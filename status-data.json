@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-03-22T21:40:00.000Z",
+  "health": {
+    "status": "offline",
+    "privacyMode": "minimal-logging"
+  },
+  "overview": {
+    "generatedAt": "2026-03-22T21:40:00.000Z",
+    "degraded": true,
+    "stats": {
+      "activeListings": 0,
+      "providers": 0,
+      "privacyMode": "minimal-logging"
+    },
+    "featuredListings": []
+  },
+  "statusReport": {
+    "generatedAt": "2026-03-22T21:40:00.000Z",
+    "windowDays": 30,
+    "degraded": true,
+    "overallStatus": "red",
+    "services": {
+      "api": "red",
+      "db": "red"
+    },
+    "events": [
+      {
+        "key": "STATIC_WEBSITE_ONLY",
+        "label": "Nur statische Website verfuegbar",
+        "count": 1,
+        "level": "red",
+        "description": "Aktuell ist nur die statische Website bzw. lokale Vorschau verfuegbar. Die eigentliche App-Infrastruktur ist nicht produktiv online.",
+        "lastSeen": "2026-03-22T21:40:00.000Z"
+      },
+      {
+        "key": "API_NOT_CONFIGURED",
+        "label": "API nicht produktiv konfiguriert",
+        "count": 1,
+        "level": "red",
+        "description": "Es gibt derzeit keinen stabil erreichbaren produktiven API-Endpunkt fuer externe Nutzer.",
+        "lastSeen": "2026-03-22T21:40:00.000Z"
+      },
+      {
+        "key": "DATABASE_NOT_CONNECTED",
+        "label": "Datenbank nicht produktiv angebunden",
+        "count": 1,
+        "level": "red",
+        "description": "Persistente Backend-Dienste und Datenbankbetrieb gelten aktuell als nicht live bzw. nicht final eingerichtet.",
+        "lastSeen": "2026-03-22T21:40:00.000Z"
+      }
+    ]
+  },
+  "banner": {
+    "enabled": true,
+    "level": "red",
+    "label": "Nicht produktiv",
+    "message": "Derzeit ist nur die statische Website als Vorschau verfuegbar. API, Datenbank und produktive Serveranbindung sind noch nicht final konfiguriert.",
+    "ctaText": "Statusseite oeffnen",
+    "ctaHref": "/status.html"
+  }
+}

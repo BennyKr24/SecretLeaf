@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CONSUMER
+  PROVIDER
+}
+
+// Pseudonyme Benutzer
+model User {
+  id             String    @id @default(cuid())
+  username       String    @unique @db.VarChar(32)
+  
+  // Email optional, minimales Auth
+  email          String?   @unique
+  passwordHash   String
+  
+  // Privacy: Zone statt exakte Koordinaten
+  locationZone   String?   @db.VarChar(64)
+  
+  role           UserRole  @default(CONSUMER)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  listings       Listing[]
+  purchases      Purchase[]
+
+  @@index([role])
+  @@index([createdAt])
+}
+
+// Angebote
+model Listing {
+  id                String    @id @default(cuid())
+  providerId        String
+  
+  title             String    @db.VarChar(128)
+  description       String?   @db.VarChar(500)
+  
+  quantityAvailable Int
+  unit              String    @default("Stück") @db.VarChar(32)
+  
+  // Preisgestaffeln als JSON
+  priceTiers        Json      // [{qty: 1, pricePerUnit: 5}, {qty: 5, pricePerUnit: 4}]
+  
+  // Privacy: Zone
+  locationZone      String    @db.VarChar(64)
+  
+  isActive          Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  expiresAt         DateTime?
+  
+  provider          User      @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  purchases         Purchase[]
+
+  @@index([providerId])
+  @@index([isActive])
+  @@index([locationZone])
+}
+
+// Käufe / Anfragen
+model Purchase {
+  id             String   @id @default(cuid())
+  consumerId     String
+  listingId      String
+  
+  quantity       Int
+  agreedPrice    Decimal  @db.Decimal(10, 2)
+  status         String   @default("PENDING") @db.VarChar(32)
+  
+  createdAt      DateTime @default(now())
+  completedAt    DateTime?
+  
+  consumer       User     @relation(fields: [consumerId], references: [id], onDelete: Cascade)
+  listing        Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  
+  @@index([consumerId])
+  @@index([listingId])
+  @@index([status])
+}
+
+// Audit Logs - minimal, mit Ablauf
+model AuditLog {
+  id         String   @id @default(cuid())
+  action     String   @db.VarChar(32)
+  userId     String?
+  metadata   Json?
+  
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime // Nach 90 Tagen löschen
+  
+  @@index([action])
+  @@index([expiresAt])
+}

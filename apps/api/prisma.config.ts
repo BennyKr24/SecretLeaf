@@ -1,0 +1,3 @@
+// Prisma 6 Konfiguration
+// Database-URL wird über .env geladen: DATABASE_URL=postgresql://...
+// Für Prisma Migrate: .env in apps/api/ legen

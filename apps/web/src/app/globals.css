@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f7faf7;
+  --bg-accent: #e8f3ea;
+  --surface: rgba(255, 255, 255, 0.86);
+  --text: #143022;
+  --muted: #4d685a;
+  --primary: #1f7a4f;
+  --primary-dark: #155638;
+  --line: #d8e8dd;
+  --ring: #5ca87f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  font-family: var(--font-body), "Manrope", sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(31, 122, 79, 0.12), transparent 38%),
+    radial-gradient(circle at 90% 0%, rgba(90, 168, 127, 0.14), transparent 42%),
+    linear-gradient(180deg, var(--bg), #f2f7f3 60%, #ecf4ee 100%);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), "Space Grotesk", sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+main {
+  animation: pageEnter 320ms ease-out;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+select,
+button,
+textarea {
+  font: inherit;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: #cfe8d6;
+  color: #0e2a1c;
+}
+
+@media (max-width: 700px) {
+  h1 {
+    line-height: 1.15;
+  }
+}

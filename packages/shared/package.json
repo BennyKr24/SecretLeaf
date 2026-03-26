@@ -1,0 +1,12 @@
+{
+  "name": "@secretleaf/shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "echo 'No build step required for shared types'",
+    "build": "echo 'No build step required for shared types'",
+    "lint": "echo 'No lint step configured for shared types'"
+  }
+}
