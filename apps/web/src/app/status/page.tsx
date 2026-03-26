@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { getApiHealth, getPublicOverview, getPublicStatusReport } from "../../lib/publicApi";
+import changelogData from "../../data/changelog.json";
+import fertilizerCoverageHistoryData from "../../data/fertilizerCoverageHistory.json";
+import { fertilizerCoverageStats } from "../../data/terpira/fertilizers";
 
 const levelClasses: Record<string, string> = {
   green: "bg-emerald-100 text-emerald-700 border-emerald-200",
@@ -119,25 +122,15 @@ const getImpactModel = (overallStatus: string, apiLevel: string, dbLevel: string
   };
 };
 
-const buildTimelineItems = (
-  generatedAt: string | undefined,
-  sourceLabel: string,
-  events: Array<{ label: string; level: string; count: number; lastSeen: string | null }>
-) => {
-  return [
-    {
-      date: generatedAt,
-      text: `Statusreport verarbeitet (${sourceLabel}).`
-    },
-    ...events
-      .filter((event) => event.lastSeen)
-      .sort((a, b) => new Date(b.lastSeen ?? 0).getTime() - new Date(a.lastSeen ?? 0).getTime())
-      .slice(0, 4)
-      .map((event) => ({
-        date: event.lastSeen,
-        text: `${event.label}: ${event.level.toUpperCase()} | ${event.count}`
-      }))
-  ];
+const typeLabels: Record<string, { label: string; cls: string }> = {
+  feature:     { label: "Feature",      cls: "bg-emerald-100 text-emerald-700 border-emerald-200" },
+  fix:         { label: "Bugfix",       cls: "bg-amber-100   text-amber-700   border-amber-200"   },
+  security:    { label: "Sicherheit",   cls: "bg-rose-100    text-rose-700    border-rose-200"    },
+  performance: { label: "Performance",  cls: "bg-blue-100    text-blue-700    border-blue-200"    },
+  release:     { label: "Release",      cls: "bg-violet-100  text-violet-700  border-violet-200"  },
+  docs:        { label: "Docs",         cls: "bg-slate-100   text-slate-700   border-slate-200"   },
+  chore:       { label: "Intern",       cls: "bg-slate-100   text-slate-600   border-slate-200"   },
+  update:      { label: "Update",       cls: "bg-cyan-100    text-cyan-700    border-cyan-200"    },
 };
 
 export default async function StatusPage() {
@@ -154,7 +147,8 @@ export default async function StatusPage() {
   const sourceLabel = health && overview && statusReport ? "Live API" : "Fallback / kein Vollzugriff";
   const historyDays = buildStatusHistory(statusReport?.windowDays ?? 30, overallStatus, statusReport?.events ?? []);
   const impactModel = getImpactModel(overallStatus, apiLevel, dbLevel);
-  const timelineItems = buildTimelineItems(statusReport?.generatedAt, sourceLabel, statusReport?.events ?? []);
+  const changelog = (changelogData.releases ?? []).slice(0, 6);
+  const coverageHistory = (fertilizerCoverageHistoryData.snapshots ?? []).slice(-6);
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#f4faf6] via-[#eef6f1] to-[#f7fbf9]">
@@ -316,6 +310,28 @@ export default async function StatusPage() {
           </div>
         </section>
 
+        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Coverage Verlauf</p>
+          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Duenger-Marktabdeckung im Zeitverlauf</h2>
+          <p className="mt-2 text-sm text-[#4d685a]">
+            Letzter Snapshot: {fertilizerCoverageStats.coveredProducts} von {fertilizerCoverageStats.trackedMarketEstimate} Linien ({fertilizerCoverageStats.coveragePercent}%).
+          </p>
+
+          <div className="mt-5 grid gap-3 md:grid-cols-5">
+            {coverageHistory.map((point) => (
+              <article key={point.date} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
+                <time className="text-xs text-[#6b8577]">{new Date(point.date).toLocaleDateString("de-DE")}</time>
+                <div className="mt-2 text-2xl font-bold text-[#123024]">{point.coverage}%</div>
+                <div className="mt-1 h-2 rounded bg-[#e5f2ea] overflow-hidden">
+                  <div className="h-full bg-[#1f7a4f]" style={{ width: `${Math.min(point.coverage, 100)}%` }} />
+                </div>
+                <p className="mt-2 text-xs text-[#4d685a]">{point.coveredProducts}/{point.marketEstimate}</p>
+                <p className="mt-1 text-xs text-[#6b8577]">{point.note}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <section className="rounded-2xl border border-[#d6e5d9] bg-white p-6 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Nutzerwirkung</p>
@@ -369,16 +385,40 @@ export default async function StatusPage() {
 
           <section className="rounded-2xl border border-[#d6e5d9] bg-white p-6 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Chronik</p>
-            <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Letzte Hinweise</h2>
-            <p className="mt-2 text-sm text-[#4d685a]">Die juengsten Status- und Incident-Hinweise in zeitlicher Reihenfolge.</p>
+            <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Letzte Patches & Releases</h2>
+            <p className="mt-2 text-sm text-[#4d685a]">Automatisch aus Git-Commits generiert. Wird bei jedem Build aktualisiert.</p>
 
             <div className="mt-5 space-y-3">
-              {timelineItems.map((item) => (
-                <article key={`${item.date}-${item.text}`} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
-                  <time className="text-xs text-[#6b8577]">{item.date ? new Date(item.date).toLocaleString("de-DE") : "kein Eintrag"}</time>
-                  <p className="mt-2 text-sm text-[#4d685a]">{item.text}</p>
-                </article>
-              ))}
+              {changelog.map((entry) => {
+                const tl = typeLabels[entry.type] ?? typeLabels["update"]!;
+                return (
+                  <article key={entry.hash} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold ${tl.cls}`}>{tl.label}</span>
+                      {entry.version && (
+                        <span className="rounded-full border border-[#d6e5d9] bg-white px-2.5 py-0.5 text-xs font-mono text-[#4d685a]">v{entry.version}</span>
+                      )}
+                      <time className="ml-auto text-xs text-[#6b8577]">
+                        {new Date(entry.date).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}
+                      </time>
+                    </div>
+                    <h3 className="mt-2 text-sm font-semibold text-[#123024]">{entry.title}</h3>
+                    {entry.changes.length > 0 && (
+                      <ul className="mt-2 space-y-1">
+                        {entry.changes.slice(0, 4).map((change: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2 text-xs text-[#4d685a]">
+                            <span className="mt-0.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-emerald-400" />
+                            {change}
+                          </li>
+                        ))}
+                        {entry.changes.length > 4 && (
+                          <li className="text-xs text-[#6b8577] pl-3.5">+ {entry.changes.length - 4} weitere Änderungen</li>
+                        )}
+                      </ul>
+                    )}
+                  </article>
+                );
+              })}
             </div>
           </section>
         </div>

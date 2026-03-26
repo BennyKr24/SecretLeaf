@@ -36,10 +36,13 @@ const mapPublicListing = (listing: {
   quantityAvailable: number;
   unit: string;
   updatedAt: Date;
-  priceTiers: unknown;
+  priceTiers: string;
   provider: { username: string };
 }) => {
-  const cheapestPrice = extractCheapestPrice(listing.priceTiers);
+  const parsedTiers = (() => {
+    try { return JSON.parse(listing.priceTiers); } catch { return []; }
+  })();
+  const cheapestPrice = extractCheapestPrice(parsedTiers);
   return {
     id: listing.id,
     title: listing.title,

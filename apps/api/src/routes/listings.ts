@@ -31,10 +31,11 @@ export const listingRoutes: FastifyPluginAsync = async (app) => {
   app.get("/mine", async (request) => {
     const userId = (request.user as any).sub;
 
-    return prisma.listing.findMany({
+    const listings = await prisma.listing.findMany({
       where: { providerId: userId },
       orderBy: { updatedAt: "desc" }
     });
+    return listings.map((l) => ({ ...l, priceTiers: JSON.parse(l.priceTiers) }));
   });
 
   // Create listing
@@ -55,16 +56,16 @@ export const listingRoutes: FastifyPluginAsync = async (app) => {
       data: {
         providerId: (request.user as any).sub,
         title: payload.title,
-        description: payload.description || null,
+        description: payload.description ?? null,
         quantityAvailable: payload.quantityAvailable,
         unit: payload.unit,
-        priceTiers: payload.priceTiers,
+        priceTiers: JSON.stringify(payload.priceTiers),
         locationZone: payload.locationZone,
         isActive: true
       }
     });
 
-    return reply.code(201).send(listing);
+    return reply.code(201).send({ ...listing, priceTiers: JSON.parse(listing.priceTiers) });
   });
 
   // Update listing
@@ -83,15 +84,20 @@ export const listingRoutes: FastifyPluginAsync = async (app) => {
       return reply.code(404).send({ error: "Listing not found" });
     }
 
+    const updateData = Object.fromEntries(
+      Object.entries(parsed.data).filter(([, v]) => v !== undefined)
+    ) as Record<string, unknown>;
+
+    if (updateData["priceTiers"] !== undefined) {
+      updateData["priceTiers"] = JSON.stringify(updateData["priceTiers"]);
+    }
+
     const updated = await prisma.listing.update({
       where: { id: listingId },
-      // Filtere undefined-Felder wegen exactOptionalPropertyTypes
-      data: Object.fromEntries(
-        Object.entries(parsed.data).filter(([, v]) => v !== undefined)
-      ) as Parameters<typeof prisma.listing.update>[0]["data"]
+      data: updateData as Parameters<typeof prisma.listing.update>[0]["data"]
     });
 
-    return reply.send(updated);
+    return reply.send({ ...updated, priceTiers: JSON.parse(updated.priceTiers) });
   });
 
   // Delete listing

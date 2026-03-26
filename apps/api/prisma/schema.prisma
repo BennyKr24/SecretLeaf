@@ -3,28 +3,24 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  CONSUMER
-  PROVIDER
-}
-
+// SQLite unterstützt keine Enums – als String gespeichert
 // Pseudonyme Benutzer
 model User {
   id             String    @id @default(cuid())
-  username       String    @unique @db.VarChar(32)
+  username       String    @unique
   
   // Email optional, minimales Auth
   email          String?   @unique
   passwordHash   String
   
   // Privacy: Zone statt exakte Koordinaten
-  locationZone   String?   @db.VarChar(64)
+  locationZone   String?
   
-  role           UserRole  @default(CONSUMER)
+  role           String    @default("CONSUMER")
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   
@@ -40,17 +36,17 @@ model Listing {
   id                String    @id @default(cuid())
   providerId        String
   
-  title             String    @db.VarChar(128)
-  description       String?   @db.VarChar(500)
+  title             String
+  description       String?
   
   quantityAvailable Int
-  unit              String    @default("Stück") @db.VarChar(32)
+  unit              String    @default("Stück")
   
-  // Preisgestaffeln als JSON
-  priceTiers        Json      // [{qty: 1, pricePerUnit: 5}, {qty: 5, pricePerUnit: 4}]
+  // Preisgestaffeln als JSON (als String in SQLite)
+  priceTiers        String    // JSON: [{qty: 1, pricePerUnit: 5}, ...]
   
   // Privacy: Zone
-  locationZone      String    @db.VarChar(64)
+  locationZone      String
   
   isActive          Boolean   @default(true)
   createdAt         DateTime  @default(now())
@@ -72,8 +68,8 @@ model Purchase {
   listingId      String
   
   quantity       Int
-  agreedPrice    Decimal  @db.Decimal(10, 2)
-  status         String   @default("PENDING") @db.VarChar(32)
+  agreedPrice    Float
+  status         String   @default("PENDING")
   
   createdAt      DateTime @default(now())
   completedAt    DateTime?
@@ -89,9 +85,9 @@ model Purchase {
 // Audit Logs - minimal, mit Ablauf
 model AuditLog {
   id         String   @id @default(cuid())
-  action     String   @db.VarChar(32)
+  action     String
   userId     String?
-  metadata   Json?
+  metadata   String?
   
   createdAt  DateTime @default(now())
   expiresAt  DateTime // Nach 90 Tagen löschen

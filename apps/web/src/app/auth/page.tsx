@@ -59,30 +59,28 @@ export default function AuthPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-blue-50 flex items-center justify-center px-6 py-12">
+    <main className="min-h-screen px-6 py-12 flex items-center justify-center">
       <div className="w-full max-w-md">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-block text-2xl font-bold text-blue-600 hover:text-blue-700">
+        <div className="mb-8 text-center">
+          <Link href="/" className="inline-block text-2xl font-bold text-[#1f7a4f] hover:text-[#17613f]">
             SecretLeaf
           </Link>
-          <h1 className="mt-6 text-2xl font-bold text-gray-900">
+          <h1 className="mt-6 text-3xl font-bold text-[#10281e]">
             {mode === "login" ? "Willkommen zurück" : "Konto erstellen"}
           </h1>
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-[#4d685a]">
             Nur minimale Felder. Keine echten Namen erforderlich.
           </p>
         </div>
 
-        {/* Mode Tabs */}
-        <div className="flex gap-2 mb-8 bg-gray-100 p-1 rounded-lg">
+        <div className="mb-8 flex gap-2 rounded-xl border border-[#d8e8dd] bg-[#edf6f0] p-1">
           <button
             type="button"
             onClick={() => { setMode("login"); setError(null); }}
             className={`flex-1 py-2 px-4 rounded font-medium transition ${
               mode === "login"
-                ? "bg-white text-blue-600 shadow-sm"
-                : "text-gray-600 hover:text-gray-900"
+                ? "bg-white text-[#1f7a4f] shadow-sm"
+                : "text-[#4d685a] hover:text-[#173126]"
             }`}
           >
             Login
@@ -92,19 +90,17 @@ export default function AuthPage() {
             onClick={() => { setMode("register"); setError(null); }}
             className={`flex-1 py-2 px-4 rounded font-medium transition ${
               mode === "register"
-                ? "bg-white text-blue-600 shadow-sm"
-                : "text-gray-600 hover:text-gray-900"
+                ? "bg-white text-[#1f7a4f] shadow-sm"
+                : "text-[#4d685a] hover:text-[#173126]"
             }`}
           >
             Registrieren
           </button>
         </div>
 
-        {/* Form */}
-        <form onSubmit={submit} className="space-y-5">
-          {/* Username */}
+        <form onSubmit={submit} className="space-y-5 rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="username" className="mb-2 block text-sm font-medium text-[#355b49]">
               Benutzername
             </label>
             <input
@@ -116,13 +112,12 @@ export default function AuthPage() {
               minLength={3}
               maxLength={32}
               placeholder="dein-pseudonym"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+              className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
             />
           </div>
 
-          {/* Password */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="password" className="mb-2 block text-sm font-medium text-[#355b49]">
               Passwort
             </label>
             <input
@@ -133,16 +128,15 @@ export default function AuthPage() {
               required
               minLength={10}
               placeholder={mode === "login" ? "••••••••••" : "Mindestens 10 Zeichen"}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+              className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
             />
           </div>
 
-          {/* Registration Fields */}
           {mode === "register" && (
             <>
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  E-Mail <span className="text-gray-400">(optional)</span>
+                <label htmlFor="email" className="mb-2 block text-sm font-medium text-[#355b49]">
+                  E-Mail <span className="text-[#7b9688]">(optional)</span>
                 </label>
                 <input
                   id="email"
@@ -150,19 +144,19 @@ export default function AuthPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="optional@beispiel.de"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                  className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
                 />
               </div>
 
               <div>
-                <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="role" className="mb-2 block text-sm font-medium text-[#355b49]">
                   Ich möchte
                 </label>
                 <select
                   id="role"
                   value={role}
                   onChange={(e) => setRole(e.target.value as UserRole)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
+                  className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
                 >
                   <option value="CONSUMER">Nur Angebote suchen</option>
                   <option value="PROVIDER">Nur Angebote erstellen</option>
@@ -171,41 +165,38 @@ export default function AuthPage() {
             </>
           )}
 
-          {/* Error */}
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+            <div className="rounded-xl border border-[#e7c1c1] bg-[#fff4f4] p-3 text-sm text-[#a54b4b]">
               {error}
             </div>
           )}
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={pending}
-            className="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+            className="w-full rounded-xl bg-[#1f7a4f] px-4 py-2 font-medium text-white transition hover:bg-[#17613f] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {pending ? "Wird verarbeitet..." : mode === "login" ? "Einloggen" : "Konto erstellen"}
           </button>
         </form>
 
-        {/* Demo-Mode */}
         {DEMO_MODE && (
-          <div className="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-4">
-            <p className="text-center text-xs font-semibold text-amber-700 uppercase tracking-wide mb-3">
+          <div className="mt-6 rounded-2xl border border-[#ead5a3] bg-[#fff8e7] p-4">
+            <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wide text-[#9b7a2c]">
               Demo-Modus aktiv – API deaktiviert
             </p>
             <div className="flex gap-2">
               <button
                 type="button"
                 onClick={() => demoLogin(false)}
-                className="flex-1 py-2 px-3 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 transition"
+                className="flex-1 rounded-lg bg-[#c89a3f] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#b4872f]"
               >
                 Als Consumer einloggen
               </button>
               <button
                 type="button"
                 onClick={() => demoLogin(true)}
-                className="flex-1 py-2 px-3 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 transition"
+                className="flex-1 rounded-lg bg-[#c89a3f] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#b4872f]"
               >
                 Als Provider einloggen
               </button>
@@ -213,9 +204,8 @@ export default function AuthPage() {
           </div>
         )}
 
-        {/* Footer */}
-        <p className="mt-6 text-center text-sm text-gray-600">
-          <Link href="/" className="text-blue-600 hover:text-blue-700 font-medium">
+        <p className="mt-6 text-center text-sm text-[#4d685a]">
+          <Link href="/" className="font-medium text-[#1f7a4f] hover:text-[#17613f]">
             ← Zur Startseite
           </Link>
         </p>

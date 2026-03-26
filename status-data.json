@@ -1,61 +1,255 @@
 {
-  "generatedAt": "2026-03-22T21:40:00.000Z",
+  "generatedAt": "2026-03-26T23:20:06.969Z",
   "health": {
-    "status": "offline",
+    "status": "ok",
     "privacyMode": "minimal-logging"
   },
   "overview": {
-    "generatedAt": "2026-03-22T21:40:00.000Z",
-    "degraded": true,
+    "generatedAt": "2026-03-26T23:20:06.971Z",
+    "degraded": false,
     "stats": {
-      "activeListings": 0,
-      "providers": 0,
+      "activeListings": 3,
+      "providers": 1,
       "privacyMode": "minimal-logging"
     },
-    "featuredListings": []
+    "featuredListings": [
+      {
+        "id": "cmn7qvnmy00077garhnipjvmw",
+        "title": "Test Angebot",
+        "description": "Test",
+        "locationZone": "berlin-mitte",
+        "quantityAvailable": 10,
+        "unit": "Stueck",
+        "provider": "testuser",
+        "cheapestPrice": 5,
+        "updatedAt": "2026-03-26T17:26:54.058Z"
+      },
+      {
+        "id": "cmn7qvhoz00057gar7jx9xpsw",
+        "title": "Test Angebot",
+        "description": "Test",
+        "locationZone": "berlin-mitte",
+        "quantityAvailable": 10,
+        "unit": "Stück",
+        "provider": "testuser",
+        "cheapestPrice": 5,
+        "updatedAt": "2026-03-26T17:26:46.356Z"
+      },
+      {
+        "id": "cmn7qv7eh00027gar5o27pi0z",
+        "title": "Test Angebot",
+        "description": "Test",
+        "locationZone": "berlin-mitte",
+        "quantityAvailable": 10,
+        "unit": "Stück",
+        "provider": "testuser",
+        "cheapestPrice": 5,
+        "updatedAt": "2026-03-26T17:26:33.018Z"
+      }
+    ]
   },
   "statusReport": {
-    "generatedAt": "2026-03-22T21:40:00.000Z",
+    "generatedAt": "2026-03-26T23:20:06.970Z",
     "windowDays": 30,
-    "degraded": true,
-    "overallStatus": "red",
+    "degraded": false,
+    "overallStatus": "green",
     "services": {
-      "api": "red",
-      "db": "red"
+      "api": "green",
+      "db": "green"
     },
     "events": [
       {
-        "key": "STATIC_WEBSITE_ONLY",
-        "label": "Nur statische Website verfuegbar",
-        "count": 1,
-        "level": "red",
-        "description": "Aktuell ist nur die statische Website bzw. lokale Vorschau verfuegbar. Die eigentliche App-Infrastruktur ist nicht produktiv online.",
-        "lastSeen": "2026-03-22T21:40:00.000Z"
+        "key": "LEGAL_REQUEST",
+        "label": "Rechtliche Auskunftsanfragen",
+        "count": 0,
+        "level": "green",
+        "description": "Externe Anfragen zu Datenoffenlegung oder Herausgabe.",
+        "lastSeen": null
       },
       {
-        "key": "API_NOT_CONFIGURED",
-        "label": "API nicht produktiv konfiguriert",
-        "count": 1,
-        "level": "red",
-        "description": "Es gibt derzeit keinen stabil erreichbaren produktiven API-Endpunkt fuer externe Nutzer.",
-        "lastSeen": "2026-03-22T21:40:00.000Z"
+        "key": "ACCOUNT_TAKEOVER_ATTEMPT",
+        "label": "Verdacht auf Kontoübernahmen",
+        "count": 0,
+        "level": "green",
+        "description": "Ungewöhnliche Login-Muster oder kompromittierte Zugriffe.",
+        "lastSeen": null
       },
       {
-        "key": "DATABASE_NOT_CONNECTED",
-        "label": "Datenbank nicht produktiv angebunden",
-        "count": 1,
-        "level": "red",
-        "description": "Persistente Backend-Dienste und Datenbankbetrieb gelten aktuell als nicht live bzw. nicht final eingerichtet.",
-        "lastSeen": "2026-03-22T21:40:00.000Z"
+        "key": "DATA_EXPORT_BULK",
+        "label": "Ungewöhnliche Datenexporte",
+        "count": 0,
+        "level": "green",
+        "description": "Überdurchschnittliche Exportanfragen in kurzer Zeit.",
+        "lastSeen": null
+      },
+      {
+        "key": "RATE_LIMIT_SPIKE",
+        "label": "Traffic-/Rate-Limit-Spitzen",
+        "count": 0,
+        "level": "green",
+        "description": "Auffällige Lastspitzen, die auf Missbrauch hindeuten können.",
+        "lastSeen": null
+      },
+      {
+        "key": "INCIDENT_RESPONSE",
+        "label": "Sicherheitsvorfälle",
+        "count": 0,
+        "level": "green",
+        "description": "Bestätigte sicherheitsrelevante Vorfälle mit Response-Prozess.",
+        "lastSeen": null
       }
     ]
   },
   "banner": {
-    "enabled": true,
-    "level": "red",
-    "label": "Nicht produktiv",
-    "message": "Derzeit ist nur die statische Website als Vorschau verfuegbar. API, Datenbank und produktive Serveranbindung sind noch nicht final konfiguriert.",
+    "enabled": false,
+    "level": "green",
+    "label": "Stabil",
+    "message": "Alle Dienste sind aktuell stabil erreichbar.",
     "ctaText": "Statusseite oeffnen",
     "ctaHref": "/status.html"
+  },
+  "probe": {
+    "mode": "watch",
+    "apiBase": "http://localhost:4000",
+    "webBase": "http://localhost:3000",
+    "measuredAt": "2026-03-26T23:20:06.969Z",
+    "checks": {
+      "apiHealth": {
+        "ok": true,
+        "status": 200,
+        "latencyMs": 1,
+        "data": {
+          "status": "ok",
+          "privacyMode": "minimal-logging"
+        },
+        "error": null
+      },
+      "apiOverview": {
+        "ok": true,
+        "status": 200,
+        "latencyMs": 2,
+        "data": {
+          "generatedAt": "2026-03-26T23:20:06.971Z",
+          "degraded": false,
+          "stats": {
+            "activeListings": 3,
+            "providers": 1,
+            "privacyMode": "minimal-logging"
+          },
+          "featuredListings": [
+            {
+              "id": "cmn7qvnmy00077garhnipjvmw",
+              "title": "Test Angebot",
+              "description": "Test",
+              "locationZone": "berlin-mitte",
+              "quantityAvailable": 10,
+              "unit": "Stueck",
+              "provider": "testuser",
+              "cheapestPrice": 5,
+              "updatedAt": "2026-03-26T17:26:54.058Z"
+            },
+            {
+              "id": "cmn7qvhoz00057gar7jx9xpsw",
+              "title": "Test Angebot",
+              "description": "Test",
+              "locationZone": "berlin-mitte",
+              "quantityAvailable": 10,
+              "unit": "Stück",
+              "provider": "testuser",
+              "cheapestPrice": 5,
+              "updatedAt": "2026-03-26T17:26:46.356Z"
+            },
+            {
+              "id": "cmn7qv7eh00027gar5o27pi0z",
+              "title": "Test Angebot",
+              "description": "Test",
+              "locationZone": "berlin-mitte",
+              "quantityAvailable": 10,
+              "unit": "Stück",
+              "provider": "testuser",
+              "cheapestPrice": 5,
+              "updatedAt": "2026-03-26T17:26:33.018Z"
+            }
+          ]
+        },
+        "error": null
+      },
+      "apiStatusReport": {
+        "ok": true,
+        "status": 200,
+        "latencyMs": 3,
+        "data": {
+          "generatedAt": "2026-03-26T23:20:06.970Z",
+          "windowDays": 30,
+          "degraded": false,
+          "overallStatus": "green",
+          "services": {
+            "api": "green",
+            "db": "green"
+          },
+          "events": [
+            {
+              "key": "LEGAL_REQUEST",
+              "label": "Rechtliche Auskunftsanfragen",
+              "count": 0,
+              "level": "green",
+              "description": "Externe Anfragen zu Datenoffenlegung oder Herausgabe.",
+              "lastSeen": null
+            },
+            {
+              "key": "ACCOUNT_TAKEOVER_ATTEMPT",
+              "label": "Verdacht auf Kontoübernahmen",
+              "count": 0,
+              "level": "green",
+              "description": "Ungewöhnliche Login-Muster oder kompromittierte Zugriffe.",
+              "lastSeen": null
+            },
+            {
+              "key": "DATA_EXPORT_BULK",
+              "label": "Ungewöhnliche Datenexporte",
+              "count": 0,
+              "level": "green",
+              "description": "Überdurchschnittliche Exportanfragen in kurzer Zeit.",
+              "lastSeen": null
+            },
+            {
+              "key": "RATE_LIMIT_SPIKE",
+              "label": "Traffic-/Rate-Limit-Spitzen",
+              "count": 0,
+              "level": "green",
+              "description": "Auffällige Lastspitzen, die auf Missbrauch hindeuten können.",
+              "lastSeen": null
+            },
+            {
+              "key": "INCIDENT_RESPONSE",
+              "label": "Sicherheitsvorfälle",
+              "count": 0,
+              "level": "green",
+              "description": "Bestätigte sicherheitsrelevante Vorfälle mit Response-Prozess.",
+              "lastSeen": null
+            }
+          ]
+        },
+        "error": null
+      },
+      "webRoot": {
+        "ok": true,
+        "status": 200,
+        "latencyMs": 126,
+        "data": {
+          "raw": "<!DOCTYPE html><html lang=\"de\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/%5Broot-of-the-server%5D__013mp2k._.css\" data-precedence=\"next_static/chunks/[root-of-the-server]__013mp2k._.css\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev"
+        },
+        "error": null
+      },
+      "webWiki": {
+        "ok": true,
+        "status": 200,
+        "latencyMs": 121,
+        "data": {
+          "raw": "<!DOCTYPE html><html lang=\"de\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/%5Broot-of-the-server%5D__013mp2k._.css\" data-precedence=\"next_static/chunks/[root-of-the-server]__013mp2k._.css\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev"
+        },
+        "error": null
+      }
+    }
   }
 }

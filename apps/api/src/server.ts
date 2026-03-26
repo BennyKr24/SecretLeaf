@@ -81,6 +81,7 @@ app.decorate("authenticate", async (request, reply) => {
   }
 });
 
+app.get("/", async () => ({ name: "SecretLeaf API", version: "1.0.0", status: "ok" }));
 app.get("/health", async () => ({ status: "ok", privacyMode: "minimal-logging" }));
 app.register(authRoutes, { prefix: "/auth" });
 app.register(listingRoutes, { prefix: "/listings" });

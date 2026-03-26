@@ -39,7 +39,7 @@ export const searchRoutes: FastifyPluginAsync = async (app) => {
     // Filter by price from priceTiers JSON
     const offers = listings
       .map((listing) => {
-        const priceTiers = listing.priceTiers as Array<{ qty: number; pricePerUnit: number }>;
+        const priceTiers = JSON.parse(listing.priceTiers) as Array<{ qty: number; pricePerUnit: number }>;
         const cheapest = Math.min(...priceTiers.map((tier) => tier.pricePerUnit));
 
         return {

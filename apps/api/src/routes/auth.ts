@@ -39,14 +39,14 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
       const emailValue: string | null = payload.email ? (normalizeEmail(payload.email) ?? null) : null;
 
       try {
-        const userData = {
-          username: payload.username,
-          passwordHash,
-          role: payload.role,
-          email: emailValue
-        } as const satisfies Parameters<typeof prisma.user.create>[0]["data"];
-
-        const user = await prisma.user.create({ data: userData });
+        const user = await prisma.user.create({
+          data: {
+            username: payload.username,
+            passwordHash,
+            role: payload.role,
+            email: emailValue
+          }
+        });
 
         const token = await reply.jwtSign(
           { sub: user.id, username: user.username, role: user.role as "CONSUMER" | "PROVIDER" },

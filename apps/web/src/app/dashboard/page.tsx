@@ -87,13 +87,13 @@ export default function DashboardPage() {
 
   if (!session) {
     return (
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen px-6 py-20">
         <section className="mx-auto max-w-4xl px-6 py-20 text-center">
-          <h1 className="text-3xl font-bold text-gray-900">Bitte einloggen</h1>
-          <p className="mt-4 text-gray-600">Die Suche ist nur für angemeldete Benutzer verfügbar.</p>
+          <h1 className="text-3xl font-bold text-[#10281e]">Bitte einloggen</h1>
+          <p className="mt-4 text-[#4d685a]">Die Suche ist nur für angemeldete Benutzer verfügbar.</p>
           <Link 
             href="/auth" 
-            className="mt-6 inline-block px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
+            className="mt-6 inline-block rounded-lg bg-[#1f7a4f] px-6 py-2 font-medium text-white hover:bg-[#17613f]"
           >
             Zu Login / Register
           </Link>
@@ -103,24 +103,26 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+    <main className="min-h-screen">
+      <header className="border-b border-[#d8e8dd] bg-white/85 backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-sm text-gray-600">Angemeldet als @{session.user.username}</p>
+            <h1 className="text-2xl font-bold text-[#10281e]">Dashboard</h1>
+            <p className="text-sm text-[#4d685a]">Angemeldet als @{session.user.username}</p>
           </div>
           <div className="flex gap-3">
-            <Link href="/" className="text-sm font-medium text-gray-600 hover:text-gray-900">
+            <Link href="/" className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
               Startseite
+            </Link>
+            <Link href="/wiki" className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
+              Wiki
             </Link>
             <button 
               onClick={() => {
                 clearSession();
                 setSession(null);
               }}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900"
+              className="text-sm font-medium text-[#4d685a] hover:text-[#173126]"
             >
               Logout
             </button>
@@ -128,15 +130,13 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      {/* Main Content */}
       <div className="mx-auto max-w-7xl px-6 py-8">
-        {/* Search Filters */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6">Angebote suchen</h2>
+        <div className="mb-8 rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
+          <h2 className="mb-6 text-lg font-semibold text-[#123024]">Angebote suchen</h2>
           
           <div className="grid md:grid-cols-4 gap-6 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="mb-2 block text-sm font-medium text-[#355b49]">
                 Location Zone
               </label>
               <input
@@ -144,12 +144,12 @@ export default function DashboardPage() {
                 value={locationZone}
                 onChange={(e) => setLocationZone(e.target.value)}
                 placeholder="z.B. berlin-mitte"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full rounded-xl border border-[#d8e8dd] px-3 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="mb-2 block text-sm font-medium text-[#355b49]">
                 Mindestmenge
               </label>
               <input
@@ -157,12 +157,12 @@ export default function DashboardPage() {
                 min={1}
                 value={minQuantity}
                 onChange={(e) => setMinQuantity(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full rounded-xl border border-[#d8e8dd] px-3 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="mb-2 block text-sm font-medium text-[#355b49]">
                 Max Preis pro Einheit (€)
               </label>
               <input
@@ -171,7 +171,7 @@ export default function DashboardPage() {
                 min={0}
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full rounded-xl border border-[#d8e8dd] px-3 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
               />
             </div>
 
@@ -179,7 +179,7 @@ export default function DashboardPage() {
               <button
                 onClick={() => void searchOffers()}
                 disabled={loading}
-                className="w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition"
+                className="w-full rounded-xl bg-[#1f7a4f] px-4 py-2 font-medium text-white transition hover:bg-[#17613f] disabled:opacity-50"
               >
                 {loading ? "Lädt..." : "Suchen"}
               </button>
@@ -187,23 +187,22 @@ export default function DashboardPage() {
           </div>
 
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+            <div className="rounded-xl border border-[#e7c1c1] bg-[#fff4f4] p-3 text-sm text-[#a54b4b]">
               {error}
             </div>
           )}
         </div>
 
-        {/* Offers List */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-gray-900">
+            <h2 className="text-lg font-semibold text-[#123024]">
               Angebote ({offers.length})
             </h2>
           </div>
 
           {offers.length === 0 ? (
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-              <p className="text-gray-600">Keine Angebote gefunden. Versuche andere Suchfilter.</p>
+            <div className="rounded-2xl border border-[#d8e8dd] bg-white/90 p-12 text-center shadow-sm">
+              <p className="text-[#4d685a]">Keine Angebote gefunden. Versuche andere Suchfilter.</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -225,35 +224,34 @@ export default function DashboardPage() {
               }}
             />
 
-            {/* My Listings */}
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-6">
+            <div className="rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
+              <h2 className="mb-6 text-lg font-semibold text-[#123024]">
                 Meine Listings
               </h2>
 
               {myListings.length === 0 ? (
-                <p className="text-gray-600">Noch keine Listings vorhanden.</p>
+                <p className="text-[#4d685a]">Noch keine Listings vorhanden.</p>
               ) : (
                 <div className="space-y-3">
                   {myListings.map((listing) => (
                     <div
                       key={listing.id}
-                      className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition"
+                      className="rounded-xl border border-[#d8e8dd] p-4 transition hover:bg-[#f5faf7]"
                     >
                       <div className="flex items-start justify-between">
                         <div>
-                          <h3 className="font-semibold text-gray-900">{listing.title}</h3>
-                          <p className="text-sm text-gray-600 mt-1">
+                          <h3 className="font-semibold text-[#123024]">{listing.title}</h3>
+                          <p className="mt-1 text-sm text-[#4d685a]">
                             {listing.quantityAvailable} Einheiten verfügbar
                           </p>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-[#4d685a]">
                             Status: {listing.isActive ? "Aktiv" : "Inaktiv"}
                           </p>
                         </div>
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           listing.isActive
-                            ? "bg-green-100 text-green-700"
-                            : "bg-gray-100 text-gray-700"
+                            ? "bg-[#e5f4ea] text-[#1f7a4f]"
+                            : "bg-[#eef3f0] text-[#567264]"
                         }`}>
                           {listing.isActive ? "Aktiv" : "Inaktiv"}
                         </span>
