@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-03-26T23:20:06.969Z",
+  "generatedAt": "2026-03-26T23:20:36.983Z",
   "health": {
     "status": "ok",
     "privacyMode": "minimal-logging"
   },
   "overview": {
-    "generatedAt": "2026-03-26T23:20:06.971Z",
+    "generatedAt": "2026-03-26T23:20:36.985Z",
     "degraded": false,
     "stats": {
       "activeListings": 3,
@@ -49,7 +49,7 @@
     ]
   },
   "statusReport": {
-    "generatedAt": "2026-03-26T23:20:06.970Z",
+    "generatedAt": "2026-03-26T23:20:36.984Z",
     "windowDays": 30,
     "degraded": false,
     "overallStatus": "green",
@@ -112,7 +112,7 @@
     "mode": "watch",
     "apiBase": "http://localhost:4000",
     "webBase": "http://localhost:3000",
-    "measuredAt": "2026-03-26T23:20:06.969Z",
+    "measuredAt": "2026-03-26T23:20:36.983Z",
     "checks": {
       "apiHealth": {
         "ok": true,
@@ -127,9 +127,9 @@
       "apiOverview": {
         "ok": true,
         "status": 200,
-        "latencyMs": 2,
+        "latencyMs": 3,
         "data": {
-          "generatedAt": "2026-03-26T23:20:06.971Z",
+          "generatedAt": "2026-03-26T23:20:36.985Z",
           "degraded": false,
           "stats": {
             "activeListings": 3,
@@ -177,9 +177,9 @@
       "apiStatusReport": {
         "ok": true,
         "status": 200,
-        "latencyMs": 3,
+        "latencyMs": 2,
         "data": {
-          "generatedAt": "2026-03-26T23:20:06.970Z",
+          "generatedAt": "2026-03-26T23:20:36.984Z",
           "windowDays": 30,
           "degraded": false,
           "overallStatus": "green",
@@ -244,7 +244,7 @@
       "webWiki": {
         "ok": true,
         "status": 200,
-        "latencyMs": 121,
+        "latencyMs": 119,
         "data": {
           "raw": "<!DOCTYPE html><html lang=\"de\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/%5Broot-of-the-server%5D__013mp2k._.css\" data-precedence=\"next_static/chunks/[root-of-the-server]__013mp2k._.css\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev"
         },
