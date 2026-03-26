@@ -12,7 +12,21 @@
     "dev:api": "npm run dev --workspace @secretleaf/api",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",
-    "typecheck": "npm run typecheck --workspaces"
+    "typecheck": "npm run typecheck --workspaces",
+    "status:update": "node scripts/status_probe.mjs --output=status-data.json",
+    "status:update:local": "node scripts/status_probe.mjs --api=http://localhost:4000 --web=http://localhost:3000 --output=status-data.json",
+    "status:watch": "node scripts/status_probe.mjs --watch --interval=30000 --output=status-data.json",
+    "status:ensure": "bash scripts/status_ensure_running.sh",
+    "status:autostart:install": "bash scripts/status_autostart_install.sh",
+    "status:autostart:show": "crontab -l",
+    "changelog:generate": "node scripts/generate-changelog.mjs",
+    "changelog:dry-run": "node scripts/generate-changelog.mjs --dry-run",
+    "coverage:snapshot": "node scripts/update-coverage-history.mjs",
+    "wiki:studies:sync": "node scripts/sync-wiki-studies.mjs",
+    "wiki:studies:sync:quick": "STUDY_LOOKBACK_DAYS=45 STUDY_LIMIT=90 node scripts/sync-wiki-studies.mjs",
+    "wiki:studies:validate": "node scripts/validate-auto-sources.mjs",
+    "wiki:studies:report": "node scripts/generate-wiki-sync-report.mjs",
+    "prebuild": "npm run changelog:generate && npm run coverage:snapshot"
   },
   "overrides": {
     "effect": ">=3.20.0",

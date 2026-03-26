@@ -1,6 +1,9 @@
 node_modules
 .next
 dist
+
+# Generated wiki sync report (automation-only)
+.github/wiki-sync-report.md
 .env
 .env.local
 apps/api/prisma/dev.db
@@ -10,3 +13,5 @@ npm-debug.log*
 backups/
 *.tar.gz
 *.tar
+apps/web/public/
+*.tsbuildinfo

@@ -1,0 +1,65 @@
+name: Wiki Study Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: "How many days to look back for new studies"
+        required: false
+        default: "45"
+      study_limit:
+        description: "Maximum number of auto-imported studies"
+        required: false
+        default: "120"
+  schedule:
+    - cron: "30 4 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: wiki-study-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync studies from Crossref
+        env:
+          STUDY_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '45' }}
+          STUDY_LIMIT: ${{ github.event.inputs.study_limit || '120' }}
+        run: npm run wiki:studies:sync
+
+      - name: Validate auto sources dataset
+        run: npm run wiki:studies:validate
+
+      - name: Generate sync report
+        run: npm run wiki:studies:report
+
+      - name: Create or update review PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore(wiki): auto-sync studies"
+          title: "chore(wiki): automated study sync update"
+          body-path: .github/wiki-sync-report.md
+          branch: automation/wiki-study-sync
+          delete-branch: false
+          add-paths: |
+            apps/web/src/data/terpira/autoSources.json
