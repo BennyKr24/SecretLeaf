@@ -26,6 +26,7 @@
     "wiki:studies:sync:quick": "STUDY_LOOKBACK_DAYS=45 STUDY_LIMIT=90 node scripts/sync-wiki-studies.mjs",
     "wiki:studies:validate": "node scripts/validate-auto-sources.mjs",
     "wiki:studies:report": "node scripts/generate-wiki-sync-report.mjs",
+    "studies:fetch": "node scripts/studies_fetch.mjs",
     "prebuild": "npm run changelog:generate && npm run coverage:snapshot"
   },
   "overrides": {

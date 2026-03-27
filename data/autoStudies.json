@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-03-27T11:35:52.683Z",
+  "stats": {
+    "fetched": 0,
+    "deduped": 0,
+    "filtered": 0,
+    "kept": 0,
+    "sources": {
+      "pubmed": 0,
+      "semantic": 0,
+      "crossref": 0
+    },
+    "generatedAt": "2026-03-27T11:35:52.683Z"
+  },
+  "studies": []
+}

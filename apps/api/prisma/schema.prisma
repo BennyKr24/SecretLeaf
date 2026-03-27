@@ -82,6 +82,28 @@ model Purchase {
   @@index([status])
 }
 
+// Scientific studies (automated ingestion pipeline)
+model Study {
+  id             String   @id @default(uuid())
+  title          String
+  doi            String   @unique
+  abstract       String
+  authors        String   // JSON array of author names
+  journal        String
+  year           Int
+  source         String   // "pubmed", "semantic", or "crossref"
+  category       String   // "medical", "chemistry", "regulation", "cultivation"
+  qualityScore   Float
+  relevanceScore Float
+  citationCount  Int
+  createdAt      DateTime @default(now())
+
+  @@index([source])
+  @@index([category])
+  @@index([qualityScore])
+  @@index([createdAt])
+}
+
 // Audit Logs - minimal, mit Ablauf
 model AuditLog {
   id         String   @id @default(cuid())

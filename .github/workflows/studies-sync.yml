@@ -1,0 +1,82 @@
+name: Studies Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      lookback_hours:
+        description: "Hours to look back for new studies (default: 48)"
+        required: false
+        default: "48"
+      max_results:
+        description: "Max results per keyword per source (default: 50)"
+        required: false
+        default: "50"
+  schedule:
+    # Run daily at 05:00 UTC
+    - cron: "0 5 * * *"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: studies-sync
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch studies from PubMed, Semantic Scholar, and CrossRef
+        env:
+          STUDY_LOOKBACK_HOURS: ${{ github.event.inputs.lookback_hours || '48' }}
+          STUDY_MAX_RESULTS: ${{ github.event.inputs.max_results || '50' }}
+          PUBMED_API_KEY: ${{ secrets.PUBMED_API_KEY }}
+          SEMANTIC_SCHOLAR_KEY: ${{ secrets.SEMANTIC_SCHOLAR_KEY }}
+        run: npm run studies:fetch
+
+      - name: Create or update review PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore(studies): auto-sync studies from external APIs"
+          title: "chore(studies): automated study sync update"
+          body: |
+            ## Automated Study Sync
+
+            This PR was generated automatically by the **Studies Sync** workflow.
+
+            ### What's included
+            - Updated `data/autoStudies.json` with freshly fetched cannabis-related studies
+            - Updated `data/study-sync-report.md` with a human-readable summary
+
+            ### Sources
+            - PubMed (NCBI E-utilities)
+            - Semantic Scholar
+            - CrossRef
+
+            ### Review checklist
+            - [ ] Verify at least 5 DOI links manually
+            - [ ] Spot-check journal quality and relevance
+            - [ ] Check `data/study-sync-report.md` for flagged studies
+            - [ ] Assign studies to wiki `sourceId` fields where appropriate
+            - [ ] Merge only after editorial review
+          branch: automation/studies-sync
+          delete-branch: false
+          add-paths: |
+            data/autoStudies.json
+            data/study-sync-report.md
