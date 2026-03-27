@@ -55,6 +55,13 @@ export type TerpiraSource = {
   doi?: string;
   sourceType?: "manual" | "auto";
   relevanceScore?: number;
+  evidenceLevel?: number;
+  publisherQuality?: number;
+  topicFit?: number;
+  studyType?: string;
+  editorialPriority?: "high" | "medium" | "low";
+  matchedTopics?: string[];
+  flags?: string[];
   fetchedAt?: string;
   tags?: string[];
 };

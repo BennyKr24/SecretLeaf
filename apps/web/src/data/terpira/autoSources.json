@@ -1,110 +1,207 @@
 {
-  "generatedAt": "2026-03-26T23:04:50.056Z",
+  "generatedAt": "2026-03-27T23:58:59.144Z",
   "stats": {
-    "fetched": 460,
-    "kept": 90,
-    "deduped": 355,
+    "fetched": 1080,
+    "kept": 22,
+    "deduped": 854,
+    "excluded": 832,
     "lookbackDays": 45,
     "queries": [
       {
-        "query": "cannabis",
-        "fetched": 60
-      },
-      {
-        "query": "cannabinoid",
-        "fetched": 60
-      },
-      {
-        "query": "thc",
-        "fetched": 29
-      },
-      {
-        "query": "cbd",
-        "fetched": 41
-      },
-      {
-        "query": "terpene",
-        "fetched": 30
-      },
-      {
+        "cluster": "medizin-evidenz",
         "query": "medical cannabis",
         "fetched": 60
       },
       {
-        "query": "cannabis cultivation",
+        "cluster": "medizin-evidenz",
+        "query": "cannabinoid pain",
         "fetched": 60
       },
       {
+        "cluster": "medizin-evidenz",
+        "query": "cbd anxiety",
+        "fetched": 60
+      },
+      {
+        "cluster": "medizin-evidenz",
+        "query": "cannabis sleep",
+        "fetched": 60
+      },
+      {
+        "cluster": "pharmakologie",
+        "query": "cannabis pharmacokinetics",
+        "fetched": 60
+      },
+      {
+        "cluster": "pharmakologie",
+        "query": "cannabinoid pharmacology",
+        "fetched": 60
+      },
+      {
+        "cluster": "pharmakologie",
+        "query": "thc cbd interactions",
+        "fetched": 60
+      },
+      {
+        "cluster": "qualitaet-labor",
+        "query": "cannabis laboratory",
+        "fetched": 60
+      },
+      {
+        "cluster": "qualitaet-labor",
         "query": "cannabis contaminants",
         "fetched": 60
       },
       {
-        "query": "cannabis pharmacokinetics",
+        "cluster": "qualitaet-labor",
+        "query": "cannabis heavy metals",
+        "fetched": 60
+      },
+      {
+        "cluster": "qualitaet-labor",
+        "query": "cannabis pesticides",
+        "fetched": 60
+      },
+      {
+        "cluster": "anbau-postharvest",
+        "query": "cannabis cultivation",
+        "fetched": 60
+      },
+      {
+        "cluster": "anbau-postharvest",
+        "query": "cannabis curing",
+        "fetched": 60
+      },
+      {
+        "cluster": "anbau-postharvest",
+        "query": "cannabis postharvest",
+        "fetched": 60
+      },
+      {
+        "cluster": "anbau-postharvest",
+        "query": "cannabis terpene profile",
+        "fetched": 60
+      },
+      {
+        "cluster": "markt-regulierung",
+        "query": "cannabis regulation",
+        "fetched": 60
+      },
+      {
+        "cluster": "markt-regulierung",
+        "query": "cannabis market",
+        "fetched": 60
+      },
+      {
+        "cluster": "markt-regulierung",
+        "query": "medical cannabis policy",
         "fetched": 60
       }
     ]
   },
+  "exclusionsPreview": [
+    {
+      "title": "Patterns of Cannabis and Alcohol Co-Use: Substitution Versus Complementary Effects",
+      "reason": "score-below-threshold"
+    },
+    {
+      "title": "Comparing and Prioritizing Different Methods of Collection and Decontamination of Waste in Decentralized Healthcare Centers",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Studying the Effluent Quality of Enhanced Modified Ludzack Ettinger-oxic Settling Anaerobic Process (E-MLE-OSA) for Treating Real Municipal Wastewater",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "A Simplified Approach to Evaluate Retinal Blue Light Hazard Using the Correlated Color Temperature of LED Light Sources",
+      "reason": "poultry-feed"
+    },
+    {
+      "title": "The Perceptions of Families of Comatose Patients in the Intensive Care Unit: A Qualitative Study",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "The Correlation between Stigma and Family Acceptance with Religiosity of PLWH MSM in Medan, Indonesia",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Is High Maternal Body Mass Index Associated with Cesarean Section Delivery in Mongolia? A Prospective Observational Study",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "A chlorhexidine-releasing epoxy-based coating on titanium implants prevents Staphylococcus aureus experimental biomaterial-associated infection",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Need of Hearing Assistance Technology (HAT) for Adults with Hearing Impairment",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Correlation of Dermatoglyphic Interpretation with Oral Diseases- Revisited",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Influence of Place and Mode of delivery on Initiation of Breast feeding Practices in Urban and Rural Area of District Ambala, Haryana",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Comparative  Study of Serum Lipid Profile Parameters  for Oral Cancer  and Non Oral Cancer Patients",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Behavioral Screening Tests to Detect Hearing Loss in School Aged Children: A Review",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Vertigo in ICF Framework: A Pilot Study",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Hearing Screening in Primary School Children: An Overview",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Clinico-mycological Profile of Dermatophytic Infections at a Tertiary Care Hospital in North India",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Comparison of Locus of Control Behaviour Scores in Normal and Individuals with stuttering – A new way to Approach Stuttering Disorder for Speech – Language Pathologists",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Giant Cells in Health and Disease-A Review",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Glaucoma: Risk Factors and Prevalence: A Review",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Knowledge Management in Health Care Sectors",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "WEANING",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Maternal and Fetal Outcomes in Booked versus Unbooked Pregnancies: Evidence from a Tertiary Care Hospital in Pakistan",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Subgroup Testing in Change-Plane Models and Its Applications to Medical Data",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Direct and configurational paths of medical tourist emotions to healthcare quality and revisit intention: a price perception perspective",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "A Hybrid Huffman-CNN-AES Deep Learning Framework for Secure Medical Image Steganography: H-CADStego",
+      "reason": "no-cannabis-anchor"
+    }
+  ],
   "sources": [
-    {
-      "id": "auto-10-3390-ani16060900",
-      "title": "Randomized and Blind Evaluation of the Efficacy of a Full-Spectrum Oral Cannabis sativa Oil Extract, Standardized Based on CBD-A, CBD and THC-A, THC in Canines with Chronic Osteoarthritis",
-      "publisher": "Animals",
-      "year": "2026",
-      "url": "https://doi.org/10.3390/ani16060900",
-      "doi": "10.3390/ani16060900",
-      "relevanceScore": 64,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1089-can-2024-0041",
-      "title": "Drug Interactions in People on Cannabidiol: Is There Cause for Concern?",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1089/can.2024.0041",
-      "doi": "10.1089/can.2024.0041",
-      "relevanceScore": 48,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1159-000550792",
-      "title": "Quantitative analysis of Cannabinoid Therapy in Prostate Cancer: Integrating Biomarkers, Imaging and Patient Outcomes",
-      "publisher": "Medical Cannabis and Cannabinoids",
-      "year": "2026",
-      "url": "https://doi.org/10.1159/000550792",
-      "doi": "10.1159/000550792",
-      "relevanceScore": 48,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1093-jat-bkag016",
-      "title": "Simultaneous Analysis of Δ9-THC, Δ8-THC, CBD, and CBN in Breath Aerosols Collected Using Cannabix Technologies Breath Collection Unit",
-      "publisher": "Journal of Analytical Toxicology",
-      "year": "2026",
-      "url": "https://doi.org/10.1093/jat/bkag016",
-      "doi": "10.1093/jat/bkag016",
-      "relevanceScore": 48,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
     {
       "id": "auto-10-1016-j-yrtph-2026-106067",
       "title": "Preclinical evidence of cannabis-induced oxidative stress: A systematic review and meta-analysis",
@@ -112,342 +209,28 @@
       "year": "2026",
       "url": "https://doi.org/10.1016/j.yrtph.2026.106067",
       "doi": "10.1016/j.yrtph.2026.106067",
-      "relevanceScore": 44,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "relevanceScore": 100,
+      "evidenceLevel": 100,
+      "publisherQuality": 90,
+      "topicFit": 100,
+      "studyType": "meta-analysis",
+      "editorialPriority": "high",
+      "matchedTopics": [
+        "medizin-evidenz",
+        "pharmakologie",
+        "qualitaet-labor"
+      ],
+      "flags": [
+        "high-evidence"
+      ],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1007-s11121-026-01893-4",
-      "title": "Quasi-randomization to Cannabinoid Condition in Studies of US Legal Market Cannabis: Characteristics of Accepters Versus Decliners of Condition Assignment",
-      "publisher": "Prevention Science",
-      "year": "2026",
-      "url": "https://doi.org/10.1007/s11121-026-01893-4",
-      "doi": "10.1007/s11121-026-01893-4",
-      "relevanceScore": 42,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1208-s12249-026-03380-z",
-      "title": "Cannabinoid Oral Mucosal Delivery: Approaches to Formulation, Fabrication, and Permeation Enhancement",
-      "publisher": "AAPS PharmSciTech",
-      "year": "2026",
-      "url": "https://doi.org/10.1208/s12249-026-03380-z",
-      "doi": "10.1208/s12249-026-03380-z",
-      "relevanceScore": 42,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-14720-aas-2026-122-1-26115",
-      "title": "From breeding to practise: Effects of sowing date and pruning system on flower yield and cannabinoid composition in four Slovenian feminized industrial hemp breeding lines",
-      "publisher": "Acta agriculturae Slovenica",
-      "year": "2026",
-      "url": "https://doi.org/10.14720/aas.2026.122.1.26115",
-      "doi": "10.14720/aas.2026.122.1.26115",
-      "relevanceScore": 42,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1177-25785125261428842",
-      "title": "Efficacy of Exogenous Cannabinoids in Pre-Clinical Models of Inflammatory Bowel Disease: A Systematic Review and Meta-Analysis",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1177/25785125261428842",
-      "doi": "10.1177/25785125261428842",
-      "relevanceScore": 40,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1177-02698811261420097",
-      "title": "Prenatal THC exposure and binge-like alcohol drinking in early adolescence: From sex-specific drinking vulnerability to abnormal endocannabinoid-dopamine nexus in the nucleus accumbens",
-      "publisher": "Journal of Psychopharmacology",
-      "year": "2026",
-      "url": "https://doi.org/10.1177/02698811261420097",
-      "doi": "10.1177/02698811261420097",
-      "relevanceScore": 40,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-cct-2026-108287",
-      "title": "An adapted brief negotiation interview for alcohol and cannabis use among assault-injured emerging adults: A randomized pilot trial protocol",
-      "publisher": "Contemporary Clinical Trials",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.cct.2026.108287",
-      "doi": "10.1016/j.cct.2026.108287",
-      "relevanceScore": 38,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-cbpc-2026-110519",
-      "title": "Pharmaceutical compounds and their toxicity to marine organisms: Emerging contaminants and innovative strategies to reduce pharmaceutical pollution – A review and meta-analysis",
-      "publisher": "Comparative Biochemistry and Physiology Part C: Toxicology &amp; Pharmacology",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.cbpc.2026.110519",
-      "doi": "10.1016/j.cbpc.2026.110519",
-      "relevanceScore": 36,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-forsciint-2026-112930",
-      "title": "HPLC-DAD method development and validation for the quantification of CBD, CBDA, Δ9-THC AND Δ9-THCA in Cannabis-based products",
-      "publisher": "Forensic Science International",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.forsciint.2026.112930",
-      "doi": "10.1016/j.forsciint.2026.112930",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-indcrop-2026-123109",
-      "title": "Corrigendum to “Environmental determinants of cannabinoid, terpene and secondary metabolite profiles in Cannabis sativa L. cultivation in Northern Morocco” [Ind. Crop. Prod. 242 (2026) 122940]",
-      "publisher": "Industrial Crops and Products",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.indcrop.2026.123109",
-      "doi": "10.1016/j.indcrop.2026.123109",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1177-25785125251372061",
-      "title": "Age-Related Effects of Cannabis and Cannabinoids on Brain and Behavior",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1177/25785125251372061",
-      "doi": "10.1177/25785125251372061",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1177-25785125261421434",
-      "title": "Cannabinoid Hyperemesis Syndrome-A Survey-Based Approach to Understanding Symptoms and Cannabis Use Patterns",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1177/25785125261421434",
-      "doi": "10.1177/25785125261421434",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-indcrop-2026-122940",
-      "title": "Environmental determinants of cannabinoid, terpene and safety profiles in Cannabis sativa L. cultivation in Northern Morocco",
-      "publisher": "Industrial Crops and Products",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.indcrop.2026.122940",
-      "doi": "10.1016/j.indcrop.2026.122940",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-2147-jpr-s551457",
-      "title": "CARE – A Retrospective, Dual-Cohort, 24-Week Real-World Study from the German Pain e-Registry on the Effectiveness and Safety of CBD-Dominant Oral Cannabis Extracts versus THC/Dronabinol in Older Patients with Chronic Pain",
-      "publisher": "Journal of Pain Research",
-      "year": "2026",
-      "url": "https://doi.org/10.2147/jpr.s551457",
-      "doi": "10.2147/jpr.s551457",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1055-s-0045-1815332",
-      "title": "HPLC-DAD method for the quantification of CBD, CBDA, Δ9-THC, and Δ9-THCA cannabinoids in medicinal formulations",
-      "publisher": "Planta Medica",
-      "year": "2026",
-      "url": "https://doi.org/10.1055/s-0045-1815332",
-      "doi": "10.1055/s-0045-1815332",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-26828-cannabis-2026-000348",
-      "title": "Analysis of Novel Cannabis Products Labeled as Containing THC-JD",
-      "publisher": "Cannabis",
-      "year": "2026",
-      "url": "https://doi.org/10.26828/cannabis/2026/000348",
-      "doi": "10.26828/cannabis/2026/000348",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-3390-antiox15030286",
-      "title": "THC and CBD Induce Heme Oxygenase-1-Dependent Cell Death and Trigger Mitochondrial Dysfunction in Human Melanoma and Cutaneous Squamous Cell Carcinoma Cells",
-      "publisher": "Antioxidants",
-      "year": "2026",
-      "url": "https://doi.org/10.3390/antiox15030286",
-      "doi": "10.3390/antiox15030286",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1007-s00216-026-06325-4",
-      "title": "A novel approach to the production of Δ9-THC and CBN certified reference materials",
-      "publisher": "Analytical and Bioanalytical Chemistry",
-      "year": "2026",
-      "url": "https://doi.org/10.1007/s00216-026-06325-4",
-      "doi": "10.1007/s00216-026-06325-4",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-55139-sbxf5926",
-      "title": "Desarrollo de Formulaciones Magistrales de Cannabidiol (CBD): Estrategia personalizada para el manejo del dolor crónico refractario y síntomas asociados a enfermedades neurológicas y oncológicas en el ambiente hospitalario privado",
-      "publisher": "Crónicas científicas",
-      "year": "2026",
-      "url": "https://doi.org/10.55139/sbxf5926",
-      "doi": "10.55139/sbxf5926",
-      "relevanceScore": 34,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-sleepx-2026-100180",
-      "title": "Integrative therapies for chronic insomnia: A randomized controlled trial of a traditional Thai herbal remedy and Cannabis sativa oil",
-      "publisher": "Sleep Medicine: X",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.sleepx.2026.100180",
-      "doi": "10.1016/j.sleepx.2026.100180",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-sleepx-2026-100173",
-      "title": "Integrative therapies for chronic insomnia: A randomized controlled trial of a traditional Thai Herbal Remedy and Cannabis sativa oil",
-      "publisher": "Sleep Medicine: X",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.sleepx.2026.100173",
-      "doi": "10.1016/j.sleepx.2026.100173",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-jpsychires-2026-02-047",
-      "title": "The association between major depressive disorder and cannabis use disorder: A meta-analysis and meta-regression analysis",
-      "publisher": "Journal of Psychiatric Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.jpsychires.2026.02.047",
-      "doi": "10.1016/j.jpsychires.2026.02.047",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-jcoa-2026-100316",
-      "title": "An alternative easy method for the analysis of volatile compounds from lipid matrices: analysis of terpenes and terpenoids in medical-grade Cannabis sativa L. inflorescences in macerated oils",
-      "publisher": "Journal of Chromatography Open",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.jcoa.2026.100316",
-      "doi": "10.1016/j.jcoa.2026.100316",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz",
+        "pharmakologie",
+        "qualitaet-labor"
       ]
     },
     {
@@ -457,192 +240,78 @@
       "year": "2026",
       "url": "https://doi.org/10.1016/j.bbi.2026.106517",
       "doi": "10.1016/j.bbi.2026.106517",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "relevanceScore": 87,
+      "evidenceLevel": 100,
+      "publisherQuality": 54,
+      "topicFit": 40,
+      "studyType": "meta-analysis",
+      "editorialPriority": "high",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [
+        "high-evidence"
+      ],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-1152-ajpendo-00391-2025",
-      "title": "Acute metabolic effects of cannabinoid receptor modulators during sequential hyperglycemic, euglycemic-hyperinsulinemic clamps in healthy individuals",
-      "publisher": "American Journal of Physiology-Endocrinology and Metabolism",
+      "id": "auto-10-1016-j-sleepx-2026-100180",
+      "title": "Integrative therapies for chronic insomnia: A randomized controlled trial of a traditional Thai herbal remedy and Cannabis sativa oil",
+      "publisher": "Sleep Medicine: X",
       "year": "2026",
-      "url": "https://doi.org/10.1152/ajpendo.00391.2025",
-      "doi": "10.1152/ajpendo.00391.2025",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.sleepx.2026.100180",
+      "doi": "10.1016/j.sleepx.2026.100180",
+      "relevanceScore": 78,
+      "evidenceLevel": 88,
+      "publisherQuality": 54,
+      "topicFit": 40,
+      "studyType": "controlled-study",
+      "editorialPriority": "medium",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [
+        "controlled-study"
+      ],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-1097-aln-0000000000005925",
-      "title": "Evaluating the Acute Effects of the Cannabinoid Dronabinol and the Opioid Hydromorphone Alone and in Combination: A Double-blind, Randomized, Placebo-controlled Trial in Knee Osteoarthritis",
-      "publisher": "Anesthesiology",
+      "id": "auto-10-1016-j-sleepx-2026-100173",
+      "title": "Integrative therapies for chronic insomnia: A randomized controlled trial of a traditional Thai Herbal Remedy and Cannabis sativa oil",
+      "publisher": "Sleep Medicine: X",
       "year": "2026",
-      "url": "https://doi.org/10.1097/aln.0000000000005925",
-      "doi": "10.1097/aln.0000000000005925",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.sleepx.2026.100173",
+      "doi": "10.1016/j.sleepx.2026.100173",
+      "relevanceScore": 78,
+      "evidenceLevel": 88,
+      "publisherQuality": 54,
+      "topicFit": 40,
+      "studyType": "controlled-study",
+      "editorialPriority": "medium",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [
+        "controlled-study"
+      ],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-3389-fpubh-2026-1740300",
-      "title": "Trends in hospitalizations for cannabinoid hyperemesis syndrome in Canada, 2016–17 to 2024–25",
-      "publisher": "Frontiers in Public Health",
-      "year": "2026",
-      "url": "https://doi.org/10.3389/fpubh.2026.1740300",
-      "doi": "10.3389/fpubh.2026.1740300",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-cotox-2025-100552",
-      "title": "Professional needs regarding cannabis: Learning about the endocannabinoid system and cannabinoid pharmacology",
-      "publisher": "Current Opinion in Toxicology",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.cotox.2025.100552",
-      "doi": "10.1016/j.cotox.2025.100552",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1080-10826076-2026-2636540",
-      "title": "Simultaneous quantitative analysis of epimeric and Δ\n                    <sup>8</sup>\n                    /Δ\n                    <sup>9</sup>\n                    positional isomers of synthetic THC analogs and natural cannabinoids in formulated products by UHPLC-DAD with optional ESI/TOFMS confirmation",
-      "publisher": "Journal of Liquid Chromatography &amp; Related Technologies",
-      "year": "2026",
-      "url": "https://doi.org/10.1080/10826076.2026.2636540",
-      "doi": "10.1080/10826076.2026.2636540",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1007-s00213-026-07023-w",
-      "title": "Perinatal exposure to delta-9-tetrahydrocannabinol (THC) alters goal-directed behavior and dopamine functioning in wistar rats",
-      "publisher": "Psychopharmacology",
-      "year": "2026",
-      "url": "https://doi.org/10.1007/s00213-026-07023-w",
-      "doi": "10.1007/s00213-026-07023-w",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1111-add-70364",
-      "title": "Challenges in establishing a link between THC exposure and cannabis use disorder",
-      "publisher": "Addiction",
-      "year": "2026",
-      "url": "https://doi.org/10.1111/add.70364",
-      "doi": "10.1111/add.70364",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-ctta-2025-100249",
-      "title": "Terpene-based hydrophobic (D)ESs: A systematic review of physiochemical properties",
-      "publisher": "Chemical Thermodynamics and Thermal Analysis",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.ctta.2025.100249",
-      "doi": "10.1016/j.ctta.2025.100249",
-      "relevanceScore": 32,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-ajmo-2025-100120",
-      "title": "Risk of Heart Failure-related Events in Patients Exposed to Medical Cannabis: A Longitudinal Cohort Study",
-      "publisher": "American Journal of Medicine Open",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.ajmo.2025.100120",
-      "doi": "10.1016/j.ajmo.2025.100120",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-ssaho-2026-102484",
-      "title": "Harmonizing health logistics: A digital framework for balancing medical cannabis demand and supply",
-      "publisher": "Social Sciences &amp; Humanities Open",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.ssaho.2026.102484",
-      "doi": "10.1016/j.ssaho.2026.102484",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-phymed-2026-158068",
-      "title": "A sesquiterpene-rich essential oil from Cannabis sativa L. attenuates symptoms and neuroinflammation in experimental autoimmune encephalomyelitis model through a CB2-mediated signalling",
-      "publisher": "Phytomedicine",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.phymed.2026.158068",
-      "doi": "10.1016/j.phymed.2026.158068",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-addbeh-2026-108622",
-      "title": "CBD, cannabis, or both? Examining use patterns and associated factors among U.S. youth and adults",
-      "publisher": "Addictive Behaviors",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.addbeh.2026.108622",
-      "doi": "10.1016/j.addbeh.2026.108622",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     },
     {
@@ -652,462 +321,51 @@
       "year": "2026",
       "url": "https://doi.org/10.1016/j.drugpo.2026.105222",
       "doi": "10.1016/j.drugpo.2026.105222",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "relevanceScore": 74,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 82,
+      "studyType": "general-study",
+      "editorialPriority": "medium",
+      "matchedTopics": [
+        "medizin-evidenz",
+        "markt-regulierung"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz",
+        "markt-regulierung"
       ]
     },
     {
-      "id": "auto-10-1016-j-indcrop-2026-123040",
-      "title": "Toward scalable micropropagation of Cannabis sativa (chemotype III): Protocol optimization and preliminary evaluation of cannabinoid stability",
-      "publisher": "Industrial Crops and Products",
+      "id": "auto-10-1016-j-jcoa-2026-100316",
+      "title": "An alternative easy method for the analysis of volatile compounds from lipid matrices: analysis of terpenes and terpenoids in medical-grade Cannabis sativa L. inflorescences in macerated oils",
+      "publisher": "Journal of Chromatography Open",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.indcrop.2026.123040",
-      "doi": "10.1016/j.indcrop.2026.123040",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.jcoa.2026.100316",
+      "doi": "10.1016/j.jcoa.2026.100316",
+      "relevanceScore": 70,
+      "evidenceLevel": 78,
+      "publisherQuality": 68,
+      "topicFit": 66,
+      "studyType": "laboratory-study",
+      "editorialPriority": "medium",
+      "matchedTopics": [
+        "qualitaet-labor",
+        "anbau-postharvest"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1177-25785125261437619",
-      "title": "Associations Between Cannabis Use and Inflammatory Biomarkers Among People with HIV",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1177/25785125261437619",
-      "doi": "10.1177/25785125261437619",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1021-jasms-5c00433",
-      "title": "Investigating the Protonated Cannabinoid Dimer Detected in the Forensic Analysis of\n                    <i>Cannabis</i>\n                    by DART-MS: A Combined Mass Spectrometry and Computational Study",
-      "publisher": "Journal of the American Society for Mass Spectrometry",
-      "year": "2026",
-      "url": "https://doi.org/10.1021/jasms.5c00433",
-      "doi": "10.1021/jasms.5c00433",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1089-can-2024-0069",
-      "title": "A National Survey of Marijuana Use Among U.S. Adults According to Obesity Status, 2016–2022",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1089/can.2024.0069",
-      "doi": "10.1089/can.2024.0069",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1089-can-2024-0083",
-      "title": "Association Between Medical Marijuana Cardholder Status and Antiemetic Overuse",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1089/can.2024.0083",
-      "doi": "10.1089/can.2024.0083",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1177-25785125251363122",
-      "title": "Polysubstance Use Disorders in Individuals with Cannabis Use Disorder: Results from a Nationally Representative Sample (National Epidemiologic Survey on Alcohol and Related Conditions)",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1177/25785125251363122",
-      "doi": "10.1177/25785125251363122",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1111-1556-4029-70290",
-      "title": "Differentiation of cannabinoid isomers via Cu‐mediated molecular ion formation and electrospray ionization–tandem mass spectrometry",
-      "publisher": "Journal of Forensic Sciences",
-      "year": "2026",
-      "url": "https://doi.org/10.1111/1556-4029.70290",
-      "doi": "10.1111/1556-4029.70290",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1055-s-0045-1814858",
-      "title": "Cannabidiphorol (CBDP) interactions with Cannabinoid Receptor 1 (CB1R) as a strong negative allosteric modulator",
-      "publisher": "Planta Medica",
-      "year": "2026",
-      "url": "https://doi.org/10.1055/s-0045-1814858",
-      "doi": "10.1055/s-0045-1814858",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1177-25785125261428008",
-      "title": "Regular Cannabis Use is Associated with a Diminished Anandamide Response to a Standard Exercise Stimulus: A Pilot Study",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1177/25785125261428008",
-      "doi": "10.1177/25785125261428008",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1177-25785125261424697",
-      "title": "A Schedule Shift, Not a Federal Green Light: What Cannabis Rescheduling to Schedule III Would Mean—and What It Would Not",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1177/25785125261424697",
-      "doi": "10.1177/25785125261424697",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1177-25785125261417167",
-      "title": "Advancing Cannabis Research in a Changing Landscape: Meeting Summary of the 2025 California Cannabis Research Workshop",
-      "publisher": "Cannabis &amp; Cannabinoid Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1177/25785125261417167",
-      "doi": "10.1177/25785125261417167",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1097-pec-0000000000003577",
-      "title": "Cannabinoid Hyperemesis Syndrome in Adolescents",
-      "publisher": "Pediatric Emergency Care",
-      "year": "2026",
-      "url": "https://doi.org/10.1097/pec.0000000000003577",
-      "doi": "10.1097/pec.0000000000003577",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1007-s11064-026-04739-1",
-      "title": "The Diminished Availability of 2-AG in Aged Synaptic Terminals is Ameliorated by a Full-Spectrum Cannabis Extract with a High THC Content",
-      "publisher": "Neurochemical Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1007/s11064-026-04739-1",
-      "doi": "10.1007/s11064-026-04739-1",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1186-s42238-026-00422-y",
-      "title": "Pharmacokinetics of oral Δ9-tetrahydrocannabinol (THC) administration in vervet monkeys",
-      "publisher": "Journal of Cannabis Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1186/s42238-026-00422-y",
-      "doi": "10.1186/s42238-026-00422-y",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1002-dta-70058",
-      "title": "Identification of Tetrahydrocannabinol (THC) Analogs, Including Methyl Ether Derivatives of THC and Hexahydrocannabiphorol, THC Methyl Carbonate and Its Synthetic by‐Product, in Commercially Available Oil Products",
-      "publisher": "Drug Testing and Analysis",
-      "year": "2026",
-      "url": "https://doi.org/10.1002/dta.70058",
-      "doi": "10.1002/dta.70058",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-phrs-2026-108173",
-      "title": "Editorial: Sixty years from THC: landscape and perspectives on the pharmacology of cannabinoids",
-      "publisher": "Pharmacological Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.phrs.2026.108173",
-      "doi": "10.1016/j.phrs.2026.108173",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1186-s42238-026-00414-y",
-      "title": "Comparative analysis of metals, pesticides, mycotoxins, microbial contaminants and THC potency in illicit and regulated cannabis inflorescences in Canada",
-      "publisher": "Journal of Cannabis Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1186/s42238-026-00414-y",
-      "doi": "10.1186/s42238-026-00414-y",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1080-15389588-2026-2616385",
-      "title": "Partial cannabis legalization and the increase of the THC threshold in road traffic: a statistical analysis of traffic cases before and after legal changes",
-      "publisher": "Traffic Injury Prevention",
-      "year": "2026",
-      "url": "https://doi.org/10.1080/15389588.2026.2616385",
-      "doi": "10.1080/15389588.2026.2616385",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1111-jsr-70298",
-      "title": "Delta‐9‐Tetrahydrocannabinol (\n                    <scp>THC</scp>\n                    ) Before Bedtime: Feasibility and Mechanistic Pilot Study on Sleep and Cardiac Autonomic Activity",
-      "publisher": "Journal of Sleep Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1111/jsr.70298",
-      "doi": "10.1111/jsr.70298",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1186-s42238-026-00421-z",
-      "title": "Electroretinographical analysis of the effect of cannabidiol (CBD) in eyes of Zucker diabetic fatty rats",
-      "publisher": "Journal of Cannabis Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1186/s42238-026-00421-z",
-      "doi": "10.1186/s42238-026-00421-z",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1186-s42238-026-00419-7",
-      "title": "Not what it seems: analytical validation and label accuracy of commercial CBD oils using HPTLC",
-      "publisher": "Journal of Cannabis Research",
-      "year": "2026",
-      "url": "https://doi.org/10.1186/s42238-026-00419-7",
-      "doi": "10.1186/s42238-026-00419-7",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1055-s-0045-1815301",
-      "title": "Development and validation of an LC-MS analytical method for the quantification of cannabinoids in blood plasma of medicinal CBD users",
-      "publisher": "Planta Medica",
-      "year": "2026",
-      "url": "https://doi.org/10.1055/s-0045-1815301",
-      "doi": "10.1055/s-0045-1815301",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1007-s12033-026-01559-0",
-      "title": "Integrating Genetic and Biotechnological Approaches to Enhance High-CBD Cannabis sativa L. Cultivation for Medicinal Purposes",
-      "publisher": "Molecular Biotechnology",
-      "year": "2026",
-      "url": "https://doi.org/10.1007/s12033-026-01559-0",
-      "doi": "10.1007/s12033-026-01559-0",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-3390-mi17020260",
-      "title": "Development and Characterization of Dissolving Microneedles for the Buccal Delivery of Cannabidiol (CBD)",
-      "publisher": "Micromachines",
-      "year": "2026",
-      "url": "https://doi.org/10.3390/mi17020260",
-      "doi": "10.3390/mi17020260",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-3168-jds-2025-27243",
-      "title": "Terpene transfer to milk from fresh leaves of hemp (Cannabis sativa L.) and savory (Satureja hortensis L.)",
-      "publisher": "Journal of Dairy Science",
-      "year": "2026",
-      "url": "https://doi.org/10.3168/jds.2025-27243",
-      "doi": "10.3168/jds.2025-27243",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-apsb-2026-03-035",
-      "title": "Expansion and functional diversification of terpene synthases shape volatile terpenoid landscape in Cannabis sativa",
-      "publisher": "Acta Pharmaceutica Sinica B",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.apsb.2026.03.035",
-      "doi": "10.1016/j.apsb.2026.03.035",
-      "relevanceScore": 26,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-josat-2026-209943",
-      "title": "Socioeconomic outcomes following outpatient treatment for alcohol, cannabis, and gambling disorder in Greenland: Changes in income, employment, and welfare utilization",
-      "publisher": "Journal of Substance Use and Addiction Treatment",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.josat.2026.209943",
-      "doi": "10.1016/j.josat.2026.209943",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-josat-2026-209945",
-      "title": "Preventing alcohol and cannabis-impaired driving among adolescents: Effects of a web-intervention in a driver education program",
-      "publisher": "Journal of Substance Use and Addiction Treatment",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.josat.2026.209945",
-      "doi": "10.1016/j.josat.2026.209945",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-josat-2026-209928",
-      "title": "Causal pathways from social media use to adolescent cannabis use: An instrumental variable mediation analysis of behavioral problems",
-      "publisher": "Journal of Substance Use and Addiction Treatment",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.josat.2026.209928",
-      "doi": "10.1016/j.josat.2026.209928",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-euroneuro-2026-112782",
-      "title": "Personality, not cognition, distinguishes chronic ayahuasca and cannabis users from non-users",
-      "publisher": "European Neuropsychopharmacology",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.euroneuro.2026.112782",
-      "doi": "10.1016/j.euroneuro.2026.112782",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
+        "crossref",
+        "qualitaet-labor",
+        "anbau-postharvest"
       ]
     },
     {
@@ -1117,282 +375,406 @@
       "year": "2026",
       "url": "https://doi.org/10.1016/j.neuropharm.2026.110878",
       "doi": "10.1016/j.neuropharm.2026.110878",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "relevanceScore": 68,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 74,
+      "studyType": "general-study",
+      "editorialPriority": "medium",
+      "matchedTopics": [
+        "medizin-evidenz",
+        "pharmakologie"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz",
+        "pharmakologie"
       ]
     },
     {
-      "id": "auto-10-1016-j-neuropharm-2026-110926",
-      "title": "Glutamatergic cannabinoid receptor 1 confers neuroprotection against ischemic stroke by suppressing excitotoxicity and anoxic depolarization",
-      "publisher": "Neuropharmacology",
+      "id": "auto-10-1016-j-cct-2026-108287",
+      "title": "An adapted brief negotiation interview for alcohol and cannabis use among assault-injured emerging adults: A randomized pilot trial protocol",
+      "publisher": "Contemporary Clinical Trials",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.neuropharm.2026.110926",
-      "doi": "10.1016/j.neuropharm.2026.110926",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.cct.2026.108287",
+      "doi": "10.1016/j.cct.2026.108287",
+      "relevanceScore": 66,
+      "evidenceLevel": 88,
+      "publisherQuality": 54,
+      "topicFit": 50,
+      "studyType": "controlled-study",
+      "editorialPriority": "medium",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [
+        "controlled-study",
+        "pilot",
+        "protocol",
+        "trial"
+      ],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-1016-j-neuropharm-2026-110891",
-      "title": "Dopamine, γ-aminobutyric acid, and glutamate balance in the nucleus accumbens shell: Differential effects of cannabinoid 1 receptor agonists Δ9-Tetrahydrocannabinol, AM11101, and AM8936",
-      "publisher": "Neuropharmacology",
+      "id": "auto-10-1016-j-josat-2026-209943",
+      "title": "Socioeconomic outcomes following outpatient treatment for alcohol, cannabis, and gambling disorder in Greenland: Changes in income, employment, and welfare utilization",
+      "publisher": "Journal of Substance Use and Addiction Treatment",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.neuropharm.2026.110891",
-      "doi": "10.1016/j.neuropharm.2026.110891",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.josat.2026.209943",
+      "doi": "10.1016/j.josat.2026.209943",
+      "relevanceScore": 59,
+      "evidenceLevel": 56,
+      "publisherQuality": 90,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-1016-j-jep-2026-121306",
-      "title": "L-Malic acid from Cissus gongylodes induces cannabinoid-mediated antinociception in mice",
-      "publisher": "Journal of Ethnopharmacology",
+      "id": "auto-10-1016-j-ajmo-2025-100120",
+      "title": "Risk of Heart Failure-related Events in Patients Exposed to Medical Cannabis: A Longitudinal Cohort Study",
+      "publisher": "American Journal of Medicine Open",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.jep.2026.121306",
-      "doi": "10.1016/j.jep.2026.121306",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.ajmo.2025.100120",
+      "doi": "10.1016/j.ajmo.2025.100120",
+      "relevanceScore": 59,
+      "evidenceLevel": 62,
+      "publisherQuality": 68,
+      "topicFit": 48,
+      "studyType": "observational-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-1016-j-neuropharm-2026-110843",
-      "title": "Adolescent cannabinoid vapour exposure sex-dependently alters the relationship between vulnerability traits and ethanol self-administration and modifies naltrexone actions on ethanol intake in rats",
-      "publisher": "Neuropharmacology",
+      "id": "auto-10-1016-j-drugalcdep-2026-113127",
+      "title": "Relations between depression and cannabis use among college students in evolving state cannabis policy environments",
+      "publisher": "Drug and Alcohol Dependence",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.neuropharm.2026.110843",
-      "doi": "10.1016/j.neuropharm.2026.110843",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.drugalcdep.2026.113127",
+      "doi": "10.1016/j.drugalcdep.2026.113127",
+      "relevanceScore": 57,
+      "evidenceLevel": 56,
+      "publisherQuality": 90,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "markt-regulierung"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "markt-regulierung"
       ]
     },
     {
-      "id": "auto-10-1007-s13181-026-01131-x",
-      "title": "Redefining Hemp: Public Law 119-37 and the Future of Cannabinoid Products",
-      "publisher": "Journal of Medical Toxicology",
+      "id": "auto-10-1016-j-ijindorg-2026-103272",
+      "title": "Legalization and innovation in the cannabis market",
+      "publisher": "International Journal of Industrial Organization",
       "year": "2026",
-      "url": "https://doi.org/10.1007/s13181-026-01131-x",
-      "doi": "10.1007/s13181-026-01131-x",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.ijindorg.2026.103272",
+      "doi": "10.1016/j.ijindorg.2026.103272",
+      "relevanceScore": 56,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 48,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "markt-regulierung"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "markt-regulierung"
       ]
     },
     {
-      "id": "auto-10-1007-s00204-026-04321-2",
-      "title": "In vitro and in vivo metabolism of the synthetic cannabinoid FUB-144: comprehensive phase I and II profiling using UHPLC–HRMS",
-      "publisher": "Archives of Toxicology",
+      "id": "auto-10-1016-j-drugalcdep-2026-113138",
+      "title": "Cannabis legalization and early adolescent expectancies: Findings from the adolescent brain cognitive development study",
+      "publisher": "Drug and Alcohol Dependence",
       "year": "2026",
-      "url": "https://doi.org/10.1007/s00204-026-04321-2",
-      "doi": "10.1007/s00204-026-04321-2",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.drugalcdep.2026.113138",
+      "doi": "10.1016/j.drugalcdep.2026.113138",
+      "relevanceScore": 56,
+      "evidenceLevel": 56,
+      "publisherQuality": 90,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "markt-regulierung"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "markt-regulierung"
       ]
     },
     {
-      "id": "auto-10-1111-bph-70350",
-      "title": "Activation of peripheral cannabinoid receptors by CB13 attenuates burn injury–induced chronic pain through TRP channel modulation",
-      "publisher": "British Journal of Pharmacology",
+      "id": "auto-10-1016-j-drugalcdep-2026-113096",
+      "title": "Cannabis retail environment and treatment for cannabis use disorder",
+      "publisher": "Drug and Alcohol Dependence",
       "year": "2026",
-      "url": "https://doi.org/10.1111/bph.70350",
-      "doi": "10.1111/bph.70350",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.drugalcdep.2026.113096",
+      "doi": "10.1016/j.drugalcdep.2026.113096",
+      "relevanceScore": 56,
+      "evidenceLevel": 56,
+      "publisherQuality": 90,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "markt-regulierung"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "markt-regulierung"
       ]
     },
     {
-      "id": "auto-10-1016-j-jpet-2026-104319",
-      "title": "The iron fist of nature: Cannabinoid derivatives alter iron homeostasis and activate ferroptotic pathways in glioblastoma cells",
-      "publisher": "The Journal of Pharmacology and Experimental Therapeutics",
+      "id": "auto-10-1016-j-euroneuro-2026-112782",
+      "title": "Personality, not cognition, distinguishes chronic ayahuasca and cannabis users from non-users",
+      "publisher": "European Neuropsychopharmacology",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.jpet.2026.104319",
-      "doi": "10.1016/j.jpet.2026.104319",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.euroneuro.2026.112782",
+      "doi": "10.1016/j.euroneuro.2026.112782",
+      "relevanceScore": 52,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "pharmakologie"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "pharmakologie"
       ]
     },
     {
-      "id": "auto-10-1016-j-molpha-2026-100102",
-      "title": "Cannabinoid receptor 2 activating antibodies: A promising therapeutic strategy for macrophage-driven fibro-inflammatory diseases",
-      "publisher": "Molecular Pharmacology",
+      "id": "auto-10-1016-j-forsciint-2026-112922",
+      "title": "Explainable machine learning to identify cannabinoid 1 receptor agonists",
+      "publisher": "Forensic Science International",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.molpha.2026.100102",
-      "doi": "10.1016/j.molpha.2026.100102",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.forsciint.2026.112922",
+      "doi": "10.1016/j.forsciint.2026.112922",
+      "relevanceScore": 50,
+      "evidenceLevel": 56,
+      "publisherQuality": 54,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-1016-j-cotox-2025-100554",
-      "title": "The unexpected when expecting: Cannabinoid use in pregnancy and postpartum",
-      "publisher": "Current Opinion in Toxicology",
+      "id": "auto-10-1016-j-regsciurbeco-2026-104220",
+      "title": "The heterogeneous effects of cannabis dispensaries on crime: The importance of foot traffic",
+      "publisher": "Regional Science and Urban Economics",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.cotox.2025.100554",
-      "doi": "10.1016/j.cotox.2025.100554",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.regsciurbeco.2026.104220",
+      "doi": "10.1016/j.regsciurbeco.2026.104220",
+      "relevanceScore": 50,
+      "evidenceLevel": 56,
+      "publisherQuality": 54,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "markt-regulierung"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "markt-regulierung"
       ]
     },
     {
-      "id": "auto-10-1016-j-ejphar-2026-178801",
-      "title": "Involvement of the cannabinoid system in stress-induced reinstatement to opioid use: a study in cb1 knockout mice of both sexes",
-      "publisher": "European Journal of Pharmacology",
+      "id": "auto-10-1016-j-ssaho-2026-102484",
+      "title": "Harmonizing health logistics: A digital framework for balancing medical cannabis demand and supply",
+      "publisher": "Social Sciences &amp; Humanities Open",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.ejphar.2026.178801",
-      "doi": "10.1016/j.ejphar.2026.178801",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.ssaho.2026.102484",
+      "doi": "10.1016/j.ssaho.2026.102484",
+      "relevanceScore": 50,
+      "evidenceLevel": 56,
+      "publisherQuality": 54,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-2337-dc25-1911",
-      "title": "Weight Regain Reverses Caloric Restriction–Induced Benefits on the Insulin–IGF-1 Nutrient-Sensing Pathway: Post Hoc Analysis From the CALERIE-2 Randomized Controlled Trial",
-      "publisher": "Diabetes Care",
+      "id": "auto-10-1016-j-phymed-2026-158068",
+      "title": "A sesquiterpene-rich essential oil from Cannabis sativa L. attenuates symptoms and neuroinflammation in experimental autoimmune encephalomyelitis model through a CB2-mediated signalling",
+      "publisher": "Phytomedicine",
       "year": "2026",
-      "url": "https://doi.org/10.2337/dc25-1911",
-      "doi": "10.2337/dc25-1911",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.phymed.2026.158068",
+      "doi": "10.1016/j.phymed.2026.158068",
+      "relevanceScore": 50,
+      "evidenceLevel": 56,
+      "publisherQuality": 54,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "anbau-postharvest"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "anbau-postharvest"
       ]
     },
     {
-      "id": "auto-10-1016-j-pnpbp-2026-111676",
-      "title": "Cannabidiol (CBD) does not reduce cocaine reward or self-administration in a mouse model of schizophrenia genetic susceptibility",
-      "publisher": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+      "id": "auto-10-1016-j-abrep-2026-100680",
+      "title": "Associations of cannabis, alcohol, and tobacco use combinations with sleep health",
+      "publisher": "Addictive Behaviors Reports",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.pnpbp.2026.111676",
-      "doi": "10.1016/j.pnpbp.2026.111676",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.abrep.2026.100680",
+      "doi": "10.1016/j.abrep.2026.100680",
+      "relevanceScore": 50,
+      "evidenceLevel": 56,
+      "publisherQuality": 54,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-1016-j-pnpbp-2026-111629",
-      "title": "A CBD-rich hemp extract is superior to CBD alone in reducing relapse to methamphetamine-seeking in rats",
-      "publisher": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+      "id": "auto-10-15406-ppij-2015-03-00058",
+      "title": "High Stakes Considerations with Medical Marijuana",
+      "publisher": "Pharmacy &amp; Pharmacology International Journal",
+      "year": "2106",
+      "url": "https://doi.org/10.15406/ppij.2015.03.00058",
+      "doi": "10.15406/ppij.2015.03.00058",
+      "relevanceScore": 47,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 26,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "pharmakologie"
+      ],
+      "flags": [],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "tags": [
+        "auto",
+        "study-sync",
+        "crossref",
+        "pharmakologie"
+      ]
+    },
+    {
+      "id": "auto-10-1016-j-abrep-2025-100656",
+      "title": "Consumption patterns and withdrawal symptoms in dual cannabis-tobacco users in Spain: Cross-sectional study",
+      "publisher": "Addictive Behaviors Reports",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.pnpbp.2026.111629",
-      "doi": "10.1016/j.pnpbp.2026.111629",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
+      "url": "https://doi.org/10.1016/j.abrep.2025.100656",
+      "doi": "10.1016/j.abrep.2025.100656",
+      "relevanceScore": 45,
+      "evidenceLevel": 62,
+      "publisherQuality": 54,
+      "topicFit": 40,
+      "studyType": "observational-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [
+        "observational"
+      ],
+      "fetchedAt": "2026-03-27T23:58:59.144Z",
       "tags": [
         "auto",
         "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1111-add-70360",
-      "title": "The prevalence of cannabidiol (CBD) use in North America and Europe: A meta‐analysis",
-      "publisher": "Addiction",
-      "year": "2026",
-      "url": "https://doi.org/10.1111/add.70360",
-      "doi": "10.1111/add.70360",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-enmm-2025-101119",
-      "title": "Environmental contaminants and ecotoxicological consequences of antibiotics and personal care products in freshwater ecosystems: Monitoring and management strategies – A review and meta-analysis",
-      "publisher": "Environmental Nanotechnology, Monitoring &amp; Management",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.enmm.2025.101119",
-      "doi": "10.1016/j.enmm.2025.101119",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-ejps-2026-107443",
-      "title": "Safety, pharmacokinetics, and pharmacodynamics of GS1-144, a neurokinin-3 receptor antagonist: A randomized phase 1 single and multiple ascending dose and food effect study",
-      "publisher": "European Journal of Pharmaceutical Sciences",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.ejps.2026.107443",
-      "doi": "10.1016/j.ejps.2026.107443",
-      "relevanceScore": 24,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
-      ]
-    },
-    {
-      "id": "auto-10-35946-arcr-v42-1-04",
-      "title": "Patterns of Cannabis and Alcohol Co-Use: Substitution Versus Complementary Effects",
-      "publisher": "Alcohol Research: Current Reviews",
-      "year": "2122",
-      "url": "https://doi.org/10.35946/arcr.v42.1.04",
-      "doi": "10.35946/arcr.v42.1.04",
-      "relevanceScore": 18,
-      "fetchedAt": "2026-03-26T23:04:50.056Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref"
+        "crossref",
+        "medizin-evidenz"
       ]
     }
   ]
