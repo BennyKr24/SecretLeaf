@@ -96,7 +96,7 @@ Beispiel:
 ### Vercel Cron (ohne lokalen PC)
 - Datei: `apps/web/vercel.json`
 - Cron-Route: `GET /api/automation/study-refresh`
-- Schedule: alle 3 Stunden (`17 */3 * * *`)
+- Schedule: täglich 04:17 UTC (`17 4 * * *`)
 - Optional geschützt über Header `x-cron-key` mit Env `CRON_SECRET`
 
 Wichtig:
