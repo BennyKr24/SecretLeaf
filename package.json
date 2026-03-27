@@ -22,10 +22,15 @@
     "changelog:generate": "node scripts/generate-changelog.mjs",
     "changelog:dry-run": "node scripts/generate-changelog.mjs --dry-run",
     "coverage:snapshot": "node scripts/update-coverage-history.mjs",
+    "fertilizers:prices:sync": "node scripts/sync-fertilizer-prices.mjs",
+    "fertilizers:prices:sync:quick": "PRICE_SYNC_LIMIT=30 node scripts/sync-fertilizer-prices.mjs",
+    "fertilizers:prices:autostart:install": "bash scripts/fertilizer_prices_autostart_install.sh",
+    "fertilizers:prices:autostart:show": "crontab -l",
     "wiki:studies:sync": "node scripts/sync-wiki-studies.mjs",
     "wiki:studies:sync:quick": "STUDY_LOOKBACK_DAYS=45 STUDY_LIMIT=90 node scripts/sync-wiki-studies.mjs",
     "wiki:studies:validate": "node scripts/validate-auto-sources.mjs",
     "wiki:studies:report": "node scripts/generate-wiki-sync-report.mjs",
+    "pests:images:check": "node scripts/validate-pest-images.mjs",
     "prebuild": "npm run changelog:generate && npm run coverage:snapshot"
   },
   "overrides": {

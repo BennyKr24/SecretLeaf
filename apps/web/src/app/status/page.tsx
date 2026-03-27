@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { getApiHealth, getPublicOverview, getPublicStatusReport } from "../../lib/publicApi";
 import changelogData from "../../data/changelog.json";
 import fertilizerCoverageHistoryData from "../../data/fertilizerCoverageHistory.json";
@@ -133,6 +134,113 @@ const typeLabels: Record<string, { label: string; cls: string }> = {
   update:      { label: "Update",       cls: "bg-cyan-100    text-cyan-700    border-cyan-200"    },
 };
 
+const getFreshnessMeta = (iso: string | null) => {
+  if (!iso) {
+    return {
+      label: "Kein Timestamp",
+      className: "bg-rose-100 text-rose-700 border-rose-200"
+    };
+  }
+
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+
+  if (diffHours <= 1) {
+    return {
+      label: "Sehr aktuell",
+      className: "bg-emerald-100 text-emerald-700 border-emerald-200"
+    };
+  }
+
+  if (diffHours <= 24) {
+    return {
+      label: `${diffHours}h alt`,
+      className: "bg-emerald-100 text-emerald-700 border-emerald-200"
+    };
+  }
+
+  if (diffHours <= 72) {
+    return {
+      label: `${diffHours}h alt`,
+      className: "bg-amber-100 text-amber-700 border-amber-200"
+    };
+  }
+
+  return {
+    label: `${diffHours}h alt`,
+    className: "bg-rose-100 text-rose-700 border-rose-200"
+  };
+};
+
+const getPriorityCards = (overallStatus: string) => {
+  if (overallStatus === "red") {
+    return [
+      {
+        title: "1) Betrieb absichern",
+        text: "Zuerst Status und Incident-Lage pruefen, bevor weitere Fachansichten bewertet werden.",
+        href: "/status",
+        cta: "Statusfokus"
+      },
+      {
+        title: "2) Kritische Datenwege",
+        text: "API/DB-Lage klaeren, damit Zahlen in Coverage- oder Marktansichten korrekt eingeordnet werden.",
+        href: "/fertilizers/coverage",
+        cta: "Coverage mit Vorsicht"
+      },
+      {
+        title: "3) Kommunikation",
+        text: "Nur belastbare Hinweise nach außen geben und auf Fallback-Status verweisen.",
+        href: "/wiki/quellen",
+        cta: "Quellenkontext"
+      }
+    ];
+  }
+
+  if (overallStatus === "yellow") {
+    return [
+      {
+        title: "1) Engpaesse priorisieren",
+        text: "Degradierte Teilbereiche zuerst stabilisieren, dann Inhaltstiefe und neue Features hochfahren.",
+        href: "/status",
+        cta: "Service-Checks"
+      },
+      {
+        title: "2) Datenfrische pruefen",
+        text: "Coverage- und Status-Timestamps gegenchecken, bevor Entscheidungen auf Trends basieren.",
+        href: "/fertilizers/coverage",
+        cta: "Coverage ansehen"
+      },
+      {
+        title: "3) Evidenz priorisieren",
+        text: "Bei reduzierter Live-Lage bleiben Quellenregister und robuste Basiskennzahlen wichtig.",
+        href: "/wiki/quellen",
+        cta: "Quellenregister"
+      }
+    ];
+  }
+
+  return [
+    {
+      title: "1) Normalbetrieb halten",
+      text: "Status ist stabil. Fokus kann auf Produktpflege, Content-Qualitaet und Sichtbarkeit liegen.",
+      href: "/status",
+      cta: "Statusmonitoring"
+    },
+    {
+      title: "2) Marktbreite erweitern",
+      text: "Coverage-Luecken pro Marke priorisieren und Daten-Updates in festen Intervallen planen.",
+      href: "/fertilizers/coverage",
+      cta: "Coverage Audit"
+    },
+    {
+      title: "3) Wissensqualitaet sichern",
+      text: "Quellen und Wiki-Fachbereiche aktuell halten, damit Priorisierungen fachlich belastbar bleiben.",
+      href: "/wiki/quellen",
+      cta: "Quellen & Wiki"
+    }
+  ];
+};
+
 export default async function StatusPage() {
   const [health, overview, statusReport] = await Promise.all([
     getApiHealth(),
@@ -148,17 +256,29 @@ export default async function StatusPage() {
   const historyDays = buildStatusHistory(statusReport?.windowDays ?? 30, overallStatus, statusReport?.events ?? []);
   const impactModel = getImpactModel(overallStatus, apiLevel, dbLevel);
   const changelog = (changelogData.releases ?? []).slice(0, 6);
-  const coverageHistory = (fertilizerCoverageHistoryData.snapshots ?? []).slice(-6);
+  const coverageSnapshots = [...(fertilizerCoverageHistoryData.snapshots ?? [])].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
+  const coverageHistory = coverageSnapshots.slice(-6);
+  const latestCoverageSnapshot = coverageSnapshots.at(-1) ?? null;
+  const previousCoverageSnapshot = coverageSnapshots.length > 1 ? coverageSnapshots.at(-2) : null;
+  const coverageDelta = latestCoverageSnapshot && previousCoverageSnapshot
+    ? Number((latestCoverageSnapshot.coverage - previousCoverageSnapshot.coverage).toFixed(1))
+    : null;
+  const statusFreshness = getFreshnessMeta(statusReport?.generatedAt ?? null);
+  const coverageFreshness = getFreshnessMeta(latestCoverageSnapshot?.date ?? null);
+  const priorityCards = getPriorityCards(overallStatus);
+  const openCoverageGap = Math.max(fertilizerCoverageStats.trackedMarketEstimate - fertilizerCoverageStats.coveredProducts, 0);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#f4faf6] via-[#eef6f1] to-[#f7fbf9]">
-      <header className="border-b border-[#d8e8dd] bg-white/80 backdrop-blur">
+    <main className="min-h-screen bg-gradient-to-b from-[#ecf7f0] via-[#f6fbf8] to-[#ffffff]">
+      <header className="border-b border-[#cfe3d6] bg-[#f7fcf9]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="grid h-9 w-9 place-items-center rounded-lg bg-[#1f7a4f] text-sm font-bold text-white">S</div>
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#145c3b] to-[#1f7a4f] text-sm font-bold text-white shadow-sm">S</div>
             <div>
-              <div className="text-xl font-bold tracking-tight text-[#123024]">SecretLeaf Status</div>
-              <div className="text-xs text-[#4d685a]">Systemzustand, Nutzerwirkung, Verlauf</div>
+              <div className="text-xl font-bold tracking-tight text-[#123024]">SecretLeaf Status Cockpit</div>
+              <div className="text-xs text-[#4d685a]">Live-Lage, Datenfrische, Prioritaetensteuerung</div>
             </div>
           </div>
 
@@ -170,14 +290,21 @@ export default async function StatusPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-          <section className="rounded-[28px] border border-[#d6e5d9] bg-white p-7 shadow-sm">
-            <p className="inline-flex rounded-full border border-[#c8ddcf] bg-[#eef7f1] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#1f7a4f]">
-              Status Center
+          <section className="rounded-[28px] border border-[#cfe3d6] bg-white p-7 shadow-sm">
+            <p className="inline-flex rounded-full border border-[#b8d7c5] bg-[#e7f5ec] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#17613f]">
+              Status Cockpit 2026
             </p>
             <h1 className="mt-4 text-5xl font-bold leading-tight text-[#10281e]">{impactModel.headline}</h1>
             <p className="mt-3 max-w-3xl text-lg leading-relaxed text-[#4d685a]">
-              Diese Statusseite beantwortet zuerst die Kernfragen: Gibt es ein Problem, was ist betroffen und was sollten Nutzer jetzt tun.
+              Diese Seite priorisiert zuerst den Betriebszustand und die Datenfrische. Danach folgen Wirkung, Verlauf und die naechsten sinnvollen Arbeitsansichten.
             </p>
+
+            <div className="mt-4 rounded-2xl border border-[#dceadf] bg-[#f4faf6] px-4 py-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-[#3f6a55]">Neu auf dieser Seite</p>
+              <p className="mt-1 text-sm text-[#355b49]">
+                Priorisierungs-Block, Freshness-Badges und direkte Arbeitsnavigation wurden als erste Ebene integriert.
+              </p>
+            </div>
 
             <div className="mt-5 flex flex-wrap gap-2">
               <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[overallStatus]}`}>
@@ -198,10 +325,13 @@ export default async function StatusPage() {
               </span>
             </div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
                 <div className="text-sm font-semibold text-[#123024]">{generatedAt}</div>
                 <div className="mt-1 text-xs text-[#4d685a]">letztes Update</div>
+                <span className={`mt-2 inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold ${statusFreshness.className}`}>
+                  {statusFreshness.label}
+                </span>
               </div>
               <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
                 <div className="text-sm font-semibold text-[#123024]">{sourceLabel}</div>
@@ -211,10 +341,19 @@ export default async function StatusPage() {
                 <div className="text-sm font-semibold text-[#123024]">{statusReport?.windowDays ?? 30} Tage</div>
                 <div className="mt-1 text-xs text-[#4d685a]">Rueckblick</div>
               </div>
+              <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
+                <div className="text-sm font-semibold text-[#123024]">
+                  {latestCoverageSnapshot ? new Date(latestCoverageSnapshot.date).toLocaleString("de-DE") : "n/a"}
+                </div>
+                <div className="mt-1 text-xs text-[#4d685a]">Coverage Snapshot</div>
+                <span className={`mt-2 inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold ${coverageFreshness.className}`}>
+                  {coverageFreshness.label}
+                </span>
+              </div>
             </div>
           </section>
 
-          <aside className="rounded-[28px] border border-[#d6e5d9] bg-white p-7 shadow-sm">
+          <aside className="rounded-[28px] border border-[#cfe3d6] bg-white p-7 shadow-sm">
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[overallStatus]}`}>
               <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[overallStatus]}`} />
               {overallStatus === "red" ? "Aktiver Incident" : overallStatus === "yellow" ? "Eingeschraenkter Betrieb" : "Kein aktiver Incident"}
@@ -222,18 +361,22 @@ export default async function StatusPage() {
             <h2 className="mt-4 text-2xl font-bold text-[#10281e]">{impactModel.summaryTitle}</h2>
             <p className="mt-2 text-sm leading-relaxed text-[#4d685a]">{impactModel.summaryText}</p>
 
+            <div className="mt-4 rounded-xl border border-[#dceadf] bg-[#f8fcf9] px-3 py-2 text-xs text-[#4d685a]">
+              Ansicht zuletzt neu priorisiert fuer Status + Coverage + Quellenkontext.
+            </div>
+
             <div className="mt-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
               <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
                 <div className="text-2xl font-bold text-[#123024]">{overallStatus.toUpperCase()}</div>
                 <div className="mt-1 text-xs text-[#4d685a]">Gesamtstatus</div>
               </div>
               <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-2xl font-bold text-[#123024]">{overview?.stats.activeListings ?? 0}</div>
-                <div className="mt-1 text-xs text-[#4d685a]">aktive Listings</div>
+                <div className="text-2xl font-bold text-[#123024]">{fertilizerCoverageStats.coveragePercent}%</div>
+                <div className="mt-1 text-xs text-[#4d685a]">Katalog-Coverage</div>
               </div>
               <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-2xl font-bold text-[#123024]">{overview?.stats.providers ?? 0}</div>
-                <div className="mt-1 text-xs text-[#4d685a]">Provider im Snapshot</div>
+                <div className="text-2xl font-bold text-[#123024]">{openCoverageGap}</div>
+                <div className="mt-1 text-xs text-[#4d685a]">offene Linien</div>
               </div>
             </div>
 
@@ -244,32 +387,10 @@ export default async function StatusPage() {
           </aside>
         </div>
 
-        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Verlauf</p>
-          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Statusverlauf letzte 30 Tage</h2>
-          <p className="mt-2 text-sm text-[#4d685a]">Links aelter, rechts aktueller. Die Punkte zeigen den grob sichtbaren Statusverlauf.</p>
-
-          <div className="mt-5 grid gap-2" style={{ gridTemplateColumns: `repeat(${historyDays.length}, minmax(0, 1fr))` }}>
-            {historyDays.map((day) => (
-              <div
-                key={day.date}
-                className={`aspect-square rounded-full border border-black/5 ${levelDotClasses[day.level]}`}
-                title={`${new Date(day.date).toLocaleDateString("de-DE")}: ${day.level.toUpperCase()}`}
-              />
-            ))}
-          </div>
-
-          <div className="mt-4 flex flex-wrap gap-4 text-xs text-[#4d685a]">
-            <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> Gruen stabil</span>
-            <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-amber-500" /> Gelb degradiert</span>
-            <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-rose-500" /> Rot Stoerung</span>
-          </div>
-        </section>
-
         <section className="mt-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Dienste</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Betrieb</p>
           <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Aktueller Systemzustand</h2>
-          <p className="mt-2 text-sm text-[#4d685a]">Welche Teile gerade verfuegbar sind und welche aktuell nicht als Live-Service gelten.</p>
+          <p className="mt-2 text-sm text-[#4d685a]">Erst die Live-Faehigkeit pruefen, dann Fachzahlen interpretieren.</p>
 
           <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <div className="rounded-2xl border border-[#d6e5d9] bg-white p-5 shadow-sm">
@@ -278,7 +399,7 @@ export default async function StatusPage() {
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
                 ERREICHBAR
               </div>
-              <p className="mt-3 text-sm text-[#4d685a]">Die Statusseite selbst bleibt als Referenzpunkt online, auch wenn Live-Dienste fehlen.</p>
+              <p className="mt-3 text-sm text-[#4d685a]">Die Statusseite bleibt als Referenzpunkt online, auch wenn Live-Dienste fehlen.</p>
             </div>
 
             <div className="rounded-2xl border border-[#d6e5d9] bg-white p-5 shadow-sm">
@@ -310,28 +431,6 @@ export default async function StatusPage() {
           </div>
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Coverage Verlauf</p>
-          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Duenger-Marktabdeckung im Zeitverlauf</h2>
-          <p className="mt-2 text-sm text-[#4d685a]">
-            Letzter Snapshot: {fertilizerCoverageStats.coveredProducts} von {fertilizerCoverageStats.trackedMarketEstimate} Linien ({fertilizerCoverageStats.coveragePercent}%).
-          </p>
-
-          <div className="mt-5 grid gap-3 md:grid-cols-5">
-            {coverageHistory.map((point) => (
-              <article key={point.date} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
-                <time className="text-xs text-[#6b8577]">{new Date(point.date).toLocaleDateString("de-DE")}</time>
-                <div className="mt-2 text-2xl font-bold text-[#123024]">{point.coverage}%</div>
-                <div className="mt-1 h-2 rounded bg-[#e5f2ea] overflow-hidden">
-                  <div className="h-full bg-[#1f7a4f]" style={{ width: `${Math.min(point.coverage, 100)}%` }} />
-                </div>
-                <p className="mt-2 text-xs text-[#4d685a]">{point.coveredProducts}/{point.marketEstimate}</p>
-                <p className="mt-1 text-xs text-[#6b8577]">{point.note}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <section className="rounded-2xl border border-[#d6e5d9] bg-white p-6 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Nutzerwirkung</p>
@@ -355,6 +454,107 @@ export default async function StatusPage() {
             </ul>
           </section>
         </div>
+
+        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Priorisierung</p>
+          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Was jetzt zuerst wichtig ist</h2>
+          <p className="mt-2 text-sm text-[#4d685a]">
+            Diese Reihenfolge ist die operative Arbeitsreihenfolge nach Statuslage.
+          </p>
+
+          <div className="mt-5 grid gap-4 lg:grid-cols-3">
+            {priorityCards.map((card) => (
+              <article key={card.title} className="rounded-2xl border border-[#dfece3] bg-[#fbfefc] p-5">
+                <h3 className="text-lg font-semibold text-[#123024]">{card.title}</h3>
+                <p className="mt-2 text-sm text-[#4d685a]">{card.text}</p>
+                <Link
+                  href={card.href as Route}
+                  className="mt-4 inline-flex items-center rounded-lg border border-[#c8ddcf] bg-white px-3 py-1.5 text-xs font-semibold text-[#1f7a4f] hover:bg-[#eef7f1]"
+                >
+                  {card.cta}
+                </Link>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Link href="/status" className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+              Status Fokus
+            </Link>
+            <Link href="/fertilizers/coverage" className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+              Coverage Audit
+            </Link>
+            <Link href="/wiki/quellen" className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+              Quellenregister
+            </Link>
+            <Link href="/fertilizers" className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+              Duenger-Katalog
+            </Link>
+          </div>
+        </section>
+
+        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Coverage Verlauf</p>
+          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Duenger-Marktabdeckung im Zeitverlauf</h2>
+          <p className="mt-2 text-sm text-[#4d685a]">
+            Letzter Snapshot: {fertilizerCoverageStats.coveredProducts} von {fertilizerCoverageStats.trackedMarketEstimate} Linien ({fertilizerCoverageStats.coveragePercent}%).
+          </p>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
+              <p className="text-xs text-[#6b8577]">Datenfrische</p>
+              <div className={`mt-2 inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${coverageFreshness.className}`}>
+                {coverageFreshness.label}
+              </div>
+            </div>
+            <div className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
+              <p className="text-xs text-[#6b8577]">Trend vs. letzter Snapshot</p>
+              <p className="mt-2 text-2xl font-bold text-[#123024]">
+                {coverageDelta == null ? "n/a" : `${coverageDelta > 0 ? "+" : ""}${coverageDelta}%`}
+              </p>
+            </div>
+            <div className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
+              <p className="text-xs text-[#6b8577]">Verbleibende Luecke</p>
+              <p className="mt-2 text-2xl font-bold text-[#123024]">{openCoverageGap}</p>
+            </div>
+          </div>
+
+          <div className="mt-5 grid gap-3 md:grid-cols-5">
+            {coverageHistory.map((point) => (
+              <article key={point.date} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
+                <time className="text-xs text-[#6b8577]">{new Date(point.date).toLocaleDateString("de-DE")}</time>
+                <div className="mt-2 text-2xl font-bold text-[#123024]">{point.coverage}%</div>
+                <div className="mt-1 h-2 rounded bg-[#e5f2ea] overflow-hidden">
+                  <div className="h-full bg-[#1f7a4f]" style={{ width: `${Math.min(point.coverage, 100)}%` }} />
+                </div>
+                <p className="mt-2 text-xs text-[#4d685a]">{point.coveredProducts}/{point.marketEstimate}</p>
+                <p className="mt-1 text-xs text-[#6b8577]">{point.note}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Verlauf</p>
+          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Statusverlauf letzte 30 Tage</h2>
+          <p className="mt-2 text-sm text-[#4d685a]">Links aelter, rechts aktueller. Die Punkte zeigen den grob sichtbaren Statusverlauf.</p>
+
+          <div className="mt-5 grid gap-2" style={{ gridTemplateColumns: `repeat(${historyDays.length}, minmax(0, 1fr))` }}>
+            {historyDays.map((day) => (
+              <div
+                key={day.date}
+                className={`aspect-square rounded-full border border-black/5 ${levelDotClasses[day.level]}`}
+                title={`${new Date(day.date).toLocaleDateString("de-DE")}: ${day.level.toUpperCase()}`}
+              />
+            ))}
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-4 text-xs text-[#4d685a]">
+            <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> Gruen stabil</span>
+            <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-amber-500" /> Gelb degradiert</span>
+            <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-rose-500" /> Rot Stoerung</span>
+          </div>
+        </section>
 
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <section className="rounded-2xl border border-[#d6e5d9] bg-white p-6 shadow-sm">
@@ -385,8 +585,8 @@ export default async function StatusPage() {
 
           <section className="rounded-2xl border border-[#d6e5d9] bg-white p-6 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Chronik</p>
-            <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Letzte Patches & Releases</h2>
-            <p className="mt-2 text-sm text-[#4d685a]">Automatisch aus Git-Commits generiert. Wird bei jedem Build aktualisiert.</p>
+            <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Letzte Patches, Releases und Prioritaetswechsel</h2>
+            <p className="mt-2 text-sm text-[#4d685a]">Automatisch aus Git-Commits generiert und als Kontext fuer Betriebs- und Produktentscheidungen nutzbar.</p>
 
             <div className="mt-5 space-y-3">
               {changelog.map((entry) => {

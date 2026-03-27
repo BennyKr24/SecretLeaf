@@ -40,6 +40,12 @@ export type TerpiraGlossaryItem = {
   definition: string;
 };
 
+export type TerpiraDownload = {
+  title: string;
+  href: string;
+  kind: string;
+};
+
 export type TerpiraSource = {
   id: string;
   title: string;
@@ -69,6 +75,7 @@ export type TerpiraArticle = {
   simpleExplainers?: TerpiraSimpleExplainer[];
   faq?: TerpiraFaqItem[];
   glossary?: TerpiraGlossaryItem[];
+  downloads?: TerpiraDownload[];
   sourceIds?: string[];
   relatedSlugs: string[];
 };

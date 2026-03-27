@@ -1,0 +1,748 @@
+{
+  "updatedAt": "2026-03-27T12:00:00.000Z",
+  "currency": "EUR",
+  "source": "demo-seed:manual",
+  "offersByProduct": {
+    "canna-terra-vega": [
+      {
+        "shop": "Growland",
+        "title": "CANNA Terra Vega 1L",
+        "productUrl": "https://example.com/growland/canna-terra-vega-1l",
+        "price": 9.49,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "HydroStore",
+        "title": "Canna Terra Vega 1L",
+        "productUrl": "https://example.com/hydrostore/canna-terra-vega-1l",
+        "price": 9.99,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "Canna Terra Vega Duenger",
+        "productUrl": "https://example.com/plantsupply/canna-terra-vega",
+        "price": 10.29,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "Terra Vega 1L",
+        "productUrl": "https://example.com/greenhub/terra-vega",
+        "price": 10.49,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "Canna Terra Vega 1L Bottle",
+        "productUrl": "https://example.com/groweu/canna-terra-vega",
+        "price": 10.79,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "canna-terra-flores": [
+      {
+        "shop": "Growland",
+        "title": "CANNA Terra Flores 1L",
+        "productUrl": "https://example.com/growland/canna-terra-flores-1l",
+        "price": 9.89,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "HydroStore",
+        "title": "Canna Terra Flores 1L",
+        "productUrl": "https://example.com/hydrostore/canna-terra-flores-1l",
+        "price": 10.39,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "Canna Terra Flores Bloom",
+        "productUrl": "https://example.com/plantsupply/canna-terra-flores",
+        "price": 10.79,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "Terra Flores 1L",
+        "productUrl": "https://example.com/greenhub/terra-flores",
+        "price": 10.99,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "Canna Terra Flores 1L Bottle",
+        "productUrl": "https://example.com/groweu/canna-terra-flores",
+        "price": 11.29,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "biobizz-grow": [
+      {
+        "shop": "BioGrowShop",
+        "title": "BioBizz Grow 1L",
+        "productUrl": "https://example.com/biogrowshop/biobizz-grow",
+        "price": 8.99,
+        "shipping": 4.5,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "Growland",
+        "title": "BioBizz Grow 1L",
+        "productUrl": "https://example.com/growland/biobizz-grow",
+        "price": 9.29,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "UrbanGrow",
+        "title": "Biobizz Grow",
+        "productUrl": "https://example.com/urbangrow/biobizz-grow",
+        "price": 9.49,
+        "shipping": 3.9,
+        "country": "AT",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "BioBizz Grow Duenger",
+        "productUrl": "https://example.com/greenhub/biobizz-grow",
+        "price": 9.69,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "BioBizz Grow 1L",
+        "productUrl": "https://example.com/groweu/biobizz-grow",
+        "price": 9.89,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "biobizz-bloom": [
+      {
+        "shop": "BioGrowShop",
+        "title": "BioBizz Bloom 1L",
+        "productUrl": "https://example.com/biogrowshop/biobizz-bloom",
+        "price": 9.19,
+        "shipping": 4.5,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "Growland",
+        "title": "BioBizz Bloom 1L",
+        "productUrl": "https://example.com/growland/biobizz-bloom",
+        "price": 9.49,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "UrbanGrow",
+        "title": "Biobizz Bloom",
+        "productUrl": "https://example.com/urbangrow/biobizz-bloom",
+        "price": 9.69,
+        "shipping": 3.9,
+        "country": "AT",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "BioBizz Bloom Duenger",
+        "productUrl": "https://example.com/greenhub/biobizz-bloom",
+        "price": 9.89,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "BioBizz Bloom 1L",
+        "productUrl": "https://example.com/groweu/biobizz-bloom",
+        "price": 10.19,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "maxibloom-powder": [
+      {
+        "shop": "BudgetGrow",
+        "title": "Maxibloom All-in-One 1kg",
+        "productUrl": "https://example.com/budgetgrow/maxibloom-1kg",
+        "price": 15.99,
+        "shipping": 4.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "HydroStore",
+        "title": "Maxibloom Powder 1kg",
+        "productUrl": "https://example.com/hydrostore/maxibloom-1kg",
+        "price": 16.49,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "Maxibloom 1kg",
+        "productUrl": "https://example.com/groweu/maxibloom-1kg",
+        "price": 16.99,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "Maxibloom Pulver",
+        "productUrl": "https://example.com/plantsupply/maxibloom",
+        "price": 17.29,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "Maxibloom Duengerpulver",
+        "productUrl": "https://example.com/greenhub/maxibloom",
+        "price": 17.99,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "calmag-supplement": [
+      {
+        "shop": "HydroStore",
+        "title": "Cal/Mag Supplement 500ml",
+        "productUrl": "https://example.com/hydrostore/calmag-500",
+        "price": 8.49,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "Growland",
+        "title": "CalMag 500ml",
+        "productUrl": "https://example.com/growland/calmag-500",
+        "price": 8.79,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "CalMag Supplement",
+        "productUrl": "https://example.com/groweu/calmag",
+        "price": 8.99,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "CalMag Zusatz",
+        "productUrl": "https://example.com/plantsupply/calmag",
+        "price": 9.19,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "CalMag Booster",
+        "productUrl": "https://example.com/greenhub/calmag",
+        "price": 9.49,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "pk-booster-formula": [
+      {
+        "shop": "HydroStore",
+        "title": "PK 13/14 Booster 500ml",
+        "productUrl": "https://example.com/hydrostore/pk-booster",
+        "price": 11.99,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "Growland",
+        "title": "PK Booster Formula",
+        "productUrl": "https://example.com/growland/pk-booster",
+        "price": 12.49,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "PK 13/14 Bloom Booster",
+        "productUrl": "https://example.com/groweu/pk-13-14",
+        "price": 12.79,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "PK Booster 500ml",
+        "productUrl": "https://example.com/plantsupply/pk-booster",
+        "price": 13.29,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "Bloom PK Booster",
+        "productUrl": "https://example.com/greenhub/pk-booster",
+        "price": 13.49,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "athena-pro-grow": [
+      {
+        "shop": "HydroStore",
+        "title": "Athena Pro Grow 1kg",
+        "productUrl": "https://example.com/hydrostore/athena-pro-grow",
+        "price": 24.99,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "Growland",
+        "title": "Athena Pro Grow Powder",
+        "productUrl": "https://example.com/growland/athena-pro-grow",
+        "price": 25.49,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "Athena Pro Grow 1kg",
+        "productUrl": "https://example.com/groweu/athena-pro-grow",
+        "price": 25.79,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "Athena Grow Pro",
+        "productUrl": "https://example.com/plantsupply/athena-pro-grow",
+        "price": 26.49,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "Athena Pro Grow",
+        "productUrl": "https://example.com/greenhub/athena-pro-grow",
+        "price": 26.99,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "athena-pro-bloom": [
+      {
+        "shop": "HydroStore",
+        "title": "Athena Pro Bloom 1kg",
+        "productUrl": "https://example.com/hydrostore/athena-pro-bloom",
+        "price": 25.99,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "Growland",
+        "title": "Athena Pro Bloom Powder",
+        "productUrl": "https://example.com/growland/athena-pro-bloom",
+        "price": 26.49,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "Athena Pro Bloom 1kg",
+        "productUrl": "https://example.com/groweu/athena-pro-bloom",
+        "price": 26.79,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "Athena Bloom Pro",
+        "productUrl": "https://example.com/plantsupply/athena-pro-bloom",
+        "price": 27.49,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "Athena Pro Bloom",
+        "productUrl": "https://example.com/greenhub/athena-pro-bloom",
+        "price": 27.99,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "house-garden-coco-a": [
+      {
+        "shop": "HydroStore",
+        "title": "House & Garden Cocos A 1L",
+        "productUrl": "https://example.com/hydrostore/hg-coco-a",
+        "price": 12.99,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "Growland",
+        "title": "House & Garden Cocos A",
+        "productUrl": "https://example.com/growland/hg-coco-a",
+        "price": 13.39,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "H&G Cocos A",
+        "productUrl": "https://example.com/groweu/hg-coco-a",
+        "price": 13.69,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "H&G Coco A 1L",
+        "productUrl": "https://example.com/plantsupply/hg-coco-a",
+        "price": 13.99,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "House & Garden Coco A",
+        "productUrl": "https://example.com/greenhub/hg-coco-a",
+        "price": 14.29,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "house-garden-coco-b": [
+      {
+        "shop": "HydroStore",
+        "title": "House & Garden Cocos B 1L",
+        "productUrl": "https://example.com/hydrostore/hg-coco-b",
+        "price": 12.99,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "Growland",
+        "title": "House & Garden Cocos B",
+        "productUrl": "https://example.com/growland/hg-coco-b",
+        "price": 13.39,
+        "shipping": 4.9,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "H&G Cocos B",
+        "productUrl": "https://example.com/groweu/hg-coco-b",
+        "price": 13.69,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "H&G Coco B 1L",
+        "productUrl": "https://example.com/plantsupply/hg-coco-b",
+        "price": 13.99,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "House & Garden Coco B",
+        "productUrl": "https://example.com/greenhub/hg-coco-b",
+        "price": 14.29,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "greenhouse-powder-feeding-grow": [
+      {
+        "shop": "BudgetGrow",
+        "title": "Green House Powder Feeding Grow 500g",
+        "productUrl": "https://example.com/budgetgrow/ghpf-grow",
+        "price": 13.49,
+        "shipping": 4.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "HydroStore",
+        "title": "Powder Feeding Grow",
+        "productUrl": "https://example.com/hydrostore/ghpf-grow",
+        "price": 13.89,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "GH Powder Feeding Grow",
+        "productUrl": "https://example.com/groweu/ghpf-grow",
+        "price": 14.19,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "Powder Feeding Grow 500g",
+        "productUrl": "https://example.com/plantsupply/ghpf-grow",
+        "price": 14.49,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "Green House Feeding Grow",
+        "productUrl": "https://example.com/greenhub/ghpf-grow",
+        "price": 14.79,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ],
+    "greenhouse-powder-feeding-short-flowering": [
+      {
+        "shop": "BudgetGrow",
+        "title": "Powder Feeding Short Flowering 500g",
+        "productUrl": "https://example.com/budgetgrow/ghpf-short-flowering",
+        "price": 13.89,
+        "shipping": 4.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "HydroStore",
+        "title": "Powder Feeding Short Flowering",
+        "productUrl": "https://example.com/hydrostore/ghpf-short-flowering",
+        "price": 14.29,
+        "shipping": 3.99,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GrowEU",
+        "title": "GH Powder Feeding Short Flowering",
+        "productUrl": "https://example.com/groweu/ghpf-short-flowering",
+        "price": 14.59,
+        "shipping": 2.99,
+        "country": "EU",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "PlantSupply",
+        "title": "Short Flowering 500g",
+        "productUrl": "https://example.com/plantsupply/ghpf-short-flowering",
+        "price": 14.89,
+        "shipping": 3.5,
+        "country": "AT",
+        "availability": "limited",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      },
+      {
+        "shop": "GreenHub",
+        "title": "Powder Feeding Bloom Short",
+        "productUrl": "https://example.com/greenhub/ghpf-short-flowering",
+        "price": 15.19,
+        "shipping": 4.49,
+        "country": "DE",
+        "availability": "in_stock",
+        "currency": "EUR",
+        "lastSeenAt": "2026-03-27T12:00:00.000Z"
+      }
+    ]
+  }
+}

@@ -142,7 +142,7 @@ const runProbe = async () => {
           ? "Der Dienst laeuft mit Einschraenkungen oder Fallback-Logik."
           : "Alle Dienste sind aktuell stabil erreichbar.",
     ctaText: "Statusseite oeffnen",
-    ctaHref: "/status.html"
+    ctaHref: "/status"
   };
 
   const snapshot = {
