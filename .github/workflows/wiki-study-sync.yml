@@ -26,6 +26,8 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,7 +37,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -54,6 +56,8 @@ jobs:
         run: npm run wiki:studies:report
 
       - name: Create or update review PR
+        id: create_pr
+        continue-on-error: true
         uses: peter-evans/create-pull-request@v7
         with:
           commit-message: "chore(wiki): auto-sync studies"
@@ -63,3 +67,12 @@ jobs:
           delete-branch: false
           add-paths: |
             apps/web/src/data/terpira/autoSources.json
+
+      - name: PR status hint
+        if: always()
+        run: |
+          if [ "${{ steps.create_pr.outcome }}" != "success" ]; then
+            echo "::warning::PR creation skipped/blocked. Enable: Settings -> Actions -> General -> Workflow permissions -> 'Allow GitHub Actions to create and approve pull requests'."
+          else
+            echo "PR step completed successfully."
+          fi
