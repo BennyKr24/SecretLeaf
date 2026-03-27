@@ -16,6 +16,7 @@
 | **Status-Seite** | ✅ Live | Cockpit-Redesign, neue Sektionsstruktur, Freshness-Badges |
 | **Wiki-Komponenten** | ✅ Neu | TOC, AskBot, HubClient, ReadingProgress |
 | **Fertilizer Prices API** | ✅ Neu | `/api/fertilizers/prices` + Sync-Pipeline |
+| **Studien-Ranking API** | ✅ Neu | `/api/search/studies` (smart/fresh/quality Scoring) |
 | **Status-Automation** | ✅ Aktiv | Probe alle 30 s, `status-data.json` aktuell |
 | **API (Fastify)** | ✅ Stabil | Health, Status-Report, Public Endpoints |
 | **Datenbank (Prisma)** | 🟡 Konfiguriert | Schema ready, DB-Endpoint nicht produktiv |
@@ -66,6 +67,17 @@ Deployment: Vercel (Frontend) · API & DB: eigenes Hosting vorbereitet
 - Sammelt neue Studien in `autoSources.json`
 - Erstellt Review-PR statt Direkt-Commit auf `main`
 
+### Studien-Ranking (Server-seitig)
+- API: `GET /api/search/studies`
+- Modi: `mode=smart|fresh|quality`
+- Quellen: `sourceRegister` (manuell + auto) mit Scoring-Breakdown
+- Filter: `includeAuto=true|false`, `includeManual=true|false`
+- Output: Score + Teilwerte (`queryMatch`, `quality`, `freshness`, `priorRelevance`)
+
+Beispiel:
+
+`/api/search/studies?q=thc+pain&mode=smart&limit=15`
+
 ### Status-Probe
 - `scripts/status_probe.mjs` — Live-Probes (API + Web)
 - Schreibt `status-data.json` alle 30 Sekunden
@@ -80,6 +92,17 @@ Deployment: Vercel (Frontend) · API & DB: eigenes Hosting vorbereitet
 - `scripts/update-coverage-history.mjs` — Snapshot-Update
 - Läuft automatisch im `prebuild`
 - Ergebnis: `apps/web/src/data/fertilizerCoverageHistory.json`
+
+### Vercel Cron (ohne lokalen PC)
+- Datei: `apps/web/vercel.json`
+- Cron-Route: `GET /api/automation/study-refresh`
+- Schedule: alle 3 Stunden (`17 */3 * * *`)
+- Optional geschützt über Header `x-cron-key` mit Env `CRON_SECRET`
+
+Wichtig:
+- Der Ranking-Endpoint läuft auf der Live-Seite auch wenn dein PC aus ist.
+- GitHub Actions werden dafür nicht benötigt.
+- Für dauerhafte Speicherung neuer externer Studien außerhalb von GitHub wird später DB/Blob/KV benötigt.
 
 ---
 

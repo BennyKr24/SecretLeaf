@@ -15,3 +15,4 @@ backups/
 *.tar
 apps/web/public/
 *.tsbuildinfo
+.vercel
