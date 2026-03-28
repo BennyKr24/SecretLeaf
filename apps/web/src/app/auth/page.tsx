@@ -13,7 +13,7 @@ const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 // Lokaler Admin-Zugang (kein API-Call nötig, kein produktives Backend erforderlich)
 const LOCAL_ADMIN: Record<string, { password: string; sessionData: import("@/lib/types").SessionData }> = {
   benny: {
-    password: "2405",
+    password: "12345678910",
     sessionData: {
       token: "local-admin-benny",
       user: { id: "admin-benny", username: "Benny", role: "PROVIDER" }
