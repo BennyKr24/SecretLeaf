@@ -68,7 +68,12 @@ export default function DashboardPage() {
 
       setOffers(response.offers);
     } catch (searchError) {
-      setError(searchError instanceof Error ? searchError.message : "Suche fehlgeschlagen");
+      const msg = searchError instanceof Error ? searchError.message : "";
+      if (msg.toLowerCase().includes("fetch") || msg.toLowerCase().includes("network")) {
+        setError("Marktplatz-API nicht erreichbar — das Backend wird noch eingerichtet.");
+      } else {
+        setError(msg || "Suche fehlgeschlagen");
+      }
     } finally {
       setLoading(false);
     }
@@ -76,9 +81,8 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!session) return;
-    void searchOffers();
     void loadMyListings();
-  }, [session, searchOffers, loadMyListings]);
+  }, [session, loadMyListings]);
 
   const isProvider = useMemo(
     () => session?.user.role === "PROVIDER",
