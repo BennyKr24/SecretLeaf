@@ -45,7 +45,7 @@ export default function DashboardPage() {
       const response = await apiRequest<ProviderListing[]>("/listings/mine", { session });
       setMyListings(response);
     } catch {
-      setMyListings([]);
+      setMyListings([]);  // Backend nicht verfügbar – kein Fehler anzeigen
     }
   }, [session]);
 
@@ -79,10 +79,7 @@ export default function DashboardPage() {
     }
   }, [locationZone, minQuantity, maxPrice, session]);
 
-  useEffect(() => {
-    if (!session) return;
-    void loadMyListings();
-  }, [session, loadMyListings]);
+  // Kein auto-fetch beim Mount – Backend läuft in Production noch nicht
 
   const isProvider = useMemo(
     () => session?.user.role === "PROVIDER",
