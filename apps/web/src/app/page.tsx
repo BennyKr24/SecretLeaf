@@ -1,13 +1,9 @@
 import Link from "next/link";
-import { wikiArticles } from "@/data/terpira/wiki";
-import { getApiHealth, getPublicOverview } from "@/lib/publicApi";
+import { wikiArticles, sourceRegister } from "@/data/terpira/wiki";
 
 export default async function LandingPage() {
-  const [overview, health] = await Promise.all([getPublicOverview(), getApiHealth()]);
-
-  const apiOnline = health?.status === "ok";
-  const activeListings = overview?.stats.activeListings ?? 0;
-  const providers = overview?.stats.providers ?? 0;
+  const articleCount = wikiArticles.length;
+  const sourceCount = sourceRegister.length;
 
   const featuredArticles = wikiArticles.slice(0, 3);
 
@@ -65,22 +61,20 @@ export default async function LandingPage() {
 
         <aside className="rounded-2xl border border-[#d7e7dc] bg-white/85 p-6 shadow-sm">
           <h2 className="text-xl font-bold text-[#133226]">Live-Status</h2>
-          <p className="mt-2 text-sm text-[#4d685a]">Signalwerte aus der API.</p>
+          <p className="mt-2 text-sm text-[#4d685a]">Stand: aktueller Build.</p>
 
           <div className="mt-6 grid gap-3">
             <div className="rounded-xl border border-[#e2eee6] bg-[#f7fbf8] p-4">
-              <div className="text-xs uppercase tracking-wide text-[#5f7a6b]">API</div>
-              <div className={`mt-1 text-2xl font-bold ${apiOnline ? "text-emerald-700" : "text-rose-700"}`}>
-                {apiOnline ? "Online" : "Offline"}
-              </div>
+              <div className="text-xs uppercase tracking-wide text-[#5f7a6b]">Plattform</div>
+              <div className="mt-1 text-2xl font-bold text-emerald-700">Online</div>
             </div>
             <div className="rounded-xl border border-[#e2eee6] bg-[#f7fbf8] p-4">
-              <div className="text-xs uppercase tracking-wide text-[#5f7a6b]">Aktive Listings</div>
-              <div className="mt-1 text-2xl font-bold text-[#123024]">{activeListings}</div>
+              <div className="text-xs uppercase tracking-wide text-[#5f7a6b]">Wiki-Artikel</div>
+              <div className="mt-1 text-2xl font-bold text-[#123024]">{articleCount}</div>
             </div>
             <div className="rounded-xl border border-[#e2eee6] bg-[#f7fbf8] p-4">
-              <div className="text-xs uppercase tracking-wide text-[#5f7a6b]">Anbieter</div>
-              <div className="mt-1 text-2xl font-bold text-[#123024]">{providers}</div>
+              <div className="text-xs uppercase tracking-wide text-[#5f7a6b]">Peer-Review-Quellen</div>
+              <div className="mt-1 text-2xl font-bold text-[#123024]">{sourceCount}</div>
             </div>
           </div>
         </aside>
