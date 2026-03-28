@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-03-28T00:12:16.530Z",
+  "generatedAt": "2026-03-28T00:26:17.105Z",
   "health": {
     "status": "ok",
     "privacyMode": "minimal-logging"
   },
   "overview": {
-    "generatedAt": "2026-03-28T00:12:16.532Z",
+    "generatedAt": "2026-03-28T00:26:17.108Z",
     "degraded": false,
     "stats": {
       "activeListings": 3,
@@ -49,7 +49,7 @@
     ]
   },
   "statusReport": {
-    "generatedAt": "2026-03-28T00:12:16.531Z",
+    "generatedAt": "2026-03-28T00:26:17.107Z",
     "windowDays": 30,
     "degraded": false,
     "overallStatus": "green",
@@ -112,12 +112,12 @@
     "mode": "watch",
     "apiBase": "http://localhost:4000",
     "webBase": "http://localhost:3000",
-    "measuredAt": "2026-03-28T00:12:16.530Z",
+    "measuredAt": "2026-03-28T00:26:17.105Z",
     "checks": {
       "apiHealth": {
         "ok": true,
         "status": 200,
-        "latencyMs": 1,
+        "latencyMs": 2,
         "data": {
           "status": "ok",
           "privacyMode": "minimal-logging"
@@ -129,7 +129,7 @@
         "status": 200,
         "latencyMs": 2,
         "data": {
-          "generatedAt": "2026-03-28T00:12:16.532Z",
+          "generatedAt": "2026-03-28T00:26:17.108Z",
           "degraded": false,
           "stats": {
             "activeListings": 3,
@@ -179,7 +179,7 @@
         "status": 200,
         "latencyMs": 2,
         "data": {
-          "generatedAt": "2026-03-28T00:12:16.531Z",
+          "generatedAt": "2026-03-28T00:26:17.107Z",
           "windowDays": 30,
           "degraded": false,
           "overallStatus": "green",
@@ -235,14 +235,14 @@
       "webRoot": {
         "ok": false,
         "status": null,
-        "latencyMs": 1,
+        "latencyMs": 2,
         "data": null,
         "error": "fetch failed"
       },
       "webWiki": {
         "ok": false,
         "status": null,
-        "latencyMs": 1,
+        "latencyMs": 2,
         "data": null,
         "error": "fetch failed"
       }
