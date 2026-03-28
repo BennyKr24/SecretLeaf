@@ -393,10 +393,23 @@ const sourceRegisterCore: TerpiraSource[] = [
   }
 ].map((s) => ({ ...s, sourceType: "manual" as const }));
 
-const autoSources: TerpiraSource[] = (autoSourcesData.sources ?? []).map((source) => ({
-  ...source,
-  sourceType: "auto" as const
-}));
+function normalizeEditorialPriority(value: string | undefined): TerpiraSource["editorialPriority"] {
+  if (value === "high" || value === "medium" || value === "low") {
+    return value;
+  }
+  return undefined;
+}
+
+const autoSources: TerpiraSource[] = (autoSourcesData.sources ?? []).map((source) => {
+  const { editorialPriority: rawEditorialPriority, ...rest } = source;
+  const editorialPriority = normalizeEditorialPriority(rawEditorialPriority);
+
+  return {
+    ...rest,
+    ...(editorialPriority ? { editorialPriority } : {}),
+    sourceType: "auto" as const
+  };
+});
 
 const sourceById = new Map<string, TerpiraSource>();
 for (const src of sourceRegisterCore) {

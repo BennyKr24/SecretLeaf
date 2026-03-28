@@ -131,6 +131,29 @@ export default function DashboardPage() {
       </header>
 
       <div className="mx-auto max-w-7xl px-6 py-8">
+        <div className="mb-8 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Internes Curation Tool</p>
+            <h2 className="mt-2 text-2xl font-semibold text-[#123024]">Studien in 1 Minute pruefen</h2>
+            <p className="mt-3 text-sm text-[#4d685a]">
+              Neue Auto-Studien sind dort bereits auf 3 kurze Zeilen verdichtet, inklusive Herkunft, Autor und Institut/Uni, damit du schnell entscheiden kannst, was ins Wiki soll.
+            </p>
+            <Link
+              href="/dashboard/studies"
+              className="mt-5 inline-flex rounded-xl bg-[#1f7a4f] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#17613f]"
+            >
+              Interne Studien-Review oeffnen
+            </Link>
+          </div>
+
+          <div className="rounded-2xl border border-[#d8e8dd] bg-[#f6faf7] p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-[#123024]">Arbeitsweise</h2>
+            <p className="mt-3 text-sm text-[#4d685a]">Rein: direkt fuer Einbau oder Artikelidee geeignet.</p>
+            <p className="mt-2 text-sm text-[#4d685a]">Spaeter: interessant, aber noch kein sofortiger Einbau.</p>
+            <p className="mt-2 text-sm text-[#4d685a]">Nein: fachlich zu schwach oder nicht nah genug an SecretLeaf.</p>
+          </div>
+        </div>
+
         <div className="mb-8 rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
           <h2 className="mb-6 text-lg font-semibold text-[#123024]">Angebote suchen</h2>
           

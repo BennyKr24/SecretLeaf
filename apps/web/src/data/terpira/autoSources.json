@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-27T23:58:59.144Z",
+  "generatedAt": "2026-03-28T00:11:07.344Z",
   "stats": {
     "fetched": 1080,
     "kept": 22,
@@ -223,7 +223,14 @@
       "flags": [
         "high-evidence"
       ],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "A. Sanz-Pérez",
+      "originLabel": "Regulatory Toxicology and Pharmacology",
+      "reviewSummary": [
+        "Meta-Analyse mit hoher Evidenz.",
+        "Regulatory Toxicology and Pharmacology · 2026 · Prioritaet high. Fokus: medizin-evidenz, pharmakologie, qualitaet-labor.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -252,7 +259,14 @@
       "flags": [
         "high-evidence"
       ],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Martino Belvederi Murri",
+      "originLabel": "Brain, Behavior, and Immunity",
+      "reviewSummary": [
+        "Meta-Analyse mit hoher Evidenz.",
+        "Brain, Behavior, and Immunity · 2026 · Prioritaet high. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -279,7 +293,14 @@
       "flags": [
         "controlled-study"
       ],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Naruwat Pakdee",
+      "originLabel": "Sleep Medicine: X",
+      "reviewSummary": [
+        "Kontrollierte Studie mit direktem Praxisbezug.",
+        "Sleep Medicine: X · 2026 · Prioritaet medium. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -306,7 +327,14 @@
       "flags": [
         "controlled-study"
       ],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Naruwat Pakdee",
+      "originLabel": "Sleep Medicine: X",
+      "reviewSummary": [
+        "Kontrollierte Studie mit direktem Praxisbezug.",
+        "Sleep Medicine: X · 2026 · Prioritaet medium. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -332,7 +360,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Sunday Azagba",
+      "originLabel": "International Journal of Drug Policy",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "International Journal of Drug Policy · 2026 · Prioritaet medium. Fokus: medizin-evidenz, markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -359,7 +394,14 @@
         "anbau-postharvest"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Victor Pereira-Francisco",
+      "originLabel": "Journal of Chromatography Open",
+      "reviewSummary": [
+        "Labor-/Analytik-Arbeit fuer Qualitaet oder Profile.",
+        "Journal of Chromatography Open · 2026 · Prioritaet medium. Fokus: qualitaet-labor, anbau-postharvest.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -386,7 +428,14 @@
         "pharmakologie"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Christopher Lucaj",
+      "originLabel": "Neuropharmacology",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Neuropharmacology · 2026 · Prioritaet medium. Fokus: medizin-evidenz, pharmakologie.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -417,7 +466,14 @@
         "protocol",
         "trial"
       ],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Edouard Coupet",
+      "originLabel": "Contemporary Clinical Trials",
+      "reviewSummary": [
+        "Kontrollierte Studie mit direktem Praxisbezug.",
+        "Contemporary Clinical Trials · 2026 · Prioritaet medium. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -442,7 +498,14 @@
         "medizin-evidenz"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Julie Flyger",
+      "originLabel": "Journal of Substance Use and Addiction Treatment",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Journal of Substance Use and Addiction Treatment · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -467,7 +530,14 @@
         "medizin-evidenz"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Cerina Dubois",
+      "originLabel": "American Journal of Medicine Open",
+      "reviewSummary": [
+        "Beobachtungsstudie, eher kontext- als beweisstark.",
+        "American Journal of Medicine Open · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -492,7 +562,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Harold Bae",
+      "originLabel": "Drug and Alcohol Dependence",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Drug and Alcohol Dependence · 2026 · Prioritaet low. Fokus: markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -517,7 +594,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Lucy Xiaolu Wang",
+      "originLabel": "International Journal of Industrial Organization",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "International Journal of Industrial Organization · 2026 · Prioritaet low. Fokus: markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -542,7 +626,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Colbey Ricklefs",
+      "originLabel": "Drug and Alcohol Dependence",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Drug and Alcohol Dependence · 2026 · Prioritaet low. Fokus: markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -567,7 +658,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Jeremy Mennis",
+      "originLabel": "Drug and Alcohol Dependence",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Drug and Alcohol Dependence · 2026 · Prioritaet low. Fokus: markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -592,7 +690,14 @@
         "pharmakologie"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "José Carlos Bouso",
+      "originLabel": "European Neuropsychopharmacology",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "European Neuropsychopharmacology · 2026 · Prioritaet low. Fokus: pharmakologie.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -617,7 +722,14 @@
         "medizin-evidenz"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Sherwin S.S. Ng",
+      "originLabel": "Forensic Science International",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Forensic Science International · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -642,7 +754,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Thomas Lebesmuehlbacher",
+      "originLabel": "Regional Science and Urban Economics",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Regional Science and Urban Economics · 2026 · Prioritaet low. Fokus: markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -667,7 +786,14 @@
         "medizin-evidenz"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Weerapat Pookkaman",
+      "originLabel": "Social Sciences &amp; Humanities Open",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Social Sciences &amp; Humanities Open · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -692,7 +818,14 @@
         "anbau-postharvest"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Giacomina Videtta",
+      "originLabel": "Phytomedicine",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Phytomedicine · 2026 · Prioritaet low. Fokus: anbau-postharvest.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -717,7 +850,14 @@
         "medizin-evidenz"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "David A. Reichenberger",
+      "originLabel": "Addictive Behaviors Reports",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Addictive Behaviors Reports · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -742,7 +882,14 @@
         "pharmakologie"
       ],
       "flags": [],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Jack E Fincham",
+      "originLabel": "Pharmacy &amp; Pharmacology International Journal",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Pharmacy &amp; Pharmacology International Journal · 2106 · Prioritaet low. Fokus: pharmakologie.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",
@@ -769,7 +916,14 @@
       "flags": [
         "observational"
       ],
-      "fetchedAt": "2026-03-27T23:58:59.144Z",
+      "firstAuthor": "Judith Saura",
+      "originLabel": "Addictive Behaviors Reports",
+      "reviewSummary": [
+        "Beobachtungsstudie, eher kontext- als beweisstark.",
+        "Addictive Behaviors Reports · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-03-28T00:11:07.344Z",
       "tags": [
         "auto",
         "study-sync",

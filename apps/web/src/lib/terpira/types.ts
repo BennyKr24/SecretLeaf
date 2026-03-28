@@ -62,6 +62,11 @@ export type TerpiraSource = {
   editorialPriority?: "high" | "medium" | "low";
   matchedTopics?: string[];
   flags?: string[];
+  firstAuthor?: string;
+  affiliationHints?: string[];
+  originLabel?: string;
+  abstractSnippet?: string;
+  reviewSummary?: string[];
   fetchedAt?: string;
   tags?: string[];
 };

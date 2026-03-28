@@ -82,6 +82,26 @@ try {
     if (src.flags != null && !Array.isArray(src.flags)) {
       fail(`${prefix}.flags must be an array when present.`);
     }
+
+    if (src.firstAuthor != null && !isNonEmptyString(src.firstAuthor)) {
+      fail(`${prefix}.firstAuthor must be a non-empty string when present.`);
+    }
+
+    if (src.affiliationHints != null && !Array.isArray(src.affiliationHints)) {
+      fail(`${prefix}.affiliationHints must be an array when present.`);
+    }
+
+    if (src.originLabel != null && !isNonEmptyString(src.originLabel)) {
+      fail(`${prefix}.originLabel must be a non-empty string when present.`);
+    }
+
+    if (src.abstractSnippet != null && !isNonEmptyString(src.abstractSnippet)) {
+      fail(`${prefix}.abstractSnippet must be a non-empty string when present.`);
+    }
+
+    if (src.reviewSummary != null && !Array.isArray(src.reviewSummary)) {
+      fail(`${prefix}.reviewSummary must be an array when present.`);
+    }
   }
 
   console.log(`[auto-sources:validate] OK (${data.sources.length} sources).`);

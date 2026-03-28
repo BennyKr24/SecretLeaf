@@ -350,6 +350,13 @@ function mapCrossrefItem(item) {
   const doi = item?.DOI ?? null;
   const url = item?.URL ?? (doi ? `https://doi.org/${doi}` : null);
   const abstract = item?.abstract ? String(item.abstract).replace(/<[^>]+>/g, ' ') : null;
+  const affiliations = (item?.author ?? [])
+    .flatMap((author) => Array.isArray(author?.affiliation) ? author.affiliation : [])
+    .map((entry) => String(entry?.name ?? '').trim())
+    .filter(Boolean);
+  const firstAuthor = item?.author?.[0]
+    ? [item.author[0].given, item.author[0].family].filter(Boolean).join(' ').trim()
+    : null;
 
   return {
     title,
@@ -357,8 +364,50 @@ function mapCrossrefItem(item) {
     year,
     doi,
     url,
-    abstract
+    abstract,
+    firstAuthor,
+    affiliations: Array.from(new Set(affiliations)).slice(0, 4)
   };
+}
+
+function cleanSnippet(text, maxLength = 180) {
+  const normalized = String(text ?? '').replace(/\s+/g, ' ').trim();
+  if (!normalized) return null;
+  if (normalized.length <= maxLength) return normalized;
+  return `${normalized.slice(0, maxLength - 1).trimEnd()}…`;
+}
+
+function deriveOriginLabel(study) {
+  const affiliation = study.affiliations?.[0];
+  if (affiliation) return affiliation;
+  return study.publisher;
+}
+
+function buildReviewSummary(study) {
+  const typeMap = {
+    'meta-analysis': 'Meta-Analyse mit hoher Evidenz.',
+    'systematic-review': 'Systematisches Review mit guter Evidenzbasis.',
+    'controlled-study': 'Kontrollierte Studie mit direktem Praxisbezug.',
+    'clinical-trial': 'Klinische Studie mit direktem Anwendungsbezug.',
+    'laboratory-study': 'Labor-/Analytik-Arbeit fuer Qualitaet oder Profile.',
+    'observational-study': 'Beobachtungsstudie, eher kontext- als beweisstark.',
+    'protocol': 'Studienprotokoll, relevant nur nach gezielter Kurationsentscheidung.',
+    'case-report': 'Einzelfallbericht, eher schwache Evidenz.',
+    'general-study': 'Allgemeine Studie mit Cannabis-Bezug.',
+  };
+
+  const topicText = Array.isArray(study.matchedTopics) && study.matchedTopics.length > 0
+    ? `Fokus: ${study.matchedTopics.join(', ')}.`
+    : 'Kein klarer Themencluster erkannt.';
+
+  const origin = deriveOriginLabel(study);
+  const abstractLine = cleanSnippet(study.abstract, 170) ?? 'Kein belastbarer Abstract-Auszug verfuegbar.';
+
+  return [
+    typeMap[study.studyType] ?? typeMap['general-study'],
+    `${origin} · ${study.year} · Prioritaet ${study.editorialPriority}. ${topicText}`,
+    abstractLine,
+  ];
 }
 
 async function main() {
@@ -427,6 +476,11 @@ async function main() {
       editorialPriority: study.editorialPriority,
       matchedTopics: study.matchedTopics,
       flags: study.flags,
+      firstAuthor: study.firstAuthor ?? undefined,
+      affiliationHints: study.affiliations?.length ? study.affiliations : undefined,
+      originLabel: deriveOriginLabel(study),
+      abstractSnippet: cleanSnippet(study.abstract, 240) ?? undefined,
+      reviewSummary: buildReviewSummary(study),
       fetchedAt: generatedAt,
       tags: ['auto', 'study-sync', 'crossref', ...study.matchedTopics]
     };
