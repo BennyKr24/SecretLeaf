@@ -10,6 +10,17 @@ import { SessionData, UserRole } from "@/lib/types";
 
 const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 
+// Lokaler Admin-Zugang (kein API-Call nötig, kein produktives Backend erforderlich)
+const LOCAL_ADMIN: Record<string, { password: string; sessionData: import("@/lib/types").SessionData }> = {
+  benny: {
+    password: "2405",
+    sessionData: {
+      token: "local-admin-benny",
+      user: { id: "admin-benny", username: "Benny", role: "PROVIDER" }
+    }
+  }
+};
+
 type AuthMode = "login" | "register";
 
 export default function AuthPage() {
@@ -31,6 +42,17 @@ export default function AuthPage() {
     event.preventDefault();
     setPending(true);
     setError(null);
+
+    // Lokaler Admin-Bypass (kein Backend nötig)
+    if (mode === "login") {
+      const localAdmin = LOCAL_ADMIN[username.trim().toLowerCase()];
+      if (localAdmin && password === localAdmin.password) {
+        saveSession(localAdmin.sessionData);
+        setPending(false);
+        router.push("/dashboard");
+        return;
+      }
+    }
 
     try {
       const endpoint = mode === "login" ? "/auth/login" : "/auth/register";
