@@ -104,7 +104,78 @@ model Study {
   @@index([createdAt])
 }
 
-// Audit Logs - minimal, mit Ablauf
+// ─── Wiki ────────────────────────────────────────────────────────────────────
+
+// Wiki articles (migrated from static wiki.ts)
+model WikiArticle {
+  id          String             @id @default(cuid())
+  slug        String             @unique
+  title       String
+  category    String             // e.g. "grundlagen", "anbau", "medizin", "recht"
+  summary     String
+  content     String             // JSON: structured sections / paragraphs
+  publishedAt DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  articleSources WikiArticleSource[]
+
+  @@index([slug])
+  @@index([category])
+}
+
+// Scientific / study sources (pmid, doi, external link)
+model WikiSource {
+  id        String             @id @default(cuid())
+  title     String
+  publisher String?
+  doi       String?            @unique
+  pmid      String?            @unique
+  url       String?
+  year      Int?
+  createdAt DateTime           @default(now())
+
+  articleSources WikiArticleSource[]
+
+  @@index([doi])
+  @@index([pmid])
+}
+
+// Many-to-many join: which sources are cited by which articles
+model WikiArticleSource {
+  articleId String
+  sourceId  String
+
+  article WikiArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  source  WikiSource  @relation(fields: [sourceId],  references: [id], onDelete: Cascade)
+
+  @@id([articleId, sourceId])
+  @@index([sourceId])
+}
+
+// ─── Fertilizer catalog ──────────────────────────────────────────────────────
+
+model Fertilizer {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  brand       String?
+  description String?
+  usage       String?  // application / dosage instructions
+  npk         String?  // JSON: { "n": 10, "p": 5, "k": 8 }
+  ec          Float?   // recommended EC value
+  phMin       Float?   // recommended pH range – lower bound
+  phMax       Float?   // recommended pH range – upper bound
+  category    String?  // "grow", "bloom", "additive", "substrate", …
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([brand])
+  @@index([category])
+}
+
+// ─── Audit Logs - minimal, mit Ablauf ────────────────────────────────────────
+
 model AuditLog {
   id         String   @id @default(cuid())
   action     String
