@@ -11,7 +11,8 @@
     "lint": "echo 'Add ESLint if required'",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:push": "prisma db push"
+    "prisma:push": "prisma db push",
+    "db:seed:wiki": "tsx --tsconfig ../../scripts/tsconfig.seed.json ../../scripts/seed-wiki.ts"
   },
   "dependencies": {
     "@fastify/cors": "^10.0.1",

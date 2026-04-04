@@ -13,9 +13,8 @@
  * Usage (from repository root):
  *   npm run db:seed:wiki
  *
- *   Or directly:
- *   DATABASE_URL="file:./apps/api/prisma/dev.db" \
- *     npx tsx --tsconfig scripts/tsconfig.seed.json scripts/seed-wiki.ts
+ *   Or directly from apps/api/:
+ *   cd apps/api && tsx --tsconfig ../../scripts/tsconfig.seed.json ../../scripts/seed-wiki.ts
  */
 
 import { readFileSync } from "node:fs";
