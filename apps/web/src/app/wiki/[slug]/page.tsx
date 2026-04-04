@@ -1,24 +1,86 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { categoryLabels, difficultyLabels, getArticleBySlug, getArticleSources, wikiArticles } from "@/data/terpira/wiki";
+'use client';
 
-type PageProps = {
-  params: Promise<{ slug: string }>;
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useParams, notFound } from "next/navigation";
+import { categoryLabels, difficultyLabels } from "@/lib/wiki/constants";
+import type { TerpiraArticle, TerpiraSource, TerpiraCategory } from "@/lib/terpira/types";
+
+type RelatedArticle = {
+  slug: string;
+  title: string;
+  summary: string;
+  category: TerpiraCategory;
 };
 
-export default async function WikiArticlePage({ params }: PageProps) {
-  const { slug } = await params;
-  const article = getArticleBySlug(slug);
+type ArticleApiResponse = {
+  article: TerpiraArticle;
+  sources: TerpiraSource[];
+  related: RelatedArticle[];
+};
 
-  if (!article) {
-    notFound();
+export default function WikiArticlePage() {
+  const params = useParams();
+  const slug = typeof params.slug === "string" ? params.slug : "";
+
+  const [data, setData] = useState<ArticleApiResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFoundError, setNotFoundError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!slug) return;
+    setLoading(true);
+    setNotFoundError(false);
+    setError(null);
+    fetch(`/api/wiki/${slug}`)
+      .then(async (res) => {
+        if (res.status === 404) { setNotFoundError(true); return null; }
+        if (!res.ok) throw new Error("Fehler beim Laden des Artikels");
+        return res.json() as Promise<ArticleApiResponse>;
+      })
+      .then((json) => { if (json) setData(json); })
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : "Unbekannter Fehler"))
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  if (notFoundError) notFound();
+
+  if (loading) {
+    return (
+      <main className="min-h-screen px-6 py-12">
+        <article className="mx-auto max-w-6xl space-y-6">
+          <div className="animate-pulse rounded-2xl border border-[#d8e8dd] bg-white/90 p-8 shadow-sm">
+            <div className="h-4 bg-[#e2eee6] rounded w-32 mb-4" />
+            <div className="h-10 bg-[#e2eee6] rounded w-3/4 mb-3" />
+            <div className="h-5 bg-[#e2eee6] rounded w-1/2" />
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {Array.from({ length: 3 }).map((_, i) => <div key={i} className="h-16 bg-[#e2eee6] rounded-xl" />)}
+            </div>
+          </div>
+        </article>
+      </main>
+    );
   }
 
-  const relatedArticles = article.relatedSlugs
-    .map((relatedSlug) => wikiArticles.find((entry) => entry.slug === relatedSlug))
-    .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
+  if (error) {
+    return (
+      <main className="min-h-screen px-6 py-12">
+        <div className="mx-auto max-w-6xl rounded-2xl border border-red-200 bg-red-50 p-8 text-center">
+          <p className="text-lg font-semibold text-red-700">Artikel konnte nicht geladen werden</p>
+          <p className="mt-2 text-sm text-red-600">{error}</p>
+          <Link href="/wiki" className="mt-4 inline-flex rounded-lg bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f]">
+            Zurueck zum Wiki
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
-  const articleSources = getArticleSources(article);
+  if (!data) return null;
+
+  const { article, sources: articleSources, related: relatedArticles } = data;
+
   const simpleExplainers = article.simpleExplainers ?? [
     {
       title: "Einfach erklaert",

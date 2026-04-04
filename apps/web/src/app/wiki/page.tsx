@@ -1,30 +1,103 @@
-import Link from "next/link";
-import { categoryLabels, difficultyLabels, getArticlesByCategory, wikiArticles, sourceRegister } from "@/data/terpira/wiki";
+'use client';
 
-const orderedCategories = [
-  "anbau",
-  "genetik",
-  "chemie",
-  "terpene",
-  "konsumformen",
-  "konzentrate",
-  "qualitaet",
-  "sicherheit",
-  "medizin",
-  "recht",
-  "markt",
-  "werkzeuge"
-] as const;
+import { useState, useEffect, useMemo } from "react";
+import Link from "next/link";
+import { categoryLabels, difficultyLabels, orderedCategories } from "@/lib/wiki/constants";
+import type { TerpiraArticle } from "@/lib/terpira/types";
+
+type WikiStats = {
+  totalArticles: number;
+  totalSources: number;
+  autoSources: number;
+  totalReadMinutes: number;
+};
+
+type WikiApiResponse = {
+  articles: TerpiraArticle[];
+  stats: WikiStats;
+};
 
 export default function WikiPage() {
-  const totalMinutes = wikiArticles.reduce((sum, article) => sum + article.readMinutes, 0);
-  const starterArticles = wikiArticles.filter((a) => a.difficulty === "einsteiger");
-  const advancedArticles = wikiArticles.filter((a) => a.difficulty === "fortgeschritten");
-  const profiArticles = wikiArticles.filter((a) => a.difficulty === "profi");
-  const autoSources = sourceRegister.filter((s) => s.sourceType === "auto").length;
-  
-  // Count sources per article
-  const avgSourcesPerArticle = (wikiArticles.reduce((sum, a) => sum + (a.sourceIds?.length || 0), 0) / wikiArticles.length).toFixed(1);
+  const [data, setData] = useState<WikiApiResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const loadWikiData = () => {
+    setError(null);
+    setLoading(true);
+    fetch("/api/wiki")
+      .then((res) => {
+        if (!res.ok) throw new Error("Fehler beim Laden der Wiki-Daten");
+        return res.json() as Promise<WikiApiResponse>;
+      })
+      .then(setData)
+      .catch((err: unknown) => setError(err instanceof Error ? err.message : "Unbekannter Fehler"))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadWikiData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const articles = data?.articles ?? [];
+  const stats = data?.stats;
+
+  const starterArticles = useMemo(() => articles.filter((a) => a.difficulty === "einsteiger"), [articles]);
+  const advancedArticles = useMemo(() => articles.filter((a) => a.difficulty === "fortgeschritten"), [articles]);
+  const profiArticles = useMemo(() => articles.filter((a) => a.difficulty === "profi"), [articles]);
+  const avgSourcesPerArticle = useMemo(
+    () =>
+      articles.length > 0
+        ? (articles.reduce((sum, a) => sum + (a.sourceIds?.length ?? 0), 0) / articles.length).toFixed(1)
+        : "0",
+    [articles]
+  );
+
+  const articlesByCategory = useMemo(() => {
+    const map = new Map<string, TerpiraArticle[]>();
+    for (const article of articles) {
+      const list = map.get(article.category) ?? [];
+      list.push(article);
+      map.set(article.category, list);
+    }
+    return map;
+  }, [articles]);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen px-6 py-12 bg-gradient-to-br from-[#f7fbf8] via-white to-[#eef7f1]">
+        <div className="mx-auto max-w-6xl">
+          <div className="animate-pulse space-y-6">
+            <div className="h-8 bg-[#e2eee6] rounded-full w-64" />
+            <div className="h-12 bg-[#e2eee6] rounded-lg w-96" />
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="h-28 bg-[#e2eee6] rounded-2xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="min-h-screen px-6 py-12 bg-gradient-to-br from-[#f7fbf8] via-white to-[#eef7f1]">
+        <div className="mx-auto max-w-6xl rounded-2xl border border-red-200 bg-red-50 p-8 text-center">
+          <p className="text-lg font-semibold text-red-700">Wiki konnte nicht geladen werden</p>
+          <p className="mt-2 text-sm text-red-600">{error}</p>
+          <button
+            onClick={loadWikiData}
+            className="mt-4 rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+          >
+            Nochmal versuchen
+          </button>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen px-6 py-12 bg-gradient-to-br from-[#f7fbf8] via-white to-[#eef7f1]">
@@ -34,10 +107,10 @@ export default function WikiPage() {
             Terpira x SecretLeaf
           </p>
           <p className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-700">
-            {sourceRegister.length} Wissenschaftliche Quellen
+            {stats?.totalSources ?? "–"} Wissenschaftliche Quellen
           </p>
           <p className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-blue-700">
-            {autoSources} Auto-Studien
+            {stats?.autoSources ?? "–"} Auto-Studien
           </p>
         </div>
         
@@ -59,7 +132,7 @@ export default function WikiPage() {
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <div className="rounded-2xl border border-[#d8e8dd] bg-white/95 p-5 shadow-md hover:shadow-lg transition-shadow">
             <p className="text-xs uppercase tracking-wide text-[#5f7a6b] font-semibold">Artikel</p>
-            <p className="mt-2 text-4xl font-bold text-[#123024]">{wikiArticles.length}</p>
+            <p className="mt-2 text-4xl font-bold text-[#123024]">{stats?.totalArticles ?? "–"}</p>
             <p className="mt-1 text-xs text-[#5f7a6b]">verfügbar</p>
           </div>
           
@@ -71,13 +144,13 @@ export default function WikiPage() {
           
           <div className="rounded-2xl border border-cyan-200 bg-cyan-50/80 p-5 shadow-md hover:shadow-lg transition-shadow">
             <p className="text-xs uppercase tracking-wide text-cyan-700 font-semibold">Quellen</p>
-            <p className="mt-2 text-4xl font-bold text-cyan-900">{sourceRegister.length}</p>
+            <p className="mt-2 text-4xl font-bold text-cyan-900">{stats?.totalSources ?? "–"}</p>
             <p className="mt-1 text-xs text-cyan-700">peer-reviewed</p>
           </div>
           
           <div className="rounded-2xl border border-[#d8e8dd] bg-white/95 p-5 shadow-md hover:shadow-lg transition-shadow">
             <p className="text-xs uppercase tracking-wide text-[#5f7a6b] font-semibold">Lesezeit total</p>
-            <p className="mt-2 text-4xl font-bold text-[#123024]">{totalMinutes}</p>
+            <p className="mt-2 text-4xl font-bold text-[#123024]">{stats?.totalReadMinutes ?? "–"}</p>
             <p className="mt-1 text-xs text-[#5f7a6b]">Minuten</p>
           </div>
           
@@ -171,7 +244,7 @@ export default function WikiPage() {
             <h2 className="text-lg font-semibold text-cyan-900">🔬 Quellenbasiert & Evidenzgeleitet</h2>
             <p className="mt-3 text-sm text-cyan-800">
               Alle Artikel sind mit peer-reviewed Fachjournalen, WHO-Standards und internationalen Laborrichtlinien verlinkt.
-              41 hochwertige Quellen aus 9 Kategorien.
+              {stats ? ` ${stats.totalSources} hochwertige Quellen.` : ""}
             </p>
             <Link
               href="/wiki/quellen"
@@ -184,7 +257,7 @@ export default function WikiPage() {
 
         <div className="mt-10 space-y-8">
           {orderedCategories.map((category) => {
-            const entries = getArticlesByCategory(category);
+            const entries = articlesByCategory.get(category) ?? [];
             if (entries.length === 0) return null;
 
             return (
