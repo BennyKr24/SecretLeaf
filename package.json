@@ -28,6 +28,7 @@
     "wiki:studies:report": "node scripts/generate-wiki-sync-report.mjs",
     "studies:fetch": "node scripts/studies_fetch.mjs",
     "db:seed:wiki": "npm run db:seed:wiki --workspace @secretleaf/api",
+    "db:gen:wiki:studies": "npm run db:gen:wiki:studies --workspace @secretleaf/api",
     "prebuild": "npm run changelog:generate && npm run coverage:snapshot"
   },
   "overrides": {

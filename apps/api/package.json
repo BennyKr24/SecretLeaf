@@ -12,7 +12,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:push": "prisma db push",
-    "db:seed:wiki": "tsx --tsconfig ../../scripts/tsconfig.seed.json ../../scripts/seed-wiki.ts"
+    "db:seed:wiki": "tsx --tsconfig ../../scripts/tsconfig.seed.json ../../scripts/seed-wiki.ts",
+    "db:gen:wiki:studies": "tsx --tsconfig ../../scripts/tsconfig.seed.json ../../scripts/studies-to-wiki.ts"
   },
   "dependencies": {
     "@fastify/cors": "^10.0.1",
