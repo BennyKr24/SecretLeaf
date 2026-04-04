@@ -16,7 +16,7 @@ export default function WikiSourcesPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/wiki/quellen")
+    fetch("/api/wiki/quellen", { cache: "no-store" })
       .then((res) => {
         if (!res.ok) throw new Error("Fehler beim Laden der Quellen");
         return res.json() as Promise<QuellenApiResponse>;

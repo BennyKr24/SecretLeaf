@@ -33,7 +33,7 @@ export default function WikiArticlePage() {
     setLoading(true);
     setNotFoundError(false);
     setError(null);
-    fetch(`/api/wiki/${slug}`)
+    fetch(`/api/wiki/${slug}`, { cache: "no-store" })
       .then(async (res) => {
         if (res.status === 404) { setNotFoundError(true); return null; }
         if (!res.ok) throw new Error("Fehler beim Laden des Artikels");

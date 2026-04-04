@@ -25,7 +25,7 @@ export default function WikiPage() {
   const loadWikiData = () => {
     setError(null);
     setLoading(true);
-    fetch("/api/wiki")
+    fetch("/api/wiki", { cache: "no-store" })
       .then((res) => {
         if (!res.ok) throw new Error("Fehler beim Laden der Wiki-Daten");
         return res.json() as Promise<WikiApiResponse>;
