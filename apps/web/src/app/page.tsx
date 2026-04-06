@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import { wikiArticles, sourceRegister } from "@/data/terpira/wiki";
 
 export default async function LandingPage() {
@@ -9,34 +10,10 @@ export default async function LandingPage() {
 
   return (
     <main className="min-h-screen">
-      <header className="border-b border-[#d8e8dd] bg-white/80 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="grid h-9 w-9 place-items-center rounded-lg bg-[#1f7a4f] text-sm font-bold text-white">S</div>
-            <div>
-              <div className="text-xl font-bold tracking-tight text-[#123024]">SecretLeaf</div>
-              <div className="text-xs text-[#4d685a]">Terpira Knowledge + Private Search</div>
-            </div>
-          </Link>
-
-          <nav className="flex items-center gap-3">
-            <Link href="/wiki" className="rounded-lg border border-[#d6e5d9] bg-white px-3 py-2 text-sm font-semibold text-[#1f7a4f] hover:bg-[#f5faf7]">
-              Wiki
-            </Link>
-            <Link href="/status" className="rounded-lg border border-[#d6e5d9] bg-white px-3 py-2 text-sm font-semibold text-[#355b49] hover:bg-[#f5faf7]">
-              Status
-            </Link>
-            <Link href="/auth" className="rounded-lg bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f]">
-              Login
-            </Link>
-          </nav>
-        </div>
-      </header>
-
       <section className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <p className="inline-flex rounded-full border border-[#c8ddcf] bg-[#eef7f1] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#1f7a4f]">
-            Hauptfokus: Cannabis-Wikipedia
+            Produktkern: Studies + Tools + Database
           </p>
           <h1 className="mt-4 text-5xl font-bold leading-tight text-[#10281e]">
             Wissen zuerst.
@@ -44,17 +21,19 @@ export default async function LandingPage() {
             Suche nur geschuetzt.
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-[#4d685a]">
-            SecretLeaf verbindet Terpira-Inhalte mit einer privaten Plattformlogik:
-            oeffentliches Cannabis-Wiki fuer Aufklaerung und Fachwissen, waehrend Angebotssuche
-            nur fuer eingeloggte Nutzer freigeschaltet ist.
+            SecretLeaf ist klar in Wissensbereich, Werkzeuge, Datenbank und Nutzerbereich gegliedert.
+            So finden neue Nutzer Inhalte in wenigen Klicks, ohne Feature-Chaos oder doppelte Strukturen.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/wiki" className="rounded-xl bg-[#1f7a4f] px-5 py-3 text-sm font-semibold text-white hover:bg-[#17613f]">
-              Zum Wiki
+            <Link href={"/studies" as Route} className="rounded-xl bg-[#1f7a4f] px-5 py-3 text-sm font-semibold text-white hover:bg-[#17613f]">
+              Zu Studies
             </Link>
-            <Link href="/dashboard" className="rounded-xl border border-[#c8ddcf] bg-white px-5 py-3 text-sm font-semibold text-[#123024] hover:bg-[#f5faf7]">
-              Geschuetzte Suche (Login)
+            <Link href={"/tools" as Route} className="rounded-xl border border-[#c8ddcf] bg-white px-5 py-3 text-sm font-semibold text-[#123024] hover:bg-[#f5faf7]">
+              Zu Tools
+            </Link>
+            <Link href={"/database" as Route} className="rounded-xl border border-[#c8ddcf] bg-white px-5 py-3 text-sm font-semibold text-[#123024] hover:bg-[#f5faf7]">
+              Zur Database
             </Link>
           </div>
         </div>
@@ -82,8 +61,8 @@ export default async function LandingPage() {
 
       <section className="mx-auto max-w-7xl px-6 pb-16">
         <div className="mb-5 flex items-end justify-between">
-          <h2 className="text-3xl font-bold text-[#10281e]">Featured aus dem Wiki</h2>
-          <Link href="/wiki" className="text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
+          <h2 className="text-3xl font-bold text-[#10281e]">Featured aus Studies</h2>
+          <Link href={"/studies" as Route} className="text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
             Alle Artikel ansehen
           </Link>
         </div>
@@ -94,7 +73,7 @@ export default async function LandingPage() {
               <h3 className="text-xl font-semibold text-[#123024]">{article.title}</h3>
               <p className="mt-2 text-sm text-[#4d685a]">{article.summary}</p>
               <div className="mt-4 text-xs text-[#5f7a6b]">{article.readMinutes} Min Lesezeit</div>
-              <Link href={`/wiki/${article.slug}`} className="mt-5 inline-flex text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
+              <Link href={`/studies/${article.slug}` as Route} className="mt-5 inline-flex text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
                 Weiterlesen →
               </Link>
             </article>

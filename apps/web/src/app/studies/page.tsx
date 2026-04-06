@@ -20,9 +20,9 @@ export default function WikiPage() {
       desc: "Schneller Einstieg mit den wichtigsten Grundlagen fuer sichere Entscheidungen.",
       accent: "border-emerald-200 bg-emerald-50",
       links: [
-        { label: "Anbau-Grundlagen", href: "/wiki/cannabis-anbau-grundlagen" },
-        { label: "VPD einfach erklärt", href: "/wiki/vpd-einfach-erklaert" },
-        { label: "COA richtig lesen", href: "/wiki/coa-richtig-lesen" },
+        { label: "Anbau-Grundlagen", href: "/studies/cannabis-anbau-grundlagen" },
+        { label: "VPD einfach erklärt", href: "/studies/vpd-einfach-erklaert" },
+        { label: "COA richtig lesen", href: "/studies/coa-richtig-lesen" },
       ],
     },
     {
@@ -30,9 +30,9 @@ export default function WikiPage() {
       desc: "Von Curing bis Recall-Prozess fuer Teams mit Qualitätsanspruch.",
       accent: "border-cyan-200 bg-cyan-50",
       links: [
-        { label: "Wasseraktivitaet und Curing", href: "/wiki/wasseraktivitaet-und-curing" },
-        { label: "PGR und Kontaminanten", href: "/wiki/pgr-und-kontaminanten" },
-        { label: "Recall- und Sperrprozesse", href: "/wiki/recall-und-sperrprozesse-fuer-chargen" },
+        { label: "Wasseraktivitaet und Curing", href: "/studies/wasseraktivitaet-und-curing" },
+        { label: "PGR und Kontaminanten", href: "/studies/pgr-und-kontaminanten" },
+        { label: "Recall- und Sperrprozesse", href: "/studies/recall-und-sperrprozesse-fuer-chargen" },
       ],
     },
     {
@@ -40,9 +40,9 @@ export default function WikiPage() {
       desc: "Recht, Markt, Daten und Governance fuer den ersten grossen Drop.",
       accent: "border-purple-200 bg-purple-50",
       links: [
-        { label: "Rechtliche Grundlagen DACH", href: "/wiki/rechtliche-grundlagen-dach" },
-        { label: "Markttransparenz und Preise", href: "/wiki/markttransparenz-und-preise" },
-        { label: "Content-Taxonomie & Governance", href: "/wiki/content-taxonomie-und-tag-governance" },
+        { label: "Rechtliche Grundlagen DACH", href: "/studies/rechtliche-grundlagen-dach" },
+        { label: "Markttransparenz und Preise", href: "/studies/markttransparenz-und-preise" },
+        { label: "Content-Taxonomie & Governance", href: "/studies/content-taxonomie-und-tag-governance" },
       ],
     },
   ];
@@ -50,7 +50,7 @@ export default function WikiPage() {
     {
       title: "How to Grow fuer Anfaenger",
       desc: "Vom ersten Setup bis zur Ernte mit defensiven Sollwerten, klaren Tageschecks und einfacher Fehlervermeidung.",
-      href: "/wiki/how-to-grow-cannabis-anfaenger-tutorial",
+      href: "/studies/how-to-grow-cannabis-anfaenger-tutorial",
       badge: "Einsteiger",
       accent: "border-blue-200 bg-blue-50",
       points: ["Setup klein halten", "Giessen ohne Chaos", "Erntefenster richtig lesen"],
@@ -58,7 +58,7 @@ export default function WikiPage() {
     {
       title: "How to Grow fuer Fortgeschrittene",
       desc: "Canopy, Feed, VPD und Review-Struktur aufeinander abstimmen, damit Performance reproduzierbar wird.",
-      href: "/wiki/how-to-grow-cannabis-fortgeschritten-tutorial",
+      href: "/studies/how-to-grow-cannabis-fortgeschritten-tutorial",
       badge: "Fortgeschritten",
       accent: "border-amber-200 bg-amber-50",
       points: ["Zielkorridore pro Phase", "Canopy aktiv fuehren", "Run-Reviews nutzen"],
@@ -66,7 +66,7 @@ export default function WikiPage() {
     {
       title: "How to Grow fuer Profis",
       desc: "SOPs, Chargendenken, QA und Risiko-Management fuer Teams mit hohem Wiederholbarkeitsanspruch.",
-      href: "/wiki/how-to-grow-cannabis-profi-tutorial",
+      href: "/studies/how-to-grow-cannabis-profi-tutorial",
       badge: "Profi",
       accent: "border-purple-200 bg-purple-50",
       points: ["SOP- und Gate-System", "Zonen- und Chargenvergleich", "Postharvest als Prozess"],
@@ -100,22 +100,22 @@ export default function WikiPage() {
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/wiki/quellen"
+            <Link href={"/studies/sources" as Route}
               className="inline-flex items-center gap-2 rounded-xl bg-white/10 border border-white/20
                 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20 transition backdrop-blur-sm">
               🔬 Quellenregister
             </Link>
-            <Link href="/wiki/schaedlinge"
+            <Link href={"/studies/pests" as Route}
               className="inline-flex items-center gap-2 rounded-xl bg-rose-500/20 border border-rose-300/40
                 px-4 py-2 text-sm font-semibold text-rose-100 hover:bg-rose-500/30 transition">
               🐛 Schädlings-Lexikon
             </Link>
-            <Link href="/wiki/naehrstoffmaengel"
+            <Link href={"/studies/deficiencies" as Route}
               className="inline-flex items-center gap-2 rounded-xl bg-cyan-500/20 border border-cyan-300/40
                 px-4 py-2 text-sm font-semibold text-cyan-100 hover:bg-cyan-500/30 transition">
               🧪 Nährstoffmängel-Lexikon
             </Link>
-            <Link href="/fertilizers"
+            <Link href={"/database/fertilizers" as Route}
               className="inline-flex items-center gap-2 rounded-xl bg-amber-500/20 border border-amber-400/30
                 px-4 py-2 text-sm font-semibold text-amber-200 hover:bg-amber-500/30 transition">
               🌿 Dünger-Katalog
@@ -171,7 +171,7 @@ export default function WikiPage() {
                 <p className={`text-xs mb-3 ${path.subColor}`}>{path.desc}</p>
                 <div className="space-y-1">
                   {path.steps.map(slug => (
-                    <Link key={slug} href={`/wiki/${slug}` as Route}
+                    <Link key={slug} href={`/studies/${slug}` as Route}
                       className={`block text-xs font-medium ${path.subColor} hover:underline`}>
                       → {slug}
                     </Link>
@@ -195,7 +195,7 @@ export default function WikiPage() {
               </p>
             </div>
             <Link
-              href="/wiki/quellen"
+              href={"/studies/sources" as Route}
               className="inline-flex rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700 transition"
             >
               Studienbasis ansehen
@@ -241,7 +241,7 @@ export default function WikiPage() {
               <h2 className="mt-1 text-2xl font-bold text-slate-900">Kuratiert fuer den ersten Drop</h2>
             </div>
             <Link
-              href="/wiki/quellen"
+              href={"/studies/sources" as Route}
               className="inline-flex rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700 transition"
             >
               Quellenlage ansehen
@@ -287,7 +287,7 @@ export default function WikiPage() {
             {weeklyUpdates.map((entry) => (
               <Link
                 key={entry.slug}
-                href={`/wiki/${entry.slug}` as Route}
+                href={`/studies/${entry.slug}` as Route}
                 className="min-w-[250px] rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50"
               >
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{entry.lastUpdated}</p>
@@ -311,19 +311,19 @@ export default function WikiPage() {
               </p>
 
               <div className="mt-3 grid gap-2 sm:grid-cols-3">
-                <Link href="/wiki/schaedlinge#ampel" className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-800 hover:bg-rose-100">
+                <Link href={"/studies/pests#ampel" as Route} className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-800 hover:bg-rose-100">
                   Modus 1: Schnellhilfe (24h)
                 </Link>
-                <Link href="/wiki/schaedlinge#filter" className="rounded-lg border border-cyan-200 bg-cyan-50 px-3 py-2 text-xs font-semibold text-cyan-800 hover:bg-cyan-100">
+                <Link href={"/studies/pests#filter" as Route} className="rounded-lg border border-cyan-200 bg-cyan-50 px-3 py-2 text-xs font-semibold text-cyan-800 hover:bg-cyan-100">
                   Modus 2: Analyse & Filter
                 </Link>
-                <Link href="/wiki/schaedlinge#downloads" className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800 hover:bg-emerald-100">
+                <Link href={"/studies/pests#downloads" as Route} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800 hover:bg-emerald-100">
                   Modus 3: Protokoll-Download
                 </Link>
               </div>
             </div>
             <Link
-              href="/wiki/schaedlinge"
+              href={"/studies/pests" as Route}
               className="inline-flex rounded-xl border border-rose-300 bg-rose-100 px-4 py-2 text-sm font-semibold text-rose-800 hover:bg-rose-200"
             >
               Zum Schädlings-Lexikon
@@ -344,19 +344,19 @@ export default function WikiPage() {
               </p>
 
               <div className="mt-3 grid gap-2 sm:grid-cols-3">
-                <Link href="/wiki/naehrstoffmaengel#ampel" className="rounded-lg border border-cyan-200 bg-cyan-50 px-3 py-2 text-xs font-semibold text-cyan-800 hover:bg-cyan-100">
+                <Link href={"/studies/deficiencies#ampel" as Route} className="rounded-lg border border-cyan-200 bg-cyan-50 px-3 py-2 text-xs font-semibold text-cyan-800 hover:bg-cyan-100">
                   Modus 1: Schnellhilfe (24h)
                 </Link>
-                <Link href="/wiki/naehrstoffmaengel#filter" className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800 hover:bg-emerald-100">
+                <Link href={"/studies/deficiencies#filter" as Route} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800 hover:bg-emerald-100">
                   Modus 2: Analyse & Filter
                 </Link>
-                <Link href="/wiki/naehrstoffmaengel#downloads" className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800 hover:bg-amber-100">
+                <Link href={"/studies/deficiencies#downloads" as Route} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800 hover:bg-amber-100">
                   Modus 3: Protokoll-Download
                 </Link>
               </div>
             </div>
             <Link
-              href="/wiki/naehrstoffmaengel"
+              href={"/studies/deficiencies" as Route}
               className="inline-flex rounded-xl border border-cyan-300 bg-cyan-100 px-4 py-2 text-sm font-semibold text-cyan-900 hover:bg-cyan-200"
             >
               Zum Nährstoffmängel-Lexikon
@@ -409,7 +409,7 @@ export default function WikiPage() {
             ].map(item => (
               <Link
                 key={item.slug}
-                href={`/wiki/${item.slug}` as Route}
+                href={`/studies/${item.slug}` as Route}
                 className={`group flex flex-col gap-2 rounded-2xl border bg-white p-5 shadow-sm transition hover:shadow-md hover:border-emerald-300 ${item.accent}`}
               >
                 <div className="flex items-center justify-between gap-2">

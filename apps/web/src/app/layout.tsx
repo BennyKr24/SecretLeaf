@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import Link from "next/link";
+import type { Route } from "next";
 import SearchBar from "@/components/SearchBar";
 import "./globals.css";
 
@@ -9,7 +10,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-displ
 
 export const metadata: Metadata = {
   title: "SecretLeaf",
-  description: "Privacy-first Cannabis-Wissensplattform mit Wiki, Dünger-Katalog und Suche"
+  description: "Privacy-first Cannabis-Plattform mit Studies, Tools, Database, Dashboard und Suche"
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -24,19 +25,22 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <span className="hidden sm:inline">SecretLeaf</span>
             </Link>
 
-            {/* Nav-Links */}
+            {/* Primary Navigation */}
             <div className="hidden md:flex items-center gap-1 text-sm text-slate-600">
-              <Link href="/wiki" className="px-3 py-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition font-medium">
-                Wiki
+              <Link href={"/studies" as Route} className="px-3 py-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition font-medium">
+                Studies
               </Link>
-              <Link href="/fertilizers" className="px-3 py-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition font-medium">
-                Dünger
+              <Link href={"/tools" as Route} className="px-3 py-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition font-medium">
+                Tools
               </Link>
-              <Link href="/dashboard" className="px-3 py-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition font-medium">
-                Marktplatz
+              <Link href={"/database" as Route} className="px-3 py-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition font-medium">
+                Database
               </Link>
-              <Link href="/status" className="px-3 py-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition font-medium">
-                Status
+              <Link href={"/dashboard" as Route} className="px-3 py-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition font-medium">
+                Dashboard
+              </Link>
+              <Link href={"/search" as Route} className="px-3 py-1.5 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition font-medium">
+                Search
               </Link>
             </div>
 
@@ -46,9 +50,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {/* SearchBar */}
             <SearchBar />
 
-            {/* Auth */}
             <Link
-              href="/auth"
+              href={"/status" as Route}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition"
+            >
+              Status
+            </Link>
+
+            {/* Secondary Navigation */}
+            <Link
+              href={"/auth" as Route}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition"
             >
               Anmelden

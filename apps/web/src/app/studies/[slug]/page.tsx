@@ -57,7 +57,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
           <div className="rounded-2xl border border-slate-200 bg-white/90 p-6 sm:p-8 shadow-sm">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-1.5 text-sm text-slate-500 mb-5">
-              <Link href="/wiki" className="hover:text-emerald-700 font-medium transition-colors">Wiki</Link>
+              <Link href={"/studies" as Route} className="hover:text-emerald-700 font-medium transition-colors">Wiki</Link>
               <span className="text-slate-300">/</span>
               <span className="text-slate-500">{categoryLabels[article.category]}</span>
               <span className="text-slate-300">/</span>
@@ -248,7 +248,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
                 <p className="text-xs font-semibold text-slate-700 mb-1">🔬 Quellen</p>
                 <p className="text-xs text-slate-500">
                   Referenzen stehen unten im Artikel oder im{' '}
-                  <Link href="/wiki/quellen" className="text-emerald-600 hover:text-emerald-700 font-semibold">
+                  <Link href={"/studies/sources" as Route} className="text-emerald-600 hover:text-emerald-700 font-semibold">
                     Quellenregister
                   </Link>.
                 </p>
@@ -286,7 +286,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
             <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
                 <h2 className="text-2xl font-bold text-slate-900">Quellen</h2>
-                <Link href="/wiki/quellen"
+                <Link href={"/studies/sources" as Route}
                   className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
                   → Gesamtregister
                 </Link>
@@ -325,7 +325,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
                 {relatedArticles.map((entry) => (
                   <Link
                     key={entry.slug}
-                      href={`/wiki/${entry.slug}` as Route}
+                      href={`/studies/${entry.slug}` as Route}
                     className="rounded-xl border border-slate-200 bg-slate-50 p-4
                       hover:border-emerald-300 hover:bg-emerald-50 transition-all group"
                   >

@@ -240,7 +240,7 @@ function ArticleCard({ article, categoryLabel, difficultyLabels, isNew, isBookma
           </span>
         </div>
         <Link
-          href={`/wiki/${article.slug}` as Route}
+          href={`/studies/${article.slug}` as Route}
           onClick={() => onOpen(article.slug)}
           className="inline-flex items-center gap-1 rounded-lg bg-[#1f7a4f] px-3 py-1.5
             text-xs font-semibold text-white hover:bg-[#17613f] transition-colors"
@@ -513,7 +513,7 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
                 {recentArticles.slice(0, 4).map((entry) => (
                   <Link
                     key={entry.slug}
-                    href={`/wiki/${entry.slug}` as Route}
+                    href={`/studies/${entry.slug}` as Route}
                     className="block rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-emerald-200 hover:text-emerald-700 transition-all"
                   >
                     {entry.title}
@@ -530,7 +530,7 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
                 {bookmarkedArticles.slice(0, 4).map((entry) => (
                   <Link
                     key={entry.slug}
-                    href={`/wiki/${entry.slug}` as Route}
+                    href={`/studies/${entry.slug}` as Route}
                     className="block rounded-lg border border-amber-100 bg-white px-3 py-2 text-sm text-slate-700 hover:border-amber-300 hover:text-amber-800 transition-all"
                   >
                     {entry.title}
@@ -648,13 +648,13 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <p className="text-sm font-semibold text-slate-700">Mehr entdecken</p>
         <div className="mt-3 flex flex-wrap gap-3">
-          <Link href="/wiki/quellen"
+          <Link href={"/studies/sources" as Route}
             className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200
               bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-emerald-300
               hover:bg-emerald-50 hover:text-emerald-800 transition-all">
             🔬 {totalSources} Wissenschaftliche Quellen
           </Link>
-          <Link href="/fertilizers"
+          <Link href={"/database/fertilizers" as Route}
             className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200
               bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-amber-300
               hover:bg-amber-50 hover:text-amber-800 transition-all">

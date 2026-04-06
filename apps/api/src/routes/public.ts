@@ -77,8 +77,8 @@ export const publicRoutes: FastifyPluginAsync = async (app) => {
       ]);
 
       const featuredListings = latestListings
-        .map((listing) => mapPublicListing(listing))
-        .filter((listing) => listing.cheapestPrice !== null);
+        .map((listing: (typeof latestListings)[number]) => mapPublicListing(listing))
+        .filter((listing: ReturnType<typeof mapPublicListing>) => listing.cheapestPrice !== null);
 
       return {
         generatedAt: new Date().toISOString(),
@@ -148,10 +148,10 @@ export const publicRoutes: FastifyPluginAsync = async (app) => {
       });
 
       const filteredListings = listings
-        .map((listing) => mapPublicListing(listing))
-        .filter((listing) => listing.cheapestPrice !== null)
-        .filter((listing) => (parsedMinPrice !== undefined ? (listing.cheapestPrice as number) >= parsedMinPrice : true))
-        .filter((listing) => (parsedMaxPrice !== undefined ? (listing.cheapestPrice as number) <= parsedMaxPrice : true))
+        .map((listing: (typeof listings)[number]) => mapPublicListing(listing))
+        .filter((listing: ReturnType<typeof mapPublicListing>) => listing.cheapestPrice !== null)
+        .filter((listing: ReturnType<typeof mapPublicListing>) => (parsedMinPrice !== undefined ? (listing.cheapestPrice as number) >= parsedMinPrice : true))
+        .filter((listing: ReturnType<typeof mapPublicListing>) => (parsedMaxPrice !== undefined ? (listing.cheapestPrice as number) <= parsedMaxPrice : true))
         .slice(0, safeLimit);
 
       return {
@@ -233,10 +233,15 @@ export const publicRoutes: FastifyPluginAsync = async (app) => {
         }
       };
 
+      const typedAuditLogs = auditLogs as Array<{ action: string; createdAt: Date }>;
+
       const events: StatusEvent[] = Object.entries(actionMap).map(([action, cfg]) => {
-        const matching = auditLogs.filter((entry) => entry.action === action);
+        const matching = typedAuditLogs.filter((entry: { action: string; createdAt: Date }) => entry.action === action);
         const count = matching.length;
-        const latest = matching.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
+        const latest = matching.sort(
+          (a: { action: string; createdAt: Date }, b: { action: string; createdAt: Date }) =>
+            b.createdAt.getTime() - a.createdAt.getTime()
+        )[0];
 
         let level: RiskLevel = "green";
         if (count >= cfg.thresholdRed) {

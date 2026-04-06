@@ -16,3 +16,4 @@ backups/
 apps/web/public/
 *.tsbuildinfo
 .vercel
+.env*.local

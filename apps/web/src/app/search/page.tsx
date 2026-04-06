@@ -221,7 +221,7 @@ function SearchContent() {
                 ? 'Keine Ergebnisse'
                 : `${data.totalResults} Ergebnisse für „${data.query}" · ${data.duration_ms}ms`}
             </span>
-            <Link href="/wiki" className="text-emerald-600 hover:text-emerald-700 font-medium">
+            <Link href={"/studies" as Route} className="text-emerald-600 hover:text-emerald-700 font-medium">
               → Wiki Hub
             </Link>
           </div>
@@ -290,14 +290,14 @@ function SearchContent() {
         {!hasSearched && !isPending && (
           <div className="text-center py-12">
             <p className="text-slate-500 text-base mb-6">
-              Durchsuche Wiki-Artikel, Dünger-Profile, Glossar-Begriffe und wissenschaftliche Quellen.
+              Durchsuche Studies, Database-Eintraege, Tools und wissenschaftliche Quellen.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { label: '📚 Wiki-Artikel', href: '/wiki', count: '13' },
-                { label: '🌿 Dünger', href: '/fertilizers', count: '50+' },
-                { label: '📖 Glossar', href: '/wiki', count: 'integriert' },
-                { label: '🔬 Quellen', href: '/wiki/quellen', count: '41' },
+                { label: '📚 Studies', href: '/studies', count: '13' },
+                { label: '🗂 Database', href: '/database', count: '1+' },
+                { label: '🧰 Tools', href: '/tools', count: '1+' },
+                { label: '🔬 Quellen', href: '/studies/sources', count: '41' },
               ].map((item) => (
                 <Link
                   key={item.href}

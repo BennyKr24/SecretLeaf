@@ -133,7 +133,35 @@ SMTP_HOST="smtp.provider.com"
 SMTP_PORT="587"
 SMTP_USER="noreply@..."
 SMTP_PASS="..."
+
+# Supabase (automatischer Studien-Sync + API)
+SUPABASE_URL="https://<project-ref>.supabase.co"
+SUPABASE_SERVICE_ROLE_KEY="<service-role-key>"
+# Public Browser Auth
+NEXT_PUBLIC_SUPABASE_URL="https://<project-ref>.supabase.co"
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY="<publishable-key>"
+
+# Cron-Schutz fuer Automation-Routen
+CRON_SECRET="long-random-secret"
 ```
+
+### Studien-Automation ohne manuelle Ausfuehrung
+Die Web-App synchronisiert Studien automatisch in Supabase:
+
+- `/api/automation/study-refresh` taeglich um 04:17 UTC
+- `/api/automation/studies-sync` taeglich um 04:27 UTC
+- `/api/automation/cleanup` sonntags um 04:40 UTC
+- `/api/automation/health` fuer Laufhistorie und Freshness-Diagnostik
+
+Die Routen sind per `CRON_SECRET` geschuetzt. Auf Vercel wird kein lokaler Rechner benoetigt.
+
+### Supabase SQL Migrations
+- Alle produktiven DB- und RLS-Aenderungen liegen in `supabase/migrations`.
+- Rolle fuer API-Authorisierung wird serverseitig ueber `public.user_roles` geprueft (nicht ueber `user_metadata`).
+- Neu hinzugekommen fuer Härtung:
+  - `supabase/migrations/20260406_003_rls_hardening.sql`
+  - `supabase/migrations/20260406_004_studies_fingerprint_index_rebuild.sql`
+  - `supabase/migrations/20260406_005_automation_runs.sql`
 
 ---
 

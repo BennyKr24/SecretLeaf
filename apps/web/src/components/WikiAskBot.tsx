@@ -411,7 +411,7 @@ export default function WikiAskBot() {
                               {msg.sources.map(src => (
                                 <Link
                                   key={src.slug}
-                                    href={`/wiki/${src.slug}` as Route}
+                                    href={`/studies/${src.slug}` as Route}
                                   onClick={() => setOpen(false)}
                                   className="flex items-start gap-2 rounded-lg border border-slate-200
                                     bg-white px-3 py-2 text-xs hover:border-emerald-300

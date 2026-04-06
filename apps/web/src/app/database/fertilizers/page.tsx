@@ -538,7 +538,7 @@ function FertilizersPageInner() {
 
     if (nextQuery) qs.set('q', nextQuery);
     else qs.delete('q');
-    const next = qs.toString() ? `/fertilizers?${qs.toString()}` : '/fertilizers';
+    const next = qs.toString() ? `/database/fertilizers?${qs.toString()}` : '/database/fertilizers';
     router.replace(next as Route, { scroll: false });
   }, [searchQuery, router, searchParams]);
 
@@ -648,18 +648,15 @@ function FertilizersPageInner() {
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <Link href="/wiki" className="text-emerald-600 hover:text-emerald-700 text-sm font-medium mb-4 inline-flex items-center gap-2">
-            ← Zurück zur Wiki
+          <Link href={"/database" as Route} className="text-emerald-600 hover:text-emerald-700 text-sm font-medium mb-4 inline-flex items-center gap-2">
+            ← Zurück zur Database
           </Link>
           <div className="mb-3 flex flex-wrap items-center gap-4">
-            <Link href={'/fertilizers/coverage' as Route} className="text-sm font-medium text-slate-700 hover:text-slate-900 underline-offset-2 hover:underline">
-              Coverage Audit öffnen
+            <Link href={'/tools/plans' as Route} className="text-sm font-medium text-emerald-700 hover:text-emerald-800 underline-offset-2 hover:underline">
+              Tool: Düngerpläne
             </Link>
-            <Link href={'/fertilizers/plans' as Route} className="text-sm font-medium text-emerald-700 hover:text-emerald-800 underline-offset-2 hover:underline">
-              Unterkategorie: Düngerpläne
-            </Link>
-            <Link href={'/wiki/schaedlinge' as Route} className="text-sm font-medium text-rose-700 hover:text-rose-800 underline-offset-2 hover:underline">
-              Wiki: Schädlings-Lexikon
+            <Link href={'/database' as Route} className="text-sm font-medium text-slate-700 hover:text-slate-900 underline-offset-2 hover:underline">
+              Database: Lexika & Quellen
             </Link>
           </div>
           <h1 className="text-4xl font-bold text-slate-900 mb-2">🌿 Dünger-Katalog</h1>
@@ -785,7 +782,7 @@ function FertilizersPageInner() {
               <p className="text-sm text-emerald-800">Praxis-Pläne auf Basis eurer bestehenden Katalogprodukte.</p>
             </div>
             <Link
-              href={'/fertilizers/plans' as Route}
+              href={'/tools/plans' as Route}
               className="inline-flex rounded-lg border border-emerald-300 bg-white px-3 py-2 text-sm font-semibold text-emerald-800 hover:border-emerald-400 hover:bg-emerald-100"
             >
               Zu den Düngerplänen

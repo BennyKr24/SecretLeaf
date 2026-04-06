@@ -82,7 +82,18 @@ app.decorate("authenticate", async (request, reply) => {
 });
 
 app.get("/", async () => ({ name: "SecretLeaf API", version: "1.0.0", status: "ok" }));
-app.get("/health", async () => ({ status: "ok", privacyMode: "minimal-logging" }));
+app.get("/health", async (_request, reply) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    return { status: "ok", privacyMode: "minimal-logging", services: { db: "green" } };
+  } catch {
+    return reply.code(503).send({
+      status: "degraded",
+      privacyMode: "minimal-logging",
+      services: { db: "red" }
+    });
+  }
+});
 app.register(authRoutes, { prefix: "/auth" });
 app.register(listingRoutes, { prefix: "/listings" });
 app.register(publicRoutes, { prefix: "/public" });

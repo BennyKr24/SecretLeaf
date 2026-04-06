@@ -23,6 +23,19 @@ const levelRank: Record<string, number> = {
   red: 2
 };
 
+const toRiskLevel = (value: string | null | undefined): "green" | "yellow" | "red" => {
+  if (value === "red" || value === "yellow" || value === "green") {
+    return value;
+  }
+  return "red";
+};
+
+const mergeWorstLevel = (...levels: Array<string | null | undefined>): "green" | "yellow" | "red" => {
+  return levels
+    .map((value) => toRiskLevel(value))
+    .sort((a, b) => (levelRank[b] ?? 2) - (levelRank[a] ?? 2))[0] as "green" | "yellow" | "red";
+};
+
 const buildStatusHistory = (windowDays: number, overallStatus: string, events: Array<{ level: string; lastSeen: string | null }>) => {
   const totalDays = Math.max(1, Math.min(windowDays || 30, 30));
   const days = Array.from({ length: totalDays }, (_, index) => {
@@ -184,13 +197,13 @@ const getPriorityCards = (overallStatus: string) => {
       {
         title: "2) Kritische Datenwege",
         text: "API/DB-Lage klaeren, damit Zahlen in Coverage- oder Marktansichten korrekt eingeordnet werden.",
-        href: "/fertilizers/coverage",
+        href: "/tools/plans",
         cta: "Coverage mit Vorsicht"
       },
       {
         title: "3) Kommunikation",
         text: "Nur belastbare Hinweise nach außen geben und auf Fallback-Status verweisen.",
-        href: "/wiki/quellen",
+        href: "/studies/sources",
         cta: "Quellenkontext"
       }
     ];
@@ -207,13 +220,13 @@ const getPriorityCards = (overallStatus: string) => {
       {
         title: "2) Datenfrische pruefen",
         text: "Coverage- und Status-Timestamps gegenchecken, bevor Entscheidungen auf Trends basieren.",
-        href: "/fertilizers/coverage",
+        href: "/tools/plans",
         cta: "Coverage ansehen"
       },
       {
         title: "3) Evidenz priorisieren",
         text: "Bei reduzierter Live-Lage bleiben Quellenregister und robuste Basiskennzahlen wichtig.",
-        href: "/wiki/quellen",
+        href: "/studies/sources",
         cta: "Quellenregister"
       }
     ];
@@ -229,13 +242,13 @@ const getPriorityCards = (overallStatus: string) => {
     {
       title: "2) Marktbreite erweitern",
       text: "Coverage-Luecken pro Marke priorisieren und Daten-Updates in festen Intervallen planen.",
-      href: "/fertilizers/coverage",
+      href: "/tools/plans",
       cta: "Coverage Audit"
     },
     {
       title: "3) Wissensqualitaet sichern",
       text: "Quellen und Wiki-Fachbereiche aktuell halten, damit Priorisierungen fachlich belastbar bleiben.",
-      href: "/wiki/quellen",
+      href: "/studies/sources",
       cta: "Quellen & Wiki"
     }
   ];
@@ -250,12 +263,13 @@ export default async function StatusPage() {
 
   const overallStatus = statusReport?.overallStatus ?? "yellow";
   const generatedAt = statusReport ? new Date(statusReport.generatedAt).toLocaleString("de-DE") : "Kein Report verfuegbar";
-  const apiLevel = health?.status === "ok" ? "green" : (statusReport?.services.api ?? "red");
-  const dbLevel = statusReport?.services.db ?? "red";
+  const healthLevel = health?.status === "ok" ? "green" : "red";
+  const apiLevel = mergeWorstLevel(statusReport?.services.api, healthLevel);
+  const dbLevel = toRiskLevel(statusReport?.services.db ?? "red");
   const sourceLabel = health && overview && statusReport ? "Live API" : "Fallback / kein Vollzugriff";
   const historyDays = buildStatusHistory(statusReport?.windowDays ?? 30, overallStatus, statusReport?.events ?? []);
   const impactModel = getImpactModel(overallStatus, apiLevel, dbLevel);
-  const changelog = (changelogData.releases ?? []).slice(0, 6);
+  const openCoverageGap = Math.max(fertilizerCoverageStats.trackedMarketEstimate - fertilizerCoverageStats.coveredProducts, 0);
   const coverageSnapshots = [...(fertilizerCoverageHistoryData.snapshots ?? [])].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
@@ -266,9 +280,24 @@ export default async function StatusPage() {
     ? Number((latestCoverageSnapshot.coverage - previousCoverageSnapshot.coverage).toFixed(1))
     : null;
   const statusFreshness = getFreshnessMeta(statusReport?.generatedAt ?? null);
-  const coverageFreshness = getFreshnessMeta(latestCoverageSnapshot?.date ?? null);
+  const liveStudyCoveragePercent = overview?.stats.studyCoveragePercent ?? fertilizerCoverageStats.coveragePercent;
+  const livePendingStudies = overview?.stats.pendingStudies ?? openCoverageGap;
+  const coverageFreshness = getFreshnessMeta(overview?.stats.latestStudyAt ?? latestCoverageSnapshot?.date ?? null);
   const priorityCards = getPriorityCards(overallStatus);
-  const openCoverageGap = Math.max(fertilizerCoverageStats.trackedMarketEstimate - fertilizerCoverageStats.coveredProducts, 0);
+
+  const operationalChangelog = (statusReport?.events ?? [])
+    .filter((event) => event.count > 0 || event.lastSeen)
+    .slice(0, 4)
+    .map((event) => ({
+      hash: `ops-${event.key}-${event.lastSeen ?? statusReport?.generatedAt ?? "now"}`,
+      version: null,
+      date: (event.lastSeen ?? statusReport?.generatedAt ?? new Date().toISOString()).slice(0, 10),
+      title: event.label,
+      type: event.level === "red" ? "security" : event.level === "yellow" ? "fix" : "update",
+      changes: [event.description, `Count: ${event.count}`],
+    }));
+
+  const changelog = [...operationalChangelog, ...(changelogData.releases ?? [])].slice(0, 8);
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#ecf7f0] via-[#f6fbf8] to-[#ffffff]">
@@ -371,12 +400,12 @@ export default async function StatusPage() {
                 <div className="mt-1 text-xs text-[#4d685a]">Gesamtstatus</div>
               </div>
               <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-2xl font-bold text-[#123024]">{fertilizerCoverageStats.coveragePercent}%</div>
-                <div className="mt-1 text-xs text-[#4d685a]">Katalog-Coverage</div>
+                <div className="text-2xl font-bold text-[#123024]">{liveStudyCoveragePercent}%</div>
+                <div className="mt-1 text-xs text-[#4d685a]">Studien-Coverage (good)</div>
               </div>
               <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-2xl font-bold text-[#123024]">{openCoverageGap}</div>
-                <div className="mt-1 text-xs text-[#4d685a]">offene Linien</div>
+                <div className="text-2xl font-bold text-[#123024]">{livePendingStudies}</div>
+                <div className="mt-1 text-xs text-[#4d685a]">offene Studien-Reviews</div>
               </div>
             </div>
 
@@ -481,13 +510,13 @@ export default async function StatusPage() {
             <Link href="/status" className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
               Status Fokus
             </Link>
-            <Link href="/fertilizers/coverage" className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+            <Link href={"/tools/plans" as Route} className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
               Coverage Audit
             </Link>
-            <Link href="/wiki/quellen" className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+            <Link href={"/studies/sources" as Route} className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
               Quellenregister
             </Link>
-            <Link href="/fertilizers" className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+            <Link href={"/database/fertilizers" as Route} className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
               Duenger-Katalog
             </Link>
           </div>
@@ -497,7 +526,7 @@ export default async function StatusPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Coverage Verlauf</p>
           <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Duenger-Marktabdeckung im Zeitverlauf</h2>
           <p className="mt-2 text-sm text-[#4d685a]">
-            Letzter Snapshot: {fertilizerCoverageStats.coveredProducts} von {fertilizerCoverageStats.trackedMarketEstimate} Linien ({fertilizerCoverageStats.coveragePercent}%).
+            Live Studien-Coverage: {overview?.stats.goodStudies ?? 0} von {overview?.stats.totalStudies ?? 0} als good markiert ({liveStudyCoveragePercent}%).
           </p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -514,8 +543,8 @@ export default async function StatusPage() {
               </p>
             </div>
             <div className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">Verbleibende Luecke</p>
-              <p className="mt-2 text-2xl font-bold text-[#123024]">{openCoverageGap}</p>
+              <p className="text-xs text-[#6b8577]">Offene Reviews</p>
+              <p className="mt-2 text-2xl font-bold text-[#123024]">{livePendingStudies}</p>
             </div>
           </div>
 

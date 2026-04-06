@@ -55,6 +55,47 @@
 ## 📦 Folder Structure
 
 ```
+
+---
+
+## 🧭 Information Architecture (Product Level)
+
+Die Plattform verwendet eine klare, nutzerzentrierte Top-Level-Struktur mit fünf Hauptbereichen.
+
+### Primary Navigation
+- `/studies` (Knowledge)
+- `/tools` (Operational Tools)
+- `/database` (Structured Catalogs)
+- `/dashboard` (User Workspace)
+- `/search` (Cross-domain Discovery)
+
+### Route Hierarchy
+- `Home`
+   - `/`
+- `Studies`
+   - `/studies`
+   - `/studies/[slug]`
+   - `/studies/sources`
+   - `/studies/pests`
+   - `/studies/deficiencies`
+- `Tools`
+   - `/tools`
+   - `/tools/plans`
+- `Database`
+   - `/database`
+   - `/database/fertilizers`
+- `Dashboard`
+   - `/dashboard`
+   - `/dashboard/review`
+- `System`
+   - `/status`
+   - `/auth`
+
+### Design Rules
+- Keine Legacy-Doppelstrukturen in der Primärnavigation.
+- Jede Route gehört genau zu einem klaren Domain-Bereich.
+- Nutzerflüsse zu Kernzielen bleiben in 2-3 Klicks erreichbar.
+- Header bleibt schlank: Primary Navigation + sekundäre Aktionen (Status/Auth).
 SecretLeaf/
 ├── apps/
 │   ├── api/              # Fastify backend
@@ -176,7 +217,7 @@ GET /public/overview
 
 ### Wiki Article View
 ```
-User clicks /wiki/cannabis-anbau-grundlagen
+User clicks /studies/cannabis-anbau-grundlagen
 ↓
 Next.js checks pre-rendered cache
 ↓
@@ -373,7 +414,7 @@ rm -rf apps/web/.next
 npm run build
 
 # Check output
-ls -la apps/web/.next/server/app/wiki/
+ls -la apps/web/.next/server/app/studies/
 ```
 
 ---

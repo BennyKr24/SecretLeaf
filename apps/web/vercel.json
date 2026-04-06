@@ -4,6 +4,14 @@
     {
       "path": "/api/automation/study-refresh",
       "schedule": "17 4 * * *"
+    },
+    {
+      "path": "/api/automation/studies-sync",
+      "schedule": "27 4 * * *"
+    },
+    {
+      "path": "/api/automation/cleanup",
+      "schedule": "40 4 * * 0"
     }
   ]
 }

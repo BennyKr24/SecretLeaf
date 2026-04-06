@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import type { Route } from "next";
 import { areaLabel, riskClass, riskLabel, stageLabel, type GrowArea, type PlantStage, type RiskLevel } from "@/lib/terpira/lexicon";
 
 type DefCategory = "makro" | "sekundaer" | "mikro" | "stress";
@@ -691,7 +692,7 @@ export default function DeficiencyLexiconPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-6 py-10">
       <section className="mx-auto max-w-7xl">
-        <Link href="/wiki" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
+        <Link href={"/studies" as Route} className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
           ← Zurück zum Wiki
         </Link>
 
@@ -934,7 +935,7 @@ export default function DeficiencyLexiconPage() {
             {lifecycleHubCards.map((card) => (
               <Link
                 key={card.slug}
-                href={`/wiki/${card.slug}`}
+                href={`/studies/${card.slug}` as Route}
                 className="group rounded-xl border border-slate-200 bg-white p-4 transition hover:border-violet-300 hover:bg-violet-50"
               >
                 <p className="text-sm font-bold text-slate-900 group-hover:text-violet-900">{card.title}</p>
@@ -968,7 +969,7 @@ export default function DeficiencyLexiconPage() {
             {wikiLinks.map((link) => (
               <Link
                 key={link.slug}
-                href={`/wiki/${link.slug}`}
+                href={`/studies/${link.slug}` as Route}
                 className="group flex flex-col gap-1.5 rounded-xl border border-slate-200 bg-slate-50 p-4 transition hover:border-emerald-300 hover:bg-emerald-50"
               >
                 <span className={`self-start rounded-full border px-2 py-0.5 text-[10px] font-semibold ${link.tagColor}`}>

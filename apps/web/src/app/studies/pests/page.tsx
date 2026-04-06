@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import type { Route } from "next";
 import { areaLabel, riskClass, riskLabel, stageLabel, type GrowArea, type PlantStage, type RiskLevel } from "@/lib/terpira/lexicon";
 
 type PestCategory = "saugend" | "blattfresser" | "substrat" | "wurzel";
@@ -650,7 +651,7 @@ export default function PestLexiconPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-6 py-10">
       <section className="mx-auto max-w-7xl">
-        <Link href="/wiki" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
+        <Link href={"/studies" as Route} className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
           ← Zurück zum Wiki
         </Link>
 
@@ -989,7 +990,7 @@ export default function PestLexiconPage() {
             ] as { slug: string; title: string; tag: string; tagColor: string; desc: string }[]).map((link) => (
               <Link
                 key={link.slug}
-                href={`/wiki/${link.slug}`}
+                href={`/studies/${link.slug}` as Route}
                 className="group flex flex-col gap-1.5 rounded-xl border border-slate-200 bg-slate-50 p-4 transition hover:border-emerald-300 hover:bg-emerald-50"
               >
                 <span className={`self-start rounded-full border px-2 py-0.5 text-[10px] font-semibold ${link.tagColor}`}>

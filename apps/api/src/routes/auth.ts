@@ -1,8 +1,13 @@
-import { Prisma } from "@prisma/client";
 import { FastifyPluginAsync } from "fastify";
 import { z } from "zod";
 import { prisma } from "../lib/prisma.js";
 import { hashPassword, normalizeEmail, verifyPassword } from "../lib/security.js";
+
+function isUniqueConstraintError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const candidate = error as { code?: unknown; name?: unknown };
+  return candidate.code === "P2002" || (candidate.name === "PrismaClientKnownRequestError" && candidate.code === "P2002");
+}
 
 const registerSchema = z.object({
   username: z.string().min(3).max(32).regex(/^[a-zA-Z0-9_-]+$/, "Invalid username"),
@@ -62,7 +67,7 @@ export const authRoutes: FastifyPluginAsync = async (app) => {
           }
         });
       } catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+        if (isUniqueConstraintError(error)) {
           return reply.code(409).send({ error: "Username or email already in use" });
         }
         request.log.error(error);

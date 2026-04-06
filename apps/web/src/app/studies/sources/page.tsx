@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import type { Route } from "next";
 import { sourceRegister } from "@/data/terpira/wiki";
 
 export default function WikiSourcesPage() {
@@ -72,7 +73,7 @@ export default function WikiSourcesPage() {
   return (
     <main className="min-h-screen px-6 py-12">
       <section className="mx-auto max-w-6xl rounded-2xl border border-[#d8e8dd] bg-white/90 p-8 shadow-sm">
-        <Link href="/wiki" className="text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
+        <Link href={"/studies" as Route} className="text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
           ← Zurueck zum Wiki
         </Link>
 
@@ -89,7 +90,7 @@ export default function WikiSourcesPage() {
               Neu im Register: das Schädlings-Lexikon mit Bildkarten, Kategorien, Risiko-Filtern und Gegenmaßnahmen.
             </p>
             <Link
-              href="/wiki/schaedlinge"
+              href={"/studies/pests" as Route}
               className="inline-flex rounded-lg border border-rose-300 bg-white px-3 py-1.5 text-sm font-semibold text-rose-700 hover:bg-rose-100"
             >
               Schädlings-Lexikon öffnen

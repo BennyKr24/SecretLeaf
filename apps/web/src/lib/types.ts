@@ -47,6 +47,11 @@ export type PublicOverview = {
     activeListings: number;
     providers: number;
     privacyMode: string;
+    totalStudies?: number;
+    goodStudies?: number;
+    pendingStudies?: number;
+    studyCoveragePercent?: number;
+    latestStudyAt?: string | null;
   };
   featuredListings: PublicListing[];
 };
@@ -89,5 +94,38 @@ export type PublicStatusReport = {
     db: RiskLevel;
   };
   events: StatusEvent[];
+};
+
+export type StudyRecord = {
+  id: string;
+  title: string;
+  description: string | null;
+  source: string | null;
+  tags: string[];
+  qualityStatus: "good" | "pending" | "bad";
+  reviewedAt: string | null;
+  reviewedBy: string | null;
+  reviewNote: string | null;
+  createdAt: string | null;
+};
+
+export type CreateStudyInput = {
+  title: string;
+  description?: string;
+  source?: string;
+  tags?: string[];
+};
+
+export type StudiesPagination = {
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNext: boolean;
+};
+
+export type StudiesListResponse = {
+  studies: StudyRecord[];
+  total: number;
+  pagination: StudiesPagination;
 };
 

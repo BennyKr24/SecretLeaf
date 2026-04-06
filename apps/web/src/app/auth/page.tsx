@@ -3,34 +3,20 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { apiRequest } from "@/lib/api";
-import { saveSession } from "@/lib/auth";
+import { loginWithSupabase, registerWithSupabase, saveSession } from "@/lib/auth";
 import { DEMO_SESSION, DEMO_SESSION_PROVIDER } from "@/lib/demoData";
-import { SessionData, UserRole } from "@/lib/types";
 
 const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
-
-// Lokaler Admin-Zugang (kein API-Call nötig, kein produktives Backend erforderlich)
-const LOCAL_ADMIN: Record<string, { password: string; sessionData: import("@/lib/types").SessionData }> = {
-  benny: {
-    password: "12345678910",
-    sessionData: {
-      token: "local-admin-benny",
-      user: { id: "admin-benny", username: "Benny", role: "PROVIDER" }
-    }
-  }
-};
 
 type AuthMode = "login" | "register";
 
 export default function AuthPage() {
   const router = useRouter();
   const [mode, setMode] = useState<AuthMode>("login");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState<UserRole>("CONSUMER");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
   const demoLogin = (asProvider = false) => {
@@ -42,37 +28,27 @@ export default function AuthPage() {
     event.preventDefault();
     setPending(true);
     setError(null);
-
-    // Lokaler Admin-Bypass (kein Backend nötig)
-    if (mode === "login") {
-      const localAdmin = LOCAL_ADMIN[username.trim().toLowerCase()];
-      if (localAdmin && password === localAdmin.password) {
-        saveSession(localAdmin.sessionData);
-        setPending(false);
-        router.push("/dashboard");
-        return;
-      }
-    }
+    setInfo(null);
 
     try {
-      const endpoint = mode === "login" ? "/auth/login" : "/auth/register";
-      const body =
-        mode === "login"
-          ? { username, password }
-          : {
-              username,
-              password,
-              role,
-              ...(email.trim() ? { email } : {})
-            };
+      const cleanEmail = email.trim().toLowerCase();
+      if (!cleanEmail) {
+        throw new Error("E-Mail ist erforderlich");
+      }
 
-      const response = await apiRequest<SessionData>(endpoint, {
-        method: "POST",
-        body
-      });
-
-      saveSession(response);
-      router.push("/dashboard");
+      if (mode === "login") {
+        await loginWithSupabase({ email: cleanEmail, password });
+        router.push("/dashboard");
+      } else {
+        const session = await registerWithSupabase({ email: cleanEmail, password });
+        if (session) {
+          saveSession(session);
+          router.push("/dashboard");
+        } else {
+          setInfo("Konto erstellt. Bitte bestaetige deine E-Mail und logge dich danach ein.");
+          setMode("login");
+        }
+      }
     } catch (authError) {
       setError(authError instanceof Error ? authError.message : "Authentifizierung fehlgeschlagen");
     } finally {
@@ -91,7 +67,7 @@ export default function AuthPage() {
             {mode === "login" ? "Willkommen zurück" : "Konto erstellen"}
           </h1>
           <p className="mt-2 text-sm text-[#4d685a]">
-            Nur minimale Felder. Keine echten Namen erforderlich.
+            Login und Registrierung laufen jetzt ueber Supabase Auth.
           </p>
         </div>
 
@@ -122,18 +98,16 @@ export default function AuthPage() {
 
         <form onSubmit={submit} className="space-y-5 rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
           <div>
-            <label htmlFor="username" className="mb-2 block text-sm font-medium text-[#355b49]">
-              Benutzername
+            <label htmlFor="email" className="mb-2 block text-sm font-medium text-[#355b49]">
+              E-Mail
             </label>
             <input
-              id="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
-              minLength={3}
-              maxLength={32}
-              placeholder="dein-pseudonym"
+              placeholder="du@beispiel.de"
               className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
             />
           </div>
@@ -155,41 +129,20 @@ export default function AuthPage() {
           </div>
 
           {mode === "register" && (
-            <>
-              <div>
-                <label htmlFor="email" className="mb-2 block text-sm font-medium text-[#355b49]">
-                  E-Mail <span className="text-[#7b9688]">(optional)</span>
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="optional@beispiel.de"
-                  className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="role" className="mb-2 block text-sm font-medium text-[#355b49]">
-                  Ich möchte
-                </label>
-                <select
-                  id="role"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value as UserRole)}
-                  className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
-                >
-                  <option value="CONSUMER">Nur Angebote suchen</option>
-                  <option value="PROVIDER">Nur Angebote erstellen</option>
-                </select>
-              </div>
-            </>
+            <div className="rounded-xl border border-[#d8e8dd] bg-[#f6faf7] p-3 text-sm text-[#4d685a]">
+              Neue Konten starten mit Rolle <span className="font-semibold">CONSUMER</span>. Provider-Rechte werden serverseitig vergeben.
+            </div>
           )}
 
           {error && (
             <div className="rounded-xl border border-[#e7c1c1] bg-[#fff4f4] p-3 text-sm text-[#a54b4b]">
               {error}
+            </div>
+          )}
+
+          {info && (
+            <div className="rounded-xl border border-[#b8dfc2] bg-[#eefaf2] p-3 text-sm text-[#2f6b45]">
+              {info}
             </div>
           )}
 

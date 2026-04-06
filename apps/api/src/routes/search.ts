@@ -36,9 +36,21 @@ export const searchRoutes: FastifyPluginAsync = async (app) => {
       take: 100
     });
 
+    type Offer = {
+      id: string;
+      title: string;
+      description: string | null;
+      quantityAvailable: number;
+      unit: string;
+      provider: string;
+      priceTiers: Array<{ qty: number; pricePerUnit: number }>;
+      cheapestPrice: number;
+      locationZone: string;
+    };
+
     // Filter by price from priceTiers JSON
-    const offers = listings
-      .map((listing) => {
+    const offers: Offer[] = listings
+      .map((listing: (typeof listings)[number]) => {
         const priceTiers = JSON.parse(listing.priceTiers) as Array<{ qty: number; pricePerUnit: number }>;
         const cheapest = Math.min(...priceTiers.map((tier) => tier.pricePerUnit));
 
@@ -54,9 +66,9 @@ export const searchRoutes: FastifyPluginAsync = async (app) => {
           locationZone: listing.locationZone
         };
       })
-      .filter((offer) => (minPrice ? offer.cheapestPrice >= minPrice : true))
-      .filter((offer) => (maxPrice ? offer.cheapestPrice <= maxPrice : true))
-      .sort((a, b) => a.cheapestPrice - b.cheapestPrice);
+      .filter((offer: Offer) => (minPrice ? offer.cheapestPrice >= minPrice : true))
+      .filter((offer: Offer) => (maxPrice ? offer.cheapestPrice <= maxPrice : true))
+      .sort((a: Offer, b: Offer) => a.cheapestPrice - b.cheapestPrice);
 
     return reply.send({ offers, total: offers.length });
   });

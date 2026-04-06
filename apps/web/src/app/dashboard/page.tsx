@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import type { Route } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ListingManager } from "@/components/ListingManager";
 import { OfferCard } from "@/components/OfferCard";
 import { apiRequest } from "@/lib/api";
-import { clearSession, getSession } from "@/lib/auth";
+import { logoutFromSupabase, restoreSessionFromSupabase } from "@/lib/auth";
 import { Offer, SessionData } from "@/lib/types";
 
 type SearchResponse = {
@@ -33,7 +34,10 @@ export default function DashboardPage() {
   const [maxPrice, setMaxPrice] = useState(25);
 
   useEffect(() => {
-    setSession(getSession());
+    void (async () => {
+      const restored = await restoreSessionFromSupabase();
+      setSession(restored);
+    })();
   }, []);
 
   const loadMyListings = useCallback(async () => {
@@ -112,16 +116,18 @@ export default function DashboardPage() {
             <p className="text-sm text-[#4d685a]">Angemeldet als @{session.user.username}</p>
           </div>
           <div className="flex gap-3">
-            <Link href="/" className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
+            <Link href={"/" as Route} className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
               Startseite
             </Link>
-            <Link href="/wiki" className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
-              Wiki
+            <Link href={"/studies" as Route} className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
+              Studies
             </Link>
             <button 
               onClick={() => {
-                clearSession();
-                setSession(null);
+                void (async () => {
+                  await logoutFromSupabase();
+                  setSession(null);
+                })();
               }}
               className="text-sm font-medium text-[#4d685a] hover:text-[#173126]"
             >
@@ -137,10 +143,10 @@ export default function DashboardPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Internes Curation Tool</p>
             <h2 className="mt-2 text-2xl font-semibold text-[#123024]">Studien in 1 Minute pruefen</h2>
             <p className="mt-3 text-sm text-[#4d685a]">
-              Neue Auto-Studien sind dort bereits auf 3 kurze Zeilen verdichtet, inklusive Herkunft, Autor und Institut/Uni, damit du schnell entscheiden kannst, was ins Wiki soll.
+              Neue Auto-Studien sind auf 3 kurze Zeilen verdichtet, inklusive Herkunft, Autor und Institut/Uni, damit du schnell entscheiden kannst, was in den Knowledge-Bereich soll.
             </p>
             <Link
-              href="/dashboard/studies"
+              href={"/dashboard/review" as Route}
               className="mt-5 inline-flex rounded-xl bg-[#1f7a4f] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#17613f]"
             >
               Interne Studien-Review oeffnen

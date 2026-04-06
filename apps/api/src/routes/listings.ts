@@ -35,7 +35,7 @@ export const listingRoutes: FastifyPluginAsync = async (app) => {
       where: { providerId: userId },
       orderBy: { updatedAt: "desc" }
     });
-    return listings.map((l) => ({ ...l, priceTiers: JSON.parse(l.priceTiers) }));
+    return listings.map((l: (typeof listings)[number]) => ({ ...l, priceTiers: JSON.parse(l.priceTiers) }));
   });
 
   // Create listing
@@ -84,17 +84,26 @@ export const listingRoutes: FastifyPluginAsync = async (app) => {
       return reply.code(404).send({ error: "Listing not found" });
     }
 
-    const updateData = Object.fromEntries(
-      Object.entries(parsed.data).filter(([, v]) => v !== undefined)
-    ) as Record<string, unknown>;
+    const payload = parsed.data;
+    const updateData: {
+      title?: string;
+      description?: string;
+      quantityAvailable?: number;
+      priceTiers?: string;
+      isActive?: boolean;
+    } = {};
 
-    if (updateData["priceTiers"] !== undefined) {
-      updateData["priceTiers"] = JSON.stringify(updateData["priceTiers"]);
+    if (payload.title !== undefined) updateData.title = payload.title;
+    if (payload.description !== undefined) updateData.description = payload.description;
+    if (payload.quantityAvailable !== undefined) updateData.quantityAvailable = payload.quantityAvailable;
+    if (payload.isActive !== undefined) updateData.isActive = payload.isActive;
+    if (payload.priceTiers !== undefined) {
+      updateData.priceTiers = JSON.stringify(payload.priceTiers);
     }
 
     const updated = await prisma.listing.update({
       where: { id: listingId },
-      data: updateData as Parameters<typeof prisma.listing.update>[0]["data"]
+      data: updateData
     });
 
     return reply.send({ ...updated, priceTiers: JSON.parse(updated.priceTiers) });
