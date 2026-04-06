@@ -297,7 +297,16 @@ export default async function StatusPage() {
       changes: [event.description, `Count: ${event.count}`],
     }));
 
-  const changelog = [...operationalChangelog, ...(changelogData.releases ?? [])].slice(0, 8);
+  const changelog = [...(changelogData.releases ?? []), ...operationalChangelog]
+    .sort((a, b) => {
+      const byDate = new Date(b.date).getTime() - new Date(a.date).getTime();
+      if (byDate !== 0) return byDate;
+      const aIsRelease = Boolean(a.version);
+      const bIsRelease = Boolean(b.version);
+      if (aIsRelease === bIsRelease) return 0;
+      return aIsRelease ? -1 : 1;
+    })
+    .slice(0, 8);
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#ecf7f0] via-[#f6fbf8] to-[#ffffff]">
