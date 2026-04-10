@@ -105,10 +105,10 @@ function matchTopics(text: string): {
   }
 
   // Bonus for core cannabis terms
-  if (/cannabis|cannabinoid|thc|cbd/i.test(text)) {
+  if (/cannabis|cannabinoid|thc|thca|cbd|cbda|cbg|cbn|terpene|terpenoid/i.test(text)) {
     topicFit += 14;
   }
-  if (/quality|labor|contaminant|microbiology|pharmacokinetic|clinical|cultivation|regulation/i.test(text)) {
+  if (/quality|labor|contaminant|microbiology|pharmacokinetic|clinical|cultivation|postharvest|curing|drying|storage|greenhouse|indoor|regulation/i.test(text)) {
     topicFit += 10;
   }
 

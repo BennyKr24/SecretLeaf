@@ -15,12 +15,12 @@ const DEFAULT_ROWS_PER_QUERY = 100;
 const MAX_ROWS_PER_QUERY = 200;
 const MAX_QUERY_COUNT = 6;
 const DEFAULT_SYNC_QUERIES = [
-  "cannabis cannabinoid thc cbd",
-  "medical cannabis clinical trial",
-  "cannabis terpene profile",
-  "cannabis cultivation greenhouse indoor",
-  "cannabis adverse effects safety",
-  "cannabinoid pharmacology review",
+  "cannabis cultivation thc cbd terpene profile",
+  "cannabis greenhouse indoor environmental control cannabinoid",
+  "cannabis postharvest curing drying terpene retention",
+  "medical cannabis clinical trial thc cbd",
+  "cannabis contaminants pesticides heavy metals microbiology",
+  "cannabinoid pharmacology thc cbd review",
 ];
 
 type AutoSource = {
@@ -211,9 +211,9 @@ async function fetchCrossrefSources(maxAttempts: number): Promise<CrossrefFetchR
             tags: ["auto:crossref", ...subjects],
             matchedTopics: subjects,
             reviewSummary: [
-              year ? `Published ${year}` : "Recent article",
-              item.publisher ?? "Publisher unknown",
-              `Query: ${query}`,
+              year ? `Publiziert ${year}` : "Aktueller Fachartikel",
+              item.publisher ?? "Verlag unbekannt",
+              `Suchprofil: ${query}`,
             ],
           };
 

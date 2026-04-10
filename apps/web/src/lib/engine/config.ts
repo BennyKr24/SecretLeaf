@@ -85,17 +85,40 @@ export const TOPIC_CLUSTERS: TopicCluster[] = [
   {
     key: "anbau-postharvest",
     queries: [
-      "cannabis cultivation",
-      "cannabis curing",
-      "cannabis postharvest",
-      "cannabis terpene profile",
+      "cannabis cultivation thc cbd terpene profile",
+      "cannabis curing drying storage",
+      "cannabis postharvest terpene retention",
+      "cannabis greenhouse indoor environmental control",
     ],
     include: [
       /cultivation/i,
+      /indoor/i,
+      /greenhouse/i,
+      /growth chamber/i,
+      /post-harvest/i,
       /postharvest/i,
       /curing/i,
+      /drying/i,
+      /storage/i,
+      /environmental control/i,
+      /light spectrum/i,
+      /photoperiod/i,
+      /irrigation/i,
+      /fertigation/i,
+      /substrate/i,
+      /nutrient/i,
+      /vpd/i,
       /flower yield/i,
       /terpene/i,
+      /terpenoid/i,
+      /cannabinoid profile/i,
+      /cannabinoid composition/i,
+      /thc/i,
+      /thca/i,
+      /cbd/i,
+      /cbda/i,
+      /trichome/i,
+      /chemotype/i,
       /cannabinoid composition/i,
       /breeding/i,
     ],
@@ -160,7 +183,7 @@ export const MID_QUALITY_PUBLISHERS: string[] = [
 // ── Cannabis Anchor Pattern ─────────────────────────────────────────────────
 
 export const CANNABIS_ANCHOR =
-  /medical cannabis|cannabis|cannabinoid|endocannabinoid|\bthc\b|\bcbd\b|\bcbn\b|\bcbg\b|terpene|marijuana|hashish/i;
+  /medical cannabis|cannabis|cannabinoid|endocannabinoid|\bthc\b|\bthca\b|\bcbd\b|\bcbda\b|\bcbn\b|\bcbg\b|terpene|terpenoid|marijuana|hashish/i;
 
 // ── Hard Exclusion Rules ────────────────────────────────────────────────────
 
