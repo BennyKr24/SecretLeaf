@@ -15,8 +15,8 @@ type Props = {
   initialCategory?: TerpiraCategory;
   /** Hide category filter (for category pages) */
   hideCategoryFilter?: boolean;
-  /** Page size for pagination */
-  pageSize?: number;
+  /** Visible items per category section before "Mehr anzeigen" */
+  sectionLimit?: number;
 };
 
 // ─── Search helpers ─────────────────────────────────────────────────────────
@@ -71,17 +71,18 @@ export default function StudiesListView({
   categoryLabels,
   initialCategory,
   hideCategoryFilter = false,
-  pageSize = 15,
+  sectionLimit = 6,
 }: Props) {
   const [category, setCategory] = useState<TerpiraCategory | 'alle'>(initialCategory ?? 'alle');
   const [difficulty, setDifficulty] = useState<TerpiraDifficulty | 'alle'>('alle');
   const [sort, setSort] = useState<SortMode>('relevanz');
   const [search, setSearch] = useState('');
-  const [page, setPage] = useState(1);
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const searchRef = useRef<HTMLInputElement>(null);
 
-  // Reset page when filters change
-  useEffect(() => { setPage(1); }, [category, difficulty, sort, search]);
+  useEffect(() => {
+    setExpandedSections({});
+  }, [category, difficulty, sort, search]);
 
   type Result = { article: TerpiraArticle; score: number; snippet: string | null };
 
@@ -110,16 +111,35 @@ export default function StudiesListView({
     return list.map(article => ({ article, score: 0, snippet: null }));
   }, [articles, category, difficulty, sort, search]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
-  const paginated = filtered.slice((page - 1) * pageSize, page * pageSize);
-
   const categoryCounts = useMemo(() => {
     const map: Record<string, number> = {};
     for (const a of articles) map[a.category] = (map[a.category] ?? 0) + 1;
     return map;
   }, [articles]);
 
+  const groupedResults = useMemo(() => {
+    const grouped = new Map<TerpiraCategory, Result[]>();
+
+    for (const result of filtered) {
+      const cat = result.article.category;
+      const list = grouped.get(cat) ?? [];
+      list.push(result);
+      grouped.set(cat, list);
+    }
+
+    return ORDERED_CATEGORIES
+      .filter((cat) => (grouped.get(cat)?.length ?? 0) > 0)
+      .map((cat) => ({
+        category: cat,
+        label: categoryLabels[cat] ?? cat,
+        items: grouped.get(cat) ?? [],
+      }));
+  }, [filtered, categoryLabels]);
+
   const hasFilters = category !== 'alle' || difficulty !== 'alle' || search.trim() !== '';
+  const toggleSection = useCallback((key: string) => {
+    setExpandedSections((prev) => ({ ...prev, [key]: !prev[key] }));
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -170,7 +190,7 @@ export default function StudiesListView({
           className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13.5px] text-slate-700
             outline-none shadow-sm focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 cursor-pointer transition-all"
         >
-          <option value="alle">Alle Level</option>
+          <option value="alle">Alle Schwierigkeitsstufen</option>
           <option value="einsteiger">Einsteiger</option>
           <option value="fortgeschritten">Fortgeschritten</option>
           <option value="profi">Profi</option>
@@ -193,7 +213,12 @@ export default function StudiesListView({
 
         {hasFilters && (
           <button
-            onClick={() => { setCategory(initialCategory ?? 'alle'); setDifficulty('alle'); setSearch(''); setSort('relevanz'); }}
+            onClick={() => {
+              setCategory(initialCategory ?? 'alle');
+              setDifficulty('alle');
+              setSearch('');
+              setSort('relevanz');
+            }}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13.5px] font-medium text-slate-400
               hover:text-red-500 hover:border-red-200 shadow-sm transition-all"
           >
@@ -208,70 +233,57 @@ export default function StudiesListView({
           <span className="font-semibold text-slate-700">{filtered.length}</span>
           {' '}Artikel{hasFilters && ' gefunden'}
         </span>
-        {totalPages > 1 && (
-          <span className="text-slate-300">Seite {page} / {totalPages}</span>
-        )}
+        <span className="text-slate-300">{groupedResults.length} Kategorien</span>
       </div>
 
-      {/* ── List ────────────────────────────────────────────── */}
-      {paginated.length === 0 ? (
+      {/* ── Grouped sections ─────────────────────────────────── */}
+      {groupedResults.length === 0 ? (
         <div className="rounded-xl border-2 border-dashed border-slate-100 bg-slate-50/50 py-16 text-center">
           <p className="text-sm font-medium text-slate-500">Keine Artikel gefunden.</p>
           <p className="mt-1 text-xs text-slate-400">Passe deine Filter oder Suche an.</p>
         </div>
       ) : (
-        <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden divide-y divide-slate-100">
-          {paginated.map(({ article, snippet }) => (
-            <StudyListItem
-              key={article.slug}
-              article={article}
-              categoryLabel={categoryLabels[article.category] ?? article.category}
-              snippet={snippet}
-            />
-          ))}
-        </div>
-      )}
+        <div className="space-y-5">
+          {groupedResults.map((group) => {
+            const isExpanded = Boolean(expandedSections[group.category]);
+            const visibleItems = isExpanded ? group.items : group.items.slice(0, sectionLimit);
+            const hiddenCount = Math.max(group.items.length - visibleItems.length, 0);
 
-      {/* ── Pagination ──────────────────────────────────────── */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-1.5 pt-1">
-          <button
-            disabled={page <= 1}
-            onClick={() => setPage(p => Math.max(1, p - 1))}
-            className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[13px] font-medium text-slate-600 disabled:opacity-30 hover:border-emerald-300 hover:text-emerald-600 transition-all shadow-sm"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Zurück
-          </button>
-          {Array.from({ length: Math.min(totalPages, 7) }, (_, i) => {
-            const p = i + 1;
             return (
-              <button
-                key={p}
-                onClick={() => setPage(p)}
-                className={`rounded-lg w-9 h-9 text-[13px] font-medium transition-all ${
-                  p === page
-                    ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-200'
-                    : 'border border-slate-200 bg-white text-slate-600 hover:border-emerald-300 hover:text-emerald-600'
-                }`}
-              >
-                {p}
-              </button>
+              <section key={group.category} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <header className="border-b border-slate-100 bg-slate-50/70 px-4 py-3 sm:px-5">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <h3 className="text-sm font-semibold text-slate-900">{group.label}</h3>
+                    <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600">
+                      {group.items.length} Artikel
+                    </span>
+                  </div>
+                </header>
+
+                <div className="divide-y divide-slate-100">
+                  {visibleItems.map(({ article, snippet }) => (
+                    <StudyListItem
+                      key={article.slug}
+                      article={article}
+                      categoryLabel={categoryLabels[article.category] ?? article.category}
+                      snippet={snippet}
+                    />
+                  ))}
+                </div>
+
+                {group.items.length > sectionLimit && (
+                  <div className="border-t border-slate-100 bg-white px-4 py-3 sm:px-5">
+                    <button
+                      onClick={() => toggleSection(group.category)}
+                      className="inline-flex items-center rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition-colors"
+                    >
+                      {isExpanded ? 'Weniger anzeigen' : `${hiddenCount} weitere anzeigen`}
+                    </button>
+                  </div>
+                )}
+              </section>
             );
           })}
-          {totalPages > 7 && <span className="text-sm text-slate-300 px-1">…</span>}
-          <button
-            disabled={page >= totalPages}
-            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-            className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-[13px] font-medium text-slate-600 disabled:opacity-30 hover:border-emerald-300 hover:text-emerald-600 transition-all shadow-sm"
-          >
-            Weiter
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
         </div>
       )}
     </div>

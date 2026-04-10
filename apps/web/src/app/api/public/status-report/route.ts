@@ -87,10 +87,10 @@ export async function GET() {
           events: [
             {
               key: "SYSTEM_DEGRADED",
-              label: "Eingeschraenkte Sicht auf Live-Daten",
+              label: "Eingeschränkte Sicht auf Live-Daten",
               count: 1,
               level: "yellow",
-              description: "Statusreport im Fallback, da DB-Metriken nicht vollstaendig abrufbar sind.",
+              description: "Statusreport im Fallback, da DB-Metriken nicht vollständig abrufbar sind.",
               lastSeen: generatedAt,
             },
           ],
@@ -139,7 +139,7 @@ export async function GET() {
         label: "Offene Studien-Reviews",
         count: pending,
         level: backlog,
-        description: "Anzahl Studien mit Qualitaetsstatus pending.",
+        description: "Anzahl Studien mit Qualitätsstatus pending.",
         lastSeen: generatedAt,
       },
       {
@@ -147,17 +147,17 @@ export async function GET() {
         label: "Schwach bewertete Studien",
         count: bad,
         level: badQuality,
-        description: "Anzahl Studien mit Qualitaetsstatus bad.",
+        description: "Anzahl Studien mit Qualitätsstatus bad.",
         lastSeen: generatedAt,
       },
       {
         key: "SYNC_ACTIVITY_24H",
-        label: "Importaktivitaet letzte 24h",
+        label: "Importaktivität letzte 24h",
         count: importedLast24h,
         level: syncActivity,
         description:
           syncRuns24h.length > 0
-            ? `Erfolgreiche Sync-Runs letzte 24h: ${syncRuns24h.length}, geaenderte Studien: ${importedLast24h}.`
+            ? `Erfolgreiche Sync-Runs letzte 24h: ${syncRuns24h.length}, geänderte Studien: ${importedLast24h}.`
             : `Fallback ohne Run-Telemetrie: neu erstellte Studien letzte 24h: ${last24hCreated}.`,
         lastSeen: latestSyncRun?.finished_at ?? generatedAt,
       },

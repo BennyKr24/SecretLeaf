@@ -4,8 +4,8 @@ import StudiesListView from "@/components/StudiesListView";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Studies – SecretLeaf",
-  description: "Evidenzbasierte Artikel zu Anbau, Terpenen, Medizin, Recht und Qualität.",
+  title: "Studien – SecretLeaf",
+  description: "Evidenzbasierte Inhalte zu Anbau, Terpenen, Medizin, Recht und Qualität.",
 };
 
 export default function StudiesPage() {
@@ -23,7 +23,7 @@ export default function StudiesPage() {
               <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-400">
                 Wissensplattform
               </p>
-              <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-white tracking-tight">Studies</h1>
+              <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-white tracking-tight">Studien</h1>
               <p className="mt-2 max-w-xl text-[14px] text-slate-400 leading-relaxed">
                 Evidenzbasierte Artikel zu Anbau, Chemie, Medizin, Recht und mehr –
                 belegt durch {sourceRegister.length} peer-reviewed Fachquellen.
@@ -54,7 +54,7 @@ export default function StudiesPage() {
             <Link href={"/studies/pests" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
                 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-all">
-              � Schädlings-Lexikon
+              🐛 Schädlings-Lexikon
             </Link>
             <Link href={"/studies/deficiencies" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5

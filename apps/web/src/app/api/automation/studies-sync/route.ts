@@ -9,6 +9,19 @@ export const dynamic = "force-dynamic";
 
 const STUDIES_TABLE = "studies";
 const JOB_NAME = "studies-sync";
+const DEFAULT_LOOKBACK_DAYS = 14;
+const MAX_LOOKBACK_DAYS = 60;
+const DEFAULT_ROWS_PER_QUERY = 100;
+const MAX_ROWS_PER_QUERY = 200;
+const MAX_QUERY_COUNT = 6;
+const DEFAULT_SYNC_QUERIES = [
+  "cannabis cannabinoid thc cbd",
+  "medical cannabis clinical trial",
+  "cannabis terpene profile",
+  "cannabis cultivation greenhouse indoor",
+  "cannabis adverse effects safety",
+  "cannabinoid pharmacology review",
+];
 
 type AutoSource = {
   title?: string;
@@ -91,6 +104,15 @@ type SyncMetrics = {
   sourceGeneratedAt: string | null;
 };
 
+type CrossrefFetchResult = {
+  sources: AutoSource[];
+  attempts: number;
+  errors: string[];
+  queryCount: number;
+  lookbackDays: number;
+  rowsPerQuery: number;
+};
+
 function isCronAuthorized(req: Request, configuredSecret: string): boolean {
   const headerSecret =
     req.headers.get("x-cron-key") ??
@@ -98,14 +120,29 @@ function isCronAuthorized(req: Request, configuredSecret: string): boolean {
   return headerSecret === configuredSecret;
 }
 
-function buildCrossrefUrl(): string {
-  const lookbackDaysRaw = Number.parseInt(process.env.STUDY_SYNC_LOOKBACK_DAYS ?? "3", 10);
-  const lookbackDays = Number.isFinite(lookbackDaysRaw) ? Math.min(Math.max(lookbackDaysRaw, 1), 14) : 3;
-  const fromDate = new Date(Date.now() - lookbackDays * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+function parseBoundedInt(value: string | undefined, fallback: number, min: number, max: number): number {
+  const parsed = Number.parseInt(value ?? "", 10);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(Math.max(parsed, min), max);
+}
 
+function getConfiguredQueries(): string[] {
+  const raw = process.env.STUDY_SYNC_CROSSREF_QUERIES;
+  const fromEnv = raw
+    ? raw
+        .split(/\r?\n|\|/g)
+        .map((part) => part.trim())
+        .filter((part) => part.length >= 3)
+    : [];
+
+  const base = fromEnv.length > 0 ? fromEnv : DEFAULT_SYNC_QUERIES;
+  return Array.from(new Set(base)).slice(0, MAX_QUERY_COUNT);
+}
+
+function buildCrossrefUrl(query: string, fromDate: string, rows: number): string {
   const params = new URLSearchParams({
-    query: "cannabis cannabinoid thc cbd",
-    rows: "60",
+    query,
+    rows: String(rows),
     sort: "published",
     order: "desc",
     filter: `from-pub-date:${fromDate},type:journal-article`,
@@ -115,56 +152,105 @@ function buildCrossrefUrl(): string {
   return `https://api.crossref.org/works?${params.toString()}`;
 }
 
-async function fetchCrossrefSources(maxAttempts: number): Promise<{ sources: AutoSource[]; attempts: number; errors: string[] }> {
+async function fetchCrossrefSources(maxAttempts: number): Promise<CrossrefFetchResult> {
   const errors: string[] = [];
-  const url = buildCrossrefUrl();
+  const lookbackDays = parseBoundedInt(
+    process.env.STUDY_SYNC_LOOKBACK_DAYS,
+    DEFAULT_LOOKBACK_DAYS,
+    1,
+    MAX_LOOKBACK_DAYS,
+  );
+  const rowsPerQuery = parseBoundedInt(
+    process.env.STUDY_SYNC_ROWS_PER_QUERY,
+    DEFAULT_ROWS_PER_QUERY,
+    20,
+    MAX_ROWS_PER_QUERY,
+  );
+  const queries = getConfiguredQueries();
+  const fromDate = new Date(Date.now() - lookbackDays * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    try {
-      const response = await fetch(url, {
-        headers: {
-          "User-Agent": "SecretLeafAutomation/1.0 (status@secretleaf.local)",
-          Accept: "application/json",
-        },
-        cache: "no-store",
-      });
+  const collected: AutoSource[] = [];
+  let attempts = 0;
 
-      if (!response.ok) {
-        const message = `crossref_http_${response.status}`;
-        errors.push(message);
-        continue;
+  for (const query of queries) {
+    const url = buildCrossrefUrl(query, fromDate, rowsPerQuery);
+    let queryCompleted = false;
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      attempts += 1;
+      try {
+        const response = await fetch(url, {
+          headers: {
+            "User-Agent": "SecretLeafAutomation/1.0 (status@secretleaf.local)",
+            Accept: "application/json",
+          },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          const message = `crossref_http_${response.status}:${query}`;
+          errors.push(message);
+          continue;
+        }
+
+        const body = (await response.json()) as CrossrefResponse;
+        const items = body.message?.items ?? [];
+        const sources: AutoSource[] = items.map((item) => {
+          const title = (item.title ?? []).find((entry) => entry && entry.trim().length > 0) ?? "";
+          const subjects = (item.subject ?? []).slice(0, 6).map((subject) => subject.trim().toLowerCase());
+          const issued = item.published?.["date-parts"]?.[0] ?? item.issued?.["date-parts"]?.[0] ?? [];
+          const year = issued[0] ? String(issued[0]) : "";
+
+          const source: AutoSource = {
+            title,
+            tags: ["auto:crossref", ...subjects],
+            matchedTopics: subjects,
+            reviewSummary: [
+              year ? `Published ${year}` : "Recent article",
+              item.publisher ?? "Publisher unknown",
+              `Query: ${query}`,
+            ],
+          };
+
+          if (item.URL) source.url = item.URL;
+          if (item.DOI) source.doi = item.DOI;
+          if (item.publisher) source.publisher = item.publisher;
+
+          return source;
+        });
+
+        collected.push(...sources);
+        queryCompleted = true;
+        break;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "crossref_fetch_failed";
+        errors.push(`${message}:${query}`);
       }
+    }
 
-      const body = (await response.json()) as CrossrefResponse;
-      const items = body.message?.items ?? [];
-      const sources: AutoSource[] = items.map((item) => {
-        const title = (item.title ?? []).find((entry) => entry && entry.trim().length > 0) ?? "";
-        const subjects = (item.subject ?? []).slice(0, 6).map((subject) => subject.trim().toLowerCase());
-        const issued = item.published?.["date-parts"]?.[0] ?? item.issued?.["date-parts"]?.[0] ?? [];
-        const year = issued[0] ? String(issued[0]) : "";
-
-        const source: AutoSource = {
-          title,
-          tags: ["auto:crossref", ...subjects],
-          matchedTopics: subjects,
-          reviewSummary: [year ? `Published ${year}` : "Recent article", item.publisher ?? "Publisher unknown"],
-        };
-
-        if (item.URL) source.url = item.URL;
-        if (item.DOI) source.doi = item.DOI;
-        if (item.publisher) source.publisher = item.publisher;
-
-        return source;
-      });
-
-      return { sources, attempts: attempt, errors };
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "crossref_fetch_failed";
-      errors.push(message);
+    if (!queryCompleted) {
+      errors.push(`crossref_query_failed:${query}`);
     }
   }
 
-  return { sources: [], attempts: maxAttempts, errors };
+  const deduped = new Map<string, AutoSource>();
+  for (const source of collected) {
+    const key =
+      normalizeText(source.doi).toLowerCase() ||
+      normalizeText(source.url).toLowerCase() ||
+      normalizeText(source.title).toLowerCase();
+    if (!key) continue;
+    if (!deduped.has(key)) deduped.set(key, source);
+  }
+
+  return {
+    sources: Array.from(deduped.values()),
+    attempts,
+    errors,
+    queryCount: queries.length,
+    lookbackDays,
+    rowsPerQuery,
+  };
 }
 
 async function safeRecordAutomationRun(input: Parameters<typeof recordAutomationRun>[0], metrics: SyncMetrics): Promise<void> {
@@ -237,9 +323,19 @@ export async function GET(req: Request) {
       ...fetchedExternal.sources,
     ];
 
-    const sources = mergedSources
+    const sourceCandidates = mergedSources
       .map(toStudyInsert)
       .filter(Boolean) as StudySyncRow[];
+
+    const dedupedByFingerprint = new Map<string, StudySyncRow>();
+    for (const source of sourceCandidates) {
+      if (!dedupedByFingerprint.has(source.source_fingerprint)) {
+        dedupedByFingerprint.set(source.source_fingerprint, source);
+      }
+    }
+
+    const sources = Array.from(dedupedByFingerprint.values());
+    metrics.skipped = Math.max(sourceCandidates.length - sources.length, 0);
 
     metrics.fetched = sources.length;
 
@@ -394,6 +490,9 @@ export async function GET(req: Request) {
       sourceGeneratedAt: metrics.sourceGeneratedAt,
       metadata: {
         externalFetched: fetchedExternal.sources.length,
+        queryCount: fetchedExternal.queryCount,
+        lookbackDays: fetchedExternal.lookbackDays,
+        rowsPerQuery: fetchedExternal.rowsPerQuery,
         errors: metrics.errors,
       },
     }, metrics);
@@ -409,6 +508,7 @@ export async function GET(req: Request) {
       notes: [
         "Runs on Vercel cron independent of local PC sessions.",
         "Sync source: static autoSources + external Crossref runtime fetch",
+        `Crossref coverage: ${fetchedExternal.queryCount} queries, lookback ${fetchedExternal.lookbackDays} days, ${fetchedExternal.rowsPerQuery} rows/query.`,
       ],
     });
   } catch (error) {

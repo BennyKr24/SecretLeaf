@@ -217,7 +217,7 @@ export default function DashboardStudiesPage() {
       );
       setDbStudies((current) => current.map((entry) => (entry.id === study.id ? updated : entry)));
     } catch (error) {
-      setDbError(error instanceof Error ? error.message : "Qualitaetsstatus konnte nicht gespeichert werden.");
+      setDbError(error instanceof Error ? error.message : "Qualitätsstatus konnte nicht gespeichert werden.");
     } finally {
       setUpdatingStudyId(null);
     }
@@ -244,7 +244,7 @@ export default function DashboardStudiesPage() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Intern</p>
             <h1 className="text-2xl font-bold text-[#10281e]">Studien-Review in 1 Minute</h1>
-            <p className="text-sm text-[#4d685a]">Kurz lesen, Quelle pruefen, dann `Rein`, `Spaeter` oder `Nein` klicken.</p>
+            <p className="text-sm text-[#4d685a]">Kurz lesen, Quelle prüfen, dann "Rein", "Später" oder "Nein" klicken.</p>
           </div>
           <div className="flex gap-3 text-sm">
             <Link href="/dashboard" className="font-medium text-[#4d685a] hover:text-[#173126]">Dashboard</Link>
@@ -270,7 +270,7 @@ export default function DashboardStudiesPage() {
             <div>
               <h2 className="text-xl font-bold text-[#10281e]">Supabase Studien-Datenbank</h2>
               <p className="mt-2 text-sm text-[#4d685a]">
-                Alle Eintraege aus der Tabelle <span className="font-semibold">studies</span>. Suche und Tag-Filter sind als Basis fuer spaetere AI-Funktionen vorbereitet.
+                Alle Einträge aus der Tabelle <span className="font-semibold">studies</span>. Suche und Tag-Filter sind als Basis für spätere KI-Funktionen vorbereitet.
               </p>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
@@ -298,16 +298,16 @@ export default function DashboardStudiesPage() {
                     onChange={(event) => setQualityFilter(event.target.value as "all" | StudyQuality)}
                     className="rounded-xl border border-[#c8ddcf] px-3 py-2 text-sm text-[#173126] outline-none focus:border-[#1f7a4f]"
                   >
-                    <option value="all">Qualitaet: Alle</option>
-                    <option value="good">Qualitaet: Gut</option>
-                    <option value="pending">Qualitaet: Offen</option>
-                    <option value="bad">Qualitaet: Schlecht</option>
+                    <option value="all">Qualität: Alle</option>
+                    <option value="good">Qualität: Gut</option>
+                    <option value="pending">Qualität: Offen</option>
+                    <option value="bad">Qualität: Schlecht</option>
                   </select>
                 </div>
               </div>
 
               <div className="mt-4 rounded-2xl border border-[#dfece3] bg-[#fbfefc] p-4">
-                <p className="text-xs text-[#6b8577]">Eintraege</p>
+                <p className="text-xs text-[#6b8577]">Einträge</p>
                 <p className="mt-1 text-3xl font-bold text-[#123024]">{dbTotal}</p>
               </div>
 
@@ -318,7 +318,7 @@ export default function DashboardStudiesPage() {
 
                 {!isLoadingDbStudies && visibleDbStudies.length === 0 && (
                   <p className="rounded-xl border border-[#d8e8dd] bg-[#f6faf7] px-4 py-3 text-sm text-[#4d685a]">
-                    Keine Studien fuer den aktuellen Filter.
+                    Keine Studien für den aktuellen Filter.
                   </p>
                 )}
 
@@ -339,7 +339,7 @@ export default function DashboardStudiesPage() {
                         return (
                           <div className="mb-3 flex items-center justify-between gap-3">
                             <span className={`rounded-full px-3 py-1 text-xs font-semibold ${qualityClass}`}>
-                              Qualitaet: {qualityLabel}
+                              Qualität: {qualityLabel}
                             </span>
                             <div className="flex gap-2">
                               <button
@@ -410,7 +410,7 @@ export default function DashboardStudiesPage() {
             <div className="rounded-2xl border border-[#dfece3] bg-[#fbfefc] p-4">
               <h3 className="text-lg font-bold text-[#10281e]">Neue Studie anlegen</h3>
               <p className="mt-2 text-sm text-[#4d685a]">
-                Fuegt einen neuen Eintrag direkt in die Tabelle <span className="font-semibold">studies</span> ein.
+                Fügt einen neuen Eintrag direkt in die Tabelle <span className="font-semibold">studies</span> ein.
               </p>
 
               <form className="mt-4 space-y-3" onSubmit={createNewStudy}>
@@ -420,7 +420,7 @@ export default function DashboardStudiesPage() {
                     value={studyForm.title}
                     onChange={(event) => onFormValueChange("title", event.target.value)}
                     className="w-full rounded-xl border border-[#c8ddcf] px-3 py-2 text-sm text-[#173126] outline-none focus:border-[#1f7a4f]"
-                    placeholder="z. B. Meta-Analyse zu CBD und Angststoerungen"
+                    placeholder="z. B. Meta-Analyse zu CBD und Angststörungen"
                     required
                   />
                 </div>
@@ -476,7 +476,7 @@ export default function DashboardStudiesPage() {
                 Sync vom {new Date(autoSourcesData.generatedAt).toLocaleString("de-DE")} · {autoSourcesData.stats.kept} Kandidaten nach Filterung · {autoSourcesData.stats.excluded} ausgeschlossen.
               </p>
               <p className="mt-3 text-sm text-[#4d685a]">
-                Jede Karte zeigt bewusst nur 3 Zeilen: Evidenz, Herkunft/Institut und warum die Studie fuer SecretLeaf relevant sein koennte.
+                Jede Karte zeigt bewusst nur 3 Zeilen: Evidenz, Herkunft/Institut und warum die Studie für SecretLeaf relevant sein könnte.
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
@@ -489,7 +489,7 @@ export default function DashboardStudiesPage() {
                 <p className="mt-1 text-3xl font-bold text-[#123024]">{stats.accepted}</p>
               </div>
               <div className="rounded-2xl border border-[#dfece3] bg-[#fbfefc] p-4">
-                <p className="text-xs text-[#6b8577]">Spaeter</p>
+                <p className="text-xs text-[#6b8577]">Später</p>
                 <p className="mt-1 text-3xl font-bold text-[#123024]">{stats.later}</p>
               </div>
               <div className="rounded-2xl border border-[#dfece3] bg-[#fbfefc] p-4">
@@ -504,7 +504,7 @@ export default function DashboardStudiesPage() {
           {[
             ["open", `Offen (${stats.open})`],
             ["accepted", `Rein (${stats.accepted})`],
-            ["later", `Spaeter (${stats.later})`],
+            ["later", `Später (${stats.later})`],
             ["rejected", `Nein (${stats.rejected})`],
             ["all", `Alle (${studies.length})`],
           ].map(([value, label]) => (
@@ -535,7 +535,7 @@ export default function DashboardStudiesPage() {
                       <span className="rounded-full bg-[#eef3f0] px-2.5 py-1 text-xs font-semibold text-[#567264]">{study.year}</span>
                       {decision && (
                         <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${decision === "accepted" ? "bg-[#e5f4ea] text-[#1f7a4f]" : decision === "later" ? "bg-[#fff5df] text-[#9b6a13]" : "bg-[#fff1f1] text-[#a54b4b]"}`}>
-                          {decision === "accepted" ? "Rein" : decision === "later" ? "Spaeter" : "Nein"}
+                          {decision === "accepted" ? "Rein" : decision === "later" ? "Später" : "Nein"}
                         </span>
                       )}
                     </div>
@@ -571,13 +571,13 @@ export default function DashboardStudiesPage() {
                       rel="noreferrer"
                       className="inline-flex justify-center rounded-xl border border-[#c8ddcf] bg-white px-4 py-2.5 text-sm font-semibold text-[#1f7a4f] hover:bg-[#eef7f1]"
                     >
-                      Quelle oeffnen
+                      Quelle öffnen
                     </a>
                     <button onClick={() => setDecision(study.id, "accepted")} className="rounded-xl bg-[#1f7a4f] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#17613f]">
                       Rein
                     </button>
                     <button onClick={() => setDecision(study.id, "later")} className="rounded-xl bg-[#c89a3f] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#b4872f]">
-                      Spaeter
+                      Später
                     </button>
                     <button onClick={() => setDecision(study.id, "rejected")} className="rounded-xl bg-[#b44d4d] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#983f3f]">
                       Nein

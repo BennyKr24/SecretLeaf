@@ -74,13 +74,12 @@ export default function WikiSourcesPage() {
     <main className="min-h-screen px-6 py-12">
       <section className="mx-auto max-w-6xl rounded-2xl border border-[#d8e8dd] bg-white/90 p-8 shadow-sm">
         <Link href={"/studies" as Route} className="text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
-          ← Zurueck zum Wiki
+          ← Zurück zum Wiki
         </Link>
 
         <h1 className="mt-4 text-4xl font-bold text-[#10281e]">Quellenregister</h1>
         <p className="mt-3 text-[#4d685a]">
-          Zentrale Referenzen fuer das SecretLeaf-Wiki. Die Artikelseiten verweisen jeweils auf die
-          relevantesten Eintraege aus diesem Register.
+          Hier findest du die relevantesten Einträge aus diesem Register.
         </p>
 
         <div className="mt-5 rounded-xl border border-rose-200 bg-rose-50 p-4">
@@ -122,8 +121,8 @@ export default function WikiSourcesPage() {
         </div>
 
         <div className="mt-6 rounded-xl border border-[#e2eee6] bg-[#f7fbf8] p-4 text-sm text-[#355b49]">
-          Redaktioneller Hinweis: Dieses Register dient als strukturierte Orientierung fuer die evidenzbasierte
-          Vertiefung. Vor operativen oder regulatorischen Entscheidungen sollten stets die aktuellen Originaldokumente geprueft werden.
+          Redaktioneller Hinweis: Dieses Register dient als strukturierte Orientierung für die evidenzbasierte
+          Vertiefung. Vor operativen oder regulatorischen Entscheidungen sollten stets die aktuellen Originaldokumente geprüft werden.
         </div>
 
         <div className="mt-6 grid gap-3 lg:grid-cols-[1fr_auto_auto]">
