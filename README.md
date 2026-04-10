@@ -1,4 +1,4 @@
-# SecretLeaf — v1.5
+# SecretLeaf — v1.6
 > Evidence-basierte Cannabis-Wissensplattform für DACH.
 > Studies-Hub · Datenbank · Tools · Review-Workflow · Betriebsstatus
 
@@ -18,6 +18,8 @@
 | **Tools-Hub** | ✅ Live | Operative Werkzeuge, Düngepläne |
 | **Status-Seite** | ✅ Live | Cockpit mit 6 Gesundheitskarten, Coverage-Verlauf |
 | **Review-Dashboard** | ✅ Live | `/dashboard/review` — 1-Klick-Workflow intern, mobil optimiert |
+| **Admin-Dashboard** | ✅ Live | `/dashboard/admin` — Benutzer, Engine, Studien, Algorithmus, System |
+| **Algorithmus-Konfig** | ✅ Live | `/dashboard/admin/algorithm` — Keywords, Quellen, Ausschlüsse, Cluster, Scoring, Anker |
 | **Vercel Cron** | ✅ Aktiv | Täglich **04:17 UTC** — läuft ohne lokalen PC |
 | **Wiki-Studien-Sync** | ✅ Aktiv | GitHub Actions täglich **04:30 UTC** — Review-PR |
 | **Status-Probe** | ✅ Aktiv | Alle 30 s, schreibt `status-data.json` |
@@ -71,6 +73,14 @@ SecretLeaf/
 | `/status` | Dynamisch | Betriebsstatus, Coverage-Verlauf, Changelog |
 | `/dashboard` | Auth | User-Area + Einstieg Review |
 | `/dashboard/review` | Auth | **Intern:** Studien-Review-Inbox |
+| `/dashboard/admin` | Auth/Admin | **Admin-Übersicht:** Stats, Pipeline, Schnellzugriff |
+| `/dashboard/admin/users` | Auth/Admin | Benutzerverwaltung |
+| `/dashboard/admin/engine` | Auth/Admin | Engine-Kontrolle & Konfiguration |
+| `/dashboard/admin/studies` | Auth/Admin | Studien-Verwaltung & Review |
+| `/dashboard/admin/algorithm` | Auth/Admin | **Algorithmus-Config:** 6 Tabs (Keywords, Sources, Exclusions, Clusters, Scoring, Anchor) |
+| `/dashboard/admin/analytics` | Auth/Admin | Analyse & Metriken |
+| `/dashboard/admin/system` | Auth/Admin | Systemstatus & Logs |
+| `/dashboard/admin/settings` | Auth/Admin | Einstellungen |
 | `/auth` | Statisch | Login / Registrierung |
 
 ---
@@ -183,6 +193,13 @@ GitHub Actions (04:30 UTC)
 - Crossref-Ingestion: **6 parallele Queries**, konfigurierbarer Lookback, DOI/URL-Deduplizierung
 - Deutsches Encoding komplett bereinigt (ü/ä/ö/ß) in allen UI-Texten und API-Responses
 
+### v1.6 (April 2026)
+- **Admin-Dashboard komplett überarbeitet:** Gruppierte Sidebar-Navigation, personalisierte Übersicht mit Echtzeit-Stats, Alert-Banner, Schnellzugriff-Karten
+- **Algorithmus-Konfigurations-Modul:** 6 Tabs (Keywords, Quellen, Ausschlüsse, Cluster, Scoring, Anker) — komplett über Admin-UI editierbar, persistiert in `engine_config`-Tabelle
+- **Supabase-Migration `engine_config`:** Neue Tabelle mit 7 Konfig-Sektionen, RLS-gesichert, Admin-only
+- **Breadcrumb-Navigation** auf allen Admin-Unterseiten
+- **Build-Pipeline stabilisiert:** `exactOptionalPropertyTypes` und Next.js strict routing-Kompatibilität
+
 ### v1.5.1 (April 2026)
 - Cron-Auth-Fix: Automation-Routen akzeptieren jetzt Vercel `Authorization: Bearer <CRON_SECRET>`
 - Studien-Sync gehärtet: Fingerprint-Lookup und Inserts in Batches gegen PostgREST-Limits
@@ -202,6 +219,7 @@ GitHub Actions (04:30 UTC)
 
 | Prio | Aufgabe | Warum |
 |------|---------|-------|
+| **P0** | **Algorithmus-Relevanz drastisch verbessern** | Aktuell viele irrelevante Studien ohne Cannabis-Bezug — harte Relevanzfilter nötig |
 | **P0** | Impressum & Datenschutz | DACH-Pflicht für öffentlichen Betrieb |
 | **P1** | Produktive Datenbank | PostgreSQL + Prisma Migrate für persistente Review-Entscheidungen |
 | **P1** | Sentry-Integration | Error-Tracking Frontend + API |
