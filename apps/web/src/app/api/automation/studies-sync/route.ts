@@ -417,28 +417,33 @@ export async function GET(req: Request) {
     const toInsert = sources.filter((source) => !existingByFingerprint.has(source.source_fingerprint));
     const toUpdate = sources.filter((source) => existingByFingerprint.has(source.source_fingerprint));
 
+    const INSERT_BATCH_SIZE = 50;
     if (toInsert.length > 0) {
-      const { error: insertError } = await supabase.from(STUDIES_TABLE).insert(toInsert);
-      if (insertError) {
-        logError("automation.studies-sync.insert-failed", { error: insertError.message });
-        metrics.errors.push(insertError.message);
+      for (let i = 0; i < toInsert.length; i += INSERT_BATCH_SIZE) {
+        const batch = toInsert.slice(i, i + INSERT_BATCH_SIZE);
+        const { error: insertError } = await supabase.from(STUDIES_TABLE).insert(batch);
+        if (insertError) {
+          logError("automation.studies-sync.insert-failed", { error: insertError.message });
+          metrics.errors.push(insertError.message);
 
-        await safeRecordAutomationRun({
-          jobName: JOB_NAME,
-          startedAt,
-          finishedAt: new Date().toISOString(),
-          success: false,
-          fetched: metrics.fetched,
-          inserted: metrics.inserted,
-          updated: metrics.updated,
-          skipped: metrics.skipped,
-          attempts: metrics.attempts,
-          sourceGeneratedAt: metrics.sourceGeneratedAt,
-          errorDetails: insertError.message,
-          metadata: { errors: metrics.errors },
-        }, metrics);
+          await safeRecordAutomationRun({
+            jobName: JOB_NAME,
+            startedAt,
+            finishedAt: new Date().toISOString(),
+            success: false,
+            fetched: metrics.fetched,
+            inserted: metrics.inserted,
+            updated: metrics.updated,
+            skipped: metrics.skipped,
+            attempts: metrics.attempts,
+            sourceGeneratedAt: metrics.sourceGeneratedAt,
+            errorDetails: insertError.message,
+            metadata: { errors: metrics.errors },
+          }, metrics);
 
-        return Response.json({ error: insertError.message }, { status: 500 });
+          return Response.json({ error: insertError.message }, { status: 500 });
+        }
+        metrics.inserted += batch.length;
       }
     }
 
@@ -480,7 +485,6 @@ export async function GET(req: Request) {
       }
     }
 
-    metrics.inserted = toInsert.length;
     metrics.updated = toUpdate.length;
 
     logInfo("automation.studies-sync.success", {
