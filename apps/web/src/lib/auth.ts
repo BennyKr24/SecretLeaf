@@ -14,7 +14,7 @@ type CurrentUserResponse = {
   user: {
     id: string;
     email: string | null;
-    role: "CONSUMER" | "PROVIDER";
+    role: "CONSUMER" | "PROVIDER" | "ADMIN";
   };
 };
 
@@ -27,7 +27,7 @@ const toSessionData = (params: {
   accessToken: string;
   userId: string;
   email?: string | null | undefined;
-  role: "CONSUMER" | "PROVIDER";
+  role: "CONSUMER" | "PROVIDER" | "ADMIN";
 }): SessionData => ({
   token: params.accessToken,
   user: {
@@ -37,7 +37,7 @@ const toSessionData = (params: {
   },
 });
 
-const fetchRoleFromApi = async (accessToken: string): Promise<"CONSUMER" | "PROVIDER"> => {
+const fetchRoleFromApi = async (accessToken: string): Promise<"CONSUMER" | "PROVIDER" | "ADMIN"> => {
   const response = await fetch("/api/auth/me", {
     method: "GET",
     headers: {
@@ -52,6 +52,7 @@ const fetchRoleFromApi = async (accessToken: string): Promise<"CONSUMER" | "PROV
   }
 
   const body = (await response.json()) as CurrentUserResponse;
+  if (body.user?.role === "ADMIN") return "ADMIN";
   return body.user?.role === "PROVIDER" ? "PROVIDER" : "CONSUMER";
 };
 

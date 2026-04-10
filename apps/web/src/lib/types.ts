@@ -1,4 +1,4 @@
-export type UserRole = "CONSUMER" | "PROVIDER";
+export type UserRole = "CONSUMER" | "PROVIDER" | "ADMIN";
 
 export type SessionUser = {
   id: string;

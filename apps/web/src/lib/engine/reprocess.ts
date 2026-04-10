@@ -1,0 +1,277 @@
+// ──────────────────────────────────────────────────────────────────────────────
+// Study Engine – Reprocessing Loop
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// Periodically re-evaluates existing studies with:
+// - Updated adaptive weights (from feedback-driven learning)
+// - Updated classification rules (if topic clusters evolve)
+//
+// Goals:
+// - Promote under-scored studies that got positive feedback
+// - Demote over-scored studies with negative feedback
+// - Catch studies that were scored before a rule update
+//
+// Runs as a separate cron job, independent of the ingestion pipeline.
+// ──────────────────────────────────────────────────────────────────────────────
+
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type {
+  ClassificationResult,
+  NormalizedStudy,
+  ReprocessConfig,
+  ReprocessResult,
+  ScoringResult,
+  ScoringWeights,
+  StudyType,
+  TopicKey,
+} from "./types";
+import { classifyStudy } from "./classify";
+import { scoreStudy } from "./score";
+import { STUDIES_TABLE } from "./config";
+import type { PipelineLogger } from "./logger";
+
+// ── Default Config ──────────────────────────────────────────────────────────
+
+export const DEFAULT_REPROCESS_CONFIG: ReprocessConfig = {
+  batchSize: 50,
+  minAgeHours: 24,
+  maxScoreForReprocess: 100,
+  useAdaptiveWeights: true,
+};
+
+// ── DB Row → NormalizedStudy adapter ────────────────────────────────────────
+
+type StoredStudyRow = {
+  id: string;
+  title: string;
+  description: string | null;
+  source: string | null;
+  doi: string | null;
+  study_type: string;
+  evidence_level: number;
+  publisher_quality: number;
+  topic_fit: number;
+  relevance_score: number;
+  editorial_priority: string;
+  matched_topics: string[];
+  flags: string[];
+  first_author: string | null;
+  abstract_snippet: string | null;
+  origin_label: string;
+  affiliation_hints: string[];
+  source_fingerprint: string;
+  fetched_at: string;
+};
+
+function rowToNormalizedStudy(row: StoredStudyRow): NormalizedStudy {
+  return {
+    title: row.title,
+    titleNormalized: row.title.toLowerCase().replace(/[^a-z0-9]/g, ""),
+    doi: row.doi,
+    url: row.source,
+    publisher: row.origin_label ?? "unknown",
+    year: row.fetched_at ? new Date(row.fetched_at).getFullYear().toString() : "0",
+    abstract: row.description ?? row.abstract_snippet,
+    firstAuthor: row.first_author,
+    affiliations: row.affiliation_hints ?? [],
+    fingerprint: row.source_fingerprint,
+    meta: {},
+  };
+}
+
+// ── Reprocessing Logic ──────────────────────────────────────────────────────
+
+/**
+ * Fetch a batch of studies eligible for reprocessing.
+ *
+ * Selection criteria:
+ * - Older than minAgeHours
+ * - Score <= maxScoreForReprocess (catches low+mid scorers first)
+ * - Ordered by oldest fetched_at first (prioritize stale data)
+ */
+async function fetchReprocessCandidates(
+  supabase: SupabaseClient,
+  config: ReprocessConfig,
+  logger: PipelineLogger,
+): Promise<StoredStudyRow[]> {
+  const cutoff = new Date(
+    Date.now() - config.minAgeHours * 60 * 60 * 1000,
+  ).toISOString();
+
+  const { data, error } = await supabase
+    .from(STUDIES_TABLE)
+    .select(
+      "id, title, description, source, doi, study_type, evidence_level, publisher_quality, topic_fit, relevance_score, editorial_priority, matched_topics, flags, first_author, abstract_snippet, origin_label, affiliation_hints, source_fingerprint, fetched_at",
+    )
+    .lte("fetched_at", cutoff)
+    .lte("relevance_score", config.maxScoreForReprocess)
+    .order("fetched_at", { ascending: true })
+    .limit(config.batchSize);
+
+  if (error) {
+    logger.error("Failed to fetch reprocess candidates", { error: error.message });
+    return [];
+  }
+
+  return (data ?? []) as StoredStudyRow[];
+}
+
+/**
+ * Re-classify and re-score a single study.
+ * Returns the new scoring result and whether the score changed significantly.
+ */
+function reprocessStudy(
+  row: StoredStudyRow,
+  minAcceptScore: number,
+): {
+  classification: ClassificationResult;
+  scoring: ScoringResult;
+  oldScore: number;
+  newScore: number;
+  delta: number;
+} {
+  const normalized = rowToNormalizedStudy(row);
+  const classification = classifyStudy(normalized);
+  const scoring = scoreStudy(normalized, classification, minAcceptScore);
+
+  return {
+    classification,
+    scoring,
+    oldScore: row.relevance_score,
+    newScore: scoring.relevanceScore,
+    delta: scoring.relevanceScore - row.relevance_score,
+  };
+}
+
+/**
+ * Apply reprocessing updates to the database.
+ */
+async function applyReprocessUpdate(
+  supabase: SupabaseClient,
+  studyId: string,
+  scoring: ScoringResult,
+  classification: ClassificationResult,
+  logger: PipelineLogger,
+): Promise<boolean> {
+  const { error } = await supabase
+    .from(STUDIES_TABLE)
+    .update({
+      study_type: classification.studyType,
+      evidence_level: scoring.breakdown.evidenceLevel,
+      publisher_quality: scoring.breakdown.publisherQuality,
+      topic_fit: classification.topicFit,
+      relevance_score: scoring.relevanceScore,
+      editorial_priority: scoring.editorialPriority,
+      matched_topics: classification.matchedTopics,
+      flags: classification.flags,
+      fetched_at: new Date().toISOString(), // reset freshness clock
+    })
+    .eq("id", studyId);
+
+  if (error) {
+    logger.error(`Failed to update study ${studyId}`, { error: error.message });
+    return false;
+  }
+
+  return true;
+}
+
+// ── Main Entry Point ────────────────────────────────────────────────────────
+
+/**
+ * Run the reprocessing loop: re-classify and re-score a batch of existing studies.
+ *
+ * @param supabase - Supabase service-role client
+ * @param logger - Pipeline logger for observability
+ * @param configOverrides - Optional config overrides
+ * @param minAcceptScore - Minimum score for the accept gate (from PipelineConfig)
+ */
+export async function runReprocessLoop(
+  supabase: SupabaseClient,
+  logger: PipelineLogger,
+  configOverrides?: Partial<ReprocessConfig>,
+  minAcceptScore: number = 52,
+): Promise<ReprocessResult> {
+  const config: ReprocessConfig = {
+    ...DEFAULT_REPROCESS_CONFIG,
+    ...configOverrides,
+  };
+
+  const result: ReprocessResult = {
+    processed: 0,
+    upgraded: 0,
+    downgraded: 0,
+    unchanged: 0,
+    errors: [],
+  };
+
+  logger.info("Reprocess loop started", {
+    batchSize: config.batchSize,
+    minAgeHours: config.minAgeHours,
+    maxScoreForReprocess: config.maxScoreForReprocess,
+  });
+
+  // Fetch candidates
+  const candidates = await fetchReprocessCandidates(supabase, config, logger);
+
+  if (candidates.length === 0) {
+    logger.info("No studies eligible for reprocessing");
+    return result;
+  }
+
+  logger.info(`Found ${candidates.length} reprocess candidates`);
+
+  // Change threshold: only update if score changed by ≥3 points
+  const SIGNIFICANT_DELTA = 3;
+
+  for (const row of candidates) {
+    try {
+      const { classification, scoring, oldScore, newScore, delta } = reprocessStudy(
+        row,
+        minAcceptScore,
+      );
+
+      result.processed++;
+
+      if (Math.abs(delta) < SIGNIFICANT_DELTA) {
+        result.unchanged++;
+        continue;
+      }
+
+      const updated = await applyReprocessUpdate(
+        supabase,
+        row.id,
+        scoring,
+        classification,
+        logger,
+      );
+
+      if (!updated) {
+        result.errors.push(`Failed to update study ${row.id}`);
+        continue;
+      }
+
+      if (delta > 0) {
+        result.upgraded++;
+        logger.debug(`Upgraded study ${row.id}: ${oldScore} → ${newScore} (Δ${delta})`);
+      } else {
+        result.downgraded++;
+        logger.debug(`Downgraded study ${row.id}: ${oldScore} → ${newScore} (Δ${delta})`);
+      }
+    } catch (err) {
+      const message = `Reprocess failed for study ${row.id}: ${err instanceof Error ? err.message : String(err)}`;
+      logger.error(message);
+      result.errors.push(message);
+    }
+  }
+
+  logger.info("Reprocess loop complete", {
+    processed: result.processed,
+    upgraded: result.upgraded,
+    downgraded: result.downgraded,
+    unchanged: result.unchanged,
+    errors: result.errors.length,
+  });
+
+  return result;
+}

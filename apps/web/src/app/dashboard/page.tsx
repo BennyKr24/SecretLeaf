@@ -116,6 +116,11 @@ export default function DashboardPage() {
             <p className="text-sm text-[#4d685a]">Angemeldet als @{session.user.username}</p>
           </div>
           <div className="flex gap-3">
+            {session.user.role === "ADMIN" && (
+              <Link href={"/dashboard/admin" as Route} className="rounded-lg bg-[#1f7a4f] px-3 py-1 text-sm font-semibold text-white hover:bg-[#17613f]">
+                Admin Panel
+              </Link>
+            )}
             <Link href={"/" as Route} className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
               Startseite
             </Link>

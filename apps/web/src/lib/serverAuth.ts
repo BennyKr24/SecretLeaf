@@ -10,7 +10,9 @@ type UserRoleRow = {
 };
 
 function normalizeRole(value: string | null | undefined): UserRole {
-  return value === "PROVIDER" ? "PROVIDER" : "CONSUMER";
+  if (value === "ADMIN") return "ADMIN";
+  if (value === "PROVIDER") return "PROVIDER";
+  return "CONSUMER";
 }
 
 export function getBearerToken(request: Request): string | null {
@@ -77,4 +79,20 @@ export async function getAuthenticatedUserWithRole(
     email: auth.user.email ?? null,
     role,
   };
+}
+
+/**
+ * Require ADMIN role. Returns authenticated admin user or a 401/403 Response.
+ */
+export async function requireAdmin(
+  request: Request,
+): Promise<{ userId: string; email: string | null; role: "ADMIN" } | Response> {
+  const user = await getAuthenticatedUserWithRole(request);
+  if (!user) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (user.role !== "ADMIN") {
+    return Response.json({ error: "Forbidden: Admin access required" }, { status: 403 });
+  }
+  return { userId: user.userId, email: user.email, role: "ADMIN" };
 }

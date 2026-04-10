@@ -1,0 +1,97 @@
+// ──────────────────────────────────────────────────────────────────────────────
+// Study Engine – Adaptive Weights API Route (Cron)
+// ──────────────────────────────────────────────────────────────────────────────
+//
+// GET /api/automation/engine-adapt?x-cron-key=...
+//
+// Triggers the adaptive weight computation:
+// 1. Fetches feedback aggregates
+// 2. Builds study profiles
+// 3. Computes new weights via correlation analysis
+// 4. Persists to scoring_weights_history
+//
+// Should run periodically (e.g., weekly) after sufficient feedback accumulates.
+// ──────────────────────────────────────────────────────────────────────────────
+
+import { computeFeedbackAggregates } from "@/lib/engine/feedback";
+import { buildStudyProfiles, computeAdaptiveWeights, saveWeightAdjustment } from "@/lib/engine/adaptive";
+import { getCronSecret } from "@/lib/env";
+import { logError, logInfo, logWarn } from "@/lib/log";
+import { getSupabaseServerClient } from "@/lib/supabaseServer";
+import { PipelineLogAggregator } from "@/lib/engine";
+
+export const dynamic = "force-dynamic";
+
+function isCronAuthorized(req: Request, configuredSecret: string): boolean {
+  const headerSecret =
+    req.headers.get("x-cron-key") ??
+    new URL(req.url).searchParams.get("x-cron-key");
+  return headerSecret === configuredSecret;
+}
+
+export async function GET(req: Request) {
+  // ── Auth ────────────────────────────────────────────────────────────
+  let configuredSecret: string;
+  try {
+    configuredSecret = getCronSecret();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Missing CRON secret";
+    logError("automation.engine-adapt.misconfigured", { message });
+    return Response.json({ error: "CRON_SECRET is not configured" }, { status: 500 });
+  }
+
+  if (!isCronAuthorized(req, configuredSecret)) {
+    logWarn("automation.engine-adapt.unauthorized");
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const supabase = getSupabaseServerClient();
+    const logs = new PipelineLogAggregator();
+    const feedbackLog = logs.createLogger("feedback-agg");
+    const adaptLog = logs.createLogger("adaptive");
+
+    // 1. Compute feedback aggregates
+    const aggregates = await computeFeedbackAggregates(supabase, feedbackLog);
+
+    if (aggregates.size === 0) {
+      logInfo("automation.engine-adapt.no-data", {});
+      return Response.json({
+        success: true,
+        message: "No feedback data yet. Weights unchanged.",
+        basedOnStudies: 0,
+      });
+    }
+
+    // 2. Build study profiles
+    const profiles = await buildStudyProfiles(supabase, aggregates, adaptLog);
+
+    // 3. Compute adaptive weights
+    const adjustment = computeAdaptiveWeights(profiles, adaptLog);
+
+    // 4. Persist
+    const saved = await saveWeightAdjustment(supabase, adjustment, adaptLog);
+
+    logInfo("automation.engine-adapt.complete", {
+      basedOnStudies: adjustment.basedOnStudies,
+      reason: adjustment.reason,
+      saved,
+    });
+
+    return Response.json({
+      success: true,
+      adjustment: {
+        weights: adjustment.weights,
+        reason: adjustment.reason,
+        basedOnStudies: adjustment.basedOnStudies,
+        computedAt: adjustment.computedAt,
+      },
+      saved,
+      generatedAt: new Date().toISOString(),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Adaptation failed";
+    logError("automation.engine-adapt.exception", { message });
+    return Response.json({ error: message }, { status: 500 });
+  }
+}
