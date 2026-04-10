@@ -312,36 +312,36 @@ export default function AdminOverviewPage() {
               <div className="mt-5">
                 <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.15em] text-[#8fa89a]">Schnellzugriff</h2>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                  {[
+                  {([
                     {
-                      href: "/dashboard/admin/users",
+                      href: "/dashboard/admin/users" as const,
                       icon: "👥",
                       title: "Benutzer",
                       sub: `${systemStats.totalAuthUsers} registriert`,
                       color: "hover:border-blue-300",
                     },
                     {
-                      href: "/dashboard/admin/studies",
+                      href: "/dashboard/admin/studies" as const,
                       icon: "🔬",
                       title: "Studien prüfen",
                       sub: data.pendingReview > 0 ? `${data.pendingReview} ausstehend` : "Alles aktuell",
                       color: data.pendingReview > 0 ? "border-amber-200 hover:border-amber-400" : "hover:border-emerald-300",
                     },
                     {
-                      href: "/dashboard/admin/engine",
+                      href: "/dashboard/admin/engine" as const,
                       icon: "⚙️",
                       title: "Engine",
                       sub: `Status: ${STATUS_CONFIG[data.pipelineStatus].label}`,
                       color: data.pipelineStatus === "healthy" ? "hover:border-emerald-300" : "border-amber-200 hover:border-amber-400",
                     },
                     {
-                      href: "/dashboard/admin/algorithm",
+                      href: "/dashboard/admin/algorithm" as const,
                       icon: "🧬",
                       title: "Algorithmus",
                       sub: "Keywords & Filter konfigurieren",
                       color: "hover:border-purple-300",
                     },
-                  ].map((item) => (
+                  ]).map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
