@@ -109,6 +109,10 @@ export const registerWithSupabase = async (input: SupabaseAuthInput): Promise<Se
 
 export const loginWithSupabase = async (input: SupabaseAuthInput): Promise<SessionData> => {
   const supabase = getSupabaseBrowserClient();
+
+  // Clear any stale session before attempting login
+  await supabase.auth.signOut().catch(() => {});
+
   const { data, error } = await supabase.auth.signInWithPassword({
     email: input.email,
     password: input.password,
