@@ -1,9 +1,11 @@
+import { recordAutomationRun } from "@/lib/automationRuns";
 import { getCronSecret } from "@/lib/env";
 import { logError, logInfo, logWarn } from "@/lib/log";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 
 export const dynamic = "force-dynamic";
 
+const JOB_NAME = "cleanup";
 const DEFAULT_MAX_AGE_HOURS = 24;
 const MAX_USER_SCAN_PAGES = 20;
 const USERS_PER_PAGE = 200;
@@ -20,6 +22,8 @@ function shouldDeleteSmokeUser(email: string | null | undefined, createdAt: stri
 }
 
 export async function GET(req: Request) {
+  const startedAt = new Date().toISOString();
+
   let configuredSecret: string;
   try {
     configuredSecret = getCronSecret();
@@ -29,7 +33,9 @@ export async function GET(req: Request) {
     return Response.json({ error: "CRON_SECRET is not configured" }, { status: 500 });
   }
 
-  const headerSecret = req.headers.get("x-cron-key");
+  const headerSecret =
+    req.headers.get("x-cron-key") ??
+    new URL(req.url).searchParams.get("x-cron-key");
   if (headerSecret !== configuredSecret) {
     logWarn("automation.cleanup.unauthorized");
     return Response.json({ error: "Unauthorized" }, { status: 401 });
@@ -87,6 +93,8 @@ export async function GET(req: Request) {
       maxAgeHours,
     });
 
+    await safeRecordRun(startedAt, true, scannedUsers, deletedUsers, deletedStudies ?? 0, null, { maxAgeHours });
+
     return Response.json({
       ok: true,
       scannedUsers,
@@ -99,6 +107,37 @@ export async function GET(req: Request) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Cleanup failed";
     logError("automation.cleanup.exception", { message });
+    await safeRecordRun(startedAt, false, 0, 0, 0, message);
     return Response.json({ error: message }, { status: 500 });
+  }
+}
+
+// ── Telemetry Helper ────────────────────────────────────────────────────────
+
+async function safeRecordRun(
+  startedAt: string,
+  success: boolean,
+  scannedUsers: number,
+  deletedUsers: number,
+  deletedStudies: number,
+  errorDetails: string | null,
+  metadata: Record<string, unknown> = {},
+): Promise<void> {
+  try {
+    await recordAutomationRun({
+      jobName: JOB_NAME,
+      startedAt,
+      finishedAt: new Date().toISOString(),
+      success,
+      fetched: scannedUsers,
+      inserted: 0,
+      updated: deletedUsers + deletedStudies,
+      skipped: 0,
+      errorDetails,
+      metadata: { ...metadata, deletedUsers, deletedStudies },
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : "telemetry failed";
+    logWarn("automation.cleanup.telemetry-failed", { message: msg });
   }
 }

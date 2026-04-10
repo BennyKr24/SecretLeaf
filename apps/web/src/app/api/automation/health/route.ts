@@ -1,6 +1,15 @@
+import { getCronSecret } from "@/lib/env";
+import { logError, logWarn } from "@/lib/log";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 
 export const dynamic = "force-dynamic";
+
+function isCronAuthorized(req: Request, configuredSecret: string): boolean {
+  const headerSecret =
+    req.headers.get("x-cron-key") ??
+    new URL(req.url).searchParams.get("x-cron-key");
+  return headerSecret === configuredSecret;
+}
 
 type RunRow = {
   id: string;
@@ -23,7 +32,21 @@ function hoursSince(iso: string | null): number | null {
   return Math.max(0, Number(((Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60)).toFixed(1)));
 }
 
-export async function GET() {
+export async function GET(req: Request) {
+  let configuredSecret: string;
+  try {
+    configuredSecret = getCronSecret();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Missing CRON secret";
+    logError("automation.health.misconfigured", { message });
+    return Response.json({ error: "CRON_SECRET is not configured" }, { status: 500 });
+  }
+
+  if (!isCronAuthorized(req, configuredSecret)) {
+    logWarn("automation.health.unauthorized");
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const supabase = getSupabaseServerClient();
     const { data, error } = await supabase

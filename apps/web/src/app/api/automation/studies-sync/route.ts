@@ -92,7 +92,9 @@ type SyncMetrics = {
 };
 
 function isCronAuthorized(req: Request, configuredSecret: string): boolean {
-  const headerSecret = req.headers.get("x-cron-key");
+  const headerSecret =
+    req.headers.get("x-cron-key") ??
+    new URL(req.url).searchParams.get("x-cron-key");
   return headerSecret === configuredSecret;
 }
 

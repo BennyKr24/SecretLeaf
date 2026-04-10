@@ -145,7 +145,7 @@ function SearchContent() {
             Intelligente Suche
           </h1>
           <p className="text-slate-400 mb-8">
-            Wiki-Artikel, 50+ Dünger, Glossarbegriffe und Wissenschaftsquellen — alles durchsuchbar.
+            Wiki-Artikel, über 50 Dünger, Glossarbegriffe und Fachquellen – alles durchsuchbar.
           </p>
 
           <form onSubmit={handleSubmit} className="relative">
@@ -216,10 +216,10 @@ function SearchContent() {
           <div className="flex items-center justify-between mb-4 text-sm text-slate-500">
             <span>
               {isPending
-                ? 'Suche…'
+                ? 'Suche läuft…'
                 : data.isEmpty
                 ? 'Keine Ergebnisse'
-                : `${data.totalResults} Ergebnisse für „${data.query}" · ${data.duration_ms}ms`}
+                : `${data.totalResults} Ergebnisse für „${data.query}“ · ${data.duration_ms} ms`}
             </span>
             <Link href={"/studies" as Route} className="text-emerald-600 hover:text-emerald-700 font-medium">
               → Wiki Hub
@@ -232,7 +232,7 @@ function SearchContent() {
           <div className="flex items-center justify-center py-16">
             <div className="flex items-center gap-3 text-slate-500">
               <div className="w-5 h-5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-              <span>Durchsuche Index…</span>
+              <span>Suche läuft…</span>
             </div>
           </div>
         )}
@@ -248,11 +248,11 @@ function SearchContent() {
         {!isPending && data?.isEmpty && (
           <div className="text-center py-16">
             <p className="text-4xl mb-3">🔍</p>
-            <h2 className="text-xl font-bold text-slate-800 mb-2">Keine Treffer</h2>
-            <p className="text-slate-500 mb-4">Für „{data.query}" wurden keine Ergebnisse gefunden.</p>
+            <h2 className="text-xl font-bold text-slate-800 mb-2">Keine Treffer gefunden</h2>
+            <p className="text-slate-500 mb-4">Für „{data.query}“ gibt es keine Ergebnisse.</p>
             {data.suggestions.length > 0 && (
               <div className="flex flex-wrap gap-2 justify-center">
-                <span className="text-sm text-slate-500">Meintest du:</span>
+                <span className="text-sm text-slate-500">Meintest du vielleicht:</span>
                 {data.suggestions.map((s) => (
                   <button
                     key={s}
@@ -290,7 +290,7 @@ function SearchContent() {
         {!hasSearched && !isPending && (
           <div className="text-center py-12">
             <p className="text-slate-500 text-base mb-6">
-              Durchsuche Studies, Database-Eintraege, Tools und wissenschaftliche Quellen.
+              Durchsuche Studies, Datenbankeinträge, Tools und wissenschaftliche Quellen.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[

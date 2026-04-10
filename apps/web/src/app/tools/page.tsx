@@ -9,7 +9,7 @@ export default function ToolsHubPage() {
           <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700">Tools</p>
           <h1 className="mt-1 text-4xl font-bold text-slate-900">Werkzeuge</h1>
           <p className="mt-2 max-w-3xl text-sm text-slate-600">
-            Operative Hilfen fuer Planung, Vergleich und Entscheidungsfindung. Alle Tools sind auf kurze, klare Workflows ausgelegt.
+            Praktische Werkzeuge für Planung, Vergleich und Entscheidungen. Alle Tools sind auf schnelle, klare Abläufe ausgelegt.
           </p>
         </header>
 
@@ -19,9 +19,9 @@ export default function ToolsHubPage() {
             className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50"
           >
             <p className="text-sm font-semibold text-emerald-700">Planung</p>
-            <h2 className="mt-1 text-xl font-bold text-slate-900">Duengerplaene</h2>
+            <h2 className="mt-1 text-xl font-bold text-slate-900">Düngerpläne</h2>
             <p className="mt-2 text-sm text-slate-600">
-              Vorgefertigte Plaene mit Setup-, Budget- und Ziel-Filtern.
+              Fertige Düngerpläne, filterbar nach Setup, Budget und Ziel.
             </p>
           </Link>
 
@@ -32,7 +32,7 @@ export default function ToolsHubPage() {
             <p className="text-sm font-semibold text-cyan-700">Discovery</p>
             <h2 className="mt-1 text-xl font-bold text-slate-900">Globale Suche</h2>
             <p className="mt-2 text-sm text-slate-600">
-              Schneller Zugriff auf Studies, Quellen und Datenbank-Eintraege.
+              Schneller Zugriff auf Studies, Quellen und Datenbankeinträge.
             </p>
           </Link>
         </div>

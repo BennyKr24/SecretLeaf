@@ -30,12 +30,19 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const result = search(q, { limit, ...(kinds ? { kinds } : {}) });
+  try {
+    const result = search(q, { limit, ...(kinds ? { kinds } : {}) });
 
-  return Response.json(result, {
-    headers: {
-      "Cache-Control": "no-store",
-      "X-Search-Duration-Ms": String(result.duration_ms),
-    },
-  });
+    return Response.json(result, {
+      headers: {
+        "Cache-Control": "no-store",
+        "X-Search-Duration-Ms": String(result.duration_ms),
+      },
+    });
+  } catch {
+    return Response.json(
+      { error: "Search failed", results: [], total: 0, duration_ms: 0 },
+      { status: 500 },
+    );
+  }
 }

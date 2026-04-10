@@ -25,13 +25,16 @@ export async function GET(req: Request) {
         skipped: 0,
         errorDetails: message,
       });
-    } catch {
-      // ignore telemetry failure
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "telemetry failed";
+      logWarn("automation.study-refresh.telemetry-failed", { message: msg });
     }
     return Response.json({ error: "CRON_SECRET is not configured" }, { status: 500 });
   }
 
-  const headerSecret = req.headers.get("x-cron-key");
+  const headerSecret =
+    req.headers.get("x-cron-key") ??
+    new URL(req.url).searchParams.get("x-cron-key");
 
   if (headerSecret !== configuredSecret) {
     logWarn("automation.study-refresh.unauthorized");
@@ -108,8 +111,9 @@ export async function GET(req: Request) {
         skipped: 0,
         errorDetails: message,
       });
-    } catch {
-      // ignore telemetry failure
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "telemetry failed";
+      logWarn("automation.study-refresh.telemetry-failed", { message: msg });
     }
 
     return Response.json(

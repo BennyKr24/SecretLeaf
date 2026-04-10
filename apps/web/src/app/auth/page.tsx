@@ -45,7 +45,7 @@ export default function AuthPage() {
           saveSession(session);
           router.push("/dashboard");
         } else {
-          setInfo("Konto erstellt. Bitte bestaetige deine E-Mail und logge dich danach ein.");
+          setInfo("Konto erstellt. Bitte bestätige deine E-Mail-Adresse und melde dich anschließend an.");
           setMode("login");
         }
       }
@@ -67,7 +67,7 @@ export default function AuthPage() {
             {mode === "login" ? "Willkommen zurück" : "Konto erstellen"}
           </h1>
           <p className="mt-2 text-sm text-[#4d685a]">
-            Login und Registrierung laufen jetzt ueber Supabase Auth.
+            Melde dich mit deiner E-Mail-Adresse an.
           </p>
         </div>
 
@@ -130,7 +130,7 @@ export default function AuthPage() {
 
           {mode === "register" && (
             <div className="rounded-xl border border-[#d8e8dd] bg-[#f6faf7] p-3 text-sm text-[#4d685a]">
-              Neue Konten starten mit Rolle <span className="font-semibold">CONSUMER</span>. Provider-Rechte werden serverseitig vergeben.
+              Neues Konto startet als Consumer. Anbieter-Zugang wird separat freigeschaltet.
             </div>
           )}
 
@@ -151,7 +151,7 @@ export default function AuthPage() {
             disabled={pending}
             className="w-full rounded-xl bg-[#1f7a4f] px-4 py-2 font-medium text-white transition hover:bg-[#17613f] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {pending ? "Wird verarbeitet..." : mode === "login" ? "Einloggen" : "Konto erstellen"}
+            {pending ? 'Einen Moment…' : mode === "login" ? "Anmelden" : "Konto erstellen"}
           </button>
         </form>
 
@@ -166,14 +166,14 @@ export default function AuthPage() {
                 onClick={() => demoLogin(false)}
                 className="flex-1 rounded-lg bg-[#c89a3f] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#b4872f]"
               >
-                Als Consumer einloggen
+                Als Consumer anmelden
               </button>
               <button
                 type="button"
                 onClick={() => demoLogin(true)}
                 className="flex-1 rounded-lg bg-[#c89a3f] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#b4872f]"
               >
-                Als Provider einloggen
+                Als Provider anmelden
               </button>
             </div>
           </div>

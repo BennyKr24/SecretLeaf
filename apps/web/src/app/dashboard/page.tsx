@@ -94,13 +94,13 @@ export default function DashboardPage() {
     return (
       <main className="min-h-screen px-6 py-20">
         <section className="mx-auto max-w-4xl px-6 py-20 text-center">
-          <h1 className="text-3xl font-bold text-[#10281e]">Bitte einloggen</h1>
-          <p className="mt-4 text-[#4d685a]">Die Suche ist nur für angemeldete Benutzer verfügbar.</p>
+          <h1 className="text-3xl font-bold text-[#10281e]">Anmeldung erforderlich</h1>
+          <p className="mt-4 text-[#4d685a]">Melde dich an, um das Dashboard zu nutzen.</p>
           <Link 
             href="/auth" 
             className="mt-6 inline-block rounded-lg bg-[#1f7a4f] px-6 py-2 font-medium text-white hover:bg-[#17613f]"
           >
-            Zu Login / Register
+            Jetzt anmelden
           </Link>
         </section>
       </main>
@@ -145,24 +145,25 @@ export default function DashboardPage() {
       <div className="mx-auto max-w-7xl px-6 py-8">
         <div className="mb-8 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Internes Curation Tool</p>
-            <h2 className="mt-2 text-2xl font-semibold text-[#123024]">Studien in 1 Minute pruefen</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Internes Curation-Tool</p>
+            <h2 className="mt-2 text-2xl font-semibold text-[#123024]">Studien schnell prüfen</h2>
             <p className="mt-3 text-sm text-[#4d685a]">
-              Neue Auto-Studien sind auf 3 kurze Zeilen verdichtet, inklusive Herkunft, Autor und Institut/Uni, damit du schnell entscheiden kannst, was in den Knowledge-Bereich soll.
+              Neu importierte Studien sind auf das Wesentliche komprimiert – mit Quelle, Autor und Institut
+              – damit du schnell entscheidest, was relevant ist.
             </p>
             <Link
               href={"/dashboard/review" as Route}
               className="mt-5 inline-flex rounded-xl bg-[#1f7a4f] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#17613f]"
             >
-              Interne Studien-Review oeffnen
+              Studien reviewen
             </Link>
           </div>
 
           <div className="rounded-2xl border border-[#d8e8dd] bg-[#f6faf7] p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-[#123024]">Arbeitsweise</h2>
-            <p className="mt-3 text-sm text-[#4d685a]">Rein: direkt fuer Einbau oder Artikelidee geeignet.</p>
-            <p className="mt-2 text-sm text-[#4d685a]">Spaeter: interessant, aber noch kein sofortiger Einbau.</p>
-            <p className="mt-2 text-sm text-[#4d685a]">Nein: fachlich zu schwach oder nicht nah genug an SecretLeaf.</p>
+            <h2 className="text-lg font-semibold text-[#123024]">Bewertungslogik</h2>
+            <p className="mt-3 text-sm text-[#4d685a]">Rein: direkt verwertbar oder als Artikelidee geeignet.</p>
+            <p className="mt-2 text-sm text-[#4d685a]">Später: interessant, aber noch nicht gut genug.</p>
+            <p className="mt-2 text-sm text-[#4d685a]">Nein: zu schwach oder nicht relevant für SecretLeaf.</p>
           </div>
         </div>
 
@@ -172,7 +173,7 @@ export default function DashboardPage() {
           <div className="grid md:grid-cols-4 gap-6 mb-6">
             <div>
               <label className="mb-2 block text-sm font-medium text-[#355b49]">
-                Location Zone
+                Gebiet
               </label>
               <input
                 type="text"
@@ -198,7 +199,7 @@ export default function DashboardPage() {
 
             <div>
               <label className="mb-2 block text-sm font-medium text-[#355b49]">
-                Max Preis pro Einheit (€)
+                Max. Preis / Einheit (€)
               </label>
               <input
                 type="number"
@@ -216,7 +217,7 @@ export default function DashboardPage() {
                 disabled={loading}
                 className="w-full rounded-xl bg-[#1f7a4f] px-4 py-2 font-medium text-white transition hover:bg-[#17613f] disabled:opacity-50"
               >
-                {loading ? "Lädt..." : "Suchen"}
+                {loading ? 'Sucht…' : 'Suchen'}
               </button>
             </div>
           </div>
@@ -260,12 +261,12 @@ export default function DashboardPage() {
             />
 
             <div className="rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
-              <h2 className="mb-6 text-lg font-semibold text-[#123024]">
-                Meine Listings
+<h2 className="text-lg font-semibold text-[#123024]">
+              Meine Angebote
               </h2>
 
               {myListings.length === 0 ? (
-                <p className="text-[#4d685a]">Noch keine Listings vorhanden.</p>
+                <p className="text-[#4d685a]">Du hast noch keine Angebote erstellt.</p>
               ) : (
                 <div className="space-y-3">
                   {myListings.map((listing) => (
@@ -280,7 +281,7 @@ export default function DashboardPage() {
                             {listing.quantityAvailable} Einheiten verfügbar
                           </p>
                           <p className="text-sm text-[#4d685a]">
-                            Status: {listing.isActive ? "Aktiv" : "Inaktiv"}
+                            {listing.isActive ? 'Aktiv' : 'Inaktiv'}
                           </p>
                         </div>
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${

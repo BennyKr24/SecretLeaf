@@ -10,6 +10,22 @@
       "schedule": "27 4 * * *"
     },
     {
+      "path": "/api/automation/engine-sync",
+      "schedule": "37 4 * * *"
+    },
+    {
+      "path": "/api/automation/engine-health",
+      "schedule": "47 4 * * *"
+    },
+    {
+      "path": "/api/automation/engine-adapt",
+      "schedule": "0 5 * * 1"
+    },
+    {
+      "path": "/api/automation/engine-reprocess",
+      "schedule": "15 5 * * 1"
+    },
+    {
       "path": "/api/automation/cleanup",
       "schedule": "40 4 * * 0"
     }

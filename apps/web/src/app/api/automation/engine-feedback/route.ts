@@ -12,11 +12,14 @@
 
 import { recordFeedback, recordFeedbackBatch } from "@/lib/engine/feedback";
 import type { FeedbackEvent, FeedbackEventType } from "@/lib/engine";
-import { logError, logInfo } from "@/lib/log";
+import { logError, logInfo, logWarn } from "@/lib/log";
+import { getAuthenticatedUser } from "@/lib/serverAuth";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 import { PipelineLogAggregator } from "@/lib/engine";
 
 export const dynamic = "force-dynamic";
+
+const MAX_BATCH_SIZE = 50;
 
 const VALID_EVENT_TYPES = new Set<FeedbackEventType>([
   "view",
@@ -40,6 +43,13 @@ function isValidEvent(obj: unknown): obj is { studyId: string; eventType: Feedba
 
 export async function POST(req: Request) {
   try {
+    // ── Auth: Only authenticated users may submit feedback ──────────────
+    const user = await getAuthenticatedUser(req);
+    if (!user) {
+      logWarn("engine-feedback.unauthorized");
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
 
     const supabase = getSupabaseServerClient();
@@ -48,6 +58,13 @@ export async function POST(req: Request) {
 
     // Support single event or batch
     if (Array.isArray(body)) {
+      if (body.length > MAX_BATCH_SIZE) {
+        return Response.json(
+          { error: `Batch too large. Maximum ${MAX_BATCH_SIZE} events per request.` },
+          { status: 400 },
+        );
+      }
+
       const events: FeedbackEvent[] = [];
       for (const item of body) {
         if (!isValidEvent(item)) continue;

@@ -14,15 +14,19 @@ export async function GET(req: NextRequest) {
     return Response.json({ suggestions: [] });
   }
 
-  // Autocomplete auf Titel-Ebene
-  const suggestions = autocomplete(prefix, 8);
+  try {
+    // Autocomplete auf Titel-Ebene
+    const suggestions = autocomplete(prefix, 8);
 
-  // Auch Top-3 Direkttreffer fürs Dropdown
-  const topResults = search(prefix, { limit: 5, minScore: 15 } as Parameters<typeof search>[1]);
+    // Auch Top-3 Direkttreffer fürs Dropdown
+    const topResults = search(prefix, { limit: 5, minScore: 15 } as Parameters<typeof search>[1]);
 
-  return Response.json({
-    prefix,
-    suggestions,
-    topResults: topResults.results.slice(0, 5),
-  });
+    return Response.json({
+      prefix,
+      suggestions,
+      topResults: topResults.results.slice(0, 5),
+    });
+  } catch {
+    return Response.json({ prefix, suggestions: [], topResults: [] });
+  }
 }

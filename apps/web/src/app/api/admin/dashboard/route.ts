@@ -18,6 +18,20 @@ export const dynamic = "force-dynamic";
 
 const STUDIES_TABLE = "studies";
 
+/**
+ * Derive a reliable base URL for internal fetch calls.
+ * Priority: origin header → VERCEL_URL env → host header.
+ */
+function getBaseUrl(req: Request): string {
+  const origin = req.headers.get("origin");
+  if (origin && origin.startsWith("http")) return origin;
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) return `https://${vercelUrl}`;
+  const host = req.headers.get("host");
+  if (host) return `https://${host}`;
+  return "";
+}
+
 type AdminAction =
   | "overview"
   | "studies"
@@ -220,9 +234,8 @@ export async function POST(req: Request) {
         if (body.lookbackDays) params.set("lookbackDays", String(body.lookbackDays));
         if (body.maxProcessed) params.set("maxProcessed", String(body.maxProcessed));
 
-        const baseUrl = req.headers.get("origin") || req.headers.get("host") || "";
-        const protocol = baseUrl.startsWith("http") ? "" : "https://";
-        const url = `${protocol}${baseUrl}/api/automation/engine-sync?${params.toString()}`;
+        const baseUrl = getBaseUrl(req);
+        const url = `${baseUrl}/api/automation/engine-sync?${params.toString()}`;
 
         const res = await fetch(url, { cache: "no-store" });
         const result = await res.json();
@@ -236,9 +249,8 @@ export async function POST(req: Request) {
         const { getCronSecret } = await import("@/lib/env");
         const cronSecret = getCronSecret();
 
-        const baseUrl = req.headers.get("origin") || req.headers.get("host") || "";
-        const protocol = baseUrl.startsWith("http") ? "" : "https://";
-        const url = `${protocol}${baseUrl}/api/automation/engine-adapt?x-cron-key=${cronSecret}`;
+        const baseUrl = getBaseUrl(req);
+        const url = `${baseUrl}/api/automation/engine-adapt?x-cron-key=${encodeURIComponent(cronSecret)}`;
 
         const res = await fetch(url, { cache: "no-store" });
         const result = await res.json();
@@ -254,9 +266,8 @@ export async function POST(req: Request) {
         const params = new URLSearchParams({ "x-cron-key": cronSecret });
         if (body.batchSize) params.set("batchSize", String(body.batchSize));
 
-        const baseUrl = req.headers.get("origin") || req.headers.get("host") || "";
-        const protocol = baseUrl.startsWith("http") ? "" : "https://";
-        const url = `${protocol}${baseUrl}/api/automation/engine-reprocess?${params.toString()}`;
+        const baseUrl = getBaseUrl(req);
+        const url = `${baseUrl}/api/automation/engine-reprocess?${params.toString()}`;
 
         const res = await fetch(url, { cache: "no-store" });
         const result = await res.json();

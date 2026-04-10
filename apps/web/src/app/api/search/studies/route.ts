@@ -33,18 +33,25 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const response = searchStudies(q, {
-    limit,
-    mode,
-    includeAuto,
-    includeManual,
-  });
+  try {
+    const response = searchStudies(q, {
+      limit,
+      mode,
+      includeAuto,
+      includeManual,
+    });
 
-  return Response.json(response, {
-    headers: {
-      "Cache-Control": "s-maxage=300, stale-while-revalidate=1800",
-      "X-Study-Search-Duration-Ms": String(response.durationMs),
-      "X-Study-Mode": mode,
-    },
-  });
+    return Response.json(response, {
+      headers: {
+        "Cache-Control": "s-maxage=300, stale-while-revalidate=1800",
+        "X-Study-Search-Duration-Ms": String(response.durationMs),
+        "X-Study-Mode": mode,
+      },
+    });
+  } catch {
+    return Response.json(
+      { error: "Study search failed", results: [], total: 0, durationMs: 0 },
+      { status: 500 },
+    );
+  }
 }

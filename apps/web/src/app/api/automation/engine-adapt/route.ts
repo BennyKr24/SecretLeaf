@@ -15,12 +15,15 @@
 
 import { computeFeedbackAggregates } from "@/lib/engine/feedback";
 import { buildStudyProfiles, computeAdaptiveWeights, saveWeightAdjustment } from "@/lib/engine/adaptive";
+import { recordAutomationRun } from "@/lib/automationRuns";
 import { getCronSecret } from "@/lib/env";
 import { logError, logInfo, logWarn } from "@/lib/log";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 import { PipelineLogAggregator } from "@/lib/engine";
 
 export const dynamic = "force-dynamic";
+
+const JOB_NAME = "engine-adapt";
 
 function isCronAuthorized(req: Request, configuredSecret: string): boolean {
   const headerSecret =
@@ -30,6 +33,8 @@ function isCronAuthorized(req: Request, configuredSecret: string): boolean {
 }
 
 export async function GET(req: Request) {
+  const startedAt = new Date().toISOString();
+
   // ── Auth ────────────────────────────────────────────────────────────
   let configuredSecret: string;
   try {
@@ -37,6 +42,7 @@ export async function GET(req: Request) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Missing CRON secret";
     logError("automation.engine-adapt.misconfigured", { message });
+    await safeRecordRun(startedAt, false, 0, message);
     return Response.json({ error: "CRON_SECRET is not configured" }, { status: 500 });
   }
 
@@ -56,6 +62,7 @@ export async function GET(req: Request) {
 
     if (aggregates.size === 0) {
       logInfo("automation.engine-adapt.no-data", {});
+      await safeRecordRun(startedAt, true, 0, null, { reason: "No feedback data" });
       return Response.json({
         success: true,
         message: "No feedback data yet. Weights unchanged.",
@@ -78,6 +85,12 @@ export async function GET(req: Request) {
       saved,
     });
 
+    await safeRecordRun(startedAt, true, adjustment.basedOnStudies, null, {
+      reason: adjustment.reason,
+      saved,
+      weights: adjustment.weights,
+    });
+
     return Response.json({
       success: true,
       adjustment: {
@@ -92,6 +105,35 @@ export async function GET(req: Request) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Adaptation failed";
     logError("automation.engine-adapt.exception", { message });
+    await safeRecordRun(startedAt, false, 0, message);
     return Response.json({ error: message }, { status: 500 });
+  }
+}
+
+// ── Telemetry Helper ────────────────────────────────────────────────────────
+
+async function safeRecordRun(
+  startedAt: string,
+  success: boolean,
+  basedOnStudies: number,
+  errorDetails: string | null,
+  metadata: Record<string, unknown> = {},
+): Promise<void> {
+  try {
+    await recordAutomationRun({
+      jobName: JOB_NAME,
+      startedAt,
+      finishedAt: new Date().toISOString(),
+      success,
+      fetched: basedOnStudies,
+      inserted: 0,
+      updated: 0,
+      skipped: 0,
+      errorDetails,
+      metadata,
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : "telemetry failed";
+    logWarn("automation.engine-adapt.telemetry-failed", { message: msg });
   }
 }

@@ -114,11 +114,12 @@ async function safeRecordRun(
       success,
       fetched: 0,
       inserted: 0,
-      updated: (metadata.upgraded as number) ?? 0 + ((metadata.downgraded as number) ?? 0),
+      updated: ((metadata.upgraded as number) ?? 0) + ((metadata.downgraded as number) ?? 0),
       skipped: (metadata.unchanged as number) ?? 0,
       metadata,
     });
-  } catch {
-    logError("automation.engine-reprocess.record-run-failed", {});
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : "telemetry failed";
+    logWarn("automation.engine-reprocess.record-run-failed", { message: msg });
   }
 }

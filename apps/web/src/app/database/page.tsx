@@ -9,7 +9,7 @@ export default function DatabaseHubPage() {
           <p className="text-xs font-semibold uppercase tracking-wide text-amber-700">Database</p>
           <h1 className="mt-1 text-4xl font-bold text-slate-900">Datenbank</h1>
           <p className="mt-2 max-w-3xl text-sm text-slate-600">
-            Strukturierte Register fuer Produktdaten und Fachbereiche. Die Bereiche sind klar getrennt, damit nichts im Duenger-Katalog vermischt wird.
+            Strukturierte Register für Produktdaten und Fachbereiche. Alle Bereiche sind klar voneinander getrennt.
           </p>
         </header>
 
@@ -25,7 +25,7 @@ export default function DatabaseHubPage() {
                   <p className="text-sm font-semibold text-amber-700">Katalog</p>
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-amber-200 bg-amber-100 text-amber-700">🗂</span>
                 </div>
-                <h2 className="mt-1 text-xl font-bold text-slate-900">Duenger</h2>
+                <h2 className="mt-1 text-xl font-bold text-slate-900">Dünger</h2>
                 <p className="mt-2 flex-1 text-sm text-slate-600">
                   Vergleich nach Phase, Basis, Format, Preis und Live-Angeboten.
                 </p>
@@ -40,9 +40,9 @@ export default function DatabaseHubPage() {
                   <p className="text-sm font-semibold text-cyan-700">Planung</p>
                   <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-cyan-200 bg-cyan-100 text-cyan-700">🧰</span>
                 </div>
-                <h2 className="mt-1 text-xl font-bold text-slate-900">Duengerplaene</h2>
+                <h2 className="mt-1 text-xl font-bold text-slate-900">Düngerpläne</h2>
                 <p className="mt-2 flex-1 text-sm text-slate-600">
-                  Praxisplaene als separates Tool, nicht als Unterbereich des Katalogs.
+                  Praxispläne als separates Tool, nicht als Unterbereich des Katalogs.
                 </p>
                 <span className="mt-3 text-xs font-semibold text-cyan-700 group-hover:underline">Tool öffnen →</span>
               </Link>
@@ -55,14 +55,14 @@ export default function DatabaseHubPage() {
                 <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Fachregister</p>
                 <h2 className="mt-1 text-xl font-bold text-slate-900">Lexika und Quellen</h2>
                 <p className="mt-1 max-w-3xl text-sm text-slate-600">
-                  Diese Inhalte sind als eigene Register verfuegbar und nicht Teil des Duenger-Katalogs.
+                  Diese Register sind eigenständig und nicht Teil des Dünger-Katalogs.
                 </p>
               </div>
               <Link
                 href={"/studies" as Route}
                 className="rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700"
               >
-                Gesamte Sammlung oeffnen
+                Zur Studiensammlung
               </Link>
             </div>
 
@@ -75,9 +75,9 @@ export default function DatabaseHubPage() {
                   <p className="text-xs font-semibold uppercase tracking-wide text-rose-700">Lexikon</p>
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-rose-200 bg-rose-100 text-rose-700">🐛</span>
                 </div>
-                <h3 className="mt-1 text-lg font-bold text-slate-900 group-hover:text-rose-900">Schaedlinge</h3>
-                <p className="mt-2 flex-1 text-sm text-slate-600">Symptome, Monitoring und Gegenmassnahmen fuer den Praxisalltag.</p>
-                <span className="mt-3 text-xs font-semibold text-rose-700 group-hover:underline">Oeffnen -&gt;</span>
+                <h3 className="mt-1 text-lg font-bold text-slate-900 group-hover:text-rose-900">Schädlinge</h3>
+                <p className="mt-2 flex-1 text-sm text-slate-600">Symptome, Monitoring und Gegenmaßnahmen für den Alltag.</p>
+                <span className="mt-3 text-xs font-semibold text-rose-700 group-hover:underline">Öffnen →</span>
               </Link>
 
               <Link
@@ -88,9 +88,9 @@ export default function DatabaseHubPage() {
                   <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">Lexikon</p>
                   <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-sky-200 bg-sky-100 text-sky-700">🧪</span>
                 </div>
-                <h3 className="mt-1 text-lg font-bold text-slate-900 group-hover:text-sky-900">Naehrstoffmaengel</h3>
-                <p className="mt-2 flex-1 text-sm text-slate-600">Diagnose- und Korrekturlogik klar getrennt vom Produktkatalog.</p>
-                <span className="mt-3 text-xs font-semibold text-sky-700 group-hover:underline">Oeffnen -&gt;</span>
+                <h3 className="mt-1 text-lg font-bold text-slate-900 group-hover:text-sky-900">Nährstoffmängel</h3>
+                <p className="mt-2 flex-1 text-sm text-slate-600">Diagnose und Korrektur – klar vom Produktkatalog getrennt.</p>
+                <span className="mt-3 text-xs font-semibold text-sky-700 group-hover:underline">Öffnen →</span>
               </Link>
 
               <Link
@@ -103,7 +103,7 @@ export default function DatabaseHubPage() {
                 </div>
                 <h3 className="mt-1 text-lg font-bold text-slate-900 group-hover:text-emerald-900">Quellenregister</h3>
                 <p className="mt-2 flex-1 text-sm text-slate-600">Wissenschaftliche Quellen nach Publisher, Jahr und Typ filtern.</p>
-                <span className="mt-3 text-xs font-semibold text-emerald-700 group-hover:underline">Oeffnen -&gt;</span>
+                <span className="mt-3 text-xs font-semibold text-emerald-700 group-hover:underline">Öffnen →</span>
               </Link>
             </div>
           </div>
