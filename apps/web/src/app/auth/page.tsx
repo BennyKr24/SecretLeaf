@@ -122,7 +122,7 @@ export default function AuthPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={10}
+              minLength={mode === "register" ? 10 : undefined}
               placeholder={mode === "login" ? "••••••••••" : "Mindestens 10 Zeichen"}
               className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
             />
