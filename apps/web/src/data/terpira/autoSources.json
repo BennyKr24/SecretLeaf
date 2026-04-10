@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-03-28T00:11:07.344Z",
+  "generatedAt": "2026-04-10T06:15:01.298Z",
   "stats": {
     "fetched": 1080,
-    "kept": 22,
-    "deduped": 854,
-    "excluded": 832,
+    "kept": 19,
+    "deduped": 867,
+    "excluded": 848,
     "lookbackDays": 45,
     "queries": [
       {
@@ -230,7 +230,7 @@
         "Regulatory Toxicology and Pharmacology · 2026 · Prioritaet high. Fokus: medizin-evidenz, pharmakologie, qualitaet-labor.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -266,7 +266,7 @@
         "Brain, Behavior, and Immunity · 2026 · Prioritaet high. Fokus: medizin-evidenz.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -300,7 +300,7 @@
         "Sleep Medicine: X · 2026 · Prioritaet medium. Fokus: medizin-evidenz.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -334,7 +334,7 @@
         "Sleep Medicine: X · 2026 · Prioritaet medium. Fokus: medizin-evidenz.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -343,16 +343,16 @@
       ]
     },
     {
-      "id": "auto-10-1016-j-drugpo-2026-105222",
-      "title": "Nonmedical cannabis legalization and adolescent inpatient cannabis use disorder, 2008–2020: A quasi-experimental analysis",
+      "id": "auto-10-1016-j-drugpo-2026-105273",
+      "title": "Daily anxiety and depressive symptoms are associated with greater same-day cannabis-alcohol co-use than single-substance use among Black sexual and gender minority people",
       "publisher": "International Journal of Drug Policy",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.drugpo.2026.105222",
-      "doi": "10.1016/j.drugpo.2026.105222",
-      "relevanceScore": 74,
+      "url": "https://doi.org/10.1016/j.drugpo.2026.105273",
+      "doi": "10.1016/j.drugpo.2026.105273",
+      "relevanceScore": 66,
       "evidenceLevel": 56,
       "publisherQuality": 68,
-      "topicFit": 82,
+      "topicFit": 66,
       "studyType": "general-study",
       "editorialPriority": "medium",
       "matchedTopics": [
@@ -360,14 +360,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "firstAuthor": "Sunday Azagba",
+      "firstAuthor": "Yen-Tyng Chen",
       "originLabel": "International Journal of Drug Policy",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
         "International Journal of Drug Policy · 2026 · Prioritaet medium. Fokus: medizin-evidenz, markt-regulierung.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -377,108 +377,37 @@
       ]
     },
     {
-      "id": "auto-10-1016-j-jcoa-2026-100316",
-      "title": "An alternative easy method for the analysis of volatile compounds from lipid matrices: analysis of terpenes and terpenoids in medical-grade Cannabis sativa L. inflorescences in macerated oils",
-      "publisher": "Journal of Chromatography Open",
+      "id": "auto-10-1016-j-amepre-2025-108218",
+      "title": "Cannabis Social Equity Initiatives Among U.S. States With Legal Nonmedical Cannabis Retail: A Review and Recommendations",
+      "publisher": "American Journal of Preventive Medicine",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.jcoa.2026.100316",
-      "doi": "10.1016/j.jcoa.2026.100316",
-      "relevanceScore": 70,
-      "evidenceLevel": 78,
-      "publisherQuality": 68,
-      "topicFit": 66,
-      "studyType": "laboratory-study",
-      "editorialPriority": "medium",
-      "matchedTopics": [
-        "qualitaet-labor",
-        "anbau-postharvest"
-      ],
-      "flags": [],
-      "firstAuthor": "Victor Pereira-Francisco",
-      "originLabel": "Journal of Chromatography Open",
-      "reviewSummary": [
-        "Labor-/Analytik-Arbeit fuer Qualitaet oder Profile.",
-        "Journal of Chromatography Open · 2026 · Prioritaet medium. Fokus: qualitaet-labor, anbau-postharvest.",
-        "Kein belastbarer Abstract-Auszug verfuegbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "qualitaet-labor",
-        "anbau-postharvest"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-neuropharm-2026-110878",
-      "title": "Assessment of high-efficacy agonism in synthetic cannabinoid receptor agonists containing l-tert-leucinate",
-      "publisher": "Neuropharmacology",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.neuropharm.2026.110878",
-      "doi": "10.1016/j.neuropharm.2026.110878",
-      "relevanceScore": 68,
+      "url": "https://doi.org/10.1016/j.amepre.2025.108218",
+      "doi": "10.1016/j.amepre.2025.108218",
+      "relevanceScore": 65,
       "evidenceLevel": 56,
       "publisherQuality": 68,
-      "topicFit": 74,
+      "topicFit": 66,
       "studyType": "general-study",
       "editorialPriority": "medium",
       "matchedTopics": [
         "medizin-evidenz",
-        "pharmakologie"
+        "markt-regulierung"
       ],
       "flags": [],
-      "firstAuthor": "Christopher Lucaj",
-      "originLabel": "Neuropharmacology",
+      "firstAuthor": "Cassidy R. LoParco",
+      "originLabel": "American Journal of Preventive Medicine",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "Neuropharmacology · 2026 · Prioritaet medium. Fokus: medizin-evidenz, pharmakologie.",
+        "American Journal of Preventive Medicine · 2026 · Prioritaet medium. Fokus: medizin-evidenz, markt-regulierung.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
         "medizin-evidenz",
-        "pharmakologie"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-cct-2026-108287",
-      "title": "An adapted brief negotiation interview for alcohol and cannabis use among assault-injured emerging adults: A randomized pilot trial protocol",
-      "publisher": "Contemporary Clinical Trials",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.cct.2026.108287",
-      "doi": "10.1016/j.cct.2026.108287",
-      "relevanceScore": 66,
-      "evidenceLevel": 88,
-      "publisherQuality": 54,
-      "topicFit": 50,
-      "studyType": "controlled-study",
-      "editorialPriority": "medium",
-      "matchedTopics": [
-        "medizin-evidenz"
-      ],
-      "flags": [
-        "controlled-study",
-        "pilot",
-        "protocol",
-        "trial"
-      ],
-      "firstAuthor": "Edouard Coupet",
-      "originLabel": "Contemporary Clinical Trials",
-      "reviewSummary": [
-        "Kontrollierte Studie mit direktem Praxisbezug.",
-        "Contemporary Clinical Trials · 2026 · Prioritaet medium. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfuegbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "medizin-evidenz"
+        "markt-regulierung"
       ]
     },
     {
@@ -505,7 +434,7 @@
         "Journal of Substance Use and Addiction Treatment · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -537,7 +466,7 @@
         "American Journal of Medicine Open · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -569,7 +498,7 @@
         "Drug and Alcohol Dependence · 2026 · Prioritaet low. Fokus: markt-regulierung.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -601,7 +530,7 @@
         "International Journal of Industrial Organization · 2026 · Prioritaet low. Fokus: markt-regulierung.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -633,76 +562,12 @@
         "Drug and Alcohol Dependence · 2026 · Prioritaet low. Fokus: markt-regulierung.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
         "markt-regulierung"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-drugalcdep-2026-113096",
-      "title": "Cannabis retail environment and treatment for cannabis use disorder",
-      "publisher": "Drug and Alcohol Dependence",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.drugalcdep.2026.113096",
-      "doi": "10.1016/j.drugalcdep.2026.113096",
-      "relevanceScore": 56,
-      "evidenceLevel": 56,
-      "publisherQuality": 90,
-      "topicFit": 40,
-      "studyType": "general-study",
-      "editorialPriority": "low",
-      "matchedTopics": [
-        "markt-regulierung"
-      ],
-      "flags": [],
-      "firstAuthor": "Jeremy Mennis",
-      "originLabel": "Drug and Alcohol Dependence",
-      "reviewSummary": [
-        "Allgemeine Studie mit Cannabis-Bezug.",
-        "Drug and Alcohol Dependence · 2026 · Prioritaet low. Fokus: markt-regulierung.",
-        "Kein belastbarer Abstract-Auszug verfuegbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "markt-regulierung"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-euroneuro-2026-112782",
-      "title": "Personality, not cognition, distinguishes chronic ayahuasca and cannabis users from non-users",
-      "publisher": "European Neuropsychopharmacology",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.euroneuro.2026.112782",
-      "doi": "10.1016/j.euroneuro.2026.112782",
-      "relevanceScore": 52,
-      "evidenceLevel": 56,
-      "publisherQuality": 68,
-      "topicFit": 40,
-      "studyType": "general-study",
-      "editorialPriority": "low",
-      "matchedTopics": [
-        "pharmakologie"
-      ],
-      "flags": [],
-      "firstAuthor": "José Carlos Bouso",
-      "originLabel": "European Neuropsychopharmacology",
-      "reviewSummary": [
-        "Allgemeine Studie mit Cannabis-Bezug.",
-        "European Neuropsychopharmacology · 2026 · Prioritaet low. Fokus: pharmakologie.",
-        "Kein belastbarer Abstract-Auszug verfuegbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "pharmakologie"
       ]
     },
     {
@@ -729,7 +594,7 @@
         "Forensic Science International · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -761,7 +626,7 @@
         "Regional Science and Urban Economics · 2026 · Prioritaet low. Fokus: markt-regulierung.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -793,7 +658,7 @@
         "Social Sciences &amp; Humanities Open · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -825,7 +690,7 @@
         "Phytomedicine · 2026 · Prioritaet low. Fokus: anbau-postharvest.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -857,7 +722,7 @@
         "Addictive Behaviors Reports · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -889,7 +754,7 @@
         "Pharmacy &amp; Pharmacology International Journal · 2106 · Prioritaet low. Fokus: pharmakologie.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
@@ -923,12 +788,44 @@
         "Addictive Behaviors Reports · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
         "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
         "medizin-evidenz"
+      ]
+    },
+    {
+      "id": "auto-10-1107-s205327332509905x",
+      "title": "Terpene based co-crystals for protection from biodeteriogens in archives and libraries",
+      "publisher": "Acta Crystallographica Section A Foundations and Advances",
+      "year": "2026",
+      "url": "https://doi.org/10.1107/s205327332509905x",
+      "doi": "10.1107/s205327332509905x",
+      "relevanceScore": 45,
+      "evidenceLevel": 56,
+      "publisherQuality": 54,
+      "topicFit": 26,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "anbau-postharvest"
+      ],
+      "flags": [],
+      "firstAuthor": "A. Ienco",
+      "originLabel": "Acta Crystallographica Section A Foundations and Advances",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Acta Crystallographica Section A Foundations and Advances · 2026 · Prioritaet low. Fokus: anbau-postharvest.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-04-10T06:15:01.298Z",
+      "tags": [
+        "auto",
+        "study-sync",
+        "crossref",
+        "anbau-postharvest"
       ]
     }
   ]
