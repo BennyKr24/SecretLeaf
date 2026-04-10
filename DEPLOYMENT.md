@@ -159,9 +159,9 @@ Die Routen sind per `CRON_SECRET` geschuetzt. Auf Vercel wird kein lokaler Rechn
 - Alle produktiven DB- und RLS-Aenderungen liegen in `supabase/migrations`.
 - Rolle fuer API-Authorisierung wird serverseitig ueber `public.user_roles` geprueft (nicht ueber `user_metadata`).
 - Neu hinzugekommen fuer Härtung:
-  - `supabase/migrations/20260406_003_rls_hardening.sql`
-  - `supabase/migrations/20260406_004_studies_fingerprint_index_rebuild.sql`
-  - `supabase/migrations/20260406_005_automation_runs.sql`
+  - `supabase/migrations/202604060003_rls_hardening.sql`
+  - `supabase/migrations/202604060004_studies_fingerprint_index_rebuild.sql`
+  - `supabase/migrations/202604060005_automation_runs.sql`
 
 ---
 

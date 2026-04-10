@@ -71,7 +71,7 @@ export async function GET(req: Request) {
 
         return Response.json({
           ok: true,
-          warning: "automation_job_runs table is missing; apply migration 20260406_005_automation_runs.sql",
+          warning: "automation_job_runs table is missing; apply migration 202604060005_automation_runs.sql",
           now: new Date().toISOString(),
           jobs: {
             studiesSync: {
