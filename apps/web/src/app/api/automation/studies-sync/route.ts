@@ -372,40 +372,47 @@ export async function GET(req: Request) {
     }
 
     // Explicit insert/update path avoids dependency on ON CONFLICT index inference.
+    // Fingerprints are looked up in batches of 100 to avoid PostgREST URL length limits.
 
     const fingerprints = sources.map((source) => source.source_fingerprint);
-    const { data: existingRows, error: existingError } = await supabase
-      .from(STUDIES_TABLE)
-      .select("id, source_fingerprint")
-      .in("source_fingerprint", fingerprints);
+    const FINGERPRINT_BATCH_SIZE = 100;
+    const existingByFingerprint = new Map<string, string>();
 
-    if (existingError) {
-      logError("automation.studies-sync.existing-fetch-failed", { error: existingError.message });
-      metrics.errors.push(existingError.message);
+    for (let i = 0; i < fingerprints.length; i += FINGERPRINT_BATCH_SIZE) {
+      const batch = fingerprints.slice(i, i + FINGERPRINT_BATCH_SIZE);
+      const { data: batchRows, error: batchError } = await supabase
+        .from(STUDIES_TABLE)
+        .select("id, source_fingerprint")
+        .in("source_fingerprint", batch);
 
-      await safeRecordAutomationRun({
-        jobName: JOB_NAME,
-        startedAt,
-        finishedAt: new Date().toISOString(),
-        success: false,
-        fetched: metrics.fetched,
-        inserted: metrics.inserted,
-        updated: metrics.updated,
-        skipped: metrics.skipped,
-        attempts: metrics.attempts,
-        sourceGeneratedAt: metrics.sourceGeneratedAt,
-        errorDetails: existingError.message,
-        metadata: { errors: metrics.errors },
-      }, metrics);
+      if (batchError) {
+        logError("automation.studies-sync.existing-fetch-failed", { error: batchError.message });
+        metrics.errors.push(batchError.message);
 
-      return Response.json({ error: existingError.message }, { status: 500 });
+        await safeRecordAutomationRun({
+          jobName: JOB_NAME,
+          startedAt,
+          finishedAt: new Date().toISOString(),
+          success: false,
+          fetched: metrics.fetched,
+          inserted: metrics.inserted,
+          updated: metrics.updated,
+          skipped: metrics.skipped,
+          attempts: metrics.attempts,
+          sourceGeneratedAt: metrics.sourceGeneratedAt,
+          errorDetails: batchError.message,
+          metadata: { errors: metrics.errors },
+        }, metrics);
+
+        return Response.json({ error: batchError.message }, { status: 500 });
+      }
+
+      for (const row of batchRows ?? []) {
+        if (typeof row.source_fingerprint === "string") {
+          existingByFingerprint.set(row.source_fingerprint as string, row.id as string);
+        }
+      }
     }
-
-    const existingByFingerprint = new Map(
-      (existingRows ?? [])
-        .filter((row) => typeof row.source_fingerprint === "string")
-        .map((row) => [row.source_fingerprint as string, row.id as string])
-    );
 
     const toInsert = sources.filter((source) => !existingByFingerprint.has(source.source_fingerprint));
     const toUpdate = sources.filter((source) => existingByFingerprint.has(source.source_fingerprint));
