@@ -18,6 +18,54 @@ export const dynamic = "force-dynamic";
 
 const STUDIES_TABLE = "studies";
 
+const STUDIES_SELECT_ENGINE = [
+  "id",
+  "title",
+  "description",
+  "source",
+  "tags",
+  "quality_status",
+  "relevance_score",
+  "study_type",
+  "editorial_priority",
+  "matched_topics",
+  "flags",
+  "first_author",
+  "origin_label",
+  "created_at",
+  "fetched_at",
+  "doi",
+].join(", ");
+
+const STUDIES_SELECT_LEGACY = [
+  "id",
+  "title",
+  "description",
+  "source",
+  "tags",
+  "quality_status",
+  "created_at",
+].join(", ");
+
+function isMissingColumnError(message: string | undefined): boolean {
+  return typeof message === "string" && /column\s+studies\..+\s+does not exist/i.test(message);
+}
+
+function normalizeLegacyStudyRow(row: Record<string, unknown>) {
+  return {
+    ...row,
+    relevance_score: null,
+    study_type: null,
+    editorial_priority: null,
+    matched_topics: null,
+    flags: null,
+    first_author: null,
+    origin_label: null,
+    fetched_at: null,
+    doi: null,
+  };
+}
+
 /**
  * Derive a reliable base URL for internal fetch calls.
  * Priority: origin header → VERCEL_URL env → host header.
@@ -123,48 +171,69 @@ export async function POST(req: Request) {
         const sortBy = (body.sortBy as string) || "created_at";
         const sortDir = body.sortDir === "asc" ? true : false;
 
-        let query = supabase
-          .from(STUDIES_TABLE)
-          .select(
-            "id, title, description, source, tags, quality_status, relevance_score, study_type, editorial_priority, matched_topics, flags, first_author, origin_label, created_at, fetched_at, doi",
-            { count: "exact" },
-          );
+        const applyStudiesFilters = (
+          query: ReturnType<typeof supabase.from>,
+          useEngineFields: boolean,
+        ) => {
+          let nextQuery = query;
 
-        // Filters
-        if (body.quality && body.quality !== "all") {
-          query = query.eq("quality_status", body.quality);
-        }
-        if (body.minScore) {
-          query = query.gte("relevance_score", Number(body.minScore));
-        }
-        if (body.maxScore) {
-          query = query.lte("relevance_score", Number(body.maxScore));
-        }
-        if (body.source && typeof body.source === "string") {
-          query = query.ilike("origin_label", `%${body.source}%`);
-        }
-        if (body.dateFrom) {
-          query = query.gte("created_at", body.dateFrom as string);
-        }
-        if (body.dateTo) {
-          query = query.lte("created_at", body.dateTo as string);
-        }
-        if (body.search && typeof body.search === "string") {
-          query = query.ilike("title", `%${body.search}%`);
-        }
-        if (body.studyType && body.studyType !== "all") {
-          query = query.eq("study_type", body.studyType);
-        }
-        if (body.priority && body.priority !== "all") {
-          query = query.eq("editorial_priority", body.priority);
+          if (body.quality && body.quality !== "all") {
+            nextQuery = nextQuery.eq("quality_status", body.quality);
+          }
+          if (useEngineFields && body.minScore) {
+            nextQuery = nextQuery.gte("relevance_score", Number(body.minScore));
+          }
+          if (useEngineFields && body.maxScore) {
+            nextQuery = nextQuery.lte("relevance_score", Number(body.maxScore));
+          }
+          if (body.source && typeof body.source === "string") {
+            nextQuery = nextQuery.ilike(useEngineFields ? "origin_label" : "source", `%${body.source}%`);
+          }
+          if (body.dateFrom) {
+            nextQuery = nextQuery.gte("created_at", body.dateFrom as string);
+          }
+          if (body.dateTo) {
+            nextQuery = nextQuery.lte("created_at", body.dateTo as string);
+          }
+          if (body.search && typeof body.search === "string") {
+            nextQuery = nextQuery.ilike("title", `%${body.search}%`);
+          }
+          if (useEngineFields && body.studyType && body.studyType !== "all") {
+            nextQuery = nextQuery.eq("study_type", body.studyType);
+          }
+          if (useEngineFields && body.priority && body.priority !== "all") {
+            nextQuery = nextQuery.eq("editorial_priority", body.priority);
+          }
+
+          return nextQuery;
+        };
+
+        const buildStudiesQuery = (useEngineFields: boolean) => {
+          const allowedSorts = useEngineFields
+            ? ["created_at", "relevance_score", "title", "fetched_at", "study_type"]
+            : ["created_at", "title", "source"];
+          const safeSortBy = allowedSorts.includes(sortBy)
+            ? sortBy
+            : "created_at";
+
+          let query = supabase
+            .from(STUDIES_TABLE)
+            .select(useEngineFields ? STUDIES_SELECT_ENGINE : STUDIES_SELECT_LEGACY, { count: "exact" });
+
+          query = applyStudiesFilters(query, useEngineFields);
+          return query.order(safeSortBy, { ascending: sortDir }).range(offset, offset + limit - 1);
+        };
+
+        let { data, count, error } = await buildStudiesQuery(true);
+
+        if (error && isMissingColumnError(error.message)) {
+          logInfo("admin.studies.legacy-fallback", { error: error.message });
+          const legacyResult = await buildStudiesQuery(false);
+          data = legacyResult.data?.map((row) => normalizeLegacyStudyRow(row as Record<string, unknown>));
+          count = legacyResult.count;
+          error = legacyResult.error;
         }
 
-        const allowedSorts = ["created_at", "relevance_score", "title", "fetched_at", "study_type"];
-        const safeSortBy = allowedSorts.includes(sortBy) ? sortBy : "created_at";
-
-        query = query.order(safeSortBy, { ascending: sortDir }).range(offset, offset + limit - 1);
-
-        const { data, count, error } = await query;
         if (error) {
           return Response.json({ error: error.message }, { status: 500 });
         }
