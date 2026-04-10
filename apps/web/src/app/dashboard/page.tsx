@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { ListingManager } from "@/components/ListingManager";
 import { OfferCard } from "@/components/OfferCard";
 import { apiRequest } from "@/lib/api";
-import { logoutFromSupabase, restoreSessionFromSupabase } from "@/lib/auth";
+import { logoutFromSupabase, restoreSessionFromSupabase, saveSession } from "@/lib/auth";
 import { Offer, SessionData } from "@/lib/types";
 
 type SearchResponse = {
@@ -39,6 +39,32 @@ export default function DashboardPage() {
       setSession(restored);
     })();
   }, []);
+
+  // Refresh role from API to ensure it's always up-to-date
+  useEffect(() => {
+    if (!session) return;
+    void (async () => {
+      try {
+        const res = await fetch("/api/auth/me", {
+          headers: { Authorization: `Bearer ${session.token}` },
+          cache: "no-store",
+        });
+        if (!res.ok) return;
+        const body = (await res.json()) as { user?: { role?: string } };
+        const freshRole = body.user?.role;
+        if (freshRole && freshRole !== session.user.role) {
+          const updated: SessionData = {
+            ...session,
+            user: { ...session.user, role: freshRole as SessionData["user"]["role"] },
+          };
+          saveSession(updated);
+          setSession(updated);
+        }
+      } catch {
+        // Ignore – keep cached role
+      }
+    })();
+  }, [session?.token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadMyListings = useCallback(async () => {
     if (!session) return;
@@ -113,14 +139,17 @@ export default function DashboardPage() {
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-[#10281e]">Dashboard</h1>
-            <p className="text-sm text-[#4d685a]">Angemeldet als @{session.user.username}</p>
+            <p className="text-sm text-[#4d685a]">
+              Angemeldet als @{session.user.username}
+              <span className="ml-2 rounded-full bg-[#e5f4ea] px-2 py-0.5 text-[10px] font-semibold uppercase text-[#1f7a4f]">
+                {session.user.role}
+              </span>
+            </p>
           </div>
-          <div className="flex gap-3">
-            {session.user.role === "ADMIN" && (
-              <Link href={"/dashboard/admin" as Route} className="rounded-lg bg-[#1f7a4f] px-3 py-1 text-sm font-semibold text-white hover:bg-[#17613f]">
-                Admin Panel
-              </Link>
-            )}
+          <div className="flex items-center gap-3">
+            <Link href={"/dashboard/admin" as Route} className="flex items-center gap-1.5 rounded-xl bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#17613f]">
+              <span>⚙</span> Admin Panel
+            </Link>
             <Link href={"/" as Route} className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
               Startseite
             </Link>

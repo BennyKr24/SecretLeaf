@@ -136,17 +136,17 @@ export const loginWithSupabase = async (input: SupabaseAuthInput): Promise<Sessi
 
 export const restoreSessionFromSupabase = async (): Promise<SessionData | null> => {
   const existing = getSession();
-  if (existing) {
-    return existing;
-  }
 
   const supabase = getSupabaseBrowserClient();
   const { data, error } = await supabase.auth.getSession();
 
   if (error || !data.session || !data.session.user) {
+    // No valid Supabase session – fall back to cached if token still present
+    if (existing) return existing;
     return null;
   }
 
+  // Always refresh role from API to keep it in sync
   const role = await fetchRoleFromApi(data.session.access_token);
 
   const session = toSessionData({

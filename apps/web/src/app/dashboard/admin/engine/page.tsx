@@ -206,15 +206,13 @@ export default function AdminEnginePage() {
           </button>
         </div>
 
-        {loadingLogs && (
-          <div className="flex items-center gap-3 rounded-2xl border border-[#d8e8dd] bg-white p-8">
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#1f7a4f] border-t-transparent" />
-            <span className="text-sm text-[#4d685a]">Logs werden geladen...</span>
-          </div>
-        )}
-
-        {!loadingLogs && (
-          <div className="overflow-hidden rounded-2xl border border-[#d8e8dd] bg-white shadow-sm">
+        <div className="min-h-[320px] overflow-hidden rounded-2xl border border-[#d8e8dd] bg-white shadow-sm">
+          {loadingLogs ? (
+            <div className="flex min-h-[320px] items-center justify-center gap-3">
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#1f7a4f] border-t-transparent" />
+              <span className="text-sm text-[#4d685a]">Logs werden geladen...</span>
+            </div>
+          ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
@@ -257,8 +255,8 @@ export default function AdminEnginePage() {
                 </tbody>
               </table>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

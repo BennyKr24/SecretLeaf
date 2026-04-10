@@ -7,9 +7,11 @@ import { useAdminAuth } from "@/lib/useAdminAuth";
 
 const NAV_ITEMS = [
   { href: "/dashboard/admin", label: "Übersicht", icon: "◉" },
+  { href: "/dashboard/admin/users", label: "Benutzer", icon: "◷" },
   { href: "/dashboard/admin/studies", label: "Studien", icon: "◎" },
   { href: "/dashboard/admin/engine", label: "Engine", icon: "⚙" },
   { href: "/dashboard/admin/analytics", label: "Analytics", icon: "◈" },
+  { href: "/dashboard/admin/system", label: "System", icon: "⊡" },
   { href: "/dashboard/admin/settings", label: "Settings", icon: "⊞" },
 ] as const;
 

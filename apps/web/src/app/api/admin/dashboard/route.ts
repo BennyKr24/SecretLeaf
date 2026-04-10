@@ -91,7 +91,11 @@ type AdminAction =
   | "engine-logs"
   | "analytics"
   | "settings-get"
-  | "settings-update";
+  | "settings-update"
+  | "users-list"
+  | "user-update-role"
+  | "user-delete"
+  | "system-stats";
 
 export async function POST(req: Request) {
   const adminOrResponse = await requireAdmin(req);
@@ -486,6 +490,165 @@ export async function POST(req: Request) {
         }
 
         return Response.json({ error: "No settings provided" }, { status: 400 });
+      }
+
+      // ── USERS LIST ────────────────────────────────────────────────────
+      case "users-list": {
+        const page = Math.max(1, Number(body.page) || 1);
+        const limit = Math.min(100, Math.max(1, Number(body.limit) || 25));
+        const searchQuery = typeof body.search === "string" ? body.search.trim() : "";
+        const roleFilter = typeof body.roleFilter === "string" ? body.roleFilter : "all";
+
+        // Fetch users from Supabase Auth admin API (uses service role key)
+        const { data: authResponse, error: authError } = await supabase.auth.admin.listUsers({
+          page,
+          perPage: limit,
+        });
+
+        if (authError) {
+          return Response.json({ error: authError.message }, { status: 500 });
+        }
+
+        const authUsers = authResponse?.users ?? [];
+
+        // Get all user roles
+        const userIds = authUsers.map((u) => u.id);
+        const { data: roleRows } = await supabase
+          .from("user_roles")
+          .select("user_id, role")
+          .in("user_id", userIds);
+
+        const roleMap: Record<string, string> = {};
+        for (const row of roleRows ?? []) {
+          roleMap[(row as { user_id: string; role: string }).user_id] =
+            (row as { user_id: string; role: string }).role;
+        }
+
+        let users = authUsers.map((u) => ({
+          id: u.id,
+          email: u.email ?? null,
+          role: roleMap[u.id] ?? "CONSUMER",
+          createdAt: u.created_at,
+          lastSignIn: u.last_sign_in_at ?? null,
+          emailConfirmed: !!u.email_confirmed_at,
+          provider: u.app_metadata?.provider ?? "email",
+        }));
+
+        // Apply filters client-side (auth.admin.listUsers doesn't support filtering)
+        if (searchQuery) {
+          const q = searchQuery.toLowerCase();
+          users = users.filter(
+            (u) =>
+              (u.email && u.email.toLowerCase().includes(q)) ||
+              u.id.toLowerCase().includes(q),
+          );
+        }
+        if (roleFilter !== "all") {
+          users = users.filter((u) => u.role === roleFilter);
+        }
+
+        // Get total count from auth
+        // Supabase admin listUsers returns all users paginated, we'll estimate total
+        // The actual total is available through a separate count
+        const { data: countData } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1 });
+        const totalUsers = countData?.users ? (authResponse as any)?.total ?? users.length : users.length;
+
+        return Response.json({
+          users,
+          total: totalUsers,
+          page,
+          limit,
+          totalPages: Math.ceil(totalUsers / limit),
+        });
+      }
+
+      // ── USER UPDATE ROLE ──────────────────────────────────────────────
+      case "user-update-role": {
+        const userId = body.userId as string;
+        const newRole = body.role as string;
+
+        if (!userId) return Response.json({ error: "userId required" }, { status: 400 });
+        if (!newRole || !["CONSUMER", "PROVIDER", "ADMIN"].includes(newRole)) {
+          return Response.json({ error: "Invalid role. Must be CONSUMER, PROVIDER, or ADMIN." }, { status: 400 });
+        }
+
+        // Prevent admin from demoting themselves
+        if (userId === adminOrResponse.userId && newRole !== "ADMIN") {
+          return Response.json({ error: "Du kannst deine eigene Admin-Rolle nicht entfernen." }, { status: 400 });
+        }
+
+        const { error } = await supabase
+          .from("user_roles")
+          .upsert({ user_id: userId, role: newRole }, { onConflict: "user_id" });
+
+        if (error) return Response.json({ error: error.message }, { status: 500 });
+
+        logInfo("admin.user-update-role", { userId, newRole, by: adminOrResponse.userId });
+        return Response.json({ updated: true, userId, role: newRole });
+      }
+
+      // ── USER DELETE ───────────────────────────────────────────────────
+      case "user-delete": {
+        const userId = body.userId as string;
+        if (!userId) return Response.json({ error: "userId required" }, { status: 400 });
+
+        // Prevent admin from deleting themselves
+        if (userId === adminOrResponse.userId) {
+          return Response.json({ error: "Du kannst deinen eigenen Account nicht löschen." }, { status: 400 });
+        }
+
+        // Delete from user_roles first
+        await supabase.from("user_roles").delete().eq("user_id", userId);
+
+        // Delete from Supabase Auth
+        const { error: authError } = await supabase.auth.admin.deleteUser(userId);
+        if (authError) return Response.json({ error: authError.message }, { status: 500 });
+
+        logInfo("admin.user-delete", { userId, by: adminOrResponse.userId });
+        return Response.json({ deleted: true });
+      }
+
+      // ── SYSTEM STATS ──────────────────────────────────────────────────
+      case "system-stats": {
+        // User counts by role
+        const { data: roleCounts } = await supabase
+          .from("user_roles")
+          .select("role");
+
+        const usersByRole: Record<string, number> = { CONSUMER: 0, PROVIDER: 0, ADMIN: 0 };
+        for (const row of roleCounts ?? []) {
+          const r = (row as { role: string }).role;
+          usersByRole[r] = (usersByRole[r] ?? 0) + 1;
+        }
+
+        // Total auth users
+        const { data: authCount } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1 });
+        const totalAuthUsers = (authCount as any)?.total ?? 0;
+
+        // Studies count
+        const { count: studiesCount } = await supabase
+          .from(STUDIES_TABLE)
+          .select("id", { count: "exact", head: true });
+
+        // Automation runs (last 24h)
+        const since24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const { count: runsLast24h } = await supabase
+          .from(AUTOMATION_RUNS_TABLE)
+          .select("id", { count: "exact", head: true })
+          .gte("finished_at", since24h);
+
+        // Feedback count
+        const { count: feedbackCount } = await supabase
+          .from("study_feedback")
+          .select("id", { count: "exact", head: true });
+
+        return Response.json({
+          usersByRole,
+          totalAuthUsers,
+          totalStudies: studiesCount ?? 0,
+          automationRunsLast24h: runsLast24h ?? 0,
+          totalFeedbackEvents: feedbackCount ?? 0,
+        });
       }
 
       default:
