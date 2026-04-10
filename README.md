@@ -1,173 +1,196 @@
-# SecretLeaf
-> Evidence-basierte Cannabis-Plattform für DACH. Studies-Hub, Database, Tools, interne Review-Queue und Betriebsstatus.
+# SecretLeaf — v1.5
+> Evidence-basierte Cannabis-Wissensplattform für DACH.
+> Studies-Hub · Datenbank · Tools · Review-Workflow · Betriebsstatus
 
-**Live:** [secretleaf.vercel.app](https://secretleaf.vercel.app)
+**Produktion:** [secretleaf.vercel.app](https://secretleaf.vercel.app) &nbsp;|&nbsp; **Branch:** `main` &nbsp;|&nbsp; **Stand:** April 2026
 
 ---
 
-## Stand v1.4 (April 2026)
+## 🟢 Live-Status
 
-| Bereich | Status | Details |
-|---------|--------|---------|
-| **Deployment** | ✅ Live | [secretleaf.vercel.app](https://secretleaf.vercel.app) |
-| **Studies-Hub (Terpira)** | ✅ Live | 13 Artikel + Nährstoffmängel, Schädlinge, Quellen |
-| **Database-Bereich** | ✅ Live | Dünger-Katalog + Fachregister-Übersicht |
-| **Tools-Bereich** | ✅ Live | Pläne und operative Werkzeuge getrennt vom Katalog |
-| **Quellenregister** | ✅ Live | 41 manuelle + 22 auto-Quellen, Coverage-Tracking |
-| **Status-Seite** | ✅ Live | Cockpit-Redesign, Freshness-Badges, Sektionsreihung |
-| **Studien-Ranking API** | ✅ Live | `/api/search/studies` (smart/fresh/quality Scoring) |
-| **Vercel Cron** | ✅ Aktiv | Täglich 04:17 UTC, kein PC nötig |
-| **Wiki-Studien-Sync** | ✅ Aktiv | GitHub Actions, täglich 04:30 UTC, Review-PR |
-| **Studien-Review (intern)** | ✅ Neu | `/dashboard/review` — 3-Zeilen-Karten, 1-Klick-Entscheidung |
+| System | Status | Info |
+|--------|--------|------|
+| **Vercel Frontend** | ✅ Live | Auto-Deploy bei Push auf `main` |
+| **Studies-Hub** | ✅ Live | 13+ Artikel, kategoriegruppiert, Schädlinge, Mängel |
+| **Studien-Ranking API** | ✅ Live | `/api/search/studies` — smart / fresh / quality |
+| **Quellenregister** | ✅ Live | 41 manuell + 22 auto-Quellen mit Coverage-Tracking |
+| **Database-Hub** | ✅ Live | Dünger-Katalog, Fachregister-Einstieg |
+| **Tools-Hub** | ✅ Live | Operative Werkzeuge, Düngepläne |
+| **Status-Seite** | ✅ Live | Cockpit mit 6 Gesundheitskarten, Coverage-Verlauf |
+| **Review-Dashboard** | ✅ Live | `/dashboard/review` — 1-Klick-Workflow intern |
+| **Vercel Cron** | ✅ Aktiv | Täglich **04:17 UTC** — läuft ohne lokalen PC |
+| **Wiki-Studien-Sync** | ✅ Aktiv | GitHub Actions täglich **04:30 UTC** — Review-PR |
+| **Status-Probe** | ✅ Aktiv | Alle 30 s, schreibt `status-data.json` |
 | **Fertilizer Prices API** | ✅ Live | `/api/fertilizers/prices` + Sync-Pipeline |
-| **Status-Automation** | ✅ Aktiv | Probe alle 30 s, `status-data.json` aktuell |
-| **API (Fastify)** | ✅ Stabil | Health, Status-Report, Public Endpoints |
-| **Datenbank (Prisma)** | 🟡 Konfiguriert | Schema ready, DB-Endpoint nicht produktiv |
-| **Monitoring** | 🟡 Partial | Status-Probe aktiv, Sentry ausstehend |
+| **Coverage-History** | ✅ Aktiv | Build-Snapshot via `prebuild` |
+| **Fastify API** | 🟡 Bereit | Health, Status-Report, Public Endpoints konfiguriert |
+| **Produktive DB (Prisma)** | 🟡 Pending | Schema ready — DB-Endpoint nicht produktiv |
+| **Sentry** | 🔴 Fehlt | Error-Tracking noch nicht eingebunden |
 
 ---
 
-## Architektur (Monorepo)
+## 📐 Architektur (Monorepo)
 
 ```
-apps/
-   api/      Fastify REST-API (Health, Auth, Listings, Public, Status-Report)
-   web/      Next.js 16 App-Router (Studies, Database, Tools, Search, Auth, Dashboard)
-packages/
-   shared/   Gemeinsame TypeScript-Typen
-scripts/    Automation (Preise, Wiki-Studien, Coverage, Status-Probe)
-.github/
-   workflows/  Wiki-Studien-Sync (täglich, Node 24, Review-PR)
+SecretLeaf/
+├── apps/
+│   ├── api/           Fastify REST-API  (Health · Auth · Listings · Status-Report)
+│   └── web/           Next.js App-Router (Studies · Database · Tools · Dashboard · Search)
+│       ├── src/app/   Routen + API-Handler
+│       ├── src/components/
+│       ├── src/data/terpira/   Wiki-Artikel + autoSources.json
+│       └── src/lib/            Utilities, Auth, API-Client
+├── packages/
+│   └── shared/        Gemeinsame TypeScript-Typen (@secretleaf/shared)
+├── scripts/           Automation (Status-Probe, Preise, Coverage, Wiki-Sync)
+├── supabase/
+│   └── migrations/    PostgreSQL-Migrationen (Rollen, RLS, Studies, Automation)
+└── .github/workflows/ Wiki-Studien-Sync (CI täglich)
 ```
 
-Deployment: Vercel (Frontend) · API & DB: eigenes Hosting vorbereitet
+**Deployment:** Vercel (Frontend, Crons) · API & DB: eigenes Hosting vorbereitet
+**Stack:** Next.js 15 · Fastify · TypeScript · Tailwind CSS · Supabase PostgreSQL · Prisma
 
 ---
 
-## Release v1.4
+## 🗺️ Alle Routen
 
-Schwerpunkte dieser Version:
-
-- Neue kanonische IA mit klarer Trennung: `Studies`, `Database`, `Tools`, `Dashboard`, `Search`
-- Neuer `Database`-Hub mit professioneller Fachregister-Sektion (Schaedlinge, Naehrstoffmaengel, Quellen)
-- Neuer `Tools`-Hub als operativer Bereich getrennt von Kataloginhalten
-- Dashboard-Workflow konsolidiert auf `/dashboard/review`
-- Navigation, Landing-Copy und interne Verlinkungen durchgaengig auf neue IA umgestellt
-- Legacy-Routen aus Altstruktur entfernt, um dauerhafte Konsistenz zu sichern
-
----
-
-## Seiten-Übersicht
-
-| Route | Art | Inhalt |
-|-------|-----|--------|
+| Route | Typ | Beschreibung |
+|-------|-----|--------------|
 | `/` | Dynamisch | Landing, API-Snapshot, CTAs |
-| `/studies` | Statisch | Hub mit 13 Artikeln, Lernpfade, Statistiken |
-| `/studies/[slug]` | Dynamisch | Artikel-Detail: Glossar, FAQ, Explainer, Quellen |
+| `/studies` | Statisch | Hub — Artikel kategoriegruppiert, Lernpfade |
+| `/studies/[slug]` | Dynamisch | Artikel-Detail: Glossar, FAQ, Quellen |
 | `/studies/sources` | Statisch | Quellenregister (41 manuell + 22 auto) |
 | `/studies/pests` | Statisch | Schädlings-Protokolle mit Bildnachweis |
-| `/studies/deficiencies` | Statisch | Nährstoffmangel-Guide (Makro/Mikro/Sekundär) |
-| `/database` | Statisch | Datenbank-Hub inkl. Fachregister-Einstieg |
+| `/studies/deficiencies` | Statisch | Nährstoffmangel-Guide (Makro / Mikro / Sekundär) |
+| `/database` | Statisch | Datenbank-Hub + Fachregister-Einstieg |
 | `/database/fertilizers` | Statisch | Dünger-Katalog |
 | `/tools` | Statisch | Tools-Hub |
-| `/tools/plans` | Statisch | Düngepläne nach Level/Substrat/Ziel |
-| `/status` | Dynamisch | Betriebsstatus, Coverage-Verlauf, Changelog |
+| `/tools/plans` | Statisch | Düngepläne nach Level / Substrat / Ziel |
 | `/search` | Dynamisch | Suche mit Autocomplete |
-| `/dashboard` | Statisch | Authentifizierte User-Area + Einstieg Studien-Review |
-| `/dashboard/review` | Statisch | **Intern:** Studien-Review-Inbox, 1 min/Studie |
+| `/status` | Dynamisch | Betriebsstatus, Coverage-Verlauf, Changelog |
+| `/dashboard` | Auth | User-Area + Einstieg Review |
+| `/dashboard/review` | Auth | **Intern:** Studien-Review-Inbox |
 | `/auth` | Statisch | Login / Registrierung |
 
 ---
 
-## Interner Workflow: Studien-Review
+## ⚙️ Automatisierungen
 
-Der Sync liefert täglich frische Studien aus Crossref, die algorithmisch vorgefiltert und mit Scoring versehen sind. Das interne Review läuft auf `/dashboard/review` (nur eingeloggt):
-
-- **3-Zeilen-Zusammenfassung** je Studie: Evidenzlevel, Herkunft/Institut, Relevanz für SecretLeaf
-- **Herkunftsdaten:** Erstautor, Publisher, Institut/Uni wenn verfügbar
-- **Prioritätsreihenfolge:** High → Medium → Low mit Relevanz-Score
-- **Entscheidungen:** `Rein` / `Spaeter` / `Nein` — werden im Browser gespeichert
-- **Filter-Tabs:** Offen / Rein / Spaeter / Nein / Alle
-
-Workflow in der Praxis:
+### 1 · Vercel Cron — `study-refresh` (täglich 04:17 UTC)
 ```
-GitHub Actions (04:30 UTC) → Crossref-Sync → autoSources.json → Review-PR
-                                                                       ↓
-                                                            /dashboard/review
-                                                            Entscheide in ~1 min/Studie
-                                                            Dann PR mergen oder ablehnen
+vercel.json → GET /api/automation/study-refresh
 ```
+- Läuft auf der Live-Seite — kein lokaler PC, kein GitHub nötig
+- Optional geschützt via `CRON_SECRET` Env-Variable
+- Crossref-Sync: **8 Cannabis-Queries**, 14 Tage Lookback, 80 Ergebnisse/Query, deduped by DOI
+- Env: `STUDY_SYNC_CROSSREF_QUERIES` · `STUDY_SYNC_LOOKBACK_DAYS` · `STUDY_SYNC_ROWS_PER_QUERY`
 
----
-
-## Automatisierungen
-
-### Wiki-Studien-Sync (GitHub Actions)
-- Workflow: `.github/workflows/wiki-study-sync.yml`
-- Täglich 04:30 UTC · manuell auslösbar (`workflow_dispatch`)
-- Filterstufen: Cannabis-Anker, Themen-Cluster, Evidenzscoring, Hard-Exclusions
+### 2 · GitHub Actions — Wiki-Studien-Sync (täglich 04:30 UTC)
+```
+.github/workflows/wiki-study-sync.yml
+```
+- Filter: Cannabis-Anker → Themen-Cluster → Evidenzscoring → Hard-Exclusions
 - Schreibt `apps/web/src/data/terpira/autoSources.json` mit 3-Zeilen-Summaries
-- Erstellt Review-PR statt Direkt-Commit auf `main`
+- **Erstellt Review-PR** statt Direkt-Commit → kein ungeprüfter Code auf `main`
 - Bericht: `.github/wiki-sync-report.md`
 
-### Studien-Ranking (Server-seitig)
-- API: `GET /api/search/studies`
-- Modi: `mode=smart|fresh|quality`
-- Quellen: `sourceRegister` (manuell + auto) mit Scoring-Breakdown
-- Filter: `includeAuto`, `includeManual`, `limit`
-- Output: Score + Teilwerte (`queryMatch`, `quality`, `freshness`, `priorRelevance`)
-
-Beispiel:
+### 3 · Status-Probe (Daemon, alle 30 s)
 ```
-GET /api/search/studies?q=thc+pain&mode=smart&limit=15
+scripts/status_probe.mjs  →  status-data.json
+scripts/status_ensure_running.sh (Self-healing)
 ```
 
-### Vercel Cron (ohne lokalen PC)
-- Datei: `apps/web/vercel.json`
-- Cron-Route: `GET /api/automation/study-refresh`
-- Schedule: täglich 04:17 UTC (`17 4 * * *`)
-- Läuft auf der Live-Seite unabhängig von GitHub und lokalem PC
-- Optional geschützt via `CRON_SECRET` Env-Variable
+### 4 · Fertilizer Prices
+```
+scripts/sync-fertilizer-prices.mjs  →  data/terpira/fertilizerPrices.json
+API: GET /api/fertilizers/prices
+```
 
-### Status-Probe
-- `scripts/status_probe.mjs` — Live-Probes (API + Web)
-- Schreibt `status-data.json` alle 30 Sekunden
-- Self-healing via `status_ensure_running.sh`
-
-### Fertilizer Prices
-- `scripts/sync-fertilizer-prices.mjs` — Preisdaten-Sync
-- Ergebnis in `apps/web/src/data/terpira/fertilizerPrices.json`
-- API: `GET /api/fertilizers/prices`
-
-### Coverage-History
-- `scripts/update-coverage-history.mjs` — Snapshot-Update bei jedem Build
-- Läuft automatisch im `prebuild` (Vercel deployed also immer frisch)
-- Ergebnis: `apps/web/src/data/fertilizerCoverageHistory.json`
+### 5 · Coverage-History (Build-Snapshot)
+```
+scripts/update-coverage-history.mjs
+Läuft automatisch als prebuild — Vercel deployiert immer frisch
+Ergebnis: data/fertilizerCoverageHistory.json
+```
 
 ---
 
-## Quellenqualität
+## 🔬 Interner Workflow: Studien-Review
+
+```
+GitHub Actions (04:30 UTC)
+  └─ Crossref-Sync → autoSources.json (3-Zeilen-Summary, Score, Autor)
+       └─ Review-PR wird erstellt
+            └─ /dashboard/review (nur eingeloggt)
+                 ├─ REIN    → Quelle bestätigt
+                 ├─ SPÄTER  → zurückgestellt
+                 └─ NEIN    → verworfen
+                      └─ PR mergen oder schließen
+```
+
+**Review-Karten-Inhalt:**
+- Evidenzlevel, Institut/Publisher, Erstautor
+- 3-Zeilen-Zusammenfassung (algorithmisch generiert)
+- Relevanz-Score für SecretLeaf
+- Sortierung: High → Medium → Low
+
+**Filter-Tabs:** Offen · Rein · Später · Nein · Alle
+
+---
+
+## 📊 Quellenqualität
 
 **41 manuelle Quellen:**
 - 9 Medizinische Fachzeitschriften (JAMA, Lancet, Nature, Addiction …)
 - 6 Laborstandards (AOAC, ISO, ASTM …)
 - 7 DACH & EU Regulierung (BfArM, Swissmedic, AGES, EMA, GMP)
 - 4 Anbau & Genetik (Horticulture, Plant Physiology, Genetics)
-- 3 Weitere (Terpene, Pharmakokinetik, Mikrobiologie)
 - 12 als Artikel-`sourceIds` mit Peer-Review-Kennzeichnung
 
 **22 Auto-Quellen (dynamisch):**
-- Täglich via Crossref-API synchronisiert
-- Gefiltert nach Cannabis-Anker, Themen-Cluster, Evidenzstufe
-- Jede Studie mit `reviewSummary` (3 Zeilen), `originLabel`, `firstAuthor`
-- Vorschlag-Pool — endgültige Aufnahme nach Review in `/dashboard/review`
+- Täglich via Crossref-API — 8 Queries, 14 Tage, DOI-deduped
+- Jede Studie mit `reviewSummary`, `originLabel`, `firstAuthor`
+- Vorschlag-Pool — endgültige Aufnahme erst nach Review
 
 ---
 
-## Nächste Prioritäten
+## 🔑 Wichtige Env-Variablen
 
-1. **Impressum & Datenschutz (P0)** — DACH-konform, Pflichtinhalt für öffentlichen Betrieb
-2. **Produktive Datenbank (P1)** — PostgreSQL + Prisma Migrate für persistente Entscheidungen + Auth
-3. **Sentry-Integration (P1)** — Error-Tracking für Frontend und API
-4. **Uptime-Monitoring (P2)** — Externer Check auf `/health` mit Alarmierung
-5. **OG/Schema-Markup (P2)** — bessere Distribution pro Artikel/Study-Page
+| Variable | Zweck |
+|----------|-------|
+| `CRON_SECRET` | Schutz der Cron-Route `POST /api/automation/*` |
+| `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | Datenbankzugriff |
+| `NEXTAUTH_SECRET` | Auth-Session |
+| `STUDY_SYNC_CROSSREF_QUERIES` | Pipe-getrennte Custom-Queries (optional) |
+| `STUDY_SYNC_LOOKBACK_DAYS` | Lookback 1–60 Tage (Standard: 14) |
+| `STUDY_SYNC_ROWS_PER_QUERY` | Ergebnisse je Query 10–200 (Standard: 80) |
+
+---
+
+## 🚀 Release-Notes
+
+### v1.5 (April 2026)
+- Studien-Liste: **kategoriegruppierte Sektionen** mit Show-More/Weniger
+- Status-Seite: **6 Gesundheitskarten** (API, DB, Cron, Pipeline, Studiencount)
+- Crossref-Ingestion: **8 parallele Queries**, konfigurierbarer Lookback, DOI-Deduplizierung
+- Deutsches Encoding komplett bereinigt (ü/ä/ö/ß) in allen UI-Texten und API-Responses
+
+### v1.4 (März 2026)
+- Neue kanonische IA: Studies · Database · Tools · Dashboard
+- Premium-UI-Redesign (Stripe/Notion/Apple-Level)
+- Studien-Review-Inbox `/dashboard/review`
+- Vercel-Cron, Coverage-History, Status-Automation
+
+---
+
+## 🎯 Nächste Prioritäten
+
+| Prio | Aufgabe | Warum |
+|------|---------|-------|
+| **P0** | Impressum & Datenschutz | DACH-Pflicht für öffentlichen Betrieb |
+| **P1** | Produktive Datenbank | PostgreSQL + Prisma Migrate für persistente Review-Entscheidungen |
+| **P1** | Sentry-Integration | Error-Tracking Frontend + API |
+| **P2** | Uptime-Monitoring | Externer Check auf `/health` mit Alarmierung |
+| **P2** | OG / Schema-Markup | SEO-Distribution pro Artikel und Study-Page |
+| **P3** | Mobile-Optimierung | Review-Dashboard auf Telefon bedienbar |
