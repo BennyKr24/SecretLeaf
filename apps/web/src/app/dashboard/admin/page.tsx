@@ -199,7 +199,7 @@ export default function AdminOverviewPage() {
               label="Zu prüfen"
               value={data.pendingReview}
               icon="🔍"
-              accent={data.pendingReview > 0 ? "amber" : undefined}
+              {...(data.pendingReview > 0 ? { accent: "amber" as const } : {})}
               sub={data.pendingReview > 0 ? "Manuelle Review ausstehend" : "Alles geprüft ✓"}
             />
           </div>
