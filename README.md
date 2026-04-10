@@ -17,7 +17,7 @@
 | **Database-Hub** | ✅ Live | Dünger-Katalog, Fachregister-Einstieg |
 | **Tools-Hub** | ✅ Live | Operative Werkzeuge, Düngepläne |
 | **Status-Seite** | ✅ Live | Cockpit mit 6 Gesundheitskarten, Coverage-Verlauf |
-| **Review-Dashboard** | ✅ Live | `/dashboard/review` — 1-Klick-Workflow intern |
+| **Review-Dashboard** | ✅ Live | `/dashboard/review` — 1-Klick-Workflow intern, mobil optimiert |
 | **Vercel Cron** | ✅ Aktiv | Täglich **04:17 UTC** — läuft ohne lokalen PC |
 | **Wiki-Studien-Sync** | ✅ Aktiv | GitHub Actions täglich **04:30 UTC** — Review-PR |
 | **Status-Probe** | ✅ Aktiv | Alle 30 s, schreibt `status-data.json` |
@@ -83,10 +83,17 @@ vercel.json → GET /api/automation/study-refresh
 ```
 - Läuft auf der Live-Seite — kein lokaler PC, kein GitHub nötig
 - Optional geschützt via `CRON_SECRET` Env-Variable
-- Crossref-Sync: **8 Cannabis-Queries**, 14 Tage Lookback, 80 Ergebnisse/Query, deduped by DOI
+- Dient als täglicher Refresh-Lauf für bestehende Quellen
+
+### 2 · Vercel Cron — `studies-sync` (täglich 04:27 UTC)
+```
+vercel.json → GET /api/automation/studies-sync
+```
+- Crossref-Sync: **6 Cannabis-Queries**, 14 Tage Lookback, 100 Ergebnisse/Query, deduped by DOI/URL
+- Erzeugt deutsche Kurz-Zusammenfassungen und akzeptiert Vercel-Bearer-Cron-Auth nativ
 - Env: `STUDY_SYNC_CROSSREF_QUERIES` · `STUDY_SYNC_LOOKBACK_DAYS` · `STUDY_SYNC_ROWS_PER_QUERY`
 
-### 2 · GitHub Actions — Wiki-Studien-Sync (täglich 04:30 UTC)
+### 3 · GitHub Actions — Wiki-Studien-Sync (täglich 04:30 UTC)
 ```
 .github/workflows/wiki-study-sync.yml
 ```
@@ -95,19 +102,19 @@ vercel.json → GET /api/automation/study-refresh
 - **Erstellt Review-PR** statt Direkt-Commit → kein ungeprüfter Code auf `main`
 - Bericht: `.github/wiki-sync-report.md`
 
-### 3 · Status-Probe (Daemon, alle 30 s)
+### 4 · Status-Probe (Daemon, alle 30 s)
 ```
 scripts/status_probe.mjs  →  status-data.json
 scripts/status_ensure_running.sh (Self-healing)
 ```
 
-### 4 · Fertilizer Prices
+### 5 · Fertilizer Prices
 ```
 scripts/sync-fertilizer-prices.mjs  →  data/terpira/fertilizerPrices.json
 API: GET /api/fertilizers/prices
 ```
 
-### 5 · Coverage-History (Build-Snapshot)
+### 6 · Coverage-History (Build-Snapshot)
 ```
 scripts/update-coverage-history.mjs
 Läuft automatisch als prebuild — Vercel deployiert immer frisch
@@ -149,7 +156,7 @@ GitHub Actions (04:30 UTC)
 - 12 als Artikel-`sourceIds` mit Peer-Review-Kennzeichnung
 
 **22 Auto-Quellen (dynamisch):**
-- Täglich via Crossref-API — 8 Queries, 14 Tage, DOI-deduped
+- Täglich via Crossref-API — 6 Queries, 14 Tage, DOI/URL-deduped
 - Jede Studie mit `reviewSummary`, `originLabel`, `firstAuthor`
 - Vorschlag-Pool — endgültige Aufnahme erst nach Review
 
@@ -164,7 +171,7 @@ GitHub Actions (04:30 UTC)
 | `NEXTAUTH_SECRET` | Auth-Session |
 | `STUDY_SYNC_CROSSREF_QUERIES` | Pipe-getrennte Custom-Queries (optional) |
 | `STUDY_SYNC_LOOKBACK_DAYS` | Lookback 1–60 Tage (Standard: 14) |
-| `STUDY_SYNC_ROWS_PER_QUERY` | Ergebnisse je Query 10–200 (Standard: 80) |
+| `STUDY_SYNC_ROWS_PER_QUERY` | Ergebnisse je Query 20–200 (Standard: 100) |
 
 ---
 
@@ -173,8 +180,15 @@ GitHub Actions (04:30 UTC)
 ### v1.5 (April 2026)
 - Studien-Liste: **kategoriegruppierte Sektionen** mit Show-More/Weniger
 - Status-Seite: **6 Gesundheitskarten** (API, DB, Cron, Pipeline, Studiencount)
-- Crossref-Ingestion: **8 parallele Queries**, konfigurierbarer Lookback, DOI-Deduplizierung
+- Crossref-Ingestion: **6 parallele Queries**, konfigurierbarer Lookback, DOI/URL-Deduplizierung
 - Deutsches Encoding komplett bereinigt (ü/ä/ö/ß) in allen UI-Texten und API-Responses
+
+### v1.5.1 (April 2026)
+- Cron-Auth-Fix: Automation-Routen akzeptieren jetzt Vercel `Authorization: Bearer <CRON_SECRET>`
+- Studien-Sync gehärtet: Fingerprint-Lookup und Inserts in Batches gegen PostgREST-Limits
+- Supabase-Migrationshistorie repariert und Engine-Schema live nachgezogen
+- Review-Dashboard mobil optimiert
+- Bestehende 578 Studien per Engine-Reprocess vollständig neu bewertet
 
 ### v1.4 (März 2026)
 - Neue kanonische IA: Studies · Database · Tools · Dashboard
@@ -193,4 +207,4 @@ GitHub Actions (04:30 UTC)
 | **P1** | Sentry-Integration | Error-Tracking Frontend + API |
 | **P2** | Uptime-Monitoring | Externer Check auf `/health` mit Alarmierung |
 | **P2** | OG / Schema-Markup | SEO-Distribution pro Artikel und Study-Page |
-| **P3** | Mobile-Optimierung | Review-Dashboard auf Telefon bedienbar |
+| **P3** | Review-Speed & Bulk-Actions | Mehrere Studien mobil schneller in Serie bewerten |

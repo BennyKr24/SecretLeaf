@@ -172,7 +172,7 @@ export async function POST(req: Request) {
         const sortDir = body.sortDir === "asc" ? true : false;
 
         const applyStudiesFilters = (
-          query: ReturnType<typeof supabase.from>,
+          query: any,
           useEngineFields: boolean,
         ) => {
           let nextQuery = query;
@@ -224,26 +224,35 @@ export async function POST(req: Request) {
           return query.order(safeSortBy, { ascending: sortDir }).range(offset, offset + limit - 1);
         };
 
-        let { data, count, error } = await buildStudiesQuery(true);
+        let studiesData: Array<Record<string, unknown>> | null = null;
+        let totalCount: number | null = null;
+        let queryError: string | null = null;
 
-        if (error && isMissingColumnError(error.message)) {
-          logInfo("admin.studies.legacy-fallback", { error: error.message });
+        const engineResult = await buildStudiesQuery(true);
+        studiesData = (engineResult.data as Array<Record<string, unknown>> | null) ?? null;
+        totalCount = engineResult.count ?? null;
+        queryError = engineResult.error?.message ?? null;
+
+        if (queryError && isMissingColumnError(queryError)) {
+          logInfo("admin.studies.legacy-fallback", { error: queryError });
           const legacyResult = await buildStudiesQuery(false);
-          data = legacyResult.data?.map((row) => normalizeLegacyStudyRow(row as Record<string, unknown>));
-          count = legacyResult.count;
-          error = legacyResult.error;
+          studiesData = ((legacyResult.data as Array<Record<string, unknown>> | null) ?? []).map((row) =>
+            normalizeLegacyStudyRow(row)
+          );
+          totalCount = legacyResult.count ?? null;
+          queryError = legacyResult.error?.message ?? null;
         }
 
-        if (error) {
-          return Response.json({ error: error.message }, { status: 500 });
+        if (queryError) {
+          return Response.json({ error: queryError }, { status: 500 });
         }
 
         return Response.json({
-          studies: data ?? [],
-          total: count ?? 0,
+          studies: studiesData ?? [],
+          total: totalCount ?? 0,
           page,
           limit,
-          totalPages: Math.ceil((count ?? 0) / limit),
+          totalPages: Math.ceil((totalCount ?? 0) / limit),
         });
       }
 
