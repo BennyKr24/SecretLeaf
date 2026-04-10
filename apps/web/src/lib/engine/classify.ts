@@ -21,6 +21,19 @@ import {
 } from "./config";
 import type { PipelineLogger } from "./logger";
 
+// ── Dynamic Override Types ──────────────────────────────────────────────────
+
+export type ClassifyOverrides = {
+  /** Additional hard exclusion rules (on top of hardcoded ones). */
+  extraExclusions?: Array<{ pattern: RegExp; reason: string }>;
+  /** Override the cannabis anchor regex. */
+  cannabisAnchorOverride?: RegExp;
+  /** Required keywords filter — rejects if text doesn't contain any. */
+  requiredKeywordsTest?: (text: string) => boolean;
+  /** Additional topic clusters to match against. */
+  extraClusters?: Array<{ key: TopicKey | string; include: RegExp[] }>;
+};
+
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
 function clamp(value: number, min: number, max: number): number {
@@ -55,9 +68,17 @@ function classifyStudyType(text: string): StudyType {
 
 // ── Hard Exclusion ──────────────────────────────────────────────────────────
 
-function detectHardExclusion(text: string): string | null {
+function detectHardExclusion(
+  text: string,
+  extraRules?: Array<{ pattern: RegExp; reason: string }>,
+): string | null {
   for (const rule of HARD_EXCLUSIONS) {
     if (rule.pattern.test(text)) return rule.reason;
+  }
+  if (extraRules) {
+    for (const rule of extraRules) {
+      if (rule.pattern.test(text)) return rule.reason;
+    }
   }
   return null;
 }
@@ -68,12 +89,14 @@ function validateCannabisAnchor(
   corpus: string,
   titleText: string,
   studyType: StudyType,
+  anchorOverride?: RegExp,
 ): string | null {
-  if (!CANNABIS_ANCHOR.test(corpus)) {
+  const anchor = anchorOverride ?? CANNABIS_ANCHOR;
+  if (!anchor.test(corpus)) {
     return "no-cannabis-anchor";
   }
 
-  const titleHasAnchor = CANNABIS_ANCHOR.test(titleText);
+  const titleHasAnchor = anchor.test(titleText);
   const anchorCount = countAnchorMatches(corpus);
 
   if (!titleHasAnchor && anchorCount < 2) {
@@ -89,7 +112,10 @@ function validateCannabisAnchor(
 
 // ── Topic Matching ──────────────────────────────────────────────────────────
 
-function matchTopics(text: string): {
+function matchTopics(
+  text: string,
+  extraClusters?: Array<{ key: TopicKey | string; include: RegExp[] }>,
+): {
   matchedTopics: TopicKey[];
   topicFit: number;
 } {
@@ -101,6 +127,17 @@ function matchTopics(text: string): {
     if (hits > 0) {
       matchedTopics.push(cluster.key);
       topicFit += 18 + hits * 8;
+    }
+  }
+
+  // Match extra custom clusters
+  if (extraClusters) {
+    for (const cluster of extraClusters) {
+      const hits = cluster.include.filter((p) => p.test(text)).length;
+      if (hits > 0) {
+        matchedTopics.push(cluster.key as TopicKey);
+        topicFit += 18 + hits * 8;
+      }
     }
   }
 
@@ -143,12 +180,26 @@ function collectSoftSignals(text: string): {
  * Classify a single normalized study.
  * Returns classification metadata including type, topics, and exclusion status.
  */
-export function classifyStudy(study: NormalizedStudy): ClassificationResult {
+export function classifyStudy(
+  study: NormalizedStudy,
+  overrides?: ClassifyOverrides,
+): ClassificationResult {
   const corpus = buildCorpus(study);
   const titleText = study.title.toLowerCase();
 
+  // Step 0: Required keywords filter (dynamic)
+  if (overrides?.requiredKeywordsTest && !overrides.requiredKeywordsTest(corpus)) {
+    return {
+      studyType: "general-study",
+      matchedTopics: [],
+      topicFit: 0,
+      flags: ["excluded:missing-required-keyword"],
+      exclusionReason: "missing-required-keyword",
+    };
+  }
+
   // Step 1: Hard exclusion check
-  const hardExclusion = detectHardExclusion(corpus);
+  const hardExclusion = detectHardExclusion(corpus, overrides?.extraExclusions);
   if (hardExclusion) {
     return {
       studyType: "general-study",
@@ -163,7 +214,9 @@ export function classifyStudy(study: NormalizedStudy): ClassificationResult {
   const studyType = classifyStudyType(corpus);
 
   // Step 3: Cannabis anchor validation
-  const anchorValidation = validateCannabisAnchor(corpus, titleText, studyType);
+  const anchorValidation = validateCannabisAnchor(
+    corpus, titleText, studyType, overrides?.cannabisAnchorOverride,
+  );
   if (anchorValidation) {
     return {
       studyType,
@@ -175,7 +228,7 @@ export function classifyStudy(study: NormalizedStudy): ClassificationResult {
   }
 
   // Step 4: Topic matching
-  const { matchedTopics, topicFit } = matchTopics(corpus);
+  const { matchedTopics, topicFit } = matchTopics(corpus, overrides?.extraClusters);
 
   // Step 5: Soft signals
   const { flags, scoreDelta: _scoreDelta } = collectSoftSignals(corpus);
@@ -199,6 +252,7 @@ export function classifyStudy(study: NormalizedStudy): ClassificationResult {
 export function classifyStudies(
   studies: NormalizedStudy[],
   logger: PipelineLogger,
+  overrides?: ClassifyOverrides,
 ): {
   classified: Array<{ study: NormalizedStudy; classification: ClassificationResult }>;
   excluded: Array<{ title: string; reason: string }>;
@@ -207,7 +261,7 @@ export function classifyStudies(
   const excluded: Array<{ title: string; reason: string }> = [];
 
   for (const study of studies) {
-    const classification = classifyStudy(study);
+    const classification = classifyStudy(study, overrides);
 
     if (classification.exclusionReason) {
       excluded.push({

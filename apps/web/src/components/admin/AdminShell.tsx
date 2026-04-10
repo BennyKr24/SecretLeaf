@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: "/dashboard/admin/users", label: "Benutzer", icon: "◷" },
   { href: "/dashboard/admin/studies", label: "Studien", icon: "◎" },
   { href: "/dashboard/admin/engine", label: "Engine", icon: "⚙" },
+  { href: "/dashboard/admin/algorithm", label: "Algorithmus", icon: "◆" },
   { href: "/dashboard/admin/analytics", label: "Analytics", icon: "◈" },
   { href: "/dashboard/admin/system", label: "System", icon: "⊡" },
   { href: "/dashboard/admin/settings", label: "Settings", icon: "⊞" },

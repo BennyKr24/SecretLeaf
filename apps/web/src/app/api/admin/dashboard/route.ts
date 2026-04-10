@@ -95,7 +95,10 @@ type AdminAction =
   | "users-list"
   | "user-update-role"
   | "user-delete"
-  | "system-stats";
+  | "system-stats"
+  | "algorithm-get"
+  | "algorithm-update"
+  | "algorithm-reset";
 
 export async function POST(req: Request) {
   const adminOrResponse = await requireAdmin(req);
@@ -649,6 +652,107 @@ export async function POST(req: Request) {
           automationRunsLast24h: runsLast24h ?? 0,
           totalFeedbackEvents: feedbackCount ?? 0,
         });
+      }
+
+      // ── ALGORITHM GET ─────────────────────────────────────────────────
+      case "algorithm-get": {
+        const { loadFullConfig, isEngineConfigTableAvailable } = await import("@/lib/engine/configLoader");
+        const tableExists = await isEngineConfigTableAvailable(supabase);
+        const { config: algoConfig, fromDatabase } = await loadFullConfig(supabase);
+
+        return Response.json({
+          config: algoConfig,
+          fromDatabase,
+          tableExists,
+        });
+      }
+
+      // ── ALGORITHM UPDATE ──────────────────────────────────────────────
+      case "algorithm-update": {
+        const section = body.section as string;
+        const value = body.value;
+
+        if (!section || value === undefined) {
+          return Response.json({ error: "section and value required" }, { status: 400 });
+        }
+
+        const validSections = [
+          "required_keywords",
+          "preferred_sources",
+          "blocked_sources",
+          "custom_exclusions",
+          "topic_clusters",
+          "scoring_params",
+          "cannabis_anchor",
+        ];
+        if (!validSections.includes(section)) {
+          return Response.json({ error: `Invalid section: ${section}` }, { status: 400 });
+        }
+
+        const { saveConfigSection, resetConfigCache } = await import("@/lib/engine/configLoader");
+        resetConfigCache();
+        const result = await saveConfigSection(
+          supabase,
+          section as Parameters<typeof saveConfigSection>[1],
+          value as Parameters<typeof saveConfigSection>[2],
+          adminOrResponse.userId,
+        );
+
+        if (!result.success) {
+          return Response.json({ error: result.error }, { status: 500 });
+        }
+
+        logInfo("admin.algorithm-update", {
+          section,
+          by: adminOrResponse.userId,
+        });
+
+        return Response.json({ saved: true, section });
+      }
+
+      // ── ALGORITHM RESET ───────────────────────────────────────────────
+      case "algorithm-reset": {
+        const section = body.section as string;
+
+        const { getDefaultConfig, saveConfigSection, resetConfigCache } = await import("@/lib/engine/configLoader");
+        const defaults = getDefaultConfig();
+
+        if (section && section !== "all") {
+          const validSections = Object.keys(defaults);
+          if (!validSections.includes(section)) {
+            return Response.json({ error: `Invalid section: ${section}` }, { status: 400 });
+          }
+          resetConfigCache();
+          const result = await saveConfigSection(
+            supabase,
+            section as keyof typeof defaults,
+            defaults[section as keyof typeof defaults],
+            adminOrResponse.userId,
+          );
+          if (!result.success) {
+            return Response.json({ error: result.error }, { status: 500 });
+          }
+
+          logInfo("admin.algorithm-reset", { section, by: adminOrResponse.userId });
+          return Response.json({ reset: true, section });
+        }
+
+        // Reset all sections
+        resetConfigCache();
+        for (const [key, val] of Object.entries(defaults)) {
+          const result = await saveConfigSection(
+            supabase,
+            key as keyof typeof defaults,
+            val as Parameters<typeof saveConfigSection>[2],
+            adminOrResponse.userId,
+          );
+          if (!result.success) {
+            return Response.json({ error: `Failed to reset ${key}: ${result.error}` }, { status: 500 });
+          }
+        }
+
+        logInfo("admin.algorithm-reset", { section: "all", by: adminOrResponse.userId });
+        return Response.json({ reset: true, section: "all" });
       }
 
       default:

@@ -26,9 +26,16 @@ import { fetchAllSources } from "./fetch/index";
 import { normalizeStudies, truncate } from "./normalize";
 import { deduplicateStudies } from "./dedup";
 import { classifyStudies } from "./classify";
+import type { ClassifyOverrides } from "./classify";
 import { scoreStudies } from "./score";
 import { fetchExistingFingerprints, persistStudies } from "./storage";
 import { shouldPipelineRun } from "./monitor";
+import {
+  loadFullConfig,
+  buildCannabisAnchorRegex,
+  buildCustomExclusionRules,
+  buildRequiredKeywordsTest,
+} from "./configLoader";
 
 // ── Assembly ────────────────────────────────────────────────────────────────
 
@@ -197,6 +204,69 @@ export async function runPipeline(
 
     // ── Stage 1: Fetch ────────────────────────────────────────────────
     const fetchLog = logs.createLogger("fetch");
+
+    // Load dynamic engine config from DB (if available)
+    let classifyOverrides: ClassifyOverrides | undefined;
+    if (supabase) {
+      const configLog = logs.createLogger("dynamic-config");
+      try {
+        const { config: dynConfig, fromDatabase } = await loadFullConfig(supabase);
+        configLog.info(`Dynamic config loaded (from DB: ${fromDatabase})`);
+
+        if (fromDatabase) {
+          // Apply scoring params overrides
+          if (dynConfig.scoring_params) {
+            const sp = dynConfig.scoring_params;
+            if (sp.minAcceptScore != null) config.minAcceptScore = sp.minAcceptScore;
+            if (sp.crossrefRowsPerQuery != null) config.crossrefRowsPerQuery = sp.crossrefRowsPerQuery;
+            if (sp.fuzzyThreshold != null) config.fuzzyThreshold = sp.fuzzyThreshold;
+          }
+
+          // Build classify overrides
+          classifyOverrides = {};
+
+          // Required keywords
+          const keywords = dynConfig.required_keywords?.keywords;
+          if (keywords && keywords.length > 0) {
+            classifyOverrides.requiredKeywordsTest = buildRequiredKeywordsTest(keywords);
+          }
+
+          // Custom exclusions
+          const exclusions = dynConfig.custom_exclusions?.rules;
+          if (exclusions && exclusions.length > 0) {
+            classifyOverrides.extraExclusions = buildCustomExclusionRules(exclusions);
+          }
+
+          // Cannabis anchor override
+          const anchorTerms = dynConfig.cannabis_anchor?.terms;
+          if (anchorTerms && anchorTerms.length > 0) {
+            classifyOverrides.cannabisAnchorOverride = buildCannabisAnchorRegex(anchorTerms);
+          }
+
+          // Extra topic clusters
+          const customClusters = dynConfig.topic_clusters?.customClusters;
+          if (customClusters && customClusters.length > 0) {
+            classifyOverrides.extraClusters = customClusters
+              .filter((c) => c.enabled)
+              .map((c) => ({
+                key: c.key,
+                include: c.includePatterns.map((p) => new RegExp(p, "i")),
+              }));
+          }
+
+          configLog.info("Classify overrides built", {
+            hasRequiredKeywords: !!classifyOverrides.requiredKeywordsTest,
+            extraExclusions: classifyOverrides.extraExclusions?.length ?? 0,
+            hasAnchorOverride: !!classifyOverrides.cannabisAnchorOverride,
+            extraClusters: classifyOverrides.extraClusters?.length ?? 0,
+          });
+        }
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        configLog.warn(`Failed to load dynamic config, using defaults: ${msg}`);
+      }
+    }
+
     const fetchResult = await fetchAllSources(config, fetchLog);
     metrics.fetched = fetchResult.items.length;
     metrics.errors.push(...fetchResult.queryStats.filter((q) => q.error).map((q) => q.error!));
@@ -243,7 +313,7 @@ export async function runPipeline(
 
     // ── Stage 4: Classify ─────────────────────────────────────────────
     const classifyLog = logs.createLogger("classify");
-    const classifyResult = classifyStudies(dedupResult.unique, classifyLog);
+    const classifyResult = classifyStudies(dedupResult.unique, classifyLog, classifyOverrides);
     metrics.classified = classifyResult.classified.length;
 
     const rejected: Array<{ title: string; reason: string }> = [
