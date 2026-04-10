@@ -268,25 +268,28 @@ export default function AlgorithmPage() {
     <AdminShell>
       <div className="space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-2xl font-bold text-[#10281e]">
-            Algorithmus-Konfiguration
-          </h1>
-          <p className="mt-1 text-sm text-[#4d685a]">
-            Steuere die Studien-Pipeline: Keywords, Quellen, Ausschlüsse,
-            Scoring-Parameter und mehr.
-          </p>
-          <div className="mt-2 flex items-center gap-3 text-xs">
-            <span
-              className={`rounded-full px-2.5 py-0.5 font-medium ${
-                fromDatabase
-                  ? "bg-green-100 text-green-700"
-                  : "bg-amber-100 text-amber-700"
-              }`}
-            >
-              {fromDatabase ? "● Aus Datenbank geladen" : "○ Standardwerte (hardcoded)"}
-            </span>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-xs text-[#8fa89a]">
+              <span>Admin</span><span>/</span><span className="font-semibold text-[#4d685a]">Algorithmus</span>
+            </div>
+            <div className="mt-1 flex items-center gap-3">
+              <span className="text-2xl">🧬</span>
+              <div>
+                <h1 className="text-2xl font-bold text-[#10281e]">Algorithmus-Konfiguration</h1>
+                <p className="text-sm text-[#4d685a]">Keywords, Quellen, Ausschlüsse, Scoring-Parameter und mehr.</p>
+              </div>
+            </div>
           </div>
+          <span
+            className={`mt-1 rounded-full px-3 py-1 text-xs font-semibold ${
+              fromDatabase
+                ? "bg-green-100 text-green-700"
+                : "bg-amber-100 text-amber-700"
+            }`}
+          >
+            {fromDatabase ? "● Aus Datenbank geladen" : "○ Standardwerte (hardcoded)"}
+          </span>
         </div>
 
         {/* Toast */}

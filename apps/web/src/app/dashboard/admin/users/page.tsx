@@ -136,11 +136,17 @@ export default function AdminUsersPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-[#10281e]">Benutzerverwaltung</h1>
-        <p className="mt-1 text-sm text-[#4d685a]">
-          Registrierte Benutzer einsehen, Rollen verwalten und Accounts administrieren.
-        </p>
+      <div className="mb-7">
+        <div className="flex items-center gap-2 text-xs text-[#8fa89a]">
+          <span>Admin</span><span>/</span><span className="font-semibold text-[#4d685a]">Benutzer</span>
+        </div>
+        <div className="mt-1 flex items-center gap-3">
+          <span className="text-2xl">👥</span>
+          <div>
+            <h1 className="text-2xl font-bold text-[#10281e]">Benutzerverwaltung</h1>
+            <p className="text-sm text-[#4d685a]">Rollen verwalten, Accounts einsehen und administrieren.</p>
+          </div>
+        </div>
       </div>
 
       {/* Stats Row */}

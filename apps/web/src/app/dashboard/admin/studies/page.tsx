@@ -209,10 +209,18 @@ export default function AdminStudiesPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-start justify-between">
+      <div className="mb-7 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#10281e]">Studien-Management</h1>
-          <p className="mt-1 text-sm text-[#4d685a]">Alle Studien filtern, sortieren, prüfen und bearbeiten.</p>
+          <div className="flex items-center gap-2 text-xs text-[#8fa89a]">
+            <span>Admin</span><span>/</span><span className="font-semibold text-[#4d685a]">Studien</span>
+          </div>
+          <div className="mt-1 flex items-center gap-3">
+            <span className="text-2xl">🔬</span>
+            <div>
+              <h1 className="text-2xl font-bold text-[#10281e]">Studien-Management</h1>
+              <p className="text-sm text-[#4d685a]">Alle Studien filtern, sortieren, prüfen und bearbeiten.</p>
+            </div>
+          </div>
         </div>
         {data && (
           <span className="rounded-full bg-[#e5f4ea] px-3 py-1 text-sm font-semibold text-[#1f7a4f]">
