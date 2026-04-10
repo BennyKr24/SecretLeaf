@@ -114,10 +114,15 @@ type CrossrefFetchResult = {
 };
 
 function isCronAuthorized(req: Request, configuredSecret: string): boolean {
-  const headerSecret =
+  // Vercel Cron sends: Authorization: Bearer <CRON_SECRET>
+  const auth = req.headers.get("authorization");
+  const bearerToken = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
+  // Manual/legacy calls use x-cron-key header or query param
+  const legacyKey =
     req.headers.get("x-cron-key") ??
     new URL(req.url).searchParams.get("x-cron-key");
-  return headerSecret === configuredSecret;
+  const candidate = bearerToken ?? legacyKey;
+  return candidate === configuredSecret;
 }
 
 function parseBoundedInt(value: string | undefined, fallback: number, min: number, max: number): number {

@@ -21,10 +21,13 @@ export const dynamic = "force-dynamic";
 const JOB_NAME = "engine-sync";
 
 function isCronAuthorized(req: Request, configuredSecret: string): boolean {
-  const headerSecret =
+  // Vercel Cron sends: Authorization: Bearer <CRON_SECRET>
+  const auth = req.headers.get("authorization");
+  const bearerToken = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
+  const legacyKey =
     req.headers.get("x-cron-key") ??
     new URL(req.url).searchParams.get("x-cron-key");
-  return headerSecret === configuredSecret;
+  return (bearerToken ?? legacyKey) === configuredSecret;
 }
 
 export async function GET(req: Request) {

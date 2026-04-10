@@ -33,9 +33,13 @@ export async function GET(req: Request) {
     return Response.json({ error: "CRON_SECRET is not configured" }, { status: 500 });
   }
 
-  const headerSecret =
+  // Vercel Cron sends: Authorization: Bearer <CRON_SECRET>
+  const auth = req.headers.get("authorization");
+  const bearerToken = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
+  const legacyKey =
     req.headers.get("x-cron-key") ??
     new URL(req.url).searchParams.get("x-cron-key");
+  const headerSecret = bearerToken ?? legacyKey;
   if (headerSecret !== configuredSecret) {
     logWarn("automation.cleanup.unauthorized");
     return Response.json({ error: "Unauthorized" }, { status: 401 });
