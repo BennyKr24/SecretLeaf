@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { restoreSessionFromSupabase, logoutFromSupabase } from "@/lib/auth";
 import type { SessionData } from "@/lib/types";
 
@@ -33,5 +33,5 @@ export function useAdminAuth(): AdminAuthState & { logout: () => Promise<void> }
     setState({ status: "unauthenticated" });
   }, []);
 
-  return { ...state, logout };
+  return useMemo(() => ({ ...state, logout }), [state, logout]);
 }
