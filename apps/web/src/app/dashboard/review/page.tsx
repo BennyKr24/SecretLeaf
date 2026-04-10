@@ -225,8 +225,8 @@ export default function DashboardStudiesPage() {
 
   if (!session) {
     return (
-      <main className="min-h-screen px-6 py-20">
-        <section className="mx-auto max-w-4xl rounded-3xl border border-[#d8e8dd] bg-white p-8 text-center shadow-sm">
+      <main className="min-h-screen px-4 py-10 sm:px-6 sm:py-20">
+        <section className="mx-auto max-w-4xl rounded-3xl border border-[#d8e8dd] bg-white p-6 text-center shadow-sm sm:p-8">
           <h1 className="text-3xl font-bold text-[#10281e]">Interne Studien-Review</h1>
           <p className="mt-3 text-[#4d685a]">Bitte einloggen, um die interne Review-Ansicht zu nutzen.</p>
           <Link href="/auth" className="mt-6 inline-flex rounded-xl bg-[#1f7a4f] px-5 py-2.5 font-medium text-white hover:bg-[#17613f]">
@@ -240,13 +240,13 @@ export default function DashboardStudiesPage() {
   return (
     <main className="min-h-screen bg-[#f6faf7]">
       <header className="border-b border-[#d8e8dd] bg-white/90 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div>
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Intern</p>
-            <h1 className="text-2xl font-bold text-[#10281e]">Studien-Review in 1 Minute</h1>
+            <h1 className="text-xl font-bold text-[#10281e] sm:text-2xl">Studien-Review in 1 Minute</h1>
             <p className="text-sm text-[#4d685a]">Kurz lesen, Quelle prüfen, dann "Rein", "Später" oder "Nein" klicken.</p>
           </div>
-          <div className="flex gap-3 text-sm">
+          <div className="flex flex-wrap gap-3 text-sm">
             <Link href="/dashboard" className="font-medium text-[#4d685a] hover:text-[#173126]">Dashboard</Link>
             <Link href={"/studies/sources" as Route} className="font-medium text-[#4d685a] hover:text-[#173126]">Quellen</Link>
             <button
@@ -264,8 +264,8 @@ export default function DashboardStudiesPage() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-7xl px-6 py-8">
-        <section className="rounded-[28px] border border-[#d8e8dd] bg-white p-6 shadow-sm">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
+        <section className="rounded-[28px] border border-[#d8e8dd] bg-white p-4 shadow-sm sm:p-6">
           <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
               <h2 className="text-xl font-bold text-[#10281e]">Supabase Studien-Datenbank</h2>
@@ -273,7 +273,7 @@ export default function DashboardStudiesPage() {
                 Alle Einträge aus der Tabelle <span className="font-semibold">studies</span>. Suche und Tag-Filter sind als Basis für spätere KI-Funktionen vorbereitet.
               </p>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
+              <div className="mt-4 grid gap-3">
                 <input
                   value={studySearch}
                   onChange={(event) => setStudySearch(event.target.value)}
@@ -337,11 +337,11 @@ export default function DashboardStudiesPage() {
                           quality === "good" ? "Gut" : quality === "bad" ? "Schlecht" : "Offen";
 
                         return (
-                          <div className="mb-3 flex items-center justify-between gap-3">
+                          <div className="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                             <span className={`rounded-full px-3 py-1 text-xs font-semibold ${qualityClass}`}>
                               Qualität: {qualityLabel}
                             </span>
-                            <div className="flex gap-2">
+                            <div className="grid grid-cols-3 gap-2 sm:flex">
                               <button
                                 onClick={() => {
                                   void setStudyQuality(study, "good");
@@ -373,7 +373,7 @@ export default function DashboardStudiesPage() {
                           </div>
                         );
                       })()}
-                      <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
                         <h3 className="text-base font-bold text-[#10281e]">{study.title}</h3>
                         {study.createdAt && (
                           <span className="text-xs text-[#6b8577]">{new Date(study.createdAt).toLocaleDateString("de-DE")}</span>
@@ -469,7 +469,7 @@ export default function DashboardStudiesPage() {
           </div>
         </section>
 
-        <section className="mt-6 rounded-[28px] border border-[#d8e8dd] bg-white p-6 shadow-sm">
+        <section className="mt-6 rounded-[28px] border border-[#d8e8dd] bg-white p-4 shadow-sm sm:p-6">
           <div className="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
             <div>
               <p className="text-sm text-[#4d685a]">
@@ -500,7 +500,7 @@ export default function DashboardStudiesPage() {
           </div>
         </section>
 
-        <section className="mt-6 flex flex-wrap gap-3">
+        <section className="mt-6 flex flex-wrap gap-2 sm:gap-3">
           {[
             ["open", `Offen (${stats.open})`],
             ["accepted", `Rein (${stats.accepted})`],
@@ -511,7 +511,7 @@ export default function DashboardStudiesPage() {
             <button
               key={value}
               onClick={() => setFilter(value as DecisionFilter)}
-              className={`rounded-full border px-4 py-2 text-sm font-medium ${filter === value ? "border-[#1f7a4f] bg-[#1f7a4f] text-white" : "border-[#d8e8dd] bg-white text-[#355b49] hover:bg-[#eef7f1]"}`}
+              className={`rounded-full border px-3 py-2 text-sm font-medium sm:px-4 ${filter === value ? "border-[#1f7a4f] bg-[#1f7a4f] text-white" : "border-[#d8e8dd] bg-white text-[#355b49] hover:bg-[#eef7f1]"}`}
             >
               {label}
             </button>
@@ -524,9 +524,9 @@ export default function DashboardStudiesPage() {
             const summaryLines = study.reviewSummary?.slice(0, 3) ?? [];
 
             return (
-              <article key={study.id} className="rounded-[28px] border border-[#d8e8dd] bg-white p-6 shadow-sm">
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div className="max-w-4xl">
+              <article key={study.id} className="rounded-[28px] border border-[#d8e8dd] bg-white p-4 shadow-sm sm:p-6">
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="max-w-4xl min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${study.editorialPriority === "high" ? "bg-[#e5f4ea] text-[#1f7a4f]" : study.editorialPriority === "medium" ? "bg-[#fff5df] text-[#9b6a13]" : "bg-[#eef3f0] text-[#567264]"}`}>
                         {study.editorialPriority === "high" ? "High" : study.editorialPriority === "medium" ? "Medium" : "Low"}
@@ -540,7 +540,7 @@ export default function DashboardStudiesPage() {
                       )}
                     </div>
 
-                    <h2 className="mt-3 text-xl font-bold leading-tight text-[#10281e]">{study.title}</h2>
+                    <h2 className="mt-3 text-lg font-bold leading-tight text-[#10281e] sm:text-xl">{study.title}</h2>
 
                     <div className="mt-4 space-y-2 text-sm text-[#355b49]">
                       {summaryLines.map((line) => (
@@ -564,12 +564,12 @@ export default function DashboardStudiesPage() {
                     )}
                   </div>
 
-                  <div className="flex w-full max-w-xs flex-col gap-3">
+                  <div className="grid w-full gap-3 sm:grid-cols-2 lg:flex lg:w-full lg:max-w-xs lg:grid-cols-1">
                     <a
                       href={study.url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex justify-center rounded-xl border border-[#c8ddcf] bg-white px-4 py-2.5 text-sm font-semibold text-[#1f7a4f] hover:bg-[#eef7f1]"
+                      className="inline-flex justify-center rounded-xl border border-[#c8ddcf] bg-white px-4 py-2.5 text-sm font-semibold text-[#1f7a4f] hover:bg-[#eef7f1] sm:col-span-2 lg:col-span-1"
                     >
                       Quelle öffnen
                     </a>

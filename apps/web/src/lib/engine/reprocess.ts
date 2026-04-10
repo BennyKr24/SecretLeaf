@@ -47,20 +47,20 @@ type StoredStudyRow = {
   description: string | null;
   source: string | null;
   doi: string | null;
-  study_type: string;
-  evidence_level: number;
-  publisher_quality: number;
-  topic_fit: number;
-  relevance_score: number;
-  editorial_priority: string;
-  matched_topics: string[];
-  flags: string[];
+  study_type: string | null;
+  evidence_level: number | null;
+  publisher_quality: number | null;
+  topic_fit: number | null;
+  relevance_score: number | null;
+  editorial_priority: string | null;
+  matched_topics: string[] | null;
+  flags: string[] | null;
   first_author: string | null;
   abstract_snippet: string | null;
-  origin_label: string;
-  affiliation_hints: string[];
+  origin_label: string | null;
+  affiliation_hints: string[] | null;
   source_fingerprint: string;
-  fetched_at: string;
+  fetched_at: string | null;
 };
 
 function rowToNormalizedStudy(row: StoredStudyRow): NormalizedStudy {
@@ -103,17 +103,21 @@ async function fetchReprocessCandidates(
     .select(
       "id, title, description, source, doi, study_type, evidence_level, publisher_quality, topic_fit, relevance_score, editorial_priority, matched_topics, flags, first_author, abstract_snippet, origin_label, affiliation_hints, source_fingerprint, fetched_at",
     )
-    .lte("fetched_at", cutoff)
-    .lte("relevance_score", config.maxScoreForReprocess)
-    .order("fetched_at", { ascending: true })
-    .limit(config.batchSize);
+    .order("fetched_at", { ascending: true, nullsFirst: true })
+    .limit(config.batchSize * 4);
 
   if (error) {
     logger.error("Failed to fetch reprocess candidates", { error: error.message });
     return [];
   }
 
-  return (data ?? []) as StoredStudyRow[];
+  return ((data ?? []) as StoredStudyRow[])
+    .filter((row) => {
+      const fetchedAtEligible = !row.fetched_at || row.fetched_at <= cutoff;
+      const score = row.relevance_score ?? 0;
+      return fetchedAtEligible && score <= config.maxScoreForReprocess;
+    })
+    .slice(0, config.batchSize);
 }
 
 /**
@@ -137,9 +141,9 @@ function reprocessStudy(
   return {
     classification,
     scoring,
-    oldScore: row.relevance_score,
+    oldScore: row.relevance_score ?? 0,
     newScore: scoring.relevanceScore,
-    delta: scoring.relevanceScore - row.relevance_score,
+    delta: scoring.relevanceScore - (row.relevance_score ?? 0),
   };
 }
 
