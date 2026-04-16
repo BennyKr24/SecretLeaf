@@ -26,6 +26,10 @@
       "schedule": "15 5 * * 1"
     },
     {
+      "path": "/api/automation/engine-prune",
+      "schedule": "30 5 * * 3"
+    },
+    {
       "path": "/api/automation/cleanup",
       "schedule": "40 4 * * 0"
     }

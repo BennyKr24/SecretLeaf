@@ -88,7 +88,10 @@ function buildTags(
   const tags = new Set<string>();
   tags.add("auto");
   tags.add("study-engine");
-  tags.add("crossref");
+
+  // Tag with the actual data source (pubmed, crossref, …)
+  const sourceTag = String((study.meta as Record<string, unknown>).source ?? "crossref");
+  if (sourceTag) tags.add(sourceTag);
 
   for (const topic of classification.matchedTopics) {
     tags.add(topic);

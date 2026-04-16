@@ -270,7 +270,7 @@ export const CATEGORY_PRIORITY: string[] = [
 // ── Crossref API ────────────────────────────────────────────────────────────
 
 export const CROSSREF_BASE_URL = "https://api.crossref.org/works";
-export const CROSSREF_USER_AGENT = "SecretLeaf/1.4 (study-engine; mailto:research@secretleaf.local)";
+export const CROSSREF_USER_AGENT = `SecretLeaf/1.4 (study-engine; mailto:${process.env.NCBI_CONTACT_EMAIL ?? "research@secretleaf.de"})`;
 
 // ── Storage ─────────────────────────────────────────────────────────────────
 

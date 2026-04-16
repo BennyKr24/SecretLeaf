@@ -92,6 +92,14 @@ function scoreEditorialUtility(
     score -= 35;
   }
 
+  // Platform core focus: cultivation and lab quality get an editorial boost
+  if (
+    matchedTopics.includes("anbau-postharvest") ||
+    matchedTopics.includes("qualitaet-labor")
+  ) {
+    score += 15;
+  }
+
   return clamp(score, 0, 100);
 }
 

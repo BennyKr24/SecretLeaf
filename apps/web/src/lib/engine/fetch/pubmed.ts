@@ -163,6 +163,11 @@ function baseParams(): URLSearchParams {
   return p;
 }
 
+/** Convert an ISO date string to the NCBI E-utilities YYYY/MM/DD format. */
+function toNCBIDate(iso: string): string {
+  return iso.slice(0, 10).replace(/-/g, "/");
+}
+
 // ── Main fetch function ──────────────────────────────────────────────────────
 
 /**
@@ -189,7 +194,7 @@ export async function fetchFromPubMed(
   }
 
   // Format date as YYYY/MM/DD for NCBI mindate parameter
-  const mindate = fromDate.slice(0, 10).replace(/-/g, "/");
+  const mindate = toNCBIDate(fromDate);
 
   try {
     // ── Step 1: esearch ───────────────────────────────────────────────────────
