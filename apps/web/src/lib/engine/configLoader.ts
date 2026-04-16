@@ -127,7 +127,7 @@ const DEFAULT_CONFIG: EngineConfigData = {
   custom_exclusions: { rules: [] },
   topic_clusters: { overrides: {}, customClusters: [] },
   scoring_params: {
-    minAcceptScore: 34,
+    minAcceptScore: 48,
     crossrefRowsPerQuery: 60,
     fuzzyThreshold: 0.85,
     weights: {

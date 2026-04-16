@@ -15,6 +15,7 @@
 import type { ClassificationResult, NormalizedStudy, StudyType, TopicKey } from "./types";
 import {
   CANNABIS_ANCHOR,
+  CULTIVATION_GATE,
   HARD_EXCLUSIONS,
   SOFT_SIGNALS,
   TOPIC_CLUSTERS,
@@ -230,7 +231,19 @@ export function classifyStudy(
   // Step 4: Topic matching
   const { matchedTopics, topicFit } = matchTopics(corpus, overrides?.extraClusters);
 
-  // Step 5: Soft signals
+  // Step 5: Cultivation gate — study MUST contain at least one cultivation-focused signal.
+  // This enforces the platform's core focus and rejects purely medical/pharmacological studies.
+  if (!CULTIVATION_GATE.test(corpus)) {
+    return {
+      studyType,
+      matchedTopics: [],
+      topicFit: 0,
+      flags: ["excluded:no-cultivation-match"],
+      exclusionReason: "no-cultivation-match",
+    };
+  }
+
+  // Step 6: Soft signals
   const { flags, scoreDelta: _scoreDelta } = collectSoftSignals(corpus);
 
   // Note: scoreDelta is NOT applied here — it's used in the scoring engine.

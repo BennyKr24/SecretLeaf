@@ -11,7 +11,7 @@
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ProcessedStudy, StorageResult } from "./types";
-import { BATCH_INSERT_SIZE, STUDIES_TABLE } from "./config";
+import { BATCH_INSERT_SIZE, CATEGORY_PRIORITY, STUDIES_TABLE } from "./config";
 import type { PipelineLogger } from "./logger";
 
 // ── Row Shape ───────────────────────────────────────────────────────────────
@@ -40,8 +40,19 @@ type StudyInsertRow = {
   origin_label: string;
   affiliation_hints: string[];
   review_summary: string[];
+  category: string | null;
   fetched_at: string;
 };
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Derive the primary category from matched topics (cultivation-first priority). */
+function derivePrimaryCategory(matchedTopics: string[]): string | null {
+  for (const key of CATEGORY_PRIORITY) {
+    if (matchedTopics.includes(key)) return key;
+  }
+  return matchedTopics[0] ?? null;
+}
 
 // ── Mapping ─────────────────────────────────────────────────────────────────
 
@@ -70,6 +81,7 @@ function toInsertRow(study: ProcessedStudy): StudyInsertRow {
     origin_label: study.originLabel,
     affiliation_hints: study.affiliations,
     review_summary: study.reviewSummary,
+    category: derivePrimaryCategory(study.matchedTopics),
     fetched_at: new Date().toISOString(),
   };
 }
@@ -97,6 +109,7 @@ function toUpdatePayload(study: ProcessedStudy): UpdatePayload {
     origin_label: study.originLabel,
     affiliation_hints: study.affiliations,
     review_summary: study.reviewSummary,
+    category: derivePrimaryCategory(study.matchedTopics),
     fetched_at: new Date().toISOString(),
   };
 }

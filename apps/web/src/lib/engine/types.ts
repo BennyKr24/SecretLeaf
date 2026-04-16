@@ -271,6 +271,8 @@ export type ReprocessResult = {
   upgraded: number;
   downgraded: number;
   unchanged: number;
+  /** Studies that now fail classification and have been marked quality_status='bad'. */
+  markedBad: number;
   errors: string[];
 };
 

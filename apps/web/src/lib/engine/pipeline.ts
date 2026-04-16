@@ -57,7 +57,7 @@ function buildReviewSummary(
     "systematic-review": "Systematisches Review mit guter Evidenzbasis.",
     "controlled-study": "Kontrollierte Studie mit direktem Praxisbezug.",
     "clinical-trial": "Klinische Studie mit direktem Anwendungsbezug.",
-    "laboratory-study": "Labor-/Analytik-Arbeit fuer Qualitaet oder Profile.",
+    "laboratory-study": "Labor-/Analytik-Arbeit für Qualität oder Profile.",
     "observational-study": "Beobachtungsstudie, eher kontext- als beweisstark.",
     "protocol": "Studienprotokoll, relevant nur nach gezielter Kurationsentscheidung.",
     "case-report": "Einzelfallbericht, eher schwache Evidenz.",
@@ -71,11 +71,11 @@ function buildReviewSummary(
 
   const origin = deriveOriginLabel(study);
   const abstractLine =
-    truncate(study.abstract, 170) ?? "Kein belastbarer Abstract-Auszug verfuegbar.";
+    truncate(study.abstract, 170) ?? "Kein belastbarer Abstract-Auszug verfügbar.";
 
   return [
     typeMap[classification.studyType] ?? typeMap["general-study"] ?? "Allgemeine Studie mit Cannabis-Bezug.",
-    `${origin} · ${study.year} · Prioritaet ${scoring.editorialPriority}. ${topicText}`,
+    `${origin} · ${study.year} · Priorität ${scoring.editorialPriority}. ${topicText}`,
     abstractLine,
   ];
 }
@@ -88,7 +88,10 @@ function buildTags(
   const tags = new Set<string>();
   tags.add("auto");
   tags.add("study-engine");
-  tags.add("crossref");
+
+  // Tag with the actual data source (pubmed, crossref, …)
+  const sourceTag = String((study.meta as Record<string, unknown>).source ?? "crossref");
+  if (sourceTag) tags.add(sourceTag);
 
   for (const topic of classification.matchedTopics) {
     tags.add(topic);
