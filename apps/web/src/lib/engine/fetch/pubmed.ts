@@ -199,8 +199,10 @@ export async function fetchFromPubMed(
   try {
     // ── Step 1: esearch ───────────────────────────────────────────────────────
     const searchParams = baseParams();
+    // Sanitize square brackets in the query to avoid malformed NCBI search syntax.
+    const sanitizedQuery = query.replace(/[\[\]]/g, "");
     searchParams.set("db", "pubmed");
-    searchParams.set("term", `${query}[Title/Abstract]`);
+    searchParams.set("term", `${sanitizedQuery}[Title/Abstract]`);
     searchParams.set("mindate", mindate);
     searchParams.set("datetype", "edat");
     searchParams.set("retmax", String(Math.min(rows, 200)));
@@ -208,7 +210,7 @@ export async function fetchFromPubMed(
     searchParams.set("sort", "pub_date");
 
     const searchUrl = `${ESEARCH_URL}?${searchParams.toString()}`;
-    logger.debug(`PubMed esearch: "${query}" from ${mindate}`, { rows });
+    logger.debug(`PubMed esearch: "${sanitizedQuery}" from ${mindate}`, { rows });
 
     const { result: searchResult, attempts: searchAttempts } = await breaker.execute(() =>
       withRetry(

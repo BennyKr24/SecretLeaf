@@ -27,7 +27,7 @@ import type {
 } from "./types";
 import { classifyStudy } from "./classify";
 import { scoreStudy } from "./score";
-import { CATEGORY_PRIORITY, STUDIES_TABLE } from "./config";
+import { CATEGORY_PRIORITY, DEFAULT_PIPELINE_CONFIG, STUDIES_TABLE } from "./config";
 import type { PipelineLogger } from "./logger";
 
 // ── Default Config ──────────────────────────────────────────────────────────
@@ -188,6 +188,35 @@ async function applyReprocessUpdate(
   return true;
 }
 
+/**
+ * Mark a study as quality_status='bad' because it failed the current classification rules.
+ * This makes it eligible for cleanup by the engine-prune cron job.
+ */
+async function markStudyAsBad(
+  supabase: SupabaseClient,
+  studyId: string,
+  exclusionReason: string,
+  logger: PipelineLogger,
+): Promise<boolean> {
+  const { error } = await supabase
+    .from(STUDIES_TABLE)
+    .update({
+      quality_status: "bad",
+      review_note: `Auto-rejected by reprocess: ${exclusionReason}`,
+    })
+    .eq("id", studyId)
+    // Only mark studies that have not already been reviewed by a human
+    .in("quality_status", ["pending"]);
+
+  if (error) {
+    logger.error(`Failed to mark study ${studyId} as bad`, { error: error.message });
+    return false;
+  }
+
+  logger.info(`Marked study ${studyId} as bad: ${exclusionReason}`);
+  return true;
+}
+
 // ── Main Entry Point ────────────────────────────────────────────────────────
 
 /**
@@ -202,7 +231,7 @@ export async function runReprocessLoop(
   supabase: SupabaseClient,
   logger: PipelineLogger,
   configOverrides?: Partial<ReprocessConfig>,
-  minAcceptScore: number = 52,
+  minAcceptScore: number = DEFAULT_PIPELINE_CONFIG.minAcceptScore,
 ): Promise<ReprocessResult> {
   const config: ReprocessConfig = {
     ...DEFAULT_REPROCESS_CONFIG,
@@ -214,6 +243,7 @@ export async function runReprocessLoop(
     upgraded: 0,
     downgraded: 0,
     unchanged: 0,
+    markedBad: 0,
     errors: [],
   };
 
@@ -244,6 +274,28 @@ export async function runReprocessLoop(
       );
 
       result.processed++;
+
+      // If the study now fails the classification rules (e.g. cultivation gate,
+      // new hard exclusion), mark it as bad so the prune job will clean it up.
+      if (classification.exclusionReason) {
+        logger.info(
+          `Study ${row.id} now excluded by classification: ${classification.exclusionReason}`,
+          { title: row.title.slice(0, 80), reason: classification.exclusionReason },
+        );
+
+        const marked = await markStudyAsBad(
+          supabase,
+          row.id,
+          classification.exclusionReason,
+          logger,
+        );
+        if (marked) {
+          result.markedBad++;
+        } else {
+          result.errors.push(`Failed to mark study ${row.id} as bad`);
+        }
+        continue;
+      }
 
       if (Math.abs(delta) < SIGNIFICANT_DELTA) {
         result.unchanged++;
@@ -282,6 +334,7 @@ export async function runReprocessLoop(
     upgraded: result.upgraded,
     downgraded: result.downgraded,
     unchanged: result.unchanged,
+    markedBad: result.markedBad,
     errors: result.errors.length,
   });
 

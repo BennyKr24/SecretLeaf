@@ -10,7 +10,7 @@ export const DEFAULT_PIPELINE_CONFIG: PipelineConfig = {
   lookbackDays: Number(process.env.STUDY_SYNC_LOOKBACK_DAYS ?? "7"),
   crossrefRowsPerQuery: 60,
   maxProcessed: Number(process.env.STUDY_LIMIT ?? "200"),
-  minAcceptScore: 34,
+  minAcceptScore: 48,
   maxFetchRetries: Number(process.env.STUDY_SYNC_MAX_ATTEMPTS ?? "3"),
   fuzzyThreshold: 0.85,
   persistToStorage: true,
@@ -189,6 +189,18 @@ export const MID_QUALITY_PUBLISHERS: string[] = [
 export const CANNABIS_ANCHOR =
   /medical cannabis|cannabis|cannabinoid|endocannabinoid|\bthc\b|\bthca\b|\bcbd\b|\bcbda\b|\bcbn\b|\bcbg\b|terpene|terpenoid|marijuana|hashish/i;
 
+// ── Cultivation Gate ────────────────────────────────────────────────────────
+//
+// A study MUST match at least one of these patterns to be accepted.
+// This enforces the platform's core focus: cannabis cultivation and lab quality.
+// Pure medical, pharmacological, addiction, or policy-only studies are rejected.
+//
+// Covers: grow environment, plant biology, post-harvest, nutrients,
+//         lighting, lab quality testing, cannabinoid/terpene profiling.
+//
+export const CULTIVATION_GATE =
+  /\bcultivation\b|indoor\s+grow|greenhouse\b|growth\s+chamber|post-harvest|postharvest|photoperiod|light\s+spectrum|vpd\b|irrigation|fertigation|\bsubstrate\b|nutrient\s|plant\s+growth|flower\s+yield|trichome|chemotype|\bbreeding\b|\bcontaminant\b|\bpesticide\b|heavy\s+metal|mycotoxin|chromatography|cannabinoid\s+(?:profile|composition)|terpene\s+(?:profile|composition|retention)|grow\s+room|grow\s+tent|seedling|germination|\bvegetative\b|fertilizer|\bcuring\b|\bdrying\b|\btoxicolog/i;
+
 // ── Hard Exclusion Rules ────────────────────────────────────────────────────
 
 export type ExclusionRule = {
@@ -206,6 +218,9 @@ export const HARD_EXCLUSIONS: ExclusionRule[] = [
   { pattern: /nigella sativa/i, reason: "non-cannabis-sativa" },
   // ── Mental health / addiction hard exclusions ──────────────────────────────
   { pattern: /\bpsychosis\b|\bpsychotic\b|\bschizophrenia\b|\bschizophrenic\b/i, reason: "mental-health-exclusion" },
+  // Intentionally broad — platform policy requires rejecting any study that
+  // mentions addiction or abuse regardless of context (no exceptions).
+  { pattern: /\baddiction\b|\babuse\b/i, reason: "addiction-or-abuse-term" },
   { pattern: /\bsubstance use disorder\b|\bcannabis use disorder\b|\baddiction treatment\b|\bdrug abuse\b|\bsubstance abuse\b/i, reason: "addiction-disorder-topic" },
   { pattern: /\bself-harm\b|\bsuicide\b|\bsuicidal\b|\bself-medication\b/i, reason: "self-harm-topic" },
 ];
