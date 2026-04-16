@@ -27,7 +27,7 @@ import type {
 } from "./types";
 import { classifyStudy } from "./classify";
 import { scoreStudy } from "./score";
-import { STUDIES_TABLE } from "./config";
+import { CATEGORY_PRIORITY, STUDIES_TABLE } from "./config";
 import type { PipelineLogger } from "./logger";
 
 // ── Default Config ──────────────────────────────────────────────────────────
@@ -157,6 +157,13 @@ async function applyReprocessUpdate(
   classification: ClassificationResult,
   logger: PipelineLogger,
 ): Promise<boolean> {
+  // Derive primary category with cultivation-first priority
+  const topicsAsStrings = classification.matchedTopics as string[];
+  const category =
+    CATEGORY_PRIORITY.find((k) => topicsAsStrings.includes(k)) ??
+    topicsAsStrings[0] ??
+    null;
+
   const { error } = await supabase
     .from(STUDIES_TABLE)
     .update({
@@ -168,6 +175,7 @@ async function applyReprocessUpdate(
       editorial_priority: scoring.editorialPriority,
       matched_topics: classification.matchedTopics,
       flags: classification.flags,
+      category,
       fetched_at: new Date().toISOString(), // reset freshness clock
     })
     .eq("id", studyId);

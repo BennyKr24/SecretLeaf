@@ -89,6 +89,10 @@ export const TOPIC_CLUSTERS: TopicCluster[] = [
       "cannabis curing drying storage",
       "cannabis postharvest terpene retention",
       "cannabis greenhouse indoor environmental control",
+      "cannabis nutrient management yield",
+      "cannabis light spectrum photoperiod indoor",
+      "cannabis substrate growing medium",
+      "cannabis irrigation fertigation deficiency",
     ],
     include: [
       /cultivation/i,
@@ -200,6 +204,10 @@ export const HARD_EXCLUSIONS: ExclusionRule[] = [
   { pattern: /hempseed meal|egg quality|dairy cow|ruminant/i, reason: "agriculture-feed" },
   { pattern: /industrial hemp breeding lines/i, reason: "industrial-hemp-low-fit" },
   { pattern: /nigella sativa/i, reason: "non-cannabis-sativa" },
+  // ── Mental health / addiction hard exclusions ──────────────────────────────
+  { pattern: /\bpsychosis\b|\bpsychotic\b|\bschizophrenia\b|\bschizophrenic\b/i, reason: "mental-health-exclusion" },
+  { pattern: /\bsubstance use disorder\b|\bcannabis use disorder\b|\baddiction treatment\b|\bdrug abuse\b|\bsubstance abuse\b/i, reason: "addiction-disorder-topic" },
+  { pattern: /\bself-harm\b|\bsuicide\b|\bsuicidal\b|\bself-medication\b/i, reason: "self-harm-topic" },
 ];
 
 // ── Soft Signal Rules ───────────────────────────────────────────────────────
@@ -244,6 +252,20 @@ export const EVIDENCE_LEVEL_SCORES: Record<string, number> = {
   "case-report": 28,
   "general-study": 56,
 };
+
+// ── Category Priority ───────────────────────────────────────────────────────
+
+/**
+ * Priority order for deriving a primary category from matched_topics.
+ * Cultivation clusters come first to reflect the platform's core focus.
+ */
+export const CATEGORY_PRIORITY: string[] = [
+  "anbau-postharvest",
+  "qualitaet-labor",
+  "pharmakologie",
+  "medizin-evidenz",
+  "markt-regulierung",
+];
 
 // ── Crossref API ────────────────────────────────────────────────────────────
 
