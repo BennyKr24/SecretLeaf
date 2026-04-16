@@ -199,7 +199,7 @@ export async function fetchFromPubMed(
   try {
     // ── Step 1: esearch ───────────────────────────────────────────────────────
     const searchParams = baseParams();
-    // Sanitize square brackets in the query to avoid malformed NCBI search syntax.
+    // Remove square brackets from the query to avoid malformed NCBI search syntax.
     const sanitizedQuery = query.replace(/[\[\]]/g, "");
     searchParams.set("db", "pubmed");
     searchParams.set("term", `${sanitizedQuery}[Title/Abstract]`);

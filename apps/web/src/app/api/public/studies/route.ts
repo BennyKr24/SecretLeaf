@@ -22,6 +22,7 @@
 // ──────────────────────────────────────────────────────────────────────────────
 
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
+import { PUBLIC_STUDIES_QUALITY_FILTER } from "@/lib/studiesQuery";
 
 export const dynamic = "force-dynamic";
 
@@ -138,7 +139,7 @@ export async function GET(request: Request) {
         { count: "exact" }
       )
       // Serve reviewed+approved studies OR auto-ingested studies with high/medium editorial priority
-      .or("quality_status.eq.good,and(quality_status.eq.pending,editorial_priority.in.(high,medium))")
+      .or(PUBLIC_STUDIES_QUALITY_FILTER)
       .gte("relevance_score", minScore);
 
     if (category) {

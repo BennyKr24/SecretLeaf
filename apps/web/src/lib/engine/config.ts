@@ -199,7 +199,7 @@ export const CANNABIS_ANCHOR =
 //         lighting, lab quality testing, cannabinoid/terpene profiling.
 //
 export const CULTIVATION_GATE =
-  /\bcultivation\b|indoor\s+grow|greenhouse\b|growth\s+chamber|post-harvest|postharvest|photoperiod|light\s+spectrum|vpd\b|irrigation|fertigation|\bsubstrate\b|nutrient\s|plant\s+growth|flower\s+yield|trichome|chemotype|\bbreeding\b|\bcontaminant\b|\bpesticide\b|heavy\s+metal|mycotoxin|chromatography|cannabinoid\s+(?:profile|composition)|terpene\s+(?:profile|composition|retention)|grow\s+room|grow\s+tent|seedling|germination|\bvegetative\b|fertilizer|\bcuring\b|\bdrying\b|\btoxicolog/i;
+  /\bcultivation\b|indoor\s+grow|greenhouse\b|growth\s+chamber|post-harvest|postharvest|photoperiod|light\s+spectrum|vpd\b|irrigation|fertigation|\bsubstrate\b|nutrient\s|plant\s+growth|flower\s+yield|trichome|chemotype|\bbreeding\b|\bcontaminant\b|\bpesticide\b|heavy\s+metal|mycotoxin|chromatography|cannabinoid\s+(?:profile|composition)|terpene\s+(?:profile|composition|retention)|grow\s+room|grow\s+tent|seedling|germination|\bvegetative\b|fertilizer|\bcuring\b|\bdrying\b|\btoxicolog\b/i;
 
 // ── Hard Exclusion Rules ────────────────────────────────────────────────────
 
