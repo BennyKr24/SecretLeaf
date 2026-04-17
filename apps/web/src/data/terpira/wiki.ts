@@ -9,10 +9,10 @@ export const categoryLabels: Record<TerpiraCategory, string> = {
   medizin: "Medizin & Wirkung",
   konsumformen: "Anwendung & Konsum",
   konzentrate: "Konzentrate & Extrakte",
-  recht: "Recht & Sicherheit",
-  sicherheit: "Licht & Umgebung",
-  qualitaet: "Labor & Analyse",
-  markt: "Ertrag & Qualität",
+  recht: "Recht & Compliance",
+  sicherheit: "Sicherheit & Umgebung",
+  qualitaet: "Qualität & Laborwerte",
+  markt: "Markt & Beschaffung",
   werkzeuge: "Tools & Rechner"
 };
 

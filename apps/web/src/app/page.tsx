@@ -33,17 +33,17 @@ const CATEGORY_DESCRIPTIONS: Partial<Record<TerpiraCategory, string>> = {
   medizin:       'Evidenzbasierte Erkenntnisse zu medizinischen Anwendungen.',
   konsumformen:  'Methoden und Formen der Anwendung im Überblick.',
   konzentrate:   'Extraktion, Verarbeitung und Qualität von Konzentraten.',
-  recht:         'Rechtliche Rahmenbedingungen, Compliance und Sicherheitsrichtlinien.',
-  sicherheit:    'Licht, Klima und Umgebungsfaktoren für optimale Bedingungen.',
+  recht:         'Rechtliche Rahmenbedingungen und Compliance-Anforderungen.',
+  sicherheit:    'Sicherheitsaspekte, Umgebungsfaktoren und Schutzmaßnahmen.',
   qualitaet:     'Laboranalysen, Qualitätskontrolle und Reinheitsprüfungen.',
-  markt:         'Ertragsoptimierung, Qualitätsbewertung und Marktüberblick.',
+  markt:         'Marktüberblick, Beschaffung und aktuelle Preisentwicklungen.',
   werkzeuge:     'Praktische Rechner und Werkzeuge für den Alltag.',
 };
 
 /* ── Curated section order ─────────────────────────────────────────────── */
 
 const HOMEPAGE_SECTIONS: TerpiraCategory[] = [
-  'anbau', 'chemie', 'sicherheit', 'markt', 'qualitaet',
+  'anbau', 'chemie', 'sicherheit', 'qualitaet', 'markt',
 ];
 
 /* ── Card components ───────────────────────────────────────────────────── */
@@ -360,7 +360,7 @@ export default async function LandingPage() {
                             {(article.sourceIds?.length ?? 0) > 0 && (
                               <>
                                 <span className="text-slate-200">·</span>
-                                <span className="text-emerald-600 font-medium">{article.sourceIds!.length} Quellen</span>
+                                <span className="text-emerald-600 font-medium">{article.sourceIds?.length} Quellen</span>
                               </>
                             )}
                           </div>

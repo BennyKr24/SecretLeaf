@@ -19,10 +19,10 @@ const CATEGORY_DESCRIPTIONS: Partial<Record<TerpiraCategory, string>> = {
   medizin:       'Evidenzbasierte Erkenntnisse zu medizinischen Anwendungen.',
   konsumformen:  'Methoden und Formen der Anwendung im Überblick.',
   konzentrate:   'Extraktion, Verarbeitung und Qualität von Konzentraten.',
-  recht:         'Rechtliche Rahmenbedingungen, Compliance und Sicherheitsrichtlinien.',
-  sicherheit:    'Licht, Klima und Umgebungsfaktoren für optimale Bedingungen.',
+  recht:         'Rechtliche Rahmenbedingungen und Compliance-Anforderungen.',
+  sicherheit:    'Sicherheitsaspekte, Umgebungsfaktoren und Schutzmaßnahmen.',
   qualitaet:     'Laboranalysen, Qualitätskontrolle und Reinheitsprüfungen.',
-  markt:         'Ertragsoptimierung, Qualitätsbewertung und Marktüberblick.',
+  markt:         'Marktüberblick, Beschaffung und aktuelle Preisentwicklungen.',
   werkzeuge:     'Praktische Rechner und Werkzeuge für den Alltag.',
 };
 
