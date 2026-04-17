@@ -8,7 +8,8 @@ export default function NewsletterSignup() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.includes('@')) return;
+    // The <input type="email" required> handles validation; extra guard for programmatic calls
+    if (!email.trim()) return;
 
     setStatus('loading');
     // Persist locally for now — real delivery via backend when ready

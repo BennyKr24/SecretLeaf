@@ -647,7 +647,7 @@ export default async function LandingPage() {
               {
                 icon: '🔬',
                 title: 'Peer-reviewed Quellen',
-                text: `Jeder Artikel verweist auf ${Math.round(sourceCount / articleCount)} Quellen im Schnitt – aus JAMA, The Lancet, Nature und mehr.`,
+                text: `Jeder Artikel verweist auf ${Math.round(sourceCount / articleCount)} Quellen im Schnitt – aus peer-reviewed Fachzeitschriften und wissenschaftlichen Datenbanken.`,
               },
               {
                 icon: '✓',

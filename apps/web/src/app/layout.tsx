@@ -3,6 +3,7 @@ import { Manrope, Space_Grotesk } from "next/font/google";
 import Link from "next/link";
 import type { Route } from "next";
 import SearchBar from "@/components/SearchBar";
+import { wikiArticles, sourceRegister } from "@/data/terpira/wiki";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-body" });
@@ -10,7 +11,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-displ
 
 export const metadata: Metadata = {
   title: "SecretLeaf – Cannabis Intelligence Platform",
-  description: "Die führende Wissensplattform für evidenzbasiertes Cannabis-Wissen. 82+ Fachartikel, 300+ peer-reviewed Quellen."
+  description: `Die führende Wissensplattform für evidenzbasiertes Cannabis-Wissen. ${wikiArticles.length}+ Fachartikel, ${sourceRegister.length}+ peer-reviewed Quellen.`
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

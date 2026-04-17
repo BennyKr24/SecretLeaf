@@ -77,9 +77,7 @@ export function useInterests() {
   );
 
   /** Returns preferred category order based on selected interests */
-  const preferredCategories: string[] = interests.length === 0
-    ? []
-    : [...new Set(interests.flatMap(i => INTEREST_META[i].categories))];
+  const preferredCategories: string[] = [...new Set(interests.flatMap(i => INTEREST_META[i].categories))];
 
   return { interests, toggle, isActive, preferredCategories, loaded };
 }
