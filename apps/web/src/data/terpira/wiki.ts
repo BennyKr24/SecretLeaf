@@ -2,18 +2,18 @@ import { TerpiraArticle, TerpiraCategory, TerpiraDifficulty, TerpiraSource } fro
 import autoSourcesData from "./autoSources.json";
 
 export const categoryLabels: Record<TerpiraCategory, string> = {
-  anbau: "Anbau",
-  genetik: "Genetik und Selektion",
-  chemie: "Cannabis-Chemie",
-  terpene: "Terpene und Aromaprofile",
-  medizin: "Medizin und Evidenz",
-  konsumformen: "Konsumformen",
-  konzentrate: "Hash und Konzentrate",
-  recht: "Recht und Compliance",
-  sicherheit: "Sicherheit und Aufklaerung",
-  qualitaet: "Qualitaet und Laborwerte",
-  markt: "Markt und Beschaffung",
-  werkzeuge: "Tools und Rechner"
+  anbau: "Anbau & Ernte",
+  genetik: "Genetik & Selektion",
+  chemie: "Chemie & Nährstoffe",
+  terpene: "Terpene & Aromen",
+  medizin: "Medizin & Wirkung",
+  konsumformen: "Anwendung & Konsum",
+  konzentrate: "Konzentrate & Extrakte",
+  recht: "Recht & Compliance",
+  sicherheit: "Sicherheit & Aufklärung",
+  qualitaet: "Qualität & Laborwerte",
+  markt: "Markt & Beschaffung",
+  werkzeuge: "Tools & Rechner"
 };
 
 export const difficultyLabels: Record<TerpiraDifficulty, string> = {

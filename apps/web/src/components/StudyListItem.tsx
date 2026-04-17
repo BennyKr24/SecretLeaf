@@ -22,6 +22,12 @@ const DIFFICULTY_LABEL: Record<TerpiraDifficulty, string> = {
   profi: 'Profi',
 };
 
+function evidenceLabel(sourceCount: number): { label: string; cls: string } | null {
+  if (sourceCount >= 5) return { label: 'Hohe Evidenz', cls: 'evidence-high border' };
+  if (sourceCount >= 3) return { label: 'Mittlere Evidenz', cls: 'evidence-med border' };
+  return null;
+}
+
 type Props = {
   article: TerpiraArticle;
   categoryLabel: string;
@@ -31,12 +37,13 @@ type Props = {
 export default function StudyListItem({ article, categoryLabel, snippet }: Props) {
   const sourceCount = article.sourceIds?.length ?? 0;
   const diff = DIFFICULTY_STYLE[article.difficulty];
+  const ev = evidenceLabel(sourceCount);
 
   return (
     <Link
       href={`/studies/${article.slug}` as Route}
       className="group flex items-center gap-4 rounded-xl border border-transparent bg-white px-5 py-4
-        hover:border-slate-200 hover:shadow-sm transition-all duration-150"
+        hover:border-emerald-100 hover:bg-emerald-50/10 hover:shadow-sm transition-all duration-150"
     >
       {/* Icon container */}
       <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-100 bg-slate-50
@@ -56,13 +63,18 @@ export default function StudyListItem({ article, categoryLabel, snippet }: Props
 
       {/* Meta */}
       <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+        {ev && (
+          <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${ev.cls}`}>
+            {ev.label}
+          </span>
+        )}
         <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[11px] font-medium ${diff.pill}`}>
           <span className={`h-1.5 w-1.5 rounded-full ${diff.dot}`} />
           {DIFFICULTY_LABEL[article.difficulty]}
         </span>
         <span className="text-xs text-slate-300 tabular-nums">{article.readMinutes} Min</span>
         {sourceCount > 0 && (
-          <span className="rounded-md bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700">
+          <span className="rounded-md bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 text-[11px] font-bold text-emerald-700">
             {sourceCount}
           </span>
         )}
