@@ -76,7 +76,13 @@ export function useInterests() {
     [interests],
   );
 
-  /** Returns preferred category order based on selected interests */
+  /**
+   * Returns preferred categories derived from selected interests, in the order
+   * interests were toggled (first-selected interest has highest priority).
+   * Duplicate categories across interests are deduplicated while preserving
+   * first-occurrence order, so the resulting feed prioritizes the user's
+   * primary interest area.
+   */
   const preferredCategories: string[] = [...new Set(interests.flatMap(i => INTEREST_META[i].categories))];
 
   return { interests, toggle, isActive, preferredCategories, loaded };

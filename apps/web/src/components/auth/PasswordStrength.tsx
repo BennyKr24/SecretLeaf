@@ -1,6 +1,10 @@
 'use client';
 
-/** Minimum password length used for validation (must match auth page) */
+/**
+ * Minimum password length enforced at signup.
+ * Set to 10 characters to meet NIST SP 800-63B recommendations for memorized secrets
+ * while staying usable for most users without requiring special character complexity.
+ */
 export const MIN_PASSWORD_LENGTH = 10;
 /** Length at which we consider a password "good" in the strength meter */
 const GOOD_PASSWORD_LENGTH = 12;

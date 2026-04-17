@@ -22,6 +22,22 @@ const RESET_REDIRECT_PATH = '/auth/reset';
 
 type Mode = 'login' | 'register' | 'forgot';
 
+/**
+ * Maps raw Supabase auth error strings to safe, user-friendly German messages.
+ *
+ * Security notes:
+ * - Login errors always return the same generic credential message to prevent
+ *   user enumeration (an attacker cannot tell whether the email or the password
+ *   was wrong).
+ * - "Email not confirmed" is shown only after a successful login attempt, i.e.
+ *   the account already exists and the credentials were correct. Revealing this
+ *   is intentional UX — it guides the user to check their inbox without leaking
+ *   anything that wasn't already confirmed by the login result.
+ * - "User already registered" is shown only during registration and reveals that
+ *   the email is taken, which is standard behaviour across SaaS products and
+ *   necessary for a good signup UX.
+ * - All unrecognised errors fall through to a generic message.
+ */
 function sanitizeError(raw: string): string {
   const lower = raw.toLowerCase();
   if (lower.includes('invalid login') || lower.includes('invalid credentials') || lower.includes('wrong password')) {

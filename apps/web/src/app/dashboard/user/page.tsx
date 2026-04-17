@@ -105,6 +105,7 @@ export default function UserDashboardPage() {
   const router = useRouter();
   const [session, setSession] = useState<SessionData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [confirmClearHistory, setConfirmClearHistory] = useState(false);
 
   const { bookmarks } = useBookmarks();
   const { history, clearHistory } = useReadingHistory();
@@ -286,13 +287,33 @@ export default function UserDashboardPage() {
           <div className="mb-4 flex items-center justify-between">
             <SectionHeader title="Kürzlich angesehen" badge={historyArticles.length} />
             {history.length > 0 && (
-              <button
-                type="button"
-                onClick={() => { if (window.confirm('Verlauf löschen?')) clearHistory(); }}
-                className="text-xs text-slate-400 hover:text-red-500 transition-colors"
-              >
-                Verlauf löschen
-              </button>
+              confirmClearHistory ? (
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="text-slate-500">Verlauf wirklich löschen?</span>
+                  <button
+                    type="button"
+                    onClick={() => { clearHistory(); setConfirmClearHistory(false); }}
+                    className="font-bold text-red-600 hover:text-red-700 transition-colors"
+                  >
+                    Ja, löschen
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setConfirmClearHistory(false)}
+                    className="text-slate-400 hover:text-slate-600 transition-colors"
+                  >
+                    Abbrechen
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setConfirmClearHistory(true)}
+                  className="text-xs text-slate-400 hover:text-red-500 transition-colors"
+                >
+                  Verlauf löschen
+                </button>
+              )
             )}
           </div>
           {historyArticles.length === 0 ? (
