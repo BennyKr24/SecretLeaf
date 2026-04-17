@@ -57,6 +57,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <Link href={"/tools" as Route} className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium">
                 Tools
               </Link>
+              <Link href={"/status" as Route} className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium">
+                Status
+              </Link>
             </div>
 
             {/* Spacer */}

@@ -1,190 +1,451 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { loginWithSupabase, registerWithSupabase, saveSession } from "@/lib/auth";
-import { DEMO_SESSION, DEMO_SESSION_PROVIDER } from "@/lib/demoData";
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useRef, useState } from 'react';
+import {
+  loginWithSupabase,
+  registerWithSupabase,
+  saveSession,
+  getSession,
+} from '@/lib/auth';
+import { DEMO_SESSION, DEMO_SESSION_PROVIDER } from '@/lib/demoData';
+import AuthInput from '@/components/auth/AuthInput';
+import PasswordField from '@/components/auth/PasswordField';
+import PasswordStrength from '@/components/auth/PasswordStrength';
+import AuthBenefits from '@/components/auth/AuthBenefits';
+import AuthDivider from '@/components/auth/AuthDivider';
 
-const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
 
-type AuthMode = "login" | "register";
+type Mode = 'login' | 'register' | 'forgot';
 
-export default function AuthPage() {
+function sanitizeError(raw: string): string {
+  const lower = raw.toLowerCase();
+  if (lower.includes('invalid login') || lower.includes('invalid credentials') || lower.includes('wrong password')) {
+    return 'E-Mail oder Passwort ist falsch.';
+  }
+  if (lower.includes('email not confirmed')) {
+    return 'Bitte bestätige zuerst deine E-Mail-Adresse.';
+  }
+  if (lower.includes('user already registered') || lower.includes('already been registered')) {
+    return 'Ein Konto mit dieser E-Mail-Adresse existiert bereits.';
+  }
+  if (lower.includes('password') && lower.includes('short')) {
+    return 'Das Passwort ist zu kurz. Mindestens 10 Zeichen erforderlich.';
+  }
+  if (lower.includes('rate limit')) {
+    return 'Zu viele Versuche. Bitte warte kurz und versuche es erneut.';
+  }
+  return 'Etwas ist schiefgelaufen. Bitte versuche es erneut.';
+}
+
+const trustItems = [
+  { icon: '🔒', label: 'SSL verschlüsselt' },
+  { icon: '🛡', label: 'Datenschutzfreundlich' },
+  { icon: '✉', label: 'Kein Spam' },
+  { icon: '🎁', label: 'Kostenlos starten' },
+];
+
+function Spinner() {
+  return (
+    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+    </svg>
+  );
+}
+
+function ErrorBox({ message }: { message: string }) {
+  return (
+    <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 flex items-start gap-2.5">
+      <svg className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+      </svg>
+      <p className="text-sm text-red-600 leading-relaxed">{message}</p>
+    </div>
+  );
+}
+
+function AuthPageInner() {
   const router = useRouter();
-  const [mode, setMode] = useState<AuthMode>("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const [mode, setMode] = useState<Mode>(() => {
+    const m = searchParams.get('mode');
+    if (m === 'register' || m === 'forgot') return m;
+    return 'login';
+  });
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [confirmError, setConfirmError] = useState<string | null>(null);
+  const [globalError, setGlobalError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
-  const demoLogin = (asProvider = false) => {
-    saveSession(asProvider ? DEMO_SESSION_PROVIDER : DEMO_SESSION);
-    router.push("/dashboard");
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setEmailError(null);
+    setPasswordError(null);
+    setConfirmError(null);
+    setGlobalError(null);
+    setInfo(null);
+    setTimeout(() => emailRef.current?.focus(), 50);
+  }, [mode]);
+
+  useEffect(() => {
+    const session = getSession();
+    if (session) router.replace('/dashboard');
+  }, [router]);
+
+  const switchMode = (next: Mode) => {
+    setMode(next);
+    setPassword('');
+    setConfirmPassword('');
   };
 
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setPending(true);
-    setError(null);
-    setInfo(null);
+  const validateEmail = (v: string): string | null => {
+    if (!v.trim()) return 'E-Mail ist erforderlich.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())) return 'Bitte eine gültige E-Mail-Adresse eingeben.';
+    return null;
+  };
 
+  const validatePassword = (v: string, forRegister: boolean): string | null => {
+    if (!v) return 'Passwort ist erforderlich.';
+    if (forRegister && v.length < 10) return 'Mindestens 10 Zeichen erforderlich.';
+    return null;
+  };
+
+  const demoLogin = (asProvider = false) => {
+    saveSession(asProvider ? DEMO_SESSION_PROVIDER : DEMO_SESSION);
+    router.push('/dashboard');
+  };
+
+  const submitForgot = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const ee = validateEmail(email);
+    if (ee) { setEmailError(ee); return; }
+    setEmailError(null);
+    setPending(true);
+    try {
+      const { getSupabaseBrowserClient } = await import('@/lib/supabaseBrowser');
+      const supabase = getSupabaseBrowserClient();
+      await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
+        redirectTo: `${window.location.origin}/auth/reset`,
+      });
+      setInfo('Wenn ein Konto mit dieser E-Mail existiert, hast du eine Nachricht mit einem Link zum Zurücksetzen erhalten.');
+    } catch {
+      setGlobalError('Etwas ist schiefgelaufen. Bitte versuche es erneut.');
+    } finally {
+      setPending(false);
+    }
+  };
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const ee = validateEmail(email);
+    const pe = validatePassword(password, mode === 'register');
+    const ce = mode === 'register' && password !== confirmPassword
+      ? 'Passwörter stimmen nicht überein.'
+      : null;
+    setEmailError(ee);
+    setPasswordError(pe);
+    setConfirmError(ce);
+    if (ee || pe || ce) return;
+    setGlobalError(null);
+    setInfo(null);
+    setPending(true);
     try {
       const cleanEmail = email.trim().toLowerCase();
-      if (!cleanEmail) {
-        throw new Error("E-Mail ist erforderlich");
-      }
-
-      if (mode === "login") {
+      if (mode === 'login') {
         await loginWithSupabase({ email: cleanEmail, password });
-        router.push("/dashboard");
+        const redirectTo = searchParams.get('next') ?? '/dashboard';
+        router.push(redirectTo);
       } else {
         const session = await registerWithSupabase({ email: cleanEmail, password });
         if (session) {
           saveSession(session);
-          router.push("/dashboard");
+          router.push('/dashboard');
         } else {
-          setInfo("Konto erstellt. Bitte bestätige deine E-Mail-Adresse und melde dich anschließend an.");
-          setMode("login");
+          setInfo('Konto erstellt! Bitte bestätige deine E-Mail-Adresse und melde dich dann an.');
+          switchMode('login');
         }
       }
-    } catch (authError) {
-      setError(authError instanceof Error ? authError.message : "Authentifizierung fehlgeschlagen");
+    } catch (err) {
+      setGlobalError(sanitizeError(err instanceof Error ? err.message : ''));
     } finally {
       setPending(false);
     }
   };
 
   return (
-    <main className="min-h-screen px-6 py-12 flex items-center justify-center">
-      <div className="w-full max-w-md">
-        <div className="mb-8 text-center">
-          <Link href="/" className="inline-block text-2xl font-bold text-[#1f7a4f] hover:text-[#17613f]">
-            SecretLeaf
+    <main className="min-h-screen bg-[#f8fafb] flex items-stretch">
+
+      {/* LEFT: Premium hero (desktop only) */}
+      <div className="hidden lg:flex w-[44%] flex-shrink-0 flex-col justify-between bg-[#071510] px-12 py-14 relative overflow-hidden">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 h-[500px] w-[700px] rounded-full bg-emerald-600/10 blur-[120px]" />
+          <div className="absolute left-0 bottom-1/3 h-[300px] w-[400px] rounded-full bg-teal-700/8 blur-[80px]" />
+        </div>
+        <div className="relative z-10">
+          <Link href="/" className="inline-flex items-center gap-2.5 group mb-14">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-base transition-transform group-hover:scale-110">🌿</span>
+            <span className="text-lg font-bold text-white tracking-tight">SecretLeaf</span>
           </Link>
-          <h1 className="mt-6 text-3xl font-bold text-[#10281e]">
-            {mode === "login" ? "Willkommen zurück" : "Konto erstellen"}
-          </h1>
-          <p className="mt-2 text-sm text-[#4d685a]">
-            Melde dich mit deiner E-Mail-Adresse an.
+          <div className="mb-10">
+            <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-500 mb-3">Cannabis Intelligence Platform</p>
+            <h2 className="text-3xl font-bold text-white leading-tight tracking-tight">
+              Wissen, das<br />
+              <span className="bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">wirklich zählt.</span>
+            </h2>
+            <p className="mt-4 text-sm text-slate-400 leading-relaxed max-w-xs">
+              Evidenzbasiertes Cannabis-Wissen aus peer-reviewed Quellen – jetzt mit persönlichem Konto.
+            </p>
+          </div>
+          <AuthBenefits />
+        </div>
+        <div className="relative z-10 border-t border-white/5 pt-8">
+          <div className="grid grid-cols-2 gap-3">
+            {trustItems.map(t => (
+              <div key={t.label} className="flex items-center gap-2 text-[12px] text-slate-400">
+                <span className="text-emerald-500">{t.icon}</span>
+                {t.label}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* RIGHT: Form panel */}
+      <div className="flex-1 flex flex-col items-center justify-center px-5 py-10 sm:px-10 lg:px-16">
+        {/* Mobile logo */}
+        <div className="lg:hidden mb-8">
+          <Link href="/" className="inline-flex items-center gap-2 group">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-sm transition-transform group-hover:scale-110">🌿</span>
+            <span className="text-[15px] font-bold text-slate-900 tracking-tight">SecretLeaf</span>
+          </Link>
+        </div>
+
+        <div className="w-full max-w-[400px]">
+          {mode === 'forgot' ? (
+            <>
+              <div className="mb-7">
+                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Passwort zurücksetzen</h1>
+                <p className="mt-2 text-sm text-slate-500 leading-relaxed">
+                  Gib deine E-Mail-Adresse ein. Wir schicken dir einen Reset-Link.
+                </p>
+              </div>
+              {info ? (
+                <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-sm text-emerald-700 leading-relaxed">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold mb-1">E-Mail gesendet</p>
+                      <p>{info}</p>
+                      <button type="button" onClick={submitForgot}
+                        className="mt-3 text-xs font-semibold text-emerald-700 underline-offset-2 hover:underline">
+                        Erneut senden
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={submitForgot} className="space-y-5">
+                  <AuthInput
+                    ref={emailRef}
+                    id="forgot-email"
+                    label="E-Mail-Adresse"
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={e => { setEmail(e.target.value); setEmailError(null); }}
+                    onBlur={() => setEmailError(validateEmail(email))}
+                    error={emailError}
+                    placeholder="du@beispiel.de"
+                  />
+                  {globalError && <ErrorBox message={globalError} />}
+                  <button type="submit" disabled={pending}
+                    className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm flex items-center justify-center gap-2">
+                    {pending ? <><Spinner />Senden…</> : 'Reset-Link senden'}
+                  </button>
+                </form>
+              )}
+              <p className="mt-6 text-center text-sm text-slate-500">
+                <button type="button" onClick={() => switchMode('login')}
+                  className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
+                  ← Zurück zum Login
+                </button>
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="mb-6">
+                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+                  {mode === 'login' ? 'Willkommen zurück' : 'Konto erstellen'}
+                </h1>
+                <p className="mt-1.5 text-sm text-slate-500">
+                  {mode === 'login' ? 'Melde dich an, um fortzufahren.' : 'Kostenlos registrieren und loslegen.'}
+                </p>
+              </div>
+
+              {/* Mode tabs */}
+              <div className="mb-6 flex rounded-xl border border-slate-200 bg-slate-50 p-1 gap-1">
+                {(['login', 'register'] as const).map(m => (
+                  <button key={m} type="button" onClick={() => switchMode(m)}
+                    className={`flex-1 rounded-lg py-2 text-sm font-semibold transition-all duration-150 ${
+                      mode === m ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                    }`}>
+                    {m === 'login' ? 'Anmelden' : 'Registrieren'}
+                  </button>
+                ))}
+              </div>
+
+              {info && (
+                <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 flex items-start gap-2.5">
+                  <svg className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="text-sm text-emerald-700 leading-relaxed">{info}</p>
+                </div>
+              )}
+
+              <form onSubmit={submit} noValidate className="space-y-4">
+                <AuthInput
+                  ref={emailRef}
+                  id="auth-email"
+                  label="E-Mail-Adresse"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={e => { setEmail(e.target.value); setEmailError(null); }}
+                  onBlur={() => setEmailError(validateEmail(email))}
+                  error={emailError}
+                  placeholder="du@beispiel.de"
+                />
+
+                <div className="space-y-1.5">
+                  <PasswordField
+                    id="auth-password"
+                    label="Passwort"
+                    autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                    value={password}
+                    onChange={e => { setPassword(e.target.value); setPasswordError(null); }}
+                    onBlur={() => setPasswordError(validatePassword(password, mode === 'register'))}
+                    error={passwordError}
+                    placeholder={mode === 'login' ? '••••••••••' : 'Mindestens 10 Zeichen'}
+                    minLength={mode === 'register' ? 10 : undefined}
+                  />
+                  {mode === 'register' && <PasswordStrength password={password} />}
+                </div>
+
+                {mode === 'register' && (
+                  <PasswordField
+                    id="auth-confirm"
+                    label="Passwort bestätigen"
+                    autoComplete="new-password"
+                    value={confirmPassword}
+                    onChange={e => { setConfirmPassword(e.target.value); setConfirmError(null); }}
+                    onBlur={() => {
+                      if (confirmPassword && confirmPassword !== password) {
+                        setConfirmError('Passwörter stimmen nicht überein.');
+                      } else {
+                        setConfirmError(null);
+                      }
+                    }}
+                    error={confirmError}
+                    placeholder="Passwort wiederholen"
+                  />
+                )}
+
+                {mode === 'login' && (
+                  <div className="flex justify-end">
+                    <button type="button" onClick={() => switchMode('forgot')}
+                      className="text-xs font-medium text-slate-500 hover:text-emerald-600 transition-colors">
+                      Passwort vergessen?
+                    </button>
+                  </div>
+                )}
+
+                {globalError && <ErrorBox message={globalError} />}
+
+                <button type="submit" disabled={pending}
+                  className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-500 active:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm shadow-emerald-900/20 flex items-center justify-center gap-2">
+                  {pending ? (
+                    <><Spinner />{mode === 'login' ? 'Anmelden…' : 'Konto erstellen…'}</>
+                  ) : (
+                    mode === 'login' ? 'Anmelden' : 'Kostenlos registrieren'
+                  )}
+                </button>
+              </form>
+
+              {DEMO_MODE && (
+                <div className="mt-4 space-y-3">
+                  <AuthDivider label="Demo" />
+                  <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+                    <p className="mb-3 text-center text-[11px] font-bold uppercase tracking-wider text-amber-700">Demo-Modus aktiv</p>
+                    <div className="flex gap-2">
+                      <button type="button" onClick={() => demoLogin(false)}
+                        className="flex-1 rounded-lg bg-amber-500 px-3 py-2 text-xs font-bold text-white hover:bg-amber-600 transition-colors">
+                        Als Consumer
+                      </button>
+                      <button type="button" onClick={() => demoLogin(true)}
+                        className="flex-1 rounded-lg bg-amber-500 px-3 py-2 text-xs font-bold text-white hover:bg-amber-600 transition-colors">
+                        Als Provider
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {mode === 'register' && (
+                <div className="lg:hidden mt-8 rounded-2xl border border-emerald-100 bg-emerald-50/60 px-5 py-4">
+                  <p className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-3">Dein Konto beinhaltet</p>
+                  <ul className="space-y-2">
+                    {['Studien speichern & wiederfinden', 'Personalisierte Inhalte', 'Wöchentlicher Wissens-Digest'].map(t => (
+                      <li key={t} className="flex items-center gap-2 text-xs text-emerald-700">
+                        <svg className="w-3.5 h-3.5 flex-shrink-0 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Trust strip (mobile) */}
+          <div className="lg:hidden mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2">
+            {trustItems.map(t => (
+              <span key={t.label} className="flex items-center gap-1.5 text-[11px] text-slate-400">
+                <span className="text-emerald-500">{t.icon}</span>
+                {t.label}
+              </span>
+            ))}
+          </div>
+
+          <p className="mt-6 text-center text-xs text-slate-400">
+            <Link href="/" className="font-medium text-slate-500 hover:text-emerald-600 transition-colors">
+              ← Zur Startseite
+            </Link>
           </p>
         </div>
-
-        <div className="mb-8 flex gap-2 rounded-xl border border-[#d8e8dd] bg-[#edf6f0] p-1">
-          <button
-            type="button"
-            onClick={() => { setMode("login"); setError(null); }}
-            className={`flex-1 py-2 px-4 rounded font-medium transition ${
-              mode === "login"
-                ? "bg-white text-[#1f7a4f] shadow-sm"
-                : "text-[#4d685a] hover:text-[#173126]"
-            }`}
-          >
-            Login
-          </button>
-          <button
-            type="button"
-            onClick={() => { setMode("register"); setError(null); }}
-            className={`flex-1 py-2 px-4 rounded font-medium transition ${
-              mode === "register"
-                ? "bg-white text-[#1f7a4f] shadow-sm"
-                : "text-[#4d685a] hover:text-[#173126]"
-            }`}
-          >
-            Registrieren
-          </button>
-        </div>
-
-        <form onSubmit={submit} className="space-y-5 rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
-          <div>
-            <label htmlFor="email" className="mb-2 block text-sm font-medium text-[#355b49]">
-              E-Mail
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="du@beispiel.de"
-              className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="mb-2 block text-sm font-medium text-[#355b49]">
-              Passwort
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={mode === "register" ? 10 : undefined}
-              placeholder={mode === "login" ? "••••••••••" : "Mindestens 10 Zeichen"}
-              className="w-full rounded-xl border border-[#d8e8dd] bg-white px-4 py-2 outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
-            />
-          </div>
-
-          {mode === "register" && (
-            <div className="rounded-xl border border-[#d8e8dd] bg-[#f6faf7] p-3 text-sm text-[#4d685a]">
-              Neues Konto startet als Consumer. Anbieter-Zugang wird separat freigeschaltet.
-            </div>
-          )}
-
-          {error && (
-            <div className="rounded-xl border border-[#e7c1c1] bg-[#fff4f4] p-3 text-sm text-[#a54b4b]">
-              {error}
-            </div>
-          )}
-
-          {info && (
-            <div className="rounded-xl border border-[#b8dfc2] bg-[#eefaf2] p-3 text-sm text-[#2f6b45]">
-              {info}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={pending}
-            className="w-full rounded-xl bg-[#1f7a4f] px-4 py-2 font-medium text-white transition hover:bg-[#17613f] disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {pending ? 'Einen Moment…' : mode === "login" ? "Anmelden" : "Konto erstellen"}
-          </button>
-        </form>
-
-        {DEMO_MODE && (
-          <div className="mt-6 rounded-2xl border border-[#ead5a3] bg-[#fff8e7] p-4">
-            <p className="mb-3 text-center text-xs font-semibold uppercase tracking-wide text-[#9b7a2c]">
-              Demo-Modus aktiv – API deaktiviert
-            </p>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => demoLogin(false)}
-                className="flex-1 rounded-lg bg-[#c89a3f] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#b4872f]"
-              >
-                Als Consumer anmelden
-              </button>
-              <button
-                type="button"
-                onClick={() => demoLogin(true)}
-                className="flex-1 rounded-lg bg-[#c89a3f] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#b4872f]"
-              >
-                Als Provider anmelden
-              </button>
-            </div>
-          </div>
-        )}
-
-        <p className="mt-6 text-center text-sm text-[#4d685a]">
-          <Link href="/" className="font-medium text-[#1f7a4f] hover:text-[#17613f]">
-            ← Zur Startseite
-          </Link>
-        </p>
       </div>
     </main>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense>
+      <AuthPageInner />
+    </Suspense>
   );
 }
