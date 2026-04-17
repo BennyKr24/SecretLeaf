@@ -1,0 +1,85 @@
+'use client';
+
+import { useCallback, useEffect, useState } from 'react';
+
+const STORAGE_KEY = 'secretleaf.interests';
+
+export type Interest = 'grow' | 'medizin' | 'labor' | 'anfaenger' | 'fortgeschritten';
+
+export const INTEREST_META: Record<Interest, { label: string; icon: string; categories: string[] }> = {
+  grow: {
+    label: 'Grow',
+    icon: '🌱',
+    categories: ['anbau', 'chemie', 'genetik', 'werkzeuge'],
+  },
+  medizin: {
+    label: 'Medizin',
+    icon: '🩺',
+    categories: ['medizin', 'terpene', 'qualitaet', 'sicherheit'],
+  },
+  labor: {
+    label: 'Labor',
+    icon: '🔬',
+    categories: ['qualitaet', 'chemie', 'konzentrate', 'terpene'],
+  },
+  anfaenger: {
+    label: 'Anfänger',
+    icon: '📗',
+    categories: ['sicherheit', 'anbau', 'recht', 'konsumformen'],
+  },
+  fortgeschritten: {
+    label: 'Fortgeschritten',
+    icon: '🧬',
+    categories: ['genetik', 'konzentrate', 'chemie', 'markt'],
+  },
+};
+
+function readInterests(): Interest[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as Interest[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeInterests(interests: Interest[]): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(interests));
+  } catch {
+    // storage full or unavailable
+  }
+}
+
+export function useInterests() {
+  const [interests, setInterests] = useState<Interest[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setInterests(readInterests());
+    setLoaded(true);
+  }, []);
+
+  const toggle = useCallback((interest: Interest) => {
+    setInterests(prev => {
+      const next = prev.includes(interest)
+        ? prev.filter(i => i !== interest)
+        : [...prev, interest];
+      writeInterests(next);
+      return next;
+    });
+  }, []);
+
+  const isActive = useCallback(
+    (interest: Interest) => interests.includes(interest),
+    [interests],
+  );
+
+  /** Returns preferred category order based on selected interests */
+  const preferredCategories: string[] = interests.length === 0
+    ? []
+    : [...new Set(interests.flatMap(i => INTEREST_META[i].categories))];
+
+  return { interests, toggle, isActive, preferredCategories, loaded };
+}

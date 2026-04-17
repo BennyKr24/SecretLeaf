@@ -6,6 +6,8 @@ import { categoryLabels, difficultyLabels, getArticleBySlug, getArticleSources, 
 import WikiReadingProgress from "@/components/WikiReadingProgress";
 import WikiAskBot from "@/components/WikiAskBot";
 import WikiArticleToc from "@/components/WikiArticleToc";
+import HistoryTracker from "@/components/HistoryTracker";
+import BookmarkButton from "@/components/BookmarkButton";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -49,6 +51,8 @@ export default async function WikiArticlePage({ params }: PageProps) {
     <>
       {/* ── Reading Progress Bar ─────────────────────────────── */}
       <WikiReadingProgress slug={article.slug} />
+      {/* ── History Tracker (client-side, silent) ────────────── */}
+      <HistoryTracker slug={article.slug} title={article.title} category={article.category} />
 
       <main className="min-h-screen bg-white">
         <article className="mx-auto max-w-6xl px-4 sm:px-6 py-8 space-y-6">
@@ -85,7 +89,9 @@ export default async function WikiArticlePage({ params }: PageProps) {
                   🔬 {articleSources.length} Quellen
                 </span>
               )}
-              <span className="ml-auto text-xs text-slate-400">Aktualisiert: {article.lastUpdated}</span>
+              <span className="text-xs text-slate-400">Aktualisiert: {article.lastUpdated}</span>
+              {/* Bookmark button */}
+              <BookmarkButton slug={article.slug} size="md" className="ml-auto" />
             </div>
 
             {/* Titel */}

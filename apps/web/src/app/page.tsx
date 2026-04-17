@@ -2,6 +2,15 @@ import Link from "next/link";
 import type { Route } from "next";
 import { wikiArticles, sourceRegister, categoryLabels } from "@/data/terpira/wiki";
 import type { TerpiraArticle, TerpiraCategory } from "@/lib/terpira/types";
+import InterestSelector from "@/components/InterestSelector";
+import {
+  SavedStudiesPanel,
+  ReadingHistoryPanel,
+  PersonalizedCategorySections,
+  RecommendedStudies,
+} from "@/components/PersonalizedSections";
+import WeeklyValueBlocks from "@/components/WeeklyValueBlocks";
+import NewsletterSignup from "@/components/NewsletterSignup";
 
 /* ── Icon & style maps ─────────────────────────────────────────────────── */
 
@@ -22,29 +31,6 @@ const DIFFICULTY_DOT: Record<string, string> = {
   fortgeschritten: 'bg-amber-400',
   profi: 'bg-purple-400',
 };
-
-/* ── Category descriptions ─────────────────────────────────────────────── */
-
-const CATEGORY_DESCRIPTIONS: Partial<Record<TerpiraCategory, string>> = {
-  anbau:         'Alles rund um Anbau, Pflege und Ernte – von der Keimung bis zur Trocknung.',
-  genetik:       'Genetik, Züchtung und Sortenwahl für gezielte Ergebnisse.',
-  chemie:        'Chemische Grundlagen, Nährstoffe und Substrate für gesundes Wachstum.',
-  terpene:       'Terpenprofile, Aromen und deren Einfluss auf Wirkung und Geschmack.',
-  medizin:       'Evidenzbasierte Erkenntnisse zu medizinischen Anwendungen.',
-  konsumformen:  'Methoden und Formen der Anwendung im Überblick.',
-  konzentrate:   'Extraktion, Verarbeitung und Qualität von Konzentraten.',
-  recht:         'Rechtliche Rahmenbedingungen und Compliance-Anforderungen.',
-  sicherheit:    'Sicherheitshinweise, Aufklärung und verantwortungsvoller Umgang.',
-  qualitaet:     'Laboranalysen, Qualitätskontrolle und Reinheitsprüfungen.',
-  markt:         'Marktüberblick, Beschaffung und aktuelle Preisentwicklungen.',
-  werkzeuge:     'Praktische Rechner und Werkzeuge für den Alltag.',
-};
-
-/* ── Curated section order ─────────────────────────────────────────────── */
-
-const HOMEPAGE_SECTIONS: TerpiraCategory[] = [
-  'anbau', 'chemie', 'sicherheit', 'qualitaet', 'markt',
-];
 
 /* ── Evidence level helper ─────────────────────────────────────────────── */
 
@@ -253,6 +239,29 @@ export default async function LandingPage() {
   const highEvidenceCount = wikiArticles.filter(a => (a.sourceIds?.length ?? 0) >= 5).length;
   const latestDate = [...wikiArticles].sort((a, b) => b.lastUpdated.localeCompare(a.lastUpdated))[0]?.lastUpdated ?? '';
 
+  /* Weekly value blocks */
+  /* "Diese Woche wichtig" – highest evidence across all categories */
+  const wochenwichtig = [...wikiArticles]
+    .sort((a, b) => (b.sourceIds?.length ?? 0) - (a.sourceIds?.length ?? 0))
+    .slice(0, 4);
+
+  /* "Neue Grow-Erkenntnisse" – latest anbau + chemie articles */
+  const growErkenntnisse = [...wikiArticles]
+    .filter(a => a.category === 'anbau' || a.category === 'chemie')
+    .sort((a, b) => b.lastUpdated.localeCompare(a.lastUpdated))
+    .slice(0, 4);
+
+  /* "Trends im Cannabis-Anbau" – genetik + markt + konzentrate */
+  const trendArticles = [...wikiArticles]
+    .filter(a => ['genetik', 'markt', 'konzentrate', 'terpene'].includes(a.category))
+    .sort((a, b) => (b.sourceIds?.length ?? 0) - (a.sourceIds?.length ?? 0))
+    .slice(0, 4);
+
+  /* Social proof: "Beliebt bei Growern" – anbau articles with highest source count */
+  const beliebtBeiGrowern = [...wikiArticles]
+    .sort((a, b) => (b.sourceIds?.length ?? 0) - (a.sourceIds?.length ?? 0))
+    .slice(0, 8);
+
   return (
     <main className="min-h-screen">
 
@@ -327,6 +336,11 @@ export default async function LandingPage() {
             </Link>
           </div>
 
+          {/* Interest selector */}
+          <div className="mt-10 pb-4 border-t border-white/5 pt-8">
+            <InterestSelector />
+          </div>
+
           {/* Authority stats */}
           <div className="mt-14 flex flex-wrap justify-center gap-10 border-t border-white/5 pt-10">
             {[
@@ -367,6 +381,13 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          PERSONALIZED – Saved studies, history, recommendations
+          ═══════════════════════════════════════════════════════════ */}
+      <SavedStudiesPanel allArticles={wikiArticles} />
+      <RecommendedStudies allArticles={wikiArticles} />
+      <ReadingHistoryPanel allArticles={wikiArticles} />
 
       {/* ═══════════════════════════════════════════════════════════
           DAILY RETURN – Trending diese Woche
@@ -454,6 +475,16 @@ export default async function LandingPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
+          WEEKLY VALUE BLOCKS + SOCIAL PROOF
+          ═══════════════════════════════════════════════════════════ */}
+      <WeeklyValueBlocks
+        wichtigArticles={wochenwichtig}
+        growArticles={growErkenntnisse}
+        trendsArticles={trendArticles}
+        meistGelesenArticles={beliebtBeiGrowern}
+      />
+
+      {/* ═══════════════════════════════════════════════════════════
           TOP STUDIES – Best-sourced medium cards
           ═══════════════════════════════════════════════════════════ */}
       <section className="mx-auto max-w-6xl px-5 py-16">
@@ -518,120 +549,48 @@ export default async function LandingPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
-          CATEGORY SECTIONS
+          CATEGORY SECTIONS – Personalized order
           ═══════════════════════════════════════════════════════════ */}
-      <section className="border-t border-slate-100 bg-white">
-        <div className="mx-auto max-w-6xl px-5 py-16">
-          <div className="mb-10">
+      <section className="border-t border-slate-100 bg-white pb-4">
+        <div className="mx-auto max-w-6xl px-5 pt-14">
+          <div className="mb-7">
             <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Themengebiete</p>
             <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">Nach Kategorie entdecken</h2>
             <p className="mt-2 text-sm text-slate-500 max-w-2xl">
               Jede Kategorie enthält kuratierte Artikel – sortiert nach Evidenzstärke und Relevanz.
             </p>
           </div>
+        </div>
+        <PersonalizedCategorySections
+          categoryArticles={categoryArticles}
+          allCategories={activeCategories}
+        />
 
-          <div className="space-y-10">
-            {HOMEPAGE_SECTIONS
-              .filter(cat => (categoryArticles[cat]?.length ?? 0) > 0)
-              .map(cat => {
-                const articles = categoryArticles[cat] ?? [];
-                const visibleArticles = articles.slice(0, 3);
-                const remainingCount = Math.max(articles.length - 3, 0);
-
-                return (
-                  <div key={cat} className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-                    {/* Section header */}
-                    <div className="border-b border-slate-100 bg-gradient-to-r from-slate-50/80 to-white px-6 py-5">
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-100 text-xl shadow-sm">
-                          {CATEGORY_ICONS[cat] ?? '📄'}
-                        </span>
-                        <div className="flex-1">
-                          <h3 className="text-base font-bold text-slate-900">{categoryLabels[cat]}</h3>
-                          {CATEGORY_DESCRIPTIONS[cat] && (
-                            <p className="mt-0.5 text-xs text-slate-400 leading-relaxed">{CATEGORY_DESCRIPTIONS[cat]}</p>
-                          )}
-                        </div>
-                        <span className="rounded-full bg-emerald-50 border border-emerald-100 px-2.5 py-1 text-[11px] font-bold text-emerald-700">
-                          {articles.length} Artikel
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Top articles grid */}
-                    <div className="grid gap-px bg-slate-100 sm:grid-cols-3">
-                      {visibleArticles.map(article => {
-                        const srcCount = article.sourceIds?.length ?? 0;
-                        return (
-                          <Link
-                            key={article.slug}
-                            href={`/studies/${article.slug}` as Route}
-                            className="group flex flex-col gap-2 bg-white p-5
-                              hover:bg-emerald-50/30 transition-colors duration-150"
-                          >
-                            <h4 className="text-[13px] font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug line-clamp-2">
-                              {article.title}
-                            </h4>
-                            <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">{article.summary}</p>
-                            <div className="mt-auto flex items-center gap-2 text-[11px] text-slate-400 pt-2">
-                              <span className={`h-1.5 w-1.5 rounded-full ${DIFFICULTY_DOT[article.difficulty] ?? 'bg-slate-300'}`} />
-                              <span>{DIFFICULTY_LABEL[article.difficulty]}</span>
-                              {srcCount > 0 && (
-                                <>
-                                  <span className="text-slate-200">·</span>
-                                  <span className="text-emerald-600 font-semibold">{srcCount} Quellen</span>
-                                </>
-                              )}
-                            </div>
-                          </Link>
-                        );
-                      })}
-                    </div>
-
-                    {remainingCount > 0 && (
-                      <div className="border-t border-slate-100 px-6 py-3 bg-slate-50/50">
-                        <Link
-                          href={`/category/${cat}` as Route}
-                          className="group inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 transition-colors"
-                        >
-                          {remainingCount} weitere Artikel anzeigen
-                          <svg className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                          </svg>
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-          </div>
-
-          {/* All categories grid */}
-          <div className="mt-12">
-            <h3 className="mb-5 text-lg font-bold text-slate-900">Alle Themengebiete</h3>
-            <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-              {activeCategories.map((cat) => (
-                <Link
-                  key={cat}
-                  href={`/category/${cat}` as Route}
-                  className="card-lift group flex items-center gap-3.5 rounded-xl border border-slate-200 bg-white px-4 py-3.5
-                    hover:border-emerald-200 hover:shadow-sm hover:shadow-emerald-50"
-                >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 border border-slate-100 text-lg flex-shrink-0 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors">
-                    {CATEGORY_ICONS[cat] ?? '📄'}
-                  </span>
-                  <div className="flex-1">
-                    <h4 className="text-sm font-semibold text-slate-800 group-hover:text-emerald-700 transition-colors">
-                      {categoryLabels[cat]}
-                    </h4>
-                    <p className="text-xs text-slate-400">{categoryCounts[cat]} Artikel</p>
-                  </div>
-                  <svg className="w-4 h-4 text-slate-200 group-hover:text-emerald-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              ))}
-            </div>
+        {/* All categories grid */}
+        <div className="mx-auto max-w-6xl px-5 pb-14">
+          <h3 className="mb-5 mt-8 text-lg font-bold text-slate-900">Alle Themengebiete</h3>
+          <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+            {activeCategories.map((cat) => (
+              <Link
+                key={cat}
+                href={`/category/${cat}` as Route}
+                className="card-lift group flex items-center gap-3.5 rounded-xl border border-slate-200 bg-white px-4 py-3.5
+                  hover:border-emerald-200 hover:shadow-sm hover:shadow-emerald-50"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 border border-slate-100 text-lg flex-shrink-0 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors">
+                  {CATEGORY_ICONS[cat] ?? '📄'}
+                </span>
+                <div className="flex-1">
+                  <h4 className="text-sm font-semibold text-slate-800 group-hover:text-emerald-700 transition-colors">
+                    {categoryLabels[cat]}
+                  </h4>
+                  <p className="text-xs text-slate-400">{categoryCounts[cat]} Artikel</p>
+                </div>
+                <svg className="w-4 h-4 text-slate-200 group-hover:text-emerald-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -661,6 +620,11 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          NEWSLETTER – Weekly digest signup
+          ═══════════════════════════════════════════════════════════ */}
+      <NewsletterSignup />
 
       {/* ═══════════════════════════════════════════════════════════
           AUTHORITY SECTION – Platform credibility
