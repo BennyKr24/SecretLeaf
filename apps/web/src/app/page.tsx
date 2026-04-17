@@ -647,7 +647,7 @@ export default async function LandingPage() {
               {
                 icon: '🔬',
                 title: 'Peer-reviewed Quellen',
-                text: `Jeder Artikel verweist auf ${Math.round(sourceCount / articleCount)} Quellen im Schnitt – aus peer-reviewed Fachzeitschriften und wissenschaftlichen Datenbanken.`,
+                text: `Jeder Artikel verweist auf ${articleCount > 0 ? Math.round(sourceCount / articleCount) : 0} Quellen im Schnitt – aus peer-reviewed Fachzeitschriften und wissenschaftlichen Datenbanken.`,
               },
               {
                 icon: '✓',

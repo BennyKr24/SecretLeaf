@@ -12,11 +12,13 @@ import {
 import { DEMO_SESSION, DEMO_SESSION_PROVIDER } from '@/lib/demoData';
 import AuthInput from '@/components/auth/AuthInput';
 import PasswordField from '@/components/auth/PasswordField';
-import PasswordStrength from '@/components/auth/PasswordStrength';
+import PasswordStrength, { MIN_PASSWORD_LENGTH } from '@/components/auth/PasswordStrength';
 import AuthBenefits from '@/components/auth/AuthBenefits';
 import AuthDivider from '@/components/auth/AuthDivider';
 
 const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+/** Path users are redirected to after password reset email is sent */
+const RESET_REDIRECT_PATH = '/auth/reset';
 
 type Mode = 'login' | 'register' | 'forgot';
 
@@ -116,7 +118,7 @@ function AuthPageInner() {
 
   const validatePassword = (v: string, forRegister: boolean): string | null => {
     if (!v) return 'Passwort ist erforderlich.';
-    if (forRegister && v.length < 10) return 'Mindestens 10 Zeichen erforderlich.';
+    if (forRegister && v.length < MIN_PASSWORD_LENGTH) return `Mindestens ${MIN_PASSWORD_LENGTH} Zeichen erforderlich.`;
     return null;
   };
 
@@ -135,7 +137,7 @@ function AuthPageInner() {
       const { getSupabaseBrowserClient } = await import('@/lib/supabaseBrowser');
       const supabase = getSupabaseBrowserClient();
       await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
-        redirectTo: `${window.location.origin}/auth/reset`,
+        redirectTo: `${window.location.origin}${RESET_REDIRECT_PATH}`,
       });
       setInfo('Wenn ein Konto mit dieser E-Mail existiert, hast du eine Nachricht mit einem Link zum Zurücksetzen erhalten.');
     } catch {
@@ -339,7 +341,7 @@ function AuthPageInner() {
                     onBlur={() => setPasswordError(validatePassword(password, mode === 'register'))}
                     error={passwordError}
                     placeholder={mode === 'login' ? '••••••••••' : 'Mindestens 10 Zeichen'}
-                    minLength={mode === 'register' ? 10 : undefined}
+                    minLength={mode === 'register' ? MIN_PASSWORD_LENGTH : undefined}
                   />
                   {mode === 'register' && <PasswordStrength password={password} />}
                 </div>

@@ -153,7 +153,7 @@ function ReadingHistoryPanel({ allArticles }: { allArticles: TerpiraArticle[] })
                   <p className="text-xs text-slate-400 line-clamp-1 mt-0.5">{categoryLabels[article.category]}</p>
                 </div>
                 {sourceCount > 0 && (
-                  <span className="hidden sm:block rounded-md bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-600 flex-shrink-0">
+                  <span className="hidden sm:inline-flex items-center flex-shrink-0 rounded-md bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-600">
                     {sourceCount}
                   </span>
                 )}

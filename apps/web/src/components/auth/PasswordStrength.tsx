@@ -1,5 +1,10 @@
 'use client';
 
+/** Minimum password length used for validation (must match auth page) */
+export const MIN_PASSWORD_LENGTH = 10;
+/** Length at which we consider a password "good" in the strength meter */
+const GOOD_PASSWORD_LENGTH = 12;
+
 type Props = {
   password: string;
 };
@@ -10,8 +15,8 @@ function getLevel(pw: string): Level {
   if (pw.length === 0) return { label: '', color: 'bg-slate-200', bg: 'bg-slate-100', width: 'w-0' };
 
   let score = 0;
-  if (pw.length >= 8)  score++;
-  if (pw.length >= 12) score++;
+  if (pw.length >= MIN_PASSWORD_LENGTH) score++;
+  if (pw.length >= GOOD_PASSWORD_LENGTH) score++;
   if (/[A-Z]/.test(pw)) score++;
   if (/[0-9]/.test(pw)) score++;
   if (/[^A-Za-z0-9]/.test(pw)) score++;
