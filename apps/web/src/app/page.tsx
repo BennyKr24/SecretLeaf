@@ -379,7 +379,7 @@ export default async function LandingPage() {
                 🔥 Diese Woche
               </span>
               <h2 className="text-2xl font-bold tracking-tight text-slate-900">Trending</h2>
-              <p className="mt-1 text-sm text-slate-400">Meistgelegte Artikel – nach Evidenzstärke</p>
+              <p className="mt-1 text-sm text-slate-400">Meistgelesene Artikel – nach Evidenzstärke</p>
             </div>
             <Link href={"/studies" as Route} className="group flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-emerald-600 transition-colors">
               Alle ansehen
