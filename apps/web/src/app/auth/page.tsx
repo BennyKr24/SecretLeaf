@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import type { Route } from 'next';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import {
   loginWithSupabase,
@@ -21,6 +22,14 @@ const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
 const RESET_REDIRECT_PATH = '/auth/reset';
 
 type Mode = 'login' | 'register' | 'forgot';
+
+function getSafeRedirect(target: string | null): Route {
+  if (!target || !target.startsWith('/')) {
+    return '/dashboard/user';
+  }
+
+  return target as Route;
+}
 
 /**
  * Maps raw Supabase auth error strings to safe, user-friendly German messages.
@@ -181,7 +190,7 @@ function AuthPageInner() {
       const cleanEmail = email.trim().toLowerCase();
       if (mode === 'login') {
         await loginWithSupabase({ email: cleanEmail, password });
-        const redirectTo = searchParams.get('next') ?? '/dashboard/user';
+        const redirectTo = getSafeRedirect(searchParams.get('next'));
         router.push(redirectTo);
       } else {
         const session = await registerWithSupabase({ email: cleanEmail, password });

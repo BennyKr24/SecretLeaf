@@ -8,6 +8,7 @@ import WikiAskBot from "@/components/WikiAskBot";
 import WikiArticleToc from "@/components/WikiArticleToc";
 import HistoryTracker from "@/components/HistoryTracker";
 import BookmarkButton from "@/components/BookmarkButton";
+import CommunitySignals from '@/components/CommunitySignals';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -50,7 +51,12 @@ export default async function WikiArticlePage({ params }: PageProps) {
   return (
     <>
       {/* ── Reading Progress Bar ─────────────────────────────── */}
-      <WikiReadingProgress slug={article.slug} />
+      <WikiReadingProgress
+        slug={article.slug}
+        title={article.title}
+        category={article.category}
+        readMinutes={article.readMinutes}
+      />
       {/* ── History Tracker (client-side, silent) ────────────── */}
       <HistoryTracker slug={article.slug} title={article.title} category={article.category} />
 
@@ -92,6 +98,10 @@ export default async function WikiArticlePage({ params }: PageProps) {
               <span className="text-xs text-slate-400">Aktualisiert: {article.lastUpdated}</span>
               {/* Bookmark button */}
               <BookmarkButton slug={article.slug} size="md" className="ml-auto" />
+            </div>
+
+            <div className="mt-3">
+              <CommunitySignals article={article} allArticles={wikiArticles} />
             </div>
 
             {/* Titel */}

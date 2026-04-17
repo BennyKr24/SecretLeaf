@@ -3,6 +3,9 @@
 import Link from 'next/link';
 import type { Route } from 'next';
 import type { TerpiraArticle, TerpiraDifficulty } from '@/lib/terpira/types';
+import { wikiArticles } from '@/data/terpira/wiki';
+import CommunitySignals from './CommunitySignals';
+import { useReadingProgress } from '@/hooks/useReadingProgress';
 
 const CATEGORY_ICONS: Record<string, string> = {
   anbau: '🌱', genetik: '🧬', chemie: '⚗️', terpene: '🌺',
@@ -38,6 +41,8 @@ export default function StudyListItem({ article, categoryLabel, snippet }: Props
   const sourceCount = article.sourceIds?.length ?? 0;
   const diff = DIFFICULTY_STYLE[article.difficulty];
   const ev = evidenceLabel(sourceCount);
+  const { getProgress } = useReadingProgress();
+  const progress = getProgress(article.slug);
 
   return (
     <Link
@@ -59,6 +64,14 @@ export default function StudyListItem({ article, categoryLabel, snippet }: Props
         <p className="mt-0.5 text-xs text-slate-400 line-clamp-1 leading-relaxed">
           {snippet ?? article.summary}
         </p>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          <CommunitySignals article={article} allArticles={wikiArticles} limit={2} compact />
+          {progress && progress.progress >= 10 && progress.progress < 95 && (
+            <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
+              {progress.progress}% gelesen
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Meta */}
