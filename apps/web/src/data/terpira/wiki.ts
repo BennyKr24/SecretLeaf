@@ -4,13 +4,13 @@ import autoSourcesData from "./autoSources.json";
 export const categoryLabels: Record<TerpiraCategory, string> = {
   anbau: "Anbau & Ernte",
   genetik: "Genetik & Selektion",
-  chemie: "Nährstoffe & Wachstum",
+  chemie: "Chemie & Nährstoffe",
   terpene: "Terpene & Aromen",
   medizin: "Medizin & Wirkung",
   konsumformen: "Anwendung & Konsum",
   konzentrate: "Konzentrate & Extrakte",
   recht: "Recht & Compliance",
-  sicherheit: "Sicherheit & Umgebung",
+  sicherheit: "Sicherheit & Aufklärung",
   qualitaet: "Qualität & Laborwerte",
   markt: "Markt & Beschaffung",
   werkzeuge: "Tools & Rechner"
