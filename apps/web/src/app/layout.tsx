@@ -69,10 +69,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <SearchBar />
 
             <Link
-              href={"/dashboard" as Route}
+              href={"/dashboard/user" as Route}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-[13.5px] font-medium text-slate-500 hover:text-slate-900 rounded-md hover:bg-slate-100 transition-colors duration-150"
             >
-              Dashboard
+              Mein Bereich
             </Link>
 
             <Link

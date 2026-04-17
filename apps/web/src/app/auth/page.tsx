@@ -101,7 +101,7 @@ function AuthPageInner() {
 
   useEffect(() => {
     const session = getSession();
-    if (session) router.replace('/dashboard');
+    if (session) router.replace('/dashboard/user');
   }, [router]);
 
   const switchMode = (next: Mode) => {
@@ -165,13 +165,13 @@ function AuthPageInner() {
       const cleanEmail = email.trim().toLowerCase();
       if (mode === 'login') {
         await loginWithSupabase({ email: cleanEmail, password });
-        const redirectTo = searchParams.get('next') ?? '/dashboard';
+        const redirectTo = searchParams.get('next') ?? '/dashboard/user';
         router.push(redirectTo);
       } else {
         const session = await registerWithSupabase({ email: cleanEmail, password });
         if (session) {
           saveSession(session);
-          router.push('/dashboard');
+          router.push('/dashboard/onboarding');
         } else {
           setInfo('Konto erstellt! Bitte bestätige deine E-Mail-Adresse und melde dich dann an.');
           switchMode('login');
