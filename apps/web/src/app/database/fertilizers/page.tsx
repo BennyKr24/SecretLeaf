@@ -662,431 +662,493 @@ function FertilizersPageInner() {
     useCase !== 'balanced' ? { key: 'useCase', label: `Use Case: ${useCaseLabelMap[useCase]}` } : null
   ].filter(Boolean) as Array<{ key: string; label: string }>;
 
+  const hasActiveFilters =
+    searchQuery ||
+    selectedPhase !== 'all' ||
+    selectedBase !== 'all' ||
+    selectedFormat !== 'all' ||
+    selectedApplication !== 'all' ||
+    selectedBrand !== 'all' ||
+    selectedCost !== 'all' ||
+    useCase !== 'balanced';
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <Link href={"/database" as Route} className="text-emerald-600 hover:text-emerald-700 text-sm font-medium mb-4 inline-flex items-center gap-2">
-            ← Katalog-Übersicht
-          </Link>
-          <div className="mb-3 flex flex-wrap items-center gap-4">
-            <Link href={'/tools/plans' as Route} className="text-sm font-medium text-emerald-700 hover:text-emerald-800 underline-offset-2 hover:underline">
-              Tool: Düngerpläne
+    <main className="min-h-screen bg-white">
+
+      {/* ── Sticky filter bar ──────────────────────────────────────── */}
+      <div className="sticky top-[60px] z-20 border-b border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div className="mx-auto max-w-7xl px-4 py-3">
+
+          {/* Row 1: breadcrumb + search */}
+          <div className="flex flex-wrap items-center gap-3">
+            <Link href={"/database" as Route} className="shrink-0 text-xs font-medium text-slate-400 hover:text-emerald-600">
+              ← Katalog
             </Link>
-            <Link href={'/database' as Route} className="text-sm font-medium text-slate-700 hover:text-slate-900 underline-offset-2 hover:underline">
-              Database: Lexika & Quellen
-            </Link>
-          </div>
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">🌿 Dünger-Katalog</h1>
-          <p className="text-lg text-slate-600">{fertilizerCatalog.length} professionelle Dünger für alle Phasen und Budgets</p>
-          <p className="text-sm text-slate-500 mt-1">Zeige {totalVisible} Treffer, Seite {safePage} von {totalPagesVisible}</p>
-          <p className="text-sm mt-1 text-emerald-700 font-medium">
-            Marktabdeckung: {fertilizerCoverageStats.coveredProducts} von ca. {fertilizerCoverageStats.trackedMarketEstimate} Linien ({fertilizerCoverageStats.coveragePercent}%)
-          </p>
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="text-xs text-slate-500">Schnellwahl Marken:</span>
-            {topBrands.map((brand) => (
-              <button key={brand} onClick={() => setSelectedBrand(brand)} className="px-2.5 py-1 rounded-full text-xs border border-slate-300 bg-white hover:border-emerald-300">
-                {brand}
-              </button>
-            ))}
-          </div>
-        </div>
+            <div className="h-4 w-px bg-slate-200" />
+            <div className="relative min-w-[180px] flex-1 max-w-sm">
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Suchen… (Taste /)"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-3 pr-8 text-sm focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                >
+                  ×
+                </button>
+              )}
+            </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-emerald-500"><div className="text-sm text-slate-600">Gesamt</div><div className="text-3xl font-bold text-slate-900">{totalVisible}</div></div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-blue-500"><div className="text-sm text-slate-600">Marken</div><div className="text-3xl font-bold text-slate-900">{new Set(sortedVisible.map((f) => f.brand)).size}</div></div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-amber-500"><div className="text-sm text-slate-600">Budget</div><div className="text-3xl font-bold text-slate-900">{sortedVisible.filter((f) => f.cost === 'budget').length}</div></div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-orange-500"><div className="text-sm text-slate-600">Organisch</div><div className="text-3xl font-bold text-slate-900">{sortedVisible.filter((f) => f.base === 'organic' || f.base === 'bio-organic').length}</div></div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-rose-500"><div className="text-sm text-slate-600">Premium</div><div className="text-3xl font-bold text-slate-900">{sortedVisible.filter((f) => f.cost === 'premium').length}</div></div>
-          <div className="bg-white rounded-lg shadow p-4 border-l-4 border-cyan-500">
-            <div className="text-sm text-slate-600">Preisdaten</div>
-            <div className="text-3xl font-bold text-slate-900">{pricedProducts}</div>
-            <div className="text-xs text-slate-500">von {totalVisible} Produkten</div>
+            {/* Quick phase pills */}
+            <div className="hidden sm:flex items-center gap-1.5">
+              {(['all', 'veg', 'flower', 'universal'] as const).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setSelectedPhase(p)}
+                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+                    selectedPhase === p
+                      ? 'border-emerald-500 bg-emerald-500 text-white'
+                      : 'border-slate-200 bg-white text-slate-500 hover:border-emerald-300 hover:text-emerald-700'
+                  }`}
+                >
+                  {p === 'all' ? 'Alle Phasen' : phaseLabelMap[p]}
+                </button>
+              ))}
+            </div>
+
+            {/* Quick cost pills */}
+            <div className="hidden md:flex items-center gap-1.5">
+              {(['all', 'budget', 'mid', 'premium'] as const).map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setSelectedCost(c === 'all' ? 'all' : c)}
+                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+                    selectedCost === c
+                      ? 'border-slate-700 bg-slate-700 text-white'
+                      : 'border-slate-200 bg-white text-slate-500 hover:border-slate-400'
+                  }`}
+                >
+                  {c === 'all' ? 'Alle Preise' : costLabelMap[c]}
+                </button>
+              ))}
+            </div>
+
+            <div className="ml-auto flex items-center gap-2 shrink-0">
+              <span className="hidden sm:inline text-xs text-slate-400 tabular-nums">
+                {totalVisible} Treffer
+              </span>
+              {hasActiveFilters && (
+                <button
+                  onClick={() => {
+                    setSearchQuery(''); setSelectedPhase('all'); setSelectedBase('all');
+                    setSelectedFormat('all'); setSelectedApplication('all'); setSelectedBrand('all');
+                    setSelectedCost('all'); setUseCase('balanced'); setSortBy('best-match');
+                  }}
+                  className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-500 hover:border-rose-300 hover:text-rose-600"
+                >
+                  Filter löschen ×
+                </button>
+              )}
+              <select
+                value={viewMode}
+                onChange={(e) => setViewMode(e.target.value as ViewMode)}
+                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+              >
+                <option value="grid">⊞ Kacheln</option>
+                <option value="list">☰ Liste</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <div className="mb-6 rounded-xl border border-cyan-200 bg-cyan-50 p-3 text-sm text-cyan-900">
-          Preisquelle: {fertilizerPriceSnapshot.source} · Letztes Update: {fertilizerPriceSnapshot.updatedAt ? new Date(fertilizerPriceSnapshot.updatedAt).toLocaleString('de-DE') : 'noch nicht synchronisiert'}
-        </div>
-
-        <div className="mb-6 rounded-xl border border-cyan-200 bg-white p-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-cyan-700">Preisfilter</p>
-          <div className="mt-2 grid gap-3 md:grid-cols-[220px_auto_auto]">
+          {/* Row 2: More filters (collapsible via checkbox trick / always visible compact row) */}
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <select
+              value={selectedBase}
+              onChange={(e) => setSelectedBase(e.target.value as FertilizerBase | 'all')}
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+            >
+              <option value="all">Alle Typen</option>
+              <option value="mineral">Mineral</option>
+              <option value="organic">Organisch</option>
+              <option value="bio-organic">Bio-Organisch</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+            <select
+              value={selectedFormat}
+              onChange={(e) => setSelectedFormat(e.target.value as FertilizerFormat | 'all')}
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+            >
+              <option value="all">Alle Formate</option>
+              <option value="liquid">Flüssig</option>
+              <option value="powder">Pulver</option>
+              <option value="pellets">Pellets</option>
+              <option value="granules">Granulat</option>
+            </select>
+            <select
+              value={selectedApplication}
+              onChange={(e) => setSelectedApplication(e.target.value as FertilizerApplication | 'all')}
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+            >
+              <option value="all">Wasser / Erde</option>
+              <option value="water">Nur Wasser</option>
+              <option value="soil">Nur Erde</option>
+              <option value="both">Wasser + Erde</option>
+            </select>
+            <select
+              value={selectedBrand}
+              onChange={(e) => setSelectedBrand(e.target.value)}
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+            >
+              <option value="all">Alle Marken</option>
+              {brands.map((b) => <option key={b} value={b}>{b}</option>)}
+            </select>
+            <select
+              value={useCase}
+              onChange={(e) => setUseCase(e.target.value as UseCase)}
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+            >
+              <option value="balanced">Verwendung: Alle</option>
+              <option value="hydro-performance">Hydro / Coco</option>
+              <option value="soil-organic">Erde & Bio</option>
+              <option value="budget-smart">Budget Klar</option>
+              <option value="max-yield">Max. Ertrag</option>
+            </select>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as SortField)}
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+            >
+              <option value="best-match">Sortierung: Beste Treffer</option>
+              <option value="name">A – Z</option>
+              <option value="cost">Preis aufst.</option>
+              <option value="npk-total">NPK-Gesamt</option>
+              <option value="ec-min">EC-Min</option>
+            </select>
             <select
               value={priceRegion}
               onChange={(e) => setPriceRegion(e.target.value as 'all' | 'DE' | 'AT' | 'CH' | 'EU' | 'OTHER')}
-              className="rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
             >
-              <option value="all">Region: Alle</option>
+              <option value="all">Preise: Alle Länder</option>
               <option value="DE">Deutschland</option>
               <option value="AT">Österreich</option>
               <option value="CH">Schweiz</option>
               <option value="EU">EU</option>
-              <option value="OTHER">Sonstige</option>
             </select>
-            <label className="inline-flex items-center gap-2 text-sm text-slate-700">
+            <label className="inline-flex items-center gap-1.5 text-xs text-slate-500 cursor-pointer">
               <input
                 type="checkbox"
                 checked={priceOnlyAvailable}
                 onChange={(e) => setPriceOnlyAvailable(e.target.checked)}
-                className="h-4 w-4 rounded border-slate-300"
+                className="h-3.5 w-3.5 rounded border-slate-300"
               />
-              Nur verfügbare Angebote
-            </label>
-            <label className="inline-flex items-center gap-2 text-sm text-slate-700">
-              <input
-                type="checkbox"
-                checked={priceOnlyWithShipping}
-                onChange={(e) => setPriceOnlyWithShipping(e.target.checked)}
-                className="h-4 w-4 rounded border-slate-300"
-              />
-              Nur Angebote mit Versandangabe
+              Nur verfügbar
             </label>
           </div>
 
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <label className="inline-flex items-center gap-2 text-sm text-slate-700">
-              <input
-                type="checkbox"
-                checked={sortByCheapestEffective}
-                onChange={(e) => setSortByCheapestEffective(e.target.checked)}
-                className="h-4 w-4 rounded border-slate-300"
-              />
-              Produkte nach günstigstem Endpreis sortieren
-            </label>
-          </div>
-
-          <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-600">Händler ausschließen</p>
-              {excludedShops.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setExcludedShops([])}
-                  className="text-xs font-semibold text-rose-700 hover:text-rose-800"
-                >
-                  Ausschlüsse zurücksetzen
-                </button>
-              )}
-            </div>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {availableShops.map(({ shop, count }) => {
-                const excluded = excludedShops.includes(shop);
-                return (
-                  <button
-                    key={`shop-${shop}`}
-                    type="button"
-                    onClick={() => toggleExcludedShop(shop)}
-                    className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${
-                      excluded
-                        ? 'border-rose-300 bg-rose-50 text-rose-700'
-                        : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-300'
-                    }`}
-                  >
-                    {shop} ({count})
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        <div className="mb-8 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700">Neu</p>
-              <p className="text-base font-bold text-emerald-900">Unterkategorie Düngerpläne</p>
-              <p className="text-sm text-emerald-800">Praxis-Pläne auf Basis eurer bestehenden Katalogprodukte.</p>
-            </div>
-            <Link
-              href={'/tools/plans' as Route}
-              className="inline-flex rounded-lg border border-emerald-300 bg-white px-3 py-2 text-sm font-semibold text-emerald-800 hover:border-emerald-400 hover:bg-emerald-100"
-            >
-              Zu den Düngerplänen
-            </Link>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg shadow p-6 mb-8 border border-slate-200 sticky top-20 z-10">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4">Filter, Suche & Automationen</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-10 gap-4">
-            <input ref={searchInputRef} type="text" placeholder="Suche nach Name, Marke, Mikronährstoff... (Shortcut /)" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 xl:col-span-2" />
-            <select value={selectedPhase} onChange={(e) => setSelectedPhase(e.target.value as FertilizerPhase | 'all')} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="all">Alle Phasen</option><option value="veg">🌱 Veg</option><option value="flower">🌸 Blüte</option><option value="universal">⚙️ Universal</option></select>
-            <select value={selectedBase} onChange={(e) => setSelectedBase(e.target.value as FertilizerBase | 'all')} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="all">Alle Typen</option><option value="mineral">Mineral</option><option value="organic">Organisch</option><option value="bio-organic">Bio-Organisch</option><option value="hybrid">Hybrid</option></select>
-            <select value={selectedFormat} onChange={(e) => setSelectedFormat(e.target.value as FertilizerFormat | 'all')} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="all">Alle Formate</option><option value="liquid">Flüssig</option><option value="powder">Pulver</option><option value="pellets">Pellets</option><option value="granules">Granulat</option></select>
-            <select value={selectedApplication} onChange={(e) => setSelectedApplication(e.target.value as FertilizerApplication | 'all')} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="all">Wasser / Erde</option><option value="water">Für Wasser</option><option value="soil">Für Erde</option><option value="both">Für Wasser + Erde</option></select>
-            <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="all">Alle Marken</option>{brands.map((brand) => <option key={brand} value={brand}>{brand}</option>)}</select>
-            <select value={selectedCost} onChange={(e) => setSelectedCost(e.target.value as 'budget' | 'mid' | 'premium' | 'all')} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="all">Alle Preise</option><option value="budget">💚 Budget</option><option value="mid">💛 Mittel</option><option value="premium">💜 Premium</option></select>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortField)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="best-match">Beste Treffer (intelligent)</option><option value="name">Nach Name</option><option value="npk-total">Nach NPK-Gesamt</option><option value="ec-min">Nach EC-Min</option><option value="ppfd-min">Nach PPFD-Min</option><option value="cost">Nach Preis</option></select>
-            <select value={useCase} onChange={(e) => setUseCase(e.target.value as UseCase)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="balanced">Einsatz: Ausgewogen</option><option value="hydro-performance">Einsatz: Hydro Leistung</option><option value="soil-organic">Einsatz: Erde & Organisch</option><option value="budget-smart">Einsatz: Budget Klar</option><option value="max-yield">Einsatz: Maximaler Ertrag</option></select>
-            <select value={viewMode} onChange={(e) => setViewMode(e.target.value as ViewMode)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="grid">Ansicht: Kacheln</option><option value="list">Ansicht: Liste</option></select>
-            <select value={pageSize} onChange={(e) => setPageSize(Number(e.target.value))} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value={12}>12 pro Seite</option><option value={24}>24 pro Seite</option><option value={48}>48 pro Seite</option><option value={72}>72 pro Seite</option></select>
-          </div>
-
-          {suggestedQueries.length > 0 && (
-            <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2">
-              <p className="text-xs font-semibold text-amber-800">Meintest du:</p>
-              <div className="mt-1 flex flex-wrap gap-2">
-                {suggestedQueries.map((suggestion) => (
-                  <button
-                    key={suggestion}
-                    onClick={() => setSearchQuery(suggestion)}
-                    className="rounded-full border border-amber-300 bg-white px-2.5 py-1 text-xs font-semibold text-amber-800 hover:border-amber-400 hover:bg-amber-100"
-                  >
-                    {suggestion}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="mt-4 grid gap-3 md:grid-cols-[1.6fr_1fr_auto] items-end">
-            <input type="text" value={profileName} onChange={(e) => setProfileName(e.target.value)} placeholder="Filterprofil-Name (z.B. Hydro Pro)" className="w-full px-3 py-2 border border-slate-300 rounded-lg" />
-            <div className="text-xs text-slate-500">Speichert Suche, Filter, Sortierung und Einsatzzweck lokal im Browser.</div>
-            <button
-              onClick={() => {
-                const name = profileName.trim();
-                if (!name) return;
-                const id = name.toLowerCase().replace(/\s+/g, '-');
-                const payload: FilterProfile = {
-                  id,
-                  name,
-                  filters: { searchQuery, selectedPhase, selectedBase, selectedFormat, selectedApplication, selectedBrand, selectedCost, sortBy, useCase }
-                };
-                setProfiles((prev) => [payload, ...prev.filter((p) => p.id !== id)].slice(0, 12));
-                setProfileName('');
-              }}
-              className="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
-            >
-              Profil speichern
-            </button>
-          </div>
-
-          {profiles.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {profiles.map((profile) => (
-                <div key={profile.id} className="inline-flex items-center gap-1 rounded-full border border-slate-300 bg-white px-2 py-1">
-                  <button
-                    onClick={() => {
-                      setSearchQuery(profile.filters.searchQuery);
-                      setSelectedPhase(profile.filters.selectedPhase);
-                      setSelectedBase(profile.filters.selectedBase);
-                      setSelectedFormat(profile.filters.selectedFormat);
-                      setSelectedApplication(profile.filters.selectedApplication);
-                      setSelectedBrand(profile.filters.selectedBrand);
-                      setSelectedCost(profile.filters.selectedCost);
-                      setSortBy(profile.filters.sortBy);
-                      setUseCase(profile.filters.useCase);
-                    }}
-                    className="text-xs text-slate-700 hover:text-slate-900"
-                  >
-                    {profile.name}
-                  </button>
-                  <button onClick={() => setProfiles((prev) => prev.filter((p) => p.id !== profile.id))} className="text-xs text-rose-600 hover:text-rose-700 px-1" aria-label={`Profil ${profile.name} löschen`}>
-                    ×
-                  </button>
-                </div>
+          {/* Active filter chips */}
+          {activeFilterChips.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {activeFilterChips.map((chip) => (
+                <span key={chip.key} className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800">
+                  {chip.label}
+                </span>
               ))}
             </div>
           )}
 
-          {(searchQuery || selectedPhase !== 'all' || selectedBase !== 'all' || selectedFormat !== 'all' || selectedApplication !== 'all' || selectedBrand !== 'all' || selectedCost !== 'all' || useCase !== 'balanced') && (
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedPhase('all');
-                setSelectedBase('all');
-                setSelectedFormat('all');
-                setSelectedApplication('all');
-                setSelectedBrand('all');
-                setSelectedCost('all');
-                setUseCase('balanced');
-                setSortBy('best-match');
-              }}
-              className="mt-4 px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium rounded-lg transition"
-            >
-              Filter zurücksetzen
-            </button>
+          {/* Spell-check suggestions */}
+          {suggestedQueries.length > 0 && (
+            <div className="mt-2 flex flex-wrap items-center gap-1.5">
+              <span className="text-xs text-amber-700 font-medium">Meintest du:</span>
+              {suggestedQueries.map((s) => (
+                <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800 hover:bg-amber-100">
+                  {s}
+                </button>
+              ))}
+            </div>
           )}
         </div>
+      </div>
 
-        {activeFilterChips.length > 0 && (
-          <div className="mb-4 flex flex-wrap gap-2">
-            {activeFilterChips.map((chip) => (
-              <span key={chip.key} className="inline-flex items-center rounded-full border border-slate-300 bg-white px-2.5 py-1 text-xs text-slate-700">{chip.label}</span>
-            ))}
-          </div>
-        )}
+      {/* ── Content ────────────────────────────────────────────────── */}
+      <div className="mx-auto max-w-7xl px-4 pt-6 pb-14">
 
+        {/* Top brand chips */}
+        <div className="mb-5 flex flex-wrap items-center gap-2">
+          <span className="text-xs font-medium text-slate-400 shrink-0">Marken:</span>
+          {topBrands.map((brand) => (
+            <button
+              key={brand}
+              onClick={() => setSelectedBrand(selectedBrand === brand ? 'all' : brand)}
+              className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${
+                selectedBrand === brand
+                  ? 'border-emerald-500 bg-emerald-500 text-white'
+                  : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+              }`}
+            >
+              {brand}
+            </button>
+          ))}
+        </div>
+
+        {/* No results */}
         {totalVisible === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg shadow border border-slate-200">
-            <p className="text-slate-600">Keine Dünger gefunden, die deinen Kriterien entsprechen.</p>
+          <div className="rounded-2xl border border-slate-100 bg-slate-50 py-16 text-center">
+            <p className="text-2xl">🔍</p>
+            <p className="mt-3 font-semibold text-slate-700">Keine Dünger gefunden</p>
+            <p className="mt-1 text-sm text-slate-500">Versuche weniger Filter oder eine andere Suche.</p>
             {suggestedQueries.length > 0 && (
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 px-4">
-                <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Meintest du:</span>
-                {suggestedQueries.map((suggestion) => (
-                  <button
-                    key={`empty-${suggestion}`}
-                    onClick={() => setSearchQuery(suggestion)}
-                    className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 hover:border-emerald-300 hover:bg-emerald-100"
-                  >
-                    {suggestion}
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+                {suggestedQueries.map((s) => (
+                  <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-50">
+                    {s}
                   </button>
                 ))}
               </div>
             )}
             <button
               onClick={() => {
-                setSelectedBrand('all');
-                setSelectedApplication('all');
-                setSelectedCost('all');
-                setSearchQuery('');
-                setUseCase('balanced');
-                setSortBy('best-match');
+                setSearchQuery(''); setSelectedPhase('all'); setSelectedBase('all');
+                setSelectedFormat('all'); setSelectedApplication('all'); setSelectedBrand('all');
+                setSelectedCost('all'); setUseCase('balanced'); setSortBy('best-match');
               }}
-              className="mt-4 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
+              className="mt-5 rounded-lg bg-emerald-600 px-5 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
             >
-              Auto-Reset auf breite Suche
+              Alle Filter zurücksetzen
             </button>
           </div>
         ) : (
-          <div className={viewMode === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6' : 'space-y-4'}>
-            {paged.map((fert) => (
-              (() => {
+          <>
+            {/* Product grid/list */}
+            <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4' : 'space-y-3'}>
+              {paged.map((fert) => {
                 const offers = getVisibleOffers(fert.id);
                 const bestPrice = offers[0] ? getEffectivePrice(offers[0]) : null;
+                const isOpen = showDetails.has(fert.id);
                 return (
-              <div key={fert.id} className={`bg-white rounded-lg shadow hover:shadow-lg transition-all border border-slate-200 overflow-hidden ${viewMode === 'list' ? 'p-4' : ''}`}>
-                <div className={`p-4 ${viewMode === 'grid' ? 'border-b border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100' : 'bg-slate-50 rounded-lg mb-3'}`}>
-                  <div className="flex justify-between items-start gap-2 mb-2">
-                    <div>
-                      <h3 className="font-bold text-lg text-slate-900">{highlightMatches(fert.name, highlightTerms)}</h3>
-                      <p className="text-sm text-slate-600">{fert.brand}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="px-2 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Treffer {Math.round(computeMatchScore(fert))}</div>
-                      <div className={`px-3 py-1 rounded-full text-xs font-semibold ${costColorMap[fert.cost]}`}>{costLabelMap[fert.cost]}</div>
-                    </div>
-                  </div>
-                  <div className="mb-2 flex flex-wrap items-center gap-2">
-                    {bestPrice != null ? (
-                      <span className="inline-flex rounded-full border border-cyan-200 bg-cyan-100 px-2.5 py-1 text-xs font-bold text-cyan-800">
-                        ab {formatEuro(bestPrice)}
-                      </span>
-                    ) : (
-                      <span className="inline-flex rounded-full border border-slate-200 bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
-                        Keine Live-Preise
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-slate-600 line-clamp-2">{highlightMatches(fert.description, highlightTerms)}</p>
-                </div>
+                  <article
+                    key={fert.id}
+                    className={`group flex flex-col rounded-2xl border border-slate-200 bg-white transition-shadow hover:shadow-md ${viewMode === 'list' ? 'sm:flex-row sm:items-start' : ''}`}
+                  >
+                    {/* Card top */}
+                    <div className={`flex flex-col gap-2 p-4 ${viewMode === 'list' ? 'flex-1' : ''}`}>
 
-                <div className={viewMode === 'grid' ? 'p-4 space-y-2' : 'space-y-2'}>
-                  <div className="flex flex-wrap gap-2">{fert.phase.map((p) => <span key={p} className="inline-block px-2 py-1 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded">{phaseLabelMap[p]}</span>)}</div>
-                  <div className="grid grid-cols-3 gap-2 text-center py-2 bg-slate-50 rounded">
-                    <div><div className="text-xl font-bold text-blue-600">{fert.npk.n}</div><div className="text-xs text-slate-600">N</div></div>
-                    <div><div className="text-xl font-bold text-orange-600">{fert.npk.p}</div><div className="text-xs text-slate-600">P</div></div>
-                    <div><div className="text-xl font-bold text-red-600">{fert.npk.k}</div><div className="text-xs text-slate-600">K</div></div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="bg-blue-50 p-2 rounded"><div className="text-xs text-slate-600">EC-Range</div><div className="font-semibold text-slate-900">{fert.ec_range.min} - {fert.ec_range.max} {fert.ec_range.unit}</div></div>
-                    {fert.ppfd_recommendation && <div className="bg-amber-50 p-2 rounded"><div className="text-xs text-slate-600">PPFD</div><div className="font-semibold text-slate-900">{fert.ppfd_recommendation.min}-{fert.ppfd_recommendation.max}</div></div>}
-                  </div>
-                  <div className="text-xs text-slate-600"><span className="font-semibold text-slate-900">{baseLabelMap[fert.base]}</span> • {formatLabelMap[fert.format]} • {applicationLabelMap[resolveApplication(fert)]}</div>
-                  <div className="flex flex-wrap gap-1">
-                    {fert.tags.slice(0, 3).map((tag) => <span key={tag} className="inline-block px-2 py-0.5 bg-slate-200 text-slate-700 text-xs rounded">{highlightMatches(tag, highlightTerms)}</span>)}
-                    {fert.tags.length > 3 && <span className="inline-block px-2 py-0.5 bg-slate-200 text-slate-700 text-xs rounded">+{fert.tags.length - 3}</span>}
-                  </div>
-                </div>
-
-                <div className={viewMode === 'grid' ? 'p-4 border-t border-slate-200' : 'pt-3 border-t border-slate-200'}>
-                  <button onClick={() => toggleDetails(fert.id)} className="w-full px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold rounded-lg transition">
-                    {showDetails.has(fert.id) ? '▼ Details' : '▶ Details'}
-                  </button>
-                  {showDetails.has(fert.id) && (
-                    <div className="mt-4 space-y-3 pt-4 border-t border-slate-200">
-                      <div>
-                        <h4 className="font-semibold text-slate-900 text-sm mb-1">Preisvergleich (alle aktuellen Angebote)</h4>
-                        {offers.length > 0 ? (
-                          <div className="space-y-2">
-                            {offers.map((offer) => (
-                              <a
-                                key={`${offer.shop}-${offer.productUrl}`}
-                                href={offer.productUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="block rounded-lg border border-cyan-200 bg-cyan-50 px-3 py-2 hover:bg-cyan-100"
-                              >
-                                <div className="flex items-center justify-between gap-2">
-                                  <p className="text-sm font-semibold text-cyan-900">{offer.shop}</p>
-                                  <p className="text-sm font-bold text-cyan-900">{formatEuro(getEffectivePrice(offer))}</p>
-                                </div>
-                                <p className="text-xs text-cyan-800 line-clamp-1">{offer.title}</p>
-                                <p className="text-xs text-cyan-700">
-                                  Produkt: {formatEuro(offer.price)}
-                                  {offer.shipping != null ? ` · Versand: ${formatEuro(offer.shipping)}` : ' · Versand: n/a'}
-                                </p>
-                                  <p className="text-xs text-cyan-700">
-                                    Region: {offer.country ?? 'Sonstige'} · Status: {offer.availability ?? 'unbekannt'}
-                                  </p>
-                              </a>
-                            ))}
-                          </div>
-                        ) : (
-                          <p className="text-sm text-slate-500">Keine Preise passend zum aktuellen Preisfilter gefunden.</p>
-                        )}
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold text-slate-900 text-sm mb-1">Nährstoff-Profil</h4>
-                        <div className="text-sm text-slate-600 space-y-1">
-                          <div><span className="font-medium">N:</span> {fert.npk.n}%</div>
-                          <div><span className="font-medium">P:</span> {fert.npk.p}%</div>
-                          <div><span className="font-medium">K:</span> {fert.npk.k}%</div>
-                          <div><span className="font-medium">NPK-Gesamt:</span> {fert.npk.n + fert.npk.p + fert.npk.k}%</div>
+                      {/* Brand + badges row */}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{fert.brand}</p>
+                          <h3 className="mt-0.5 text-base font-bold leading-snug text-slate-900">
+                            {highlightMatches(fert.name, highlightTerms)}
+                          </h3>
+                        </div>
+                        <div className="flex flex-col items-end gap-1 shrink-0">
+                          <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${costColorMap[fert.cost]}`}>
+                            {costLabelMap[fert.cost]}
+                          </span>
+                          {bestPrice != null ? (
+                            <span className="rounded-full border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-xs font-bold text-cyan-800">
+                              ab {formatEuro(bestPrice)}
+                            </span>
+                          ) : (
+                            <span className="rounded-full border border-slate-100 bg-slate-50 px-2 py-0.5 text-xs text-slate-400">
+                              Kein Preis
+                            </span>
+                          )}
                         </div>
                       </div>
-                      {fert.micronutrients.length > 0 && <div><h4 className="font-semibold text-slate-900 text-sm mb-1">Mikronährstoffe</h4><div className="text-sm text-slate-600">{fert.micronutrients.join(', ')}</div></div>}
-                      {fert.dilutionRatio && <div><h4 className="font-semibold text-slate-900 text-sm mb-1">Dosierung</h4><div className="text-sm text-slate-600 font-mono bg-slate-50 p-2 rounded">{fert.dilutionRatio}</div></div>}
-                      {fert.ph_range && <div><h4 className="font-semibold text-slate-900 text-sm mb-1">pH-Bereich</h4><div className="text-sm text-slate-600">{fert.ph_range.min} - {fert.ph_range.max}</div></div>}
-                      <div>
-                        <h4 className="font-semibold text-slate-900 text-sm mb-1">Ertragspotenzial</h4>
-                        <div className="text-sm font-semibold">{fert.yeild_potential === 'average' && '⭐ Durchschnitt'}{fert.yeild_potential === 'high' && '⭐⭐ Hoch'}{fert.yeild_potential === 'very_high' && '⭐⭐⭐ Sehr Hoch'}</div>
+
+                      {/* Phase chips */}
+                      <div className="flex flex-wrap gap-1">
+                        {fert.phase.map((p) => (
+                          <span key={p} className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
+                            {phaseLabelMap[p]}
+                          </span>
+                        ))}
+                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
+                          {baseLabelMap[fert.base]}
+                        </span>
+                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
+                          {formatLabelMap[fert.format]}
+                        </span>
                       </div>
+
+                      {/* Description */}
+                      <p className="text-xs leading-relaxed text-slate-500 line-clamp-2">
+                        {highlightMatches(fert.description, highlightTerms)}
+                      </p>
+
+                      {/* NPK + EC strip */}
+                      <div className="mt-1 flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2 text-xs">
+                        <span className="font-bold text-blue-600">N {fert.npk.n}</span>
+                        <span className="font-bold text-orange-500">P {fert.npk.p}</span>
+                        <span className="font-bold text-red-500">K {fert.npk.k}</span>
+                        <span className="ml-auto text-slate-400">EC {fert.ec_range.min}–{fert.ec_range.max}</span>
+                        {fert.yeild_potential === 'very_high' && <span title="Sehr hohes Ertragspotenzial" className="text-amber-500">★★★</span>}
+                        {fert.yeild_potential === 'high' && <span title="Hohes Ertragspotenzial" className="text-amber-400">★★</span>}
+                        {fert.yeild_potential === 'average' && <span title="Durchschnittliches Ertragspotenzial" className="text-slate-300">★</span>}
+                      </div>
+
+                      {/* Tags (max 3) */}
+                      {fert.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1">
+                          {fert.tags.slice(0, 3).map((tag) => (
+                            <span key={tag} className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-500">
+                              {highlightMatches(tag, highlightTerms)}
+                            </span>
+                          ))}
+                          {fert.tags.length > 3 && (
+                            <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-400">
+                              +{fert.tags.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
+
+                    {/* Details toggle */}
+                    <div className="border-t border-slate-100">
+                      <button
+                        onClick={() => toggleDetails(fert.id)}
+                        className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-semibold text-slate-500 hover:bg-slate-50 hover:text-emerald-700"
+                      >
+                        <span>{isOpen ? 'Details schließen' : 'Details & Preisvergleich'}</span>
+                        <span className="text-base leading-none">{isOpen ? '▲' : '▼'}</span>
+                      </button>
+
+                      {isOpen && (
+                        <div className="space-y-4 border-t border-slate-100 px-4 pb-4 pt-3">
+
+                          {/* Prices */}
+                          <div>
+                            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Preisvergleich</p>
+                            {offers.length > 0 ? (
+                              <div className="space-y-2">
+                                {offers.map((offer) => (
+                                  <a
+                                    key={`${offer.shop}-${offer.productUrl}`}
+                                    href={offer.productUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 hover:border-emerald-200 hover:bg-emerald-50"
+                                  >
+                                    <div className="min-w-0 flex-1">
+                                      <p className="truncate text-xs font-semibold text-slate-700">{offer.shop}</p>
+                                      <p className="truncate text-[11px] text-slate-400">{offer.title}</p>
+                                    </div>
+                                    <div className="shrink-0 text-right">
+                                      <p className="text-sm font-bold text-emerald-700">{formatEuro(getEffectivePrice(offer))}</p>
+                                      {offer.shipping != null && (
+                                        <p className="text-[11px] text-slate-400">+{formatEuro(offer.shipping)} Versand</p>
+                                      )}
+                                    </div>
+                                  </a>
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="text-xs text-slate-400">Keine Preise für den gewählten Filter.</p>
+                            )}
+                          </div>
+
+                          {/* Nutrient detail */}
+                          <div>
+                            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Nährstoffprofil</p>
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div className="rounded-lg bg-slate-50 px-3 py-2">
+                                <span className="font-semibold text-slate-600">NPK:</span>{' '}
+                                {fert.npk.n}–{fert.npk.p}–{fert.npk.k}
+                              </div>
+                              {fert.ph_range && (
+                                <div className="rounded-lg bg-slate-50 px-3 py-2">
+                                  <span className="font-semibold text-slate-600">pH:</span>{' '}
+                                  {fert.ph_range.min}–{fert.ph_range.max}
+                                </div>
+                              )}
+                              {fert.dilutionRatio && (
+                                <div className="rounded-lg bg-slate-50 px-3 py-2 font-mono">
+                                  <span className="font-sans font-semibold text-slate-600">Dosierung:</span>{' '}
+                                  {fert.dilutionRatio}
+                                </div>
+                              )}
+                              {fert.ppfd_recommendation && (
+                                <div className="rounded-lg bg-slate-50 px-3 py-2">
+                                  <span className="font-semibold text-slate-600">PPFD:</span>{' '}
+                                  {fert.ppfd_recommendation.min}–{fert.ppfd_recommendation.max} µmol
+                                </div>
+                              )}
+                            </div>
+                            {fert.micronutrients.length > 0 && (
+                              <p className="mt-2 text-[11px] text-slate-500">
+                                <span className="font-semibold">Mikronährstoffe:</span>{' '}
+                                {fert.micronutrients.join(', ')}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </article>
                 );
-              })()
-            ))}
-          </div>
+              })}
+            </div>
+
+            {/* Pagination */}
+            {totalVisible > pageSize && (
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-2">
+                  <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={safePage === 1} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 disabled:opacity-40 hover:border-emerald-300">
+                    ← Zurück
+                  </button>
+                  {Array.from({ length: totalPagesVisible }, (_, i) => i + 1)
+                    .filter((p) => p === 1 || p === totalPagesVisible || Math.abs(p - safePage) <= 2)
+                    .map((p, i, arr) => {
+                      const prev = arr[i - 1];
+                      return [
+                        prev != null && p - prev > 1 ? <span key={`gap-${p}`} className="px-1 text-slate-400">…</span> : null,
+                        <button
+                          key={p}
+                          onClick={() => setCurrentPage(p)}
+                          className={`rounded-lg border px-3.5 py-2 text-sm font-medium ${
+                            p === safePage
+                              ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                              : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+                          }`}
+                        >
+                          {p}
+                        </button>
+                      ];
+                    })}
+                  <button onClick={() => setCurrentPage((p) => Math.min(totalPagesVisible, p + 1))} disabled={safePage === totalPagesVisible} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 disabled:opacity-40 hover:border-emerald-300">
+                    Weiter →
+                  </button>
+                </div>
+                <select
+                  value={pageSize}
+                  onChange={(e) => setPageSize(Number(e.target.value))}
+                  className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600"
+                >
+                  <option value={12}>12 / Seite</option>
+                  <option value={24}>24 / Seite</option>
+                  <option value={48}>48 / Seite</option>
+                </select>
+              </div>
+            )}
+          </>
         )}
 
-        {totalVisible > pageSize && (
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-            <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={safePage === 1} className="px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 disabled:opacity-40">Zurück</button>
-            {Array.from({ length: totalPagesVisible }, (_, i) => i + 1)
-              .filter((p) => p === 1 || p === totalPagesVisible || Math.abs(p - safePage) <= 2)
-              .map((p) => (
-                <button key={p} onClick={() => setCurrentPage(p)} className={`px-3 py-2 rounded-lg border text-sm ${p === safePage ? 'border-emerald-500 bg-emerald-50 text-emerald-700 font-semibold' : 'border-slate-300 bg-white text-slate-700'}`}>
-                  {p}
-                </button>
-              ))}
-            <button onClick={() => setCurrentPage((p) => Math.min(totalPagesVisible, p + 1))} disabled={safePage === totalPagesVisible} className="px-3 py-2 rounded-lg border border-slate-300 bg-white text-slate-700 disabled:opacity-40">Weiter</button>
-          </div>
-        )}
-
-        <div className="mt-12 bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="font-semibold text-blue-900 mb-2">💡 Hinweis</h3>
-          <p className="text-blue-800 text-sm">
-            Die angegebenen Werte sind Richtlinien. Die genaue Dosierung hängt vom Anbau-Setup, Wasser-Qualität,
-            Licht-Intensität und Nährstoff-Status ab. Beginne immer mit niedriger EC und steigere schrittweise.
-            Regelmäßige Blatt- und Boden-Tests sind essentiell für optimale Ergebnisse.
-          </p>
-        </div>
+        {/* Footer note */}
+        <p className="mt-10 text-center text-[11px] text-slate-400">
+          Preisquelle: {fertilizerPriceSnapshot.source} · zuletzt aktualisiert:{' '}
+          {fertilizerPriceSnapshot.updatedAt
+            ? new Date(fertilizerPriceSnapshot.updatedAt).toLocaleDateString('de-DE')
+            : 'ausstehend'}{' '}
+          · Werte sind Richtwerte, keine medizinische oder rechtliche Beratung.
+        </p>
       </div>
     </main>
   );
@@ -1094,7 +1156,7 @@ function FertilizersPageInner() {
 
 export default function FertilizersPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-6" />}>
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
       <FertilizersPageInner />
     </Suspense>
   );
