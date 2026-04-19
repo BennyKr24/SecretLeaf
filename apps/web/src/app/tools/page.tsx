@@ -1,18 +1,251 @@
 import Link from "next/link";
 import type { Route } from "next";
+import { toolRegistry } from "@/lib/tools/registry";
+import {
+  toolCategoryLabel,
+  toolCategoryIcon,
+  toolCategoryColor,
+  toolCategoryAccent,
+  type ToolCategory,
+} from "@/lib/tools/types";
+import ToolsHubClient from "@/components/tools/ToolsHubClient";
+
+const FEATURED_SLUGS = ["abluft-rechner", "licht-rechner", "naehrstoff-rechner"];
+
+const CATEGORIES: ToolCategory[] = ["klima", "licht", "naehrstoffe", "planung"];
+
+const CATEGORY_DESCRIPTIONS: Record<ToolCategory, string> = {
+  klima: "Berechne Luftbedarf und Rohrdurchmesser – damit Temperatur und Luftfeuchte stimmen.",
+  licht: "Finde die optimale Lichtintensität (PPFD) und das tägliche Lichtintegral (DLI).",
+  naehrstoffe: "Berechne EC-Ziel und Dosierung – für jede Phase und jedes Substrat.",
+  planung: "Schätze deinen Ertrag realistisch ein, bevor du mit dem Grow beginnst.",
+};
+
+const categoryTopBar: Record<ToolCategory, string> = {
+  klima: "from-cyan-400 to-cyan-600",
+  licht: "from-amber-400 to-amber-600",
+  naehrstoffe: "from-emerald-400 to-emerald-600",
+  planung: "from-violet-400 to-violet-600",
+};
+
+const categoryIconBg: Record<ToolCategory, string> = {
+  klima: "bg-cyan-50 ring-1 ring-cyan-200",
+  licht: "bg-amber-50 ring-1 ring-amber-200",
+  naehrstoffe: "bg-emerald-50 ring-1 ring-emerald-200",
+  planung: "bg-violet-50 ring-1 ring-violet-200",
+};
+
+export default function ToolsHubPage() {
+  const featuredTools = FEATURED_SLUGS.map((slug) =>
+    toolRegistry.find((t) => t.slug === slug)
+  ).filter(Boolean);
+
+  return (
+    <main className="min-h-screen">
+      {/* ── HERO ──────────────────────────────────────────── */}
+      <section className="border-b border-slate-100 bg-white px-4 py-16 sm:px-6 sm:py-20">
+        <div className="mx-auto max-w-6xl">
+          <p className="text-xs font-semibold uppercase tracking-widest text-emerald-600">
+            Grow Tools
+          </p>
+          <h1 className="mt-3 max-w-2xl text-4xl font-bold leading-tight text-slate-900 sm:text-5xl">
+            Optimiere deinen Grow
+            <br className="hidden sm:block" /> datenbasiert.
+          </h1>
+          <p className="mt-4 max-w-xl text-base text-slate-500">
+            Berechne Licht, Klima und Nährstoffe präzise — basierend auf echten Anbauwerten.
+            Alle Tools teilen dein Setup.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href="#featured"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
+            >
+              Meistgenutzte Tools →
+            </a>
+            <a
+              href="#alle-tools"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-emerald-300 hover:text-emerald-700"
+            >
+              Alle Tools entdecken
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-6xl space-y-10 px-4 py-10 sm:px-6">
+
+        {/* ── Grow-Check + Zuletzt genutzt (client) ─────── */}
+        <ToolsHubClient />
+
+        {/* ── FEATURED TOOLS ────────────────────────────── */}
+        <section id="featured">
+          <h2 className="mb-5 text-lg font-bold text-slate-900">Meistgenutzte Tools</h2>
+          <div className="grid gap-5 sm:grid-cols-3">
+            {featuredTools.map(
+              (tool) =>
+                tool && (
+                  <Link
+                    key={tool.slug}
+                    href={`/tools/${tool.slug}` as Route}
+                    className="tool-card-lift group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+                  >
+                    {/* Category top accent */}
+                    <div
+                      className={`absolute left-0 right-0 top-0 h-1 bg-gradient-to-r ${categoryTopBar[tool.category]}`}
+                    />
+                    <div className="relative pt-1">
+                      <div className={`mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl text-2xl ${categoryIconBg[tool.category]}`}>
+                        {tool.icon}
+                      </div>
+                      <span className={`block text-xs font-semibold ${toolCategoryAccent[tool.category]}`}>
+                        {toolCategoryLabel[tool.category]}
+                      </span>
+                      <h3 className="mt-1 text-lg font-bold text-slate-900 transition-colors group-hover:text-emerald-700">
+                        {tool.title}
+                      </h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
+                        {tool.shortDescription}
+                      </p>
+                      <p className="mt-4 text-xs font-semibold text-emerald-600 opacity-0 transition-opacity group-hover:opacity-100">
+                        Jetzt berechnen →
+                      </p>
+                    </div>
+                  </Link>
+                )
+            )}
+          </div>
+        </section>
+
+        {/* ── ALLE TOOLS BY CATEGORY ────────────────────── */}
+        <div id="alle-tools" className="space-y-8">
+          {CATEGORIES.map((cat) => {
+            const tools = toolRegistry.filter((t) => t.category === cat);
+            if (tools.length === 0) return null;
+            return (
+              <section key={cat} className="border-t border-slate-100 pt-8">
+                <div className="mb-5">
+                  <h2 className={`flex items-center gap-2 text-base font-bold ${toolCategoryAccent[cat]}`}>
+                    {toolCategoryIcon[cat]} {toolCategoryLabel[cat]}
+                  </h2>
+                  <p className="mt-1 text-sm text-slate-500">{CATEGORY_DESCRIPTIONS[cat]}</p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {tools.map((tool) => (
+                    <Link
+                      key={tool.slug}
+                      href={`/tools/${tool.slug}` as Route}
+                      className="tool-card-lift group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg text-lg ${categoryIconBg[cat]}`}>
+                          {tool.icon}
+                        </div>
+                        <span className="rounded-full border border-slate-100 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-400">
+                          {tool.difficulty === "einsteiger"
+                            ? "Einsteiger"
+                            : tool.difficulty === "fortgeschritten"
+                            ? "Fortg."
+                            : "Profi"}
+                        </span>
+                      </div>
+                      <h3 className="mt-3 text-base font-bold text-slate-900 transition-colors group-hover:text-emerald-700">
+                        {tool.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-slate-500">{tool.shortDescription}</p>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </div>
+
+        {/* ── WEITERE WERKZEUGE ─────────────────────────── */}
+        <section className="border-t border-slate-100 pt-8">
+          <h2 className="mb-5 text-sm font-bold text-slate-900">Weitere Werkzeuge</h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Link
+              href={"/tools/plans" as Route}
+              className="tool-card-lift rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+            >
+              <p className="text-sm font-semibold text-emerald-700">Planung</p>
+              <h2 className="mt-1 text-xl font-bold text-slate-900">Düngerpläne</h2>
+              <p className="mt-2 text-sm text-slate-500">
+                Fertige Düngerpläne, filterbar nach Setup, Budget und Ziel.
+              </p>
+            </Link>
+            <Link
+              href={"/search" as Route}
+              className="tool-card-lift rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+            >
+              <p className="text-sm font-semibold text-cyan-700">Recherche</p>
+              <h2 className="mt-1 text-xl font-bold text-slate-900">Globale Suche</h2>
+              <p className="mt-2 text-sm text-slate-500">
+                Schneller Zugriff auf Fachartikel, Quellen und Datenbankeinträge.
+              </p>
+            </Link>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+
+const CATEGORIES: ToolCategory[] = ["klima", "licht", "naehrstoffe", "planung"];
 
 export default function ToolsHubPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-6 py-10">
-      <section className="mx-auto max-w-6xl space-y-6">
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-4 py-8 sm:px-6 sm:py-10">
+      <section className="mx-auto max-w-6xl space-y-8">
+        {/* ── Hero ────────────────────────────────────── */}
         <header className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700">Tools</p>
           <h1 className="mt-1 text-4xl font-bold text-slate-900">Werkzeuge</h1>
           <p className="mt-2 max-w-3xl text-sm text-slate-600">
-            Praktische Werkzeuge für Planung, Vergleich und Entscheidungen. Alle Tools sind auf schnelle, klare Abläufe ausgelegt.
+            Vier spezialisierte Rechner für Klima, Licht, Nährstoffe und Ertrag. Alle Tools
+            teilen dein Grow-Setup — einmal eingeben, überall nutzen.
           </p>
         </header>
 
+        {/* ── Grow-Check (client-side) ────────────────── */}
+        <ToolsHubClient />
+
+        {/* ── Tool cards by category ──────────────────── */}
+        {CATEGORIES.map((cat) => {
+          const tools = toolRegistry.filter((t) => t.category === cat);
+          if (tools.length === 0) return null;
+          return (
+            <section key={cat}>
+              <h2 className={`mb-3 flex items-center gap-2 text-sm font-bold ${toolCategoryAccent[cat]}`}>
+                {toolCategoryIcon[cat]} {toolCategoryLabel[cat]}
+              </h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {tools.map((tool) => (
+                  <Link
+                    key={tool.slug}
+                    href={`/tools/${tool.slug}` as Route}
+                    className={`group rounded-2xl border bg-white p-5 shadow-sm transition ${toolCategoryHover[tool.category]}`}
+                  >
+                    <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs font-semibold ${toolCategoryColor[tool.category]}`}>
+                      {tool.icon} {toolCategoryLabel[tool.category]}
+                    </span>
+                    <h3 className="mt-2 text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                      {tool.title}
+                    </h3>
+                    <p className="mt-1 text-sm text-slate-600">{tool.shortDescription}</p>
+                    <p className="mt-3 text-xs font-medium text-slate-400">
+                      {tool.difficulty === "einsteiger" ? "Einsteiger" : tool.difficulty === "fortgeschritten" ? "Fortgeschritten" : "Profi"}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+
+        {/* ── Additional links ────────────────────────── */}
         <div className="grid gap-4 md:grid-cols-2">
           <Link
             href={"/tools/plans" as Route}
@@ -29,10 +262,10 @@ export default function ToolsHubPage() {
             href={"/search" as Route}
             className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-cyan-300 hover:bg-cyan-50"
           >
-            <p className="text-sm font-semibold text-cyan-700">Discovery</p>
+            <p className="text-sm font-semibold text-cyan-700">Recherche</p>
             <h2 className="mt-1 text-xl font-bold text-slate-900">Globale Suche</h2>
             <p className="mt-2 text-sm text-slate-600">
-              Schneller Zugriff auf Studies, Quellen und Datenbankeinträge.
+              Schneller Zugriff auf Fachartikel, Quellen und Datenbankeinträge.
             </p>
           </Link>
         </div>

@@ -1,0 +1,109 @@
+import type { ToolResultData, ResultLevel } from './types';
+import { round } from './units';
+
+// ── PPFD & DLI calculation ─────────────────────────────────────────────────
+// PPF (µmol/s) = Watt × Efficacy (µmol/J)
+// PPFD = PPF / Area × Height correction
+// DLI = PPFD × 3600 × Photoperiod / 1,000,000
+
+export type LightingInputs = {
+  lampenLeistung: number;   // W
+  effizienz: number;        // µmol/J (1.0 – 3.5)
+  reflektorVerlust: number; // % (0 – 40)
+  aufhaengHoehe: number;    // cm (15 – 150)
+  flaeche: number;          // m²
+  photoperiode: number;     // h/Tag (12 – 24)
+  phase: 'veg' | 'bluete';
+};
+
+export type LightingOutput = {
+  ppf: number;
+  nutzbarePPF: number;
+  ppfd: number;
+  dli: number;
+  results: ToolResultData[];
+};
+
+// Simple height correction factor (inverse-square approximation for panel LEDs)
+function heightFactor(heightCm: number): number {
+  // Calibrated for typical LED panels: at 30cm ≈0.95, at 60cm ≈0.78, at 100cm ≈0.55
+  const h = heightCm / 100;
+  return Math.max(0.2, 1.0 / (1 + 0.6 * h * h));
+}
+
+function ppfdLevel(ppfd: number, phase: 'veg' | 'bluete'): ResultLevel {
+  if (phase === 'veg') {
+    if (ppfd >= 400 && ppfd <= 700) return 'gruen';
+    if (ppfd >= 250 && ppfd < 400) return 'gelb';
+    if (ppfd > 700 && ppfd <= 900) return 'gelb';
+    return 'rot';
+  }
+  // Blüte
+  if (ppfd >= 600 && ppfd <= 1000) return 'gruen';
+  if (ppfd >= 400 && ppfd < 600) return 'gelb';
+  if (ppfd > 1000 && ppfd <= 1300) return 'gelb';
+  return 'rot';
+}
+
+function ppfdExplanation(ppfd: number, phase: 'veg' | 'bluete'): string {
+  const ziel = phase === 'veg' ? '400–700 µmol/m²/s' : '600–1.000 µmol/m²/s';
+  if (ppfd < (phase === 'veg' ? 250 : 400)) {
+    return `Deutlich unter dem Zielbereich (${ziel}). Lampe näher positionieren oder stärkeres Modell einsetzen.`;
+  }
+  if (ppfd > (phase === 'veg' ? 900 : 1300)) {
+    return `Über dem empfohlenen Bereich (${ziel}). Lichtstress wahrscheinlich — Abstand erhöhen oder dimmen.`;
+  }
+  return `Im empfohlenen Bereich für ${phase === 'veg' ? 'vegetative Phase' : 'Blütephase'} (${ziel}).`;
+}
+
+export function calculateLighting(inputs: LightingInputs): LightingOutput {
+  const { lampenLeistung, effizienz, reflektorVerlust, aufhaengHoehe, flaeche, photoperiode, phase } = inputs;
+
+  const ppf = round(lampenLeistung * effizienz, 1);
+  const nutzbarePPF = round(ppf * (1 - reflektorVerlust / 100), 1);
+  const hFactor = heightFactor(aufhaengHoehe);
+  const ppfd = round((nutzbarePPF / Math.max(0.25, flaeche)) * hFactor, 0);
+  const dli = round((ppfd * 3600 * photoperiode) / 1_000_000, 1);
+
+  const level = ppfdLevel(ppfd, phase);
+
+  const results: ToolResultData[] = [
+    {
+      label: 'PPFD (geschätzt)',
+      value: ppfd,
+      formatted: `${ppfd}`,
+      unit: 'µmol/m²/s',
+      level,
+      explanation: ppfdExplanation(ppfd, phase),
+    },
+    {
+      label: 'Tageslichtintegral (DLI)',
+      value: dli,
+      formatted: `${dli}`,
+      unit: 'mol/m²/d',
+      explanation: dli < 20 ? 'Niedrig — eher für Keimlinge/Klone geeignet.' : dli > 55 ? 'Sehr hoch — CO2-Supplementierung empfohlen.' : 'Guter Bereich für aktives Wachstum.',
+    },
+    {
+      label: 'Gesamt-PPF',
+      value: ppf,
+      formatted: `${ppf}`,
+      unit: 'µmol/s',
+      explanation: `Bei ${effizienz} µmol/J Effizienz.`,
+    },
+    {
+      label: 'Nutzbare PPF',
+      value: nutzbarePPF,
+      formatted: `${nutzbarePPF}`,
+      unit: 'µmol/s',
+      explanation: `Nach ${reflektorVerlust}% Reflektorverlust.`,
+    },
+    {
+      label: 'Höhenkorrekturfaktor',
+      value: round(hFactor, 2),
+      formatted: `${round(hFactor * 100, 0)}%`,
+      explanation: `Bei ${aufhaengHoehe} cm Aufhänghöhe erreichen ca. ${round(hFactor * 100, 0)}% des Lichts die Pflanzenfläche.`,
+    },
+  ];
+
+  return { ppf, nutzbarePPF, ppfd, dli, results };
+}
