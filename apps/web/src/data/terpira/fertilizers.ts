@@ -324,42 +324,6 @@ const fertilizerCatalogCore: FertilizerProfile[] = [
     tags: ["Profi", "Universal", "Fulvinsäuren"],
     yeild_potential: "very_high"
   },
-  {
-    id: "advanced-nutrients-sensi-grow",
-    name: "Advanced Nutrients Sensi Grow",
-    brand: "Advanced Nutrients",
-    phase: ["veg"],
-    base: "mineral",
-    format: "liquid",
-    npk: { n: 4, p: 3, k: 4 },
-    micronutrients: ["Ca", "Mg", "Fe", "Mn", "Zn", "B", "Cu", "Mo"],
-    ec_range: { min: 1.0, max: 1.9, unit: "mS/cm" },
-    ppfd_recommendation: { min: 250, max: 700, unit: "µmol/(m²·s)" },
-    ph_range: { min: 5.5, max: 6.5 },
-    dilutionRatio: "2ml/L (3-teiliges System)",
-    cost: "premium",
-    description: "3-Komponenten-System mit pH-Pufferung für maximale Stabilität.",
-    tags: ["Profi", "Wachstum", "3-Teile", "pH-Gepuffert"],
-    yeild_potential: "very_high"
-  },
-  {
-    id: "advanced-nutrients-sensi-bloom",
-    name: "Advanced Nutrients Sensi Bloom",
-    brand: "Advanced Nutrients",
-    phase: ["flower"],
-    base: "mineral",
-    format: "liquid",
-    npk: { n: 1, p: 9, k: 6 },
-    micronutrients: ["Ca", "Mg", "Fe", "Mn", "Zn", "B", "Cu", "Mo"],
-    ec_range: { min: 1.2, max: 2.1, unit: "mS/cm" },
-    ppfd_recommendation: { min: 500, max: 1000, unit: "µmol/(m²·s)" },
-    ph_range: { min: 5.5, max: 6.5 },
-    dilutionRatio: "2ml/L",
-    cost: "premium",
-    description: "Spezial-Formulierung für maximale Harzentwicklung und Trichom-Ausprägung.",
-    tags: ["Profi", "Blüte", "Harz", "Trichome"],
-    yeild_potential: "very_high"
-  },
 
   {
     id: "botanicare-kind-grow",
