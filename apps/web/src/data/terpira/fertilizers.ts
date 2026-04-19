@@ -1035,7 +1035,7 @@ type BrandExpansionPlan = {
   lines: string[];
 };
 
-const marketExpansionPlans: BrandExpansionPlan[] = [,
+const marketExpansionPlans: BrandExpansionPlan[] = [
   {
     brand: "Grotek",
     base: "mineral",

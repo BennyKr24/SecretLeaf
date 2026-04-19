@@ -141,7 +141,7 @@ function OnboardingInner() {
             </>
           ) : selected.length === 0
             ? 'Überspringen & weiter'
-          ? `${selected.length} ${selected.length === 1 ? 'Interesse' : 'Interessen'} speichern & weiter`
+            : `${selected.length} ${selected.length === 1 ? 'Interesse' : 'Interessen'} speichern & weiter`
           }
         </button>
 
