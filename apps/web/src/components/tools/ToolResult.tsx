@@ -7,10 +7,10 @@ import { resultLevelClass } from '@/lib/tools/types';
 type ToolResultProps = {
   label: string;
   value: string;
-  unit?: string;
-  level?: ResultLevel;
-  explanation?: string;
-  large?: boolean;
+  unit?: string | undefined;
+  level?: ResultLevel | undefined;
+  explanation?: string | undefined;
+  large?: boolean | undefined;
 };
 
 const levelText: Record<ResultLevel, string> = {
@@ -74,12 +74,12 @@ export function ToolResult({ label, value, unit, level, explanation, large }: To
 }
 
 type ToolResultCardProps = {
-  title?: string;
+  title?: string | undefined;
   children: React.ReactNode;
   /** Shown in the footer: "Das bedeutet: ..." */
-  interpretation?: string;
+  interpretation?: string | undefined;
   /** Shown in the footer: direct action recommendation */
-  recommendation?: string;
+  recommendation?: string | undefined;
 };
 
 export function ToolResultCard({ title, children, interpretation, recommendation }: ToolResultCardProps) {
