@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Studien – SecretLeaf",
-  description: "Evidenzbasierte Inhalte zu Anbau, Terpenen, Medizin, Recht und Qualität.",
+  description: "Wissenschaftlich fundierte Inhalte zu Anbau, Terpenen, Medizin, Recht und Qualität.",
 };
 
 export default function StudiesPage() {
@@ -25,8 +25,8 @@ export default function StudiesPage() {
               </p>
               <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-white tracking-tight">Studien</h1>
               <p className="mt-2 max-w-xl text-[14px] text-slate-400 leading-relaxed">
-                Evidenzbasierte Artikel zu Anbau, Chemie, Medizin, Recht und mehr –
-                belegt durch {sourceRegister.length} peer-reviewed Fachquellen.
+                Wissenschaftlich fundierte Artikel zu Anbau, Chemie, Medizin, Recht und mehr –
+                gestützt auf {sourceRegister.length} peer-reviewed Fachquellen.
               </p>
             </div>
 

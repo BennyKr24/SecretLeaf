@@ -79,14 +79,14 @@ export default function WikiSourcesPage() {
 
         <h1 className="mt-4 text-4xl font-bold text-[#10281e]">Quellenregister</h1>
         <p className="mt-3 text-[#4d685a]">
-          Hier findest du die relevantesten Einträge aus diesem Register.
+          Alle wissenschaftlichen Quellen, auf die unsere Fachartikel verweisen – nach Herausgeber gruppiert.
         </p>
 
         <div className="mt-5 rounded-xl border border-rose-200 bg-rose-50 p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-rose-700">Register-Erweiterung</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-rose-700">Neuer Bereich</p>
           <div className="mt-1 flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm text-rose-900">
-              Neu im Register: das Schädlings-Lexikon mit Bildkarten, Kategorien, Risiko-Filtern und Gegenmaßnahmen.
+              Jetzt verfügbar: das Schädlings-Lexikon mit Bildkarten, Kategorien, Risikobewertungen und Gegenmaßnahmen.
             </p>
             <Link
               href={"/studies/pests" as Route}

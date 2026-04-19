@@ -290,13 +290,13 @@ function SearchContent() {
         {!hasSearched && !isPending && (
           <div className="text-center py-12">
             <p className="text-slate-500 text-base mb-6">
-              Durchsuche Studies, Datenbankeinträge, Tools und wissenschaftliche Quellen.
+              Durchsuche Fachartikel, Datenbankeinträge, Werkzeuge und wissenschaftliche Quellen.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { label: '📚 Studies', href: '/studies', count: '13' },
-                { label: '🗂 Database', href: '/database', count: '1+' },
-                { label: '🧰 Tools', href: '/tools', count: '1+' },
+                { label: '📚 Studien', href: '/studies', count: '13' },
+                { label: '🗂 Datenbank', href: '/database', count: '1+' },
+                { label: '🧰 Werkzeuge', href: '/tools', count: '1+' },
                 { label: '🔬 Quellen', href: '/studies/sources', count: '41' },
               ].map((item) => (
                 <Link

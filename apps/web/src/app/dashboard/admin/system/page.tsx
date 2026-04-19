@@ -108,9 +108,9 @@ export default function AdminSystemPage() {
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <StatCard
-                label="Gesamt Auth Users"
+                label="Registrierte Benutzer"
                 value={stats.totalAuthUsers}
-                description="Alle registrierten Accounts"
+                description="Alle registrierten Benutzerkonten"
               />
               <StatCard
                 label="Consumer"
@@ -141,14 +141,14 @@ export default function AdminSystemPage() {
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <StatCard label="Studien gesamt" value={stats.totalStudies} />
               <StatCard
-                label="Automation Runs (24h)"
+                label="Durchläufe (24h)"
                 value={stats.automationRunsLast24h}
-                description="Pipeline-Ausführungen der letzten 24 Stunden"
+                description="Pipeline-Durchläufe der letzten 24 Stunden"
               />
               <StatCard
-                label="Feedback Events"
+                label="Feedback-Ereignisse"
                 value={stats.totalFeedbackEvents}
-                description="Gesamtzahl aller Nutzerfeedbacks"
+                description="Gesamtzahl aller Nutzerbewertungen"
               />
             </div>
           </div>

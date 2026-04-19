@@ -94,8 +94,8 @@ function findArticles(query: string, limit = 4): ScoredArticle[] {
 function synthesizeAnswer(query: string, results: ScoredArticle[]): string {
   if (results.length === 0) {
     return (
-      'Zu dieser Frage habe ich keinen direkten Treffer im Wiki. ' +
-      'Versuch es mit einem anderen Begriff oder nutze die Suche (Strg+K) für die volle Volltextsuche über alle Artikel, Glossar und Quellen.'
+      'Zu dieser Frage habe ich keinen passenden Artikel im Wiki gefunden. ' +
+      'Versuche es mit einem anderen Suchbegriff oder nutze die Volltextsuche (Strg+K) über alle Artikel, Glossar und Quellen.'
     );
   }
 
@@ -172,12 +172,12 @@ function RenderAnswer({ text }: { text: string }) {
 // ─── Starter-Fragen ───────────────────────────────────────────────────────────
 
 const SUGGESTED: Array<{ label: string; q: string }> = [
-  { label: 'Was ist VPD?', q: 'Was ist VPD und wie beeinflusst es Cannabis?' },
-  { label: 'CBD vs THC', q: 'Was ist der Unterschied zwischen CBD und THC?' },
+  { label: 'Was ist VPD?', q: 'Was ist VPD und welchen Einfluss hat es auf Cannabis?' },
+  { label: 'CBD vs. THC', q: 'Worin unterscheiden sich CBD und THC?' },
   { label: 'Terpene erklärt', q: 'Was sind Terpene und welche Wirkung haben sie?' },
-  { label: 'Curing & Wasseraktivität', q: 'Wie funktioniert Curing und was ist Wasseraktivität?' },
-  { label: 'Rezeptorpharmakokinetik', q: 'Wie wirkt das Endocannabinoid-System auf den Körper?' },
-  { label: 'Pheno-Hunt', q: 'Was ist ein Pheno-Hunt und warum ist er wichtig?' },
+  { label: 'Curing & Wasseraktivität', q: 'Wie funktioniert Curing und was bedeutet Wasseraktivität?' },
+  { label: 'Endocannabinoid-System', q: 'Wie wirkt Cannabis über das Endocannabinoid-System?' },
+  { label: 'Phänotyp-Selektion', q: 'Was ist ein Pheno-Hunt und warum ist er wichtig?' },
 ];
 
 // ─── WikiAskBot ───────────────────────────────────────────────────────────────

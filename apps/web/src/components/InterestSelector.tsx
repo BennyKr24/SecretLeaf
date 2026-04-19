@@ -43,7 +43,7 @@ export default function InterestSelector() {
       </div>
       {INTERESTS.some(i => isActive(i)) && (
         <p className="text-[11px] text-emerald-500/70 mt-1">
-          ✓ Homepage wird nach deinen Interessen sortiert
+          ✓ Inhalte werden nach deinen Interessen angepasst
         </p>
       )}
     </div>

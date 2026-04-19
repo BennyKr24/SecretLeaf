@@ -42,8 +42,8 @@ export default async function WikiArticlePage({ params }: PageProps) {
 
   const articleSources = getArticleSources(article);
   const simpleExplainers = article.simpleExplainers ?? [
-    { title: "Kurz erklärt", text: article.keyTakeaways[0] ?? "Dieser Artikel fasst das Thema kompakt und evidenzbasiert zusammen." },
-    { title: "Warum relevant?", text: article.keyTakeaways[1] ?? "Die Inhalte unterstützen konsistente Entscheidungen zu Qualität und Risiko." },
+    { title: "Kurz erklärt", text: article.keyTakeaways[0] ?? "Dieser Artikel fasst das Thema kompakt und wissenschaftlich fundiert zusammen." },
+    { title: "Warum relevant?", text: article.keyTakeaways[1] ?? "Die Inhalte helfen bei fundierten Entscheidungen zu Qualität, Anbau und Sicherheit." },
   ];
 
   const diff = DIFFICULTY_META[article.difficulty];
@@ -67,7 +67,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
           <div className="rounded-2xl border border-slate-200 bg-white/90 p-6 sm:p-8 shadow-sm">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-1.5 text-sm text-slate-500 mb-5">
-              <Link href={"/studies" as Route} className="hover:text-emerald-700 font-medium transition-colors">Wiki</Link>
+              <Link href={"/studies" as Route} className="hover:text-emerald-700 font-medium transition-colors">Studien</Link>
               <span className="text-slate-300">/</span>
               <span className="text-slate-500">{categoryLabels[article.category]}</span>
               <span className="text-slate-300">/</span>

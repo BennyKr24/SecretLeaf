@@ -357,7 +357,7 @@ export default function FertilizerPlansPage() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-8">
           <Link href={"/tools" as Route} className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700 hover:text-emerald-800">
-            ← Zurück zu Tools
+            ← Zurück zu Werkzeuge
           </Link>
           <h1 className="mt-3 text-4xl font-bold text-slate-900">Düngerpläne</h1>
           <p className="mt-2 max-w-3xl text-slate-600">
@@ -406,7 +406,7 @@ export default function FertilizerPlansPage() {
               <option value="premium">Premium</option>
             </select>
             <select value={activeLevel} onChange={(e) => setActiveLevel(e.target.value as PlanLevel | "all")} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
-              <option value="all">Alle Level</option>
+              <option value="all">Alle Stufen</option>
               <option value="einsteiger">Einsteiger</option>
               <option value="fortgeschritten">Fortgeschritten</option>
               <option value="profi">Profi</option>
@@ -437,7 +437,7 @@ export default function FertilizerPlansPage() {
                 onClick={resetFilters}
                 className="rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 hover:border-rose-300 hover:text-rose-700"
               >
-                Reset
+                Zurücksetzen
               </button>
             )}
           </div>

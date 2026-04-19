@@ -68,8 +68,8 @@ function sanitizeError(raw: string): string {
 }
 
 const trustItems = [
-  { icon: '🔒', label: 'SSL verschlüsselt' },
-  { icon: '🛡', label: 'Datenschutzfreundlich' },
+  { icon: '🔒', label: 'SSL-verschlüsselt' },
+  { icon: '🛡', label: 'Datenschutzkonform' },
   { icon: '✉', label: 'Kein Spam' },
   { icon: '🎁', label: 'Kostenlos starten' },
 ];
@@ -164,7 +164,7 @@ function AuthPageInner() {
       await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
         redirectTo: `${window.location.origin}${RESET_REDIRECT_PATH}`,
       });
-      setInfo('Wenn ein Konto mit dieser E-Mail existiert, hast du eine Nachricht mit einem Link zum Zurücksetzen erhalten.');
+      setInfo('Wenn ein Konto mit dieser Adresse existiert, haben wir dir einen Link zum Zurücksetzen geschickt.');
     } catch {
       setGlobalError('Etwas ist schiefgelaufen. Bitte versuche es erneut.');
     } finally {
@@ -198,7 +198,7 @@ function AuthPageInner() {
           saveSession(session);
           router.push('/dashboard/onboarding');
         } else {
-          setInfo('Konto erstellt! Bitte bestätige deine E-Mail-Adresse und melde dich dann an.');
+          setInfo('Konto erstellt! Bitte bestätige deine E-Mail-Adresse – danach kannst du dich anmelden.');
           switchMode('login');
         }
       }
@@ -224,13 +224,13 @@ function AuthPageInner() {
             <span className="text-lg font-bold text-white tracking-tight">SecretLeaf</span>
           </Link>
           <div className="mb-10">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-500 mb-3">Cannabis Intelligence Platform</p>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-500 mb-3">Wissensplattform für Cannabis</p>
             <h2 className="text-3xl font-bold text-white leading-tight tracking-tight">
-              Wissen, das<br />
-              <span className="bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">wirklich zählt.</span>
+              Fundiertes Wissen,<br />
+              <span className="bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">das den Unterschied macht.</span>
             </h2>
             <p className="mt-4 text-sm text-slate-400 leading-relaxed max-w-xs">
-              Evidenzbasiertes Cannabis-Wissen aus peer-reviewed Quellen – jetzt mit persönlichem Konto.
+              Wissenschaftliches Cannabis-Wissen aus peer-reviewed Quellen – jetzt mit persönlichem Konto nutzen.
             </p>
           </div>
           <AuthBenefits />
@@ -262,8 +262,8 @@ function AuthPageInner() {
             <>
               <div className="mb-7">
                 <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Passwort zurücksetzen</h1>
-                <p className="mt-2 text-sm text-slate-500 leading-relaxed">
-                  Gib deine E-Mail-Adresse ein. Wir schicken dir einen Reset-Link.
+                  <p className="mt-2 text-sm text-slate-500 leading-relaxed">
+                  Gib deine E-Mail-Adresse ein – wir senden dir einen Link zum Zurücksetzen.
                 </p>
               </div>
               {info ? (
@@ -299,7 +299,7 @@ function AuthPageInner() {
                   {globalError && <ErrorBox message={globalError} />}
                   <button type="submit" disabled={pending}
                     className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm flex items-center justify-center gap-2">
-                    {pending ? <><Spinner />Senden…</> : 'Reset-Link senden'}
+                    {pending ? <><Spinner />Wird gesendet…</> : 'Link zum Zurücksetzen senden'}
                   </button>
                 </form>
               )}

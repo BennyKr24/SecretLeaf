@@ -48,18 +48,18 @@ function evidenceMeta(sourceCount: number) {
   }
   if (sourceCount >= 3) {
     return {
-      label: 'Solide Evidenz',
+      label: 'Mittlere Evidenz',
       cls: 'border-cyan-200 bg-cyan-50 text-cyan-700',
     };
   }
   if (sourceCount >= 1) {
     return {
-      label: 'Basis Evidenz',
+      label: 'Grundlagenartikel',
       cls: 'border-amber-200 bg-amber-50 text-amber-700',
     };
   }
   return {
-    label: 'Editorial',
+    label: 'Redaktionell',
     cls: 'border-slate-200 bg-slate-100 text-slate-600',
   };
 }

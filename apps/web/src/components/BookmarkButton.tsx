@@ -20,7 +20,7 @@ export default function BookmarkButton({ slug, size = 'md', className = '' }: Pr
   return (
     <button
       type="button"
-      aria-label={saved ? 'Lesezeichen entfernen' : 'Studie speichern'}
+      aria-label={saved ? 'Aus Merkliste entfernen' : 'Zur Merkliste hinzufügen'}
       onClick={(e) => {
         e.preventDefault();
         toggle(slug);

@@ -1,10 +1,10 @@
 type Benefit = { icon: string; text: string };
 
 const BENEFITS: Benefit[] = [
-  { icon: '🔖', text: 'Studien speichern & wiederfinden' },
-  { icon: '✦',  text: 'Personalisierte Inhalte nach Interessen' },
-  { icon: '📖', text: 'Persönlicher Leserverlauf' },
-  { icon: '📬', text: 'Wöchentlicher Wissens-Digest' },
+  { icon: '🔖', text: 'Studien speichern und jederzeit wiederfinden' },
+  { icon: '✦',  text: 'Personalisierte Inhalte nach deinen Interessen' },
+  { icon: '📖', text: 'Persönlicher Leseverlauf' },
+  { icon: '📬', text: 'Wöchentliche Zusammenfassung der wichtigsten Studien' },
   { icon: '🔬', text: 'Zugang zu allen Forschungsartikeln' },
 ];
 

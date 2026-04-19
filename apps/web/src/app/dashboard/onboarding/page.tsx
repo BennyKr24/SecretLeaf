@@ -72,10 +72,10 @@ function OnboardingInner() {
             ✦
           </div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Was interessiert dich?
+            Welche Themen interessieren dich?
           </h1>
           <p className="mt-2 text-sm text-slate-500 leading-relaxed">
-            Wähle deine Themen — wir personalisieren deine Inhalte und Empfehlungen entsprechend.
+            Wähle deine Schwerpunkte – wir passen Inhalte und Empfehlungen entsprechend an.
           </p>
         </div>
 
@@ -140,8 +140,8 @@ function OnboardingInner() {
               Speichern…
             </>
           ) : selected.length === 0
-            ? 'Überspringen & loslegen'
-            : `${selected.length} ${selected.length === 1 ? 'Interesse' : 'Interessen'} speichern & loslegen`
+            ? 'Überspringen & weiter'
+          ? `${selected.length} ${selected.length === 1 ? 'Interesse' : 'Interessen'} speichern & weiter`
           }
         </button>
 

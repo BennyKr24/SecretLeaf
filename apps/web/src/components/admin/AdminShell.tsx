@@ -9,7 +9,7 @@ const NAV_GROUPS = [
   {
     label: "Übersicht",
     items: [
-      { href: "/dashboard/admin", label: "Dashboard", icon: "🏠", exact: true },
+      { href: "/dashboard/admin", label: "Übersicht", icon: "🏠", exact: true },
     ],
   },
   {
@@ -22,14 +22,14 @@ const NAV_GROUPS = [
   {
     label: "Pipeline",
     items: [
-      { href: "/dashboard/admin/engine", label: "Engine", icon: "⚙️" },
+      { href: "/dashboard/admin/engine", label: "Pipeline-Engine", icon: "⚙️" },
       { href: "/dashboard/admin/algorithm", label: "Algorithmus", icon: "🧬" },
     ],
   },
   {
     label: "Monitoring",
     items: [
-      { href: "/dashboard/admin/analytics", label: "Analytics", icon: "📊" },
+      { href: "/dashboard/admin/analytics", label: "Auswertungen", icon: "📊" },
       { href: "/dashboard/admin/system", label: "System", icon: "🖥️" },
       { href: "/dashboard/admin/settings", label: "Einstellungen", icon: "🔧" },
     ],
@@ -56,13 +56,13 @@ export function AdminShell({ children }: { children: ReactNode }) {
       <div className="flex min-h-screen items-center justify-center bg-[#f6faf7]">
         <div className="mx-auto max-w-md rounded-2xl border border-[#d8e8dd] bg-white p-8 text-center shadow-sm">
           <p className="text-4xl">🔒</p>
-          <h1 className="mt-4 text-2xl font-bold text-[#10281e]">Admin Login erforderlich</h1>
-          <p className="mt-2 text-sm text-[#4d685a]">Bitte melde dich mit einem Admin-Account an.</p>
+          <h1 className="mt-4 text-2xl font-bold text-[#10281e]">Administratoranmeldung erforderlich</h1>
+          <p className="mt-2 text-sm text-[#4d685a]">Bitte melde dich mit einem Admin-Konto an.</p>
           <Link
             href="/auth"
             className="mt-6 inline-flex rounded-xl bg-[#1f7a4f] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#17613f]"
           >
-            Zum Login
+            Zur Anmeldung
           </Link>
         </div>
       </div>
@@ -75,7 +75,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
         <div className="mx-auto max-w-md rounded-2xl border border-[#d8e8dd] bg-white p-8 text-center shadow-sm">
           <p className="text-4xl">⛔</p>
           <h1 className="mt-4 text-2xl font-bold text-[#10281e]">Zugriff verweigert</h1>
-          <p className="mt-2 text-sm text-[#4d685a]">Dein Account hat keine Admin-Berechtigung.</p>
+          <p className="mt-2 text-sm text-[#4d685a]">Dein Konto verfügt nicht über Admin-Berechtigungen.</p>
           <Link
             href="/dashboard"
             className="mt-6 inline-flex rounded-xl border border-[#d8e8dd] px-6 py-2.5 text-sm font-semibold text-[#10281e] transition hover:bg-[#f6faf7]"
@@ -105,7 +105,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <div className="mt-2 flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-[#1f7a4f]" />
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">
-              Admin Panel
+              Admin-Bereich
             </p>
           </div>
         </div>

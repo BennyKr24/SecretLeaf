@@ -417,45 +417,8 @@ const fertilizerCatalogCore: FertilizerProfile[] = [
     tags: ["DIY", "Budget", "Klassiker", "Hydroponik"],
     yeild_potential: "high"
   },
+  
 
-  {
-    id: "canna-aqua-veg",
-    name: "Canna Aqua Veg",
-    brand: "CANNA",
-    phase: ["veg"],
-    base: "mineral",
-    format: "liquid",
-    npk: { n: 7, p: 9, k: 5 },
-    micronutrients: ["Ca", "Mg", "Fe", "Mn", "B", "Zn", "Cu", "Mo"],
-    ec_range: { min: 1.0, max: 1.8, unit: "mS/cm" },
-    ppfd_recommendation: { min: 300, max: 600, unit: "µmol/(m²·s)" },
-    ph_range: { min: 5.5, max: 6.5 },
-    dilutionRatio: "1.4ml/L",
-    cost: "premium",
-    description: "Niederländisches Premium-System speziell für Tonsteinkultur.",
-    tags: ["Profi", "Canna", "Tonsteinkultur", "Hydroponik"],
-    yeild_potential: "very_high"
-  },
-  {
-    id: "canna-aqua-flower",
-    name: "Canna Aqua Bloom",
-    brand: "CANNA",
-    phase: ["flower"],
-    base: "mineral",
-    format: "liquid",
-    npk: { n: 3, p: 7, k: 8 },
-    micronutrients: ["Ca", "Mg", "Fe", "Mn", "B", "Zn", "Cu", "Mo"],
-    ec_range: { min: 1.2, max: 2.0, unit: "mS/cm" },
-    ppfd_recommendation: { min: 500, max: 1000, unit: "µmol/(m²·s)" },
-    ph_range: { min: 5.5, max: 6.5 },
-    dilutionRatio: "1.4ml/L",
-    cost: "premium",
-    description: "Hochgestimmte Hydro-Blüten-Formulierung für Top-Ergebnisse.",
-    tags: ["Profi", "Blüte", "Hydroponik"],
-    yeild_potential: "very_high"
-  },
-
-  // === SUBSTRATE/BODEN-SYSTEME ===
   {
     id: "earth-juice-grow",
     name: "Earth Juice Grow",
@@ -492,63 +455,10 @@ const fertilizerCatalogCore: FertilizerProfile[] = [
     tags: ["Bio-Organisch", "Budget", "Blüte"],
     yeild_potential: "average"
   },
-
-  {
-    id: "super-plant-grow",
-    name: "Super Plant Grow (Torfquelltabs)",
-    brand: "Super Plant",
-    phase: ["veg"],
-    base: "organic",
-    format: "pellets",
-    npk: { n: 12, p: 8, k: 8 },
-    micronutrients: ["Tonminerale", "Mikroben", "Fulvinsäuren"],
-    ec_range: { min: 0.08, max: 0.15, unit: "mS/cm" },
-    ppfd_recommendation: { min: 50, max: 200, unit: "µmol/(m²·s)" },
-    ph_range: { min: 5.8, max: 7.0 },
-    dilutionRatio: "Ein Tablet pro Pflanze (Verwendung im Substrat)",
-    cost: "mid",
-    description: "Langzeit-Pellets: Nährstoffe über 3-4 Wochen freigesetzt.",
-    tags: ["Organisch", "Pellets", "Langzeit", "Einfach"],
-    yeild_potential: "high"
-  },
-  {
-    id: "super-plant-bloom",
-    name: "Super Plant Bloom (Blüte-Tabs)",
-    brand: "Super Plant",
-    phase: ["flower"],
-    base: "organic",
-    format: "pellets",
-    npk: { n: 4, p: 14, k: 10 },
-    micronutrients: ["Tonminerale", "Kalium", "Mikroben"],
-    ec_range: { min: 0.12, max: 0.20, unit: "mS/cm" },
-    ppfd_recommendation: { min: 300, max: 700, unit: "µmol/(m²·s)" },
-    ph_range: { min: 5.8, max: 7.0 },
-    dilutionRatio: "Ein Tablet pro Pflanze (4-Wochen Freisetzung)",
-    cost: "mid",
-    description: "Blüte-fokussierte Pellets mit Booster für Harz-Produktion.",
-    tags: ["Organisch", "Pellets", "Langzeit", "Blüte"],
-    yeild_potential: "high"
-  },
+  
 
   // === PREMIUM ADDITIVE & BOOSTER ===
-  {
-    id: "beneficial-microbes-powder",
-    name: "Beneficial Microbes (Granules)",
-    brand: "Hydrobuddy",
-    phase: ["universal"],
-    base: "organic",
-    format: "granules",
-    npk: { n: 0, p: 0, k: 0 },
-    micronutrients: ["Bacillus", "Pseudomonas", "Trichoderma", "Arbuscular Mycorrhizae"],
-    ec_range: { min: 0, max: 0, unit: "mS/cm" },
-    ppfd_recommendation: { min: 0, max: 0, unit: "µmol/(m²·s)" },
-    ph_range: { min: 4.0, max: 8.5 },
-    dilutionRatio: "1g pro Liter Wasser (einmalige Gabe)",
-    cost: "premium",
-    description: "Probiotische Kulturen zur Bodengesundheit und Nährstoff-Verfügbarkeit.",
-    tags: ["Profi", "Bio-Organisch", "Bodengesundheit", "Additive"],
-    yeild_potential: "high"
-  },
+  
   {
     id: "kelp-extract-concentrate",
     name: "Kelp Extract 60X",
@@ -567,30 +477,12 @@ const fertilizerCatalogCore: FertilizerProfile[] = [
     tags: ["Bio-Organisch", "Additive", "Stress-Resistance", "Hormon-Stimulation"],
     yeild_potential: "average"
   },
-  {
-    id: "humic-fulvic-acid-blend",
-    name: "Premium Humic & Fulvic Blend",
-    brand: "GrowKase",
-    phase: ["universal"],
-    base: "organic",
-    format: "liquid",
-    npk: { n: 0, p: 0, k: 0 },
-    micronutrients: ["Fulvinsäuren", "Huminsäuren", "Kohlenhydrate", "Chelate"],
-    ec_range: { min: 0.3, max: 0.8, unit: "mS/cm" },
-    ppfd_recommendation: { min: 100, max: 800, unit: "µmol/(m²·s)" },
-    ph_range: { min: 3.5, max: 8.0 },
-    dilutionRatio: "0.5ml/L wöchentlich",
-    cost: "premium",
-    description: "Maximale Nährstoff-Verfügbarkeit durch Chelat-Komplexe und organische Säuren.",
-    tags: ["Profi", "Additive", "Chelat-Formulierung", "Nährstoff-Verfügbarkeit"],
-    yeild_potential: "high"
-  },
 
   // === SPEZIALISIERTE BLÜTE-BOOSTER ===
   {
     id: "pk-booster-formula",
     name: "PK 13/14 Booster",
-    brand: "Bloom-Max",
+    brand: "CANNA",
     phase: ["flower"],
     base: "mineral",
     format: "liquid",
@@ -664,44 +556,7 @@ const fertilizerCatalogCore: FertilizerProfile[] = [
     yeild_potential: "high"
   },
 
-  // === ABSCHLUSS MEHR BUDGET-OPTIONEN ===
-  {
-    id: "nitro-boost",
-    name: "Nitro Boost (Flüssig)",
-    brand: "Budget-Grow",
-    phase: ["veg"],
-    base: "mineral",
-    format: "liquid",
-    npk: { n: 15, p: 0, k: 0 },
-    micronutrients: ["Fe", "Mn"],
-    ec_range: { min: 0.3, max: 0.8, unit: "mS/cm" },
-    ppfd_recommendation: { min: 150, max: 400, unit: "µmol/(m²·s)" },
-    ph_range: { min: 5.5, max: 7.0 },
-    dilutionRatio: "0.5ml/L (zusätzlich zu Basis-Dünger)",
-    cost: "budget",
-    description: "Stickstoff-Booster für schnelles vegetatives Wachstum.",
-    tags: ["Budget", "Wachstum", "Stickstoff", "Additive"],
-    yeild_potential: "average"
-  },
-
-  {
-    id: "phosphorus-kick",
-    name: "Phosphorus Kick",
-    brand: "Budget-Grow",
-    phase: ["flower"],
-    base: "mineral",
-    format: "powder",
-    npk: { n: 0, p: 18, k: 2 },
-    micronutrients: ["Ca"],
-    ec_range: { min: 0.4, max: 1.0, unit: "mS/cm" },
-    ppfd_recommendation: { min: 300, max: 900, unit: "µmol/(m²·s)" },
-    ph_range: { min: 5.5, max: 6.8 },
-    dilutionRatio: "2g/L (zusätzlich zu Basis-Dünger)",
-    cost: "budget",
-    description: "Reines Phosphor-Pulver für die kritische Blüte-Phase.",
-    tags: ["Budget", "Blüte", "Phosphor"],
-    yeild_potential: "average"
-  },
+  
 
   // === INTERNATIONALE PROFI-MARKEN (Europäisch) ===
   {
@@ -1216,15 +1071,7 @@ type BrandExpansionPlan = {
   lines: string[];
 };
 
-const marketExpansionPlans: BrandExpansionPlan[] = [
-  {
-    brand: "AN",
-    base: "mineral",
-    format: "liquid",
-    application: "water",
-    cost: "premium",
-    lines: ["Grow A", "Grow B", "Bloom A", "Bloom B", "Micro", "CalMag", "Bud Booster", "PK Finish", "Root Stim", "Silica", "Enzyme", "Amino"]
-  },
+const marketExpansionPlans: BrandExpansionPlan[] = [,
   {
     brand: "Grotek",
     base: "mineral",
@@ -1290,14 +1137,6 @@ const marketExpansionPlans: BrandExpansionPlan[] = [
     lines: ["Pure Blend Grow", "Pure Blend Bloom", "CalMag", "Silica", "Hydroguard", "Sweet", "Liquid Karma", "CNS17", "PK", "Root", "Tea", "Finish"]
   },
   {
-    brand: "Cultiwool",
-    base: "mineral",
-    format: "powder",
-    application: "water",
-    cost: "budget",
-    lines: ["Grow", "Bloom", "Micro", "CalMag", "PK", "Root", "Enzyme", "Silica", "Trace", "Finish", "Flush", "Starter"]
-  },
-  {
     brand: "Madame Grow",
     base: "organic",
     format: "liquid",
@@ -1320,14 +1159,6 @@ const marketExpansionPlans: BrandExpansionPlan[] = [
     application: "soil",
     cost: "mid",
     lines: ["Grow Powder", "Bloom Powder", "Bat Guano", "Kalong Mix", "Palm Tree", "Seaweed", "Complete", "Taste", "Root", "Compost", "Tea", "Topdress"]
-  },
-  {
-    brand: "EHG",
-    base: "mineral",
-    format: "powder",
-    application: "water",
-    cost: "budget",
-    lines: ["Grow", "Bloom", "Micro", "PK", "Root", "Silica", "CalMag", "Trace", "Finish", "Flush", "Boost", "Hydro"]
   },
   {
     brand: "Ionic",
@@ -1354,30 +1185,6 @@ const marketExpansionPlans: BrandExpansionPlan[] = [
     lines: ["Grow", "Bloom", "Micro", "Root", "CalMag", "Silica", "PK", "Booster", "Amino", "Terp", "Flush", "Complete"]
   },
   {
-    brand: "Sensi Garden",
-    base: "bio-organic",
-    format: "pellets",
-    application: "soil",
-    cost: "budget",
-    lines: ["Soil Grow", "Soil Bloom", "Topdress Veg", "Topdress Bloom", "Microbe Mix", "Calcium", "Magnesium", "Silica", "Root", "Compost", "Tea", "Final"]
-  },
-  {
-    brand: "Hydromax",
-    base: "mineral",
-    format: "powder",
-    application: "water",
-    cost: "budget",
-    lines: ["A", "B", "Micro", "CalMag", "PK", "Root", "Enzyme", "Silica", "Sugar", "Finish", "Flush", "Hydro Start"]
-  },
-  {
-    brand: "Root Republic",
-    base: "organic",
-    format: "liquid",
-    application: "both",
-    cost: "mid",
-    lines: ["Grow", "Bloom", "Root", "Compost", "Tea", "Kelp", "CalMag", "Silica", "PK", "Amino", "Terp", "Final"]
-  },
-  {
     brand: "Metrop",
     base: "mineral",
     format: "liquid",
@@ -1392,22 +1199,6 @@ const marketExpansionPlans: BrandExpansionPlan[] = [
     application: "both",
     cost: "premium",
     lines: ["Grow", "Bloom", "Micro", "Honey", "Secret", "Root", "CalMag", "Silica", "PK", "Amino", "Finish", "Flush"]
-  },
-  {
-    brand: "Vaalserberg Garden",
-    base: "mineral",
-    format: "powder",
-    application: "water",
-    cost: "budget",
-    lines: ["A", "B", "Grow", "Bloom", "Micro", "PK", "CalMag", "Silica", "Root", "Enzyme", "Boost", "Finish"]
-  },
-  {
-    brand: "BioNova Soil",
-    base: "organic",
-    format: "pellets",
-    application: "soil",
-    cost: "mid",
-    lines: ["Grow Mix", "Bloom Mix", "Topdress Veg", "Topdress Bloom", "Compost", "Microbe", "Calcium", "Magnesium", "Silica", "Tea", "Root", "Final"]
   }
 ];
 
@@ -1533,7 +1324,6 @@ const brandMarketEstimate: Record<string, number> = {
   "Green House Feeding": 18,
   "BioTabs": 12,
   "Mills": 14,
-  "AN": 20,
   "Grotek": 20,
   "BAC": 18,
   "Biocanna": 14,
@@ -1542,21 +1332,14 @@ const brandMarketEstimate: Record<string, number> = {
   "Aptus": 18,
   "Remo": 14,
   "Botanicare": 22,
-  "Cultiwool": 12,
   "Madame Grow": 12,
   "Bionova": 18,
   "Guanokalong": 12,
-  "EHG": 10,
   "Ionic": 14,
   "Nectar for the Gods": 18,
   "Royal Queen Nutrients": 12,
-  "Sensi Garden": 10,
-  "Hydromax": 10,
-  "Root Republic": 12,
   "Metrop": 12,
   "Humboldt Nutrients": 20,
-  "Vaalserberg Garden": 10,
-  "BioNova Soil": 10,
   "HESI": 16,
   "FloraFlex": 12,
   "General Hydroponics": 24,

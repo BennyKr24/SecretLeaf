@@ -148,13 +148,13 @@ export default function DashboardPage() {
           </div>
           <div className="flex items-center gap-3">
             <Link href={"/dashboard/admin" as Route} className="flex items-center gap-1.5 rounded-xl bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#17613f]">
-              <span>⚙</span> Admin Panel
+              <span>⚙</span> Admin-Bereich
             </Link>
             <Link href={"/" as Route} className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
               Startseite
             </Link>
             <Link href={"/studies" as Route} className="text-sm font-medium text-[#4d685a] hover:text-[#173126]">
-              Studies
+              Studien
             </Link>
             <button 
               onClick={() => {
@@ -165,7 +165,7 @@ export default function DashboardPage() {
               }}
               className="text-sm font-medium text-[#4d685a] hover:text-[#173126]"
             >
-              Logout
+              Abmelden
             </button>
           </div>
         </div>
@@ -174,25 +174,25 @@ export default function DashboardPage() {
       <div className="mx-auto max-w-7xl px-6 py-8">
         <div className="mb-8 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="rounded-2xl border border-[#d8e8dd] bg-white/90 p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Internes Curation-Tool</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Redaktions-Tool</p>
             <h2 className="mt-2 text-2xl font-semibold text-[#123024]">Studien schnell prüfen</h2>
             <p className="mt-3 text-sm text-[#4d685a]">
-              Neu importierte Studien sind auf das Wesentliche komprimiert – mit Quelle, Autor und Institut
-              – damit du schnell entscheidest, was relevant ist.
+              Neu importierte Studien werden kompakt dargestellt – mit Quelle, Autor und Institut
+              – damit du schnell entscheiden kannst, was relevant ist.
             </p>
             <Link
               href={"/dashboard/review" as Route}
               className="mt-5 inline-flex rounded-xl bg-[#1f7a4f] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#17613f]"
             >
-              Studien reviewen
+              Studien prüfen
             </Link>
           </div>
 
           <div className="rounded-2xl border border-[#d8e8dd] bg-[#f6faf7] p-6 shadow-sm">
-            <h2 className="text-lg font-semibold text-[#123024]">Bewertungslogik</h2>
+            <h2 className="text-lg font-semibold text-[#123024]">Bewertungskriterien</h2>
             <p className="mt-3 text-sm text-[#4d685a]">Rein: direkt verwertbar oder als Artikelidee geeignet.</p>
-            <p className="mt-2 text-sm text-[#4d685a]">Später: interessant, aber noch nicht gut genug.</p>
-            <p className="mt-2 text-sm text-[#4d685a]">Nein: zu schwach oder nicht relevant für SecretLeaf.</p>
+            <p className="mt-2 text-sm text-[#4d685a]">Später: interessant, aber noch nicht ausreichend belegt.</p>
+            <p className="mt-2 text-sm text-[#4d685a]">Nein: zu schwach oder thematisch nicht relevant.</p>
           </div>
         </div>
 

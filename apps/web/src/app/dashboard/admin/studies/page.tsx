@@ -49,9 +49,9 @@ const QUALITY_OPTIONS = [
 
 const PRIORITY_OPTIONS = [
   { value: "all", label: "Alle" },
-  { value: "high", label: "High" },
-  { value: "medium", label: "Medium" },
-  { value: "low", label: "Low" },
+  { value: "high", label: "Hoch" },
+  { value: "medium", label: "Mittel" },
+  { value: "low", label: "Niedrig" },
 ];
 
 const SORT_OPTIONS = [

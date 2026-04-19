@@ -58,7 +58,7 @@ const TABS: { key: Tab; label: string; icon: string }[] = [
   { key: "sources", label: "Quellen", icon: "📚" },
   { key: "exclusions", label: "Ausschlüsse", icon: "🚫" },
   { key: "clusters", label: "Topic-Cluster", icon: "🧬" },
-  { key: "scoring", label: "Scoring", icon: "⚖️" },
+  { key: "scoring", label: "Bewertung", icon: "⚖️" },
   { key: "anchor", label: "Cannabis-Anker", icon: "🌿" },
 ];
 

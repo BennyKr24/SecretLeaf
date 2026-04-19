@@ -105,7 +105,7 @@ function TrendingList({
 }) {
   return (
     <div className="px-4 py-3">
-      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Trending Themen</p>
+      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Beliebte Themen</p>
       <div className="flex flex-wrap gap-2">
         {topics.map((t) => (
           <button

@@ -137,9 +137,9 @@ export default function AdminSettingsPage() {
           <div className="rounded-2xl border border-[#d8e8dd] bg-white p-5 shadow-sm">
             <div className="flex items-start justify-between">
               <div>
-                <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">Adaptive Scoring Weights</h2>
+                <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">Adaptive Bewertungsgewichtungen</h2>
                 <p className="mt-1 text-xs text-[#6b8577]">
-                  Manuell Weights überschreiben. Werden beim nächsten Adapt-Run neu berechnet.
+                  Gewichtungen manuell überschreiben. Werden beim nächsten Anpassungsdurchlauf neu berechnet.
                 </p>
               </div>
               {data.adaptiveWeights && (
@@ -182,7 +182,7 @@ export default function AdminSettingsPage() {
                 disabled={saving}
                 className="rounded-xl bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f] disabled:opacity-50"
               >
-                {saving ? "Speichert..." : "Weights speichern"}
+                {saving ? "Speichert..." : "Gewichtungen speichern"}
               </button>
               <button
                 onClick={handleReset}
@@ -195,7 +195,7 @@ export default function AdminSettingsPage() {
 
           {/* Pipeline Defaults */}
           <div className="rounded-2xl border border-[#d8e8dd] bg-white p-5 shadow-sm">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">Pipeline Defaults</h2>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">Pipeline-Standardwerte</h2>
             <p className="mt-1 mb-4 text-xs text-[#6b8577]">
               Standard-Parameter für Pipeline-Runs. Diese Werte werden auf der Engine-Seite als Voreinstellung verwendet.
             </p>

@@ -36,7 +36,7 @@ const DIFFICULTY_LABEL: Record<string, string> = {
 function evidenceLevel(sourceCount: number): { label: string; cls: string } {
   if (sourceCount >= 5) return { label: 'Hohe Evidenz', cls: 'evidence-high border' };
   if (sourceCount >= 3) return { label: 'Mittlere Evidenz', cls: 'evidence-med border' };
-  return { label: 'Basisartikel', cls: 'evidence-low border' };
+  return { label: 'Grundlagenartikel', cls: 'evidence-low border' };
 }
 
 /* ── Mini card ─────────────────────────────────────────────────────────── */
@@ -197,7 +197,7 @@ function PersonalizedCategorySections({ categoryArticles, allCategories }: {
       {loaded && preferredCategories.length > 0 && (
         <div className="mx-auto max-w-6xl px-5 pt-10">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[11px] font-semibold text-emerald-700">
-            ✦ Für dich kuratiert – basierend auf deinen Interessen
+            ✦ Für dich zusammengestellt – basierend auf deinen Interessen
           </div>
         </div>
       )}

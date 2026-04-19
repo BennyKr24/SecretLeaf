@@ -144,7 +144,7 @@ export default function AdminUsersPage() {
           <span className="text-2xl">👥</span>
           <div>
             <h1 className="text-2xl font-bold text-[#10281e]">Benutzerverwaltung</h1>
-            <p className="text-sm text-[#4d685a]">Rollen verwalten, Accounts einsehen und administrieren.</p>
+            <p className="text-sm text-[#4d685a]">Rollen verwalten, Benutzerkonten einsehen und administrieren.</p>
           </div>
         </div>
       </div>

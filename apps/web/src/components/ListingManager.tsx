@@ -80,7 +80,7 @@ export function ListingManager({ session, onRefresh }: ListingManagerProps) {
       
       await onRefresh();
     } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Listing konnte nicht erstellt werden");
+      setError(submitError instanceof Error ? submitError.message : "Angebot konnte nicht erstellt werden");
     } finally {
       setSaving(false);
     }
@@ -168,7 +168,7 @@ export function ListingManager({ session, onRefresh }: ListingManagerProps) {
               placeholder="z.B. berlin-mitte"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
             />
-            <p className="text-xs text-gray-500 mt-1">Privacy: Wird nur grob gespeichert, nicht exakt.</p>
+            <p className="text-xs text-gray-500 mt-1">Datenschutz: Position wird nur grob gespeichert.</p>
           </div>
 
           {/* Price Tiers */}
@@ -197,7 +197,7 @@ export function ListingManager({ session, onRefresh }: ListingManagerProps) {
 
         {success && (
           <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-sm text-green-700">
-            ✓ Listing erfolgreich erstellt!
+            ✓ Angebot erfolgreich erstellt!
           </div>
         )}
 

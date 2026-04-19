@@ -29,7 +29,7 @@ export default function NewsletterSignup() {
       <div className="mx-auto max-w-6xl px-5 py-14">
         <div className="mx-auto max-w-xl text-center">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[10px] font-bold text-emerald-700 tracking-widest uppercase mb-4">
-            📬 Weekly Digest
+            📬 Wöchentliche Zusammenfassung
           </span>
           <h2 className="text-2xl font-bold tracking-tight text-slate-900">
             Jede Woche das Wichtigste
@@ -68,7 +68,7 @@ export default function NewsletterSignup() {
           )}
 
           {status === 'error' && (
-            <p className="mt-2 text-xs text-red-500">Etwas ist schief gelaufen. Bitte versuche es erneut.</p>
+            <p className="mt-2 text-xs text-red-500">Etwas ist schiefgelaufen. Bitte versuche es erneut.</p>
           )}
 
           <div className="mt-5 flex flex-wrap justify-center gap-5 text-[11px] text-slate-400">

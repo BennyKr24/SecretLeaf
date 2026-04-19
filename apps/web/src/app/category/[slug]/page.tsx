@@ -12,18 +12,18 @@ const CATEGORY_ICONS: Record<string, string> = {
 };
 
 const CATEGORY_DESCRIPTIONS: Partial<Record<TerpiraCategory, string>> = {
-  anbau:         'Alles rund um Anbau, Pflege und Ernte – von der Keimung bis zur Trocknung.',
-  genetik:       'Genetik, Züchtung und Sortenwahl für gezielte Ergebnisse.',
-  chemie:        'Chemische Grundlagen, Nährstoffe und Substrate für gesundes Wachstum.',
-  terpene:       'Terpenprofile, Aromen und deren Einfluss auf Wirkung und Geschmack.',
-  medizin:       'Evidenzbasierte Erkenntnisse zu medizinischen Anwendungen.',
-  konsumformen:  'Methoden und Formen der Anwendung im Überblick.',
-  konzentrate:   'Extraktion, Verarbeitung und Qualität von Konzentraten.',
-  recht:         'Rechtliche Rahmenbedingungen und Compliance-Anforderungen.',
-  sicherheit:    'Sicherheitshinweise, Aufklärung und verantwortungsvoller Umgang.',
+  anbau:         'Alles zu Anbau, Pflege und Ernte – von der Keimung bis zur Trocknung und zum Curing.',
+  genetik:       'Genetik, Züchtung und Sortenwahl – für gezielte Ergebnisse bei Ertrag und Wirkstoffprofil.',
+  chemie:        'Nährstoffe, Substrate und chemische Grundlagen für gesundes Pflanzenwachstum.',
+  terpene:       'Terpenprofile, Aromastoffe und deren Einfluss auf Wirkung und Geschmack.',
+  medizin:       'Wissenschaftliche Erkenntnisse zu medizinischen Cannabis-Anwendungen.',
+  konsumformen:  'Verschiedene Konsumformen und Anwendungsmethoden im Überblick.',
+  konzentrate:   'Extraktion, Verarbeitung und Qualitätsbewertung von Konzentraten.',
+  recht:         'Rechtliche Rahmenbedingungen, Regulierung und Compliance.',
+  sicherheit:    'Sicherheitshinweise, Risikobewertung und verantwortungsvoller Umgang.',
   qualitaet:     'Laboranalysen, Qualitätskontrolle und Reinheitsprüfungen.',
-  markt:         'Marktüberblick, Beschaffung und aktuelle Preisentwicklungen.',
-  werkzeuge:     'Praktische Rechner und Werkzeuge für den Alltag.',
+  markt:         'Marktanalysen, Beschaffung und aktuelle Preisentwicklungen.',
+  werkzeuge:     'Praktische Rechner, Kalkulatoren und Werkzeuge für den Alltag.',
 };
 
 const validCategories = Object.keys(categoryLabels) as TerpiraCategory[];
@@ -36,8 +36,8 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   const label = categoryLabels[params.slug as TerpiraCategory];
   if (!label) return { title: "Kategorie – SecretLeaf" };
   return {
-    title: `${label} – Studies – SecretLeaf`,
-    description: CATEGORY_DESCRIPTIONS[params.slug as TerpiraCategory] ?? `Alle Artikel zum Thema ${label} auf SecretLeaf.`,
+    title: `${label} – Studien – SecretLeaf`,
+    description: CATEGORY_DESCRIPTIONS[params.slug as TerpiraCategory] ?? `Alle Fachartikel zum Thema ${label} auf SecretLeaf.`,
   };
 }
 
@@ -81,7 +81,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
               {icon}
             </span>
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-400">Themengebiet</p>
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-400">Fachgebiet</p>
               <h1 className="mt-0.5 text-3xl font-bold text-white tracking-tight">{label}</h1>
               {description && (
                 <p className="mt-1.5 text-sm text-slate-400 leading-relaxed max-w-xl">{description}</p>

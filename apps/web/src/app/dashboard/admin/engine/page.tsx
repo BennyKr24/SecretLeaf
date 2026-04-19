@@ -139,7 +139,7 @@ export default function AdminEnginePage() {
         <ActionCard
           title="Pipeline starten"
           description="Startet die vollständige Fetch → Normalize → Dedup → Classify → Score → Store Pipeline."
-          buttonLabel={dryRun ? "Dry Run starten" : "Pipeline starten"}
+          buttonLabel={dryRun ? "Testlauf starten" : "Pipeline starten"}
           buttonColor="green"
           loading={triggeringSync}
           onTrigger={() => void triggerAction("engine-trigger", setTriggeringSync, {
@@ -151,7 +151,7 @@ export default function AdminEnginePage() {
           <div className="mt-3 space-y-2">
             <div className="flex items-center gap-2">
               <input type="checkbox" id="dryRun" checked={dryRun} onChange={(e) => setDryRun(e.target.checked)} className="rounded" />
-              <label htmlFor="dryRun" className="text-xs text-[#4d685a]">Dry Run (kein DB-Write)</label>
+              <label htmlFor="dryRun" className="text-xs text-[#4d685a]">Testlauf (kein DB-Schreibvorgang)</label>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
@@ -168,17 +168,17 @@ export default function AdminEnginePage() {
 
         <ActionCard
           title="Adaptive Scoring"
-          description="Berechnet optimierte Scoring-Weights basierend auf Feedback-Daten (Pearson-Korrelation)."
-          buttonLabel="Weights berechnen"
+          description="Berechnet optimierte Bewertungsgewichtungen auf Basis von Feedback-Daten (Pearson-Korrelation)."
+          buttonLabel="Gewichtungen berechnen"
           buttonColor="blue"
           loading={triggeringAdapt}
           onTrigger={() => void triggerAction("engine-adapt", setTriggeringAdapt)}
         />
 
         <ActionCard
-          title="Reprocessing"
-          description="Re-klassifiziert und re-scored bestehende Studien mit aktuellen Regeln."
-          buttonLabel="Reprocessing starten"
+          title="Neuverarbeitung"
+          description="Klassifiziert und bewertet bestehende Studien erneut mit aktuellen Regeln."
+          buttonLabel="Neuverarbeitung starten"
           buttonColor="amber"
           loading={triggeringReprocess}
           onTrigger={() => void triggerAction("engine-reprocess", setTriggeringReprocess)}

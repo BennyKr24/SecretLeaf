@@ -32,7 +32,7 @@ const DIFFICULTY_LABEL: Record<string, string> = {
 function evidenceLevel(sourceCount: number): { label: string; cls: string } {
   if (sourceCount >= 5) return { label: 'Hohe Evidenz', cls: 'evidence-high border' };
   if (sourceCount >= 3) return { label: 'Mittlere Evidenz', cls: 'evidence-med border' };
-  return { label: 'Basisartikel', cls: 'evidence-low border' };
+  return { label: 'Grundlagenartikel', cls: 'evidence-low border' };
 }
 
 function WeeklyCard({ article, rank }: { article: TerpiraArticle; rank: number }) {
@@ -98,27 +98,27 @@ export default function WeeklyValueBlocks({
       id: 'wichtig',
       eyebrow: '📌 Diese Woche wichtig',
       eyebrowColor: 'bg-red-50 border-red-200 text-red-700',
-      title: 'Diese Woche wichtig',
-      subtitle: 'Die relevantesten Artikel der Woche – nach Evidenzstärke',
+      title: 'Wichtigste Artikel der Woche',
+      subtitle: 'Die relevantesten Beiträge – nach wissenschaftlicher Abdeckung',
       articles: wichtigArticles,
       linkLabel: 'Alle Studien',
       linkHref: '/studies',
     },
     {
       id: 'grow',
-      eyebrow: '🌱 Grow-Erkenntnisse',
+      eyebrow: '🌱 Grow-Wissen',
       eyebrowColor: 'bg-emerald-50 border-emerald-200 text-emerald-700',
-      title: 'Neue Grow-Erkenntnisse',
-      subtitle: 'Aktuelles Wissen für bessere Ergebnisse im Anbau',
+      title: 'Aktuelle Grow-Erkenntnisse',
+      subtitle: 'Neues Wissen für bessere Ergebnisse beim Cannabis-Anbau',
       articles: growArticles,
       linkLabel: 'Alle Anbau-Artikel',
       linkHref: '/category/anbau',
     },
     {
       id: 'trends',
-      eyebrow: '📈 Markt & Trends',
+      eyebrow: '📈 Markt & Entwicklung',
       eyebrowColor: 'bg-blue-50 border-blue-200 text-blue-700',
-      title: 'Trends im Cannabis-Anbau',
+      title: 'Trends im Cannabis-Bereich',
       subtitle: 'Technologie, Genetik und Methoden im Überblick',
       articles: trendsArticles,
       linkLabel: 'Markt & Beschaffung',
@@ -164,7 +164,7 @@ export default function WeeklyValueBlocks({
           <div className="mx-auto max-w-6xl px-5 py-12">
             <div className="mb-6">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 tracking-widest uppercase mb-2">
-                👥 Social Proof
+                👥 Community-Favoriten
               </span>
               <h2 className="text-xl font-bold tracking-tight text-slate-900">Beliebt bei Growern</h2>
               <p className="mt-1 text-sm text-slate-400">Die meistgelesenen Artikel der Community</p>

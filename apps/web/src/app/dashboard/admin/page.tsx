@@ -30,9 +30,9 @@ type SystemStats = {
 };
 
 const STATUS_CONFIG = {
-  healthy: { label: "Healthy", color: "bg-emerald-100 text-emerald-700", dot: "bg-emerald-500" },
-  degraded: { label: "Degraded", color: "bg-amber-100 text-amber-700", dot: "bg-amber-500" },
-  failing: { label: "Failing", color: "bg-red-100 text-red-700", dot: "bg-red-500" },
+  healthy: { label: "Stabil", color: "bg-emerald-100 text-emerald-700", dot: "bg-emerald-500" },
+  degraded: { label: "Eingeschränkt", color: "bg-amber-100 text-amber-700", dot: "bg-amber-500" },
+  failing: { label: "Fehlerhaft", color: "bg-red-100 text-red-700", dot: "bg-red-500" },
 } as const;
 
 function StatCard({
@@ -170,7 +170,7 @@ export default function AdminOverviewPage() {
               {data.pipelineStatus === "degraded" && (
                 <div className="flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
                   <span>🟡</span>
-                  <span className="font-semibold">Pipeline degraded</span>
+                  <span className="font-semibold">Pipeline eingeschränkt</span>
                   <span className="text-amber-500">—</span>
                   <span>{data.consecutiveFailures} Fehler in Folge. Bitte im Blick behalten.</span>
                   <Link href="/dashboard/admin/engine" className="ml-auto font-semibold underline hover:no-underline">
@@ -181,7 +181,7 @@ export default function AdminOverviewPage() {
               {data.pendingReview > 0 && (
                 <div className="flex items-center gap-3 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700">
                   <span>🔵</span>
-                  <span><span className="font-semibold">{data.pendingReview} Studi{data.pendingReview === 1 ? "e" : "en"}</span> warten auf Review.</span>
+                  <span><span className="font-semibold">{data.pendingReview} Studi{data.pendingReview === 1 ? "e" : "en"}</span> warten auf Prüfung.</span>
                   <Link href="/dashboard/admin/studies?filter=pending" className="ml-auto font-semibold underline hover:no-underline">
                     Jetzt prüfen →
                   </Link>
@@ -200,7 +200,7 @@ export default function AdminOverviewPage() {
               value={data.pendingReview}
               icon="🔍"
               {...(data.pendingReview > 0 ? { accent: "amber" as const } : {})}
-              sub={data.pendingReview > 0 ? "Manuelle Review ausstehend" : "Alles geprüft ✓"}
+              sub={data.pendingReview > 0 ? "Manuelle Prüfung ausstehend" : "Alles geprüft ✓"}
             />
           </div>
 
@@ -243,7 +243,7 @@ export default function AdminOverviewPage() {
 
             {/* Last Run */}
             <div className="rounded-2xl border border-[#d8e8dd] bg-white p-5 shadow-sm">
-              <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-[#8fa89a]">Letzter Pipeline-Run</h2>
+              <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-[#8fa89a]">Letzter Pipeline-Durchlauf</h2>
               {data.lastRun ? (
                 <div className="mt-3">
                   <div className="flex items-center gap-2">
@@ -258,13 +258,13 @@ export default function AdminOverviewPage() {
                       {typeof data.lastRun.metadata.accepted === "number" && (
                         <div className="rounded-xl bg-emerald-50 px-2 py-2 text-center">
                           <p className="text-lg font-bold text-emerald-700">{data.lastRun.metadata.accepted as number}</p>
-                          <p className="text-emerald-600">Accepted</p>
+                          <p className="text-emerald-600">Angenommen</p>
                         </div>
                       )}
                       {typeof data.lastRun.metadata.rejected === "number" && (
                         <div className="rounded-xl bg-red-50 px-2 py-2 text-center">
                           <p className="text-lg font-bold text-red-600">{data.lastRun.metadata.rejected as number}</p>
-                          <p className="text-red-500">Rejected</p>
+                          <p className="text-red-500">Abgelehnt</p>
                         </div>
                       )}
                       {typeof data.lastRun.metadata.durationMs === "number" && (
@@ -284,7 +284,7 @@ export default function AdminOverviewPage() {
               ) : (
                 <div className="mt-4 flex items-center gap-2 text-sm text-[#6b8577]">
                   <span>—</span>
-                  <span>Noch kein Pipeline-Run aufgezeichnet.</span>
+                  <span>Noch kein Pipeline-Durchlauf aufgezeichnet.</span>
                 </div>
               )}
             </div>

@@ -142,7 +142,7 @@ const typeLabels: Record<string, { label: string; cls: string }> = {
   security:    { label: "Sicherheit",   cls: "bg-rose-100    text-rose-700    border-rose-200"    },
   performance: { label: "Performance",  cls: "bg-blue-100    text-blue-700    border-blue-200"    },
   release:     { label: "Release",      cls: "bg-violet-100  text-violet-700  border-violet-200"  },
-  docs:        { label: "Docs",         cls: "bg-slate-100   text-slate-700   border-slate-200"   },
+  docs:        { label: "Doku",         cls: "bg-slate-100   text-slate-700   border-slate-200"   },
   chore:       { label: "Intern",       cls: "bg-slate-100   text-slate-600   border-slate-200"   },
   update:      { label: "Update",       cls: "bg-cyan-100    text-cyan-700    border-cyan-200"    },
 };

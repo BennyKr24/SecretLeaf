@@ -103,7 +103,7 @@ export default function AdminAnalyticsPage() {
         <>
           {/* Overview Metrics */}
           <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <MetricCard label="Feedback Events" value={data.totalFeedbackEvents} />
+            <MetricCard label="Feedback-Ereignisse" value={data.totalFeedbackEvents} />
             <MetricCard label="Study Types" value={Object.keys(data.typeCounts).length} />
             <MetricCard label="Quellen" value={data.topSources.length} />
             <MetricCard

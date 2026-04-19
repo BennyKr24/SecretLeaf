@@ -37,7 +37,7 @@ const DIFFICULTY_DOT: Record<string, string> = {
 function evidenceLevel(sourceCount: number): { label: string; cls: string } {
   if (sourceCount >= 5) return { label: 'Hohe Evidenz', cls: 'evidence-high border' };
   if (sourceCount >= 3) return { label: 'Mittlere Evidenz', cls: 'evidence-med border' };
-  return { label: 'Basisartikel', cls: 'evidence-low border' };
+  return { label: 'Grundlagenartikel', cls: 'evidence-low border' };
 }
 
 /* ── Card components ───────────────────────────────────────────────────── */
@@ -288,24 +288,24 @@ export default async function LandingPage() {
 
           {/* Main headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-[64px] font-bold text-white leading-[1.05] tracking-tight">
-            Das Wissen,<br />
+            Cannabis-Wissen,<br />
             <span className="bg-gradient-to-r from-emerald-300 via-emerald-400 to-teal-300 bg-clip-text text-transparent">
-              das zählt.
+              wissenschaftlich fundiert.
             </span>
           </h1>
 
           <p className="mt-5 text-[17px] text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            {articleCount} evidenzbasierte Fachartikel, belegt durch {sourceCount}+ peer-reviewed Quellen –
-            die führende Wissensplattform für seriöses Cannabis-Wissen.
+            {articleCount} Fachartikel, belegt durch {sourceCount}+ wissenschaftliche Quellen –
+            die umfassendste deutschsprachige Plattform für seriöses Cannabis-Wissen.
           </p>
 
           {/* Trust signal row */}
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             {[
               { icon: '✓', text: `${highEvidenceCount} Artikel mit hoher Evidenz` },
-              { icon: '🔬', text: `${sourceCount}+ verifizierte Quellen` },
-              { icon: '↻', text: `Aktualisiert ${latestDate}` },
-              { icon: '🛡', text: 'Peer-reviewed' },
+              { icon: '🔬', text: `${sourceCount}+ wissenschaftliche Quellen` },
+              { icon: '↻', text: `Zuletzt aktualisiert: ${latestDate}` },
+              { icon: '🛡', text: 'Peer-reviewed & geprüft' },
             ].map(item => (
               <span key={item.text} className="trust-badge">
                 <span>{item.icon}</span>
@@ -322,7 +322,7 @@ export default async function LandingPage() {
                 hover:bg-emerald-500 transition-all duration-200 shadow-lg shadow-emerald-900/50
                 hover:shadow-xl hover:shadow-emerald-800/40 hover:-translate-y-0.5"
             >
-              Jetzt entdecken
+              Studien entdecken
               <svg className="inline ml-2 w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
@@ -344,9 +344,9 @@ export default async function LandingPage() {
           {/* Authority stats */}
           <div className="mt-14 flex flex-wrap justify-center gap-10 border-t border-white/5 pt-10">
             {[
-              { value: articleCount, label: 'Fachartikel', sub: 'kuratiert & geprüft' },
+              { value: articleCount, label: 'Fachartikel', sub: 'redaktionell geprüft' },
               { value: `${sourceCount}+`, label: 'Quellen', sub: 'peer-reviewed' },
-              { value: activeCategories.length, label: 'Themengebiete', sub: 'vollständig abgedeckt' },
+              { value: activeCategories.length, label: 'Fachgebiete', sub: 'umfassend abgedeckt' },
               { value: highEvidenceCount, label: 'Hohe Evidenz', sub: '≥ 5 Quellen belegt' },
             ].map(stat => (
               <div key={stat.label} className="text-center">
@@ -362,8 +362,8 @@ export default async function LandingPage() {
         <div className="relative mx-auto max-w-6xl px-5 pb-16 pt-6">
           <div className="mb-6 flex items-end justify-between">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-500">Top-Empfehlungen</p>
-              <h2 className="mt-1 text-xl font-bold text-white tracking-tight">Die wichtigsten Studien</h2>
+              <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-500">Empfehlungen</p>
+              <h2 className="mt-1 text-xl font-bold text-white tracking-tight">Bestbelegte Studien</h2>
             </div>
             <Link href={"/studies" as Route} className="group flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-emerald-400 transition-colors">
               Alle ansehen
@@ -399,8 +399,8 @@ export default async function LandingPage() {
               <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 tracking-widest uppercase mb-2">
                 🔥 Diese Woche
               </span>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900">Trending</h2>
-              <p className="mt-1 text-sm text-slate-400">Meistgelesene Artikel – nach Evidenzstärke</p>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900">Im Trend</h2>
+              <p className="mt-1 text-sm text-slate-400">Meistgelesene Artikel – sortiert nach Quellenstärke</p>
             </div>
             <Link href={"/studies" as Route} className="group flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-emerald-600 transition-colors">
               Alle ansehen
@@ -455,8 +455,8 @@ export default async function LandingPage() {
               <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 tracking-widest uppercase mb-2">
                 🌱 Beliebt im Anbau
               </span>
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900">Top Anbau-Wissen</h2>
-              <p className="mt-1 text-sm text-slate-400">Die meistgenutzten Artikel für erfolgreichen Anbau</p>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900">Top-Wissen für den Anbau</h2>
+              <p className="mt-1 text-sm text-slate-400">Die meistgelesenen Artikel rund um erfolgreichen Cannabis-Anbau</p>
             </div>
             <Link href={"/category/anbau" as Route} className="group flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-emerald-600 transition-colors">
               Alle Anbau-Artikel
@@ -492,7 +492,7 @@ export default async function LandingPage() {
           <div>
             <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-600">Bestbelegt</p>
             <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">Weitere Top-Studien</h2>
-            <p className="mt-1 text-sm text-slate-400">Artikel mit der höchsten Quellenabdeckung</p>
+            <p className="mt-1 text-sm text-slate-400">Artikel mit der höchsten wissenschaftlichen Abdeckung</p>
           </div>
           <Link href={"/studies" as Route} className="group flex items-center gap-1 text-sm font-medium text-slate-500 hover:text-emerald-600 transition-colors">
             Alle ansehen
@@ -554,10 +554,10 @@ export default async function LandingPage() {
       <section className="border-t border-slate-100 bg-white pb-4">
         <div className="mx-auto max-w-6xl px-5 pt-14">
           <div className="mb-7">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Themengebiete</p>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">Nach Kategorie entdecken</h2>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400">Fachgebiete</p>
+            <h2 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">Nach Thema entdecken</h2>
             <p className="mt-2 text-sm text-slate-500 max-w-2xl">
-              Jede Kategorie enthält kuratierte Artikel – sortiert nach Evidenzstärke und Relevanz.
+              Alle Kategorien enthalten redaktionell geprüfte Artikel – geordnet nach Quellenstärke und Relevanz.
             </p>
           </div>
         </div>
@@ -568,7 +568,7 @@ export default async function LandingPage() {
 
         {/* All categories grid */}
         <div className="mx-auto max-w-6xl px-5 pb-14">
-          <h3 className="mb-5 mt-8 text-lg font-bold text-slate-900">Alle Themengebiete</h3>
+          <h3 className="mb-5 mt-8 text-lg font-bold text-slate-900">Alle Fachgebiete</h3>
           <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {activeCategories.map((cat) => (
               <Link
@@ -635,29 +635,29 @@ export default async function LandingPage() {
             Warum SecretLeaf?
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight max-w-2xl mx-auto">
-            Mehr als ein Blog – eine wissenschaftliche Wissensplattform
+            Nicht nur ein Blog – eine wissenschaftliche Wissensplattform
           </h2>
           <p className="mt-4 text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-            Jeder Artikel ist mit peer-reviewed Quellen belegt. Kein Hörensagen, keine Forenweisheiten –
-            nur geprüftes Wissen auf dem Stand der aktuellen Forschung.
+            Jeder Artikel stützt sich auf peer-reviewed Quellen. Keine Halbwahrheiten, keine Foren-Mythen –
+            nur geprüftes Fachwissen auf dem Stand der aktuellen Forschung.
           </p>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
             {[
               {
                 icon: '🔬',
-                title: 'Peer-reviewed Quellen',
-                text: `Jeder Artikel verweist auf ${articleCount > 0 ? Math.round(sourceCount / articleCount) : 0} Quellen im Schnitt – aus peer-reviewed Fachzeitschriften und wissenschaftlichen Datenbanken.`,
+                title: 'Wissenschaftliche Quellen',
+                text: `Jeder Artikel verweist auf durchschnittlich ${articleCount > 0 ? Math.round(sourceCount / articleCount) : 0} Quellen – aus peer-reviewed Fachzeitschriften und wissenschaftlichen Datenbanken.`,
               },
               {
                 icon: '✓',
                 title: 'Redaktionell geprüft',
-                text: `${highEvidenceCount} Artikel mit hoher Evidenz (≥ 5 Quellen). Regelmäßige Aktualisierungen bei neuen Erkenntnissen.`,
+                text: `${highEvidenceCount} Artikel mit hoher Evidenz (≥ 5 Quellen). Laufende Aktualisierungen bei neuen Forschungsergebnissen.`,
               },
               {
                 icon: '🧠',
-                title: 'Strukturiertes Wissen',
-                text: `${activeCategories.length} Fachkategorien, geordnet nach Thema und Evidenzstärke – für schnelle Orientierung.`,
+                title: 'Strukturiert & übersichtlich',
+                text: `${activeCategories.length} Fachgebiete, geordnet nach Thema und Quellenstärke – für schnelle Orientierung.`,
               },
             ].map(item => (
               <div key={item.title} className="rounded-2xl border border-white/5 bg-white/5 p-6 text-left">
@@ -673,7 +673,7 @@ export default async function LandingPage() {
               href={"/studies" as Route}
               className="rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white hover:bg-emerald-500 transition-all duration-200 shadow-lg shadow-emerald-900/40"
             >
-              Alle Studien ansehen
+              Alle Studien anzeigen
             </Link>
             <Link
               href={"/studies/sources" as Route}
