@@ -514,8 +514,26 @@ function FertilizersPageInner() {
   useEffect(() => {
     if (hasInitializedFromUrl.current) return;
     const qs = new URLSearchParams(searchParams.toString());
+
     const queryValue = qs.get('q') ?? '';
     if (queryValue) setSearchQuery(queryValue);
+
+    const phaseValue = qs.get('phase');
+    if (phaseValue && ['veg', 'flower', 'universal'].includes(phaseValue))
+      setSelectedPhase(phaseValue as FertilizerPhase);
+
+    const baseValue = qs.get('base');
+    if (baseValue && ['mineral', 'organic', 'bio-organic', 'hybrid'].includes(baseValue))
+      setSelectedBase(baseValue as FertilizerBase);
+
+    const costValue = qs.get('cost');
+    if (costValue && ['budget', 'mid', 'premium'].includes(costValue))
+      setSelectedCost(costValue as 'budget' | 'mid' | 'premium');
+
+    const useCaseValue = qs.get('useCase');
+    if (useCaseValue && ['balanced', 'hydro-performance', 'soil-organic', 'budget-smart', 'max-yield'].includes(useCaseValue))
+      setUseCase(useCaseValue as UseCase);
+
     hasInitializedFromUrl.current = true;
   }, [searchParams]);
 
@@ -649,7 +667,7 @@ function FertilizersPageInner() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <Link href={"/database" as Route} className="text-emerald-600 hover:text-emerald-700 text-sm font-medium mb-4 inline-flex items-center gap-2">
-            ← Zurück zur Database
+            ← Katalog-Übersicht
           </Link>
           <div className="mb-3 flex flex-wrap items-center gap-4">
             <Link href={'/tools/plans' as Route} className="text-sm font-medium text-emerald-700 hover:text-emerald-800 underline-offset-2 hover:underline">
@@ -800,9 +818,9 @@ function FertilizersPageInner() {
             <select value={selectedApplication} onChange={(e) => setSelectedApplication(e.target.value as FertilizerApplication | 'all')} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="all">Wasser / Erde</option><option value="water">Für Wasser</option><option value="soil">Für Erde</option><option value="both">Für Wasser + Erde</option></select>
             <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="all">Alle Marken</option>{brands.map((brand) => <option key={brand} value={brand}>{brand}</option>)}</select>
             <select value={selectedCost} onChange={(e) => setSelectedCost(e.target.value as 'budget' | 'mid' | 'premium' | 'all')} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="all">Alle Preise</option><option value="budget">💚 Budget</option><option value="mid">💛 Mittel</option><option value="premium">💜 Premium</option></select>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortField)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="best-match">Best Match (intelligent)</option><option value="name">Nach Name</option><option value="npk-total">Nach NPK-Gesamt</option><option value="ec-min">Nach EC-Min</option><option value="ppfd-min">Nach PPFD-Min</option><option value="cost">Nach Preis</option></select>
-            <select value={useCase} onChange={(e) => setUseCase(e.target.value as UseCase)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="balanced">Use Case: Ausgewogen</option><option value="hydro-performance">Use Case: Hydro Leistung</option><option value="soil-organic">Use Case: Erde & Organisch</option><option value="budget-smart">Use Case: Budget Klar</option><option value="max-yield">Use Case: Maximaler Ertrag</option></select>
-            <select value={viewMode} onChange={(e) => setViewMode(e.target.value as ViewMode)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="grid">Ansicht: Grid</option><option value="list">Ansicht: Liste</option></select>
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortField)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="best-match">Beste Treffer (intelligent)</option><option value="name">Nach Name</option><option value="npk-total">Nach NPK-Gesamt</option><option value="ec-min">Nach EC-Min</option><option value="ppfd-min">Nach PPFD-Min</option><option value="cost">Nach Preis</option></select>
+            <select value={useCase} onChange={(e) => setUseCase(e.target.value as UseCase)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="balanced">Einsatz: Ausgewogen</option><option value="hydro-performance">Einsatz: Hydro Leistung</option><option value="soil-organic">Einsatz: Erde & Organisch</option><option value="budget-smart">Einsatz: Budget Klar</option><option value="max-yield">Einsatz: Maximaler Ertrag</option></select>
+            <select value={viewMode} onChange={(e) => setViewMode(e.target.value as ViewMode)} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value="grid">Ansicht: Kacheln</option><option value="list">Ansicht: Liste</option></select>
             <select value={pageSize} onChange={(e) => setPageSize(Number(e.target.value))} className="w-full px-4 py-2 border border-slate-300 rounded-lg"><option value={12}>12 pro Seite</option><option value={24}>24 pro Seite</option><option value={48}>48 pro Seite</option><option value={72}>72 pro Seite</option></select>
           </div>
 
@@ -825,7 +843,7 @@ function FertilizersPageInner() {
 
           <div className="mt-4 grid gap-3 md:grid-cols-[1.6fr_1fr_auto] items-end">
             <input type="text" value={profileName} onChange={(e) => setProfileName(e.target.value)} placeholder="Filterprofil-Name (z.B. Hydro Pro)" className="w-full px-3 py-2 border border-slate-300 rounded-lg" />
-            <div className="text-xs text-slate-500">Speichert Suche, Filter, Sortierung und Use-Case lokal im Browser.</div>
+            <div className="text-xs text-slate-500">Speichert Suche, Filter, Sortierung und Einsatzzweck lokal im Browser.</div>
             <button
               onClick={() => {
                 const name = profileName.trim();
@@ -947,7 +965,7 @@ function FertilizersPageInner() {
                       <p className="text-sm text-slate-600">{fert.brand}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="px-2 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Match {Math.round(computeMatchScore(fert))}</div>
+                      <div className="px-2 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Treffer {Math.round(computeMatchScore(fert))}</div>
                       <div className={`px-3 py-1 rounded-full text-xs font-semibold ${costColorMap[fert.cost]}`}>{costLabelMap[fert.cost]}</div>
                     </div>
                   </div>
@@ -1011,7 +1029,7 @@ function FertilizersPageInner() {
                                   {offer.shipping != null ? ` · Versand: ${formatEuro(offer.shipping)}` : ' · Versand: n/a'}
                                 </p>
                                   <p className="text-xs text-cyan-700">
-                                    Region: {offer.country ?? 'OTHER'} · Status: {offer.availability ?? 'unknown'}
+                                    Region: {offer.country ?? 'Sonstige'} · Status: {offer.availability ?? 'unbekannt'}
                                   </p>
                               </a>
                             ))}

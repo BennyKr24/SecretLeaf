@@ -11,7 +11,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-displ
 
 export const metadata: Metadata = {
   title: "SecretLeaf – Cannabis Intelligence Platform",
-  description: `Die führende Wissensplattform für evidenzbasiertes Cannabis-Wissen. ${wikiArticles.length}+ Fachartikel, ${sourceRegister.length}+ peer-reviewed Quellen.`
+  description: `Die führende Wissensplattform für evidenzbasiertes Cannabis-Wissen. ${wikiArticles.length}+ Fachartikel, gestützt auf ${sourceRegister.length}+ wissenschaftliche Quellen.`
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -22,10 +22,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* ── Top trust bar ───────────────────────────────────────── */}
         <div className="hidden md:flex items-center justify-center gap-6 border-b border-slate-100 bg-slate-50/80 px-5 py-1.5">
           {[
-            { icon: '✓', text: 'Peer-reviewed Quellen' },
-            { icon: '🔬', text: 'Evidenzbasiert' },
-            { icon: '↻', text: 'Regelmäßig aktualisiert' },
-            { icon: '🛡', text: 'Verifizierte Inhalte' },
+            { icon: '✓', text: 'Wissenschaftlich fundiert' },
+            { icon: '🔬', text: 'Peer-reviewed Quellen' },
+            { icon: '↻', text: 'Laufend aktualisiert' },
+            { icon: '🛡', text: 'Redaktionell geprüft' },
           ].map(item => (
             <span key={item.text} className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500">
               <span className="text-emerald-600">{item.icon}</span>
@@ -52,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 Studien
               </Link>
               <Link href={"/database" as Route} className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium">
-                Datenbank
+                Katalog
               </Link>
               <Link href={"/tools" as Route} className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium">
                 Tools
@@ -93,12 +93,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-sm">🌿</span>
                 <div>
                   <p className="text-sm font-semibold text-slate-900">SecretLeaf</p>
-                  <p className="text-[11px] text-slate-400">Cannabis Intelligence Platform</p>
+                  <p className="text-[11px] text-slate-400">Wissensplattform für Cannabis</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-slate-500">
                 <Link href={"/studies" as Route} className="hover:text-emerald-600 transition-colors">Studien</Link>
-                <Link href={"/database" as Route} className="hover:text-emerald-600 transition-colors">Datenbank</Link>
+                <Link href={("/database" as Route)} className="hover:text-emerald-600 transition-colors">Katalog</Link>
                 <Link href={"/tools" as Route} className="hover:text-emerald-600 transition-colors">Tools</Link>
                 <Link href={"/studies/sources" as Route} className="hover:text-emerald-600 transition-colors">Quellenregister</Link>
               </div>
