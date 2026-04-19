@@ -18,6 +18,14 @@ type PestEntry = {
   stage: PlantStage;
   images: string[];
   short: string;
+  /** Körpergröße Adulte in mm */
+  sizeMm?: string;
+  /** Lebenszyklus Ei→Adult in Tagen (bei Optimaltemp.) */
+  lifecycleDays?: string;
+  /** Optimale Vermehrungsbedingungen */
+  optimalConditions?: string;
+  /** Wirtschaftliche Schadensschwelle / Action Level */
+  actionThreshold?: string;
   symptoms: string[];
   monitoring: string[];
   prevention: string[];
@@ -57,13 +65,17 @@ const pestLexicon: PestEntry[] = [
   {
     id: "spinnmilben",
     name: "Spinnmilben",
-    latinName: "Tetranychus urticae",
+    latinName: "Tetranychus urticae (Koch, 1836)",
     category: "saugend",
     risk: "kritisch",
     growArea: "beides",
     stage: "veg",
     images: ["/terpira/pests/spider-mites.jpg"],
-    short: "Feinste Gespinste und helle Saugpunkte auf Blattoberseiten, exponentielle Ausbreitung in trockener Luft.",
+    sizeMm: "0,3–0,5 mm (Adulte, weiblich)",
+    lifecycleDays: "7–14 Tage (Ei → Adult bei 25 °C)",
+    optimalConditions: "Temp. > 27 °C, RLF < 40 %, trockene Warmluft",
+    actionThreshold: "≥ 5 Adulte / Blatt oder sichtbare Gespinste an > 10 % der Pflanzen",
+    short: "Feinste Gespinste und helle Saugpunkte auf Blattoberseiten, exponentielle Ausbreitung bei trockener Warmluft. Populationsverdopplung alle 3–5 Tage unter Optimalbedingungen.",
     symptoms: [
       "Punktförmige Aufhellungen auf oberen Blattflächen",
       "Feine Gespinste an Blattunterseiten und Triebspitzen",
@@ -92,14 +104,18 @@ const pestLexicon: PestEntry[] = [
   },
   {
     id: "thripse",
-    name: "Thripse",
-    latinName: "Frankliniella occidentalis",
+    name: "Thripse (Kalifornischer Blütenthrips)",
+    latinName: "Frankliniella occidentalis (Pergande, 1895)",
     category: "saugend",
     risk: "hoch",
     growArea: "beides",
     stage: "alle",
     images: ["/terpira/pests/thrips.jpg"],
-    short: "Silbrig glänzende Fraßflächen und schwarze Kotpunkte, sehr mobil und schwer früh zu erkennen.",
+    sizeMm: "1,0–1,7 mm (Adulte)",
+    lifecycleDays: "14–20 Tage (Ei → Adult bei 25 °C)",
+    optimalConditions: "20–30 °C, moderate RLF 50–70 %, Puppenstadien im Substrat",
+    actionThreshold: "≥ 5 Adulte / Blauleimtafel / Woche oder sichtbare Silberflecken",
+    short: "Silbrig glänzende Fraßflächen und schwarze Kotpunkte (Faeces). Sehr mobil, Virusvektor (TSWV), Puppenstadien im Substrat erschweren Bekämpfung.",
     symptoms: [
       "Silbrige Schabspuren entlang Blattadern",
       "Kleine schwarze Kotpunkte auf Blattunterseiten",
@@ -129,13 +145,17 @@ const pestLexicon: PestEntry[] = [
   {
     id: "blattlaeuse",
     name: "Blattläuse",
-    latinName: "Aphidoidea",
+    latinName: "Myzus persicae / Macrosiphum euphorbiae",
     category: "saugend",
     risk: "mittel",
     growArea: "beides",
     stage: "veg",
     images: ["/terpira/pests/aphids.jpg"],
-    short: "Kolonien an Triebspitzen mit Honigtau und sekundärem Schimmelrisiko bei hoher Luftfeuchte.",
+    sizeMm: "1,5–3,0 mm (wingless Adulte)",
+    lifecycleDays: "7–10 Tage je Generation (parthenogenetisch, bis 12 Nymphen/Tag)",
+    optimalConditions: "15–25 °C, hoher N-Gehalt im Pflanzengewebe, geschützte Standorte",
+    actionThreshold: "≥ 1 Kolonie (> 20 Individuen) / Pflanze oder Honigtau sichtbar",
+    short: "Kolonien an Triebspitzen mit Honigtau-Ausscheidung und sekundärem Rußtau-Risiko. Parthenogenetische Vermehrung ermöglicht schnellen Populationsaufbau.",
     symptoms: [
       "Koloniebildung an Triebspitzen und Blattstielen",
       "Klebriger Honigtau auf Blättern",
@@ -164,14 +184,18 @@ const pestLexicon: PestEntry[] = [
   },
   {
     id: "weisse-fliegen",
-    name: "Weiße Fliegen",
-    latinName: "Aleyrodidae",
+    name: "Weiße Fliegen (Gewächshausmottenschildlaus)",
+    latinName: "Trialeurodes vaporariorum (Westwood, 1856)",
     category: "saugend",
     risk: "hoch",
     growArea: "beides",
     stage: "alle",
     images: ["/terpira/pests/whiteflies.jpg"],
-    short: "Aufgewirbelte weiße Insekten bei Berührung, Larven an Blattunterseiten und hohe Honigtau-Last.",
+    sizeMm: "1,0–1,5 mm (Adulte), Larven 0,3–0,7 mm (sessil)",
+    lifecycleDays: "21–30 Tage (Ei → Adult bei 22 °C)",
+    optimalConditions: "20–28 °C, RLF 60–80 %, dichtes Blattwerk",
+    actionThreshold: "≥ 10 Adulte / Gelbtafel / Woche oder Larvenplatten auf > 5 % der Blätter",
+    short: "Aufgewirbelte weiße Adulte bei Pflanzenbewegung. Sessile Larvenstadien an Blattunterseiten saugen Phloem. Hohe Honigtau-Produktion mit Rußtau-Folge.",
     symptoms: [
       "Flugschwarm bei Berührung der Pflanze",
       "Larvenplatten auf Blattunterseiten",
@@ -200,14 +224,18 @@ const pestLexicon: PestEntry[] = [
   },
   {
     id: "schmierlaeuse",
-    name: "Schmierläuse",
-    latinName: "Pseudococcidae",
+    name: "Schmierläuse (Wollläuse)",
+    latinName: "Planococcus citri / Pseudococcus longispinus",
     category: "saugend",
     risk: "hoch",
     growArea: "beides",
     stage: "alle",
     images: ["/terpira/pests/mealybugs.jpg"],
-    short: "Wachsige, weiße Kolonien in Blattachseln und an Stielen mit deutlichem Honigtau- und Schimmelrisiko.",
+    sizeMm: "2,0–5,0 mm (Adulte weiblich, mit Wachsmantel)",
+    lifecycleDays: "30–50 Tage (Ei → Adult bei 25 °C)",
+    optimalConditions: "22–30 °C, geschützte Nischen, hohe N-Düngung",
+    actionThreshold: "Jede sichtbare Kolonie → sofortige Maßnahme (null Toleranz in Blütephase)",
+    short: "Wachsbedeckte Kolonien in Blattachseln und Stammknoten. Honigtau-Produktion fördert Rußtau. Wachsschicht erschwert Kontaktmittel-Penetration.",
     symptoms: [
       "Weiße, watteartige Nester an Knoten und Blattstielen",
       "Klebrige Beläge (Honigtau) auf Blättern",
@@ -236,14 +264,18 @@ const pestLexicon: PestEntry[] = [
   },
   {
     id: "zikaden",
-    name: "Zikaden",
-    latinName: "Cicadellidae",
+    name: "Zikaden (Blattzikaden)",
+    latinName: "Empoasca spp. / Cicadellidae",
     category: "saugend",
     risk: "mittel",
     growArea: "beides",
     stage: "veg",
     images: ["/terpira/pests/leafhoppers.jpg"],
-    short: "Sehr mobile Sauger mit punktförmigen Chlorosen und möglicher Verbreitung von Pflanzenkrankheiten.",
+    sizeMm: "2–4 mm (Adulte), keilförmig, grünlich",
+    lifecycleDays: "20–35 Tage (Ei → Adult)",
+    optimalConditions: "Warme Tage (> 22 °C), Eintrag über Zuluft oder Outdoor-Kontakt",
+    actionThreshold: "≥ 3 Adulte / Gelbtafel / Woche oder punktförmige Chlorosen an > 10 % Blättern",
+    short: "Sehr mobile Sauger mit charakteristischen punktförmigen Chlorosen (Hopper Burn). Potenzielle Vektoren für Phytoplasmen und Pflanzenviren.",
     symptoms: [
       "Feine, helle Punktierungen auf Blattoberseiten",
       "Unruhige, springende Insekten bei Berührung",
@@ -273,13 +305,17 @@ const pestLexicon: PestEntry[] = [
   {
     id: "trauermuecken",
     name: "Trauermücken",
-    latinName: "Sciaridae",
+    latinName: "Bradysia spp. (Sciaridae)",
     category: "substrat",
     risk: "mittel",
     growArea: "indoor",
     stage: "keimling",
     images: ["/terpira/pests/fungus-gnats-real.jpg"],
-    short: "Erwachsene Mücken stören kaum, Larven können junge Wurzeln stark schwächen.",
+    sizeMm: "Adulte 2–4 mm (fliegend), Larven 5–8 mm (glasig-weiß, schwarzer Kopf)",
+    lifecycleDays: "21–28 Tage (Ei → Adult bei 22 °C)",
+    optimalConditions: "Dauernasse Substratoberfläche, Temp. 18–25 °C, hoher Organikanteil",
+    actionThreshold: "≥ 20 Adulte / Gelbtafel / Woche oder sichtbare Larven im oberen Substratbereich",
+    short: "Adulte Mücken (Lästlinge) sind kaum direkt schädlich. Larven fressen an Feinwurzeln und Wurzelhaaren, was v.a. Keimlinge und Jungpflanzen stark schwächt. Sekundärinfektionen (Pythium, Fusarium) werden gefördert.",
     symptoms: [
       "Kleine schwarze Flieger über dem Substrat",
       "Langsames Wachstum bei Jungpflanzen",
@@ -308,14 +344,18 @@ const pestLexicon: PestEntry[] = [
   },
   {
     id: "wurzellaeuse",
-    name: "Wurzelläuse",
-    latinName: "Pemphigus spp.",
+    name: "Wurzelläuse (Cannabis Root Aphid)",
+    latinName: "Rhopalosiphum rufiabdominale / Pemphigus spp.",
     category: "wurzel",
     risk: "kritisch",
     growArea: "indoor",
     stage: "veg",
     images: ["/terpira/pests/root-aphids-real.jpg"],
-    short: "Versteckter Wurzelbefall mit deutlicher Wachstumsbremse trotz scheinbar passender Nährstoffwerte.",
+    sizeMm: "1,0–2,5 mm (wachsig-weiß, leicht mit Perlite verwechselbar)",
+    lifecycleDays: "14–21 Tage je Generation (asexuell, 30–60 Nymphen/Weibchen)",
+    optimalConditions: "Warmes Substrat > 22 °C, stehende Feuchtigkeit, organische Substrate",
+    actionThreshold: "Jeder Nachweis → sofortige Isolierung (Null-Toleranz, da unterirdisch schwer kontrollierbar)",
+    short: "Versteckter Wurzelbefall, der klassische Mangelsymptome mimiert: Welken, Chlorosen, Wachstumsstopp trotz korrekter Düngung. Wachsige Kolonien an Feinwurzeln und Topfwänden. Extrem schwer zu eliminieren.",
     symptoms: [
       "Mangelbild trotz korrekter Düngung",
       "Schwacher Wurzelballen, geringes Wurzelweiß",
@@ -344,14 +384,18 @@ const pestLexicon: PestEntry[] = [
   },
   {
     id: "raupen",
-    name: "Raupen",
-    latinName: "Lepidoptera larvae",
+    name: "Raupen (Eulenfalter / Hanfzünsler)",
+    latinName: "Helicoverpa armigera / Ostrinia nubilalis (Lepidoptera)",
     category: "blattfresser",
     risk: "hoch",
     growArea: "outdoor",
     stage: "bluete",
     images: ["/terpira/pests/caterpillars.jpg"],
-    short: "Starke Fraßschäden an Blättern und Blüten, oft kombiniert mit Botrytis-Risiko.",
+    sizeMm: "10–40 mm (Larven, artabhängig), Eier 0,5 mm (halbkugelig)",
+    lifecycleDays: "25–40 Tage (Ei → Puppe), 1–3 Generationen/Jahr",
+    optimalConditions: "Warme Sommernächte > 18 °C, Falterzuflug ab Dämmerung, dichte Blütenstände",
+    actionThreshold: "≥ 1 Kotkrümel oder Fraßspur / Blütenstand → sofortige Inspektion + BT-Behandlung",
+    short: "Starke Fraß- und Bohrschäden in Blütenständen. Kotkrümel begünstigen Botrytis cinerea (Grauschimmel) als Sekundärpathogen. Nachtaktive Falter legen Eier direkt an Blüten.",
     symptoms: [
       "Große Fraßlöcher in Blättern",
       "Kotkrümel in Blütenständen",
@@ -381,13 +425,17 @@ const pestLexicon: PestEntry[] = [
   {
     id: "minierfliegen",
     name: "Minierfliegen",
-    latinName: "Liriomyza spp.",
+    latinName: "Liriomyza trifolii / L. huidobrensis (Agromyzidae)",
     category: "blattfresser",
     risk: "mittel",
     growArea: "beides",
     stage: "veg",
     images: ["/terpira/pests/leaf-miners-real.jpg"],
-    short: "Charakteristische Blatt-Tunnel reduzieren Assimilation und öffnen Eintrittspforten.",
+    sizeMm: "Adulte 1,5–2,5 mm (schwarz-gelb), Larven 2–3 mm in Blattmesophyll",
+    lifecycleDays: "17–25 Tage (Ei → Adult bei 25 °C)",
+    optimalConditions: "20–30 °C, eingeschleppte Adulte über Zuluft oder Pflanzenmaterial",
+    actionThreshold: "≥ 3 aktive Minen / Pflanze oder > 15 % Blattfläche geschädigt",
+    short: "Charakteristische serpentinenartige Minen im Blattmesophyll reduzieren Photosyntheseleistung um 15–40 % pro befallenes Blatt. Einstichstellen der Adulten dienen als Eintrittspforten für Pathogene.",
     symptoms: [
       "Weiße, serpentinenartige Fraßgänge",
       "Punktförmige Einstichstellen",
@@ -412,6 +460,353 @@ const pestLexicon: PestEntry[] = [
       "Nützlinge + Hygiene kombiniert einsetzen",
       "Rotationsprinzip für Kontaktmittel",
       "Nachkontrolle über mindestens 2 Wochen"
+    ]
+  },
+  // === NEU: BREITMILBEN (häufig übersehen!) ===
+  {
+    id: "breitmilben",
+    name: "Breitmilben (Broad Mites)",
+    latinName: "Polyphagotarsonemus latus (Banks, 1904)",
+    category: "saugend",
+    risk: "kritisch",
+    growArea: "indoor",
+    stage: "veg",
+    images: ["/terpira/pests/broad-mites.jpg"],
+    sizeMm: "0,1–0,2 mm (mit bloßem Auge NICHT sichtbar, Mikroskop ab 60× nötig)",
+    lifecycleDays: "5–7 Tage (Ei → Adult bei 25 °C, extrem schnell)",
+    optimalConditions: "Temp. 20–30 °C, RLF > 60 %, geschützte Triebspitzen und Blütenansätze",
+    actionThreshold: "Jeder Verdacht (verkrüppelte Triebspitzen) → sofortige Mikroskopkontrolle + Behandlung",
+    short: "Mikroskopisch kleine Milben (0,2 mm), die mit ihrer toxischen Speichelinjizierung massives Verkrüppeln junger Triebe verursachen. Wird häufig als Nährstoffmangel, Herbizidschaden oder Genetikfehler fehldiagnostiziert. Eine der am häufigsten übersehenen Schädlinge im Cannabis-Anbau.",
+    symptoms: [
+      "Verkrüppelte, glasig-glänzende Triebspitzen (Epinastie)",
+      "Blattränder rollen sich nach unten, werden ledrig und spröde",
+      "Neuwachstum wirkt verdickt, verdreht, ‚aufgeblasen'",
+      "Scheinbar nährstoffbedingte Wachstumsstörung, reagiert nicht auf Düngung",
+      "Blütenansätze verformen sich, ‚popcorn buds' ohne Trichome"
+    ],
+    monitoring: [
+      "Mikroskop ab 60× an Triebspitzen (Adulte und glänzende Eier auf Blattunterseite)",
+      "Vergleich gesunder vs. verdächtiger Triebe unter gleichen Bedingungen",
+      "Ausschlussdiagnose: Normaler pH/EC, kein Herbizidkontakt → Breitmilbenverdacht"
+    ],
+    prevention: [
+      "Strikte Quarantäne aller Neuzugänge (min. 14 Tage) mit Mikroskop-Check",
+      "Mutterpflanzen regelmäßig auf Triebspitzenanomalien prüfen",
+      "Klimaführung optimieren: RLF-Schwankungen > 80 % vermeiden"
+    ],
+    treatmentBio: [
+      "Raubmilben Amblyseius andersoni oder A. californicus (breites Beutespektrum)",
+      "Neem-Azadirachtin-Präparate nach Herstellervorgabe, 3× im 5-Tage-Intervall",
+      "Kaliseife-Sprühung als Kontaktmittel auf Triebspitzen und junge Blätter"
+    ],
+    treatmentIntegrated: [
+      "Befallene Triebspitzen sofort entfernen und entsorgen (nicht kompostieren)",
+      "Ablufttemperatur kurzzeitig > 33 °C senkt Milbenfertilität (Hitzeschock-Methode)",
+      "3 Behandlungszyklen im 5-Tage-Abstand, um alle Lebensstadien zu erfassen",
+      "Nachkontrolle unter Mikroskop an Tag 7, 14 und 21 nach letzter Behandlung"
+    ]
+  },
+
+  // === NEU: ROSTMILBEN (Cannabis-spezifisch) ===
+  {
+    id: "rostmilben",
+    name: "Hanfrostmilbe (Hemp Russet Mite)",
+    latinName: "Aculops cannabicola (Farkas, 1960)",
+    category: "saugend",
+    risk: "kritisch",
+    growArea: "beides",
+    stage: "alle",
+    images: ["/terpira/pests/russet-mites.jpg"],
+    sizeMm: "0,15–0,20 mm (nur unter Mikroskop sichtbar, wurmförmig)",
+    lifecycleDays: "21–30 Tage je Generation bei 25 °C",
+    optimalConditions: "Temp. 22–30 °C, trockenes Klima, besiedelt Trichomzonen",
+    actionThreshold: "Bronzefärbung an Basalblättern → Befall oft schon fortgeschritten. Prävention entscheidend.",
+    short: "Cannabis-spezifischer Eriophyid-Milbe (nur 0,2 mm). Besiedelt bevorzugt Trichomzonen und zerstört Harzdrüsen. Aufwärtswanderung von unten nach oben, oft erst bei massivem Befall der Blüten bemerkt.",
+    symptoms: [
+      "Gelblich-bronzene Verfärbung der unteren Blätter (Aufwärtsprogression)",
+      "Blattränder rollen sich nach oben, Blätter wirken glänzend/ölig",
+      "Trichome werden zerstört: Blüten ohne Harz, flache/braune Drüsenköpfe",
+      "Gesamte Pflanze wirkt ‚ausgetrocknet' trotz normaler Bewässerung",
+      "Schwerer Befall: Kompletter Blattverlust von unten nach oben"
+    ],
+    monitoring: [
+      "30-60× Handmikroskop: Wurmförmige Milben (4 Beine, kein Spinngewebe) an Blattstielen und Trichombasen",
+      "UV-Taschenlampe: Beschädigte Trichome fluoreszieren anders als gesunde",
+      "Basalblätter monatlich auf Bronzefärbung kontrollieren, besonders in der Blütephase"
+    ],
+    prevention: [
+      "Quarantäne und Mikroskop-Screening jeder Neupflanze (Stiel und Blattunterseite)",
+      "Separate Kleidung/Handschuhe pro Raum (Milben haften an Textilien)",
+      "Mutterpflanzen-Bestand regelmäßig rotieren und Altstöcke entsorgen"
+    ],
+    treatmentBio: [
+      "Schwefelbasierte Kontaktmittel in Vegetationsphase (vor Blüte!), 2× im Wochenintervall",
+      "Neemöl-Sprühung wöchentlich in Veg, Mindestabstand 3 Wochen vor Ernte",
+      "Raubmilben Amblyseius andersoni als Dauerbesatz präventiv"
+    ],
+    treatmentIntegrated: [
+      "Befallene Pflanzen isolieren, befallene untere Blattschichten komplett entlauben",
+      "Sprühen von unten nach oben (Milben wandern aufwärts)",
+      "Befallene Blütenbestände bei starkem Befall nicht erntefähig – Totalverlust vermeiden durch Frühintervention",
+      "Post-Harvest: Raum komplett reinigen, 48h > 35 °C oder Ozon-Behandlung"
+    ]
+  },
+
+  // === NEU: SCHILDLÄUSE ===
+  {
+    id: "schildlaeuse",
+    name: "Schildläuse",
+    latinName: "Coccidae / Diaspididae",
+    category: "saugend",
+    risk: "mittel",
+    growArea: "indoor",
+    stage: "alle",
+    images: ["/terpira/pests/scale-insects.jpg"],
+    sizeMm: "1–6 mm (flach-oval, sessil, braun/schwarz Schild)",
+    lifecycleDays: "30–60 Tage (artabhängig)",
+    optimalConditions: "Warme, geschützte Standorte, trockene Bedingungen, verholzte Stängel",
+    actionThreshold: "≥ 5 sessile Schilder / Stängelabschnitt (30 cm)",
+    short: "Sessile Sauger mit festem Schutzschild auf Stängeln und Blattstielen. Oft spät entdeckt, da immobil und gut getarnt. Honigtau-Produktion und Schwächung der Pflanze.",
+    symptoms: [
+      "Braune, ovale, erhabene Krusten an Stängeln und Blattstielen",
+      "Klebrige Honigtau-Flecken unter befallenen Bereichen",
+      "Lokale Wachstumsdepression, Gelbfärbung benachbarter Blätter",
+      "Schwer abkratzbare ‚Punkte' (nicht mit Substratpartikeln verwechseln)"
+    ],
+    monitoring: [
+      "Stängel und Verzweigungspunkte visuell inspizieren (alle 2 Wochen)",
+      "Honigtau-Streifen auf benachbarten Blättern als Frühindikator",
+      "Leichtes Abkratzen verdächtiger ‚Punkte' → weicher Körper darunter = Schildlaus"
+    ],
+    prevention: [
+      "Quarantäne-Prüfung an Stängeln bei Neuzugängen",
+      "Regelmäßige Stängelinspektion v.a. an Mutterpflanzen und Langzeitkulturen",
+      "Übermäßige Stickstoffdüngung vermeiden (weichzelliges Gewebe wird bevorzugt)"
+    ],
+    treatmentBio: [
+      "Mechanisches Entfernen per Pinzette oder Zahnbürste + Isopropanol (70 %)",
+      "Nützlinge: Marienkäfer (Chilocorus spp.) oder Schlupfwespen (Metaphycus spp.)",
+      "Ölpräparate (Rapsöl 2 %) im Intervall, um Crawler-Stadien zu treffen"
+    ],
+    treatmentIntegrated: [
+      "Starke Herde: Betroffene Triebabschnitte zurückschneiden und entsorgen",
+      "Crawler-Wanderphase abpassen (einziges mobiles Stadium, 1–2× pro Generation)",
+      "Nachkontrolle 14 und 28 Tage nach Behandlung auf Rekolonisation"
+    ]
+  },
+
+  // === NEU: SPRINGSCHWÄNZE (Differentialdiagnose) ===
+  {
+    id: "springschwaenze",
+    name: "Springschwänze (Collembola)",
+    latinName: "Collembola (diverse Gattungen)",
+    category: "substrat",
+    risk: "niedrig",
+    growArea: "indoor",
+    stage: "alle",
+    images: ["/terpira/pests/springtails.jpg"],
+    sizeMm: "0,5–3 mm (weiß bis grau, springen bei Störung)",
+    lifecycleDays: "14–21 Tage je Generation",
+    optimalConditions: "Feuchtes Substrat, hoher Organikanteil, Temp. 15–25 °C",
+    actionThreshold: "In der Regel harmlos – kein Eingriff nötig. Nur bei Massenbefall an Sämlingen relevant.",
+    short: "Kleine, springende Substratbewohner, die meist organisches Material und Pilze fressen. Werden oft fälschlich als Schädlinge behandelt, sind aber Nützlinge im Bodenökosystem. Nur bei extremem Massenbefall und Keimlingen relevant.",
+    symptoms: [
+      "Kleine weiße/graue Tiere springen bei Substratberührung weg",
+      "Fraßspuren an feinen Wurzelhaaren bei Massenbefall (selten)",
+      "In der Regel keine sichtbaren Pflanzenschäden"
+    ],
+    monitoring: [
+      "Substratoberfläche beobachten nach Gießen",
+      "Bei Verdacht: Feuchtes Tuch über Substrat legen und nach 24h kontrollieren",
+      "Nicht mit Trauermücken-Larven oder Wurzelläusen verwechseln"
+    ],
+    prevention: [
+      "Substratfeuchte nach Bedarf regulieren, nicht dauerhaft nass",
+      "Vermeidung übermäßiger organischer Auflagen (Mulch, Kompost) auf der Oberfläche"
+    ],
+    treatmentBio: [
+      "Meist kein Eingriff nötig – sind Teil eines gesunden Bodenlebens",
+      "Bei Massenbefall: Substratoberfläche abtrocknen lassen",
+      "Kein Gift einsetzen – eher Klima/Gießregime anpassen"
+    ],
+    treatmentIntegrated: [
+      "Gießfrequenz reduzieren, Drainage verbessern",
+      "Nur bei nachweislichem Wurzelschaden an jungen Sämlingen: Nematoden (Steinernema) als Ultima Ratio"
+    ]
+  },
+
+  // === NEU: PFLANZENNEMATODEN (Wurzelgallennematoden) ===
+  {
+    id: "wurzelnematoden",
+    name: "Wurzelgallennematoden",
+    latinName: "Meloidogyne spp. (M. incognita, M. javanica)",
+    category: "wurzel",
+    risk: "hoch",
+    growArea: "beides",
+    stage: "veg",
+    images: ["/terpira/pests/root-knot-nematodes.jpg"],
+    sizeMm: "0,5–1,0 mm (Larven, mikroskopisch; Gallen sichtbar)",
+    lifecycleDays: "25–35 Tage je Generation bei 25 °C",
+    optimalConditions: "Warmes Substrat > 20 °C, sandige/lockere Böden, wiederverwendete Erde",
+    actionThreshold: "Sichtbare Gallen an Wurzeln → Befall bestätigt. Prävention entscheidend.",
+    short: "Endoparasitische Rundwürmer, die charakteristische Gallen (Knoten) an Wurzeln verursachen. Beeinträchtigte Wasser- und Nährstoffaufnahme führt zu Welke, Chlorosen und Kümmerwuchs. Bodenmüdigkeit bei wiederholtem Anbau.",
+    symptoms: [
+      "Unregelmäßige Verdickungen (Gallen) an Feinwurzeln und Hauptwurzeln",
+      "Welke trotz ausreichender Bewässerung",
+      "Chlorosen und ungleichmäßiges Wachstum im Bestand",
+      "Wurzelsystem braun, knotig, reduzierte Seitenwurzelbildung"
+    ],
+    monitoring: [
+      "Wurzelkontrolle bei Umtopfen oder Verdacht (Gallen mit Lupe bestätigen)",
+      "Bodenproben-Analyse bei wiederverwendeten Substraten",
+      "Schwache Pflanzen trotz guter Düngung als Warnsignal"
+    ],
+    prevention: [
+      "Nur frisches, steriles Substrat verwenden – gebrauchte Erde nie ohne Sterilisation wiederverwenden",
+      "Zugekaufte Stecklinge und Jungpflanzen: Wurzeln auf Gallen kontrollieren",
+      "Antagonistische Pilze (Paecilomyces lilacinus) präventiv einsetzen"
+    ],
+    treatmentBio: [
+      "Nützliche Nematoden (Steinernema, Heterorhabditis) sind NICHT gegen Meloidogyne wirksam – keine Verwechslung!",
+      "Biologische Bodenentseuchung: Kreuzblütler-Gründüngung (Biofumigation mit Senf/Ölrettich)",
+      "Pilzpräparate mit Purpureocillium lilacinum gegen Nematoden-Eier"
+    ],
+    treatmentIntegrated: [
+      "Befallenes Substrat komplett entsorgen (nicht im Garten verwenden)",
+      "Solarisation bei Outdoor: Folie auf nassem Boden für 4–6 Wochen",
+      "Resistente Genetik bevorzugen bei bekanntem Nematoden-Standort",
+      "Fruchtfolge bei wiederholtem Outdoor-Anbau: Cannabis-Freie Rotation alle 2 Zyklen"
+    ]
+  },
+
+  // === NEU: ERDFLÖHE (Outdoor) ===
+  {
+    id: "erdfloehe",
+    name: "Erdflöhe (Hanferdfloh)",
+    latinName: "Psylliodes attenuatus (Koch, 1803) / Phyllotreta spp.",
+    category: "blattfresser",
+    risk: "mittel",
+    growArea: "outdoor",
+    stage: "veg",
+    images: ["/terpira/pests/flea-beetles.jpg"],
+    sizeMm: "1,5–3,0 mm (metallisch-grün/blau/schwarz, kräftige Hinterbeine)",
+    lifecycleDays: "30–45 Tage (Ei → Adult), 1–2 Generationen/Jahr",
+    optimalConditions: "Warme, trockene Tage (> 20 °C), Outdoor-Direktkultur, lockerer Boden",
+    actionThreshold: "≥ 20 % Blattfläche mit Lochfraß oder > 5 Käfer/Pflanze bei Jungpflanzen",
+    short: "Kleine, springende Blattkäfer mit charakteristischem Lochfraß (‚Schrotschuss-Muster'). Psylliodes attenuatus ist wirtsspezifisch auf Hanf. Hauptschaden an Keimlingen und Jungpflanzen, etablierte Pflanzen tolerieren mäßigen Befall.",
+    symptoms: [
+      "Rundliche Löcher (1–3 mm) im ‚Schrotschuss-Muster' auf Blättern",
+      "Skelettfraß an Keimblattern und ersten echten Blättern kann Totalausfall verursachen",
+      "Käfer springen bei Annäherung sofort weg (diagnostisch)",
+      "Larven im Boden können an Wurzeln fressen (sekundär)"
+    ],
+    monitoring: [
+      "Visuelle Kontrolle junger Pflanzen, besonders ersten 4 Wochen nach Auspflanzung",
+      "Leimtafeln auf Bodenhöhe (gelb/weiß) zum Populationsmonitoring",
+      "Morgens oder bei Kühle prüfen (Käfer weniger sprungaktiv)"
+    ],
+    prevention: [
+      "Direktsaat-Keimlinge mit Vlies oder Kulturschutznetz abdecken (< 0,8 mm Maschenweite)",
+      "Jungpflanzen indoor vorziehen und erst als kräftige Pflanzen auspflanzen",
+      "Mulch: Feuchter Bodenmulch reduziert Käfer-Aktivität"
+    ],
+    treatmentBio: [
+      "Neem-basierte Spritzungen (Azadirachtin) als Fraßhemmer bei starkem Befall",
+      "Spinosad als Bio-Spritzung zugelassen in vielen EU-Ländern für Käfer",
+      "Nützlings-Nematoden (Steinernema carpocapsae) gegen Larven im Boden"
+    ],
+    treatmentIntegrated: [
+      "Kulturschutznetze sind die effektivste Maßnahme (mechanische Barriere)",
+      "Trockenstress vermeiden (gestresste Pflanzen werden stärker befallen)",
+      "Fangpflanzen (Senf) am Feldrand können Käfer ablenken",
+      "Kräftige Pflanzen tolerieren 20–30 % Fraß ohne signifikanten Ertragsverlust"
+    ]
+  },
+
+  // === NEU: SCHNECKEN (Outdoor) ===
+  {
+    id: "schnecken",
+    name: "Nacktschnecken",
+    latinName: "Arion vulgaris / Deroceras reticulatum (Gastropoda)",
+    category: "blattfresser",
+    risk: "hoch",
+    growArea: "outdoor",
+    stage: "keimling",
+    images: ["/terpira/pests/slugs.jpg"],
+    sizeMm: "20–120 mm (artabhängig), Eier 2–3 mm (kugelrund, transparent)",
+    lifecycleDays: "30–40 Tage (Ei → fressaktiv), bis 400 Eier/Tier/Jahr",
+    optimalConditions: "Feucht, 10–20 °C, Nachtaktivität, Regenphasen",
+    actionThreshold: "Jeder sichtbare Fraßschaden an Keimlingen → sofort handeln",
+    short: "Nachtaktive Weichtiere mit massivem Fraßpotenzial, besonders an Keimlingen und Jungpflanzen. Können eine Jungpflanze in einer Nacht komplett vernichten. Schleimspuren als diagnostisches Merkmal.",
+    symptoms: [
+      "Große, unregelmäßige Fraßlöcher an Blatträndern und -flächen",
+      "Keimlinge und junge Blätter über Nacht komplett abgefressen",
+      "Silbrig-glänzende Schleimspuren auf Blättern, Substrat und Töpfen",
+      "Kotkrümel (dunkel, kegelförmig) nahe Fraßstellen"
+    ],
+    monitoring: [
+      "Abendliche/nächtliche Kontrolle mit Taschenlampe (Hauptaktivität 22–04 Uhr)",
+      "Bierfallen: Becher bodenbündig eingraben (Monitoring, nicht Bekämpfung)",
+      "Schleimspuren morgens auf Substrat und Pflanze prüfen"
+    ],
+    prevention: [
+      "Schneckenzaun um Anbaufläche (Kupferband oder Spezialzaun)",
+      "Substratoberfläche trocken halten, kein Mulch direkt am Stängel",
+      "Umfeld aufräumen: Verstecke (Bretter, Steine, Laub) entfernen",
+      "Pflanzen in erhöhte Gefäße oder auf Kupferfolie-Untersetzer stellen"
+    ],
+    treatmentBio: [
+      "Eisen-III-Phosphat-Schneckenkorn (biologisch abbaubar, unbedenklich für Igel/Vögel)",
+      "Nematoden Phasmarhabditis hermaphrodita als Gießmittel bei > 5 °C Bodentemp.",
+      "Mechanisches Absammeln abends (konsequent, über 2–3 Wochen)"
+    ],
+    treatmentIntegrated: [
+      "Kupferband um Töpfe/Hochbeete (Kupfer = Kontaktbarriere für Schnecken)",
+      "Förderung natürlicher Fressfeinde: Igel, Laufkäfer, Blindschleichen, Enten",
+      "Kombination aus Barrieren + Schneckenkorn + Absammeln für optimale Wirkung",
+      "Kein Metaldehyd verwenden (giftig für Haustiere und Nützlinge)"
+    ]
+  },
+
+  // === NEU: GALLMÜCKEN ===
+  {
+    id: "gallmuecken",
+    name: "Gallmücken (Blattgallmücke)",
+    latinName: "Contarinia spp. / Dasineura spp. (Cecidomyiidae)",
+    category: "blattfresser",
+    risk: "mittel",
+    growArea: "outdoor",
+    stage: "veg",
+    images: ["/terpira/pests/gall-midges.jpg"],
+    sizeMm: "Adulte 1–3 mm (zierliche Mücken), Larven 2–3 mm (orange-rot)",
+    lifecycleDays: "14–21 Tage je Generation",
+    optimalConditions: "Feuchte Bedingungen, Temperatur 15–25 °C, dichter Bestand",
+    actionThreshold: "≥ 5 % der Blätter/Triebe mit Gallenbildung",
+    short: "Winzige Mücken, deren Larven in Pflanzenge webe Gallen (knotenartige Wucherungen) induzieren. Beeinträchtigen Photosynthese und Nährstofftransport lokal. In Cannabis eher selten, aber zunehmend bei Outdoor-Kulturen.",
+    symptoms: [
+      "Kleine, knotenartige Wucherungen (Gallen) an Blättern, Stielen oder Triebspitzen",
+      "Verdrehte oder eingerollte Blattbereiche mit orangenen Larven im Inneren",
+      "Lokale Wachstumsdepression, verkrüppelte Triebspitzen"
+    ],
+    monitoring: [
+      "Blätter und Triebe auf ungewöhnliche Verdickungen/Verformungen prüfen",
+      "Gallen vorsichtig öffnen → orange/rote Larven bestätigen Gallmücken",
+      "Gelbtafeln gegen adulte Mücken"
+    ],
+    prevention: [
+      "Gute Belüftung des Bestands",
+      "Befallene Pflanzenteile frühzeitig entfernen und entsorgen",
+      "Unkrautmanagement am Feldrand (Alternativwirte reduzieren)"
+    ],
+    treatmentBio: [
+      "Befallene Triebe/Blätter abschneiden und vernichten (Larven in Gallen)",
+      "Nützlinge: Diverse Gallmücken-Parasitoide (Platygaster, Torymus spp.)",
+      "Neem-basierte Mittel gegen adulte Mücken zur Eiablage-Hemmung"
+    ],
+    treatmentIntegrated: [
+      "Mechanische Entfernung befallener Pflanzenteile ist effektivste Maßnahme",
+      "Bei schwerem Befall: Bestand ausdünnen für bessere Luftzirkulation",
+      "Nachkontrolle 2–3 Wochen nach Entfernung auf Neubefall"
     ]
   }
 ];
@@ -458,6 +853,48 @@ const beneficialMatrix: BeneficialRow[] = [
     targetStage: "Larven in Blattminen",
     deploymentWindow: "Früher Befall",
     notes: "Befallene Blätter parallel entfernen und dokumentieren."
+  },
+  {
+    pest: "Breitmilben",
+    beneficial: "Amblyseius andersoni / A. californicus",
+    targetStage: "Alle mobilen Stadien",
+    deploymentWindow: "Präventiv ab Veg-Phase und bei Verdacht",
+    notes: "Breitmilben sind < 0,2 mm – visuelle Kontrolle unter Mikroskop nötig."
+  },
+  {
+    pest: "Rostmilben",
+    beneficial: "Amblyseius andersoni (Dauerbesatz)",
+    targetStage: "Adulte + Nymphen",
+    deploymentWindow: "Präventiv, dauerhaft in Risikokulturen",
+    notes: "Schwefel-basierte Mittel in Veg ergänzen. Rostmilben wandern aufwärts."
+  },
+  {
+    pest: "Wurzelläuse",
+    beneficial: "Steinernema feltiae + Beauveria bassiana",
+    targetStage: "Larven/Nymphen im Substrat",
+    deploymentWindow: "Bei erstem Nachweis, Substratapplikation",
+    notes: "Isolierung befallener Pflanzen essenziell. Schwer kontrollierbar, Prävention vorrangig."
+  },
+  {
+    pest: "Raupen / Hanfzünsler",
+    beneficial: "Trichogramma spp. (Ei-Parasitoide)",
+    targetStage: "Eier (vor Larvenentwicklung)",
+    deploymentWindow: "Präventiv in Blütephase bei Falterdruck",
+    notes: "Kombinieren mit BT-Spritzung für maximale Wirkung."
+  },
+  {
+    pest: "Schnecken",
+    beneficial: "Phasmarhabditis hermaphrodita (Nematoden)",
+    targetStage: "Jungschnecken im Boden",
+    deploymentWindow: "Ab 5 °C Bodentemperatur, feucht ausbringen",
+    notes: "Eisen-III-Phosphat-Schneckenkorn als Ergänzung."
+  },
+  {
+    pest: "Erdflöhe",
+    beneficial: "Steinernema carpocapsae (Nematoden)",
+    targetStage: "Larven im Boden",
+    deploymentWindow: "Vor/während Hauptflugzeit",
+    notes: "Kulturschutznetze zusätzlich als mechanische Barriere."
   }
 ];
 
@@ -511,6 +948,31 @@ const externalSources: ExternalSource[] = [
     title: "Western flower thrips - Wikipedia",
     url: "https://en.wikipedia.org/wiki/Frankliniella_occidentalis",
     kind: "Artprofil"
+  },
+  {
+    title: "Broad mite (Polyphagotarsonemus latus) - Wikipedia",
+    url: "https://en.wikipedia.org/wiki/Polyphagotarsonemus_latus",
+    kind: "Artprofil"
+  },
+  {
+    title: "Hemp russet mite (Aculops cannabicola) - CABI",
+    url: "https://www.cabidigitallibrary.org/doi/10.1079/cabicompendium.109039",
+    kind: "Artprofil"
+  },
+  {
+    title: "Root-knot nematode (Meloidogyne) - Wikipedia",
+    url: "https://en.wikipedia.org/wiki/Meloidogyne",
+    kind: "Artprofil"
+  },
+  {
+    title: "Cannabis pest management review – McPartland (2018)",
+    url: "https://doi.org/10.1079/9781786394835.0000",
+    kind: "Fachbuch"
+  },
+  {
+    title: "IPM for Cannabis – Oregon State University Extension",
+    url: "https://extension.oregonstate.edu/crop-production/cannabis",
+    kind: "Behörden-Leitfaden"
   }
 ];
 
@@ -564,6 +1026,31 @@ const symptomOptions: SymptomOption[] = [
     id: "honigtau",
     label: "Klebriger Honigtau",
     keywords: ["honigtau", "klebrig"]
+  },
+  {
+    id: "verkrueppelt",
+    label: "Verkrüppelte / verdrehte Triebspitzen",
+    keywords: ["verkrüppel", "triebspitzen", "verdreht", "epinastie", "glasig"]
+  },
+  {
+    id: "bronze",
+    label: "Bronzefärbung / glänzende Blätter",
+    keywords: ["bronze", "glänz", "ölig", "rostmilb", "trichom"]
+  },
+  {
+    id: "gallen",
+    label: "Gallen / Knoten an Wurzeln oder Blättern",
+    keywords: ["gallen", "knoten", "verdickung", "wucherung", "nematod"]
+  },
+  {
+    id: "schleimspuren",
+    label: "Schleimspuren / Nachtfraß",
+    keywords: ["schleim", "schneck", "nachtfraß", "nacht"]
+  },
+  {
+    id: "lochfrass",
+    label: "Schrotschuss-Lochfraß",
+    keywords: ["loch", "schrotschuss", "erdfloh", "rund"]
   }
 ];
 
@@ -877,6 +1364,16 @@ export default function PestLexiconPage() {
                   <p className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 font-semibold text-slate-700">Umgebung: {areaLabel[entry.growArea]}</p>
                   <p className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 font-semibold text-slate-700">Phase: {stageLabel[entry.stage]}</p>
                 </div>
+
+                {/* Professioneller Steckbrief */}
+                {(entry.sizeMm ?? entry.lifecycleDays ?? entry.optimalConditions ?? entry.actionThreshold) && (
+                  <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50/50 p-3 text-xs text-slate-700 space-y-1">
+                    {entry.sizeMm && <p><span className="font-semibold text-slate-900">Größe:</span> {entry.sizeMm}</p>}
+                    {entry.lifecycleDays && <p><span className="font-semibold text-slate-900">Lebenszyklus:</span> {entry.lifecycleDays}</p>}
+                    {entry.optimalConditions && <p><span className="font-semibold text-slate-900">Optimalbedingungen:</span> {entry.optimalConditions}</p>}
+                    {entry.actionThreshold && <p><span className="font-semibold text-slate-900">Schadensschwelle:</span> {entry.actionThreshold}</p>}
+                  </div>
+                )}
 
                 <details className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
                   <summary className="cursor-pointer text-sm font-semibold text-slate-800">Vollprofil öffnen</summary>
