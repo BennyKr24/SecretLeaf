@@ -51,6 +51,17 @@ export const toolRegistry: ToolMeta[] = [
     relatedToolSlugs: ["licht-rechner", "naehrstoff-rechner"],
     coverageKey: "ertrag",
   },
+  {
+    slug: "vpd",
+    title: "VPD-Rechner",
+    shortDescription: "Optimalen VPD-Wert für jede Wachstumsphase berechnen",
+    category: "klima",
+    icon: "💨",
+    difficulty: "fortgeschritten",
+    relatedArticleSlugs: [],
+    relatedToolSlugs: ["abluft-rechner", "licht-rechner"],
+    coverageKey: "klima",
+  },
 ];
 
 export function getToolBySlug(slug: string): ToolMeta | undefined {

@@ -19,21 +19,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="de">
       <body className={`${manrope.variable} ${spaceGrotesk.variable}`}>
 
-        {/* ── Top trust bar ───────────────────────────────────────── */}
-        <div className="hidden md:flex items-center justify-center gap-6 border-b border-slate-100 bg-slate-50/80 px-5 py-1.5">
-          {[
-            { icon: '✓', text: 'Wissenschaftlich fundiert' },
-            { icon: '🔬', text: 'Peer-reviewed Quellen' },
-            { icon: '↻', text: 'Laufend aktualisiert' },
-            { icon: '🛡', text: 'Redaktionell geprüft' },
-          ].map(item => (
-            <span key={item.text} className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500">
-              <span className="text-emerald-600">{item.icon}</span>
-              {item.text}
-            </span>
-          ))}
-        </div>
-
         {/* ── Main navigation ─────────────────────────────────────── */}
         <nav className="sticky top-0 z-40 w-full border-b border-slate-100 bg-white/95 backdrop-blur-xl">
           <div className="max-w-6xl mx-auto px-5 h-[60px] flex items-center gap-6">
@@ -46,19 +31,44 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {/* Divider */}
             <div className="hidden md:block h-5 w-px bg-slate-200" />
 
-            {/* Primary Navigation */}
+            {/* Primary Navigation — Product-first */}
             <div className="hidden md:flex items-center gap-0.5 text-[13.5px] text-slate-600">
-              <Link href={"/studies" as Route} className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium">
-                Studien
+              {/* PRIMARY: Grow actions */}
+              <Link
+                href={"/start" as Route}
+                className="nav-link flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800 transition-colors duration-150"
+              >
+                <span className="text-[12px]">🌱</span>
+                Grow starten
               </Link>
-              <Link href={"/database" as Route} className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium">
-                Katalog
+              <Link
+                href={"/dashboard" as Route}
+                className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium"
+              >
+                Dashboard
               </Link>
-              <Link href={"/tools" as Route} className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium">
+              <Link
+                href={"/tools" as Route}
+                className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium"
+              >
                 Tools
               </Link>
-              <Link href={"/status" as Route} className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium">
-                Status
+              <Link
+                href={"/diagnose" as Route}
+                className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium"
+              >
+                Diagnose
+              </Link>
+
+              {/* Divider */}
+              <span className="mx-1.5 h-4 w-px bg-slate-200" />
+
+              {/* SECONDARY: Content */}
+              <Link
+                href={"/studies" as Route}
+                className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 hover:text-slate-900 transition-colors duration-150 font-medium text-slate-500"
+              >
+                Studien
               </Link>
             </div>
 
@@ -67,13 +77,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
             {/* SearchBar */}
             <SearchBar />
-
-            <Link
-              href={"/dashboard/user" as Route}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-[13.5px] font-medium text-slate-500 hover:text-slate-900 rounded-md hover:bg-slate-100 transition-colors duration-150"
-            >
-              Mein Bereich
-            </Link>
 
             <Link
               href={"/auth" as Route}

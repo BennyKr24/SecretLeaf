@@ -10,12 +10,12 @@ import {
 } from "@/lib/tools/types";
 import ToolsHubClient from "@/components/tools/ToolsHubClient";
 
-const FEATURED_SLUGS = ["abluft-rechner", "licht-rechner", "naehrstoff-rechner"];
+const FEATURED_SLUGS = ["vpd", "licht-rechner", "naehrstoff-rechner"];
 
 const CATEGORIES: ToolCategory[] = ["klima", "licht", "naehrstoffe", "planung"];
 
 const CATEGORY_DESCRIPTIONS: Record<ToolCategory, string> = {
-  klima: "Berechne Luftbedarf und Rohrdurchmesser – damit Temperatur und Luftfeuchte stimmen.",
+  klima: "Berechne VPD, Luftbedarf und Rohrdurchmesser — damit Temperatur, VPD und Luftfeuchte auf jede Phase abgestimmt sind.",
   licht: "Finde die optimale Lichtintensität (PPFD) und das tägliche Lichtintegral (DLI).",
   naehrstoffe: "Berechne EC-Ziel und Dosierung – für jede Phase und jedes Substrat.",
   planung: "Schätze deinen Ertrag realistisch ein, bevor du mit dem Grow beginnst.",

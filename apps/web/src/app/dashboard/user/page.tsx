@@ -21,6 +21,10 @@ import {
 } from '@/lib/retention';
 import BookmarkButton from '@/components/BookmarkButton';
 import CommunitySignals from '@/components/CommunitySignals';
+import { useGrowState } from '@/hooks/useGrowState';
+import { useGrowLog } from '@/hooks/useGrowLog';
+import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
+import { TASK_CATEGORY_ICONS, PHASE_ICONS } from '@/lib/grow/phases';
 
 function timeAgo(isoDate: string): string {
   const diff = Date.now() - new Date(isoDate).getTime();
@@ -168,6 +172,8 @@ export default function UserDashboardPage() {
 
   const { bookmarks } = useBookmarks();
   const { history, clearHistory } = useReadingHistory();
+  const { activeGrow } = useGrowState();
+  const { hasTodayEntry } = useGrowLog(activeGrow?.id ?? null);
   const { progressEntries } = useReadingProgress();
   const { interests, toggle: toggleInterest, isActive, loaded: interestsLoaded, preferredCategories } = useInterests();
 
@@ -289,12 +295,12 @@ export default function UserDashboardPage() {
         <div className="relative mx-auto max-w-6xl px-4 pb-8 pt-6 sm:px-5 sm:pb-10">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-emerald-200">Retention Hub</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-emerald-200">Grow OS</p>
               <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
                 {greeting()}{session ? `, ${session.user.username}` : ''}
               </h1>
               <p className="mt-3 text-sm leading-6 text-emerald-50/85 sm:text-base">
-                Dein persönlicher Wochenrückblick mit neuen Grow-Studien, passenden Inhalten und klaren Wiedereinstiegen in begonnene Artikel.
+                Dein aktiver Grow, nächste Tasks und Quick-Actions — direkt hier oben. Studien und Empfehlungen findest du weiter unten.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90">
@@ -337,7 +343,161 @@ export default function UserDashboardPage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl space-y-8 px-4 py-6 sm:px-5 sm:py-8">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-5 sm:py-8">
+
+        {/* ═══════════════════ PRIMARY — Grow ═══════════════════ */}
+        <div className="space-y-5">
+        {activeGrow ? (
+          <section className="rounded-[28px] border border-emerald-200 bg-white p-4 shadow-[0_8px_40px_-8px_rgba(5,150,105,0.18)] ring-1 ring-emerald-100 sm:p-6">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-600">Aktiver Grow</p>
+                <h2 className="mt-1 text-lg font-bold text-slate-900">{activeGrow.name}</h2>
+              </div>
+              <Link
+                href={`/grow/${activeGrow.id}` as Route}
+                className="flex-shrink-0 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 transition hover:bg-emerald-100"
+              >
+                Öffnen →
+              </Link>
+            </div>
+
+            {/* Grow meta */}
+            <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+              {(() => {
+                const phase = getPhaseForDay(activeGrow.plan, activeGrow.currentDay);
+                const { completed, total, percent } = getTaskProgress(activeGrow);
+                const phaseProgress = activeGrow.plan.totalDays > 0
+                  ? Math.min(100, Math.round((activeGrow.currentDay / activeGrow.plan.totalDays) * 100))
+                  : 0;
+                return (
+                  <>
+                    <span className="flex items-center gap-1 text-slate-600">
+                      {phase ? PHASE_ICONS[phase.id] : '🌿'}
+                      <span className="font-medium">{phase?.label ?? '—'}</span>
+                    </span>
+                    <span className="text-slate-300">·</span>
+                    <span className="text-slate-500">Tag {activeGrow.currentDay} / {activeGrow.plan.totalDays}</span>
+                    <span className="text-slate-300">·</span>
+                    <span className="text-slate-500">{completed}/{total} Tasks ({percent}%)</span>
+                    <div className="mt-2 w-full">
+                      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
+                        <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${phaseProgress}%` }} />
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
+
+            {/* Overdue warning */}
+            {(() => {
+              const overdue = getOverdueTasks(activeGrow);
+              if (overdue.length === 0) return null;
+              return (
+                <div className="mb-3 flex items-center gap-2 rounded-xl border border-rose-100 bg-rose-50 px-3 py-2">
+                  <span>⚠️</span>
+                  <p className="text-xs font-semibold text-rose-700">
+                    {overdue.length === 1 ? '1 überfälliger Task' : `${overdue.length} überfällige Tasks`} — jetzt erledigen
+                  </p>
+                </div>
+              );
+            })()}
+
+            {/* Next tasks */}
+            {(() => {
+              const tasks = getUpcomingTasks(activeGrow, 3);
+              if (tasks.length === 0) return (
+                <p className="rounded-xl border border-dashed border-slate-200 py-4 text-center text-xs text-slate-400">Alle Tasks erledigt ✨</p>
+              );
+              return (
+                <div className="space-y-2">
+                  {tasks.map((task) => {
+                    const diff = task.dueDay - activeGrow.currentDay;
+                    const dueLbl = diff === 0 ? 'Heute' : diff === 1 ? 'Morgen' : diff < 0 ? `${Math.abs(diff)}d überfällig` : `in ${diff}d`;
+                    return (
+                      <div key={task.id} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-2.5">
+                        <span className="text-base flex-shrink-0">{TASK_CATEGORY_ICONS[task.category]}</span>
+                        <p className="flex-1 text-sm font-medium text-slate-800">{task.title}</p>
+                        <span className={`flex-shrink-0 text-[10px] font-semibold ${
+                          diff < 0 ? 'text-rose-600' : diff === 0 ? 'text-emerald-700' : 'text-slate-400'
+                        }`}>{dueLbl}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+
+            {/* Daily Status */}
+            <div className={`flex items-center gap-2.5 rounded-2xl border px-4 py-2.5 ${
+              hasTodayEntry
+                ? 'border-emerald-200 bg-emerald-50'
+                : 'border-amber-200 bg-amber-50'
+            }`}>
+              <span className="text-base">{hasTodayEntry ? '✅' : '⏰'}</span>
+              <p className={`text-sm font-semibold ${
+                hasTodayEntry ? 'text-emerald-800' : 'text-amber-800'
+              }`}>
+                {hasTodayEntry ? 'Heute bereits gepflegt ✓' : 'Heute noch kein Eintrag'}
+              </p>
+              {!hasTodayEntry && (
+                <span className="ml-auto text-[11px] font-bold text-amber-600">Jetzt loggen →</span>
+              )}
+            </div>
+
+            {/* Primary CTA */}
+            <div className="mt-5">
+              <Link
+                href={`/grow/${activeGrow.id}` as Route}
+                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3.5 text-sm font-bold text-white shadow-md shadow-emerald-900/20 transition hover:bg-emerald-700 active:scale-[0.98]"
+              >
+                <span className="text-base">📓</span>
+                Heute loggen &amp; Tasks erledigen
+                <svg className="ml-auto h-4 w-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+
+            {/* Secondary actions */}
+            <div className="mt-2 flex gap-2">
+              <Link
+                href={'/tools' as Route}
+                className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-xs font-semibold text-slate-500 transition hover:border-cyan-200 hover:text-cyan-700"
+              >
+                🧪 Tools
+              </Link>
+              <Link
+                href={'/diagnose' as Route}
+                className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-xs font-semibold text-slate-500 transition hover:border-violet-200 hover:text-violet-700"
+              >
+                🩺 Diagnose
+              </Link>
+            </div>
+          </section>
+        ) : (
+          <section className="rounded-[28px] border border-dashed border-emerald-200 bg-emerald-50/40 p-5 text-center">
+            <span className="text-3xl">🌱</span>
+            <h2 className="mt-2 text-base font-bold text-slate-800">Noch kein aktiver Grow</h2>
+            <p className="mt-1 text-sm text-slate-500">Starte deinen ersten Grow — dauert unter 2 Minuten.</p>
+            <Link
+              href={'/start' as Route}
+              className="mt-3 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-700"
+            >
+              🌱 Grow starten →
+            </Link>
+          </section>
+        )}
+        </div>{/* /primary */}
+
+        {/* ═══════════════════ SECONDARY — Wissensbasis ═══════════════════ */}
+        <div className="mt-12 space-y-8 border-t border-slate-200 pt-10">
+          <div className="flex items-center gap-3">
+            <p className="flex-shrink-0 text-[11px] font-bold uppercase tracking-widest text-slate-400">📚 Wissensbasis &amp; Empfehlungen</p>
+            <div className="h-px flex-1 bg-slate-100" />
+          </div>
+
         <section className="rounded-[28px] border border-slate-200/70 bg-white/85 p-4 shadow-[0_20px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur sm:p-6">
           <SectionHeader
             title="Smart Notifications"
@@ -648,6 +808,7 @@ export default function UserDashboardPage() {
             </div>
           </section>
         </div>
+        </div>{/* /secondary */}
       </div>
     </main>
   );
