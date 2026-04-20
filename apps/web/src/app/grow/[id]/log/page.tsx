@@ -23,6 +23,7 @@ import {
 } from '@/lib/grow/types';
 import type {
   LogEntryType,
+  LogEntryData,
   LogEntry,
   TrainingMethod,
 } from '@/lib/grow/types';
@@ -166,6 +167,8 @@ type QuickAddProps = {
   onSelect: (type: LogEntryType) => void;
   onCancel: () => void;
   onSave: (type: LogEntryType, fields: Record<string, string>) => void;
+  /** When set, form is in edit mode — pre-fill and show "Bearbeiten" label */
+  editingEntry?: LogEntry | null;
 };
 
 const QUICK_ADD_TYPES: { type: LogEntryType; label: string }[] = [
@@ -175,8 +178,50 @@ const QUICK_ADD_TYPES: { type: LogEntryType; label: string }[] = [
   { type: 'notiz', label: 'Notiz' },
 ];
 
-function QuickAddBar({ activeType, onSelect, onCancel, onSave }: QuickAddProps) {
-  const [fields, setFields] = useState<Record<string, string>>({});
+function QuickAddBar({ activeType, onSelect, onCancel, onSave, editingEntry }: QuickAddProps) {
+  const isEditing = editingEntry != null;
+
+  // Pre-fill fields from existing entry when editing
+  const buildInitialFields = useCallback((entry: LogEntry): Record<string, string> => {
+    const base: Record<string, string> = {};
+    // Date/time — split ISO into date + time parts for the inputs
+    const d = new Date(entry.date);
+    base['_date'] = d.toISOString().slice(0, 10);
+    base['_time'] = d.toTimeString().slice(0, 5);
+    if (entry.notes) base['notes'] = entry.notes;
+    const { data } = entry;
+    if (data.type === 'wasser') {
+      if (data.mengeLiter !== undefined) base['mengeLiter'] = String(data.mengeLiter);
+      if (data.ph !== undefined) base['ph'] = String(data.ph);
+    } else if (data.type === 'duenger') {
+      if (data.produkt) base['produkt'] = data.produkt;
+      if (data.ec !== undefined) base['ec'] = String(data.ec);
+      if (data.mengeLiter !== undefined) base['mengeLiter'] = String(data.mengeLiter);
+    } else if (data.type === 'training') {
+      base['methode'] = data.methode;
+    } else if (data.type === 'notiz') {
+      base['text'] = data.text;
+    }
+    return base;
+  }, []);
+
+  const todayDate = new Date().toISOString().slice(0, 10);
+  const nowTime = new Date().toTimeString().slice(0, 5);
+
+  const [fields, setFields] = useState<Record<string, string>>(() => {
+    if (editingEntry) return buildInitialFields(editingEntry);
+    return { _date: todayDate, _time: nowTime };
+  });
+
+  // Re-sync fields when editingEntry changes (e.g. switching between entries)
+  useEffect(() => {
+    if (editingEntry) {
+      setFields(buildInitialFields(editingEntry));
+    } else {
+      setFields({ _date: todayDate, _time: nowTime });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editingEntry?.id]);
 
   const set = useCallback((key: string, value: string) => {
     setFields((prev) => ({ ...prev, [key]: value }));
@@ -185,23 +230,34 @@ function QuickAddBar({ activeType, onSelect, onCancel, onSave }: QuickAddProps) 
   const handleSave = () => {
     if (!activeType) return;
     onSave(activeType, fields);
-    setFields({});
+    setFields({ _date: todayDate, _time: nowTime });
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4">
-      {/* Type selector row */}
+    <div className={`rounded-2xl border bg-white p-4 ${isEditing ? 'border-amber-300 ring-1 ring-amber-200' : 'border-slate-200'}`}>
+      {isEditing && (
+        <div className="mb-3 flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2">
+          <span className="text-sm">✏️</span>
+          <p className="text-xs font-bold text-amber-800">Eintrag bearbeiten</p>
+        </div>
+      )}
+
+      {/* Type selector row — locked in edit mode */}
       <div className="flex gap-2 overflow-x-auto pb-1">
         {QUICK_ADD_TYPES.map(({ type, label }) => (
           <button
             key={type}
             onClick={() => {
-              setFields({});
+              if (isEditing) return; // type is fixed when editing
+              setFields({ _date: todayDate, _time: nowTime });
               onSelect(type);
             }}
+            disabled={isEditing && activeType !== type}
             className={`flex flex-shrink-0 items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-semibold transition ${
               activeType === type
                 ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-900/20'
+                : isEditing
+                ? 'border border-slate-100 bg-slate-50 text-slate-300'
                 : 'border border-slate-200 bg-slate-50 text-slate-600 hover:border-emerald-300 hover:text-emerald-700'
             }`}
           >
@@ -348,13 +404,44 @@ function QuickAddBar({ activeType, onSelect, onCancel, onSave }: QuickAddProps) 
             </div>
           )}
 
+          {/* Date + time row */}
+          <div className="grid grid-cols-2 gap-3 border-t border-slate-100 pt-3">
+            <div>
+              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                Datum
+              </label>
+              <input
+                type="date"
+                max={new Date().toISOString().slice(0, 10)}
+                value={fields['_date'] ?? todayDate}
+                onChange={(e) => set('_date', e.target.value)}
+                className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                Uhrzeit <span className="font-normal normal-case text-slate-300">(optional)</span>
+              </label>
+              <input
+                type="time"
+                value={fields['_time'] ?? ''}
+                onChange={(e) => set('_time', e.target.value)}
+                className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+              />
+            </div>
+          </div>
+
           {/* Action row */}
           <div className="flex gap-2 pt-1">
             <button
               onClick={handleSave}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm shadow-emerald-900/20 transition hover:bg-emerald-700 active:scale-[0.98]"
+              className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold text-white shadow-sm transition active:scale-[0.98] ${
+                isEditing
+                  ? 'bg-amber-500 shadow-amber-900/20 hover:bg-amber-600'
+                  : 'bg-emerald-600 shadow-emerald-900/20 hover:bg-emerald-700'
+              }`}
             >
-              {LOG_ENTRY_TYPE_ICONS[activeType]} Eintrag speichern
+              {isEditing ? '✏️ Änderungen speichern' : `${LOG_ENTRY_TYPE_ICONS[activeType]} Eintrag speichern`}
             </button>
             <button
               onClick={onCancel}
@@ -376,10 +463,12 @@ function QuickAddBar({ activeType, onSelect, onCancel, onSave }: QuickAddProps) 
 function EntryCard({
   entry,
   onDelete,
+  onEdit,
   isNew,
 }: {
   entry: LogEntry;
   onDelete: (id: string) => void;
+  onEdit: (entry: LogEntry) => void;
   isNew?: boolean;
 }) {
   const [confirming, setConfirming] = useState(false);
@@ -406,7 +495,7 @@ function EntryCard({
         )}
       </div>
 
-      {/* Time + delete */}
+      {/* Time + actions */}
       <div className="flex flex-shrink-0 flex-col items-end gap-1">
         <span className="text-[11px] text-slate-400">{time}</span>
         {confirming ? (
@@ -425,21 +514,33 @@ function EntryCard({
             </button>
           </div>
         ) : (
-          <button
-            onClick={() => setConfirming(true)}
-            className="rounded-lg p-1 text-slate-300 opacity-0 transition hover:bg-slate-50 hover:text-slate-500 group-hover:opacity-100"
-            aria-label="Eintrag löschen"
-          >
-            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-0.5 opacity-0 transition group-hover:opacity-100">
+            {/* Edit */}
+            <button
+              onClick={() => onEdit(entry)}
+              className="rounded-lg p-1 text-slate-300 hover:bg-amber-50 hover:text-amber-500"
+              aria-label="Eintrag bearbeiten"
+            >
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+            </button>
+            {/* Delete */}
+            <button
+              onClick={() => setConfirming(true)}
+              className="rounded-lg p-1 text-slate-300 hover:bg-slate-50 hover:text-slate-500"
+              aria-label="Eintrag löschen"
+            >
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </button>
+          </div>
         )}
       </div>
     </div>
   );
 }
-
 // ────────────────────────────────────────────────────────────────────────────
 // Page
 // ────────────────────────────────────────────────────────────────────────────
@@ -448,9 +549,10 @@ export default function GrowLogPage(_props: Props) {
   const { id } = useParams<{ id: string }>();
   const { grows, loaded: growLoaded } = useGrowState();
   const grow = grows.find((g) => g.id === id) ?? null;
-  const { entries, loaded: logLoaded, addEntry, deleteEntry, currentStreak } = useGrowLog(id);
+  const { entries, loaded: logLoaded, addEntry, deleteEntry, updateEntry, currentStreak } = useGrowLog(id);
 
   const [activeType, setActiveType] = useState<LogEntryType | null>(null);
+  const [editingEntry, setEditingEntry] = useState<LogEntry | null>(null);
   const [savedType, setSavedType] = useState<LogEntryType | null>(null);
   const [newestId, setNewestId] = useState<string | null>(null);
   const [streakPulse, setStreakPulse] = useState(false);
@@ -473,67 +575,83 @@ export default function GrowLogPage(_props: Props) {
     return () => { if (pulseTimer.current) clearTimeout(pulseTimer.current); };
   }, [streakPulse]);
 
+  /** Builds an ISO date string from the _date / _time fields. */
+  const buildDate = (fields: Record<string, string>): string => {
+    const datePart = fields['_date'] ?? new Date().toISOString().slice(0, 10);
+    const timePart = fields['_time'] ?? new Date().toTimeString().slice(0, 5);
+    return new Date(`${datePart}T${timePart}:00`).toISOString();
+  };
+
+  /** Builds the LogEntryData from form fields for a given type. */
+  const buildData = (type: LogEntryType, fields: Record<string, string>): LogEntryData | null => {
+    if (type === 'wasser') {
+      const payload: { type: 'wasser'; mengeLiter?: number; ph?: number } = { type: 'wasser' };
+      if (fields['mengeLiter']) payload.mengeLiter = parseFloat(fields['mengeLiter']);
+      if (fields['ph']) payload.ph = parseFloat(fields['ph']);
+      return payload;
+    }
+    if (type === 'duenger') {
+      const payload: { type: 'duenger'; produkt?: string; ec?: number; mengeLiter?: number } = { type: 'duenger' };
+      if (fields['produkt']) payload.produkt = fields['produkt'];
+      if (fields['ec']) payload.ec = parseFloat(fields['ec']);
+      if (fields['mengeLiter']) payload.mengeLiter = parseFloat(fields['mengeLiter']);
+      return payload;
+    }
+    if (type === 'training') {
+      if (!fields['methode']) return null;
+      return { type: 'training', methode: fields['methode'] as TrainingMethod };
+    }
+    if (type === 'notiz') {
+      if (!fields['text']?.trim()) return null;
+      return { type: 'notiz', text: fields['text'].trim() };
+    }
+    return null;
+  };
+
   const handleSave = useCallback(
     (type: LogEntryType, fields: Record<string, string>) => {
-      const now = new Date().toISOString();
       const notes = fields['notes'] ? fields['notes'] : undefined;
-      let saved = false;
+      const data = buildData(type, fields);
+      if (!data) return;
 
-      if (type === 'wasser') {
-        const payload: { type: 'wasser'; mengeLiter?: number; ph?: number } = { type: 'wasser' };
-        if (fields['mengeLiter']) payload.mengeLiter = parseFloat(fields['mengeLiter']);
-        if (fields['ph']) payload.ph = parseFloat(fields['ph']);
-        addEntry({ date: now, ...(notes !== undefined && { notes }), data: payload });
-        saved = true;
-      }
+      const date = buildDate(fields);
 
-      if (type === 'duenger') {
-        const payload: { type: 'duenger'; produkt?: string; ec?: number; mengeLiter?: number } = { type: 'duenger' };
-        if (fields['produkt']) payload.produkt = fields['produkt'];
-        if (fields['ec']) payload.ec = parseFloat(fields['ec']);
-        if (fields['mengeLiter']) payload.mengeLiter = parseFloat(fields['mengeLiter']);
-        addEntry({ date: now, ...(notes !== undefined && { notes }), data: payload });
-        saved = true;
-      }
-
-      if (type === 'training') {
-        if (!fields['methode']) return;
-        addEntry({
-          date: now,
+      if (editingEntry) {
+        // Update existing entry
+        updateEntry(editingEntry.id, {
+          date,
+          data,
           ...(notes !== undefined && { notes }),
-          data: {
-            type: 'training',
-            methode: fields['methode'] as TrainingMethod,
-          },
         });
-        saved = true;
-      }
-
-      if (type === 'notiz') {
-        if (!fields['text']?.trim()) return;
-        addEntry({
-          date: now,
-          data: {
-            type: 'notiz',
-            text: fields['text'].trim(),
-          },
-        });
-        saved = true;
-      }
-
-      if (saved) {
+        setEditingEntry(null);
+        setActiveType(null);
+        setSavedType(type);
+      } else {
+        // Create new entry
+        addEntry({ date, ...(notes !== undefined && { notes }), data });
         setActiveType(null);
         setSavedType(type);
         setStreakPulse(true);
-        // Mark the entry that will appear first in the list
         const firstEntry = entries[0];
         if (firstEntry) setNewestId(firstEntry.id);
-        // Clear the newest highlight after 3 s
         setTimeout(() => setNewestId(null), 3000);
       }
     },
-    [id, addEntry, entries]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [editingEntry, addEntry, updateEntry, entries]
   );
+
+  const handleEdit = useCallback((entry: LogEntry) => {
+    setEditingEntry(entry);
+    setActiveType(entry.data.type as LogEntryType);
+    // Scroll to top so form is visible
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    setEditingEntry(null);
+    setActiveType(null);
+  }, []);
 
   // ── Loading ─────────────────────────────────────────────────────────────────
 
@@ -591,8 +709,9 @@ export default function GrowLogPage(_props: Props) {
         <QuickAddBar
           activeType={activeType}
           onSelect={setActiveType}
-          onCancel={() => setActiveType(null)}
+          onCancel={handleCancel}
           onSave={handleSave}
+          editingEntry={editingEntry}
         />
 
         {/* ── Save feedback banner ─────────────────────────────────────────── */}
@@ -620,7 +739,7 @@ export default function GrowLogPage(_props: Props) {
                 </div>
                 <div className="space-y-2">
                   {group.entries.map((entry) => (
-                    <EntryCard key={entry.id} entry={entry} onDelete={deleteEntry} isNew={entry.id === newestId} />
+                    <EntryCard key={entry.id} entry={entry} onDelete={deleteEntry} onEdit={handleEdit} isNew={entry.id === newestId} />
                   ))}
                 </div>
               </div>

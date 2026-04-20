@@ -194,6 +194,36 @@ export function createLogEntry(input: CreateLogEntryInput): LogEntry {
 }
 
 /**
+ * Updates mutable fields (date, notes, data) of an existing log entry.
+ * `id`, `growId`, and `createdAt` are immutable.
+ * Returns the updated entry, or null if not found.
+ */
+export function updateLogEntry(
+  id: string,
+  updates: Partial<Pick<LogEntry, "date" | "notes" | "data">>
+): LogEntry | null {
+  const all = storage.get<LogEntry[]>(STORAGE_KEYS.LOG_ENTRIES) ?? [];
+  const idx = all.findIndex((e) => e.id === id);
+  if (idx < 0) return null;
+
+  const existing = all[idx];
+  if (!existing) return null;
+
+  const updated: LogEntry = {
+    ...existing,
+    ...updates,
+    id: existing.id,
+    growId: existing.growId,
+    createdAt: existing.createdAt,
+  };
+
+  const next = [...all];
+  next[idx] = updated;
+  storage.set(STORAGE_KEYS.LOG_ENTRIES, next);
+  return updated;
+}
+
+/**
  * Deletes a single log entry by ID.
  * No-ops if the entry does not exist.
  */

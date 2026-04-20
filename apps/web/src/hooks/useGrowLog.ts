@@ -17,6 +17,7 @@ import {
   getLogEntries,
   createLogEntry as storeCreateLogEntry,
   deleteLogEntry as storeDeleteLogEntry,
+  updateLogEntry as storeUpdateLogEntry,
 } from "@/lib/grow/store";
 
 // ── Hook ──────────────────────────────────────────────────────────────────────
@@ -33,6 +34,12 @@ export type UseGrowLogReturn = {
    * Returns the created entry, or null if `growId` is not set.
    */
   addEntry: (input: Omit<CreateLogEntryInput, "growId">) => LogEntry | null;
+
+  /**
+   * Updates mutable fields of an existing log entry.
+   * Returns the updated entry or null if not found.
+   */
+  updateEntry: (id: string, updates: Partial<Pick<LogEntry, "date" | "notes" | "data">>) => LogEntry | null;
 
   /**
    * Deletes a log entry by ID.
@@ -130,6 +137,15 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
     [refresh]
   );
 
+  const updateEntry = useCallback(
+    (id: string, updates: Partial<Pick<LogEntry, "date" | "notes" | "data">>): LogEntry | null => {
+      const result = storeUpdateLogEntry(id, updates);
+      refresh();
+      return result;
+    },
+    [refresh]
+  );
+
   const entriesByType = useCallback(
     (type: LogEntryType): LogEntry[] => {
       return entries.filter((e) => e.data.type === type);
@@ -142,6 +158,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
     loaded,
     addEntry,
     deleteEntry,
+    updateEntry,
     refresh,
     entriesByType,
     currentStreak: computeStreak(entries),
