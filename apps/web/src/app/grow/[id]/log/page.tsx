@@ -132,13 +132,13 @@ function StreakBadge({ streak, pulse }: { streak: number; pulse: boolean }) {
 }
 
 /** Inline success banner — slides in below QuickAdd, auto-dismisses. */
-function SavedBanner({ type, visible }: { type: LogEntryType | null; visible: boolean }) {
+function SavedBanner({ type, visible, completedTask }: { type: LogEntryType | null; visible: boolean; completedTask?: string | null }) {
   return (
     <div
       role="status"
       aria-live="polite"
       className={`overflow-hidden transition-all duration-300 ease-out ${
-        visible ? 'max-h-16 opacity-100' : 'max-h-0 opacity-0'
+        visible ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'
       }`}
     >
       {type && (
@@ -150,7 +150,11 @@ function SavedBanner({ type, visible }: { type: LogEntryType | null; visible: bo
             <p className="text-sm font-bold text-emerald-800">
               {LOG_ENTRY_TYPE_ICONS[type]} {LOG_ENTRY_TYPE_LABELS[type]} gespeichert
             </p>
-            <p className="text-xs text-emerald-600">Gut gemacht — weiter so!</p>
+            {completedTask ? (
+              <p className="text-xs text-emerald-600">✅ Task erledigt: <span className="font-semibold">{completedTask}</span></p>
+            ) : (
+              <p className="text-xs text-emerald-600">Gut gemacht — weiter so!</p>
+            )}
           </div>
         </div>
       )}
@@ -554,6 +558,7 @@ export default function GrowLogPage(_props: Props) {
   const [activeType, setActiveType] = useState<LogEntryType | null>(null);
   const [editingEntry, setEditingEntry] = useState<LogEntry | null>(null);
   const [savedType, setSavedType] = useState<LogEntryType | null>(null);
+  const [completedTask, setCompletedTask] = useState<string | null>(null);
   const [newestId, setNewestId] = useState<string | null>(null);
   const [streakPulse, setStreakPulse] = useState(false);
   const bannerTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -628,10 +633,16 @@ export default function GrowLogPage(_props: Props) {
         setSavedType(type);
       } else {
         // Create new entry
-        addEntry({ date, ...(notes !== undefined && { notes }), data });
+        const result = addEntry({ date, ...(notes !== undefined && { notes }), data });
         setActiveType(null);
         setSavedType(type);
         setStreakPulse(true);
+        if (result?.completedTaskId) {
+          // Find task title for feedback
+          const task = grow?.plan.phases.flatMap((p) => p.tasks).find((t) => t.id === result.completedTaskId);
+          setCompletedTask(task?.title ?? 'Task erledigt');
+          setTimeout(() => setCompletedTask(null), 4000);
+        }
         const firstEntry = entries[0];
         if (firstEntry) setNewestId(firstEntry.id);
         setTimeout(() => setNewestId(null), 3000);
@@ -715,7 +726,7 @@ export default function GrowLogPage(_props: Props) {
         />
 
         {/* ── Save feedback banner ─────────────────────────────────────────── */}
-        <SavedBanner type={savedType} visible={savedType !== null} />
+        <SavedBanner type={savedType} visible={savedType !== null} completedTask={completedTask} />
 
         {/* ── Timeline ────────────────────────────────────────────────────── */}
         {grouped.length === 0 ? (

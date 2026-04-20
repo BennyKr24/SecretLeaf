@@ -12,13 +12,61 @@ import type {
   LogEntry,
   LogEntryType,
   CreateLogEntryInput,
+  TaskCategory,
 } from "@/lib/grow/types";
 import {
   getLogEntries,
+  getGrowById,
   createLogEntry as storeCreateLogEntry,
   deleteLogEntry as storeDeleteLogEntry,
   updateLogEntry as storeUpdateLogEntry,
+  completeTask as storeCompleteTask,
 } from "@/lib/grow/store";
+
+// ── Log → Task mapping ────────────────────────────────────────────────────────
+
+/**
+ * Maps a log entry type to the task category it can auto-complete.
+ * Only types with a direct task equivalent are listed.
+ */
+const LOG_TYPE_TO_TASK_CATEGORY: Partial<Record<LogEntryType, TaskCategory>> = {
+  wasser: "bewaesserung",
+  duenger: "duengung",
+  training: "training",
+};
+
+/**
+ * Finds and completes the nearest open task of the matching category.
+ * Only acts if a task is due today or overdue (within a ±3 day window).
+ * Returns the completed task ID, or null if none matched.
+ */
+function autoCompleteTask(growId: string, logType: LogEntryType): string | null {
+  const category = LOG_TYPE_TO_TASK_CATEGORY[logType];
+  if (!category) return null;
+
+  const grow = getGrowById(growId);
+  if (!grow) return null;
+
+  const today = grow.currentDay;
+  const WINDOW = 3; // days: today - WINDOW to today
+
+  // All incomplete tasks of matching category within the window, closest first
+  const candidate = grow.plan.phases
+    .flatMap((p) => p.tasks)
+    .filter(
+      (t) =>
+        !t.completed &&
+        t.category === category &&
+        t.dueDay >= today - WINDOW &&
+        t.dueDay <= today
+    )
+    .sort((a, b) => Math.abs(a.dueDay - today) - Math.abs(b.dueDay - today))[0];
+
+  if (!candidate) return null;
+
+  storeCompleteTask(growId, candidate.id);
+  return candidate.id;
+}
 
 // ── Hook ──────────────────────────────────────────────────────────────────────
 
@@ -31,9 +79,10 @@ export type UseGrowLogReturn = {
   /**
    * Adds a new log entry for the current grow.
    * `growId` and `createdAt` are injected automatically.
-   * Returns the created entry, or null if `growId` is not set.
+   * Also auto-completes the nearest matching open task (if any).
+   * Returns an object with the created entry and the completed task ID (or null).
    */
-  addEntry: (input: Omit<CreateLogEntryInput, "growId">) => LogEntry | null;
+  addEntry: (input: Omit<CreateLogEntryInput, "growId">) => { entry: LogEntry; completedTaskId: string | null } | null;
 
   /**
    * Updates mutable fields of an existing log entry.
@@ -120,11 +169,13 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
   }, [refresh]);
 
   const addEntry = useCallback(
-    (input: Omit<CreateLogEntryInput, "growId">): LogEntry | null => {
+    (input: Omit<CreateLogEntryInput, "growId">): { entry: LogEntry; completedTaskId: string | null } | null => {
       if (!growId) return null;
       const entry = storeCreateLogEntry({ ...input, growId });
+      // Auto-complete the nearest matching open task
+      const completedTaskId = autoCompleteTask(growId, input.data.type as LogEntryType);
       refresh();
-      return entry;
+      return { entry, completedTaskId };
     },
     [growId, refresh]
   );
