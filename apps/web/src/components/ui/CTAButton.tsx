@@ -94,7 +94,13 @@ export function CTAButton({
   if ("href" in rest && rest.href !== undefined) {
     const { href, target, rel, onClick } = rest as AsLink;
     return (
-      <Link href={href} className={cls} target={target} rel={rel} onClick={onClick}>
+      <Link
+        href={href}
+        className={cls}
+        {...(target !== undefined && { target })}
+        {...(rel !== undefined && { rel })}
+        {...(onClick !== undefined && { onClick })}
+      >
         {children}
       </Link>
     );

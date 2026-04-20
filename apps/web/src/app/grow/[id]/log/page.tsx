@@ -479,40 +479,27 @@ export default function GrowLogPage({ params }: Props) {
       let saved = false;
 
       if (type === 'wasser') {
-        addEntry({
-          growId: id,
-          date: now,
-          notes,
-          data: {
-            type: 'wasser',
-            mengeLiter: fields['mengeLiter'] ? parseFloat(fields['mengeLiter']) : undefined,
-            ph: fields['ph'] ? parseFloat(fields['ph']) : undefined,
-          },
-        });
+        const payload: { type: 'wasser'; mengeLiter?: number; ph?: number } = { type: 'wasser' };
+        if (fields['mengeLiter']) payload.mengeLiter = parseFloat(fields['mengeLiter']);
+        if (fields['ph']) payload.ph = parseFloat(fields['ph']);
+        addEntry({ date: now, ...(notes !== undefined && { notes }), data: payload });
         saved = true;
       }
 
       if (type === 'duenger') {
-        addEntry({
-          growId: id,
-          date: now,
-          notes,
-          data: {
-            type: 'duenger',
-            produkt: fields['produkt'] ?? undefined,
-            ec: fields['ec'] ? parseFloat(fields['ec']) : undefined,
-            mengeLiter: fields['mengeLiter'] ? parseFloat(fields['mengeLiter']) : undefined,
-          },
-        });
+        const payload: { type: 'duenger'; produkt?: string; ec?: number; mengeLiter?: number } = { type: 'duenger' };
+        if (fields['produkt']) payload.produkt = fields['produkt'];
+        if (fields['ec']) payload.ec = parseFloat(fields['ec']);
+        if (fields['mengeLiter']) payload.mengeLiter = parseFloat(fields['mengeLiter']);
+        addEntry({ date: now, ...(notes !== undefined && { notes }), data: payload });
         saved = true;
       }
 
       if (type === 'training') {
         if (!fields['methode']) return;
         addEntry({
-          growId: id,
           date: now,
-          notes,
+          ...(notes !== undefined && { notes }),
           data: {
             type: 'training',
             methode: fields['methode'] as TrainingMethod,
@@ -524,7 +511,6 @@ export default function GrowLogPage({ params }: Props) {
       if (type === 'notiz') {
         if (!fields['text']?.trim()) return;
         addEntry({
-          growId: id,
           date: now,
           data: {
             type: 'notiz',

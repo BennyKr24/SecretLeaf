@@ -24,7 +24,8 @@ import CommunitySignals from '@/components/CommunitySignals';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
-import { TASK_CATEGORY_ICONS, PHASE_ICONS } from '@/lib/grow/phases';
+import { PHASE_ICONS } from '@/lib/grow/phases';
+import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
 
 function timeAgo(isoDate: string): string {
   const diff = Date.now() - new Date(isoDate).getTime();

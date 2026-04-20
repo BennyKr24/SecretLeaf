@@ -1,21 +1,7 @@
 {
   "_note": "Diese Datei wird automatisch durch scripts/generate-changelog.mjs aktualisiert. Manuelle Eintraege bleiben erhalten solange ihr Hash 'manual' ist.",
-  "generatedAt": "2026-03-26T22:33:02.724Z",
+  "generatedAt": "2026-04-20T20:44:48.204Z",
   "releases": [
-    {
-      "hash": "manual-v1.4.0",
-      "version": "1.4.0",
-      "date": "2026-04-06",
-      "title": "Automatisierung massiv erweitert, Datenbank & API produktionsnah konfiguriert",
-      "type": "release",
-      "changes": [
-        "Automations-Endpunkte erweitert: Health, Cleanup, Study-Sync und manuelles Refresh fuer stabile Betriebsablaeufe",
-        "Status- und Public-API weiter ausgebaut fuer verlaessliche Live-Uebersichten und Monitoring",
-        "Supabase/DB-Grundlage deutlich gehaertet: Rollen, RLS-Hardening, Fingerprint-Indexing und Automation-Run-Tracking",
-        "Datenfluss zwischen Web, API und Storage konsolidiert fuer robustere Sync- und Review-Prozesse",
-        "Klarer IA-Relaunch in v1.4 (Studies, Database, Tools, Dashboard) fuer bessere operative Steuerung"
-      ]
-    },
     {
       "hash": "manual",
       "version": "1.3.0",
@@ -31,6 +17,781 @@
         "Dünger-Katalog mit 50+ Profilen (NPK, EC-Bereich, PPFD, pH, Dosierung)",
         "Interaktive Seite /fertilizers mit Filter nach Wachstumsphase, Format und Basis",
         "PPFD- und EC-Daten in Wiki-Artikeln ergänzt"
+      ]
+    },
+    {
+      "hash": "354b9cb31fd1bd02aa41bdc1a3b8500db33220fb",
+      "version": null,
+      "date": "2026-04-20",
+      "title": "Phase 5-6: Grow OS dashboard restructure + Log System",
+      "type": "update",
+      "changes": [
+        "Phase 5-6: Grow OS dashboard restructure + Log System",
+        "Dashboard: Grow = PRIMARY zone, Content = SECONDARY zone",
+        "Dashboard: Primary CTA 'Heute loggen & Tasks erledigen'",
+        "Dashboard: Daily Status badge (heute gepflegt ✓ / noch kein Eintrag)",
+        "GL-01: /grow/[id]/log page with Quick-Add (Wasser/Dünger/Training/Notiz)",
+        "GL-01: Streak badge (Retention Motor) in header",
+        "GL-01: Save feedback: banner + streak pulse + newest entry highlight",
+        "useGrowLog: hasTodayEntry computed property"
+      ]
+    },
+    {
+      "hash": "e053165d608421501801df1ecf2e075bf769ae94",
+      "version": null,
+      "date": "2026-04-19",
+      "title": "Syntax-Fehler in onboarding + fertilizers die Build blockierten",
+      "type": "fix",
+      "changes": [
+        "Syntax-Fehler in onboarding + fertilizers die Build blockierten",
+        "onboarding/page.tsx:144: ? → : (Ternary-Kette repariert)",
+        "fertilizers.ts:1038: spurious Komma nach [ entfernt"
+      ]
+    },
+    {
+      "hash": "3f224eda994c62d2511a782b02cfa2a6564fa461",
+      "version": null,
+      "date": "2026-04-19",
+      "title": "Schädlingslexikon professionell erweitert – 18 Einträge, Steckbriefe, Nützlingsmatrix",
+      "type": "feature",
+      "changes": [
+        "Schädlingslexikon professionell erweitert – 18 Einträge, Steckbriefe, Nützlingsmatrix",
+        "PestEntry-Typ um sizeMm, lifecycleDays, optimalConditions, actionThreshold erweitert",
+        "10 bestehende Einträge mit vollständigen lateinischen Autorennamen, Größen, Lebenszyklen, Optimalbedingungen und Schadensschwellen versehen",
+        "8 neue Schädlinge: Breitmilben, Hanfrostmilben, Schildläuse, Springschwänze, Wurzelgallennematoden, Erdflöhe, Nacktschnecken, Gallmücken",
+        "Nützlingsmatrix um 6 neue Einträge erweitert (Breitmilben, Rostmilben, Wurzelläuse, Raupen, Schnecken, Erdflöhe)",
+        "5 neue Symptom-Optionen für Schnelldiagnose",
+        "5 neue externe Quellen (Wikipedia, CABI, McPartland 2018, Oregon State)",
+        "Professioneller Steckbrief-Block in Kartenansicht (Größe, Lebenszyklus, Bedingungen, Schwelle)"
+      ]
+    },
+    {
+      "hash": "5462ab2ed86553f52d5c9a6b69849e0efd949068",
+      "version": null,
+      "date": "2026-04-19",
+      "title": "AN Sensi Grow/Bloom Duplikate entfernt (behalte pH Perfect Variante)",
+      "type": "fix",
+      "changes": [
+        "AN Sensi Grow/Bloom Duplikate entfernt (behalte pH Perfect Variante)"
+      ]
+    },
+    {
+      "hash": "ff2d7d2ca9901fbd462a59e9d6b74fd6f0f695e1",
+      "version": null,
+      "date": "2026-04-19",
+      "title": "Katalog kuratiert + algorithmische Preise für 242 Produkte",
+      "type": "feature",
+      "changes": [
+        "Katalog kuratiert + algorithmische Preise für 242 Produkte",
+        "8 fiktive/doppelte Kern-Produkte entfernt (Super Plant, Hydrobuddy, GrowKase, Budget-Grow, Canna-Duplikate)",
+        "8 fiktive Expansion-Marken entfernt (Cultiwool, EHG, Sensi Garden, Hydromax, Root Republic, Vaalserberg Garden, BioNova Soil, AN-Duplikat)",
+        "PK Booster rebranded zu CANNA (PK 13/14)",
+        "Neuer algorithmischer Preisgenerator: Preise basierend auf Kostenstufe, Format, Marken-Premium, NPK-Gehalt",
+        "242 Produkte × ~5 Shops = 1208 Angebote mit realistischen DE/AT/CH/EU Versandkosten",
+        "8 deutsche Growshops mit variierten Preisen (±12%)",
+        "Preisrange: €5.83 (Budget) bis €23.07 (Premium)"
+      ]
+    },
+    {
+      "hash": "345ef556eaec389399985d4d033cb3363d5308b3",
+      "version": null,
+      "date": "2026-04-19",
+      "title": "redesign fertilizer catalog – sticky filter bar, clean product cards, remove clutter",
+      "type": "feature",
+      "changes": [
+        "redesign fertilizer catalog – sticky filter bar, clean product cards, remove clutter"
+      ]
+    },
+    {
+      "hash": "3269d984b13b100c32548ab9380faefca75993b4",
+      "version": null,
+      "date": "2026-04-19",
+      "title": "redesign Katalog hub – hero, Schnellstart-Chips, Use-Case-Karten, URL-Filter-Params",
+      "type": "feature",
+      "changes": [
+        "redesign Katalog hub – hero, Schnellstart-Chips, Use-Case-Karten, URL-Filter-Params"
+      ]
+    },
+    {
+      "hash": "c1adb7da4168280571ec206e1a8af83d3bccb980",
+      "version": null,
+      "date": "2026-04-19",
+      "title": "resolve tools typecheck and duplicate module blocks",
+      "type": "fix",
+      "changes": [
+        "resolve tools typecheck and duplicate module blocks"
+      ]
+    },
+    {
+      "hash": "682848b0deda9b8017d3ea266e88f082378629fd",
+      "version": null,
+      "date": "2026-04-19",
+      "title": "upgrade tools hub and calculators UX",
+      "type": "feature",
+      "changes": [
+        "upgrade tools hub and calculators UX"
+      ]
+    },
+    {
+      "hash": "37f7d199f6507dee3292a79f1b836677e8767757",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Add retention system for weekly return flows",
+      "type": "update",
+      "changes": [
+        "Add retention system for weekly return flows"
+      ]
+    },
+    {
+      "hash": "a80d70fff1be1ae633519f549c2df6962c9fd0a9",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Merge pull request #5 from BennyKr24/copilot/redesign-user-experience",
+      "type": "update",
+      "changes": [
+        "Merge pull request #5 from BennyKr24/copilot/redesign-user-experience",
+        "Add personalized post-login dashboard, onboarding, and auth-to-dashboard routing"
+      ]
+    },
+    {
+      "hash": "9144eb34a6dbe986dc8ba7ac7730490bb81479ba",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Code review fixes: inline confirm modal, JSDoc comments on MIN_PASSWORD_LENGTH, sanitizeError, preferredCategories",
+      "type": "update",
+      "changes": [
+        "Code review fixes: inline confirm modal, JSDoc comments on MIN_PASSWORD_LENGTH, sanitizeError, preferredCategories",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/789a00ee-4669-4397-ba7d-6f3314b6a340"
+      ]
+    },
+    {
+      "hash": "24ad611f196698cbe816f6cfeac62412790574ba",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Post-login user dashboard, onboarding flow, personalized feed, nav update",
+      "type": "update",
+      "changes": [
+        "Post-login user dashboard, onboarding flow, personalized feed, nav update",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/789a00ee-4669-4397-ba7d-6f3314b6a340"
+      ]
+    },
+    {
+      "hash": "cf59826695dbe939baa2cd0f49b06b43acc735b8",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Code review fixes: MIN_PASSWORD_LENGTH constant, RESET_REDIRECT_PATH constant, division-by-zero guard, className semantic fix",
+      "type": "update",
+      "changes": [
+        "Code review fixes: MIN_PASSWORD_LENGTH constant, RESET_REDIRECT_PATH constant, division-by-zero guard, className semantic fix",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/c2824afb-d146-4525-b98b-0c03d0d54bf3"
+      ]
+    },
+    {
+      "hash": "29d66c43378635f44f7401b2e4d39784adb647dd",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Premium auth rebuild: split layout, login/signup/forgot, show/hide password, strength meter, trust signals + Status in nav",
+      "type": "update",
+      "changes": [
+        "Premium auth rebuild: split layout, login/signup/forgot, show/hide password, strength meter, trust signals + Status in nav",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/c2824afb-d146-4525-b98b-0c03d0d54bf3"
+      ]
+    },
+    {
+      "hash": "f7fb672d59f0423ebf0fae2e02ed44bea495fbda",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Code review fixes: simplify preferredCategories, fix email guard, clarify eslint disable, dynamic metadata, remove hardcoded publisher names",
+      "type": "update",
+      "changes": [
+        "Code review fixes: simplify preferredCategories, fix email guard, clarify eslint disable, dynamic metadata, remove hardcoded publisher names",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/149ff06d-b4b6-44d4-bf42-17b23f9bf1e8"
+      ]
+    },
+    {
+      "hash": "2000667e5d16e83812f2fc35a9b751f8e595147e",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Engagement system: interests, bookmarks, reading history, weekly blocks, newsletter, social proof",
+      "type": "update",
+      "changes": [
+        "Engagement system: interests, bookmarks, reading history, weekly blocks, newsletter, social proof",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/149ff06d-b4b6-44d4-bf42-17b23f9bf1e8"
+      ]
+    },
+    {
+      "hash": "14ccda0bd3a01ac27a395f06d358615fcd891651",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Fix spelling: Meistgelegte → Meistgelesene",
+      "type": "fix",
+      "changes": [
+        "Fix spelling: Meistgelegte → Meistgelesene",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/6fd9e75e-4679-497a-8936-e4750e1a4aeb"
+      ]
+    },
+    {
+      "hash": "e6c5c18f841012d67c7c7b7a19d2e11d60158ef2",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Premium authority platform: trust signals, daily return sections, improved hero, micro-UX, footer",
+      "type": "update",
+      "changes": [
+        "Premium authority platform: trust signals, daily return sections, improved hero, micro-UX, footer",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/6fd9e75e-4679-497a-8936-e4750e1a4aeb"
+      ]
+    },
+    {
+      "hash": "573b2298dbf74d6105a41db53a5e6b7611b5ba1c",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Improve category label semantic alignment: chemie→Chemie & Nährstoffe, sicherheit→Sicherheit & Aufklärung",
+      "type": "update",
+      "changes": [
+        "Improve category label semantic alignment: chemie→Chemie & Nährstoffe, sicherheit→Sicherheit & Aufklärung",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/75c4259f-8e8f-4a1c-97e8-7d76f3065510"
+      ]
+    },
+    {
+      "hash": "9d91898336d7ff3eef3cf443fdb746341e3c14f2",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Fix review feedback: improve category label alignment and remove non-null assertion",
+      "type": "fix",
+      "changes": [
+        "Fix review feedback: improve category label alignment and remove non-null assertion",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/75c4259f-8e8f-4a1c-97e8-7d76f3065510"
+      ]
+    },
+    {
+      "hash": "77bb9b28930ea70779f2b489cd9a8e90dbca8094",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Add category descriptions to category pages and update breadcrumb labels",
+      "type": "update",
+      "changes": [
+        "Add category descriptions to category pages and update breadcrumb labels",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/75c4259f-8e8f-4a1c-97e8-7d76f3065510"
+      ]
+    },
+    {
+      "hash": "a0f9655b00185387362efcba6f32b3825affd605",
+      "version": null,
+      "date": "2026-04-17",
+      "title": "Redesign homepage UX: hero section, featured studies, category sections, visual hierarchy",
+      "type": "update",
+      "changes": [
+        "Redesign homepage UX: hero section, featured studies, category sections, visual hierarchy",
+        "Agent-Logs-Url: https://github.com/BennyKr24/SecretLeaf/sessions/75c4259f-8e8f-4a1c-97e8-7d76f3065510"
+      ]
+    },
+    {
+      "hash": "a8fda4005c085b74a350ec14e34500f915f26317",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "README v1.6 — Admin-Dashboard, Algorithmus-Config, Prioritäten aktualisiert",
+      "type": "docs",
+      "changes": [
+        "README v1.6 — Admin-Dashboard, Algorithmus-Config, Prioritäten aktualisiert"
+      ]
+    },
+    {
+      "hash": "2818025497380a3bf497ee1cdfa275e71151ccad",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "admin page href type error for Next.js strict routing",
+      "type": "fix",
+      "changes": [
+        "admin page href type error for Next.js strict routing"
+      ]
+    },
+    {
+      "hash": "dfe13e5f1a5c4a7838c9a8592d4136c305ad40cc",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "remove duplicate JSX closing tag in overview",
+      "type": "fix",
+      "changes": [
+        "remove duplicate JSX closing tag in overview"
+      ]
+    },
+    {
+      "hash": "aa45b918b551de3a50b5f4f7969c58b4b6db2858",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "visual UX overhaul",
+      "type": "feature",
+      "changes": [
+        "visual UX overhaul",
+        "AdminShell: grouped nav (Übersicht/Inhalte/Pipeline/Monitoring), emoji icons,",
+        "initials avatar, logout icon button, back-to-dashboard link",
+        "Overview: personalized greeting with date, alert banners for pipeline issues",
+        "and pending reviews, colored stat cards with icons, improved pipeline/last-run",
+        "cards, richer quick actions with live status info",
+        "All sub-pages: consistent breadcrumb + icon page headers",
+        "Slightly wider sidebar (224px→240px), softer background (#f0f7f3)"
+      ]
+    },
+    {
+      "hash": "811c63770dcb7836f38cd947b89d2d38145a9b42",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "algorithm config admin module",
+      "type": "feature",
+      "changes": [
+        "algorithm config admin module",
+        "New engine_config table (key-value store for dynamic pipeline config)",
+        "Config loader with graceful fallback to hardcoded defaults",
+        "Pipeline integration: loads dynamic config at runtime",
+        "Classify overrides: required keywords, custom exclusions, anchor terms, extra clusters",
+        "API endpoints: algorithm-get, algorithm-update, algorithm-reset",
+        "Admin UI page with 6 tabs: Keywords, Sources, Exclusions, Clusters, Scoring, Anchor",
+        "Setup wizard with copy-paste SQL for Supabase Dashboard"
+      ]
+    },
+    {
+      "hash": "488e0a0105d5ae6cb91a0f0d45c7c44b578d7158",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "stabilize auth hook for admin pages",
+      "type": "fix",
+      "changes": [
+        "stabilize auth hook for admin pages"
+      ]
+    },
+    {
+      "hash": "22ed1937029900ba36fd27937e0b3e27b416affb",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "user management, system page, settings upgrade, log scroll fix",
+      "type": "feature",
+      "changes": [
+        "user management, system page, settings upgrade, log scroll fix"
+      ]
+    },
+    {
+      "hash": "cf46baf2ee25b168a5e31c08363be849027e9b31",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "finalize stability fixes and update docs",
+      "type": "chore",
+      "changes": [
+        "finalize stability fixes and update docs"
+      ]
+    },
+    {
+      "hash": "2d7295ec8ccb8053af98914cb202007101436279",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "reprocess legacy studies and improve mobile review",
+      "type": "fix",
+      "changes": [
+        "reprocess legacy studies and improve mobile review"
+      ]
+    },
+    {
+      "hash": "541e88f95bf514025eff38efe59b2ed009ce4056",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "expand cultivation keyword coverage",
+      "type": "feature",
+      "changes": [
+        "expand cultivation keyword coverage"
+      ]
+    },
+    {
+      "hash": "a4bfc2bb4a2709b238ac48330955c41cbff43dad",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "repair supabase migration history",
+      "type": "fix",
+      "changes": [
+        "repair supabase migration history"
+      ]
+    },
+    {
+      "hash": "67c26bcf469e0cc9a84701f2434419f867f43a58",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "fallback studies query for legacy schema",
+      "type": "fix",
+      "changes": [
+        "fallback studies query for legacy schema"
+      ]
+    },
+    {
+      "hash": "3483fdbcff7fa96aeeaf67cfd4e167ff32814e85",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "require password min length only on register",
+      "type": "fix",
+      "changes": [
+        "require password min length only on register"
+      ]
+    },
+    {
+      "hash": "5b9edc1c632160f392d43b82fe22f38afeb3f0de",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "batch insert in studies-sync (50/chunk) to avoid PostgREST body limit",
+      "type": "fix",
+      "changes": [
+        "batch insert in studies-sync (50/chunk) to avoid PostgREST body limit"
+      ]
+    },
+    {
+      "hash": "9780d26cf24b836e67c4f160be84f6a570815e65",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "batch fingerprint lookup to avoid PostgREST URL length limit",
+      "type": "fix",
+      "changes": [
+        "batch fingerprint lookup to avoid PostgREST URL length limit"
+      ]
+    },
+    {
+      "hash": "70a1b70a64cc268026d0bf3fa64a4397caeaa878",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "cron auth — accept Vercel Bearer token in all automation routes",
+      "type": "fix",
+      "changes": [
+        "cron auth — accept Vercel Bearer token in all automation routes",
+        "Vercel Cron sends Authorization: Bearer <CRON_SECRET>",
+        "but all routes were checking x-cron-key header → 401 every time.",
+        "Now accepts both: Bearer (Vercel native) and x-cron-key (manual calls).",
+        "Affected: studies-sync, study-refresh, engine-health, engine-adapt,",
+        "health, cleanup, engine-reprocess, engine-sync"
+      ]
+    },
+    {
+      "hash": "22f129eefe544ed0a243fe0bf59e007bc21e35b2",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "README v1.5 — vollständig neu als Dashboard & Infosheet",
+      "type": "docs",
+      "changes": [
+        "README v1.5 — vollständig neu als Dashboard & Infosheet"
+      ]
+    },
+    {
+      "hash": "e4862f369a5fe927a15450ca3f7556a7285ad5e9",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "text quality, study ingestion, category grouping, system status",
+      "type": "feature",
+      "changes": [
+        "text quality, study ingestion, category grouping, system status",
+        "Phase 1: Fix German encoding (ue/ae/oe→ü/ä/ö) in status, studies, dashboard, API routes",
+        "Phase 2: Expand Crossref ingestion (multi-query, 14d lookback, configurable)",
+        "Phase 3: Redesign studies list into category-grouped sections with show-more",
+        "Phase 4: Add system health summary cards to status page"
+      ]
+    },
+    {
+      "hash": "c9d448935a183333e908f7fd3b2814eb96845f5c",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "premium UI redesign, German copy, production hardening",
+      "type": "feature",
+      "changes": [
+        "premium UI redesign, German copy, production hardening",
+        "Premium UI/UX: dark heroes, emerald design system, new StudyListItem/StudiesListView components, category pages",
+        "Native German copywriting pass across all pages (proper umlauts, natural phrasing)",
+        "Production hardening:",
+        "- Schedule engine-sync, engine-adapt, engine-reprocess, engine-health as Vercel crons",
+        "- Auth on /api/automation/health (was public, leaked job logs)",
+        "- Auth on /api/automation/engine-feedback (was public, could manipulate scoring)",
+        "- Telemetry recording for engine-adapt and cleanup routes"
+      ]
+    },
+    {
+      "hash": "97435041a54a5d1da1eab2833ed8ddf15cda1c77",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "clear stale session before login attempt",
+      "type": "fix",
+      "changes": [
+        "clear stale session before login attempt"
+      ]
+    },
+    {
+      "hash": "b4dbd43ec76be780847fedeb0af72c0a0010e636",
+      "version": null,
+      "date": "2026-04-10",
+      "title": "add study engine, self-improving pipeline, admin control panel",
+      "type": "feature",
+      "changes": [
+        "add study engine, self-improving pipeline, admin control panel",
+        "Study ingestion engine (fetch, normalize, dedup, classify, score, store)",
+        "Self-improving pipeline (feedback, adaptive scoring, monitoring, reprocess, circuit breaker)",
+        "Admin control panel with 5 sections (overview, studies, engine, analytics, settings)",
+        "Admin role system (migration, auth guards, API routes)",
+        "Engine API routes (sync, feedback, reprocess, adapt, health)",
+        "Supabase migrations for engine columns, self-improving features, admin role"
+      ]
+    },
+    {
+      "hash": "d06de56bef4bd0224a3387e317db4a2b5dc7214c",
+      "version": null,
+      "date": "2026-04-06",
+      "title": "prioritize releases in Chronik ordering",
+      "type": "fix",
+      "changes": [
+        "prioritize releases in Chronik ordering"
+      ]
+    },
+    {
+      "hash": "10b04de2f431ef35f041bca424a1ce96fa9dec9c",
+      "version": null,
+      "date": "2026-04-06",
+      "title": "announce v1.4 automation and DB/API milestone",
+      "type": "docs",
+      "changes": [
+        "announce v1.4 automation and DB/API milestone"
+      ]
+    },
+    {
+      "hash": "affb615e0687fd9ccc2295575f227715707a81ee",
+      "version": null,
+      "date": "2026-04-06",
+      "title": "release: v1.4 IA redesign, automation and database UX polish",
+      "type": "release",
+      "changes": [
+        "release: v1.4 IA redesign, automation and database UX polish"
+      ]
+    },
+    {
+      "hash": "52bf8c570ca5e65faa87ff07127f1cdc66129fac",
+      "version": null,
+      "date": "2026-03-28",
+      "title": "smarte Such-Engine v2 — Synonyme, Intent, Phrase-Bonus, Positions-Score",
+      "type": "feature",
+      "changes": [
+        "smarte Such-Engine v2 — Synonyme, Intent, Phrase-Bonus, Positions-Score"
+      ]
+    },
+    {
+      "hash": "94acf16532acef049535ea26f2670319c225b618",
+      "version": null,
+      "date": "2026-03-28",
+      "title": "Live-Status zeigt echte Wiki-Zahlen statt toter API",
+      "type": "fix",
+      "changes": [
+        "Live-Status zeigt echte Wiki-Zahlen statt toter API"
+      ]
+    },
+    {
+      "hash": "beb3bb6bf4ed7ece725d39a98d63ac25510e6dff",
+      "version": null,
+      "date": "2026-03-28",
+      "title": "status-data.json Zeitstempel aktualisiert",
+      "type": "chore",
+      "changes": [
+        "status-data.json Zeitstempel aktualisiert"
+      ]
+    },
+    {
+      "hash": "45f40c4b38d02392954e5c97def0e312e986dcab",
+      "version": null,
+      "date": "2026-03-28",
+      "title": "auto-fetch beim Mount komplett entfernt",
+      "type": "fix",
+      "changes": [
+        "auto-fetch beim Mount komplett entfernt"
+      ]
+    },
+    {
+      "hash": "f95fc3977ec7ed9d6482f478b6e24987fc9ec92e",
+      "version": null,
+      "date": "2026-03-28",
+      "title": "kein auto-fetch beim Mount, freundlicher API-Hinweis",
+      "type": "fix",
+      "changes": [
+        "kein auto-fetch beim Mount, freundlicher API-Hinweis"
+      ]
+    },
+    {
+      "hash": "b0dfe3e0eb0b74ea79a9317ebd5130d42fe82006",
+      "version": null,
+      "date": "2026-03-28",
+      "title": "Admin-Passwort auf 12345678910 geaendert",
+      "type": "fix",
+      "changes": [
+        "Admin-Passwort auf 12345678910 geaendert"
+      ]
+    },
+    {
+      "hash": "f01dfec6832b39cd86c90ececac8f97892ed2221",
+      "version": null,
+      "date": "2026-03-28",
+      "title": "lokaler Admin-Bypass fuer Benny ohne Backend",
+      "type": "feature",
+      "changes": [
+        "lokaler Admin-Bypass fuer Benny ohne Backend"
+      ]
+    },
+    {
+      "hash": "e15284e60333033d8176467734fb6663edeb97b8",
+      "version": null,
+      "date": "2026-03-28",
+      "title": "interne Studien-Review-Seite + Sync-Enrichment",
+      "type": "feature",
+      "changes": [
+        "interne Studien-Review-Seite + Sync-Enrichment",
+        "Neue Route /dashboard/studies: 3-Zeilen-Karten, Herkunft/Institut,",
+        "Erstautor, Priorität, 1-Klick-Entscheidung (Rein/Spaeter/Nein)",
+        "Entscheidungen persistent im localStorage (kein Server nötig)",
+        "Filter-Tabs: Offen / Rein / Spaeter / Nein / Alle + Zählerfelder",
+        "Studien nach editorialPriority + relevanceScore sortiert",
+        "Dashboard: Einstiegskachel mit Erklärung der Arbeitsweise",
+        "sync-wiki-studies.mjs: firstAuthor, originLabel, reviewSummary (3 Zeilen)"
+      ]
+    },
+    {
+      "hash": "824e7eb0ca17fb8c681667b82ff05184c68a8a87",
+      "version": null,
+      "date": "2026-03-27",
+      "title": "harden wiki study filtering and scoring",
+      "type": "feature",
+      "changes": [
+        "harden wiki study filtering and scoring",
+        "replace broad keyword scoring with topic-cluster ranking",
+        "require cannabis-specific anchors before accepting studies",
+        "add hard exclusions for veterinary/feed/marine/corrigendum noise",
+        "classify study types and score evidence, publisher quality, topic fit",
+        "enrich autoSources with editorial priority, flags and matched topics",
+        "strengthen validation for new metadata fields",
+        "improve sync report with risky hits and exclusions preview"
+      ]
+    },
+    {
+      "hash": "dd7a27842f7e126026da67b78ae1dd9ae5b766b9",
+      "version": null,
+      "date": "2026-03-27",
+      "title": "harden wiki-study-sync when PR creation is blocked",
+      "type": "fix",
+      "changes": [
+        "harden wiki-study-sync when PR creation is blocked",
+        "upgrade setup-node to v24",
+        "force JS actions to Node 24",
+        "make create-pull-request non-fatal",
+        "add warning hint for missing Actions PR permission"
+      ]
+    },
+    {
+      "hash": "072dfc711bcb90dd3f9b210438a3316b5805b09d",
+      "version": null,
+      "date": "2026-03-27",
+      "title": "adapt cron schedule to hobby plan (daily)",
+      "type": "chore",
+      "changes": [
+        "adapt cron schedule to hobby plan (daily)"
+      ]
+    },
+    {
+      "hash": "cfe2622d4cf09c352075649beeb37f28fd484e69",
+      "version": null,
+      "date": "2026-03-27",
+      "title": "add study ranking algorithms + server cron automation",
+      "type": "feature",
+      "changes": [
+        "add study ranking algorithms + server cron automation",
+        "Add weighted study ranking engine (smart/fresh/quality)",
+        "New endpoint: GET /api/search/studies",
+        "New cron-safe endpoint: GET /api/automation/study-refresh",
+        "Add Vercel cron config in apps/web/vercel.json (every 3h)",
+        "Document new APIs and automation behavior in README",
+        "Add CRON_SECRET to .env.example",
+        "Keep .vercel ignored in git"
+      ]
+    },
+    {
+      "hash": "0b9075eedfc60dcc1522d58f4ea4cf2ca807df1e",
+      "version": null,
+      "date": "2026-03-27",
+      "title": "README komplett neu – Stand 27. März 2026",
+      "type": "docs",
+      "changes": [
+        "README komplett neu – Stand 27. März 2026",
+        "Aktueller Stand-Table mit allen heutigen Neuerungen",
+        "Live-URL: secretleaf.vercel.app",
+        "Seiten-Übersicht aller Routes (statisch/dynamisch)",
+        "Automatisierungen: Wiki-Sync, Status-Probe, Preise, Coverage",
+        "Quellenqualität-Übersicht (41 Quellen)",
+        "Nächste Prioritäten klar priorisiert",
+        "Alten veralteten Content entfernt"
+      ]
+    },
+    {
+      "hash": "dc819d39a93006a49e742c254c23edf2ef8cbca8",
+      "version": null,
+      "date": "2026-03-27",
+      "title": "fix deploy config – inline tsconfig, root vercel.json",
+      "type": "chore",
+      "changes": [
+        "fix deploy config – inline tsconfig, root vercel.json"
+      ]
+    },
+    {
+      "hash": "8fa3f60e3be907bd09dad18ea3bbc0eacf3464d3",
+      "version": null,
+      "date": "2026-03-27",
+      "title": "polish & status page section reorder + coverage freshness UX",
+      "type": "chore",
+      "changes": [
+        "polish & status page section reorder + coverage freshness UX",
+        "Status page: reorder sections (Betrieb → Wirkung/Aktion → Priorisierung → Coverage → Verlauf → Historie)",
+        "Status page: tighter section intros, visual identity markers, cockpit branding",
+        "Coverage page: freshness badge, trend delta, automation note, relevance explainer",
+        "wiki.ts: editorial/style cleanup (market, VPD/EC, seed blocks)",
+        "fertilizer coverage history: snapshot update",
+        "status-data.json: regenerated with /status CTA route",
+        "Various wiki route improvements and new wiki sections (pests, deficiencies)"
+      ]
+    },
+    {
+      "hash": "ab0ec3359aecfc6c46f4f8bf4fc41e845a3e5ee5",
+      "version": null,
+      "date": "2026-03-26",
+      "title": "persist latest status snapshot",
+      "type": "chore",
+      "changes": [
+        "persist latest status snapshot"
+      ]
+    },
+    {
+      "hash": "d3d9a20e90c858fddb5f24928a7fd996b0e712d7",
+      "version": null,
+      "date": "2026-03-26",
+      "title": "snapshot full workspace state before sleep",
+      "type": "chore",
+      "changes": [
+        "snapshot full workspace state before sleep"
+      ]
+    },
+    {
+      "hash": "c26e36a63f7cf3416914d91bc38a0b26dd274cf4",
+      "version": null,
+      "date": "2026-03-26",
+      "title": "professional automated study sync pipeline",
+      "type": "chore",
+      "changes": [
+        "professional automated study sync pipeline"
+      ]
+    },
+    {
+      "hash": "manual-v1.4.0",
+      "version": "1.4.0",
+      "date": "2026-04-06",
+      "title": "Automatisierung massiv erweitert, Datenbank & API produktionsnah konfiguriert",
+      "type": "release",
+      "changes": [
+        "Automations-Endpunkte erweitert: Health, Cleanup, Study-Sync und manuelles Refresh fuer stabile Betriebsablaeufe",
+        "Status- und Public-API weiter ausgebaut fuer verlaessliche Live-Uebersichten und Monitoring",
+        "Supabase/DB-Grundlage deutlich gehaertet: Rollen, RLS-Hardening, Fingerprint-Indexing und Automation-Run-Tracking",
+        "Datenfluss zwischen Web, API und Storage konsolidiert fuer robustere Sync- und Review-Prozesse",
+        "Klarer IA-Relaunch in v1.4 (Studies, Database, Tools, Dashboard) fuer bessere operative Steuerung"
       ]
     },
     {

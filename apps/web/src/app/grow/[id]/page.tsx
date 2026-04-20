@@ -12,7 +12,8 @@ import Link from 'next/link';
 import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
-import { TASK_CATEGORY_ICONS, PHASE_ICONS } from '@/lib/grow/phases';
+import { PHASE_ICONS } from '@/lib/grow/phases';
+import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
 import type { GrowTask, Grow } from '@/lib/grow/types';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

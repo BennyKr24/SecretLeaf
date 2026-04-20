@@ -143,8 +143,8 @@ function PhasePills({ value, onChange }: PhasePillsProps) {
 
 // ── Interpretation helper ────────────────────────────────────────────────────
 
-function getInterpretation(out: VPDOutput): string {
-  const { vpd, level, phase, optimalMin, optimalMax } = out;
+function getInterpretation(out: VPDOutput, phase: VPDPhase): string {
+  const { vpd, level, optimalMin, optimalMax } = out;
   if (level === 'gruen') {
     return `Perfekte Bedingungen für die ${VPD_PHASE_LABELS[phase]}. Stomata sind offen, Transpiration und Nährstoffaufnahme laufen optimal.`;
   }
@@ -158,11 +158,10 @@ function getInterpretation(out: VPDOutput): string {
 
 function getRecommendation(out: VPDOutput): string | undefined {
   if (out.level === 'gruen') return undefined;
-  const { targetRH, lufttemperatur } = { lufttemperatur: 0, ...out };
   if (out.vpd < out.optimalMin) {
     return `Ziel-Luftfeuchte: ${out.targetRH} % (bei aktueller Temperatur).`;
   }
-  return `Ziel-Luftfeuchte: ${out.targetRH} % — oder Temperatur auf ${(lufttemperatur - 2).toFixed(0)} °C senken.`;
+  return `Ziel-Luftfeuchte: ${out.targetRH} %.`;
 }
 
 // ── Page ─────────────────────────────────────────────────────────────────────
@@ -171,7 +170,6 @@ export default function VpdPage() {
   const { inputs, setInput, loaded, saveSnapshot } = useToolState({
     slug: 'vpd',
     defaults: DEFAULTS,
-    setupKeys: ['lufttemperatur', 'luftfeuchtigkeit'],
   });
 
   const output = useMemo(() => calculateVPD(inputs), [inputs]);
@@ -243,11 +241,7 @@ export default function VpdPage() {
             label="Blatttemperatur manuell einstellen"
             checked={inputs.blattOffsetManuell}
             onChange={(v) => setInput('blattOffsetManuell', v)}
-            hint={
-              inputs.blattOffsetManuell
-                ? undefined
-                : `Standard: +2 °C Offset (Blatt bei ${(inputs.lufttemperatur + 2).toFixed(1)} °C).`
-            }
+            {...(!inputs.blattOffsetManuell && { hint: `Standard: +2 °C Offset (Blatt bei ${(inputs.lufttemperatur + 2).toFixed(1)} °C).` })}
           />
 
           {inputs.blattOffsetManuell && (
@@ -285,7 +279,7 @@ export default function VpdPage() {
         <div className="space-y-5">
           <ToolResultCard
             title="VPD deines Grows"
-            interpretation={getInterpretation(output)}
+            interpretation={getInterpretation(output, inputs.phase)}
             recommendation={getRecommendation(output)}
           >
             <ToolResult

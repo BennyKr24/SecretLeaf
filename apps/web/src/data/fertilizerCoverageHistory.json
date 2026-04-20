@@ -41,6 +41,13 @@
       "coveredProducts": 346,
       "marketEstimate": 420,
       "note": "Automatischer Tages-Snapshot"
+    },
+    {
+      "date": "2026-04-20T20:44:48.464Z",
+      "coverage": 57.6,
+      "coveredProducts": 242,
+      "marketEstimate": 420,
+      "note": "Automatischer Tages-Snapshot"
     }
   ]
 }

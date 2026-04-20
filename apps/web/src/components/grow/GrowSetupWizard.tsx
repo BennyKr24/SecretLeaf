@@ -499,6 +499,8 @@ export default function GrowSetupWizard() {
         erfahrung: data.erfahrung,
         pflanzenAnzahl: data.pflanzenAnzahl,
         startDate: new Date().toISOString(),
+        currentPhaseId: 'keimung',
+        status: 'aktiv',
       });
       router.push(`/grow/${grow.id}`);
     } catch {

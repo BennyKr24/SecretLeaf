@@ -42,6 +42,9 @@ export type UseGrowLogReturn = {
   /** True if there is at least one log entry for today. */
   hasTodayEntry: boolean;
 
+  /** Manually re-syncs from storage. */
+  refresh: () => void;
+
   /** Returns entries filtered by type. */
   entriesByType: (type: LogEntryType) => LogEntry[];
 
