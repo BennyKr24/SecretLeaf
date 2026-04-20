@@ -151,7 +151,7 @@ export default function GrowPage({ params }: Props) {
   useEffect(() => {
     if (!loaded) return;
     const found = grows.find((g) => g.id === params.id) ?? null;
-    if (found === null) setNotFound(true);
+    setNotFound(found === null);
     setGrow(found);
   }, [grows, loaded, params.id]);
 
