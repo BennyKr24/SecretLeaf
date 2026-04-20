@@ -7,7 +7,7 @@
 // complete action), quick actions and phase timeline.
 // ────────────────────────────────────────────────────────────────────────────
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, use } from 'react';
 import Link from 'next/link';
 import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';
@@ -18,7 +18,7 @@ import type { GrowTask, Grow } from '@/lib/grow/types';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-type Props = { params: { id: string } };
+type Props = { params: Promise<{ id: string }> };
 
 function dayLabel(dueDay: number, currentDay: number): string {
   const diff = dueDay - currentDay;
@@ -144,16 +144,17 @@ function TaskItem({ task, currentDay, onComplete }: TaskItemProps) {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function GrowPage({ params }: Props) {
+  const { id } = use(params);
   const { grows, loaded, completeTask } = useGrowState();
   const [grow, setGrow] = useState<Grow | null>(null);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     if (!loaded) return;
-    const found = grows.find((g) => g.id === params.id) ?? null;
+    const found = grows.find((g) => g.id === id) ?? null;
     setNotFound(found === null);
     setGrow(found);
-  }, [grows, loaded, params.id]);
+  }, [grows, loaded, id]);
 
   const handleComplete = useCallback((taskId: string) => {
     if (!grow) return;
