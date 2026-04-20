@@ -10,8 +10,9 @@
 // ─ Timeline grouped by calendar date, newest-first
 // ────────────────────────────────────────────────────────────────────────────
 
-import { useState, useCallback, useEffect, useRef, use } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
@@ -30,7 +31,7 @@ import type {
 // Types
 // ────────────────────────────────────────────────────────────────────────────
 
-type Props = { params: Promise<{ id: string }> };
+type Props = Record<string, never>;
 
 // ────────────────────────────────────────────────────────────────────────────
 // Helpers
@@ -443,8 +444,8 @@ function EntryCard({
 // Page
 // ────────────────────────────────────────────────────────────────────────────
 
-export default function GrowLogPage({ params }: Props) {
-  const { id } = use(params);
+export default function GrowLogPage(_props: Props) {
+  const { id } = useParams<{ id: string }>();
   const { grows, loaded: growLoaded } = useGrowState();
   const grow = grows.find((g) => g.id === id) ?? null;
   const { entries, loaded: logLoaded, addEntry, deleteEntry, currentStreak } = useGrowLog(id);
