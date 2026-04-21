@@ -27,6 +27,20 @@ import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } fr
 import { PHASE_ICONS } from '@/lib/grow/phases';
 import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
 
+/** True when a plant needs attention: no log > 3 days or no watering > 3 days. */
+function dashboardPlantAlert(plantEntries: { date: string; data: { type: string } }[]): boolean {
+  if (plantEntries.length === 0) return false;
+  const newest = plantEntries[0]!;
+  const sinceLog = Math.floor((Date.now() - new Date(newest.date).getTime()) / 86_400_000);
+  if (sinceLog > 3) return true;
+  const lastWater = plantEntries.find((e) => e.data.type === "wasser");
+  if (lastWater) {
+    const sinceWater = Math.floor((Date.now() - new Date(lastWater.date).getTime()) / 86_400_000);
+    if (sinceWater > 3) return true;
+  }
+  return false;
+}
+
 function timeAgo(isoDate: string): string {
   const diff = Date.now() - new Date(isoDate).getTime();
   const minutes = Math.floor(diff / 60_000);
@@ -174,7 +188,19 @@ export default function UserDashboardPage() {
   const { bookmarks } = useBookmarks();
   const { history, clearHistory } = useReadingHistory();
   const { activeGrow } = useGrowState();
-  const { hasTodayEntry } = useGrowLog(activeGrow?.id ?? null);
+  const { hasTodayEntry, entries: growEntries } = useGrowLog(activeGrow?.id ?? null);
+
+  // Compute how many plants need attention
+  const alertCount = useMemo(() => {
+    if (!activeGrow) return 0;
+    const overdueTasks = getOverdueTasks(activeGrow).length;
+    const plantAlerts = activeGrow.plants.filter((p) => {
+      const pe = growEntries.filter((e) => e.plantId === p.id);
+      return dashboardPlantAlert(pe);
+    }).length;
+    return overdueTasks > 0 || plantAlerts > 0 ? plantAlerts + (overdueTasks > 0 ? 1 : 0) : 0;
+  }, [activeGrow, growEntries]);
+
   const { progressEntries } = useReadingProgress();
   const { interests, toggle: toggleInterest, isActive, loaded: interestsLoaded, preferredCategories } = useInterests();
 
@@ -348,6 +374,26 @@ export default function UserDashboardPage() {
 
         {/* ═══════════════════ PRIMARY — Grow ═══════════════════ */}
         <div className="space-y-5">
+        {/* ── Grow Alert Banner ── */}
+        {activeGrow && alertCount > 0 && (
+          <a
+            href={`/grow/${activeGrow.id}`}
+            className="flex items-center gap-3 rounded-2xl border border-rose-300 bg-rose-50 px-4 py-3 transition hover:bg-rose-100 active:scale-[0.99]"
+          >
+            <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-rose-600 text-sm text-white">🚨</span>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-bold text-rose-800">
+                {alertCount === 1
+                  ? '1 Pflanze braucht Aufmerksamkeit'
+                  : `${alertCount} Pflanzen brauchen Aufmerksamkeit`}
+              </p>
+              <p className="text-[11px] text-rose-500">Zur Grow-Seite → Pflanzen &amp; Tasks prüfen</p>
+            </div>
+            <svg className="h-4 w-4 flex-shrink-0 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        )}
         {activeGrow ? (
           <section className="rounded-[28px] border border-emerald-200 bg-white p-4 shadow-[0_8px_40px_-8px_rgba(5,150,105,0.18)] ring-1 ring-emerald-100 sm:p-6">
             <div className="mb-4 flex items-center justify-between gap-3">

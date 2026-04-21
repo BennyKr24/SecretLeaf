@@ -12,7 +12,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
@@ -108,8 +108,12 @@ function entrySummary(entry: LogEntry): string {
 // Sub-components
 // ────────────────────────────────────────────────────────────────────────────
 
+const STREAK_MILESTONES = new Set([3, 7, 14, 21, 30]);
+
 /** Streak pill — shown prominently at the top. */
 function StreakBadge({ streak, pulse }: { streak: number; pulse: boolean }) {
+  const isMilestone = pulse && STREAK_MILESTONES.has(streak);
+
   if (streak === 0) {
     return (
       <div className={`inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-semibold text-slate-500 transition-all duration-300 ${pulse ? 'scale-110 border-emerald-300 bg-emerald-50 text-emerald-700' : ''}`}>
@@ -121,12 +125,17 @@ function StreakBadge({ streak, pulse }: { streak: number; pulse: boolean }) {
 
   return (
     <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-bold transition-all duration-300 ${
-      pulse
+      isMilestone
+        ? 'scale-110 border-amber-400 bg-amber-500 text-white shadow-lg shadow-amber-900/25'
+        : pulse
         ? 'scale-110 border-emerald-400 bg-emerald-500 text-white shadow-md shadow-emerald-900/20'
         : 'border-emerald-200 bg-emerald-50 text-emerald-700'
     }`}>
-      <span className="text-base">🔥</span>
-      <span>{streak} {streak === 1 ? 'Tag' : 'Tage'} in Folge{pulse ? ' ↑' : ''}</span>
+      <span className="text-base">{isMilestone ? '🏆' : '🔥'}</span>
+      <span>
+        {streak} {streak === 1 ? 'Tag' : 'Tage'} in Folge
+        {isMilestone ? ` — ${streak}-Tage-Meilenstein!` : pulse ? ' ↑' : ''}
+      </span>
     </div>
   );
 }
@@ -144,14 +153,14 @@ function SavedBanner({ type, visible, completedTask }: { type: LogEntryType | nu
       {type && (
         <div className="flex items-center gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
           <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-emerald-600 text-sm text-white">
-            ✓
+            \u2713
           </span>
           <div className="flex-1">
             <p className="text-sm font-bold text-emerald-800">
-              {LOG_ENTRY_TYPE_ICONS[type]} {LOG_ENTRY_TYPE_LABELS[type]} gespeichert
+              {LOG_ENTRY_TYPE_ICONS[type]} {LOG_ENTRY_TYPE_LABELS[type]} gespeichert \u2713
             </p>
             {completedTask ? (
-              <p className="text-xs text-emerald-600">✅ Task erledigt: <span className="font-semibold">{completedTask}</span></p>
+              <p className="text-xs text-emerald-600">\u2705 Task erledigt: <span className="font-semibold">{completedTask}</span></p>
             ) : (
               <p className="text-xs text-emerald-600">Gut gemacht — weiter so!</p>
             )}
@@ -162,12 +171,34 @@ function SavedBanner({ type, visible, completedTask }: { type: LogEntryType | nu
   );
 }
 
+/** Daily completion banner — shown when today is logged and no critical plants. */
+function DailyCompletionBanner({ visible }: { visible: boolean }) {
+  return (
+    <div
+      className={`overflow-hidden transition-all duration-500 ease-out ${
+        visible ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'
+      }`}
+    >
+      <div className="flex items-center gap-3 rounded-2xl border border-emerald-300 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 py-3">
+        <span className="text-xl leading-none">✅</span>
+        <div>
+          <p className="text-sm font-bold text-emerald-800">Alles erledigt für heute</p>
+          <p className="text-xs text-emerald-600">Dein Grow ist versorgt — bis morgen!</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ────────────────────────────────────────────────────────────────────────────
 // Quick-Add Bar (inline form — no modal)
 // ────────────────────────────────────────────────────────────────────────────
 
 type QuickAddProps = {
   activeType: LogEntryType | null;
+  plants: { id: string; name: string }[];
+  selectedPlantId: string;
+  onSelectPlant: (plantId: string) => void;
   onSelect: (type: LogEntryType) => void;
   onCancel: () => void;
   onSave: (type: LogEntryType, fields: Record<string, string>) => void;
@@ -182,7 +213,16 @@ const QUICK_ADD_TYPES: { type: LogEntryType; label: string }[] = [
   { type: 'notiz', label: 'Notiz' },
 ];
 
-function QuickAddBar({ activeType, onSelect, onCancel, onSave, editingEntry }: QuickAddProps) {
+function QuickAddBar({
+  activeType,
+  plants,
+  selectedPlantId,
+  onSelectPlant,
+  onSelect,
+  onCancel,
+  onSave,
+  editingEntry,
+}: QuickAddProps) {
   const isEditing = editingEntry != null;
 
   // Pre-fill fields from existing entry when editing
@@ -245,6 +285,25 @@ function QuickAddBar({ activeType, onSelect, onCancel, onSave, editingEntry }: Q
           <p className="text-xs font-bold text-amber-800">Eintrag bearbeiten</p>
         </div>
       )}
+
+      {/* Plant scope selector */}
+      <div className="mb-3">
+        <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+          Gültigkeit
+        </label>
+        <select
+          value={selectedPlantId}
+          onChange={(e) => onSelectPlant(e.target.value)}
+          className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+        >
+          <option value="">Gesamter Grow</option>
+          {plants.map((plant) => (
+            <option key={plant.id} value={plant.id}>
+              {plant.name}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Type selector row — locked in edit mode */}
       <div className="flex gap-2 overflow-x-auto pb-1">
@@ -466,11 +525,13 @@ function QuickAddBar({ activeType, onSelect, onCancel, onSave, editingEntry }: Q
 
 function EntryCard({
   entry,
+  plantName,
   onDelete,
   onEdit,
   isNew,
 }: {
   entry: LogEntry;
+  plantName?: string | undefined;
   onDelete: (id: string) => void;
   onEdit: (entry: LogEntry) => void;
   isNew?: boolean;
@@ -493,6 +554,9 @@ function EntryCard({
       {/* Content */}
       <div className="min-w-0 flex-1">
         <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{label}</p>
+        <p className="mt-0.5 text-[11px] font-semibold text-emerald-700">
+          {plantName ?? 'Gesamter Grow'}
+        </p>
         <p className="mt-0.5 text-sm font-medium leading-snug text-slate-800">{summary}</p>
         {entry.notes && (
           <p className="mt-1 text-xs leading-relaxed text-slate-400">{entry.notes}</p>
@@ -551,18 +615,39 @@ function EntryCard({
 
 export default function GrowLogPage(_props: Props) {
   const { id } = useParams<{ id: string }>();
+  const searchParams = useSearchParams();
   const { grows, loaded: growLoaded } = useGrowState();
   const grow = grows.find((g) => g.id === id) ?? null;
-  const { entries, loaded: logLoaded, addEntry, deleteEntry, updateEntry, currentStreak } = useGrowLog(id);
+  const { entries, loaded: logLoaded, addEntry, deleteEntry, updateEntry, currentStreak, entriesByPlant } = useGrowLog(id);
 
+  const initPlant = searchParams.get('plant') ?? '';
   const [activeType, setActiveType] = useState<LogEntryType | null>(null);
+  const [selectedPlantId, setSelectedPlantId] = useState<string>(initPlant);
+  const [activePlantFilter, setActivePlantFilter] = useState<string | null>(initPlant || null);
   const [editingEntry, setEditingEntry] = useState<LogEntry | null>(null);
   const [savedType, setSavedType] = useState<LogEntryType | null>(null);
   const [completedTask, setCompletedTask] = useState<string | null>(null);
   const [newestId, setNewestId] = useState<string | null>(null);
   const [streakPulse, setStreakPulse] = useState(false);
+  const [showCompletion, setShowCompletion] = useState(false);
   const bannerTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pulseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const completionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Derive: has the user logged today and there are no critical plants?
+  const hasTodayEntry = entries.some((e) => {
+    const d = new Date(e.date);
+    const t = new Date();
+    return d.getFullYear() === t.getFullYear() && d.getMonth() === t.getMonth() && d.getDate() === t.getDate();
+  });
+  const noCriticalPlants = grow
+    ? grow.plants.every((p) => {
+        const pe = entries.filter((e) => e.plantId === p.id);
+        if (pe.length === 0) return true;
+        const sinceLog = Math.floor((Date.now() - new Date(pe[0]!.date).getTime()) / 86_400_000);
+        return sinceLog <= 3;
+      })
+    : true;
 
   // Auto-clear feedback after 3 s
   useEffect(() => {
@@ -579,6 +664,16 @@ export default function GrowLogPage(_props: Props) {
     pulseTimer.current = setTimeout(() => setStreakPulse(false), 1500);
     return () => { if (pulseTimer.current) clearTimeout(pulseTimer.current); };
   }, [streakPulse]);
+
+  // Show completion banner 600ms after save, hide after 4s
+  useEffect(() => {
+    if (!hasTodayEntry || !noCriticalPlants) { setShowCompletion(false); return; }
+    const t = setTimeout(() => setShowCompletion(true), 600);
+    if (completionTimer.current) clearTimeout(completionTimer.current);
+    completionTimer.current = setTimeout(() => setShowCompletion(false), 5000);
+    return () => { clearTimeout(t); if (completionTimer.current) clearTimeout(completionTimer.current); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasTodayEntry, noCriticalPlants]);
 
   /** Builds an ISO date string from the _date / _time fields. */
   const buildDate = (fields: Record<string, string>): string => {
@@ -626,6 +721,7 @@ export default function GrowLogPage(_props: Props) {
         updateEntry(editingEntry.id, {
           date,
           data,
+          ...(selectedPlantId ? { plantId: selectedPlantId } : {}),
           ...(notes !== undefined && { notes }),
         });
         setEditingEntry(null);
@@ -633,7 +729,7 @@ export default function GrowLogPage(_props: Props) {
         setSavedType(type);
       } else {
         // Create new entry
-        const result = addEntry({ date, ...(notes !== undefined && { notes }), data });
+        const result = addEntry({ date, ...(notes !== undefined && { notes }), data, ...(selectedPlantId ? { plantId: selectedPlantId } : {}) });
         setActiveType(null);
         setSavedType(type);
         setStreakPulse(true);
@@ -643,18 +739,18 @@ export default function GrowLogPage(_props: Props) {
           setCompletedTask(task?.title ?? 'Task erledigt');
           setTimeout(() => setCompletedTask(null), 4000);
         }
-        const firstEntry = entries[0];
-        if (firstEntry) setNewestId(firstEntry.id);
+        if (result?.entry.id) setNewestId(result.entry.id);
         setTimeout(() => setNewestId(null), 3000);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [editingEntry, addEntry, updateEntry, entries]
+    [editingEntry, addEntry, updateEntry, selectedPlantId]
   );
 
   const handleEdit = useCallback((entry: LogEntry) => {
     setEditingEntry(entry);
     setActiveType(entry.data.type as LogEntryType);
+    setSelectedPlantId(entry.plantId ?? '');
     // Scroll to top so form is visible
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -662,6 +758,7 @@ export default function GrowLogPage(_props: Props) {
   const handleCancel = useCallback(() => {
     setEditingEntry(null);
     setActiveType(null);
+    setSelectedPlantId('');
   }, []);
 
   // ── Loading ─────────────────────────────────────────────────────────────────
@@ -686,7 +783,9 @@ export default function GrowLogPage(_props: Props) {
     );
   }
 
-  const grouped = groupByDay(entries);
+  const plantFilteredEntries = entriesByPlant(activePlantFilter);
+  const grouped = groupByDay(plantFilteredEntries);
+  const plantNameById = new Map((grow?.plants ?? []).map((plant) => [plant.id, plant.name]));
 
   return (
     <main className="min-h-screen bg-slate-50">
@@ -719,6 +818,9 @@ export default function GrowLogPage(_props: Props) {
         {/* ── Quick-Add ────────────────────────────────────────────────────── */}
         <QuickAddBar
           activeType={activeType}
+          plants={grow.plants}
+          selectedPlantId={selectedPlantId}
+          onSelectPlant={setSelectedPlantId}
           onSelect={setActiveType}
           onCancel={handleCancel}
           onSave={handleSave}
@@ -727,6 +829,44 @@ export default function GrowLogPage(_props: Props) {
 
         {/* ── Save feedback banner ─────────────────────────────────────────── */}
         <SavedBanner type={savedType} visible={savedType !== null} completedTask={completedTask} />
+        {/* ── Daily completion ──────────────────────────────────────────────── */}
+        <DailyCompletionBanner visible={showCompletion} />
+        {/* ── Plant Filter ─────────────────────────────────────────────── */}
+        <div className="flex gap-2 overflow-x-auto pb-1">
+          <button
+            onClick={() => setActivePlantFilter(null)}
+            className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
+              activePlantFilter === null
+                ? 'bg-emerald-600 text-white'
+                : 'border border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+            }`}
+          >
+            Alle
+          </button>
+          <button
+            onClick={() => setActivePlantFilter('')}
+            className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
+              activePlantFilter === ''
+                ? 'bg-emerald-600 text-white'
+                : 'border border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+            }`}
+          >
+            Gesamter Grow
+          </button>
+          {grow.plants.map((plant) => (
+            <button
+              key={plant.id}
+              onClick={() => setActivePlantFilter(plant.id)}
+              className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
+                activePlantFilter === plant.id
+                  ? 'bg-emerald-600 text-white'
+                  : 'border border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+              }`}
+            >
+              {plant.name}
+            </button>
+          ))}
+        </div>
 
         {/* ── Timeline ────────────────────────────────────────────────────── */}
         {grouped.length === 0 ? (
@@ -750,7 +890,14 @@ export default function GrowLogPage(_props: Props) {
                 </div>
                 <div className="space-y-2">
                   {group.entries.map((entry) => (
-                    <EntryCard key={entry.id} entry={entry} onDelete={deleteEntry} onEdit={handleEdit} isNew={entry.id === newestId} />
+                    <EntryCard
+                      key={entry.id}
+                      entry={entry}
+                      plantName={entry.plantId ? plantNameById.get(entry.plantId) : undefined}
+                      onDelete={deleteEntry}
+                      onEdit={handleEdit}
+                      isNew={entry.id === newestId}
+                    />
                   ))}
                 </div>
               </div>

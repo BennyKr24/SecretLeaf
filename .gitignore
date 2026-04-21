@@ -2,6 +2,10 @@ node_modules
 .next
 dist
 
+# Local deploy history (not tracked in git)
+deploy-log.txt
+version.txt
+
 # Generated wiki sync report (automation-only)
 .github/wiki-sync-report.md
 .env

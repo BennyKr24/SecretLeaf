@@ -9,6 +9,7 @@ import { storage, STORAGE_KEYS } from "@/lib/store";
 import type {
   Grow,
   LogEntry,
+  Plant,
   CreateGrowInput,
   CreateLogEntryInput,
   GrowPlan,
@@ -16,11 +17,44 @@ import type {
 } from "./types";
 import { generateId } from "./utils";
 
+function createDefaultPlants(count: number): Plant[] {
+  const now = new Date().toISOString();
+  return Array.from({ length: Math.max(1, count) }, (_, index) => ({
+    id: generateId(),
+    name: `Plant ${index + 1}`,
+    createdAt: now,
+  }));
+}
+
+function normalizeGrow(grow: Grow): Grow {
+  const safeCount = Math.max(1, grow.pflanzenAnzahl || 1);
+  const hasPlants = Array.isArray(grow.plants) && grow.plants.length > 0;
+  return {
+    ...grow,
+    pflanzenAnzahl: safeCount,
+    plants: hasPlants ? grow.plants : createDefaultPlants(safeCount),
+  };
+}
+
 // ── Grow Reads ────────────────────────────────────────────────────────────────
 
 /** Returns all stored grows. Empty array if none exist. */
 export function getGrows(): Grow[] {
-  return storage.get<Grow[]>(STORAGE_KEYS.GROWS) ?? [];
+  const grows = storage.get<Grow[]>(STORAGE_KEYS.GROWS) ?? [];
+  let changed = false;
+  const normalized = grows.map((grow) => {
+    const missingPlants = !Array.isArray(grow.plants) || grow.plants.length === 0;
+    const invalidCount = !Number.isFinite(grow.pflanzenAnzahl) || grow.pflanzenAnzahl < 1;
+    if (missingPlants || invalidCount) changed = true;
+    return normalizeGrow(grow);
+  });
+
+  // Stabilize legacy data once so plant IDs remain consistent across refreshes.
+  if (changed) {
+    storage.set(STORAGE_KEYS.GROWS, normalized);
+  }
+
+  return normalized;
 }
 
 /** Returns a single grow by ID, or null if not found. */
@@ -56,9 +90,13 @@ export function createGrow(input: CreateGrowInput, plan?: GrowPlan): Grow {
   const now = new Date().toISOString();
   const defaultPlan: GrowPlan = { phases: [], totalDays: 0, generatedAt: now };
   const existing = getGrows();
+  const plants = input.plants?.length
+    ? input.plants
+    : createDefaultPlants(input.pflanzenAnzahl);
 
   const grow: Grow = {
     ...input,
+    plants,
     id: generateId(),
     plan: plan ?? defaultPlan,
     currentDay: 1, // will be recomputed at runtime via computeCurrentDay
@@ -168,10 +206,15 @@ export function setActiveGrow(id: string): void {
 /**
  * Returns all log entries for a given grow, sorted newest-first by `date`.
  */
-export function getLogEntries(growId: string): LogEntry[] {
+export function getLogEntries(growId: string, plantId?: string): LogEntry[] {
   const all = storage.get<LogEntry[]>(STORAGE_KEYS.LOG_ENTRIES) ?? [];
   return all
-    .filter((e) => e.growId === growId)
+    .filter((e) => {
+      if (e.growId !== growId) return false;
+      if (plantId === undefined) return true;
+      if (plantId === "") return e.plantId === undefined;
+      return e.plantId === plantId;
+    })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
@@ -200,7 +243,7 @@ export function createLogEntry(input: CreateLogEntryInput): LogEntry {
  */
 export function updateLogEntry(
   id: string,
-  updates: Partial<Pick<LogEntry, "date" | "notes" | "data">>
+  updates: Partial<Pick<LogEntry, "date" | "notes" | "data" | "plantId">>
 ): LogEntry | null {
   const all = storage.get<LogEntry[]>(STORAGE_KEYS.LOG_ENTRIES) ?? [];
   const idx = all.findIndex((e) => e.id === id);

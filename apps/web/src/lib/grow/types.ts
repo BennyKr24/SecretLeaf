@@ -123,6 +123,15 @@ export const GROW_STATUS_LABELS: Record<GrowStatus, string> = {
   abgebrochen: "Abgebrochen",
 };
 
+// ── Plant (Entity within a Grow) ────────────────────────────────────────────
+
+export type Plant = {
+  id: string;
+  name: string;
+  notes?: string;
+  createdAt: string; // ISO string
+};
+
 // ── Grow (Core Entity) ────────────────────────────────────────────────────────
 
 export type Grow = {
@@ -135,6 +144,7 @@ export type Grow = {
   lichtLeistung?: number;
   erfahrung: Erfahrung;
   pflanzenAnzahl: number;
+  plants: Plant[];
   /** Grow canopy area in m². */
   flaeche?: number;
   /** ISO string — the date the grow was officially started. */
@@ -242,6 +252,8 @@ export const LOG_ENTRY_TYPE_ICONS: Record<LogEntryType, string> = {
 export type LogEntry = {
   id: string;
   growId: string;
+  /** Optional plant relation. Omitted = whole-grow entry. */
+  plantId?: string;
   /** ISO string — when the action occurred (user-provided, may differ from createdAt). */
   date: string;
   data: LogEntryData;
@@ -256,7 +268,13 @@ export type LogEntry = {
  * Input to create a new Grow.
  * `id`, `plan`, `currentDay`, `createdAt`, `updatedAt` are auto-generated.
  */
-export type CreateGrowInput = Omit<Grow, "id" | "plan" | "currentDay" | "createdAt" | "updatedAt">;
+export type CreateGrowInput = Omit<
+  Grow,
+  "id" | "plan" | "currentDay" | "createdAt" | "updatedAt" | "plants"
+> & {
+  /** Optional: if omitted, defaults are generated from `pflanzenAnzahl`. */
+  plants?: Plant[];
+};
 
 /**
  * Input to create a new LogEntry.

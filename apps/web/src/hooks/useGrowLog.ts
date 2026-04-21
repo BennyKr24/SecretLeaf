@@ -88,7 +88,7 @@ export type UseGrowLogReturn = {
    * Updates mutable fields of an existing log entry.
    * Returns the updated entry or null if not found.
    */
-  updateEntry: (id: string, updates: Partial<Pick<LogEntry, "date" | "notes" | "data">>) => LogEntry | null;
+  updateEntry: (id: string, updates: Partial<Pick<LogEntry, "date" | "notes" | "data" | "plantId">>) => LogEntry | null;
 
   /**
    * Deletes a log entry by ID.
@@ -103,6 +103,14 @@ export type UseGrowLogReturn = {
 
   /** Returns entries filtered by type. */
   entriesByType: (type: LogEntryType) => LogEntry[];
+
+  /**
+   * Returns entries filtered by plant scope.
+   * - `null` => all entries
+   * - `""` => whole-grow entries only (without plantId)
+   * - `"<plantId>"` => entries for a specific plant
+   */
+  entriesByPlant: (plantId: string | null) => LogEntry[];
 
   /**
    * Returns the number of consecutive days that have at least one log entry.
@@ -189,12 +197,21 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
   );
 
   const updateEntry = useCallback(
-    (id: string, updates: Partial<Pick<LogEntry, "date" | "notes" | "data">>): LogEntry | null => {
+    (id: string, updates: Partial<Pick<LogEntry, "date" | "notes" | "data" | "plantId">>): LogEntry | null => {
       const result = storeUpdateLogEntry(id, updates);
       refresh();
       return result;
     },
     [refresh]
+  );
+
+  const entriesByPlant = useCallback(
+    (plantId: string | null): LogEntry[] => {
+      if (plantId === null) return entries;
+      if (plantId === "") return entries.filter((e) => e.plantId === undefined);
+      return entries.filter((e) => e.plantId === plantId);
+    },
+    [entries]
   );
 
   const entriesByType = useCallback(
@@ -212,6 +229,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
     updateEntry,
     refresh,
     entriesByType,
+    entriesByPlant,
     currentStreak: computeStreak(entries),
     hasTodayEntry: entries.some((e) => {
       const d = new Date(e.date);
