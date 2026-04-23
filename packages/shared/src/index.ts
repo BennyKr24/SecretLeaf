@@ -1,4 +1,4 @@
-export type UserRole = "CONSUMER" | "PROVIDER" | "BOTH";
+export type UserRole = "CONSUMER" | "PROVIDER" | "BOTH" | "ADMIN" | "TEAM";
 
 export type PriceTierInput = {
   minUnits: number;
