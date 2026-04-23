@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { Route } from 'next';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { restoreSessionFromSupabase, logoutFromSupabase } from '@/lib/auth';
 import type { SessionData } from '@/lib/types';
 import { useBookmarks } from '@/hooks/useBookmarks';
@@ -41,17 +42,19 @@ function dashboardPlantAlert(plantEntries: { date: string; data: { type: string 
   return false;
 }
 
-function timeAgo(isoDate: string): string {
+type TFn = ReturnType<typeof useTranslations>;
+
+function timeAgo(isoDate: string, t: TFn): string {
   const diff = Date.now() - new Date(isoDate).getTime();
   const minutes = Math.floor(diff / 60_000);
-  if (minutes < 1) return 'Gerade eben';
-  if (minutes < 60) return `vor ${minutes} Min.`;
+  if (minutes < 1) return t('timeJustNow');
+  if (minutes < 60) return t('timeMinutesAgo', { count: minutes });
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `vor ${hours} Std.`;
+  if (hours < 24) return t('timeHoursAgo', { count: hours });
   const days = Math.floor(hours / 24);
-  if (days < 7) return `vor ${days} ${days === 1 ? 'Tag' : 'Tagen'}`;
+  if (days < 7) return t(days === 1 ? 'timeDayAgo' : 'timeDaysAgo', { count: days });
   const weeks = Math.floor(days / 7);
-  return `vor ${weeks} ${weeks === 1 ? 'Woche' : 'Wochen'}`;
+  return t(weeks === 1 ? 'timeWeekAgo' : 'timeWeeksAgo', { count: weeks });
 }
 
 const INTEREST_ORDER = Object.keys(INTEREST_META) as Interest[];
@@ -93,18 +96,19 @@ function MetricCard({ icon, label, value, tone = 'default' }: { icon: string; la
 }
 
 function ArticleCard({ article, variant = 'default' }: { article: TerpiraArticle; variant?: 'compact' | 'default' }) {
+  const t = useTranslations('dashboard');
   if (variant === 'compact') {
     return (
       <Link
         href={`/studies/${article.slug}`}
-        className="group flex items-start gap-3 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:bg-emerald-50/40"
+        className="group flex items-start gap-3 rounded-2xl border border-slate-100 bg-white dark:border-slate-700 dark:bg-slate-800 px-4 py-3 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:bg-emerald-50/40"
       >
         <div className="min-w-0 flex-1">
-          <p className="line-clamp-1 text-[13px] font-semibold text-slate-800 transition-colors group-hover:text-emerald-700">
+          <p className="line-clamp-1 text-[13px] font-semibold text-slate-800 dark:text-slate-100 transition-colors group-hover:text-emerald-700">
             {article.title}
           </p>
           <p className="mt-0.5 text-xs text-slate-400">
-            {categoryLabels[article.category]} · {article.readMinutes} Min.
+            {categoryLabels[article.category]} · {article.readMinutes} {t('minReadTime')}
           </p>
           <div className="mt-2">
             <CommunitySignals article={article} allArticles={wikiArticles} limit={2} compact />
@@ -118,7 +122,7 @@ function ArticleCard({ article, variant = 'default' }: { article: TerpiraArticle
   return (
     <Link
       href={`/studies/${article.slug}`}
-      className="group flex flex-col rounded-3xl border border-slate-100 bg-white p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md"
+      className="group flex flex-col rounded-3xl border border-slate-100 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md"
     >
       <div className="mb-3 flex items-start justify-between gap-2">
         <span className="inline-block rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">
@@ -134,7 +138,7 @@ function ArticleCard({ article, variant = 'default' }: { article: TerpiraArticle
         <CommunitySignals article={article} allArticles={wikiArticles} compact />
       </div>
       <div className="mt-3 flex items-center gap-3 text-[11px] text-slate-400">
-        <span>{article.readMinutes} Min. Lesezeit</span>
+        <span>{article.readMinutes} {t('minReadTime')}</span>
         <span>·</span>
         <span className="capitalize">{article.difficulty}</span>
       </div>
@@ -148,17 +152,18 @@ function ContinueReadingCard({ article, progress, updatedAt, sectionId }: {
   updatedAt: string;
   sectionId?: string;
 }) {
+  const t = useTranslations('dashboard');
   const href = sectionId ? `/studies/${article.slug}#${sectionId}` : `/studies/${article.slug}`;
 
   return (
     <a
       href={href}
-      className="group flex min-w-[280px] snap-start flex-col rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md sm:min-w-0"
+      className="group flex min-w-[280px] snap-start flex-col rounded-3xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md sm:min-w-0"
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-600">Fortsetzen</p>
-          <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-slate-900 transition-colors group-hover:text-emerald-700">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-600">{t('continueLabel')}</p>
+          <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-slate-900 dark:text-slate-100 transition-colors group-hover:text-emerald-700">
             {article.title}
           </h3>
         </div>
@@ -166,13 +171,13 @@ function ContinueReadingCard({ article, progress, updatedAt, sectionId }: {
           {progress}%
         </span>
       </div>
-      <p className="mt-2 text-xs text-slate-500">{categoryLabels[article.category]} · zuletzt {timeAgo(updatedAt)}</p>
+      <p className="mt-2 text-xs text-slate-500">{categoryLabels[article.category]} · {t('lastRead', { time: timeAgo(updatedAt, t) })}</p>
       <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
         <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400" style={{ width: `${progress}%` }} />
       </div>
       <div className="mt-4 flex items-center justify-between text-xs text-slate-400">
-        <span>{sectionId ? `Weiter bei ${sectionId.replace('-', ' ')}` : 'Direkt weiterlesen'}</span>
-        <span className="font-semibold text-emerald-600">Öffnen →</span>
+        <span>{sectionId ? t('resumeAt', { section: sectionId.replace('-', ' ') }) : t('readDirectly')}</span>
+        <span className="font-semibold text-emerald-600">{t('openBtn')}</span>
       </div>
     </a>
   );
@@ -180,9 +185,10 @@ function ContinueReadingCard({ article, progress, updatedAt, sectionId }: {
 
 export default function UserDashboardPage() {
   const router = useRouter();
+  const t = useTranslations('dashboard');
   const [session, setSession] = useState<SessionData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [confirmClearHistory, setConfirmClearHistory] = useState(false);
+  const [confirmClearHistoryVisible, setConfirmClearHistoryVisible] = useState(false);
   const [lastVisit, setLastVisit] = useState<Date | null>(null);
 
   const { bookmarks } = useBookmarks();
@@ -292,28 +298,28 @@ export default function UserDashboardPage() {
 
   const greeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return 'Guten Morgen';
-    if (hour < 17) return 'Guten Tag';
-    return 'Guten Abend';
+    if (hour < 12) return t('goodMorning');
+    if (hour < 17) return t('goodAfternoon');
+    return t('goodEvening');
   };
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#f4f8f5]">
+      <main className="flex min-h-screen items-center justify-center bg-[#f4f8f5] dark:bg-slate-950">
         <div className="flex flex-col items-center gap-3">
           <svg className="h-6 w-6 animate-spin text-emerald-500" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>
-          <p className="text-sm text-slate-500">Lade…</p>
+          <p className="text-sm text-slate-500">{t('loading')}</p>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#f4f8f5_0%,#fbfcfb_32%,#ffffff_100%)]">
-      <section className="relative overflow-hidden border-b border-emerald-100/60 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_38%),linear-gradient(135deg,#0f2e1f_0%,#174b34_46%,#f4f8f5_100%)] text-white">
+    <main className="min-h-screen bg-[linear-gradient(180deg,#f4f8f5_0%,#fbfcfb_32%,#ffffff_100%)] dark:bg-slate-950">
+      <section className="relative overflow-hidden border-b border-emerald-100/60 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_38%),linear-gradient(135deg,#0f2e1f_0%,#174b34_46%,#f4f8f5_100%)] dark:bg-none dark:bg-slate-900 text-white">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-[-5%] top-[-10%] h-52 w-52 rounded-full bg-emerald-300/20 blur-3xl" />
           <div className="absolute right-[-5%] top-12 h-44 w-44 rounded-full bg-teal-200/15 blur-3xl" />
@@ -322,31 +328,31 @@ export default function UserDashboardPage() {
         <div className="relative mx-auto max-w-6xl px-4 pb-8 pt-6 sm:px-5 sm:pb-10">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-emerald-200">Grow OS</p>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-emerald-200">{t('growOsEyebrow')}</p>
               <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
                 {greeting()}{session ? `, ${session.user.username}` : ''}
               </h1>
               <p className="mt-3 text-sm leading-6 text-emerald-50/85 sm:text-base">
-                Dein aktiver Grow, nächste Tasks und Quick-Actions — direkt hier oben. Studien und Empfehlungen findest du weiter unten.
+                {t('heroBannerSub')}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90">
-                  🔥 {readingStreak > 0 ? `${readingStreak} Tage Serie` : 'Serie starten'}
+                  🔥 {readingStreak > 0 ? t('streakBadge', { count: readingStreak }) : t('streakStart')}
                 </span>
                 <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90">
-                  ⚡ Aktivität {activityScore}/100
+                  ⚡ {t('activityBadge', { score: activityScore })}
                 </span>
                 <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90">
-                  ✉︎ Digest bereit für E-Mail
+                  ✉︎ {t('digestBadge')}
                 </span>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3 sm:min-w-[340px]">
-              <MetricCard icon="🔖" label="Gespeichert" value={bookmarks.length} />
-              <MetricCard icon="📖" label="Gelesen" value={history.length} />
-              <MetricCard icon="🔥" label="Serie" value={readingStreak} tone="accent" />
-              <MetricCard icon="⚡" label="Aktivität" value={activityScore} tone="accent" />
+              <MetricCard icon="🔖" label={t('metricSaved')} value={bookmarks.length} />
+              <MetricCard icon="📖" label={t('metricRead')} value={history.length} />
+              <MetricCard icon="🔥" label={t('metricStreak')} value={readingStreak} tone="accent" />
+              <MetricCard icon="⚡" label={t('metricActivity')} value={activityScore} tone="accent" />
             </div>
           </div>
 
@@ -356,7 +362,7 @@ export default function UserDashboardPage() {
                 href="/dashboard/admin"
                 className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-xs font-semibold text-white/90 transition-colors hover:bg-white/15"
               >
-                ⚙ Admin
+                ⚙ {t('adminLink')}
               </Link>
             )}
             <button
@@ -364,7 +370,7 @@ export default function UserDashboardPage() {
               onClick={() => void (async () => { await logoutFromSupabase(); router.push('/'); })()}
               className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-xs font-semibold text-white/90 transition-colors hover:bg-white/15"
             >
-              Abmelden
+              {t('logoutBtn')}
             </button>
           </div>
         </div>
@@ -383,11 +389,9 @@ export default function UserDashboardPage() {
             <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-rose-600 text-sm text-white">🚨</span>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-bold text-rose-800">
-                {alertCount === 1
-                  ? '1 Pflanze braucht Aufmerksamkeit'
-                  : `${alertCount} Pflanzen brauchen Aufmerksamkeit`}
+                {t('alertPlants', { count: alertCount })}
               </p>
-              <p className="text-[11px] text-rose-500">Zur Grow-Seite → Pflanzen &amp; Tasks prüfen</p>
+              <p className="text-[11px] text-rose-500">{t('alertGotoGrow')}</p>
             </div>
             <svg className="h-4 w-4 flex-shrink-0 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -395,17 +399,17 @@ export default function UserDashboardPage() {
           </a>
         )}
         {activeGrow ? (
-          <section className="rounded-[28px] border border-emerald-200 bg-white p-4 shadow-[0_8px_40px_-8px_rgba(5,150,105,0.18)] ring-1 ring-emerald-100 sm:p-6">
+          <section className="rounded-[28px] border border-emerald-200 bg-white dark:bg-slate-800 p-4 shadow-[0_8px_40px_-8px_rgba(5,150,105,0.18)] ring-1 ring-emerald-100 sm:p-6">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-600">Aktiver Grow</p>
-                <h2 className="mt-1 text-lg font-bold text-slate-900">{activeGrow.name}</h2>
+                <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-600">{t('activeGrowEyebrow')}</p>
+                <h2 className="mt-1 text-lg font-bold text-slate-900 dark:text-slate-100">{activeGrow.name}</h2>
               </div>
               <Link
                 href={`/grow/${activeGrow.id}` as Route}
                 className="flex-shrink-0 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 transition hover:bg-emerald-100"
               >
-                Öffnen →
+                {t('openBtn')}
               </Link>
             </div>
 
@@ -424,9 +428,9 @@ export default function UserDashboardPage() {
                       <span className="font-medium">{phase?.label ?? '—'}</span>
                     </span>
                     <span className="text-slate-300">·</span>
-                    <span className="text-slate-500">Tag {activeGrow.currentDay} / {activeGrow.plan.totalDays}</span>
+                    <span className="text-slate-500">{t('growDayProgress', { current: activeGrow.currentDay, total: activeGrow.plan.totalDays })}</span>
                     <span className="text-slate-300">·</span>
-                    <span className="text-slate-500">{completed}/{total} Tasks ({percent}%)</span>
+                    <span className="text-slate-500">{t('growTaskProgress', { done: completed, total, percent })}</span>
                     <div className="mt-2 w-full">
                       <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
                         <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${phaseProgress}%` }} />
@@ -445,7 +449,7 @@ export default function UserDashboardPage() {
                 <div className="mb-3 flex items-center gap-2 rounded-xl border border-rose-100 bg-rose-50 px-3 py-2">
                   <span>⚠️</span>
                   <p className="text-xs font-semibold text-rose-700">
-                    {overdue.length === 1 ? '1 überfälliger Task' : `${overdue.length} überfällige Tasks`} — jetzt erledigen
+                    {t('overdueTasks', { count: overdue.length })} — {t('overdueNow')}
                   </p>
                 </div>
               );
@@ -455,13 +459,19 @@ export default function UserDashboardPage() {
             {(() => {
               const tasks = getUpcomingTasks(activeGrow, 3);
               if (tasks.length === 0) return (
-                <p className="rounded-xl border border-dashed border-slate-200 py-4 text-center text-xs text-slate-400">Alle Tasks erledigt ✨</p>
+                <p className="rounded-xl border border-dashed border-slate-200 py-4 text-center text-xs text-slate-400">{t('allTasksDone')}</p>
               );
               return (
                 <div className="space-y-2">
                   {tasks.map((task) => {
                     const diff = task.dueDay - activeGrow.currentDay;
-                    const dueLbl = diff === 0 ? 'Heute' : diff === 1 ? 'Morgen' : diff < 0 ? `${Math.abs(diff)}d überfällig` : `in ${diff}d`;
+                    const dueLbl = diff === 0
+                      ? t('taskDueToday')
+                      : diff === 1
+                        ? t('taskDueTomorrow')
+                        : diff < 0
+                          ? t('taskOverdue', { days: Math.abs(diff) })
+                          : t('taskInDays', { days: diff });
                     return (
                       <div key={task.id} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-2.5">
                         <span className="text-base flex-shrink-0">{TASK_CATEGORY_ICONS[task.category]}</span>
@@ -486,10 +496,10 @@ export default function UserDashboardPage() {
               <p className={`text-sm font-semibold ${
                 hasTodayEntry ? 'text-emerald-800' : 'text-amber-800'
               }`}>
-                {hasTodayEntry ? 'Heute bereits gepflegt ✓' : 'Heute noch kein Eintrag'}
+                {hasTodayEntry ? t('dailyDone') : t('dailyMissing')}
               </p>
               {!hasTodayEntry && (
-                <span className="ml-auto text-[11px] font-bold text-amber-600">Jetzt loggen →</span>
+                <span className="ml-auto text-[11px] font-bold text-amber-600">{t('dailyLogNow')}</span>
               )}
             </div>
 
@@ -500,7 +510,7 @@ export default function UserDashboardPage() {
                 className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3.5 text-sm font-bold text-white shadow-md shadow-emerald-900/20 transition hover:bg-emerald-700 active:scale-[0.98]"
               >
                 <span className="text-base">📓</span>
-                Heute loggen &amp; Tasks erledigen
+                {t('todayLogCTA')}
                 <svg className="ml-auto h-4 w-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
@@ -513,26 +523,26 @@ export default function UserDashboardPage() {
                 href={'/tools' as Route}
                 className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-xs font-semibold text-slate-500 transition hover:border-cyan-200 hover:text-cyan-700"
               >
-                🧪 Tools
+                {t('toolsLink')}
               </Link>
               <Link
                 href={'/diagnose' as Route}
                 className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-xs font-semibold text-slate-500 transition hover:border-violet-200 hover:text-violet-700"
               >
-                🩺 Diagnose
+                {t('diagnoseLink')}
               </Link>
             </div>
           </section>
         ) : (
-          <section className="rounded-[28px] border border-dashed border-emerald-200 bg-emerald-50/40 p-5 text-center">
+          <section className="rounded-[28px] border border-dashed border-emerald-200 bg-emerald-50/40 dark:bg-slate-800/40 p-5 text-center">
             <span className="text-3xl">🌱</span>
-            <h2 className="mt-2 text-base font-bold text-slate-800">Noch kein aktiver Grow</h2>
-            <p className="mt-1 text-sm text-slate-500">Starte deinen ersten Grow — dauert unter 2 Minuten.</p>
+            <h2 className="mt-2 text-base font-bold text-slate-800 dark:text-slate-100">{t('noActiveGrowTitle')}</h2>
+            <p className="mt-1 text-sm text-slate-500">{t('noActiveGrowSub')}</p>
             <Link
               href={'/start' as Route}
               className="mt-3 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-700"
             >
-              🌱 Grow starten →
+              🌱 {t('startGrowCTA')}
             </Link>
           </section>
         )}
@@ -541,27 +551,27 @@ export default function UserDashboardPage() {
         {/* ═══════════════════ SECONDARY — Wissensbasis ═══════════════════ */}
         <div className="mt-12 space-y-8 border-t border-slate-200 pt-10">
           <div className="flex items-center gap-3">
-            <p className="flex-shrink-0 text-[11px] font-bold uppercase tracking-widest text-slate-400">📚 Wissensbasis &amp; Empfehlungen</p>
+            <p className="flex-shrink-0 text-[11px] font-bold uppercase tracking-widest text-slate-400">📚 {t('knowledgeBaseEyebrow')}</p>
             <div className="h-px flex-1 bg-slate-100" />
           </div>
 
-        <section className="rounded-[28px] border border-slate-200/70 bg-white/85 p-4 shadow-[0_20px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur sm:p-6">
+        <section className="rounded-[28px] border border-slate-200/70 bg-white/85 dark:bg-slate-800/85 p-4 shadow-[0_20px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur sm:p-6">
           <SectionHeader
-            title="Smart Notifications"
-            subtitle="Was seit deinem letzten Besuch passiert ist und was zu deinen Interessen passt"
+            title={t('smartNotificationsTitle')}
+            subtitle={t('smartNotificationsSub')}
             badge={newSinceLastVisit.length + interestMatches.length}
           />
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="rounded-3xl border border-emerald-100 bg-[linear-gradient(180deg,rgba(236,253,245,0.9),rgba(255,255,255,0.95))] p-4">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">Seit letztem Besuch neu</p>
-                  <p className="mt-1 text-sm text-slate-600">Frische Inhalte, damit sich dein nächster Besuch sofort lohnt.</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">{t('newSinceLastVisit')}</p>
+                  <p className="mt-1 text-sm text-slate-600">{t('newSinceLastVisitSub')}</p>
                 </div>
                 <span className="rounded-full bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white">{newSinceLastVisit.length}</span>
               </div>
               {newSinceLastVisit.length === 0 ? (
-                <EmptyState icon="🛰" text="Seit deinem letzten Besuch gab es noch keine neuen Updates. Der Wochen-Digest hält dich trotzdem auf Kurs." />
+                <EmptyState icon="🛰" text={t('noNewUpdates')} />
               ) : (
                 <div className="space-y-3">
                   {newSinceLastVisit.map((article) => (
@@ -574,20 +584,18 @@ export default function UserDashboardPage() {
             <div className="rounded-3xl border border-sky-100 bg-[linear-gradient(180deg,rgba(240,249,255,0.9),rgba(255,255,255,0.95))] p-4">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600">Passend zu deinen Interessen</p>
-                  <p className="mt-1 text-sm text-slate-600">Neue Inhalte in deinen Themenfeldern, priorisiert nach Momentum.</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600">{t('fitsYourInterests')}</p>
+                  <p className="mt-1 text-sm text-slate-600">{t('fitsYourInterestsSub')}</p>
                 </div>
                 <span className="rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-bold text-white">{interestMatches.length}</span>
               </div>
               {interestMatches.length === 0 ? (
                 <EmptyState
                   icon="🎯"
-                  text={interests.length === 0
-                    ? 'Wähle Interessen aus, damit wir passende Benachrichtigungen hervorheben können.'
-                    : 'Gerade gibt es nichts Neues in deinen Interessen. Der Digest zeigt dir trotzdem relevante Themen mit Momentum.'}
+                  text={interests.length === 0 ? t('noInterestsYet') : t('noInterestMatch')}
                   action={interests.length === 0 ? (
                     <Link href="/dashboard/onboarding" className="rounded-xl bg-sky-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-sky-500">
-                      Interessen wählen
+                      {t('chooseInterests')}
                     </Link>
                   ) : undefined}
                 />
@@ -602,16 +610,16 @@ export default function UserDashboardPage() {
           </div>
         </section>
 
-        <section className="rounded-[28px] border border-slate-200/70 bg-white/90 p-4 shadow-sm sm:p-6">
+        <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
           <SectionHeader
-            title="Weekly Digest"
-            subtitle="Modular aufgebaut, damit dieselbe Struktur später direkt per E-Mail versendet werden kann"
+            title={t('weeklyDigestTitle')}
+            subtitle={t('weeklyDigestSub')}
             badge={digest.generatedAt.slice(0, 10)}
           />
 
           <div className="-mx-1 flex snap-x gap-4 overflow-x-auto px-1 pb-2 lg:grid lg:grid-cols-[1.15fr_1.15fr_0.9fr] lg:overflow-visible">
             <div className="min-w-[290px] snap-start rounded-3xl border border-emerald-100 bg-[linear-gradient(180deg,rgba(236,253,245,0.95),rgba(255,255,255,1))] p-4 lg:min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">Neue Grow Studien</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">{t('newGrowStudies')}</p>
               <div className="mt-3 space-y-3">
                 {digest.newGrowStudies.map((article) => (
                   <ArticleCard key={article.slug} article={article} variant="compact" />
@@ -620,7 +628,7 @@ export default function UserDashboardPage() {
             </div>
 
             <div className="min-w-[290px] snap-start rounded-3xl border border-amber-100 bg-[linear-gradient(180deg,rgba(255,251,235,0.95),rgba(255,255,255,1))] p-4 lg:min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600">Wichtig diese Woche</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600">{t('importantThisWeek')}</p>
               <div className="mt-3 space-y-3">
                 {digest.importantThisWeek.map((article) => (
                   <ArticleCard key={article.slug} article={article} variant="compact" />
@@ -629,7 +637,7 @@ export default function UserDashboardPage() {
             </div>
 
             <div className="min-w-[290px] snap-start rounded-3xl border border-rose-100 bg-[linear-gradient(180deg,rgba(255,241,242,0.95),rgba(255,255,255,1))] p-4 lg:min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-600">Trending Themen</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-600">{t('trendingTopics')}</p>
               <div className="mt-3 space-y-3">
                 {digest.trendingTopics.map((topic) => (
                   <Link
@@ -640,13 +648,13 @@ export default function UserDashboardPage() {
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="text-sm font-bold text-slate-900">{topic.label}</p>
-                        <p className="mt-1 text-xs text-slate-500">{topic.articleCount} relevante Artikel</p>
+                        <p className="mt-1 text-xs text-slate-500">{t('relevantArticles', { count: topic.articleCount })}</p>
                       </div>
                       <span className="rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-700">
                         +{topic.momentum}
                       </span>
                     </div>
-                    <p className="mt-3 line-clamp-2 text-xs text-slate-600">Startpunkt: {topic.sampleArticle.title}</p>
+                    <p className="mt-3 line-clamp-2 text-xs text-slate-600">{t('trendingStartpoint', { title: topic.sampleArticle.title })}</p>
                   </Link>
                 ))}
               </div>
@@ -654,19 +662,19 @@ export default function UserDashboardPage() {
           </div>
         </section>
 
-        <section className="rounded-[28px] border border-slate-200/70 bg-white/90 p-4 shadow-sm sm:p-6">
+        <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
           <SectionHeader
-            title="Continue Reading"
-            subtitle="Begonnene Artikel direkt an der letzten sinnvollen Stelle wieder aufnehmen"
+            title={t('continueReadingTitle')}
+            subtitle={t('continueReadingSub')}
             badge={continueReading.length}
           />
           {continueReading.length === 0 ? (
             <EmptyState
               icon="📍"
-              text="Sobald du einen Artikel teilweise liest, erscheint hier dein Wiedereinstieg mit Fortschritt und Abschnittsanker."
+              text={t('noProgressYet')}
               action={
                 <Link href="/studies" className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-emerald-500">
-                  Studien entdecken
+                  {t('discoverStudies')}
                 </Link>
               }
             />
@@ -686,15 +694,15 @@ export default function UserDashboardPage() {
         </section>
 
         <div className="grid gap-8 xl:grid-cols-[1.3fr_0.9fr]">
-          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 p-4 shadow-sm sm:p-6">
-            <SectionHeader title="Gespeicherte Studien" subtitle="Schneller Zugriff auf deine Merkliste" badge={bookmarkedArticles.length} />
+          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+            <SectionHeader title={t('savedStudiesTitle')} subtitle={t('savedStudiesSub')} badge={bookmarkedArticles.length} />
             {bookmarkedArticles.length === 0 ? (
               <EmptyState
                 icon="🔖"
-                text="Du hast noch keine Studien gespeichert. Entdecke Inhalte und baue dir deine persönliche Wissensliste auf."
+                text={t('noBookmarksYet')}
                 action={
                   <Link href="/studies" className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-emerald-500">
-                    Studien entdecken
+                    {t('discoverStudies')}
                   </Link>
                 }
               />
@@ -707,16 +715,16 @@ export default function UserDashboardPage() {
             )}
           </section>
 
-          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 p-4 shadow-sm sm:p-6">
-            <SectionHeader title="Streak & Aktivität" subtitle="Dein Rhythmus entscheidet, wie relevant die Startseite wird" />
+          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+            <SectionHeader title={t('streakActivityTitle')} subtitle={t('streakActivitySub')} />
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
               <div className="rounded-3xl border border-amber-100 bg-amber-50/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">Lese-Serie</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">{t('readingStreakLabel')}</p>
                 <p className="mt-2 text-3xl font-bold text-slate-900">{readingStreak}</p>
-                <p className="mt-1 text-sm text-slate-600">{readingStreak === 1 ? 'Tag in Folge' : 'Tage in Folge'}</p>
+                <p className="mt-1 text-sm text-slate-600">{readingStreak === 1 ? t('dayInRow') : t('daysInRow')}</p>
               </div>
               <div className="rounded-3xl border border-emerald-100 bg-emerald-50/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">Aktivitätsscore</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">{t('activityScoreLabel')}</p>
                 <p className="mt-2 text-3xl font-bold text-slate-900">{activityScore}</p>
                 <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/80">
                   <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400" style={{ width: `${activityScore}%` }} />
@@ -725,9 +733,9 @@ export default function UserDashboardPage() {
             </div>
 
             <div className="mt-5 rounded-3xl border border-slate-100 bg-slate-50/80 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Kürzlich angesehen</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{t('recentlyViewed')}</p>
               {historyArticles.length === 0 ? (
-                <p className="mt-3 text-sm text-slate-500">Noch keine Lesehistorie vorhanden.</p>
+                <p className="mt-3 text-sm text-slate-500">{t('noReadHistory')}</p>
               ) : (
                 <div className="mt-3 space-y-2">
                   {historyArticles.map((article) => {
@@ -740,9 +748,9 @@ export default function UserDashboardPage() {
                       >
                         <div className="min-w-0 flex-1">
                           <p className="line-clamp-1 font-semibold text-slate-800">{article.title}</p>
-                          <p className="mt-0.5 text-xs text-slate-400">{categoryLabels[article.category]} · {entry ? timeAgo(entry.readAt) : ''}</p>
+                          <p className="mt-0.5 text-xs text-slate-400">{categoryLabels[article.category]} · {entry ? timeAgo(entry.readAt, t) : ''}</p>
                         </div>
-                        <span className="text-xs font-semibold text-emerald-600">Öffnen</span>
+                        <span className="text-xs font-semibold text-emerald-600">{t('openLink')}</span>
                       </Link>
                     );
                   })}
@@ -750,31 +758,31 @@ export default function UserDashboardPage() {
               )}
               {history.length > 0 && (
                 <div className="mt-4 flex justify-end">
-                  {confirmClearHistory ? (
+                  {confirmClearHistoryVisible ? (
                     <div className="flex items-center gap-2 text-xs">
-                      <span className="text-slate-500">Verlauf wirklich löschen?</span>
+                      <span className="text-slate-500">{t('confirmClearHistory')}</span>
                       <button
                         type="button"
-                        onClick={() => { clearHistory(); setConfirmClearHistory(false); }}
+                        onClick={() => { clearHistory(); setConfirmClearHistoryVisible(false); }}
                         className="font-bold text-red-600 transition-colors hover:text-red-700"
                       >
-                        Ja, löschen
+                        {t('confirmYes')}
                       </button>
                       <button
                         type="button"
-                        onClick={() => setConfirmClearHistory(false)}
+                        onClick={() => setConfirmClearHistoryVisible(false)}
                         className="text-slate-400 transition-colors hover:text-slate-600"
                       >
-                        Abbrechen
+                        {t('confirmCancel')}
                       </button>
                     </div>
                   ) : (
                     <button
                       type="button"
-                      onClick={() => setConfirmClearHistory(true)}
+                      onClick={() => setConfirmClearHistoryVisible(true)}
                       className="text-xs text-slate-400 transition-colors hover:text-red-500"
                     >
-                      Verlauf löschen
+                      {t('clearHistory')}
                     </button>
                   )}
                 </div>
@@ -783,15 +791,15 @@ export default function UserDashboardPage() {
           </section>
         </div>
 
-        <section className="rounded-[28px] border border-slate-200/70 bg-white/90 p-4 shadow-sm sm:p-6">
-          <SectionHeader title="Empfohlen für dich" subtitle="Personalisiert nach Interessen, Verlauf und bereits gespeicherten Artikeln" badge={recommendedArticles.length} />
+        <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+          <SectionHeader title={t('recommendedTitle')} subtitle={t('recommendedSub')} badge={recommendedArticles.length} />
           {recommendedArticles.length === 0 && interests.length === 0 ? (
             <EmptyState
               icon="✨"
-              text="Wähle deine Interessen, damit wir neue Inhalte priorisieren und smarter benachrichtigen können."
+              text={t('noRecommendedYet')}
               action={
                 <Link href="/dashboard/onboarding" className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-emerald-500">
-                  Interessen wählen
+                  {t('chooseInterests')}
                 </Link>
               }
             />
@@ -805,8 +813,8 @@ export default function UserDashboardPage() {
         </section>
 
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 p-4 shadow-sm sm:p-6">
-            <SectionHeader title="Meine Interessen" subtitle="Diese Auswahl steuert Empfehlungen, Notifications und spätere E-Mail-Digests" />
+          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+            <SectionHeader title={t('myInterestsTitle')} subtitle={t('myInterestsSub')} />
             <div className="flex flex-wrap gap-2">
               {INTEREST_ORDER.map((interest) => {
                 const meta = INTEREST_META[interest];
@@ -829,19 +837,19 @@ export default function UserDashboardPage() {
             </div>
             {interestsLoaded && interests.length > 0 && (
               <p className="mt-3 text-[11px] text-emerald-600">
-                ✓ Personalisierung aktiv — {interests.length} {interests.length === 1 ? 'Interesse' : 'Interessen'} ausgewählt
+                ✓ {t('personalizationActive', { count: interests.length })}
               </p>
             )}
           </section>
 
-          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 p-4 shadow-sm sm:p-6">
-            <SectionHeader title="Schnellzugriff" subtitle="Deine wichtigsten Wege auf kleineren Screens sofort erreichbar" />
+          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+            <SectionHeader title={t('quickAccessTitle')} subtitle={t('quickAccessSub')} />
             <div className="grid grid-cols-2 gap-3">
               {[
-                { href: '/studies' as Route, icon: '📚', label: 'Alle Studien' },
-                { href: '/database' as Route, icon: '🗄', label: 'Datenbank' },
-                { href: '/tools' as Route, icon: '🛠', label: 'Tools' },
-                { href: '/status' as Route, icon: '🟢', label: 'Status' },
+                { href: '/studies' as Route, icon: '📚', label: t('allStudies') },
+                { href: '/database' as Route, icon: '🗄', label: t('database') },
+                { href: '/tools' as Route, icon: '🛠', label: t('tools') },
+                { href: '/status' as Route, icon: '🟢', label: t('status') },
               ].map((item) => (
                 <Link
                   key={item.href}

@@ -90,4 +90,6 @@ export type TerpiraArticle = {
   downloads?: TerpiraDownload[];
   sourceIds?: string[];
   relatedSlugs: string[];
+  growValue?: string;
+  qualityScore?: number;
 };

@@ -14,6 +14,13 @@
   --transition-fast: 120ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-base: 200ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Tailwind semantic aliases ── */
+  --background: #f8fafb;
+  --card: #ffffff;
+  --foreground: #0f172a;
+  --border: #e2e8f0;
+  --muted-foreground: #64748b;
 }
 
 .dark {
@@ -25,6 +32,13 @@
   --primary-dark: #16a34a;
   --line: #252836;
   --ring: #166534;
+
+  /* ── Tailwind semantic aliases ── */
+  --background: #0f1117;
+  --card: #1a1d27;
+  --foreground: #e8edf3;
+  --border: #252836;
+  --muted-foreground: #8b99b0;
 }
 
 * {
