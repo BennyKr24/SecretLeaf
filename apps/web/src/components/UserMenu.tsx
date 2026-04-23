@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import type { Route } from "next";
 import { useAuth, type AuthUser } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -61,7 +60,7 @@ function MenuItem({
     const linkProps = onClick ? { onClick: () => onClick() } : {};
     return (
       <Link
-        href={href as Route}
+        href={href}
         className={base + (danger ? dangerCls : safe)}
         {...linkProps}
       >
@@ -112,7 +111,7 @@ export function UserMenu() {
   const handleLogout = async () => {
     setOpen(false);
     await logout();
-    router.push("/" as Route);
+    router.push("/");
   };
 
   // During SSR / hydration, render a stable placeholder to avoid layout shift
@@ -174,9 +173,8 @@ export function UserMenu() {
             </div>
           </div>
 
-          {/* Navigation items */}
+          {/* Navigation items — no items that duplicate the top nav bar */}
           <MenuItem href="/dashboard/user" icon="👤" label={t("profile")} onClick={() => setOpen(false)} />
-          <MenuItem href="/dashboard" icon="📊" label={t("dashboard")} onClick={() => setOpen(false)} />
           <MenuItem href="/start" icon="🌱" label={t("myGrows")} onClick={() => setOpen(false)} />
 
           {/* Divider */}

@@ -112,8 +112,8 @@
     "openMenu": "Open user menu",
     "login": "Sign In",
     "profile": "Profile",
-    "dashboard": "Dashboard",
     "myGrows": "My Grows",
+    "settings": "Settings",
     "theme": "Theme",
     "language": "Language",
     "logout": "Sign Out"

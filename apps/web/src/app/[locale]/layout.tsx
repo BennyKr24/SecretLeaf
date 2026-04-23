@@ -81,7 +81,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                   {t("catalog")}
                 </Link>
                 <Link href="/tools" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
-                  Tools
+                  {t("tools")}
                 </Link>
                 <Link href="/studies/sources" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
                   {t("sources")}
