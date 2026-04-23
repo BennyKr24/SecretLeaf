@@ -1,6 +1,5 @@
 'use client';
 
-import type { Route } from 'next';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { INTEREST_META, type Interest } from '@/hooks/useInterests';
@@ -11,12 +10,12 @@ const INTEREST_ORDER = Object.keys(INTEREST_META) as Interest[];
 const ONBOARDING_KEY = 'secretleaf.onboarding_done';
 const INTERESTS_KEY = 'secretleaf.interests';
 
-function getSafeRedirect(target: string | null): Route {
+function getSafeRedirect(target: string | null): string {
   if (!target || !target.startsWith('/')) {
     return '/dashboard/user';
   }
 
-  return target as Route;
+  return target;
 }
 
 function OnboardingInner() {

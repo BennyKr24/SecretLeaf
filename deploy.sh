@@ -147,15 +147,32 @@ do_push() {
 if do_push; then
   success "Pushed to main"
 else
-  warn "Push failed — retrying once…"
-  sleep 3
-  if do_push; then
-    success "Pushed to main (retry succeeded)"
+  # Check if the rejection is due to remote being ahead (fetch first)
+  PUSH_OUTPUT=$(git push origin main --no-progress 2>&1 || true)
+  if echo "${PUSH_OUTPUT}" | grep -q "fetch first\|non-fast-forward\|rejected"; then
+    warn "Remote has new commits — pulling and rebasing…"
+    if git pull --rebase origin main; then
+      success "Rebased onto remote"
+      if do_push; then
+        success "Pushed to main (after rebase)"
+      else
+        echo ""
+        error "Push failed even after rebase."
+        warn  "Resolve conflicts manually and re-run ./deploy.sh"
+        exit 1
+      fi
+    else
+      echo ""
+      error "Rebase failed — there may be conflicts."
+      warn  "Run: git rebase --abort  (to undo)"
+      warn  "Then resolve conflicts manually and re-run ./deploy.sh"
+      exit 1
+    fi
   else
     echo ""
-    error "Push failed after retry."
+    error "Push failed for an unexpected reason:"
+    echo "${PUSH_OUTPUT}" >&2
     warn  "Your commit exists locally but was NOT pushed."
-    warn  "Fix the remote issue (e.g. git pull --rebase origin main) and re-run."
     exit 1
   fi
 fi

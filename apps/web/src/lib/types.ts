@@ -1,9 +1,13 @@
 export type UserRole = "CONSUMER" | "PROVIDER" | "ADMIN";
 
+export type UserPlan = "free" | "pro";
+
 export type SessionUser = {
   id: string;
   username: string;
   role: UserRole;
+  /** Subscription tier — defaults to "free" when not set */
+  plan?: UserPlan;
 };
 
 export type SessionData = {

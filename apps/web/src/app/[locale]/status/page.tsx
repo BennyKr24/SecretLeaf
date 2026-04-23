@@ -1,9 +1,10 @@
 import Link from "next/link";
 import type { Route } from "next";
-import { getApiHealth, getPublicOverview, getPublicStatusReport } from "../../lib/publicApi";
-import changelogData from "../../data/changelog.json";
-import fertilizerCoverageHistoryData from "../../data/fertilizerCoverageHistory.json";
-import { fertilizerCoverageStats } from "../../data/terpira/fertilizers";
+import { getApiHealth, getPublicOverview, getPublicStatusReport } from "@/lib/publicApi";
+import changelogData from "@/data/changelog.json";
+import fertilizerCoverageHistoryData from "@/data/fertilizerCoverageHistory.json";
+import { fertilizerCoverageStats } from "@/data/terpira/fertilizers";
+import type { StatusEvent } from "@/lib/types";
 
 const levelClasses: Record<string, string> = {
   green: "bg-emerald-100 text-emerald-700 border-emerald-200",
@@ -283,7 +284,7 @@ export default async function StatusPage() {
   const liveStudyCoveragePercent = overview?.stats.studyCoveragePercent ?? fertilizerCoverageStats.coveragePercent;
   const livePendingStudies = overview?.stats.pendingStudies ?? openCoverageGap;
   const totalStudies = overview?.stats.totalStudies ?? 0;
-  const pipelineEvent = (statusReport?.events ?? []).find((event) => event.key === "SYNC_ACTIVITY_24H") ?? null;
+  const pipelineEvent = (statusReport?.events ?? []).find((event: StatusEvent) => event.key === "SYNC_ACTIVITY_24H") ?? null;
   const pipelineLastRunIso = pipelineEvent?.lastSeen ?? null;
   const pipelineLastRun = pipelineLastRunIso ? new Date(pipelineLastRunIso).toLocaleString("de-DE") : "Keine Daten";
   const pipelineHealthLabel =
@@ -292,9 +293,9 @@ export default async function StatusPage() {
   const priorityCards = getPriorityCards(overallStatus);
 
   const operationalChangelog = (statusReport?.events ?? [])
-    .filter((event) => event.count > 0 || event.lastSeen)
+    .filter((event: StatusEvent) => event.count > 0 || event.lastSeen)
     .slice(0, 4)
-    .map((event) => ({
+    .map((event: StatusEvent) => ({
       hash: `ops-${event.key}-${event.lastSeen ?? statusReport?.generatedAt ?? "now"}`,
       version: null,
       date: (event.lastSeen ?? statusReport?.generatedAt ?? new Date().toISOString()).slice(0, 10),
@@ -642,7 +643,7 @@ export default async function StatusPage() {
             <p className="mt-2 text-sm text-[#4d685a]">Fokus auf potenziell problematische Ereignisse für Nutzer und Betriebsstabilität.</p>
 
             <div className="mt-5 space-y-3">
-              {(statusReport?.events ?? []).map((event) => (
+              {(statusReport?.events ?? []).map((event: StatusEvent) => (
                 <article key={event.key} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-center gap-3">

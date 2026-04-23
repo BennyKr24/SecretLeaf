@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ResultLevel } from '@/lib/tools/types';
 import { resultLevelClass } from '@/lib/tools/types';
+import { TranslateButton } from '@/components/TranslateButton';
 
 type ToolResultProps = {
   label: string;
@@ -66,7 +67,7 @@ export function ToolResult({ label, value, unit, level, explanation, large }: To
               : 'text-slate-500'
           }`}
         >
-          {explanation}
+          <TranslateButton text={explanation} />
         </p>
       )}
     </div>

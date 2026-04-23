@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Route } from "next";
 import type { DiagnoseResult as DiagnoseResultType, Confidence } from "@/lib/diagnose/tree";
 import { getActiveGrow, createLogEntry } from "@/lib/grow/store";
+import { TranslateButton } from "@/components/TranslateButton";
 
 // ── Confidence badge ──────────────────────────────────────────────────────────
 
@@ -62,7 +63,9 @@ export function DiagnoseResult({ result, onReset }: Props) {
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="text-3xl leading-none">{result.icon}</span>
-            <h2 className="text-lg font-bold text-neutral-900 leading-snug">{result.title}</h2>
+            <h2 className="text-lg font-bold text-neutral-900 leading-snug">
+              <TranslateButton text={result.title} />
+            </h2>
           </div>
           {/* Confidence badge */}
           <span
@@ -78,7 +81,9 @@ export function DiagnoseResult({ result, onReset }: Props) {
           <div className={`h-full rounded-full transition-all ${conf.dot} ${conf.barWidth}`} />
         </div>
 
-        <p className="text-sm text-neutral-500 leading-relaxed">{result.explanation}</p>
+        <p className="text-sm text-neutral-500 leading-relaxed">
+          <TranslateButton text={result.explanation} />
+        </p>
       </div>
 
       {/* ── Why this result ── */}
@@ -88,7 +93,9 @@ export function DiagnoseResult({ result, onReset }: Props) {
           <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
             Warum diese Diagnose?
           </p>
-          <p className="text-sm text-neutral-600 leading-relaxed">{result.reasoning}</p>
+          <p className="text-sm text-neutral-600 leading-relaxed">
+            <TranslateButton text={result.reasoning} />
+          </p>
         </div>
       </div>
 

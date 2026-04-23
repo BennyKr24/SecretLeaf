@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import type { Route } from 'next';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import {
   loginWithSupabase,
@@ -23,12 +22,12 @@ const RESET_REDIRECT_PATH = '/auth/reset';
 
 type Mode = 'login' | 'register' | 'forgot';
 
-function getSafeRedirect(target: string | null): Route {
+function getSafeRedirect(target: string | null): string {
   if (!target || !target.startsWith('/')) {
     return '/dashboard/user';
   }
 
-  return target as Route;
+  return target;
 }
 
 /**

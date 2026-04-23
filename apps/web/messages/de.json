@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "startGrow": "Grow starten",
+    "dashboard": "Dashboard",
+    "tools": "Tools",
+    "diagnose": "Diagnose",
+    "studies": "Studien",
+    "login": "Anmelden"
+  },
+  "footer": {
+    "studies": "Studien",
+    "catalog": "Katalog",
+    "tools": "Tools",
+    "sources": "Quellenregister",
+    "tagline": "Wissensplattform für Cannabis",
+    "rights": "Alle Rechte vorbehalten"
+  },
+  "home": {
+    "heroHeadline": "Grow smarter.\nNot harder.",
+    "heroSub": "Die Wissensplattform für evidenzbasiertes Cannabis-Anbau. Datengestützt. Präzise.",
+    "ctaStart": "Grow starten",
+    "ctaTools": "Tools nutzen",
+    "trustArticles": "Fachartikel",
+    "trustSources": "Wiss. Quellen",
+    "trustFree": "Kostenlos nutzbar",
+    "trustUpdated": "Täglich aktualisiert",
+    "card1Title": "Grow starten",
+    "card1Sub": "Schritt für Schritt begleitet",
+    "card2Title": "Tools nutzen",
+    "card2Sub": "VPD, Licht, Nährstoffe",
+    "card3Title": "Diagnose",
+    "card3Sub": "Problem erkennen & lösen"
+  },
+  "search": {
+    "placeholder": "Suchen … (⌘K)",
+    "label": "Suchen",
+    "noResults": "Keine Ergebnisse gefunden",
+    "trending": "Trending"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "forgotPassword": "Passwort vergessen?",
+    "noAccount": "Noch kein Konto?",
+    "hasAccount": "Bereits ein Konto?"
+  },
+  "studies": {
+    "title": "Studien & Forschung",
+    "subtitle": "Evidenzbasiertes Wissen aus der Wissenschaft",
+    "evidenceHigh": "Hohe Evidenz",
+    "evidenceMed": "Mittlere Evidenz",
+    "evidenceLow": "Niedrige Evidenz",
+    "readMore": "Weiterlesen",
+    "sources": "Quellenregister",
+    "deficiencies": "Mängel",
+    "pests": "Schädlinge"
+  },
+  "tools": {
+    "title": "Grow-Tools",
+    "subtitle": "Präzisionswerkzeuge für deinen Anbau",
+    "calculate": "Berechnen",
+    "result": "Ergebnis",
+    "reset": "Zurücksetzen",
+    "save": "Speichern"
+  },
+  "diagnose": {
+    "title": "Pflanzen-Diagnose",
+    "subtitle": "Erkenne und löse Probleme in deinem Grow",
+    "start": "Diagnose starten",
+    "next": "Weiter",
+    "back": "Zurück",
+    "result": "Diagnose-Ergebnis"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "myGrows": "Meine Grows",
+    "newGrow": "Neuer Grow",
+    "noGrows": "Noch keine Grows. Starte deinen ersten Grow!",
+    "settings": "Einstellungen"
+  },
+  "common": {
+    "loading": "Laden …",
+    "error": "Ein Fehler ist aufgetreten",
+    "retry": "Erneut versuchen",
+    "close": "Schließen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "back": "Zurück",
+    "next": "Weiter",
+    "submit": "Absenden"
+  },
+  "theme": {
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System"
+  },
+  "language": {
+    "de": "DE",
+    "en": "EN",
+    "switchTo": "Sprache wechseln"
+  },
+  "translate": {
+    "button": "Übersetzen",
+    "loading": "Übersetzt …",
+    "showOriginal": "Original anzeigen"
+  },
+  "userMenu": {
+    "openMenu": "Benutzer-Menü öffnen",
+    "login": "Anmelden",
+    "profile": "Profil",
+    "dashboard": "Dashboard",
+    "myGrows": "Meine Grows",
+    "theme": "Design",
+    "language": "Sprache",
+    "logout": "Abmelden"
+  }
+}

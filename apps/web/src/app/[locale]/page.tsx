@@ -25,11 +25,11 @@ function StudyCard({ article }: { article: TerpiraArticle }) {
   return (
     <Link
       href={`/studies/${article.slug}` as Route}
-      className="group flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-5
-        hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-50 transition-all"
+      className="group flex flex-col gap-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5
+        hover:border-emerald-200 dark:hover:border-emerald-700 hover:shadow-lg hover:shadow-emerald-50 dark:hover:shadow-emerald-950 transition-all"
     >
       <div className="flex items-start justify-between gap-2">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 border border-slate-100 text-lg flex-shrink-0">
+        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 text-lg flex-shrink-0">
           {CATEGORY_ICONS[article.category] ?? "📄"}
         </span>
         {n > 0 && (
@@ -39,15 +39,15 @@ function StudyCard({ article }: { article: TerpiraArticle }) {
         )}
       </div>
       <div>
-        <h3 className="text-sm font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-2 leading-snug">
+        <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors line-clamp-2 leading-snug">
           {article.title}
         </h3>
-        <p className="mt-1 text-xs text-slate-400 line-clamp-2 leading-relaxed">{article.summary}</p>
+        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500 line-clamp-2 leading-relaxed">{article.summary}</p>
       </div>
-      <div className="mt-auto flex items-center gap-2 text-xs text-slate-400 pt-2 border-t border-slate-50">
+      <div className="mt-auto flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 pt-2 border-t border-slate-50 dark:border-slate-700">
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
         <span>{article.readMinutes} Min</span>
-        {n > 0 && <><span className="text-slate-200">·</span><span className="text-emerald-600 font-semibold">{n} Quellen</span></>}
+        {n > 0 && <><span className="text-slate-200 dark:text-slate-600">·</span><span className="text-emerald-600 dark:text-emerald-400 font-semibold">{n} Quellen</span></>}
       </div>
     </Link>
   );

@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "startGrow": "Start Grow",
+    "dashboard": "Dashboard",
+    "tools": "Tools",
+    "diagnose": "Diagnose",
+    "studies": "Studies",
+    "login": "Sign In"
+  },
+  "footer": {
+    "studies": "Studies",
+    "catalog": "Catalog",
+    "tools": "Tools",
+    "sources": "Source Register",
+    "tagline": "Cannabis Knowledge Platform",
+    "rights": "All rights reserved"
+  },
+  "home": {
+    "heroHeadline": "Grow smarter.\nNot harder.",
+    "heroSub": "The knowledge platform for evidence-based cannabis cultivation. Data-driven. Precise.",
+    "ctaStart": "Start Grow",
+    "ctaTools": "Use Tools",
+    "trustArticles": "Expert Articles",
+    "trustSources": "Scientific Sources",
+    "trustFree": "Free to use",
+    "trustUpdated": "Updated daily",
+    "card1Title": "Start Grow",
+    "card1Sub": "Step by step guidance",
+    "card2Title": "Use Tools",
+    "card2Sub": "VPD, Light, Nutrients",
+    "card3Title": "Diagnose",
+    "card3Sub": "Identify & solve problems"
+  },
+  "search": {
+    "placeholder": "Search … (⌘K)",
+    "label": "Search",
+    "noResults": "No results found",
+    "trending": "Trending"
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "No account yet?",
+    "hasAccount": "Already have an account?"
+  },
+  "studies": {
+    "title": "Studies & Research",
+    "subtitle": "Evidence-based knowledge from science",
+    "evidenceHigh": "High Evidence",
+    "evidenceMed": "Medium Evidence",
+    "evidenceLow": "Low Evidence",
+    "readMore": "Read more",
+    "sources": "Source Register",
+    "deficiencies": "Deficiencies",
+    "pests": "Pests"
+  },
+  "tools": {
+    "title": "Grow Tools",
+    "subtitle": "Precision tools for your grow",
+    "calculate": "Calculate",
+    "result": "Result",
+    "reset": "Reset",
+    "save": "Save"
+  },
+  "diagnose": {
+    "title": "Plant Diagnosis",
+    "subtitle": "Identify and solve problems in your grow",
+    "start": "Start Diagnosis",
+    "next": "Next",
+    "back": "Back",
+    "result": "Diagnosis Result"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "myGrows": "My Grows",
+    "newGrow": "New Grow",
+    "noGrows": "No grows yet. Start your first grow!",
+    "settings": "Settings"
+  },
+  "common": {
+    "loading": "Loading …",
+    "error": "An error occurred",
+    "retry": "Try again",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": {
+    "de": "DE",
+    "en": "EN",
+    "switchTo": "Switch language"
+  },
+  "translate": {
+    "button": "Translate",
+    "loading": "Translating …",
+    "showOriginal": "Show original"
+  },
+  "userMenu": {
+    "openMenu": "Open user menu",
+    "login": "Sign In",
+    "profile": "Profile",
+    "dashboard": "Dashboard",
+    "myGrows": "My Grows",
+    "theme": "Theme",
+    "language": "Language",
+    "logout": "Sign Out"
+  }
+}
