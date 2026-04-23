@@ -1,6 +1,6 @@
 "use client";
 
-import { SessionData } from "./types";
+import { SessionData, UserRole } from "./types";
 import { getSupabaseBrowserClient } from "./supabaseBrowser";
 
 const SESSION_KEY = "secretleaf.session";
@@ -14,7 +14,7 @@ type CurrentUserResponse = {
   user: {
     id: string;
     email: string | null;
-    role: "CONSUMER" | "PROVIDER" | "ADMIN";
+    role: UserRole;
   };
 };
 
@@ -27,17 +27,18 @@ const toSessionData = (params: {
   accessToken: string;
   userId: string;
   email?: string | null | undefined;
-  role: "CONSUMER" | "PROVIDER" | "ADMIN";
+  role: UserRole;
 }): SessionData => ({
   token: params.accessToken,
   user: {
     id: params.userId,
     username: params.email ? usernameFromEmail(params.email) : "user",
+    ...(params.email ? { email: params.email } : {}),
     role: params.role,
   },
 });
 
-const fetchRoleFromApi = async (accessToken: string): Promise<"CONSUMER" | "PROVIDER" | "ADMIN"> => {
+const fetchRoleFromApi = async (accessToken: string): Promise<UserRole> => {
   const response = await fetch("/api/auth/me", {
     method: "GET",
     headers: {
@@ -52,8 +53,10 @@ const fetchRoleFromApi = async (accessToken: string): Promise<"CONSUMER" | "PROV
   }
 
   const body = (await response.json()) as CurrentUserResponse;
-  if (body.user?.role === "ADMIN") return "ADMIN";
-  return body.user?.role === "PROVIDER" ? "PROVIDER" : "CONSUMER";
+  const role = body.user?.role;
+  if (role === "ADMIN") return "ADMIN";
+  if (role === "TEAM") return "TEAM";
+  return role === "PROVIDER" ? "PROVIDER" : "CONSUMER";
 };
 
 export const getSession = (): SessionData | null => {

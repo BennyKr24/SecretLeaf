@@ -1,0 +1,218 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
+
+// ── Plan helpers ──────────────────────────────────────────────────────────────
+
+type EffectivePlan = "free" | "pro" | "team";
+
+function effectivePlan(role: string, plan: string): EffectivePlan {
+  if (role === "TEAM") return "team";
+  if (plan === "pro") return "pro";
+  return "free";
+}
+
+const planBadgeClass: Record<EffectivePlan, string> = {
+  team: "bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300",
+  pro: "bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300",
+  free: "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400",
+};
+
+// ── Section wrapper ───────────────────────────────────────────────────────────
+
+function Section({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-4">
+        {label}
+      </p>
+      {children}
+    </div>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
+
+export default function ProfilePage() {
+  const t = useTranslations("profile");
+  const { user, isLoggedIn, isLoading } = useAuth();
+  const router = useRouter();
+
+  const { name, avatarUrl, saveState, updateName } = useProfile(
+    user?.id,
+    user?.displayName ?? user?.username ?? ""
+  );
+
+  const [nameInput, setNameInput] = useState("");
+  const [touched, setTouched] = useState(false);
+
+  // Sync input when profile name loads from localStorage
+  useEffect(() => {
+    setNameInput(name);
+  }, [name]);
+
+  // Redirect to /auth if not logged in
+  useEffect(() => {
+    if (!isLoading && !isLoggedIn) {
+      router.push("/auth");
+    }
+  }, [isLoading, isLoggedIn, router]);
+
+  // ── Loading skeleton ────────────────────────────────────────────────────────
+  if (isLoading) {
+    return (
+      <main className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <div className="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 animate-pulse" />
+      </main>
+    );
+  }
+
+  if (!user) return null;
+
+  const nameError =
+    touched && nameInput.trim().length < 2 ? t("nameMin") : null;
+
+  const handleSaveName = async () => {
+    setTouched(true);
+    if (nameInput.trim().length < 2) return;
+    await updateName(nameInput.trim());
+  };
+
+  const plan = effectivePlan(user.role, user.plan);
+
+  const planLabel: Record<EffectivePlan, string> = {
+    team: t("planTeam"),
+    pro: t("planPro"),
+    free: t("planFree"),
+  };
+
+  const saveLabel =
+    saveState === "saving"
+      ? t("saving")
+      : saveState === "success"
+        ? t("saved")
+        : saveState === "error"
+          ? t("saveError")
+          : t("save");
+
+  return (
+    <main className="min-h-screen bg-slate-50 dark:bg-slate-950">
+      <div className="max-w-xl mx-auto px-5 py-12 space-y-5">
+        {/* Page header */}
+        <div className="mb-2">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+            {t("title")}
+          </h1>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            {t("subtitle")}
+          </p>
+        </div>
+
+        {/* Avatar */}
+        <Section label={t("avatar")}>
+          <div className="flex items-center gap-5">
+            {avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={avatarUrl}
+                alt={name}
+                className="h-16 w-16 rounded-full object-cover ring-2 ring-emerald-500"
+              />
+            ) : (
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-600 text-xl font-bold text-white select-none flex-shrink-0">
+                {user.initials}
+              </span>
+            )}
+            <div>
+              <button
+                disabled
+                className="rounded-lg border border-slate-200 dark:border-slate-700 px-3.5 py-2 text-sm font-medium text-slate-400 dark:text-slate-500 cursor-not-allowed"
+              >
+                {t("avatarUpload")}
+              </button>
+              <p className="mt-1.5 text-[11px] text-slate-400 dark:text-slate-500">
+                {t("avatarHint")}
+              </p>
+            </div>
+          </div>
+        </Section>
+
+        {/* Name */}
+        <Section label={t("name")}>
+          <div className="space-y-3">
+            <div>
+              <input
+                type="text"
+                value={nameInput}
+                onChange={(e) => {
+                  setNameInput(e.target.value);
+                  setTouched(true);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") void handleSaveName();
+                }}
+                placeholder={t("namePlaceholder")}
+                className={[
+                  "w-full rounded-xl border px-4 py-2.5 text-sm bg-transparent text-slate-900 dark:text-slate-100 outline-none transition-colors",
+                  nameError
+                    ? "border-rose-400 dark:border-rose-600 focus:ring-2 focus:ring-rose-400/20"
+                    : "border-slate-200 dark:border-slate-700 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20",
+                ].join(" ")}
+              />
+              {nameError && (
+                <p className="mt-1.5 text-xs text-rose-500">{nameError}</p>
+              )}
+            </div>
+            <button
+              onClick={() => void handleSaveName()}
+              disabled={saveState === "saving" || (touched && !!nameError)}
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-500 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+            >
+              {saveState === "saving" && (
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              )}
+              {saveState === "success" && (
+                <span className="text-sm">✓</span>
+              )}
+              {saveLabel}
+            </button>
+          </div>
+        </Section>
+
+        {/* Email */}
+        <Section label={t("email")}>
+          <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+            {user.email ?? user.username}
+          </p>
+          <p className="mt-2 text-[12px] text-slate-400 dark:text-slate-500">
+            {t("emailChangeSoon")}
+          </p>
+        </Section>
+
+        {/* Plan */}
+        <Section label={t("plan")}>
+          <div className="flex items-center gap-3">
+            <span
+              className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${planBadgeClass[plan]}`}
+            >
+              {planLabel[plan]}
+            </span>
+            <p className="text-[12px] text-slate-400 dark:text-slate-500">
+              {t("planUpgradeHint")}
+            </p>
+          </div>
+        </Section>
+      </div>
+    </main>
+  );
+}

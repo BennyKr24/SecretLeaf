@@ -117,5 +117,27 @@
     "theme": "Design",
     "language": "Sprache",
     "logout": "Abmelden"
+  },
+  "profile": {
+    "title": "Mein Profil",
+    "subtitle": "Persönliche Daten und Einstellungen",
+    "avatar": "Avatar",
+    "avatarUpload": "Bild hochladen",
+    "avatarHint": "Bildupload bald verfügbar",
+    "name": "Name",
+    "namePlaceholder": "Dein Name",
+    "nameMin": "Mindestens 2 Zeichen erforderlich",
+    "email": "E-Mail",
+    "emailChangeSoon": "E-Mail-Änderung bald verfügbar",
+    "plan": "Plan",
+    "planFree": "Free",
+    "planPro": "Pro",
+    "planTeam": "Team",
+    "planUpgradeHint": "Upgrade-Möglichkeiten demnächst",
+    "save": "Speichern",
+    "saving": "Wird gespeichert …",
+    "saved": "Gespeichert",
+    "saveError": "Fehler beim Speichern",
+    "notLoggedIn": "Du bist nicht angemeldet."
   }
 }

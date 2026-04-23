@@ -19,11 +19,19 @@ function Avatar({ user }: { user: AuthUser }) {
 
 // ── Plan Badge ────────────────────────────────────────────────────────────────
 
-function PlanBadge({ plan }: { plan: "free" | "pro" }) {
-  if (plan === "pro") {
+function PlanBadge({ plan, role }: { plan: "free" | "pro" | "team"; role: string }) {
+  const effectivePlan = role === "TEAM" ? "team" : plan;
+  if (effectivePlan === "pro") {
     return (
       <span className="ml-1 rounded-full bg-amber-100 dark:bg-amber-900 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300">
         PRO
+      </span>
+    );
+  }
+  if (effectivePlan === "team") {
+    return (
+      <span className="ml-1 rounded-full bg-emerald-100 dark:bg-emerald-900 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
+        TEAM
       </span>
     );
   }
@@ -163,8 +171,8 @@ export function UserMenu() {
               <Avatar user={user} />
               <div className="min-w-0">
                 <p className="text-[13px] font-semibold text-slate-900 dark:text-slate-100 truncate flex items-center gap-1">
-                  {user.username}
-                  <PlanBadge plan={user.plan} />
+                  {user.displayName}
+                  <PlanBadge plan={user.plan} role={user.role} />
                 </p>
                 <p className="text-[11px] text-slate-400 dark:text-slate-500 capitalize">
                   {user.role.toLowerCase()}
@@ -174,7 +182,7 @@ export function UserMenu() {
           </div>
 
           {/* Navigation items — no items that duplicate the top nav bar */}
-          <MenuItem href="/dashboard/user" icon="👤" label={t("profile")} onClick={() => setOpen(false)} />
+          <MenuItem href="/profile" icon="👤" label={t("profile")} onClick={() => setOpen(false)} />
           <MenuItem href="/start" icon="🌱" label={t("myGrows")} onClick={() => setOpen(false)} />
 
           {/* Divider */}

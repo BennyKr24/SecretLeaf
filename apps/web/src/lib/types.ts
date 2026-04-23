@@ -1,13 +1,22 @@
 export type UserRole = "CONSUMER" | "PROVIDER" | "ADMIN" | "TEAM";
 
-export type UserPlan = "free" | "pro";
+export type UserPlan = "free" | "pro" | "team";
 
 export type SessionUser = {
   id: string;
   username: string;
+  /** Email address — stored since login, used on profile page */
+  email?: string;
   role: UserRole;
   /** Subscription tier — defaults to "free" when not set */
   plan?: UserPlan;
+};
+
+/** Profile data stored in localStorage per user — keyed by userId */
+export type UserProfile = {
+  userId: string;
+  name: string;
+  avatarUrl?: string;
 };
 
 export type SessionData = {

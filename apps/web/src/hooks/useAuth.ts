@@ -19,7 +19,9 @@ import type { SessionUser, UserPlan } from "@/lib/types";
 export type AuthUser = SessionUser & {
   /** Resolved plan — always present, defaults to "free". */
   plan: UserPlan;
-  /** First two characters of username, uppercased — for avatar initials. */
+  /** Display name from profile, or username fallback. */
+  displayName: string;
+  /** First two characters of displayName, uppercased — for avatar initials. */
   initials: string;
 };
 
@@ -36,19 +38,34 @@ export type AuthState = {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function getInitials(username: string): string {
-  const parts = username.trim().split(/[\s._-]/);
+function getInitials(name: string): string {
+  const parts = name.trim().split(/[\s._-]/);
   if (parts.length >= 2) {
     return (parts[0]![0]! + parts[1]![0]!).toUpperCase();
   }
-  return username.slice(0, 2).toUpperCase();
+  return name.slice(0, 2).toUpperCase();
+}
+
+/** Read display name from localStorage profile, or null if not set. */
+function readProfileName(userId: string): string | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(`secretleaf.profile.${userId}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { name?: string };
+    return parsed.name ?? null;
+  } catch {
+    return null;
+  }
 }
 
 function toAuthUser(user: SessionUser): AuthUser {
+  const displayName = readProfileName(user.id) ?? user.username;
   return {
     ...user,
     plan: user.plan ?? "free",
-    initials: getInitials(user.username),
+    displayName,
+    initials: getInitials(displayName),
   };
 }
 
@@ -83,8 +100,14 @@ export function useAuth(): AuthState {
         hydrate();
       }
     };
+    // Re-hydrate when profile name changes (same tab, via useProfile)
+    const handleProfileUpdate = () => hydrate();
     window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
+    window.addEventListener("secretleaf:profileUpdated", handleProfileUpdate);
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener("secretleaf:profileUpdated", handleProfileUpdate);
+    };
   }, [hydrate]);
 
   const logout = useCallback(async () => {

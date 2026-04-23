@@ -117,5 +117,27 @@
     "theme": "Theme",
     "language": "Language",
     "logout": "Sign Out"
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Personal data and settings",
+    "avatar": "Avatar",
+    "avatarUpload": "Upload image",
+    "avatarHint": "Image upload coming soon",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "nameMin": "At least 2 characters required",
+    "email": "Email",
+    "emailChangeSoon": "Email change coming soon",
+    "plan": "Plan",
+    "planFree": "Free",
+    "planPro": "Pro",
+    "planTeam": "Team",
+    "planUpgradeHint": "Upgrade options coming soon",
+    "save": "Save",
+    "saving": "Saving …",
+    "saved": "Saved",
+    "saveError": "Failed to save",
+    "notLoggedIn": "You are not signed in."
   }
 }
