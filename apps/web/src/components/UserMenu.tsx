@@ -183,6 +183,7 @@ export function UserMenu() {
 
           {/* Navigation items — no items that duplicate the top nav bar */}
           <MenuItem href="/profile" icon="👤" label={t("profile")} onClick={() => setOpen(false)} />
+          <MenuItem href="/dashboard/user" icon="📊" label={t("dashboard")} onClick={() => setOpen(false)} />
           <MenuItem href="/start" icon="🌱" label={t("myGrows")} onClick={() => setOpen(false)} />
 
           {/* Divider */}

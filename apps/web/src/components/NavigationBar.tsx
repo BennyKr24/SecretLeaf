@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import SearchBar from "@/components/SearchBar";
 import { UserMenu } from "@/components/UserMenu";
+import { useAuth } from "@/hooks/useAuth";
 
 export function NavigationBar() {
   const t = useTranslations("nav");
+  const { isLoggedIn } = useAuth();
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl">
@@ -34,12 +36,14 @@ export function NavigationBar() {
             <span className="text-[12px]">🌱</span>
             {t("startGrow")}
           </Link>
-          <Link
-            href="/dashboard"
-            className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-150 font-medium"
-          >
-            {t("dashboard")}
-          </Link>
+          {!isLoggedIn && (
+            <Link
+              href="/dashboard"
+              className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-150 font-medium"
+            >
+              {t("dashboard")}
+            </Link>
+          )}
           <Link
             href="/tools"
             className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-150 font-medium"
