@@ -1,25 +1,37 @@
 'use client';
 
 import { useState } from 'react';
+import { Analytics } from '@/lib/analytics';
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // The <input type="email" required> handles validation; extra guard for programmatic calls
     if (!email.trim()) return;
 
     setStatus('loading');
-    // Persist locally for now — real delivery via backend when ready
+    setErrorMsg(null);
+
     try {
-      const existing = JSON.parse(localStorage.getItem('secretleaf.newsletter') ?? '[]') as string[];
-      if (!existing.includes(email)) {
-        localStorage.setItem('secretleaf.newsletter', JSON.stringify([...existing, email]));
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+      });
+
+      if (res.ok) {
+        Analytics.newsletterSignup();
+        setStatus('success');
+      } else {
+        const data = await res.json() as { error?: string };
+        setErrorMsg(data.error ?? 'Etwas ist schiefgelaufen.');
+        setStatus('error');
       }
-      setStatus('success');
     } catch {
+      setErrorMsg('Keine Verbindung. Bitte versuche es erneut.');
       setStatus('error');
     }
   };
@@ -62,13 +74,13 @@ export default function NewsletterSignup() {
                   hover:bg-emerald-500 transition-all duration-150 shadow-sm flex-shrink-0
                   disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {status === 'loading' ? 'Wird gespeichert…' : 'Abonnieren'}
+              {status === 'loading' ? 'Wird übermittelt…' : 'Abonnieren'}
               </button>
             </form>
           )}
 
           {status === 'error' && (
-            <p className="mt-2 text-xs text-red-500">Etwas ist schiefgelaufen. Bitte versuche es erneut.</p>
+            <p className="mt-2 text-xs text-red-500">{errorMsg ?? 'Etwas ist schiefgelaufen. Bitte versuche es erneut.'}</p>
           )}
 
           <div className="mt-5 flex flex-wrap justify-center gap-5 text-[11px] text-slate-400">

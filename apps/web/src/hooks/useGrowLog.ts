@@ -22,6 +22,15 @@ import {
   updateLogEntry as storeUpdateLogEntry,
   completeTask as storeCompleteTask,
 } from "@/lib/grow/store";
+import { useAuth } from "@/hooks/useAuth";
+import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
+import { storage, STORAGE_KEYS } from "@/lib/store";
+import {
+  createLogEntry as dbCreateLogEntry,
+  getLogEntries as dbGetLogEntries,
+  updateLogEntry as dbUpdateLogEntry,
+  deleteLogEntry as dbDeleteLogEntry,
+} from "@/lib/grow/db";
 
 // ── Log → Task mapping ────────────────────────────────────────────────────────
 
@@ -160,6 +169,7 @@ function computeStreak(entries: LogEntry[]): number {
 // ── Main Hook ─────────────────────────────────────────────────────────────────
 
 export function useGrowLog(growId: string | null): UseGrowLogReturn {
+  const { user } = useAuth();
   const [entries, setEntries] = useState<LogEntry[]>([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -171,38 +181,151 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
     setEntries(getLogEntries(growId));
   }, [growId]);
 
+  // ── Initial load ──────────────────────────────────────────────────────────
+  // Logged-in: fetch from Supabase, fall back to localStorage on error.
+  // Anonymous: localStorage only.
   useEffect(() => {
-    refresh();
-    setLoaded(true);
-  }, [refresh]);
+    if (!growId) {
+      setEntries([]);
+      setLoaded(true);
+      return;
+    }
+    if (!user) {
+      refresh();
+      setLoaded(true);
+      return;
+    }
+    const supabase = getSupabaseBrowserClient();
+    dbGetLogEntries(supabase, growId)
+      .then((rows) => {
+        setEntries(rows); // already sorted logged_at DESC
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.error("[log] Supabase load failed, falling back to localStorage:", err);
+        refresh();
+        setLoaded(true);
+      });
+  // Re-run when user session or growId changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, growId]);
 
   const addEntry = useCallback(
     (input: Omit<CreateLogEntryInput, "growId">): { entry: LogEntry; completedTaskId: string | null } | null => {
       if (!growId) return null;
-      const entry = storeCreateLogEntry({ ...input, growId });
-      // Auto-complete the nearest matching open task
+
+      if (!user) {
+        // Offline path: unchanged localStorage behavior
+        const entry = storeCreateLogEntry({ ...input, growId });
+        const completedTaskId = autoCompleteTask(growId, input.data.type as LogEntryType);
+        refresh();
+        return { entry, completedTaskId };
+      }
+
+      // Online path: optimistic UI
+      const now = new Date().toISOString();
+      const entry: LogEntry = {
+        ...input,
+        growId,
+        id: crypto.randomUUID(),
+        createdAt: now,
+      };
       const completedTaskId = autoCompleteTask(growId, input.data.type as LogEntryType);
-      refresh();
+
+      setEntries((prev) =>
+        [entry, ...prev].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      );
+
+      const supabase = getSupabaseBrowserClient();
+      void (async () => {
+        try {
+          await dbCreateLogEntry(supabase, user.id, entry);
+          setEntries((current) => {
+            storage.set(STORAGE_KEYS.LOG_ENTRIES, current);
+            return current;
+          });
+        } catch (err) {
+          console.error("[log] addEntry Supabase failed, rolling back:", err);
+          setEntries((prev) => prev.filter((e) => e.id !== entry.id));
+        }
+      })();
+
       return { entry, completedTaskId };
     },
-    [growId, refresh]
+    [growId, refresh, user]
   );
 
   const deleteEntry = useCallback(
     (id: string): void => {
-      storeDeleteLogEntry(id);
-      refresh();
+      if (!user) {
+        storeDeleteLogEntry(id);
+        refresh();
+        return;
+      }
+
+      const snapshot = entries.find((e) => e.id === id) ?? null;
+
+      // Optimistic: remove immediately
+      setEntries((prev) => prev.filter((e) => e.id !== id));
+
+      const supabase = getSupabaseBrowserClient();
+      void (async () => {
+        try {
+          await dbDeleteLogEntry(supabase, id);
+          setEntries((current) => {
+            storage.set(STORAGE_KEYS.LOG_ENTRIES, current);
+            return current;
+          });
+        } catch (err) {
+          console.error("[log] deleteEntry Supabase failed, rolling back:", err);
+          if (snapshot) {
+            setEntries((prev) =>
+              [snapshot, ...prev].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            );
+          }
+        }
+      })();
     },
-    [refresh]
+    [user, entries, refresh]
   );
 
   const updateEntry = useCallback(
     (id: string, updates: Partial<Pick<LogEntry, "date" | "notes" | "data" | "plantId">>): LogEntry | null => {
-      const result = storeUpdateLogEntry(id, updates);
-      refresh();
-      return result;
+      if (!user) {
+        const result = storeUpdateLogEntry(id, updates);
+        refresh();
+        return result;
+      }
+
+      const prev = entries.find((e) => e.id === id) ?? null;
+      if (!prev) return null;
+
+      const updated: LogEntry = { ...prev, ...updates };
+
+      // Optimistic: update state sorted by date desc
+      setEntries((all) =>
+        all
+          .map((e) => (e.id === id ? updated : e))
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      );
+
+      const supabase = getSupabaseBrowserClient();
+      void (async () => {
+        try {
+          await dbUpdateLogEntry(supabase, id, updates);
+          setEntries((current) => {
+            storage.set(STORAGE_KEYS.LOG_ENTRIES, current);
+            return current;
+          });
+        } catch (err) {
+          console.error("[log] updateEntry Supabase failed, rolling back:", err);
+          setEntries((all) => all.map((e) => (e.id === id ? prev : e)));
+        }
+      })();
+
+      return updated;
     },
-    [refresh]
+    [user, entries, refresh]
   );
 
   const entriesByPlant = useCallback(

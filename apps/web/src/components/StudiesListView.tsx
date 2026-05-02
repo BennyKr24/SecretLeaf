@@ -6,7 +6,7 @@ import StudyListItem from './StudyListItem';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-type SortMode = 'relevanz' | 'neueste' | 'kurz' | 'lang';
+type SortMode = 'relevanz' | 'neueste' | 'kurz' | 'lang' | 'qualitaet';
 
 type Props = {
   articles: TerpiraArticle[];
@@ -15,6 +15,8 @@ type Props = {
   initialCategory?: TerpiraCategory;
   /** Hide category filter (for category pages) */
   hideCategoryFilter?: boolean;
+  /** Preset tag filter */
+  initialTag?: string;
   /** Visible items per category section before "Mehr anzeigen" */
   sectionLimit?: number;
 };
@@ -71,26 +73,46 @@ export default function StudiesListView({
   categoryLabels,
   initialCategory,
   hideCategoryFilter = false,
+  initialTag,
   sectionLimit = 6,
 }: Props) {
   const [category, setCategory] = useState<TerpiraCategory | 'alle'>(initialCategory ?? 'alle');
   const [difficulty, setDifficulty] = useState<TerpiraDifficulty | 'alle'>('alle');
-  const [sort, setSort] = useState<SortMode>('relevanz');
+  const [sort, setSort] = useState<SortMode>('qualitaet');
   const [search, setSearch] = useState('');
+  const [activeTag, setActiveTag] = useState<string>(initialTag ?? '');
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setExpandedSections({});
-  }, [category, difficulty, sort, search]);
+  }, [category, difficulty, sort, search, activeTag]);
 
   type Result = { article: TerpiraArticle; score: number; snippet: string | null };
+
+  // Derive the top tags from all articles for the tag cloud
+  const topTags = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const a of articles) {
+      for (const t of a.tags) {
+        counts.set(t, (counts.get(t) ?? 0) + 1);
+      }
+    }
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([tag]) => tag);
+  }, [articles]);
 
   const filtered = useMemo((): Result[] => {
     let list = [...articles];
 
+    // Hide articles that have a qualityScore defined but below the minimum threshold
+    list = list.filter(a => a.qualityScore === undefined || a.qualityScore >= 2);
+
     if (category !== 'alle') list = list.filter(a => a.category === category);
     if (difficulty !== 'alle') list = list.filter(a => a.difficulty === difficulty);
+    if (activeTag) list = list.filter(a => a.tags.some(t => t.toLowerCase() === activeTag.toLowerCase()));
 
     if (search.trim()) {
       return list
@@ -103,13 +125,14 @@ export default function StudiesListView({
       case 'neueste': list.sort((a, b) => b.lastUpdated.localeCompare(a.lastUpdated)); break;
       case 'kurz': list.sort((a, b) => a.readMinutes - b.readMinutes); break;
       case 'lang': list.sort((a, b) => b.readMinutes - a.readMinutes); break;
+      case 'qualitaet': list.sort((a, b) => (b.qualityScore ?? 0) - (a.qualityScore ?? 0)); break;
       default: list.sort((a, b) =>
         ORDERED_CATEGORIES.indexOf(a.category) - ORDERED_CATEGORIES.indexOf(b.category)
       );
     }
 
     return list.map(article => ({ article, score: 0, snippet: null }));
-  }, [articles, category, difficulty, sort, search]);
+  }, [articles, category, difficulty, sort, search, activeTag]);
 
   const categoryCounts = useMemo(() => {
     const map: Record<string, number> = {};
@@ -136,7 +159,7 @@ export default function StudiesListView({
       }));
   }, [filtered, categoryLabels]);
 
-  const hasFilters = category !== 'alle' || difficulty !== 'alle' || search.trim() !== '';
+  const hasFilters = category !== 'alle' || difficulty !== 'alle' || search.trim() !== '' || activeTag !== '';
   const toggleSection = useCallback((key: string) => {
     setExpandedSections((prev) => ({ ...prev, [key]: !prev[key] }));
   }, []);
@@ -147,7 +170,7 @@ export default function StudiesListView({
       <div className="flex flex-wrap items-center gap-2.5">
         {/* Search */}
         <div className="relative flex-1 min-w-[220px]">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-fg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
@@ -155,12 +178,12 @@ export default function StudiesListView({
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Artikel suchen…"
-            className="w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-9 pr-8 text-[13.5px]
-              text-slate-900 placeholder:text-slate-400 outline-none shadow-sm
+            className="w-full rounded-lg border border-border bg-card py-2.5 pl-9 pr-8 text-[13.5px]
+              text-foreground placeholder:text-muted-fg outline-none shadow-sm
               focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all"
           />
           {search && (
-            <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-600 transition-colors">
+            <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground transition-colors">
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -173,7 +196,7 @@ export default function StudiesListView({
           <select
             value={category}
             onChange={e => setCategory(e.target.value as TerpiraCategory | 'alle')}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13.5px] text-slate-700
+            className="rounded-lg border border-border bg-card px-3 py-2.5 text-[13.5px] text-foreground
               outline-none shadow-sm focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 cursor-pointer transition-all"
           >
             <option value="alle">Alle Kategorien</option>
@@ -187,7 +210,7 @@ export default function StudiesListView({
         <select
           value={difficulty}
           onChange={e => setDifficulty(e.target.value as TerpiraDifficulty | 'alle')}
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13.5px] text-slate-700
+          className="rounded-lg border border-border bg-card px-3 py-2.5 text-[13.5px] text-foreground
             outline-none shadow-sm focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 cursor-pointer transition-all"
         >
           <option value="alle">Alle Schwierigkeitsstufen</option>
@@ -201,13 +224,14 @@ export default function StudiesListView({
           <select
             value={sort}
             onChange={e => setSort(e.target.value as SortMode)}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13.5px] text-slate-700
+            className="rounded-lg border border-border bg-card px-3 py-2.5 text-[13.5px] text-foreground
               outline-none shadow-sm focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 cursor-pointer transition-all"
           >
             <option value="relevanz">Relevanz</option>
             <option value="neueste">Neueste zuerst</option>
             <option value="kurz">Kürzeste zuerst</option>
             <option value="lang">Längste zuerst</option>
+            <option value="qualitaet">Nach Qualität</option>
           </select>
         )}
 
@@ -217,30 +241,50 @@ export default function StudiesListView({
               setCategory(initialCategory ?? 'alle');
               setDifficulty('alle');
               setSearch('');
-              setSort('relevanz');
+              setSort('qualitaet');
+              setActiveTag(initialTag ?? '');
             }}
-            className="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13.5px] font-medium text-slate-400
-              hover:text-red-500 hover:border-red-200 shadow-sm transition-all"
+            className="rounded-lg border border-border bg-card px-3 py-2.5 text-[13.5px] font-medium text-muted-fg
+              hover:text-red-500 hover:border-red-300 shadow-sm transition-all"
           >
             Zurücksetzen
           </button>
         )}
       </div>
 
+      {/* ── Tag cloud ────────────────────────────────────────── */}
+      {topTags.length > 0 && !search.trim() && (
+        <div className="flex flex-wrap gap-1.5">
+          {topTags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setActiveTag(activeTag === tag ? '' : tag)}
+              className={`rounded-full border px-2.5 py-1 text-[11px] font-medium transition-all ${
+                activeTag === tag
+                  ? 'border-emerald-400 bg-emerald-500 text-white shadow-sm'
+                  : 'border-border bg-card text-muted-fg hover:border-emerald-300 hover:text-foreground'
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* ── Result info ──────────────────────────────────────── */}
-      <div className="flex items-center justify-between text-[13px] text-slate-400">
+      <div className="flex items-center justify-between text-[13px] text-muted-fg">
         <span>
-          <span className="font-semibold text-slate-700">{filtered.length}</span>
+          <span className="font-semibold text-foreground">{filtered.length}</span>
           {' '}Artikel{hasFilters && ' gefunden'}
         </span>
-        <span className="text-slate-300">{groupedResults.length} Kategorien</span>
+        <span className="text-muted-fg">{groupedResults.length} Kategorien</span>
       </div>
 
       {/* ── Grouped sections ─────────────────────────────────── */}
       {groupedResults.length === 0 ? (
-        <div className="rounded-xl border-2 border-dashed border-slate-100 bg-slate-50/50 py-16 text-center">
-          <p className="text-sm font-medium text-slate-500">Keine Artikel gefunden.</p>
-          <p className="mt-1 text-xs text-slate-400">Passe deine Filter oder Suche an.</p>
+        <div className="rounded-xl border-2 border-dashed border-border bg-background py-16 text-center">
+          <p className="text-sm font-medium text-muted-fg">Keine Artikel gefunden.</p>
+          <p className="mt-1 text-xs text-muted-fg">Passe deine Filter oder Suche an.</p>
         </div>
       ) : (
         <div className="space-y-5">
@@ -250,17 +294,17 @@ export default function StudiesListView({
             const hiddenCount = Math.max(group.items.length - visibleItems.length, 0);
 
             return (
-              <section key={group.category} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-                <header className="border-b border-slate-100 bg-slate-50/70 px-4 py-3 sm:px-5">
+              <section key={group.category} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                <header className="border-b border-border bg-background px-4 py-3 sm:px-5">
                   <div className="flex flex-wrap items-center justify-between gap-3">
-                    <h3 className="text-sm font-semibold text-slate-900">{group.label}</h3>
-                    <span className="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600">
+                    <h3 className="text-sm font-semibold text-foreground">{group.label}</h3>
+                    <span className="rounded-full border border-border bg-card px-2.5 py-1 text-[11px] font-semibold text-muted-fg">
                       {group.items.length} Artikel
                     </span>
                   </div>
                 </header>
 
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-border">
                   {visibleItems.map(({ article, snippet }) => (
                     <StudyListItem
                       key={article.slug}
@@ -272,7 +316,7 @@ export default function StudiesListView({
                 </div>
 
                 {group.items.length > sectionLimit && (
-                  <div className="border-t border-slate-100 bg-white px-4 py-3 sm:px-5">
+                  <div className="border-t border-border bg-card px-4 py-3 sm:px-5">
                     <button
                       onClick={() => toggleSection(group.category)}
                       className="inline-flex items-center rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition-colors"

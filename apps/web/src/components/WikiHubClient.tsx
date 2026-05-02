@@ -127,10 +127,10 @@ function ArticleCard({ article, categoryLabel, difficultyLabels, isNew, isBookma
   const evidence = evidenceMeta(sourceCount);
 
   return (
-    <article className="group relative flex flex-col rounded-2xl border border-slate-200 bg-white
+    <article className="group relative flex flex-col rounded-2xl border border-border bg-card
       shadow-sm hover:shadow-md hover:border-emerald-200 transition-all duration-200 overflow-hidden">
       {/* Kategorie-Farbleiste */}
-      <div className="h-1 w-full bg-gradient-to-r from-[#1f7a4f] to-emerald-400" />
+      <div className="h-1 w-full bg-gradient-to-r from-primary to-emerald-400" />
 
       <div className="flex-1 flex flex-col p-5">
         {/* Badges */}
@@ -147,7 +147,7 @@ function ArticleCard({ article, categoryLabel, difficultyLabels, isNew, isBookma
               className={`inline-flex h-6 w-6 items-center justify-center rounded-full border text-xs transition-all
                 ${isBookmarked
                   ? 'border-amber-300 bg-amber-100 text-amber-700'
-                  : 'border-slate-200 bg-white text-slate-400 hover:border-amber-200 hover:text-amber-600'
+                  : 'border-border bg-card text-slate-400 hover:border-amber-200 hover:text-amber-600'
                 }`}
             >
               {isBookmarked ? '★' : '☆'}
@@ -219,7 +219,7 @@ function ArticleCard({ article, categoryLabel, difficultyLabels, isNew, isBookma
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between gap-2 border-t border-slate-100 px-5 py-3 bg-slate-50/50">
+      <div className="flex items-center justify-between gap-2 border-t border-border px-5 py-3 bg-background/50">
         <div className="flex items-center gap-3 text-xs text-slate-400">
           <span className="flex items-center gap-1">
             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -242,8 +242,8 @@ function ArticleCard({ article, categoryLabel, difficultyLabels, isNew, isBookma
         <Link
           href={`/studies/${article.slug}` as Route}
           onClick={() => onOpen(article.slug)}
-          className="inline-flex items-center gap-1 rounded-lg bg-[#1f7a4f] px-3 py-1.5
-            text-xs font-semibold text-white hover:bg-[#17613f] transition-colors"
+          className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5
+            text-xs font-semibold text-white hover:bg-primary-dark transition-colors"
         >
           {progressPct >= 10 && progressPct < 100 ? 'Weiterlesen' : 'Lesen'}
           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -446,7 +446,7 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
           { label: 'Profi', value: profi, sub: 'Artikel', accent: false, cls: 'border-purple-200 bg-purple-50/40' },
         ].map(stat => (
           <div key={stat.label}
-            className={`rounded-2xl border p-4 shadow-sm ${stat.cls ?? 'border-slate-200 bg-white'}`}>
+            className={`rounded-2xl border p-4 shadow-sm ${stat.cls ?? 'border-border bg-card'}`}>
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{stat.label}</p>
             <p className="mt-1 text-2xl font-bold text-slate-900">{stat.value}</p>
             <p className="text-xs text-slate-400">{stat.sub}</p>
@@ -466,8 +466,8 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
             value={localSearch}
             onChange={e => setLocalSearch(e.target.value)}
             placeholder="Wiki durchsuchen… (/ oder Strg+F)"
-            className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-9 pr-10 text-sm
-              text-slate-900 placeholder:text-slate-400 outline-none
+            className="w-full rounded-xl border border-border bg-card py-2.5 pl-9 pr-10 text-sm
+              text-foreground placeholder:text-slate-400 outline-none
               focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all shadow-sm"
           />
           {localSearch && (
@@ -483,7 +483,7 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
           <select
             value={sort}
             onChange={e => setSort(e.target.value as SortMode)}
-            className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700
+            className="rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground
               outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 shadow-sm cursor-pointer"
           >
             <option value="relevanz">Standard</option>
@@ -495,7 +495,7 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
 
         {hasFilters && (
           <button onClick={resetFilters}
-            className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm
+            className="rounded-xl border border-border bg-card px-3 py-2.5 text-sm
               text-slate-600 hover:text-red-600 hover:border-red-200 transition-all shadow-sm">
             Zurücksetzen
           </button>
@@ -507,7 +507,7 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
       {(recentArticles.length > 0 || bookmarkedArticles.length > 0) && (
         <div className="grid gap-4 lg:grid-cols-2">
           {recentArticles.length > 0 && (
-            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Zuletzt gelesen</p>
               <div className="mt-2 space-y-2">
                 {recentArticles.slice(0, 4).map((entry) => (
@@ -645,7 +645,7 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
       )}
 
       {/* ── Quick-Links-Footer ───────────────────────────────────── */}
-      <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
         <p className="text-sm font-semibold text-slate-700">Mehr entdecken</p>
         <div className="mt-3 flex flex-wrap gap-3">
           <Link href={"/studies/sources" as Route}
@@ -686,8 +686,8 @@ function CategoryTab({ label, icon, count, active, onClick }: {
       className={`inline-flex items-center gap-1.5 flex-shrink-0 rounded-xl px-3 py-2 text-sm
         font-medium transition-all duration-150
         ${active
-          ? 'bg-[#1f7a4f] text-white shadow-md shadow-emerald-900/20'
-          : 'bg-white border border-slate-200 text-slate-700 hover:border-emerald-300 hover:text-emerald-700 shadow-sm'
+          ? 'bg-primary text-white shadow-md shadow-emerald-900/20'
+          : 'bg-card border border-border text-slate-700 hover:border-emerald-300 hover:text-emerald-700 shadow-sm'
         }`}
     >
       <span className="text-base leading-none">{icon}</span>
@@ -732,7 +732,7 @@ function EmptyState({ onReset, query, suggestions, onSelectSuggestion }: {
       )}
 
       <button onClick={onReset}
-        className="mt-4 inline-flex rounded-xl bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f] transition">
+        className="mt-4 inline-flex rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition">
         Filter zurücksetzen
       </button>
     </div>

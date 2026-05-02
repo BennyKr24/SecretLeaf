@@ -3,9 +3,6 @@
 import Link from 'next/link';
 import type { Route } from 'next';
 import type { TerpiraArticle, TerpiraDifficulty } from '@/lib/terpira/types';
-import { wikiArticles } from '@/data/terpira/wiki';
-import CommunitySignals from './CommunitySignals';
-import { useReadingProgress } from '@/hooks/useReadingProgress';
 
 const CATEGORY_ICONS: Record<string, string> = {
   anbau: '🌱', genetik: '🧬', chemie: '⚗️', terpene: '🌺',
@@ -14,7 +11,7 @@ const CATEGORY_ICONS: Record<string, string> = {
 };
 
 const DIFFICULTY_STYLE: Record<TerpiraDifficulty, { pill: string; dot: string }> = {
-  einsteiger:     { pill: 'text-blue-600 bg-blue-50 border-blue-100',   dot: 'bg-blue-400' },
+  einsteiger:     { pill: 'text-blue-600 bg-blue-50 border-blue-100',    dot: 'bg-blue-400' },
   fortgeschritten:{ pill: 'text-amber-600 bg-amber-50 border-amber-100', dot: 'bg-amber-400' },
   profi:          { pill: 'text-purple-600 bg-purple-50 border-purple-100', dot: 'bg-purple-400' },
 };
@@ -25,10 +22,20 @@ const DIFFICULTY_LABEL: Record<TerpiraDifficulty, string> = {
   profi: 'Profi',
 };
 
-function evidenceLabel(sourceCount: number): { label: string; cls: string } | null {
-  if (sourceCount >= 5) return { label: 'Hohe Evidenz', cls: 'evidence-high border' };
-  if (sourceCount >= 3) return { label: 'Mittlere Evidenz', cls: 'evidence-med border' };
-  return null;
+/** Maps qualityScore 1–5 to a visual indicator */
+function QualityDots({ score }: { score: number }) {
+  return (
+    <span className="inline-flex items-center gap-0.5" title={`Qualität ${score}/5`}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <span
+          key={i}
+          className={`h-1.5 w-1.5 rounded-full ${
+            i <= score ? 'bg-emerald-500' : 'bg-border'
+          }`}
+        />
+      ))}
+    </span>
+  );
 }
 
 type Props = {
@@ -37,66 +44,83 @@ type Props = {
   snippet?: string | null;
 };
 
-export default function StudyListItem({ article, categoryLabel, snippet }: Props) {
-  const sourceCount = article.sourceIds?.length ?? 0;
+export default function StudyListItem({ article, snippet }: Props) {
   const diff = DIFFICULTY_STYLE[article.difficulty];
-  const ev = evidenceLabel(sourceCount);
-  const { getProgress } = useReadingProgress();
-  const progress = getProgress(article.slug);
+  const qualityScore = article.qualityScore ?? 0;
+  // Show growValue if available, otherwise fall back to search snippet or summary
+  const insight = article.growValue ?? snippet ?? article.summary;
+  // Show at most 4 tags
+  const visibleTags = article.tags.slice(0, 4);
 
   return (
     <Link
       href={`/studies/${article.slug}` as Route}
-      className="group flex items-center gap-4 rounded-xl border border-transparent bg-white px-5 py-4
-        hover:border-emerald-100 hover:bg-emerald-50/10 hover:shadow-sm transition-all duration-150"
+      className="group flex items-start gap-4 rounded-xl border border-transparent bg-card px-5 py-4
+        hover:border-emerald-200 hover:bg-emerald-50/10 hover:shadow-sm transition-all duration-150"
     >
-      {/* Icon container */}
-      <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-100 bg-slate-50
-        group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors duration-150 text-base flex-shrink-0">
+      {/* Icon */}
+      <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg
+        border border-border bg-background group-hover:bg-emerald-50 group-hover:border-emerald-200
+        transition-colors duration-150 text-base">
         {CATEGORY_ICONS[article.category] ?? '📄'}
       </span>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <h3 className="text-[13.5px] font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug line-clamp-1">
+        {/* Title */}
+        <h3 className="text-[13.5px] font-semibold text-foreground group-hover:text-emerald-700
+          transition-colors leading-snug line-clamp-1">
           {article.title}
         </h3>
-        <p className="mt-0.5 text-xs text-slate-400 line-clamp-1 leading-relaxed">
-          {snippet ?? article.summary}
-        </p>
-        <div className="mt-2 flex flex-wrap items-center gap-2">
-          <CommunitySignals article={article} allArticles={wikiArticles} limit={2} compact />
-          {progress && progress.progress >= 10 && progress.progress < 95 && (
-            <span className="inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
-              {progress.progress}% gelesen
-            </span>
-          )}
-        </div>
+
+        {/* Grow insight — the practical value for the grower */}
+        {insight && (
+          <p className="mt-1 text-xs text-muted-fg leading-relaxed line-clamp-2">
+            {article.growValue ? (
+              <span className="font-medium text-emerald-600 mr-1">→</span>
+            ) : null}
+            {insight}
+          </p>
+        )}
+
+        {/* Tags */}
+        {visibleTags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1">
+            {visibleTags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-md border border-border bg-background px-1.5 py-0.5
+                  text-[10px] font-medium text-muted-fg"
+              >
+                {tag}
+              </span>
+            ))}
+            {article.tags.length > 4 && (
+              <span className="rounded-md border border-border bg-background px-1.5 py-0.5
+                text-[10px] font-medium text-muted-fg">
+                +{article.tags.length - 4}
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Meta */}
-      <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
-        {ev && (
-          <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${ev.cls}`}>
-            {ev.label}
-          </span>
-        )}
-        <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[11px] font-medium ${diff.pill}`}>
+      <div className="hidden sm:flex flex-shrink-0 flex-col items-end gap-1.5 pt-0.5">
+        {qualityScore > 0 && <QualityDots score={qualityScore} />}
+        <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[10px] font-medium ${diff.pill}`}>
           <span className={`h-1.5 w-1.5 rounded-full ${diff.dot}`} />
           {DIFFICULTY_LABEL[article.difficulty]}
         </span>
-        <span className="text-xs text-slate-300 tabular-nums">{article.readMinutes} Min</span>
-        {sourceCount > 0 && (
-          <span className="rounded-md bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 text-[11px] font-bold text-emerald-700">
-            {sourceCount}
-          </span>
-        )}
+        <span className="text-[10px] text-muted-fg tabular-nums">{article.readMinutes} Min</span>
       </div>
 
       {/* Arrow */}
-      <svg className="w-3.5 h-3.5 text-slate-200 group-hover:text-emerald-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+      <svg className="mt-1 w-3.5 h-3.5 flex-shrink-0 text-border group-hover:text-emerald-400 transition-colors"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
       </svg>
     </Link>
   );
 }
+

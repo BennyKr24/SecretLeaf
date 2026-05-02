@@ -10,7 +10,7 @@
 // ─ Timeline grouped by calendar date, newest-first
 // ────────────────────────────────────────────────────────────────────────────
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useParams, useSearchParams } from 'next/navigation';
 import type { Route } from 'next';
@@ -27,6 +27,9 @@ import type {
   LogEntry,
   TrainingMethod,
 } from '@/lib/grow/types';
+import { getInsightsForLogType } from '@/lib/grow/insights';
+import type { GrowInsight } from '@/lib/grow/insights';
+import { Analytics } from '@/lib/analytics';
 
 // ────────────────────────────────────────────────────────────────────────────
 // Types
@@ -110,9 +113,20 @@ function entrySummary(entry: LogEntry): string {
 
 const STREAK_MILESTONES = new Set([3, 7, 14, 21, 30]);
 
+function streakNarrative(streak: number): string {
+  if (streak >= 30) return '30 Tage Ertrag geschützt — kein Tag verloren.';
+  if (streak >= 21) return `${streak} Tage ohne Ertragsverlust.`;
+  if (streak >= 14) return `${streak} Tage — dein Grow verliert keinen Ertrag mehr.`;
+  if (streak >= 7)  return `${streak} Tage Ertrag geschützt.`;
+  if (streak >= 3)  return 'Ertrag wird täglich geschützt.';
+  if (streak >= 1)  return 'Tag 1 — schütze deinen Ertrag täglich.';
+  return '';
+}
+
 /** Streak pill — shown prominently at the top. */
 function StreakBadge({ streak, pulse }: { streak: number; pulse: boolean }) {
-  const isMilestone = pulse && STREAK_MILESTONES.has(streak);
+  const isMilestone = STREAK_MILESTONES.has(streak);
+  const narrative = streakNarrative(streak);
 
   if (streak === 0) {
     return (
@@ -124,46 +138,64 @@ function StreakBadge({ streak, pulse }: { streak: number; pulse: boolean }) {
   }
 
   return (
-    <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-bold transition-all duration-300 ${
-      isMilestone
+    <div className={`inline-flex flex-col items-end rounded-2xl border px-3 py-1.5 text-right transition-all duration-300 ${
+      isMilestone && pulse
         ? 'scale-110 border-amber-400 bg-amber-500 text-white shadow-lg shadow-amber-900/25'
         : pulse
         ? 'scale-110 border-emerald-400 bg-emerald-500 text-white shadow-md shadow-emerald-900/20'
         : 'border-emerald-200 bg-emerald-50 text-emerald-700'
     }`}>
-      <span className="text-base">{isMilestone ? '🏆' : '🔥'}</span>
-      <span>
-        {streak} {streak === 1 ? 'Tag' : 'Tage'} in Folge
-        {isMilestone ? ` — ${streak}-Tage-Meilenstein!` : pulse ? ' ↑' : ''}
+      <span className="text-sm font-black leading-tight">
+        {isMilestone && pulse ? '🏆' : '🔥'} {streak} {streak === 1 ? 'Tag' : 'Tage'} Ertrag geschützt
       </span>
+      {narrative && (
+        <span className={`text-[10px] font-bold leading-tight ${
+          (isMilestone && pulse) || pulse ? 'text-white/80' : 'text-emerald-500'
+        }`}>
+          {narrative}
+        </span>
+      )}
     </div>
   );
 }
 
+// ── Reward messages per log type ─────────────────────────────────────────────
+const LOG_SAVE_REWARD: Record<LogEntryType, { headline: string; sub: string; yieldLine: string }> = {
+  wasser:      { headline: 'Du hast Trockenstress vermieden ✓',              sub: '+2–4g Ertrag geschützt.',                         yieldLine: 'Dein Grow bleibt im Wachstumsrhythmus.' },
+  duenger:     { headline: 'Gut reagiert — Nährstoffmangel vermieden ✓',    sub: '+3–6g Ertrag stabilisiert.',                      yieldLine: 'Dein Grow ist jetzt ausgeglichen.' },
+  training:    { headline: 'Guter Schritt — mehr Lichtfläche geschaffen ✓',  sub: '+5–10g mehr Ertrag ermöglicht.',              yieldLine: 'Dein Grow hat jetzt mehr Licht.' },
+  notiz:       { headline: 'Du hast deinen Grow dokumentiert ✓',            sub: 'Bessere Grundlage für die nächste Entscheidung.',  yieldLine: 'Jede Notiz macht deinen Grow kalkulierbarer.' },
+  tool_result: { headline: 'Du hast ein Problem früh erkannt ✓',            sub: 'Ertragsverlust gestoppt.',                         yieldLine: 'Dein Grow ist jetzt besser kontrolliert.' },
+};
+
 /** Inline success banner — slides in below QuickAdd, auto-dismisses. */
 function SavedBanner({ type, visible, completedTask }: { type: LogEntryType | null; visible: boolean; completedTask?: string | null }) {
+  const reward = type ? LOG_SAVE_REWARD[type] : null;
   return (
     <div
       role="status"
       aria-live="polite"
       className={`overflow-hidden transition-all duration-300 ease-out ${
-        visible ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'
+        visible ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
       }`}
     >
-      {type && (
-        <div className="flex items-center gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
-          <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-emerald-600 text-sm text-white">
-            \u2713
-          </span>
-          <div className="flex-1">
-            <p className="text-sm font-bold text-emerald-800">
-              {LOG_ENTRY_TYPE_ICONS[type]} {LOG_ENTRY_TYPE_LABELS[type]} gespeichert \u2713
-            </p>
-            {completedTask ? (
-              <p className="text-xs text-emerald-600">\u2705 Task erledigt: <span className="font-semibold">{completedTask}</span></p>
-            ) : (
-              <p className="text-xs text-emerald-600">Gut gemacht — weiter so!</p>
-            )}
+      {type && reward && (
+        <div className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 py-3 shadow-sm">
+          <div className="flex items-start gap-3">
+            <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-emerald-600 text-base text-white shadow-sm">
+              ✓
+            </span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-black text-emerald-900">{reward.headline}</p>
+              <p className="text-xs text-emerald-700 mt-0.5">{reward.sub}</p>
+              {completedTask ? (
+                <p className="mt-1.5 text-xs font-bold text-emerald-800 bg-emerald-100 rounded-lg px-2 py-1 inline-block">
+                  ⚡ Kritisches Problem behoben: <span className="font-black">{completedTask}</span>
+                </p>
+              ) : (
+                <p className="mt-1.5 text-[11px] font-bold text-emerald-600">↑ {reward.yieldLine}</p>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -172,18 +204,104 @@ function SavedBanner({ type, visible, completedTask }: { type: LogEntryType | nu
 }
 
 /** Daily completion banner — shown when today is logged and no critical plants. */
-function DailyCompletionBanner({ visible }: { visible: boolean }) {
+function DailyCompletionBanner({ visible, streak }: { visible: boolean; streak: number }) {
+  const msg =
+    streak >= 14 ? 'Du verhinderst täglich, was andere Grower erst zu spät bemerken.' :
+    streak >= 7  ? 'Konsequenz zahlt sich direkt in der Ernte aus.' :
+    streak >= 3  ? 'Jeden Tag eintragen ist der wichtigste Faktor für bessere Ernten.' :
+                   'Morgen siehst du, ob heute etwas gewirkt hat.';
   return (
     <div
       className={`overflow-hidden transition-all duration-500 ease-out ${
-        visible ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'
+        visible ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
       }`}
     >
       <div className="flex items-center gap-3 rounded-2xl border border-emerald-300 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 py-3">
         <span className="text-xl leading-none">✅</span>
         <div>
-          <p className="text-sm font-bold text-emerald-800">Alles erledigt für heute</p>
-          <p className="text-xs text-emerald-600">Dein Grow ist versorgt — bis morgen!</p>
+          <p className="text-sm font-black text-emerald-900">Du hast verhindert, dass dein Grow Ertrag verliert ✓</p>
+          <p className="text-xs text-emerald-700">{msg}</p>
+          <p className="text-[11px] font-bold text-emerald-600 mt-1">→ Morgen entscheidet sich, ob dein Grow stabil bleibt</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const LOG_ACTION_LABEL: Record<string, string> = {
+  wasser:   '💧 Jetzt gießen',
+  duenger:  '🧪 Düngung loggen',
+  notiz:    '📝 Notiz eintragen',
+  training: '✂️ Training loggen',
+};
+
+/** Subtle action card — appears after a log entry, dismisses after 8s. */
+function LogInsightCard({
+  insight,
+  growId,
+  visible,
+  onAct,
+}: {
+  insight: GrowInsight | null;
+  growId: string;
+  visible: boolean;
+  onAct: () => void;
+}) {
+  const [showFeedback, setShowFeedback] = useState(false);
+
+  const handleAct = () => {
+    setShowFeedback(true);
+    setTimeout(onAct, 1600);
+  };
+
+  if (!insight) return null;
+  const { article, action, priority } = insight;
+
+  const actionHref =
+    action.type === 'log' ? `/grow/${growId}/log?type=${action.logType}` : action.href;
+  const actionLabel =
+    action.type === 'log'
+      ? (LOG_ACTION_LABEL[action.logType] ?? 'Jetzt handeln')
+      : '🔧 Tool öffnen';
+
+  return (
+    <div
+      className={`overflow-hidden transition-all duration-500 ease-out ${
+        visible ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
+      }`}
+    >
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-card px-4 py-3">
+        <div className="flex items-start gap-3">
+          <span className="mt-0.5 text-base leading-none">💡</span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[12px] font-medium leading-snug text-foreground">
+              {article.growValue}
+            </p>
+            <div className="mt-2 flex items-center gap-2">
+              <Link
+                href={actionHref as Route}
+                onClick={handleAct}
+                className={`rounded-lg px-3 py-1 text-[11px] font-bold text-white transition active:scale-[0.97] ${
+                  priority === 'high' ? 'bg-rose-600 hover:bg-rose-700' : 'bg-emerald-600 hover:bg-emerald-700'
+                }`}
+              >
+                {actionLabel}
+              </Link>
+              <Link
+                href={`/wiki/${article.slug}` as Route}
+                className="text-[11px] font-semibold text-muted-fg hover:underline"
+              >
+                Details →
+              </Link>
+            </div>
+          </div>
+        </div>
+        {/* Feedback overlay */}
+        <div className={`absolute inset-0 flex flex-col items-center justify-center gap-1 bg-emerald-500 transition-all duration-300 ${
+          showFeedback ? 'opacity-100' : 'pointer-events-none opacity-0'
+        }`}>
+          <p className="text-sm font-black text-white">Du hast ein kritisches Problem behoben ✓</p>
+          <p className="text-[11px] font-bold text-emerald-100">Du hast Ertragsverlust gestoppt.</p>
         </div>
       </div>
     </div>
@@ -630,9 +748,11 @@ export default function GrowLogPage(_props: Props) {
   const [newestId, setNewestId] = useState<string | null>(null);
   const [streakPulse, setStreakPulse] = useState(false);
   const [showCompletion, setShowCompletion] = useState(false);
+  const [logInsightType, setLogInsightType] = useState<LogEntryType | null>(null);
   const bannerTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pulseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const completionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const insightTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Derive: has the user logged today and there are no critical plants?
   const hasTodayEntry = entries.some((e) => {
@@ -674,6 +794,20 @@ export default function GrowLogPage(_props: Props) {
     return () => { clearTimeout(t); if (completionTimer.current) clearTimeout(completionTimer.current); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasTodayEntry, noCriticalPlants]);
+
+  // Dismiss log insight after 8s
+  useEffect(() => {
+    if (!logInsightType) return;
+    if (insightTimer.current) clearTimeout(insightTimer.current);
+    insightTimer.current = setTimeout(() => setLogInsightType(null), 8000);
+    return () => { if (insightTimer.current) clearTimeout(insightTimer.current); };
+  }, [logInsightType]);
+
+  // Resolve insight article for the last logged type
+  const insightData = useMemo(
+    () => (logInsightType ? (getInsightsForLogType(logInsightType, 1)[0] ?? null) : null),
+    [logInsightType],
+  );
 
   /** Builds an ISO date string from the _date / _time fields. */
   const buildDate = (fields: Record<string, string>): string => {
@@ -730,8 +864,10 @@ export default function GrowLogPage(_props: Props) {
       } else {
         // Create new entry
         const result = addEntry({ date, ...(notes !== undefined && { notes }), data, ...(selectedPlantId ? { plantId: selectedPlantId } : {}) });
+        Analytics.logEntryAdded(type);
         setActiveType(null);
         setSavedType(type);
+        setLogInsightType(type);
         setStreakPulse(true);
         if (result?.completedTaskId) {
           // Find task title for feedback
@@ -830,7 +966,14 @@ export default function GrowLogPage(_props: Props) {
         {/* ── Save feedback banner ─────────────────────────────────────────── */}
         <SavedBanner type={savedType} visible={savedType !== null} completedTask={completedTask} />
         {/* ── Daily completion ──────────────────────────────────────────────── */}
-        <DailyCompletionBanner visible={showCompletion} />
+        <DailyCompletionBanner visible={showCompletion} streak={currentStreak} />
+        {/* ── Log insight (context-aware knowledge tip) ────────────────────── */}
+        <LogInsightCard
+          insight={insightData}
+          growId={id}
+          visible={logInsightType !== null && activeType === null}
+          onAct={() => setLogInsightType(null)}
+        />
         {/* ── Plant Filter ─────────────────────────────────────────────── */}
         <div className="flex gap-2 overflow-x-auto pb-1">
           <button

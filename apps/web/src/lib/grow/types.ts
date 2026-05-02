@@ -112,6 +112,19 @@ export type GrowPlan = {
   generatedAt: string; // ISO string
 };
 
+// ── Harvest Data ──────────────────────────────────────────────────────────────
+
+export type HarvestData = {
+  /** Total yield in grams (dry weight). */
+  grams: number;
+  /** User rating 1–5. */
+  rating: number;
+  /** Optional free-text note. */
+  notes?: string;
+  /** ISO string — when harvest data was recorded. */
+  recordedAt: string;
+};
+
 // ── Grow Status ───────────────────────────────────────────────────────────────
 
 export type GrowStatus = "aktiv" | "abgeschlossen" | "pausiert" | "abgebrochen";
@@ -159,6 +172,8 @@ export type Grow = {
   status: GrowStatus;
   plan: GrowPlan;
   notes?: string;
+  /** Harvest data — recorded when grow is completed. */
+  harvest?: HarvestData;
   createdAt: string; // ISO string
   updatedAt: string; // ISO string
 };

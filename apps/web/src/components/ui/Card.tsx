@@ -33,13 +33,13 @@ const PADDING: Record<CardPadding, string> = {
 };
 
 const VARIANTS: Record<CardVariant, string> = {
-  default: "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm",
-  flat: "border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900",
-  inset: "border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-900/60 shadow-inner",
+  default: "border border-border bg-card shadow-sm",
+  flat: "border border-border bg-background",
+  inset: "border border-border bg-background shadow-inner",
 };
 
 const INTERACTIVE =
-  "cursor-pointer transition-all duration-150 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-md";
+  "cursor-pointer transition-all duration-150 hover:border-emerald-400 hover:shadow-md";
 
 // ── Component ─────────────────────────────────────────────────────────────────
 

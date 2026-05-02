@@ -3,20 +3,12 @@
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
-import {
-  loginWithSupabase,
-  registerWithSupabase,
-  saveSession,
-  getSession,
-} from '@/lib/auth';
-import { DEMO_SESSION, DEMO_SESSION_PROVIDER } from '@/lib/demoData';
+import { loginWithSupabase, registerWithSupabase, saveSession, getSession } from '@/lib/auth';
 import AuthInput from '@/components/auth/AuthInput';
 import PasswordField from '@/components/auth/PasswordField';
 import PasswordStrength, { MIN_PASSWORD_LENGTH } from '@/components/auth/PasswordStrength';
 import AuthBenefits from '@/components/auth/AuthBenefits';
-import AuthDivider from '@/components/auth/AuthDivider';
 
-const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
 /** Path users are redirected to after password reset email is sent */
 const RESET_REDIRECT_PATH = '/auth/reset';
 
@@ -146,11 +138,6 @@ function AuthPageInner() {
     return null;
   };
 
-  const demoLogin = (asProvider = false) => {
-    saveSession(asProvider ? DEMO_SESSION_PROVIDER : DEMO_SESSION);
-    router.push('/dashboard');
-  };
-
   const submitForgot = async (e: React.FormEvent) => {
     e.preventDefault();
     const ee = validateEmail(email);
@@ -209,10 +196,10 @@ function AuthPageInner() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f8fafb] flex items-stretch">
+    <main className="min-h-screen bg-background flex items-stretch">
 
       {/* LEFT: Premium hero (desktop only) */}
-      <div className="hidden lg:flex w-[44%] flex-shrink-0 flex-col justify-between bg-[#071510] px-12 py-14 relative overflow-hidden">
+      <div className="hidden lg:flex w-[44%] flex-shrink-0 flex-col justify-between bg-brand-hero px-12 py-14 relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-1/2 -translate-x-1/2 top-0 h-[500px] w-[700px] rounded-full bg-emerald-600/10 blur-[120px]" />
           <div className="absolute left-0 bottom-1/3 h-[300px] w-[400px] rounded-full bg-teal-700/8 blur-[80px]" />
@@ -409,25 +396,6 @@ function AuthPageInner() {
                   )}
                 </button>
               </form>
-
-              {DEMO_MODE && (
-                <div className="mt-4 space-y-3">
-                  <AuthDivider label="Demo" />
-                  <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
-                    <p className="mb-3 text-center text-[11px] font-bold uppercase tracking-wider text-amber-700">Demo-Modus aktiv</p>
-                    <div className="flex gap-2">
-                      <button type="button" onClick={() => demoLogin(false)}
-                        className="flex-1 rounded-lg bg-amber-500 px-3 py-2 text-xs font-bold text-white hover:bg-amber-600 transition-colors">
-                        Als Consumer
-                      </button>
-                      <button type="button" onClick={() => demoLogin(true)}
-                        className="flex-1 rounded-lg bg-amber-500 px-3 py-2 text-xs font-bold text-white hover:bg-amber-600 transition-colors">
-                        Als Provider
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {mode === 'register' && (
                 <div className="lg:hidden mt-8 rounded-2xl border border-emerald-100 bg-emerald-50/60 px-5 py-4">

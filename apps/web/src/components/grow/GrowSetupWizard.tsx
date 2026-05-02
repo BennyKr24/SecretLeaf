@@ -13,6 +13,7 @@
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useGrowState } from '@/hooks/useGrowState';
+import { Analytics } from '@/lib/analytics';
 import type {
   GrowUmgebung,
   GrowMedium,
@@ -502,6 +503,7 @@ export default function GrowSetupWizard() {
         currentPhaseId: 'keimung',
         status: 'aktiv',
       });
+      Analytics.growCreated(data.umgebung, data.medium);
       router.push(`/grow/${grow.id}`);
     } catch {
       setSubmitting(false);

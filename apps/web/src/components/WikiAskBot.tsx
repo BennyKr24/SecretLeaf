@@ -275,7 +275,7 @@ export default function WikiAskBot() {
         className={`
           fixed bottom-6 right-6 z-50 flex items-center gap-2
           rounded-full px-4 py-3 shadow-xl transition-all duration-300
-          bg-[#1f7a4f] text-white hover:bg-[#17613f] hover:shadow-2xl
+          bg-primary text-white hover:bg-primary-dark hover:shadow-2xl
           hover:scale-105 active:scale-95
           ${open ? 'opacity-0 pointer-events-none' : 'opacity-100'}
         `}
@@ -301,12 +301,12 @@ export default function WikiAskBot() {
 
           {/* Panel */}
           <div className="relative flex flex-col w-full max-w-md h-[85vh] max-h-[640px]
-            rounded-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden
+            rounded-2xl bg-card shadow-2xl border border-border overflow-hidden
             animate-in slide-in-from-bottom-8 duration-300 ease-out">
 
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4
-              bg-gradient-to-r from-[#123024] to-[#1f7a4f] text-white flex-shrink-0">
+              bg-gradient-to-r from-primary-deep to-primary text-white flex-shrink-0">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-base">
                   🤖
@@ -333,10 +333,10 @@ export default function WikiAskBot() {
             </div>
 
             {/* Message Area */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-slate-50/50">
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-background/50">
               {messages.length === 0 ? (
                 <div className="space-y-4">
-                  <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-sm">
+                  <div className="rounded-xl bg-card border border-border p-4 shadow-sm">
                     <p className="text-sm text-slate-600">
                       Hallo! Ich bin der <strong className="text-slate-900">Wiki-Bot</strong>.
                       Frag mich alles rund um Cannabis – ich durchsuche
@@ -357,8 +357,8 @@ export default function WikiAskBot() {
                         <button
                           key={s.q}
                           onClick={() => void ask(s.q)}
-                          className="text-left rounded-xl border border-slate-200 bg-white px-3 py-2.5
-                            text-xs text-slate-700 hover:border-emerald-300 hover:bg-emerald-50
+                          className="text-left rounded-xl border border-border bg-card px-3 py-2.5
+                            text-xs text-foreground hover:border-emerald-300 hover:bg-emerald-50
                             hover:text-emerald-800 transition-all shadow-sm"
                         >
                           {s.label}
@@ -374,7 +374,7 @@ export default function WikiAskBot() {
                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     {msg.role === 'bot' && (
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#1f7a4f] to-emerald-400
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-emerald-400
                         flex-shrink-0 flex items-center justify-center text-xs text-white mr-2 mt-1">
                         🌿
                       </div>
@@ -395,13 +395,13 @@ export default function WikiAskBot() {
                           <span className="text-xs text-slate-400">Durchsuche Wiki…</span>
                         </div>
                       ) : msg.role === 'user' ? (
-                        <div className="rounded-2xl rounded-tr-sm bg-[#1f7a4f] px-4 py-2.5
+                        <div className="rounded-2xl rounded-tr-sm bg-primary px-4 py-2.5
                           text-sm text-white shadow-sm">
                           {msg.text}
                         </div>
                       ) : (
                         <div className="space-y-2">
-                          <div className="rounded-2xl rounded-tl-sm bg-white border border-slate-200
+                        <div className="rounded-2xl rounded-tl-sm bg-card border border-border
                             shadow-sm px-4 py-3">
                             <RenderAnswer text={msg.text} />
                           </div>
@@ -436,7 +436,7 @@ export default function WikiAskBot() {
             </div>
 
             {/* Input */}
-            <div className="flex-shrink-0 border-t border-slate-200 bg-white px-4 py-3">
+            <div className="flex-shrink-0 border-t border-border bg-card px-4 py-3">
               <form onSubmit={handleSubmit} className="flex items-center gap-2">
                 <input
                   ref={inputRef}
@@ -445,16 +445,16 @@ export default function WikiAskBot() {
                   onKeyDown={handleKey}
                   placeholder="Frag das Wiki…"
                   disabled={loading}
-                  className="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5
-                    text-sm text-slate-900 placeholder:text-slate-400 outline-none
+                  className="flex-1 rounded-xl border border-border bg-background px-4 py-2.5
+                    text-sm text-foreground placeholder:text-slate-400 outline-none
                     focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all
                     disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || loading}
-                  className="w-10 h-10 rounded-xl bg-[#1f7a4f] text-white flex items-center
-                    justify-center hover:bg-[#17613f] disabled:opacity-40 disabled:cursor-not-allowed
+                  className="w-10 h-10 rounded-xl bg-primary text-white flex items-center
+                    justify-center hover:bg-primary-dark disabled:opacity-40 disabled:cursor-not-allowed
                     transition-all active:scale-95"
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

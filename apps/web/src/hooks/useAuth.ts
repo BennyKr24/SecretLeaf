@@ -13,6 +13,8 @@ import { useCallback, useEffect, useState } from "react";
 import { getSession, clearSession } from "@/lib/auth";
 import { logoutFromSupabase } from "@/lib/auth";
 import type { SessionUser, UserPlan } from "@/lib/types";
+import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
+import { needsMigration, runMigration } from "@/lib/grow/migration";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -109,6 +111,19 @@ export function useAuth(): AuthState {
       window.removeEventListener("secretleaf:profileUpdated", handleProfileUpdate);
     };
   }, [hydrate]);
+
+  // Trigger one-time localStorage → Supabase migration when user logs in
+  useEffect(() => {
+    const session = getSession();
+    if (!session) return;
+    const userId = session.user.id;
+    if (!needsMigration(userId)) return;
+    const supabase = getSupabaseBrowserClient();
+    // fire-and-forget — must not block rendering or auth state
+    void runMigration(userId, supabase);
+  // Re-check whenever the session changes (login event)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   const logout = useCallback(async () => {
     try {

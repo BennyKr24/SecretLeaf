@@ -160,6 +160,62 @@ Everything else is secondary.
 
 ---
 
+# 🎨 DESIGN TOKEN SYSTEM (ENFORCED)
+
+The canonical token system lives in `apps/web/src/app/globals.css`.
+
+**NEVER use:**
+- `bg-white` / `text-black` / `text-gray-*` / `bg-slate-*` in structural containers
+- `dark:` modifier classes — tokens handle dark mode automatically
+
+**ALWAYS use Tailwind semantic aliases:**
+| Intent | Class |
+|---|---|
+| Page background | `bg-background` |
+| Card / surface | `bg-card` |
+| Primary text | `text-foreground` |
+| Secondary / muted text | `text-muted-fg` |
+| Borders | `border-border` |
+| Dividers | `divide-border` |
+
+Accent colors (badge fills, CTA buttons, hover states) may still use raw Tailwind classes.
+
+---
+
+# 🌐 i18n ENFORCEMENT (ENFORCED)
+
+ESLint rules are configured in `apps/web/.eslintrc.json` to flag hardcoded strings.
+
+- Every user-visible string MUST use `t('key')` from `next-intl`
+- Server components → `getTranslations()` from `next-intl/server`
+- Client components → `useTranslations()` hook
+- Add keys to BOTH `messages/de.json` AND `messages/en.json` simultaneously
+- Never import translation files directly from `messages/`
+
+---
+
+# 📊 STUDIES SYSTEM RULES (ENFORCED)
+
+Every `TerpiraArticle` supports the full quality schema:
+
+```ts
+{ title, tags, growValue?: string, qualityScore?: number }
+```
+
+- Use `isHighQuality(study)` from `@/lib/studies` to check `qualityScore >= 4`
+- The UI hides articles with `qualityScore < 2` (defined but too low)
+- Default sort in StudiesListView includes a "Nach Qualität" option (DESC)
+- **DO NOT clean or remove data** without explicit review clearance
+
+---
+
+# 🧱 CARD SYSTEM RULES
+
+Always use `<Card>` from `@/components/ui/Card` for content surfaces.
+Card variants map to tokens automatically. Never recreate card styles inline.
+
+---
+
 # 🚨 IMPORTANT
 
 SecretLeaf is NOT a website.

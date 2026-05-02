@@ -1,3 +1,11 @@
+export type GrowCategory =
+  | "lighting"
+  | "nutrients"
+  | "watering"
+  | "climate"
+  | "stress"
+  | "yield";
+
 export type TerpiraCategory =
   | "anbau"
   | "genetik"
@@ -92,4 +100,5 @@ export type TerpiraArticle = {
   relatedSlugs: string[];
   growValue?: string;
   qualityScore?: number;
+  growCategory?: GrowCategory;
 };

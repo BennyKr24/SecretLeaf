@@ -54,7 +54,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
     <main className="min-h-screen">
 
       {/* ── Hero ──────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-b border-slate-200 bg-[#0b1f13]">
+      <section className="relative overflow-hidden border-b border-slate-200 bg-brand-hero">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-0 top-0 h-full w-1/3 bg-emerald-600/5 blur-[60px]" />
         </div>

@@ -1,0 +1,27 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "JSXText[value=/[A-Za-z\\u00C0-\\u024F\\u00e4\\u00f6\\u00fc\\u00c4\\u00d6\\u00dc\\u00df]{3,}/]",
+        "message": "i18n: Hardcoded JSX text detected. Use t('key') from next-intl instead of literal strings."
+      },
+      {
+        "selector": "JSXAttribute[name.name=/^(placeholder|title|alt)$/] > Literal[value!=''][value!=' '][value!='submit'][value!='text'][value!='button'][value!='checkbox'][value!='radio'][value!='password'][value!='email'][value!='number']",
+        "message": "i18n: Hardcoded attribute value detected. Use t('key') from next-intl instead of a literal string."
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["**/messages/*"],
+            "message": "Import translations via next-intl (useTranslations / getTranslations), not directly from messages/."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -6,10 +6,15 @@
 // Reactive state layer for the Grow system.
 // Wraps lib/grow/store (CRUD) + lib/grow/planGenerator (business logic).
 // Components never touch the store or storage directly.
+//
+// Supabase path (Step 4):
+//   - Logged-in users: optimistic UI → Supabase write → localStorage cache sync
+//   - Anonymous users: unchanged localStorage path
 // ────────────────────────────────────────────────────────────────────────────
 
 import { useCallback, useEffect, useState } from "react";
 import type { Grow, CreateGrowInput, GrowPhaseId } from "@/lib/grow/types";
+import type { GrowUmgebung, GrowMedium, LichtTyp, Erfahrung, GrowStatus } from "@/lib/grow/types";
 import {
   getGrows,
   getActiveGrow,
@@ -23,6 +28,42 @@ import {
 } from "@/lib/grow/store";
 import { generateGrowPlan } from "@/lib/grow/planGenerator";
 import { computeCurrentDay } from "@/lib/grow/utils";
+import { useAuth } from "@/hooks/useAuth";
+import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
+import {
+  createGrow as dbCreateGrow,
+  updateGrow as dbUpdateGrow,
+  deleteGrow as dbDeleteGrow,
+  getGrows as dbGetGrows,
+  type GrowRow,
+} from "@/lib/grow/db";
+import { storage, STORAGE_KEYS } from "@/lib/store";
+
+// ── Supabase row → Grow mapper ────────────────────────────────────────────────
+
+function rowToGrow(row: GrowRow): Grow {
+  return {
+    id: row.id,
+    name: row.name,
+    umgebung: row.umgebung as GrowUmgebung,
+    medium: row.medium as GrowMedium,
+    lichtTyp: row.licht_typ as LichtTyp,
+    ...(row.licht_leistung !== null && { lichtLeistung: row.licht_leistung }),
+    erfahrung: row.erfahrung as Erfahrung,
+    pflanzenAnzahl: row.pflanzen_anzahl,
+    plants: [],                 // plants fetched in a later step
+    ...(row.flaeche !== null && { flaeche: row.flaeche }),
+    startDate: row.start_date,
+    currentPhaseId: row.current_phase_id as GrowPhaseId,
+    currentDay: computeCurrentDay(row.start_date),
+    status: row.status as GrowStatus,
+    plan: row.plan,
+    ...(row.notes !== null && { notes: row.notes }),
+    ...(row.harvest != null && { harvest: row.harvest }),
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -40,7 +81,7 @@ export type UseGrowStateReturn = {
   activeGrow: Grow | null;
   /** Convenience shorthand for `activeGrow?.id`. */
   activeGrowId: string | null;
-  /** True once the initial localStorage read has completed (SSR-safe). */
+  /** True once the initial load has completed (SSR-safe). */
   loaded: boolean;
 
   /**
@@ -74,11 +115,12 @@ export type UseGrowStateReturn = {
 };
 
 export function useGrowState(): UseGrowStateReturn {
+  const { user } = useAuth();
   const [grows, setGrows] = useState<Grow[]>([]);
   const [activeGrow, setActiveGrow] = useState<Grow | null>(null);
   const [loaded, setLoaded] = useState(false);
 
-  // ── Read from storage ───────────────────────────────────────────────────────
+  // ── Local-state refresh (localStorage path) ─────────────────────────────────
   const refresh = useCallback(() => {
     const allGrows = getGrows().map(withLiveDay);
     setGrows(allGrows);
@@ -87,41 +129,157 @@ export function useGrowState(): UseGrowStateReturn {
     setActiveGrow(active !== null ? withLiveDay(active) : null);
   }, []);
 
+  // ── Initial load ────────────────────────────────────────────────────────────
+  //
+  // Logged-in users → fetch from Supabase, fall back to localStorage on error.
+  // Anonymous users → localStorage only (unchanged behavior).
+  //
   useEffect(() => {
-    refresh();
-    setLoaded(true);
-  }, [refresh]);
+    if (!user) {
+      // Anonymous: use localStorage as before
+      refresh();
+      setLoaded(true);
+      return;
+    }
+
+    // Logged-in: load from Supabase
+    const supabase = getSupabaseBrowserClient();
+    dbGetGrows(supabase)
+      .then((rows) => {
+        setGrows(rows.map(rowToGrow));
+        setLoaded(true);
+      })
+      .catch((err) => {
+        console.error("[grows] Supabase load failed, falling back to localStorage:", err);
+        refresh();
+        setLoaded(true);
+      });
+  // Re-run when user logs in or out
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   // ── Write actions ───────────────────────────────────────────────────────────
+  //
+  // Pattern for logged-in users:
+  //   1. Optimistic: update local React state immediately
+  //   2. Supabase write (awaited inside async IIFE)
+  //   3. On success: sync localStorage as cache
+  //   4. On error: rollback React state, console.error
+  //
+  // Anonymous users fall through to the plain localStorage path.
+
   const createGrow = useCallback(
     (input: CreateGrowInput): Grow => {
       const plan = generateGrowPlan(input);
+      // Build the grow object via store (generates id, timestamps, plants)
       const grow = storeCreateGrow(input, plan);
-      refresh();
+      const growWithDay = withLiveDay(grow);
+
+      if (!user) {
+        // Anonymous: localStorage only (unchanged behaviour)
+        refresh();
+        return grow;
+      }
+
+      // Optimistic: add to React state immediately
+      setGrows((prev) => [growWithDay, ...prev]);
+
+      const supabase = getSupabaseBrowserClient();
+      void (async () => {
+        try {
+          await dbCreateGrow(supabase, user.id, grow);
+          // Success: sync localStorage cache from current state
+          setGrows((current) => {
+            storage.set(STORAGE_KEYS.GROWS, current.map((g) =>
+              g.id === grow.id ? grow : g
+            ));
+            return current;
+          });
+        } catch (err) {
+          console.error("[grows] createGrow Supabase failed, rolling back:", err);
+          // Rollback: remove optimistic entry from state only
+          setGrows((prev) => prev.filter((g) => g.id !== grow.id));
+        }
+      })();
+
       return grow;
     },
-    [refresh]
+    [user, refresh]
   );
 
   const updateGrow = useCallback(
     (id: string, updates: Partial<Omit<Grow, "id" | "createdAt">>): Grow | null => {
-      const result = storeUpdateGrow(id, updates);
-      refresh();
-      return result;
+      if (!user) {
+        // Anonymous: localStorage only
+        const result = storeUpdateGrow(id, updates);
+        refresh();
+        return result;
+      }
+
+      // Optimistic: find previous state for rollback
+      const prev = grows.find((g) => g.id === id) ?? null;
+      const updated = prev ? withLiveDay({ ...prev, ...updates, updatedAt: new Date().toISOString() }) : null;
+      if (updated) {
+        setGrows((all) => all.map((g) => (g.id === id ? updated : g)));
+      }
+
+      const supabase = getSupabaseBrowserClient();
+      void (async () => {
+        try {
+          await dbUpdateGrow(supabase, id, updates);
+          // Success: sync localStorage cache from current state
+          setGrows((current) => {
+            storage.set(STORAGE_KEYS.GROWS, current.map((g) =>
+              // strip runtime-only currentDay before persisting
+              g.id === id ? { ...g, currentDay: 0 } : g
+            ));
+            return current;
+          });
+        } catch (err) {
+          console.error("[grows] updateGrow Supabase failed, rolling back:", err);
+          if (prev) setGrows((all) => all.map((g) => (g.id === id ? prev : g)));
+        }
+      })();
+
+      return updated;
     },
-    [refresh]
+    [user, grows, refresh]
   );
 
   const deleteGrow = useCallback(
     (id: string): void => {
-      storeDeleteGrow(id);
-      refresh();
+      if (!user) {
+        // Anonymous: localStorage only
+        storeDeleteGrow(id);
+        refresh();
+        return;
+      }
+
+      // Optimistic: snapshot for rollback
+      const snapshot = grows.find((g) => g.id === id) ?? null;
+      setGrows((prev) => prev.filter((g) => g.id !== id));
+
+      const supabase = getSupabaseBrowserClient();
+      void (async () => {
+        try {
+          await dbDeleteGrow(supabase, id);
+          // Success: sync localStorage cache from current state
+          setGrows((current) => {
+            storage.set(STORAGE_KEYS.GROWS, current);
+            return current;
+          });
+        } catch (err) {
+          console.error("[grows] deleteGrow Supabase failed, rolling back:", err);
+          if (snapshot) setGrows((prev) => [snapshot, ...prev]);
+        }
+      })();
     },
-    [refresh]
+    [user, grows, refresh]
   );
 
   const setActiveGrowId = useCallback(
     (id: string): void => {
+      // Active-grow pointer is UI-only state — localStorage is fine for both paths
       storeSetActiveGrow(id);
       refresh();
     },
@@ -130,18 +288,81 @@ export function useGrowState(): UseGrowStateReturn {
 
   const completeTask = useCallback(
     (growId: string, taskId: string): void => {
-      storeCompleteTask(growId, taskId);
-      refresh();
+      if (!user) {
+        storeCompleteTask(growId, taskId);
+        refresh();
+        return;
+      }
+
+      const prev = grows.find((g) => g.id === growId) ?? null;
+      if (!prev) return;
+
+      const now = new Date().toISOString();
+      const updatedPlan = {
+        ...prev.plan,
+        phases: prev.plan.phases.map((p) => ({
+          ...p,
+          tasks: p.tasks.map((t) =>
+            t.id === taskId ? { ...t, completed: true, completedAt: now } : t
+          ),
+        })),
+      };
+      const optimistic = withLiveDay({ ...prev, plan: updatedPlan, updatedAt: now });
+
+      // Optimistic state update
+      setGrows((all) => all.map((g) => (g.id === growId ? optimistic : g)));
+
+      const supabase = getSupabaseBrowserClient();
+      void (async () => {
+        try {
+          await dbUpdateGrow(supabase, growId, { plan: updatedPlan });
+          // Success: sync localStorage cache from current state
+          setGrows((current) => {
+            storage.set(STORAGE_KEYS.GROWS, current);
+            return current;
+          });
+        } catch (err) {
+          console.error("[grows] completeTask Supabase failed, rolling back:", err);
+          setGrows((all) => all.map((g) => (g.id === growId ? prev : g)));
+        }
+      })();
     },
-    [refresh]
+    [user, grows, refresh]
   );
 
   const advancePhase = useCallback(
     (growId: string, phaseId: GrowPhaseId): void => {
-      storeAdvancePhase(growId, phaseId);
-      refresh();
+      if (!user) {
+        storeAdvancePhase(growId, phaseId);
+        refresh();
+        return;
+      }
+
+      const prev = grows.find((g) => g.id === growId) ?? null;
+      if (!prev) return;
+
+      const now = new Date().toISOString();
+      const optimistic = withLiveDay({ ...prev, currentPhaseId: phaseId, updatedAt: now });
+
+      // Optimistic state update
+      setGrows((all) => all.map((g) => (g.id === growId ? optimistic : g)));
+
+      const supabase = getSupabaseBrowserClient();
+      void (async () => {
+        try {
+          await dbUpdateGrow(supabase, growId, { currentPhaseId: phaseId });
+          // Success: sync localStorage cache from current state
+          setGrows((current) => {
+            storage.set(STORAGE_KEYS.GROWS, current);
+            return current;
+          });
+        } catch (err) {
+          console.error("[grows] advancePhase Supabase failed, rolling back:", err);
+          setGrows((all) => all.map((g) => (g.id === growId ? prev : g)));
+        }
+      })();
     },
-    [refresh]
+    [user, grows, refresh]
   );
 
   return {

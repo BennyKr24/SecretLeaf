@@ -1,4 +1,4 @@
-import { TerpiraArticle, TerpiraCategory, TerpiraDifficulty, TerpiraSource } from "@/lib/terpira/types";
+import { TerpiraArticle, TerpiraCategory, TerpiraDifficulty, TerpiraSource, GrowCategory } from "@/lib/terpira/types";
 import autoSourcesData from "./autoSources.json";
 
 export const categoryLabels: Record<TerpiraCategory, string> = {
@@ -462,8 +462,8 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "Systemdenken statt Einzeltricks",
         content: [
-          "Cannabis-Anbau ist ein vernetztes System. Jede Aenderung bei Licht oder Bewaesserung beeinflusst die anderen Parameter.",
-          "Ein guter Run basiert auf kontrollierbaren Prozessen, nicht auf zufaelligen Spitzenwerten."
+          "Ertrag und Qualitaet entstehen aus stabilen Prozessen — nicht aus isolierten Tricks.",
+          "Licht, Klima und Naehrstoffe greifen ineinander: eine Aenderung beeinflusst immer das Gesamtsystem."
         ],
         checklist: [
           "VPD-Zielbereich pro Wachstumsphase definieren",
@@ -472,10 +472,34 @@ const baseWikiArticles: TerpiraArticle[] = [
         ]
       },
       {
+        heading: "Warum das deinen Ertrag und deine Qualitaet direkt beeinflusst",
+        content: [
+          "Instabile Parameter erzeugen Stress. Stress kostet Ertrag und verschlechtert das Terpenprofil.",
+          "Wer Messwerte nicht dokumentiert, kann Ursachen nach einem schlechten Run nicht zurueckverfolgen."
+        ]
+      },
+      {
         heading: "Datensaubere Routinen",
         content: [
           "Notiere Futterstaerke, pH-Korrekturen und Giesstermine in einer einheitlichen Struktur.",
           "Nur so lassen sich Ursache-Wirkung-Beziehungen spaeter sicher bewerten."
+        ]
+      },
+      {
+        heading: "In SecretLeaf relevant wenn",
+        content: [
+          "du deinen ersten Run startest und kein Setup-Protokoll hast",
+          "Qualitaet oder Ertrag zwischen Runs schwankt, ohne erkennbaren Grund",
+          "du eine Variable (Licht, Duenger, Temperatur) anpassen willst und die Auswirkung verstehen moechtest"
+        ]
+      },
+      {
+        heading: "Was du konkret tun solltest",
+        content: [],
+        checklist: [
+          "Lege heute fixe Messpunkte fest: Temperatur, RH, pH, EC — taegliche zur gleichen Zeit",
+          "Schreibe jede Aenderung mit Datum ins Grow-Log, bevor du sie machst",
+          "Aendere nur eine Variable pro Woche — sonst kannst du Ursachen nicht isolieren"
         ]
       }
     ],
@@ -693,17 +717,34 @@ const baseWikiArticles: TerpiraArticle[] = [
     ],
     sections: [
       {
-        heading: "Von Aroma zu Datenmodell",
+        heading: "Was Terpene wirklich leisten",
         content: [
-          "Terpenprofile sollten als wiederholbare Datensaetze mit Charge, Datum und Methode gespeichert werden.",
-          "Nur so lassen sich Produktionsaenderungen gegen spaetere Qualitaetsabweichungen mappen."
+          "Terpene formen das Aroma deiner Ernte und beeinflussen, wie das Produkt wahrgenommen wird.",
+          "Sie ersetzen keine Laborwerte fuer Cannabinoide — aber sie erklaeren, warum zwei Chargen mit gleichen THC-Werten unterschiedlich wirken."
         ]
       },
       {
-        heading: "Kommunikation ohne Uebertreibung",
+        heading: "Warum das deine Qualitaet direkt betrifft",
         content: [
-          "Formuliere Effekte als Wahrscheinlichkeiten und nicht als garantierte Wirkungen.",
-          "Kombiniere Laborwerte mit Nutzerfeedback, aber trenne subjektive und objektive Befunde strikt."
+          "Terpene sind fluechtig: Hitze, Luft und Licht bauen sie ab — schlechte Lagerung zerstoert das Profil.",
+          "Wer Terpenverluste versteht, kann Ernte, Curing und Lagerung konkret verbessern."
+        ]
+      },
+      {
+        heading: "In SecretLeaf relevant wenn",
+        content: [
+          "du Chargen vergleichen willst und nicht weisst, warum sich Aroma unterscheidet",
+          "dein Curing oder deine Lagerung das Profil veraendern und du den Grund nicht kennst",
+          "du Laborwerte einordnen moechtest und nicht weisst, welche Terpenangabe belastbar ist"
+        ]
+      },
+      {
+        heading: "Was du konkret tun solltest",
+        content: [],
+        checklist: [
+          "Ernte bei < 22\u00b0C trocknen und lagern — jeder Grad mehr beschleunigt Terpenverlust messbar",
+          "Glasbehaelter luftdicht verschliessen — Sauerstoffkontakt ist der groesste Einzelfaktor fuer Profilveraenderung",
+          "COA-Terpenangabe nur vergleichen, wenn gleiche Methode und Probenahmezeit dokumentiert sind"
         ]
       }
     ],
@@ -1131,10 +1172,10 @@ const baseWikiArticles: TerpiraArticle[] = [
     ],
     sections: [
       {
-        heading: "COA-Basischeck",
+        heading: "Was du zuerst pruefst",
         content: [
-          "Pruefe zuerst Identitaet der Probe und Laborakkreditierung.",
-          "Ohne diese Basis ist die restliche Interpretation unsicher."
+          "Schau zuerst: Ist die Chargennummer identisch mit deiner Ware? Ist das Analysedatum aktuell?",
+          "Ohne diesen Match ist das COA wertlos — es koennte jedes andere Produkt beschreiben."
         ],
         checklist: [
           "Chargennummer identisch zur Ware",
@@ -1143,10 +1184,34 @@ const baseWikiArticles: TerpiraArticle[] = [
         ]
       },
       {
+        heading: "Warum ein COA deine Kaufentscheidung veraendert",
+        content: [
+          "Ein COA zeigt dir, was du wirklich bekommst — Potenz, Terpene, Schadstoffe.",
+          "Ohne Laborbericht ist jede Qualitaetsaussage Marketing, keine Tatsache."
+        ]
+      },
+      {
         heading: "Kontaminanten richtig einordnen",
         content: [
-          "Rueckstaende muessen gegen lokale Grenzwerte und Messunsicherheit bewertet werden.",
-          "Einzelne unkritische Werte sind anders zu lesen als systematische Auffaelligkeiten."
+          "Einzelne Spuren unter Grenzwert sind anders zu bewerten als systematische Auffaelligkeiten.",
+          "Entscheidend ist: Sind Messgrenzen (LOQ/LOD) angegeben? Fehlen sie, ist der Befund nicht vergleichbar."
+        ]
+      },
+      {
+        heading: "In SecretLeaf relevant wenn",
+        content: [
+          "du ein Produkt kaufst und pruefen willst, ob die Angaben stimmen",
+          "du Chargen vergleichst und verstehen willst, warum Qualitaet schwankt",
+          "du entscheiden moechtest, ob einem Lieferanten zu vertrauen ist"
+        ]
+      },
+      {
+        heading: "Was du konkret tun solltest",
+        content: [],
+        checklist: [
+          "Chargennummer auf COA mit der auf der Verpackung abgleichen — immer, kein Ausnahme",
+          "Pruefe: Sind Kontaminantenliste und Messmethode vollstaendig? Sonst anfragen oder Lieferant wechseln",
+          "Speichere COAs chargenbezogen in deinem Grow-Log — nur so kannst du spaeter vergleichen"
         ]
       }
     ],
@@ -1979,22 +2044,39 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     sections: [
       {
-        heading: "Von der Vorstufe zum Profil",
+        heading: "Was das fuer deinen Grow bedeutet",
         content: [
-          "Viele Cannabinoide teilen biochemische Vorstufen. Welche Stoffe spaeter dominieren, haengt von genetischen und prozessbedingten Faktoren ab.",
-          "Deshalb sind Prozentwerte immer eine Momentaufnahme und kein unveraenderliches Produktmerkmal."
+          "Das Cannabinoid-Profil deiner Pflanze ist keine feste Groesse — es veraendert sich mit Reife, Lagerung und Prozess.",
+          "Wer das versteht, kann Erntezeitpunkt und Lagerung gezielt steuern statt auf Zufallswerte zu vertrauen."
         ]
       },
       {
-        heading: "Warum das fuer die Praxis wichtig ist",
+        heading: "Warum das Qualitaet und Profil direkt beeinflusst",
         content: [
-          "Wenn Teams verstehen, wie Profile entstehen und kippen koennen, werden Erntefenster, Lagerung und COA-Interpretation deutlich belastbarer.",
-          "Gerade bei Minor Cannabinoiden hilft ein mechanistischer Blick, Marketing von echter Plausibilitaet zu trennen."
+          "Zu frueh geerntet: THC-Vorstufen dominieren, Wirkprofil ist unfertig.",
+          "Zu spaet geerntet oder schlecht gelagert: THC baut ab, CBN steigt — das Profil kippt unwiderruflich."
         ],
         checklist: [
           "Analysedaten immer mit Ernte- und Prozessdaten lesen",
-          "Vorstufen und Gesamtprofil gemeinsam betrachten",
-          "Minor-Werte nur mit Methodenhinweis vergleichen"
+          "Minor-Werte nur mit Methodenhinweis vergleichen",
+          "COA-Datum pruefen: aeltere Proben spiegeln nicht das aktuelle Profil"
+        ]
+      },
+      {
+        heading: "In SecretLeaf relevant wenn",
+        content: [
+          "du den richtigen Erntezeitpunkt bestimmen willst und Trichom-Kontrolle allein nicht reicht",
+          "Laborwerte zwischen Chargen stark schwanken und du den Grund nicht kennst",
+          "du verstehen willst, warum dein Profil sich nach Lagerung veraendert hat"
+        ]
+      },
+      {
+        heading: "Was du konkret tun solltest",
+        content: [],
+        checklist: [
+          "Erntezeitpunkt festhalten: Datum, Trichom-Bild, Reifegrad — so kannst du Laborwerte spaeter einordnen",
+          "Lagertemperatur unter 20\u00b0C halten und Licht ausschliessen — beides beschleunigt Abbau messbar",
+          "COA-Daten immer mit Charge und Lagerbedingung verknuepfen, nicht nur ablegen"
         ]
       }
     ],
@@ -2243,22 +2325,39 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     sections: [
       {
-        heading: "Warum Einzelterpene so beliebt sind",
+        heading: "Was diese Terpene dir ueber dein Produkt sagen",
         content: [
-          "Begriffe wie Myrcen oder Limonen sind greifbar und lassen sich gut kommunizieren. Genau deshalb werden sie oft ueberbetont.",
-          "Fachlich sauber bleibt die Beschreibung aber nur, wenn das gesamte Profil mitgedacht wird."
+          "Myrcen, Limonen und Caryophyllen sind die drei am haeufigsten gemessenen Terpene — sie beschreiben einen Teil des Aromas, aber nicht die Wirkung.",
+          "Ein Produkt mit viel Myrcen kann trotzdem ein anderes Profil haben als ein anderes mit gleichen Werten, weil andere Bestandteile mitspielen."
         ]
       },
       {
-        heading: "Wie du sie sinnvoll beschreibst",
+        heading: "Warum das fuer Qualitaetsbewertung wichtig ist",
         content: [
-          "Nutze Einzelterpene als Teil eines breiteren sensorischen und analytischen Bildes. Keine Einzelsubstanz liefert allein eine sichere Wirkprognose.",
-          "Besonders im Content ist es wichtig, Korrelation nicht als gesicherte Kausalitaet darzustellen."
+          "Wer nur auf das Top-Terpen schaut, bewertet ein Produkt unvollstaendig.",
+          "Qualitaet entsteht aus dem Gesamtprofil — kein einzelnes Terpen erklaert, warum eine Ernte besonders gut ist."
         ],
         checklist: [
-          "Gesamtprofil nennen, nicht nur das Top-Terpen",
-          "Wirkungsbehauptungen mit Evidenzstufe markieren",
-          "Sensorische Sprache und Laborwerte sauber trennen"
+          "Gesamtprofil lesen, nicht nur das staerkste Terpen",
+          "Sensorischen Eindruck (Geruch, Aroma) und Laborwerte getrennt notieren",
+          "Terpenvergleiche nur bei gleicher Messmethode machen"
+        ]
+      },
+      {
+        heading: "In SecretLeaf relevant wenn",
+        content: [
+          "du Chargen vergleichst und verstehen willst, warum eine Ernte aromatisch besser war",
+          "du Laborwerte liest und einordnen moechtest, ob Terpenunterschiede bedeutend sind",
+          "du dein Curing verbessern willst und wissen moechtest, welche Bedingungen das Profil sichern"
+        ]
+      },
+      {
+        heading: "Was du konkret tun solltest",
+        content: [],
+        checklist: [
+          "Notiere beim Curing-Start das Aromaprofil sensorisch — so erkennst du spaeter Verluste",
+          "Vergleiche Terpen-COAs nur, wenn Methode und Probenahme identisch sind — sonst nicht aussagekraeftig",
+          "Bewerte Qualitaet immer mit Gesamtprofil + Sensorik + COA gemeinsam, nie mit einem Wert allein"
         ]
       }
     ],
@@ -4533,17 +4632,278 @@ const thirdWaveSeeds: LiteArticleSeed[] = [
 
 const thirdWaveWikiArticles: TerpiraArticle[] = thirdWaveSeeds.map(createLiteArticle);
 
+// ─── Curated Grow Knowledge Base ──────────────────────────────────────────────
+//
+// SINGLE SOURCE OF TRUTH for:
+//   - which articles are exported (allowlist)
+//   - growValue: 1-sentence practical takeaway for growers
+//   - qualityScore: 1–5 signal strength (5 = must-know for every grow)
+//
+// RULE: Only add an article here once it has a concrete, actionable growValue.
+// DELETE aggressively – every entry must earn its place.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; growCategory: GrowCategory }> = {
+  // ── Core Grow System ──────────────────────────────────────────────────────
+  "cannabis-anbau-grundlagen": {
+    growValue: "Führ täglich ein Grow-Log mit VPD, EC und pH – drei dokumentierte Runs machen dich besser als beliebig viele undokumentierte.",
+    qualityScore: 5,
+    growCategory: "yield",
+  },
+  "vpd-einfach-erklaert": {
+    growValue: "Halte VPD in der Blüte bei 1.2–1.6 kPa – jeder Ausreißer über mehrere Stunden öffnet Schimmelfenster und kostet Ertrag.",
+    qualityScore: 5,
+    growCategory: "climate",
+  },
+  "vpd-und-ec-kombi-rechner-guide": {
+    growValue: "Stabilisiere VPD immer zuerst, dann justiere EC – niemals beide Parameter gleichzeitig ändern.",
+    qualityScore: 5,
+    growCategory: "climate",
+  },
+  "cannabis-substrat-und-wurzelzone": {
+    growValue: "Wiege den Topf nass und trocken: bei 30–40% Gewichtsverlust ist der ideale Gießzeitpunkt erreicht.",
+    qualityScore: 5,
+    growCategory: "watering",
+  },
+  "bewaesserung-ohne-uebergiessen": {
+    growValue: "Gieß erst wenn der Topf spürbar leichter ist – Sauerstoffmangel durch Staunässe schadet mehr als kurze Trockenheit.",
+    qualityScore: 5,
+    growCategory: "watering",
+  },
+  "lichtstress-und-canopy-management": {
+    growValue: "Miss PPFD an 9 Punkten im Zelt und halte die Varianz unter 20% – uniforme Beleuchtung schlägt Spitzenwerte an einzelnen Punkten.",
+    qualityScore: 5,
+    growCategory: "lighting",
+  },
+  "grow-log-und-kpi-dashboard": {
+    growValue: "Tracke tägliches Topfgewicht, Klima und Drain-EC – nach 3 Runs erkennst du Muster, die sonst unsichtbar bleiben.",
+    qualityScore: 5,
+    growCategory: "yield",
+  },
+  "sensor-kalibrierung-und-messfehler": {
+    growValue: "Kalibriere pH-Sensoren wöchentlich und EC-Sensoren alle 2 Wochen – ein falsch messender Sensor kostet mehr als ein Ersatzgerät.",
+    qualityScore: 5,
+    growCategory: "climate",
+  },
+  // ── Nutrients & Deficiencies ──────────────────────────────────────────────
+  "naehrstoffblockaden-und-antagonismen": {
+    growValue: "Prüfe pH (5.8–6.2 Coco, 6.0–6.8 Erde) bevor du neue Dünger gibst – 80% der Mangelbilder sind pH-Blockaden, keine echten Mängel.",
+    qualityScore: 5,
+    growCategory: "nutrients",
+  },
+  "naehrstoffbedarf-cannabis-lebenszyklus": {
+    growValue: "Wechsle ab Blütewoche 3 von NPK 2:1:2 auf 1:3:3 – phasengerechte Ernährung verhindert Stickstoffüberschuss in der Spätblüte.",
+    qualityScore: 4,
+    growCategory: "nutrients",
+  },
+  "substrat-vergleich-coco-erde-hydro": {
+    growValue: "Wähle Coco für Kontrolle und Wuchsgeschwindigkeit, Erde für Fehlertoleranz, Hydro nur mit etablierter System-Routine.",
+    qualityScore: 4,
+    growCategory: "watering",
+  },
+  // ── Stress & Prevention ───────────────────────────────────────────────────
+  "stressmarker-frueh-erkennen": {
+    growValue: "Hängende Blätter morgens = Hitzestress, hängende Blätter abends = Wasserverlust – beide Signale richtig lesen spart Ertragseinbußen.",
+    qualityScore: 4,
+    growCategory: "stress",
+  },
+  "integrierte-schaedlingspraevention-grow": {
+    growValue: "Stelle Klebefallen auf und mache wöchentliche Sichtkontrollen – früh erkannter Schädlingsdruck halbiert den Behandlungsaufwand.",
+    qualityScore: 4,
+    growCategory: "stress",
+  },
+  "schimmel-und-mykotoxine-bei-cannabis": {
+    growValue: "Trockne auf aw < 0.65 und halte den Trocknungsraum unter 50% RH – sichtbarer Schimmel beginnt erst ab aw > 0.75.",
+    qualityScore: 5,
+    growCategory: "yield",
+  },
+  // ── Genetics ─────────────────────────────────────────────────────────────
+  "genetik-und-phaenotyp-selektion": {
+    growValue: "Definiere Selektionsziele vor dem Pheno-Hunt schriftlich – wer erst danach priorisiert, wählt nach Bauchgefühl.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "feminisiert-vs-regular-vs-autoflower": {
+    growValue: "Feminisiert für reproduzierbare Produktions-Runs, Regular für Zucht, Autoflower für zeitlich geplante Kurzzyklen.",
+    qualityScore: 3,
+    growCategory: "yield",
+  },
+  "mutterpflanzen-und-clone-hygiene": {
+    growValue: "Desinfiziere Schneidwerkzeug zwischen jeder Pflanze und halte mindestens 3 Backup-Clones pro Linie – ein Ausfall darf keine Linie vernichten.",
+    qualityScore: 4,
+    growCategory: "stress",
+  },
+  // ── Post-Harvest & Quality ────────────────────────────────────────────────
+  "wasseraktivitaet-und-curing": {
+    growValue: "Cure 3–4 Wochen in verschlossenen Gläsern bei 62% RH und prüfe aw wöchentlich – Ziel ist aw < 0.65 für stabile Qualität.",
+    qualityScore: 5,
+    growCategory: "yield",
+  },
+  "lagerung-verpackung-und-lichtschutz": {
+    growValue: "Lagere in UV-geschützten Glasgefäßen bei 18–21°C – transparentes Plastik durchlässt UV und beschleunigt Qualitätsverlust messbar.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "lagerung-und-terpenverlust-vermeiden": {
+    growValue: "Vermeide Temperaturen über 22°C bei der Lagerung – jeder Grad darüber beschleunigt Terpenverlust und Oxidation.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "thc-zu-cbn-abbau-und-oxidation": {
+    growValue: "Lagere luftdicht, lichtdicht und unter 20°C – Sauerstoff, Wärme und Licht sind die drei Haupttreiber des THC-Abbaus zu CBN.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  // ── Chemistry & Understanding ─────────────────────────────────────────────
+  "cannabinoid-biosynthese-verstehen": {
+    growValue: "Ernte bei 25–30% amber Trichomen für relaxierendes Profil, bei klaren bis milchigen für aktivierendes – Trichom-Kontrolle schlägt Kalenderplanung.",
+    qualityScore: 3,
+    growCategory: "yield",
+  },
+  "terpene-und-wirkprofil": {
+    growValue: "Cure unter 22°C in geschlossenen Behältern – Wärme und Sauerstoff zerstören flüchtige Terpene schneller als jede andere Lagerungsvariable.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "myrcen-limonen-caryophyllen-einordnung": {
+    growValue: "Beurteile Qualität am Gesamtprofil aus Cannabinoiden + Terpenen – ein einzelnes Terpen-Label ist kein Qualitätsmerkmal.",
+    qualityScore: 3,
+    growCategory: "yield",
+  },
+  // ── Safety & Contamination ────────────────────────────────────────────────
+  "coa-richtig-lesen": {
+    growValue: "Prüfe COA auf Chargenbezug, Methode (HPLC/GC-MS) und LOQ – ohne diese Angaben ist der Laborbericht nicht vergleichbar.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "pgr-und-kontaminanten": {
+    growValue: "Kaufe nur von transparenten Lieferanten mit aktuellen chargenspezifischen COAs – PGR-belastetes Material kann nicht nachträglich repariert werden.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "pestizidklassen-und-rueckstandsrisiken": {
+    growValue: "Setze nur zugelassene Mittel ein und halte mind. 14 Tage Auswaschphase vor der Ernte – dokumentiere jeden Einsatz mit Datum und Menge.",
+    qualityScore: 4,
+    growCategory: "stress",
+  },
+  // ── Environment & Systems ─────────────────────────────────────────────────
+  "indoor-outdoor-anbau-vergleich": {
+    growValue: "Wähle Indoor für reproduzierbare Qualität und Kontrolle, Outdoor für Ertragsziel – beide Systeme brauchen konsequente Dokumentation.",
+    qualityScore: 3,
+    growCategory: "yield",
+  },
+  // ── Konsum & Formen ───────────────────────────────────────────────────────
+  "inhalation-vs-edibles": {
+    growValue: "Warte bei Edibles mindestens 2 Stunden bis zur Nachdosierung – später Eintritt führt häufig zu unbewusster Überdosierung.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "vaping-rauchen-und-verdampfen-vergleich": {
+    growValue: "Vaporizer bei 170–185°C nutzen – darunter werden Wirkstoffe nicht vollständig aktiviert, darüber entstehen Abbauprodukte.",
+    qualityScore: 3,
+    growCategory: "yield",
+  },
+  "hash-typen-vergleichen": {
+    growValue: "Kenne die Verfahrensgruppe deines Produkts (Sieb, Eiswasser, Press) – das bestimmt Qualitätsmerkmale und Lageranforderungen.",
+    qualityScore: 3,
+    growCategory: "yield",
+  },
+  "bubble-hash-qualitaetskriterien": {
+    growValue: "Bubble Hash über 90µm-Sieben enthält mehr Kopfdrüsen und weniger Pflanzenreste – Siebgröße ist das wichtigste dokumentierbare Qualitätsmerkmal.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "rosin-einordnung-ohne-hype": {
+    growValue: "Rosin-Qualität hängt von Ausgangsmaterial, Temperatur (70–90°C) und Druck ab – ohne diese Angaben sind Vergleiche zwischen Chargen wertlos.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "full-melt-und-marketingsprache": {
+    growValue: "Full-Melt ist eine Schmelzeigenschaft, kein Herstellungsverfahren – prüfe immer, ob eine Produktbeschreibung Verfahren und Qualitätsmerkmal klar trennt.",
+    qualityScore: 3,
+    growCategory: "yield",
+  },
+  // ── Tutorials ────────────────────────────────────────────────────────────
+  "how-to-grow-cannabis-anfaenger-tutorial": {
+    growValue: "Starte mit einer Pflanze, stabilem Setup und täglichem Log – drei dokumentierte Runs machen dich besser als beliebig viele undokumentierte.",
+    qualityScore: 5,
+    growCategory: "yield",
+  },
+  "how-to-grow-cannabis-fortgeschritten-tutorial": {
+    growValue: "Verwandle dein Setup vom reaktiven Einzelrun in ein datengestütztes System – Wiederholbarkeit ist wichtiger als Spitzenwerte.",
+    qualityScore: 5,
+    growCategory: "yield",
+  },
+  "how-to-grow-cannabis-profi-tutorial": {
+    growValue: "Validiere jede Prozessänderung über mindestens zwei dokumentierte Runs – echte Systeme sind reproduzierbar, keine Einmalglücke.",
+    qualityScore: 5,
+    growCategory: "yield",
+  },
+};
+
+// ─── Curated Export ───────────────────────────────────────────────────────────
+// Only articles present in GROW_KNOWLEDGE are exported.
+// They are enriched with growValue + qualityScore from the map.
+// ─────────────────────────────────────────────────────────────────────────────
+
 export const wikiArticles: TerpiraArticle[] = [
   ...baseWikiArticles,
   ...expansionWikiArticles,
-  ...thirdWaveWikiArticles
-];
+  ...thirdWaveWikiArticles,
+]
+  .filter((a) => a.slug in GROW_KNOWLEDGE)
+  .map((a) => ({ ...a, ...GROW_KNOWLEDGE[a.slug] }))
+  // Sort by qualityScore DESC as canonical default
+  .sort((a, b) => (b.qualityScore ?? 0) - (a.qualityScore ?? 0));
 
 export const getArticleBySlug = (slug: string) =>
   wikiArticles.find((article) => article.slug === slug);
 
 export const getArticlesByCategory = (category: TerpiraCategory) =>
   wikiArticles.filter((article) => article.category === category);
+
+/**
+ * Returns articles with qualityScore >= 4, sorted by score DESC.
+ * Use for tool recommendations, AI suggestions and featured sections.
+ */
+export const getHighQualityArticles = (): TerpiraArticle[] =>
+  wikiArticles.filter((a) => (a.qualityScore ?? 0) >= 4);
+
+/**
+ * Returns articles that include any of the given tags (case-insensitive).
+ * Use for context-aware tool recommendations.
+ */
+export const getArticlesByTags = (tags: string[]): TerpiraArticle[] => {
+  const lower = tags.map((t) => t.toLowerCase());
+  return wikiArticles.filter((a) =>
+    a.tags.some((t) => lower.includes(t.toLowerCase()))
+  );
+};
+
+/**
+ * Returns articles matching a grow-action category, sorted by qualityScore DESC.
+ * Use for log-based triggers and contextual recommendations.
+ */
+export const getArticlesByGrowCategory = (category: GrowCategory, limit = 3): TerpiraArticle[] =>
+  wikiArticles
+    .filter((a) => a.growCategory === category)
+    .sort((a, b) => (b.qualityScore ?? 0) - (a.qualityScore ?? 0))
+    .slice(0, limit);
+
+/**
+ * Returns the top N articles relevant to a given tool context.
+ * Prioritises qualityScore, then articles tagged with the context tags.
+ */
+export const getArticlesForTool = (
+  contextTags: string[],
+  limit = 3
+): TerpiraArticle[] => {
+  const lower = contextTags.map((t) => t.toLowerCase());
+  return wikiArticles
+    .filter((a) => a.tags.some((t) => lower.includes(t.toLowerCase())))
+    .sort((a, b) => (b.qualityScore ?? 0) - (a.qualityScore ?? 0))
+    .slice(0, limit);
+};
 
 export const getArticleSources = (article: TerpiraArticle) => {
   const sourceIds = article.sourceIds && article.sourceIds.length > 0

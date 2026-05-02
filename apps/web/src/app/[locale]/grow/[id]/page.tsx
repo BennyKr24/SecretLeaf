@@ -7,16 +7,30 @@
 // complete action), quick actions and phase timeline.
 // ────────────────────────────────────────────────────────────────────────────
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
+import { useAuth } from '@/hooks/useAuth';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
-import { PHASE_ICONS } from '@/lib/grow/phases';
-import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
-import type { GrowTask, Grow, Plant, LogEntry } from '@/lib/grow/types';
+import { PHASE_ICONS, PHASE_ORDER } from '@/lib/grow/phases';
+import { TASK_CATEGORY_ICONS, GROW_STATUS_LABELS } from '@/lib/grow/types';
+import type { GrowTask, Grow, Plant, LogEntry, HarvestData } from '@/lib/grow/types';
+import SmartInsights from '@/components/SmartInsights';
+import {
+  getGrowHealthScore,
+  getDailyAction,
+  getGrowHealthStatus,
+  getPlantMicroInsight,
+  getGrowPriorities,
+  getTotalYieldImpact,
+  getOptimizationScore,
+  getPotentialYield,
+  computeTrend,
+} from '@/lib/grow/intelligence';
+import type { DailyAction, GrowHealthStatus, GrowTrend, YieldImpactResult } from '@/lib/grow/intelligence';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -125,7 +139,7 @@ function TaskItem({ task, currentDay, onComplete }: TaskItemProps) {
             ? 'border-rose-300 hover:border-rose-500 hover:bg-rose-50'
             : 'border-slate-300 hover:border-emerald-400 hover:bg-emerald-50'
         }`}
-        aria-label="Task erledigen"
+        aria-label="Aufgabe erledigen"
       />
       <div className="min-w-0 flex-1">
         <p className="text-sm font-semibold text-slate-800">{task.title}</p>
@@ -154,21 +168,7 @@ function computePlantStatus(plantEntries: LogEntry[]): PlantStatus {
   return days <= 3 ? "good" : "needs-attention";
 }
 
-function getMicroInsight(plantEntries: LogEntry[]): string {
-  if (plantEntries.length === 0) return "Noch kein Eintrag";
-  const lastWater = plantEntries.find((e) => e.data.type === "wasser");
-  if (lastWater) {
-    const days = Math.floor((Date.now() - new Date(lastWater.date).getTime()) / 86_400_000);
-    if (days === 0) return "Heute bewässert";
-    if (days === 1) return "Gestern bewässert";
-    return `Seit ${days} Tagen nicht bewässert`;
-  }
-  const newest = plantEntries[0]!;
-  const days = Math.floor((Date.now() - new Date(newest.date).getTime()) / 86_400_000);
-  if (days === 0) return "Heute eingetragen";
-  if (days === 1) return "Letzter Eintrag gestern";
-  return `Letzter Eintrag vor ${days} Tagen`;
-}
+// getMicroInsight replaced by getPlantMicroInsight from intelligence.ts
 
 function getWorstReason(plantEntries: LogEntry[]): string {
   if (plantEntries.length === 0) return "Kein Eintrag vorhanden";
@@ -202,6 +202,410 @@ function isPlantCritical(plantEntries: LogEntry[]): boolean {
     if (sinceWater > 3) return true;
   }
   return false;
+}
+
+// ── Grow Performance Panel ───────────────────────────────────────────────────
+
+/**
+/**
+ * PRO: Emotional yield performance panel.
+ * Shows potential vs current, loss %, visual progress bar, and trend.
+ * FREE: Shows vague % with blurred detail + hard paywall CTA.
+ */
+function GrowPerformancePanel({
+  isPro,
+  yieldImpact,
+  optScore,
+  trend,
+  growId,
+}: {
+  isPro: boolean;
+  yieldImpact: YieldImpactResult;
+  optScore: number;
+  trend: GrowTrend | null;
+  growId: string;
+}) {
+  const usedPercent = yieldImpact.potentialYield > 0
+    ? Math.round((yieldImpact.currentEstimate / yieldImpact.potentialYield) * 100)
+    : 100;
+
+  const barColor =
+    usedPercent >= 80 ? 'bg-emerald-500' :
+    usedPercent >= 50 ? 'bg-amber-500'   : 'bg-rose-500';
+
+  const lossMessage =
+    yieldImpact.lossPercent >= 40
+      ? 'Du verlierst gerade fast die Hälfte deines möglichen Ertrags.'
+      : yieldImpact.lossPercent >= 20
+        ? 'Dein Grow arbeitet gerade unter seinem Potenzial — das ist noch korrigierbar.'
+        : yieldImpact.lossPercent > 0
+          ? 'Du verlierst gerade Ertrag — kleine Korrekturen reichen.'
+          : 'Dein Grow läuft nahe am vollen Potenzial.';
+
+  const trendIcon  = !trend || trend.trend === 'stable' ? '→' : trend.trend === 'up' ? '↑' : '↓';
+  const trendColor = !trend || trend.trend === 'stable' ? 'text-slate-400' : trend.trend === 'up' ? 'text-emerald-500' : 'text-rose-500';
+  const trendLabel =
+    !trend || trend.trend === 'stable'
+      ? 'Stabil'
+      : trend.trend === 'up'
+        ? `+${trend.delta} gewonnen`
+        : `${trend.delta} verloren`;
+
+  if (isPro) {
+    return (
+      <div className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50/60 p-4 shadow-sm space-y-3">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <p className="text-[11px] font-black uppercase tracking-widest text-amber-700">📊 Ertrag-Performance</p>
+          <span className="rounded-full bg-amber-500 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">PRO</span>
+        </div>
+
+        {/* Entry message — always visible before numbers */}
+        <p className="text-sm font-black text-rose-700 leading-snug">
+          {yieldImpact.totalLoss > 0
+            ? lossMessage
+            : 'Dein Grow läuft nahe am vollen Potenzial.'}
+        </p>
+
+        {/* Weekly loss rate */}
+        {yieldImpact.weeklyLossRate > 0 && (
+          <p className="text-[11px] font-bold text-rose-600 leading-tight">
+            ⚠ Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
+          </p>
+        )}
+
+        {/* Projected yield vs Potential */}
+        <div className="rounded-xl border border-white bg-white/80 px-3 py-2.5 shadow-sm space-y-2">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Wenn nichts geändert wird</p>
+              <p className="text-lg font-black text-slate-900 leading-tight mt-0.5">
+                ~{yieldImpact.projectedYield}g
+                <span className="text-sm font-semibold text-slate-400"> statt {yieldImpact.potentialYield}g möglich</span>
+              </p>
+            </div>
+            {yieldImpact.lossPercent > 0 && (
+              <p className="text-sm font-black text-rose-600">−{yieldImpact.lossPercent}%</p>
+            )}
+          </div>
+          {/* Progress bar */}
+          <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+            <div
+              className={`h-full rounded-full transition-all duration-700 ${barColor}`}
+              style={{ width: `${usedPercent}%` }}
+            />
+          </div>
+          <p className="text-[10px] text-slate-400 font-medium">{usedPercent}% des Potenzials genutzt</p>
+        </div>
+
+        {/* Stats row */}
+        <div className="grid grid-cols-3 gap-2">
+          <div className="rounded-xl border border-rose-100 bg-white px-2 py-2 text-center shadow-sm">
+            <p className="text-base font-black text-rose-600">{yieldImpact.totalLoss > 0 ? `−${yieldImpact.totalLoss}g` : '—'}</p>
+            <p className="text-[9px] font-semibold text-rose-400 mt-0.5 leading-tight">Verlust-Risiko</p>
+          </div>
+          <div className="rounded-xl border border-emerald-100 bg-white px-2 py-2 text-center shadow-sm">
+            <p className={`text-base font-black ${optScore >= 80 ? 'text-emerald-600' : optScore >= 50 ? 'text-amber-600' : 'text-rose-600'}`}>{optScore}%</p>
+            <p className="text-[9px] font-semibold text-slate-400 mt-0.5 leading-tight">Optimierung</p>
+          </div>
+          <div className="rounded-xl border border-slate-100 bg-white px-2 py-2 text-center shadow-sm">
+            <p className={`text-base font-black ${trendColor}`}>{trendIcon}</p>
+            <p className={`text-[9px] font-semibold mt-0.5 leading-tight ${trendColor}`}>{trendLabel}</p>
+          </div>
+        </div>
+
+        {/* Momentum sentence */}
+        {trend && trend.trend !== 'stable' && (
+          <p className={`text-[11px] font-semibold leading-tight ${trend.trend === 'up' ? 'text-emerald-700' : 'text-rose-600'}`}>
+            {trend.trend === 'up'
+              ? `↑ Du hast deinen Grow seit dem letzten Besuch um +${trend.delta} Punkte verbessert.`
+              : `↓ Dein Grow hat ${Math.abs(trend.delta)} Punkte verloren — jetzt gegensteuern.`}
+          </p>
+        )}
+
+        {/* Recovery upside */}
+        {yieldImpact.totalGainPotential > 0 && (
+          <p className="text-[11px] text-emerald-700 font-semibold leading-tight">
+            ↑ +{yieldImpact.totalGainPotential}g mit dieser Aktion zurückholbar.
+          </p>
+        )}
+      </div>
+    );
+  }
+
+  // FREE — real % shown, exact grams blurred
+  return (
+    <Link href={'/pricing' as Route} className="block">
+      <div className="relative overflow-hidden rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50/60 p-4 shadow-sm">
+
+        {/* Header visible to all */}
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-[11px] font-black uppercase tracking-widest text-amber-700">📊 Ertrag-Performance</p>
+        </div>
+
+        {/* Entry message — always visible before numbers */}
+        <p className="text-sm font-black text-rose-700 mb-3">
+          {yieldImpact.lossPercent >= 20
+            ? 'Du verlierst gerade spürbar Ertrag.'
+            : 'Dein Grow läuft unter seinem Potenzial.'}
+        </p>
+
+        {/* Weekly loss visible, gram projection locked */}
+        {yieldImpact.weeklyLossRate > 0 && (
+          <p className="text-[11px] font-bold text-rose-600 mb-2 leading-tight">
+            ⚠ Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
+          </p>
+        )}
+
+        {/* Progress bar with real %, projection locked */}
+        <div className="rounded-xl border border-white bg-white/80 px-3 py-2.5 shadow-sm space-y-2 mb-3">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">{usedPercent}% des Potenzials genutzt</p>
+            </div>
+            {yieldImpact.lossPercent > 0 && (
+              <p className="text-xs font-black text-rose-600">−{yieldImpact.lossPercent}% Verlustrisiko</p>
+            )}
+          </div>
+          <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+            <div className={`h-full rounded-full transition-all duration-700 ${barColor}`} style={{ width: `${usedPercent}%` }} />
+          </div>
+          <div className="flex items-center justify-between">
+            <p className="text-[10px] text-rose-500 font-bold">🔒 Genaue Ertragszahlen nur für PRO sichtbar</p>
+          </div>
+        </div>
+
+        {/* Blurred stats — real values, hidden */}
+        <div className="grid grid-cols-3 gap-2 blur-[4px] select-none pointer-events-none mb-3">
+          <div className="rounded-xl border border-rose-100 bg-white px-2 py-2 text-center">
+            <p className="text-base font-black text-rose-600">{yieldImpact.totalLoss > 0 ? `−${yieldImpact.totalLoss}g` : '—'}</p>
+            <p className="text-[9px] font-semibold text-rose-400 mt-0.5">Verlust-Risiko</p>
+          </div>
+          <div className="rounded-xl border border-amber-100 bg-white px-2 py-2 text-center">
+            <p className="text-base font-black text-amber-600">{optScore}%</p>
+            <p className="text-[9px] font-semibold text-slate-400 mt-0.5">Optimierung</p>
+          </div>
+          <div className="rounded-xl border border-slate-100 bg-white px-2 py-2 text-center">
+            <p className={`text-base font-black ${trendColor}`}>{trendIcon}</p>
+            <p className={`text-[9px] font-semibold mt-0.5 ${trendColor}`}>{trendLabel}</p>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-100/60 px-3 py-2.5">
+          <p className="text-xs font-bold text-amber-900 leading-snug">Du siehst nur einen Teil — PRO zeigt dir, was du noch verlierst.</p>
+          <span className="flex-shrink-0 rounded-full bg-amber-500 px-3 py-1.5 text-[10px] font-black text-white shadow-sm">🌟 PRO</span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+// ── PRO Insight Gate ─────────────────────────────────────────────────────────
+
+/**
+ * Blurred teaser shown to FREE users in place of PRO intelligence data.
+ * Clicking opens the profile page where plan upgrade will live.
+ */
+function ProInsightGate({
+  yieldImpact,
+  deepInsight,
+  isPro,
+}: {
+  yieldImpact?: string;
+  deepInsight?: string;
+  isPro: boolean;
+}) {
+  if (!yieldImpact && !deepInsight) return null;
+
+  if (isPro) {
+    return (
+      <div className="mt-2 space-y-1">
+        {yieldImpact && (
+          <p className="text-[11px] font-bold text-amber-300/90 leading-tight">
+            📊 {yieldImpact}
+          </p>
+        )}
+        {deepInsight && (
+          <p className="text-[11px] text-white/70 leading-snug italic">
+            🔬 {deepInsight}
+          </p>
+        )}
+      </div>
+    );
+  }
+
+  // FREE users — hide, panel handles conversion
+  return null;
+}
+
+// ── Daily Action Card ────────────────────────────────────────────────────────
+
+const DAILY_ACTION_CONFIG: Record<
+  DailyAction['level'],
+  { bg: string; border: string; icon: string; label: string; subtext: string; cta: string }
+> = {
+  critical: {
+    bg:     'bg-rose-600',
+    border: 'border-rose-700',
+    icon:   '🚨',
+    label:  'EINZIGE PRIORITÄT HEUTE',
+    subtext:'text-rose-100',
+    cta:    'bg-white text-rose-700 hover:bg-rose-50 shadow-sm',
+  },
+  warning: {
+    bg:     'bg-amber-500',
+    border: 'border-amber-600',
+    icon:   '⚠️',
+    label:  'HEUTE NICHT VERGESSEN',
+    subtext:'text-amber-100',
+    cta:    'bg-white text-amber-700 hover:bg-amber-50 shadow-sm',
+  },
+  info: {
+    bg:     'bg-primary',
+    border: 'border-primary-dark',
+    icon:   '💡',
+    label:  'HEUTE AKTIV BLEIBEN',
+    subtext:'text-emerald-100',
+    cta:    'bg-white text-emerald-700 hover:bg-emerald-50 shadow-sm',
+  },
+  success: {
+    bg:     'bg-emerald-700',
+    border: 'border-emerald-800',
+    icon:   '✓',
+    label:  'TAG GESICHERT',
+    subtext:'text-emerald-200',
+    cta:    'bg-white/20 border border-white/30 text-white hover:bg-white/30',
+  },
+};
+
+function DailyActionCard({
+  action,
+  scoreDelta,
+  isPro,
+}: {
+  action: DailyAction;
+  scoreDelta?: number | null;
+  isPro: boolean;
+}) {
+  const cfg = DAILY_ACTION_CONFIG[action.level];
+  const [showDelta, setShowDelta] = useState(false);
+
+  useEffect(() => {
+    if (scoreDelta == null || scoreDelta === 0) return;
+    setShowDelta(true);
+    const t = setTimeout(() => setShowDelta(false), 3000);
+    return () => clearTimeout(t);
+  }, [scoreDelta]);
+
+  return (
+    <div className={`relative overflow-hidden rounded-2xl border ${cfg.bg} ${cfg.border} px-5 py-4 shadow-md`}>
+      {/* Score delta badge */}
+      {showDelta && scoreDelta != null && scoreDelta !== 0 && (
+        <span
+          className={`absolute right-4 top-3 animate-bounce rounded-full px-2.5 py-0.5 text-xs font-black shadow-md
+            ${scoreDelta > 0 ? 'bg-white text-emerald-700' : 'bg-rose-100 text-rose-700'}`}
+        >
+          {scoreDelta > 0 ? `+${scoreDelta}` : scoreDelta} Score
+        </span>
+      )}
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          <p className={`text-[10px] font-black uppercase tracking-widest mb-1 ${cfg.subtext}`}>
+            {cfg.icon} {cfg.label}
+          </p>
+          <p className="text-base font-black leading-snug text-white">{action.message}</p>
+          <p className={`mt-1 text-xs leading-snug ${cfg.subtext}`}>{action.subtext}</p>
+          {action.consequence && (
+            <p className={`mt-1.5 text-[11px] font-semibold leading-tight opacity-90 ${cfg.subtext}`}>
+              → {action.consequence}
+            </p>
+          )}
+          {action.upside && (
+            <p className="mt-1 text-[11px] font-semibold leading-tight text-emerald-100/90">
+              ↑ {action.upside}
+            </p>
+          )}
+          <ProInsightGate
+            {...(action.yieldImpact ? { yieldImpact: action.yieldImpact } : {})}
+            {...(action.deepInsight ? { deepInsight: action.deepInsight } : {})}
+            isPro={isPro}
+          />
+        </div>
+        <div className="flex-shrink-0 flex flex-col items-end gap-1">
+          <Link
+            href={action.ctaHref as Route}
+            className={`rounded-xl px-4 py-2.5 text-sm font-bold transition active:scale-95 ${cfg.cta}`}
+          >
+            {action.ctaLabel}
+          </Link>
+          {action.recoveryGrams != null && action.recoveryGrams > 0 && (
+            <p className="text-[10px] font-bold text-emerald-300/90 whitespace-nowrap">
+              +{action.recoveryGrams}g mit dieser Aktion zurückholbar
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Grow Status Header ────────────────────────────────────────────────────────
+
+function scoreToIcon(score: number): string {
+  if (score >= 85) return '🌟';
+  if (score >= 70) return '✅';
+  if (score >= 50) return '⚠️';
+  return '🔴';
+}
+
+function scoreToMomentum(score: number, prevScore?: number): string {
+  if (prevScore != null) {
+    const delta = score - prevScore;
+    if (delta >= 5)   return `Du hast deinen Grow um +${delta} Punkte verbessert.`;
+    if (delta <= -10) return `Dein Grow hat ${Math.abs(delta)} Punkte verloren — du hast Fortschritt verloren.`;
+    if (delta <= -5)  return `Dein Grow hat ${Math.abs(delta)} Punkte verloren — jetzt gegensteuern.`;
+  }
+  if (score >= 85) return 'Du bist heute auf Kurs — alles unter Kontrolle.';
+  if (score >= 70) return 'Du bist in Gefahr — Potenzial wird täglich verschenkt.';
+  if (score >= 50) return 'Du verlierst Ertrag — ein Eingriff stoppt das heute.';
+  return 'Kritisch — jeder Tag ohne Aktion kostet dich Ertrag.';
+}
+
+function GrowStatusHeader({
+  score,
+  status,
+  prevScore,
+}: {
+  score: number;
+  status: GrowHealthStatus;
+  prevScore?: number;
+}) {
+  const colors = {
+    green:  { ring: 'ring-emerald-200 border-emerald-200', bg: 'bg-emerald-50',  text: 'text-emerald-700', score: 'text-emerald-600' },
+    yellow: { ring: 'ring-amber-200 border-amber-200',     bg: 'bg-amber-50',    text: 'text-amber-700',   score: 'text-amber-600'   },
+    red:    { ring: 'ring-rose-200 border-rose-200',       bg: 'bg-rose-50',     text: 'text-rose-700',    score: 'text-rose-600'    },
+  }[status.color];
+
+  const momentum = scoreToMomentum(score, prevScore);
+
+  return (
+    <div className={`flex items-center gap-4 rounded-2xl border px-4 py-3 ring-1 ${colors.bg} ${colors.ring}`}>
+      <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full ring-2 bg-white ${colors.ring}`}>
+        <span className="text-2xl leading-none">{scoreToIcon(score)}</span>
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className={`text-sm font-black leading-snug ${colors.text}`}>{momentum}</p>
+        <p className={`text-xs opacity-80 mt-0.5 ${colors.text}`}>{status.text}</p>
+        <p className={`text-[10px] font-bold uppercase tracking-wider opacity-60 mt-0.5 ${colors.text}`}>
+          {status.yieldLabel}
+        </p>
+        <p className={`text-[10px] font-semibold opacity-70 mt-0.5 ${colors.text}`}>
+          ↑ {status.upsideLabel}
+        </p>
+      </div>
+    </div>
+  );
 }
 
 // ── Plant Scoring ─────────────────────────────────────────────────────────────
@@ -313,6 +717,8 @@ type PlantCardProps = {
   isSelected: boolean;
   isEditing: boolean;
   draftName: string;
+  isEditingNotes: boolean;
+  draftNotes: string;
   variant?: PlantVariant;
   isCritical?: boolean;
   onSelect: () => void;
@@ -320,6 +726,10 @@ type PlantCardProps = {
   onSave: () => void;
   onCancel: () => void;
   onRename: () => void;
+  onDraftNotesChange: (v: string) => void;
+  onSaveNotes: () => void;
+  onEditNotes: () => void;
+  onCancelNotes: () => void;
 };
 
 const CARD_VARIANT_CLASSES: Record<PlantVariant, string> = {
@@ -335,6 +745,8 @@ function PlantCard({
   isSelected,
   isEditing,
   draftName,
+  isEditingNotes,
+  draftNotes,
   variant = "default",
   isCritical = false,
   onSelect,
@@ -342,10 +754,18 @@ function PlantCard({
   onSave,
   onCancel,
   onRename,
+  onDraftNotesChange,
+  onSaveNotes,
+  onEditNotes,
+  onCancelNotes,
 }: PlantCardProps) {
   const status = computePlantStatus(plantEntries);
   const { label: statusLabel, classes: statusClasses } = PLANT_STATUS_CONFIG[status];
-  const insight = getMicroInsight(plantEntries);
+  const microInsight = getPlantMicroInsight(plantEntries);
+  const microInsightClass =
+    microInsight.level === 'good'     ? 'text-emerald-600' :
+    microInsight.level === 'critical' ? 'text-rose-600 font-semibold' :
+                                        'text-amber-600';
 
   const baseClasses = isSelected
     ? "border-emerald-400 bg-emerald-50/70 shadow-sm ring-1 ring-emerald-200"
@@ -390,7 +810,53 @@ function PlantCard({
       </button>
 
       {/* ── Micro insight ── */}
-      <p className="px-4 pb-2.5 text-[11px] text-slate-400 leading-tight">{insight}</p>
+      <div className="px-4 pb-2.5">
+        <p className={`text-[11px] leading-tight ${microInsightClass}`}>{microInsight.text}</p>
+        {microInsight.consequence && microInsight.level !== 'good' && (
+          <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">→ {microInsight.consequence}</p>
+        )}
+      </div>
+
+      {/* ── Plant Notes ── */}
+      {isEditingNotes ? (
+        <div className="mx-4 mb-3 space-y-2">
+          <textarea
+            value={draftNotes}
+            onChange={(e) => onDraftNotesChange(e.target.value)}
+            placeholder="Notiz zur Pflanze…"
+            rows={3}
+            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700
+              placeholder:text-slate-300 focus:border-emerald-400 focus:outline-none resize-none"
+          />
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={onSaveNotes}
+              className="rounded-lg bg-emerald-600 px-3 py-1 text-xs font-bold text-white hover:bg-emerald-700"
+            >
+              Speichern
+            </button>
+            <button
+              type="button"
+              onClick={onCancelNotes}
+              className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-50"
+            >
+              Abbrechen
+            </button>
+          </div>
+        </div>
+      ) : plant.notes ? (
+        <div className="mx-4 mb-3 rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
+          <p className="text-[11px] text-slate-600 leading-relaxed whitespace-pre-wrap">{plant.notes}</p>
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); onEditNotes(); }}
+            className="mt-1 text-[10px] font-semibold text-slate-400 hover:text-emerald-600 transition-colors"
+          >
+            Notiz bearbeiten
+          </button>
+        </div>
+      ) : null}
 
       {/* ── Actions ── */}
       <div className="flex items-center gap-2 border-t border-slate-100 px-4 py-2.5">
@@ -436,8 +902,143 @@ function PlantCard({
             >
               Umbenennen
             </button>
+            {!plant.notes && !isEditingNotes && (
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); onEditNotes(); }}
+                className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-400 transition hover:bg-slate-50"
+              >
+                + Notiz
+              </button>
+            )}
           </>
         )}
+      </div>
+    </div>
+  );
+}
+
+// ── Harvest Section ───────────────────────────────────────────────────────────
+
+function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestData) => void }) {
+  const existing = grow.harvest;
+  const [editing, setEditing] = useState(false);
+  const [grams, setGrams] = useState(String(existing?.grams ?? ''));
+  const [rating, setRating] = useState(existing?.rating ?? 0);
+  const [notes, setNotes] = useState(existing?.notes ?? '');
+
+  function handleSave() {
+    const g = parseFloat(grams);
+    if (!g || g <= 0 || rating < 1) return;
+    onSave({
+      grams: g,
+      rating,
+      notes: notes.trim() || undefined,
+      recordedAt: new Date().toISOString(),
+    } as HarvestData);
+    setEditing(false);
+  }
+
+  if (!editing && existing) {
+    return (
+      <div className="rounded-2xl border border-emerald-200 bg-emerald-50/40 p-5 shadow-sm">
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-sm font-bold text-emerald-700">🌿 Ernte erfasst</p>
+          <button
+            type="button"
+            onClick={() => { setEditing(true); }}
+            className="text-xs font-semibold text-emerald-600 hover:underline"
+          >
+            Bearbeiten
+          </button>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="text-center">
+            <p className="text-2xl font-black text-emerald-700">{existing.grams}g</p>
+            <p className="text-[10px] uppercase tracking-wide text-emerald-600">Trockengewicht</p>
+          </div>
+          <div className="flex gap-1">
+            {[1,2,3,4,5].map(s => (
+              <span key={s} className={`text-xl ${s <= existing.rating ? 'text-amber-400' : 'text-slate-200'}`}>★</span>
+            ))}
+          </div>
+        </div>
+        {existing.notes && (
+          <p className="mt-3 rounded-xl bg-emerald-100/60 px-3 py-2 text-xs text-emerald-800 leading-relaxed">
+            {existing.notes}
+          </p>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+      <p className="text-sm font-bold text-foreground mb-4">
+        {existing ? '✏️ Ernte bearbeiten' : '🌿 Ernte erfassen'}
+      </p>
+      <div className="space-y-4">
+        {/* Grams */}
+        <div>
+          <label className="block text-xs font-semibold text-muted-fg mb-1">Trockengewicht (g)</label>
+          <input
+            type="number"
+            min="0"
+            step="0.1"
+            value={grams}
+            onChange={e => setGrams(e.target.value)}
+            placeholder="z.B. 45.5"
+            className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground
+              placeholder:text-slate-300 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+          />
+        </div>
+        {/* Rating */}
+        <div>
+          <label className="block text-xs font-semibold text-muted-fg mb-1.5">Bewertung</label>
+          <div className="flex gap-2">
+            {[1,2,3,4,5].map(s => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setRating(s)}
+                className={`text-2xl transition-transform hover:scale-110 ${s <= rating ? 'text-amber-400' : 'text-slate-200'}`}
+              >★</button>
+            ))}
+          </div>
+        </div>
+        {/* Notes */}
+        <div>
+          <label className="block text-xs font-semibold text-muted-fg mb-1">Notizen (optional)</label>
+          <textarea
+            value={notes}
+            onChange={e => setNotes(e.target.value)}
+            rows={3}
+            placeholder="Geschmack, Potenz-Einschätzung, was anders machen…"
+            className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground
+              placeholder:text-slate-300 focus:border-emerald-400 focus:outline-none resize-none"
+          />
+        </div>
+        {/* Actions */}
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={!grams || parseFloat(grams) <= 0 || rating < 1}
+            className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary-dark
+              disabled:opacity-40 disabled:cursor-not-allowed transition"
+          >
+            Ernte speichern
+          </button>
+          {(editing && existing) && (
+            <button
+              type="button"
+              onClick={() => setEditing(false)}
+              className="rounded-xl border border-border px-4 py-2 text-sm font-semibold text-foreground hover:bg-background transition"
+            >
+              Abbrechen
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -447,12 +1048,19 @@ function PlantCard({
 
 export default function GrowPage(_props: Props) {
   const { id } = useParams<{ id: string }>();
-  const { grows, loaded, completeTask, updateGrow } = useGrowState();
+  const { grows, loaded, completeTask, updateGrow, advancePhase } = useGrowState();
   const { entries } = useGrowLog(id);
+  const { user } = useAuth();
+  const isPro = user?.plan === 'pro' || user?.plan === 'team' || user?.role === 'TEAM';
 
   const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null);
   const [editingPlantId, setEditingPlantId] = useState<string | null>(null);
   const [draftPlantName, setDraftPlantName] = useState("");
+  const [editingPlantNotesId, setEditingPlantNotesId] = useState<string | null>(null);
+  const [draftPlantNotes, setDraftPlantNotes] = useState("");
+  const [scoreDelta, setScoreDelta] = useState<number | null>(null);
+  const [growTrend, setGrowTrend] = useState<GrowTrend | null>(null);
+  const prevEntriesLen = useRef<number | null>(null);
 
   const grow = loaded ? (grows.find((g) => g.id === id) ?? null) : null;
   const notFound = loaded && grow === null;
@@ -496,6 +1104,31 @@ export default function GrowPage(_props: Props) {
     setDraftPlantName("");
   }, [grow, draftPlantName, updateGrow]);
 
+  const startEditPlantNotes = useCallback((plantId: string, currentNotes: string) => {
+    setEditingPlantNotesId(plantId);
+    setDraftPlantNotes(currentNotes);
+  }, []);
+
+  const cancelEditPlantNotes = useCallback(() => {
+    setEditingPlantNotesId(null);
+    setDraftPlantNotes("");
+  }, []);
+
+  const savePlantNotes = useCallback((plantId: string) => {
+    if (!grow) return;
+    const trimmed = draftPlantNotes.trim();
+    updateGrow(grow.id, {
+      plants: grow.plants.map((plant) => {
+        if (plant.id !== plantId) return plant;
+        if (trimmed) return { ...plant, notes: trimmed };
+        const { notes: _n, ...rest } = plant;
+        return rest;
+      }),
+    });
+    setEditingPlantNotesId(null);
+    setDraftPlantNotes("");
+  }, [grow, draftPlantNotes, updateGrow]);
+
   if (!loaded) {
     return (
       <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-4 py-10">
@@ -531,17 +1164,54 @@ export default function GrowPage(_props: Props) {
   const overdue      = getOverdueTasks(grow);
   const { percent }  = getTaskProgress(grow);
 
-  // Grow health: stable if no overdue tasks, and majority of plants have recent logs
-  const criticalPlantCount = grow.plants.filter((p) => {
-    const pe = entries.filter((e) => e.plantId === p.id);
-    if (pe.length === 0) return false;
-    return Math.floor((Date.now() - new Date(pe[0]!.date).getTime()) / 86_400_000) > 3;
-  }).length;
-  const growHealthStable = overdue.length === 0 && criticalPlantCount === 0;
+  // Intelligence layer
+  const healthScore  = getGrowHealthScore(grow, entries);
+  const healthStatus = getGrowHealthStatus(healthScore);
+  const dailyAction  = getDailyAction(grow, entries);
+  const priorities   = getGrowPriorities(grow, entries);
+  const yieldImpact  = getTotalYieldImpact(priorities, getPotentialYield(grow));
+  const optScore     = getOptimizationScore(grow, entries);
+
+  // Score delta: compare to score before last entry was added
+  const prevScoreRef = useRef<number | null>(null);
+  useEffect(() => {
+    if (!grow) return;
+    const newLen = entries.length;
+    if (prevEntriesLen.current !== null && newLen > prevEntriesLen.current) {
+      // An entry was just added — compute delta from last known score
+      const prev = prevScoreRef.current;
+      if (prev !== null) {
+        setScoreDelta(healthScore - prev);
+      }
+    }
+    prevEntriesLen.current = newLen;
+    prevScoreRef.current = healthScore;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [entries.length]);
+
+  // Optimization score trend: persist previous score in localStorage, compute delta
+  useEffect(() => {
+    if (!grow) return;
+    const key = `secretleaf.optscore.${grow.id}`;
+    const stored = localStorage.getItem(key);
+    if (stored !== null) {
+      const prev = Number(stored);
+      if (!Number.isNaN(prev) && prev !== optScore) {
+        setGrowTrend(computeTrend(prev, optScore));
+      }
+    }
+    localStorage.setItem(key, String(optScore));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [grow?.id, optScore]);
+
+  const showPerformancePanel = entries.length >= 3 || healthScore < 70;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-4 py-8 sm:px-6">
       <div className="mx-auto max-w-2xl space-y-5">
+
+        {/* ── Daily Action Card ────────────────────────── */}
+        <DailyActionCard action={dailyAction} scoreDelta={scoreDelta} isPro={isPro} />
 
         {/* ── Grow Overview ───────────────────────────── */}
         <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -569,20 +1239,55 @@ export default function GrowPage(_props: Props) {
             </div>
             <div className="mt-4"><GrowProgressBar grow={grow} /></div>
             <div className="mt-4"><PhaseTimeline grow={grow} /></div>
-            <div className={`mt-4 flex items-center gap-2 rounded-xl border px-3 py-2 ${
-              growHealthStable
-                ? 'border-emerald-200 bg-emerald-50'
-                : 'border-amber-200 bg-amber-50'
-            }`}>
-              <span className="text-base leading-none">{growHealthStable ? '📈' : '⚠️'}</span>
-              <p className={`text-xs font-semibold ${growHealthStable ? 'text-emerald-700' : 'text-amber-700'}`}>
-                {growHealthStable ? 'Dein Grow läuft stabil' : 'Mehr Aufmerksamkeit nötig'}
-              </p>
-            </div>
+
           </div>
         </div>
 
-        {/* ── Plants ───────────────────────────────────── */}
+        {/* ── Phase Suggestion ─────────────────────────── */}
+        {(() => {
+          if (!currentPhase || grow.status !== 'aktiv') return null;
+          if (grow.currentDay <= currentPhase.endDay) return null;
+          const currentIdx = PHASE_ORDER.indexOf(currentPhase.id);
+          const nextPhaseId = PHASE_ORDER[currentIdx + 1];
+          if (!nextPhaseId) return null;
+          const nextPhase = grow.plan.phases.find(p => p.id === nextPhaseId);
+          if (!nextPhase) return null;
+          const overdueDays = grow.currentDay - currentPhase.endDay;
+          return (
+            <div className="rounded-2xl border border-emerald-300 bg-emerald-50/60 p-4 flex items-center justify-between gap-3 shadow-sm">
+              <div>
+                <p className="text-sm font-bold text-emerald-800">
+                  👉 Bereit für die nächste Phase
+                </p>
+                <p className="text-xs text-emerald-700 mt-0.5">
+                  {currentPhase.label} war vor {overdueDays} {overdueDays === 1 ? 'Tag' : 'Tagen'} geplant abgeschlossen zu sein.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => advancePhase(grow.id, nextPhaseId)}
+                className="flex-shrink-0 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white
+                  hover:bg-emerald-700 transition active:scale-95"
+              >
+                → {nextPhase.label}
+              </button>
+            </div>
+          );
+        })()}
+        {/* ── Grow Status Header ───────────────────────── */}
+        <GrowStatusHeader score={healthScore} status={healthStatus} {...(prevScoreRef.current !== null && { prevScore: prevScoreRef.current })} />
+
+        {/* ── Performance Panel ────────────────────────── */}
+        {showPerformancePanel && (
+          <GrowPerformancePanel
+            isPro={isPro}
+            yieldImpact={yieldImpact}
+            optScore={optScore}
+            trend={growTrend}
+            growId={grow.id}
+          />
+        )}
+
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <h2 className="mb-3 text-base font-bold text-slate-900">
             Pflanzen ({grow.plants.length})
@@ -615,6 +1320,8 @@ export default function GrowPage(_props: Props) {
                         isSelected={selectedPlantId === plant.id}
                         isEditing={editingPlantId === plant.id}
                         draftName={draftPlantName}
+                        isEditingNotes={editingPlantNotesId === plant.id}
+                        draftNotes={draftPlantNotes}
                         variant={variant}
                         isCritical={isPlantCritical(plantEntries)}
                         onSelect={() => setSelectedPlantId(plant.id)}
@@ -622,6 +1329,10 @@ export default function GrowPage(_props: Props) {
                         onSave={() => savePlantName(plant.id)}
                         onCancel={cancelRenamePlant}
                         onRename={() => startRenamePlant(plant.id, plant.name)}
+                        onDraftNotesChange={setDraftPlantNotes}
+                        onSaveNotes={() => savePlantNotes(plant.id)}
+                        onEditNotes={() => startEditPlantNotes(plant.id, plant.notes ?? "")}
+                        onCancelNotes={cancelEditPlantNotes}
                       />
                     );
                   })}
@@ -699,6 +1410,17 @@ export default function GrowPage(_props: Props) {
             </Link>
           </div>
         </div>
+
+        {/* ── Smart Insights ───────────────────────────── */}
+        <SmartInsights grow={grow} />
+
+        {/* ── Harvest Data ─────────────────────────────── */}
+        {(grow.status === 'abgeschlossen' || grow.currentPhaseId === 'ernte') && (
+          <HarvestSection
+            grow={grow}
+            onSave={(data) => updateGrow(grow.id, { harvest: data })}
+          />
+        )}
 
         {/* ── Phase description ────────────────────────── */}
         {currentPhase && (

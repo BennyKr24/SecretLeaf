@@ -17,6 +17,15 @@ export function getStudyQuality(study: StudyRecord): StudyQuality {
   return study.qualityStatus;
 }
 
+/**
+ * Returns true when a study or wiki article is considered high-quality.
+ * High quality means qualityScore ≥ 4 (out of 5).
+ * Used to surface badge, featured placement, or priority ranking.
+ */
+export function isHighQuality(study: { qualityScore?: number }): boolean {
+  return (study.qualityScore ?? 0) >= 4;
+}
+
 function authHeaders(session?: SessionData | null): HeadersInit {
   return {
     "Content-Type": "application/json",

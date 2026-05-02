@@ -295,5 +295,12 @@
     "saved": "Saved",
     "saveError": "Failed to save",
     "notLoggedIn": "You are not signed in."
+  },
+  "offers": {
+    "by": "by @{provider}",
+    "available": "Available:",
+    "priceTiers": "Price tiers",
+    "tierFrom": "from {qty} {unit}:",
+    "contact": "Contact"
   }
 }
