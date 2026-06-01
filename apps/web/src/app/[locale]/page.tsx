@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { wikiArticles, sourceRegister } from "@/data/terpira/wiki";
 import type { TerpiraArticle } from "@/lib/terpira/types";
 import { CTAButton } from "@/components/ui/CTAButton";
+import { PremiumScrollFx } from "@/components/scroll/PremiumScrollFx";
 
 
 /* ─── Minimal helpers kept for the studies section at the bottom ─── */
@@ -59,71 +60,91 @@ function StudyCard({ article, evidenceLabels }: { article: TerpiraArticle; evide
 
 function ProductDashboardMock() {
   return (
-    <div className="relative mx-auto w-full max-w-[940px]">
+    <div className="relative mx-auto w-full max-w-[980px]">
       <div className="pointer-events-none absolute -inset-10 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.24),transparent_66%)] blur-2xl" />
       <div className="pointer-events-none absolute -bottom-10 left-10 right-10 h-16 rounded-full bg-emerald-400/25 blur-2xl" />
-      <div
-        className="relative overflow-hidden rounded-[30px] border border-emerald-300/25 bg-[#08110f]/85 p-3 shadow-[0_26px_100px_rgba(0,0,0,0.62)] backdrop-blur-xl"
-        style={{ transform: "perspective(1800px) rotateX(6deg) rotateY(-8deg)", transformOrigin: "center" }}
-      >
-        <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-white/10" />
-        <div className="pointer-events-none absolute -left-24 top-[-1px] h-px w-[180%] rotate-[4deg] bg-gradient-to-r from-transparent via-emerald-200/35 to-transparent" />
-        <div className="rounded-2xl border border-white/10 bg-[#0a1512] p-4 sm:p-5">
-          <div className="mb-4 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-300/80">Grow OS</p>
-              <h3 className="mt-1 text-lg font-semibold text-slate-100">Meine Grows</h3>
-            </div>
-            <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold text-emerald-200">
-              AI Diagnose aktiv
-            </span>
-          </div>
+      <div className="pointer-events-none absolute inset-x-16 -top-4 h-px bg-gradient-to-r from-transparent via-emerald-100/70 to-transparent" />
 
-          <div className="grid gap-3 sm:grid-cols-[1.4fr_1fr]">
-            <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-              <div className="mb-2 flex items-center justify-between text-xs text-slate-300">
-                <span>OG Kush</span>
-                <span className="text-emerald-300">Bluete - Tag 42</span>
+      <div className="relative rounded-[38px] bg-gradient-to-br from-white/35 via-emerald-300/20 to-white/10 p-[1.5px] shadow-[0_28px_120px_rgba(0,0,0,0.7)]">
+        <div className="relative overflow-hidden rounded-[37px] border border-white/10 bg-[#030907] p-2.5">
+          <div className="pointer-events-none absolute left-1/2 top-[9px] z-10 h-1 w-24 -translate-x-1/2 rounded-full bg-white/15" />
+          <div className="pointer-events-none absolute left-1/2 top-[7px] z-10 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-emerald-200/70 shadow-[0_0_10px_rgba(52,211,153,0.6)]" />
+
+          <div
+            className="relative overflow-hidden rounded-[30px] border border-emerald-300/25 bg-[#08110f]/85 p-3 shadow-[0_26px_100px_rgba(0,0,0,0.62)] backdrop-blur-xl"
+            style={{ transform: "perspective(1800px) rotateX(5deg) rotateY(-7deg)", transformOrigin: "center" }}
+          >
+            <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-white/10" />
+            <div className="pointer-events-none absolute -left-24 top-[-1px] h-px w-[180%] rotate-[4deg] bg-gradient-to-r from-transparent via-emerald-200/35 to-transparent" />
+            <div className="rounded-2xl border border-white/10 bg-[#0a1512] p-4 sm:p-5">
+              <div className="mb-4 flex items-center justify-between">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-300/80">Grow OS</p>
+                  <h3 className="mt-1 text-lg font-semibold text-slate-100">Meine Grows</h3>
+                </div>
+                <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold text-emerald-200">
+                  AI Diagnose aktiv
+                </span>
               </div>
-              <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                <div className="h-full w-[67%] rounded-full bg-gradient-to-r from-emerald-400 to-lime-300" />
+
+              <div className="grid gap-3 sm:grid-cols-[1.4fr_1fr]">
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <div className="mb-2 flex items-center justify-between text-xs text-slate-300">
+                    <span>OG Kush</span>
+                    <span className="text-emerald-300">Bluete - Tag 42</span>
+                  </div>
+                  <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                    <div className="h-full w-[67%] rounded-full bg-gradient-to-r from-emerald-400 to-lime-300" />
+                  </div>
+                  <div className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
+                    <div className="rounded-lg border border-emerald-300/30 bg-emerald-400/10 p-2 text-emerald-200">Gesundheit: sehr gut</div>
+                    <div className="rounded-lg border border-white/10 bg-white/5 p-2 text-slate-300">Bewaesserung: in 2 Tagen</div>
+                    <div className="rounded-lg border border-amber-300/30 bg-amber-300/10 p-2 text-amber-200">Naechste Aufgabe: Duengen</div>
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                  <p className="text-xs text-slate-400">AI Diagnose</p>
+                  <p className="mt-1 text-sm font-semibold text-slate-100">Keine kritischen Signale</p>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-400">VPD und pH innerhalb Zielbereich. Leichter N-Bedarf in 48h moeglich.</p>
+                  <button
+                    type="button"
+                    className="mt-3 rounded-lg border border-emerald-300/40 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-400/20"
+                  >
+                    Details anzeigen
+                  </button>
+                </div>
               </div>
-              <div className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
-                <div className="rounded-lg border border-emerald-300/30 bg-emerald-400/10 p-2 text-emerald-200">Gesundheit: sehr gut</div>
-                <div className="rounded-lg border border-white/10 bg-white/5 p-2 text-slate-300">Bewaesserung: in 2 Tagen</div>
-                <div className="rounded-lg border border-amber-300/30 bg-amber-300/10 p-2 text-amber-200">Naechste Aufgabe: Duengen</div>
+
+              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {[
+                  { label: "Temperatur", value: "25 C", line: "from-emerald-300 to-green-500" },
+                  { label: "Luftfeuchte", value: "55%", line: "from-cyan-300 to-blue-500" },
+                  { label: "VPD", value: "0.92", line: "from-amber-300 to-yellow-500" },
+                  { label: "pH", value: "6.2", line: "from-fuchsia-300 to-purple-500" },
+                ].map((item) => (
+                  <div key={item.label} className="rounded-lg border border-white/10 bg-white/[0.03] p-2.5">
+                    <p className="text-[10px] uppercase tracking-wider text-slate-500">{item.label}</p>
+                    <p className="mt-1 text-sm font-semibold text-slate-100">{item.value}</p>
+                    <div className={`mt-2 h-1 rounded-full bg-gradient-to-r ${item.line}`} />
+                  </div>
+                ))}
               </div>
             </div>
-
-            <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-              <p className="text-xs text-slate-400">AI Diagnose</p>
-              <p className="mt-1 text-sm font-semibold text-slate-100">Keine kritischen Signale</p>
-              <p className="mt-2 text-xs leading-relaxed text-slate-400">VPD und pH innerhalb Zielbereich. Leichter N-Bedarf in 48h moeglich.</p>
-              <button
-                type="button"
-                className="mt-3 rounded-lg border border-emerald-300/40 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-400/20"
-              >
-                Details anzeigen
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {[
-              { label: "Temperatur", value: "25 C", line: "from-emerald-300 to-green-500" },
-              { label: "Luftfeuchte", value: "55%", line: "from-cyan-300 to-blue-500" },
-              { label: "VPD", value: "0.92", line: "from-amber-300 to-yellow-500" },
-              { label: "pH", value: "6.2", line: "from-fuchsia-300 to-purple-500" },
-            ].map((item) => (
-              <div key={item.label} className="rounded-lg border border-white/10 bg-white/[0.03] p-2.5">
-                <p className="text-[10px] uppercase tracking-wider text-slate-500">{item.label}</p>
-                <p className="mt-1 text-sm font-semibold text-slate-100">{item.value}</p>
-                <div className={`mt-2 h-1 rounded-full bg-gradient-to-r ${item.line}`} />
-              </div>
-            ))}
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function HeroPlantDecor() {
+  return (
+    <div className="pointer-events-none absolute -right-10 -top-1 z-20 hidden h-[620px] w-[360px] lg:block" aria-hidden="true">
+      <div className="absolute right-10 top-16 h-[430px] w-[220px] rounded-[60%_40%_56%_44%/44%_58%_42%_56%] bg-gradient-to-b from-emerald-300/35 via-emerald-500/22 to-emerald-900/20 blur-[0.5px] sl-plant-leaf sl-plant-leaf--slow" />
+      <div className="absolute right-28 top-50 h-[300px] w-[150px] rotate-[12deg] rounded-[58%_42%_46%_54%/40%_64%_36%_60%] bg-gradient-to-b from-lime-300/35 via-emerald-400/22 to-emerald-900/18 sl-plant-leaf" />
+      <div className="absolute right-0 top-44 h-[360px] w-[170px] -rotate-[10deg] rounded-[62%_38%_52%_48%/46%_56%_44%_54%] bg-gradient-to-b from-emerald-200/30 via-emerald-500/20 to-emerald-950/20 sl-plant-leaf sl-plant-leaf--fast" />
+      <div className="absolute right-4 top-28 h-[470px] w-[290px] rounded-full bg-emerald-500/12 blur-[75px]" />
     </div>
   );
 }
@@ -149,24 +170,29 @@ export default async function LandingPage() {
 
   return (
     <main className="min-h-screen bg-[#030807] text-slate-100">
+      <PremiumScrollFx />
+      <div className="pointer-events-none fixed inset-x-0 top-0 z-[70] h-px bg-gradient-to-r from-emerald-300/10 via-emerald-300/80 to-emerald-300/10 sl-progress-line" aria-hidden="true" />
+
       <section className="relative overflow-hidden border-b border-white/5">
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute -top-44 left-1/2 h-[520px] w-[860px] -translate-x-1/2 rounded-full bg-emerald-500/12 blur-[150px]" />
-          <div className="absolute -top-14 right-[-120px] h-[520px] w-[520px] rounded-full bg-emerald-500/10 blur-[120px]" />
-          <div className="absolute -bottom-20 right-0 h-[280px] w-[460px] rounded-full bg-teal-500/8 blur-[110px]" />
+          <div data-parallax="0.3" className="absolute -top-44 left-1/2 h-[520px] w-[860px] -translate-x-1/2 rounded-full bg-emerald-500/12 blur-[150px]" />
+          <div data-parallax="0.42" className="absolute -top-14 right-[-120px] h-[520px] w-[520px] rounded-full bg-emerald-500/10 blur-[120px] sl-velocity-glow" />
+          <div data-parallax="0.2" className="absolute -bottom-20 right-0 h-[280px] w-[460px] rounded-full bg-teal-500/8 blur-[110px]" />
           <div className="absolute -left-16 bottom-6 h-[320px] w-[240px] rotate-[-12deg] rounded-[70%_30%_65%_35%/38%_60%_40%_62%] border border-emerald-300/12 bg-gradient-to-br from-emerald-400/12 to-transparent blur-[1px]" />
           <div className="absolute -right-20 top-8 h-[420px] w-[300px] rotate-[14deg] rounded-[74%_26%_46%_54%/42%_58%_42%_58%] border border-emerald-300/15 bg-gradient-to-br from-emerald-300/15 to-transparent blur-[1px]" />
           <div className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:26px_26px]" />
           <div className="absolute inset-x-0 top-[72px] h-px bg-gradient-to-r from-transparent via-emerald-200/30 to-transparent" />
         </div>
 
+        <HeroPlantDecor />
+
         <div className="relative mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-14">
-          <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:gap-10">
-            <div className="order-1 lg:order-2">
+          <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] lg:gap-10">
+            <div className="order-1 lg:order-2" data-parallax="0.14" data-reveal data-reveal-delay="30">
               <ProductDashboardMock />
             </div>
 
-            <div className="order-2 space-y-6 lg:order-1">
+            <div className="order-2 space-y-6 lg:order-1" data-reveal>
               <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-emerald-200">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
                 {t("eyebrow")}
@@ -227,7 +253,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <section className="border-b border-white/5 bg-[#040b09]">
+      <section className="border-b border-white/5 bg-[#040b09]" data-reveal>
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
           <p className="text-center text-xs uppercase tracking-[0.22em] text-slate-500">Vertraut von ueber 10.000 Growern weltweit</p>
           <div className="mt-4 grid grid-cols-2 gap-3 text-center text-sm text-slate-400 sm:grid-cols-3 lg:grid-cols-6">
@@ -262,7 +288,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <section className="border-b border-white/5 bg-[#030807]">
+      <section className="border-b border-white/5 bg-[#030807]" data-reveal data-reveal-delay="50">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
@@ -321,7 +347,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-[#060f0d]">
+      <section className="bg-[#060f0d]" data-reveal data-reveal-delay="90">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
           <div className="mb-6 flex items-end justify-between gap-4">
             <div>
@@ -348,7 +374,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <section className="border-y border-white/5 bg-[#040a08]">
+      <section className="border-y border-white/5 bg-[#040a08]" data-reveal data-reveal-delay="120">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.4)]">
@@ -402,7 +428,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-[#030807]">
+      <section className="bg-[#030807]" data-reveal data-reveal-delay="150">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-gradient-to-br from-emerald-500/15 via-transparent to-transparent p-8 shadow-[0_20px_70px_rgba(0,0,0,0.45)] sm:p-10">
             <div className="pointer-events-none absolute -right-14 -top-14 h-44 w-44 rounded-full bg-emerald-400/20 blur-3xl" />
