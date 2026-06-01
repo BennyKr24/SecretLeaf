@@ -60,13 +60,17 @@ function StudyCard({ article, evidenceLabels }: { article: TerpiraArticle; evide
 
 function ProductDashboardMock() {
   return (
-    <div className="relative mx-auto w-full max-w-[1020px]">
+    <div className="relative mx-auto w-full max-w-[1040px]">
       <div className="pointer-events-none absolute -inset-10 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.24),transparent_66%)] blur-2xl" />
       <div className="pointer-events-none absolute -bottom-10 left-10 right-10 h-20 rounded-full bg-emerald-400/25 blur-2xl" />
       <div className="pointer-events-none absolute inset-x-16 -top-4 h-px bg-gradient-to-r from-transparent via-emerald-100/70 to-transparent" />
 
-      <div className="relative rounded-[40px] bg-gradient-to-br from-white/35 via-emerald-300/20 to-white/10 p-[1.5px] shadow-[0_28px_120px_rgba(0,0,0,0.7)]">
-        <div className="relative overflow-hidden rounded-[39px] border border-white/10 bg-[#030907] p-2.5">
+      <div className="relative rounded-[44px] bg-gradient-to-br from-white/35 via-emerald-300/20 to-white/10 p-[1.5px] shadow-[0_28px_120px_rgba(0,0,0,0.7)]">
+        <div className="relative overflow-hidden rounded-[43px] border border-white/10 bg-[#030907] p-2.5">
+          <div className="pointer-events-none absolute bottom-24 left-[7px] z-10 h-10 w-[3px] rounded-full bg-white/20" />
+          <div className="pointer-events-none absolute bottom-[150px] left-[7px] z-10 h-8 w-[3px] rounded-full bg-white/20" />
+          <div className="pointer-events-none absolute right-[7px] top-[145px] z-10 h-12 w-[3px] rounded-full bg-white/25" />
+
           <div className="pointer-events-none absolute left-1/2 top-[9px] z-10 h-1 w-24 -translate-x-1/2 rounded-full bg-white/15" />
           <div className="pointer-events-none absolute left-1/2 top-[7px] z-10 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-emerald-200/70 shadow-[0_0_10px_rgba(52,211,153,0.6)]" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-white/10 to-transparent sl-tablet-glare" />
@@ -74,7 +78,7 @@ function ProductDashboardMock() {
 
           <div
             className="relative overflow-hidden rounded-[30px] border border-emerald-300/25 bg-[#08110f]/85 p-3 shadow-[0_26px_100px_rgba(0,0,0,0.62)] backdrop-blur-xl"
-            style={{ transform: "perspective(1800px) rotateX(6deg) rotateY(-8deg)", transformOrigin: "center" }}
+            style={{ transform: "perspective(1850px) rotateX(7deg) rotateY(-10deg)", transformOrigin: "center" }}
           >
             <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-white/10" />
             <div className="pointer-events-none absolute -left-24 top-[-1px] h-px w-[180%] rotate-[4deg] bg-gradient-to-r from-transparent via-emerald-200/35 to-transparent" />
@@ -89,7 +93,7 @@ function ProductDashboardMock() {
                 </span>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-[56px_1.3fr_1fr]">
+              <div className="grid gap-3 sm:grid-cols-[56px_1.35fr_1fr]">
                 <div className="hidden rounded-xl border border-white/10 bg-[#08100e] p-2 sm:block">
                   <div className="mb-2 h-7 rounded-md border border-white/10 bg-white/[0.03]" />
                   <div className="space-y-2">
@@ -160,46 +164,51 @@ function ProductDashboardMock() {
 
 function HeroPlantDecor() {
   return (
-    <div className="pointer-events-none absolute -right-16 -top-8 z-20 hidden h-[680px] w-[420px] lg:block" aria-hidden="true">
-      <div className="absolute right-5 top-10 h-[560px] w-[320px] rounded-full bg-emerald-500/14 blur-[82px]" />
+    <div className="pointer-events-none absolute -right-20 -top-8 z-20 hidden h-[700px] w-[430px] lg:block" aria-hidden="true">
+      <div className="absolute right-8 top-14 h-[560px] w-[320px] rounded-full bg-emerald-500/15 blur-[84px]" />
 
-      <svg viewBox="0 0 260 640" className="absolute right-10 top-2 h-[620px] w-[250px] sl-leaf-svg sl-plant-leaf--slow">
+      <svg viewBox="0 0 320 700" className="absolute right-2 top-0 h-[680px] w-[330px] sl-cannabis-cluster sl-plant-leaf--slow">
         <defs>
-          <linearGradient id="leafMain" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="rgba(187,247,208,0.72)" />
-            <stop offset="60%" stopColor="rgba(34,197,94,0.55)" />
-            <stop offset="100%" stopColor="rgba(20,83,45,0.45)" />
+          <linearGradient id="slLeafFill" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="rgba(187,247,208,0.82)" />
+            <stop offset="55%" stopColor="rgba(34,197,94,0.62)" />
+            <stop offset="100%" stopColor="rgba(20,83,45,0.55)" />
+          </linearGradient>
+          <linearGradient id="slLeafVein" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="rgba(16,185,129,0.95)" />
+            <stop offset="100%" stopColor="rgba(5,46,22,0.8)" />
           </linearGradient>
         </defs>
-        <g transform="translate(130 330)">
-          <rect x="-2.5" y="-250" width="5" height="520" rx="3" fill="rgba(110,231,183,0.55)" />
-          {[-65, -45, -25, -5, 15, 35, 55].map((angle, index) => (
-            <ellipse key={`r-${index}`} cx="58" cy={-180 + index * 52} rx="56" ry="16" transform={`rotate(${angle})`} fill="url(#leafMain)" />
-          ))}
-          {[-120, -102, -84, -66, -48, -30, -12].map((angle, index) => (
-            <ellipse key={`l-${index}`} cx="-58" cy={-178 + index * 52} rx="56" ry="16" transform={`rotate(${angle})`} fill="url(#leafMain)" />
-          ))}
-          <ellipse cx="0" cy="-216" rx="20" ry="68" fill="url(#leafMain)" />
-          <ellipse cx="0" cy="188" rx="16" ry="48" fill="rgba(34,197,94,0.4)" />
+
+        <g transform="translate(176 350)">
+          <path d="M0 270 L0 -40" stroke="url(#slLeafVein)" strokeWidth="6" strokeLinecap="round" />
+          <path d="M0 -38 C 20 -160, 50 -250, 84 -330 C 76 -246, 61 -163, 35 -74 C 24 -40, 12 -22, 0 -38 Z" fill="url(#slLeafFill)" />
+          <path d="M0 -36 C -18 -156, -50 -246, -86 -332 C -76 -250, -61 -164, -34 -76 C -24 -42, -12 -24, 0 -36 Z" fill="url(#slLeafFill)" />
+          <path d="M4 -28 C 74 -146, 124 -215, 170 -258 C 142 -187, 108 -129, 58 -72 C 38 -50, 18 -36, 4 -28 Z" fill="url(#slLeafFill)" />
+          <path d="M-4 -28 C -76 -146, -127 -215, -172 -258 C -143 -188, -108 -131, -59 -72 C -39 -49, -20 -35, -4 -28 Z" fill="url(#slLeafFill)" />
+          <path d="M8 -18 C 94 -104, 154 -145, 212 -166 C 170 -124, 122 -90, 66 -52 C 44 -38, 24 -26, 8 -18 Z" fill="url(#slLeafFill)" />
+          <path d="M-8 -18 C -96 -104, -156 -145, -214 -166 C -171 -124, -123 -90, -67 -52 C -44 -37, -24 -24, -8 -18 Z" fill="url(#slLeafFill)" />
+
+          <path d="M0 8 C 22 -14, 42 -20, 56 -22" stroke="url(#slLeafVein)" strokeWidth="2.1" strokeLinecap="round" />
+          <path d="M0 -10 C 26 -44, 48 -54, 72 -62" stroke="url(#slLeafVein)" strokeWidth="2" strokeLinecap="round" />
+          <path d="M0 -6 C -22 -14, -40 -20, -56 -22" stroke="url(#slLeafVein)" strokeWidth="2.1" strokeLinecap="round" />
+          <path d="M0 -12 C -28 -44, -49 -54, -73 -62" stroke="url(#slLeafVein)" strokeWidth="2" strokeLinecap="round" />
         </g>
       </svg>
 
-      <svg viewBox="0 0 240 520" className="absolute -right-8 top-[130px] h-[440px] w-[220px] sl-leaf-svg sl-plant-leaf--fast">
+      <svg viewBox="0 0 220 470" className="absolute -right-6 top-[150px] h-[420px] w-[220px] sl-cannabis-cluster sl-plant-leaf--fast">
         <defs>
-          <linearGradient id="leafSide" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="rgba(167,243,208,0.62)" />
-            <stop offset="100%" stopColor="rgba(21,128,61,0.45)" />
+          <linearGradient id="slLeafFillSmall" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="rgba(167,243,208,0.76)" />
+            <stop offset="100%" stopColor="rgba(21,128,61,0.5)" />
           </linearGradient>
         </defs>
-        <g transform="translate(120 260)">
-          <rect x="-2" y="-190" width="4" height="390" rx="2" fill="rgba(110,231,183,0.44)" />
-          {[-58, -40, -20, 0, 20, 40].map((angle, index) => (
-            <ellipse key={`s-r-${index}`} cx="44" cy={-128 + index * 44} rx="40" ry="12" transform={`rotate(${angle})`} fill="url(#leafSide)" />
-          ))}
-          {[-122, -104, -86, -68, -50, -32].map((angle, index) => (
-            <ellipse key={`s-l-${index}`} cx="-44" cy={-126 + index * 44} rx="40" ry="12" transform={`rotate(${angle})`} fill="url(#leafSide)" />
-          ))}
-          <ellipse cx="0" cy="-154" rx="14" ry="52" fill="url(#leafSide)" />
+        <g transform="translate(118 236)">
+          <path d="M0 182 L0 -26" stroke="rgba(110,231,183,0.82)" strokeWidth="4" strokeLinecap="round" />
+          <path d="M0 -24 C 16 -84, 34 -132, 58 -182 C 53 -136, 44 -90, 26 -40 C 18 -24, 10 -14, 0 -24 Z" fill="url(#slLeafFillSmall)" />
+          <path d="M0 -24 C -16 -84, -34 -132, -60 -182 C -54 -136, -45 -90, -26 -40 C -18 -24, -10 -14, 0 -24 Z" fill="url(#slLeafFillSmall)" />
+          <path d="M6 -16 C 56 -80, 90 -114, 124 -132 C 96 -100, 70 -76, 38 -48 C 26 -36, 14 -26, 6 -16 Z" fill="url(#slLeafFillSmall)" />
+          <path d="M-6 -16 C -56 -80, -92 -114, -126 -132 C -98 -100, -72 -76, -40 -48 C -26 -34, -14 -24, -6 -16 Z" fill="url(#slLeafFillSmall)" />
         </g>
       </svg>
     </div>

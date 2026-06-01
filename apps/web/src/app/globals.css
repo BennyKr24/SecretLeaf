@@ -297,11 +297,13 @@ html {
   will-change: transform;
 }
 
-.sl-leaf-svg {
-  filter: drop-shadow(0 20px 42px rgba(0, 0, 0, 0.52));
+.sl-cannabis-cluster {
+  filter:
+    drop-shadow(0 16px 34px rgba(0, 0, 0, 0.54))
+    drop-shadow(0 0 24px rgba(34, 197, 94, 0.24));
   opacity: 0.98;
   animation: slLeafSway 8.5s ease-in-out infinite;
-  transform-origin: 50% 65%;
+  transform-origin: 56% 70%;
   will-change: transform;
 }
 
@@ -323,7 +325,7 @@ html {
   .sl-plant-leaf,
   .sl-plant-leaf--slow,
   .sl-plant-leaf--fast,
-  .sl-leaf-svg {
+  .sl-cannabis-cluster {
     animation: none !important;
     transition: none !important;
     transform: none !important;
