@@ -21,9 +21,6 @@ import type {
   ReprocessConfig,
   ReprocessResult,
   ScoringResult,
-  ScoringWeights,
-  StudyType,
-  TopicKey,
 } from "./types";
 import { classifyStudy } from "./classify";
 import { scoreStudy } from "./score";

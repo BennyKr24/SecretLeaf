@@ -54,20 +54,30 @@ export function useProfile(
   userId: string | undefined,
   fallback: string
 ): ProfileState {
-  const [name, setName] = useState(fallback);
-  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
+  const [name, setName] = useState(() => {
+    if (!userId) return fallback;
+    return readProfile(userId)?.name ?? fallback;
+  });
+  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(() => {
+    if (!userId) return undefined;
+    return readProfile(userId)?.avatarUrl;
+  });
   const [saveState, setSaveState] = useState<SaveState>("idle");
 
   // Load from localStorage on mount / when userId changes
   useEffect(() => {
     if (!userId) return;
     const stored = readProfile(userId);
-    if (stored) {
-      setName(stored.name);
-      setAvatarUrl(stored.avatarUrl);
-    } else {
-      setName(fallback);
-    }
+    const t = setTimeout(() => {
+      if (stored) {
+        setName(stored.name);
+        setAvatarUrl(stored.avatarUrl);
+      } else {
+        setName(fallback);
+        setAvatarUrl(undefined);
+      }
+    }, 0);
+    return () => clearTimeout(t);
   }, [userId, fallback]);
 
   const updateName = useCallback(

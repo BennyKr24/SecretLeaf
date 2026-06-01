@@ -1,434 +1,305 @@
-"# Architecture & Design Decisions
+# SecretLeaf Architecture
 
-## 🏗️ Overall Architecture
+## 1. Purpose and Scope
 
-```
-┌─────────────────────────────────────────────┐
-│        Browser / Mobile Client              │
-└────────────────┬────────────────────────────┘
-                 │
-        ┌────────┴─────────┐
-        │                  │
-    ┌───▼──────┐      ┌────▼──────┐
-    │ Next.js  │      │  Fastify  │
-    │ (Web)    │      │  (API)    │
-    └───┬──────┘      └────┬──────┘
-        │                  │
-        │       ┌──────────┴─────────────┐
-        │       │                        │
-    ┌───▼───────▼────────┐    ┌─────────▼──────┐
-    │  TypeScript Stack  │    │   Prisma ORM   │
-    │  + Tailwind CSS    │    │  + PostgreSQL  │
-    └────────────────────┘    └────────────────┘
-```
+This document describes the current technical architecture of SecretLeaf and the intended target structure.
+It is an engineering reference for product, development, and operations.
 
-### Why this Stack?
+Scope of this document:
+- System boundaries and runtime topology
+- Domain architecture
+- Data ownership and persistence
+- Security model
+- Reliability and operations fundamentals
+- Known architectural debt and migration direction
 
-**Frontend (Next.js)**
-- Server-Side Rendering ready
-- Static generation für Wiki (Performance)
-- Built-in API routes (optional)
-- Great TypeScript support
-- Tailwind für schnelle Styling
-
-**Backend (Fastify)**
-- Leicht (einfaches Deployment)
-- TypeScript native
-- Plugin-System für Modularität
-- Auto-Reloading in Dev
-- Fast benchmarks
-
-**Database (Prisma + PostgreSQL)**
-- Type-safe schema
-- Migration system
-- Easy querying
-- PostgreSQL = robust + GDPR-ready
-
-**Monorepo (npm workspaces)**
-- Shared types (`@secretleaf/shared`)
-- Coordinated versioning
-- Atomic commits über packages
-- One `package.json` management
+Out of scope:
+- UI style rules (see AI_RULES.md)
+- Deployment steps (see DEPLOYMENT.md)
 
 ---
 
-## 📦 Folder Structure
+## 2. Reality Check: Current System
 
-```
+SecretLeaf currently runs as a monorepo with two server paths:
+
+1. apps/web (Next.js)
+- Primary product runtime
+- App Router pages and API routes
+- Supabase-backed auth, studies, automation telemetry
+- Grow product features with hybrid storage (Supabase + local cache)
+
+2. apps/api (Fastify + Prisma)
+- Legacy/parallel API stack
+- Listing/marketplace-oriented routes
+- Separate Prisma schema (SQLite datasource in current config)
+- Not the primary production path for the core product
+
+This duality is the main architectural complexity today.
 
 ---
 
-## 🧭 Information Architecture (Product Level)
+## 3. Monorepo Structure
 
-Die Plattform verwendet eine klare, nutzerzentrierte Top-Level-Struktur mit fünf Hauptbereichen.
-
-### Primary Navigation
-- `/studies` (Knowledge)
-- `/tools` (Operational Tools)
-- `/database` (Structured Catalogs)
-- `/dashboard` (User Workspace)
-- `/search` (Cross-domain Discovery)
-
-### Route Hierarchy
-- `Home`
-   - `/`
-- `Studies`
-   - `/studies`
-   - `/studies/[slug]`
-   - `/studies/sources`
-   - `/studies/pests`
-   - `/studies/deficiencies`
-- `Tools`
-   - `/tools`
-   - `/tools/plans`
-- `Database`
-   - `/database`
-   - `/database/fertilizers`
-- `Dashboard`
-   - `/dashboard`
-   - `/dashboard/review`
-- `System`
-   - `/status`
-   - `/auth`
-
-### Design Rules
-- Keine Legacy-Doppelstrukturen in der Primärnavigation.
-- Jede Route gehört genau zu einem klaren Domain-Bereich.
-- Nutzerflüsse zu Kernzielen bleiben in 2-3 Klicks erreichbar.
-- Header bleibt schlank: Primary Navigation + sekundäre Aktionen (Status/Auth).
+```text
 SecretLeaf/
-├── apps/
-│   ├── api/              # Fastify backend
-│   │   ├── src/
-│   │   │   ├── routes/   # API endpoints
-│   │   │   ├── lib/      # Utilities
-│   │   │   └── server.ts # Entry
-│   │   └── prisma/       # DB schema + migrations
-│   │
-│   └── web/              # Next.js frontend
-│       ├── src/
-│       │   ├── app/      # Routes/Pages
-│       │   ├── components/
-│       │   ├── lib/      # Utilities + Terpira
-│       │   ├── data/     # Wiki content
-│       │   └── styles/
-│       └── public/       # Static assets
-│
-├── packages/
-│   └── shared/           # Shared types & utilities
-│
-├── scripts/              # Automation (status probe, etc.)
-├── README.md             # Main overview
-├── DEPLOYMENT.md         # Production guide
-└── ARCHITECTURE.md       # This file
+  apps/
+    web/                 # Primary product runtime (Next.js)
+    api/                 # Legacy parallel API (Fastify + Prisma)
+  packages/
+    shared/              # Shared types (currently minimal)
+  scripts/               # Ops and data automation scripts
+  supabase/
+    migrations/          # Production DB/RLS migrations
 ```
+
+Key principle:
+- Product-critical development is centered in apps/web and supabase/migrations.
 
 ---
 
-## 🧠 Key Design Decisions
+## 4. Runtime Topology
 
-### 1. **Wiki as Knowledge Base (Terpira)**
+### 4.1 Primary runtime (production)
 
-**Decision**: Dedicate significant effort to structured wiki with peer-reviewed sources.
+```text
+Client (Browser)
+  -> Next.js app (apps/web)
+    -> App Router pages
+    -> Next.js API routes (/api/*)
+      -> Supabase (Auth + Postgres + RLS)
+      -> External sources (Crossref)
+```
 
-**Why**:
-- Users benefit from education → better decisions
-- Reduces misinformation & regulatory risk
-- Builds credibility (41 peer-reviewed sources)
-- Evergreen content (SEO bonus)
+### 4.2 Legacy runtime (secondary)
 
-**Trade-offs**:
-- Development time upfront
-- Requires maintenance
-- Benefit: Long-term organic traffic
+```text
+Client/Internal caller
+  -> Fastify API (apps/api)
+    -> Prisma Client
+      -> SQLite/Postgres (depends on env)
+```
+
+Strategic direction:
+- Keep one primary backend path for product-critical use cases.
+- Decommission or isolate legacy routes that do not support the current product thesis.
 
 ---
 
-### 2. **Status Automation (Daemon Mode)**
+## 5. Domain Architecture
 
-**Decision**: Run continuous status probes (every 30s) instead of polling from frontend.
+SecretLeaf currently contains four major domains.
 
-**Why**:
-- Users see real status immediately
-- No race conditions with stale data
-- Backend-driven vs frontend-spam polling
-- Self-healing with `ensure_running.sh`
+### 5.1 Grow OS Domain
 
-**Implementation**:
-```
-status_probe.mjs → checks /health + /status-report → writes status-data.json
-↓
-Frontend (static or dynamic) reads status-data.json
-↓
-Fallback if API down: Show last-known status
-```
+Purpose:
+- Guided grow operations and daily execution
 
----
+Core capabilities:
+- Grow setup and planning
+- Multi-plant management
+- Task generation and completion
+- Grow log entries and retention mechanics
 
-### 3. **Pre-rendering for Performance**
+Persistence model:
+- Logged-in users: Supabase tables (grows, plants, log_entries)
+- Anonymous/offline fallback: local storage adapter
+- Migration path from local to cloud exists and is idempotent
 
-**Decision**: Pre-render 8 wiki pages (hub + 13 articles + sources) as static HTML.
+### 5.2 Studies and Knowledge Domain
 
-**Why**:
-- Fastest possible load time
-- Minimal JavaScript
-- Works offline
-- Great for SEO
+Purpose:
+- Structured knowledge and source-backed content
 
-**Trade-offs**:
-- Rebuild needed if content changes
-- Mitigation: On-demand ISR (Incremental Static Regeneration)
+Core capabilities:
+- Static knowledge base pages
+- Study records with quality status
+- Search and filtering
 
----
+Persistence model:
+- Curated data in code + Supabase table storage for synchronized studies
 
-### 4. **Public API with Fallback**
+### 5.3 Automation and Study Engine Domain
 
-**Decision**: Public API endpoints never return 500 (fallback to degraded response).
+Purpose:
+- Continuous ingestion, normalization, classification, scoring, persistence
 
-**Why**:
-- Better UX (something beats nothing)
-- System resilience
-- User trust
+Core capabilities:
+- Scheduled ingestion via cron routes
+- Deterministic, rule-based pipeline
+- Telemetry via automation_job_runs
+- Health monitoring endpoint and circuit breaker support
 
-**Example**:
-```typescript
-// If DB down, return demo data instead of 500
-GET /public/overview
-→ Try DB query
-→ Fail: Return cached/demo data with "degraded" flag
-```
+Persistence model:
+- Supabase studies + automation_job_runs
 
----
+### 5.4 Admin and Governance Domain
 
-### 5. **JWT + Minimal Auth**
+Purpose:
+- Operate quality, runs, settings, and roles
 
-**Decision**: JWT for simplicity, no OAuth initially.
+Core capabilities:
+- Admin dashboard API actions
+- Study review workflows
+- Engine trigger/reprocess/adapt actions
 
-**Why**:
-- No external dependencies
-- Stateless (scales easily)
-- Good enough for MVP
-
-**Future**: Add OAuth2 / OIDC if needed
+Security model:
+- Role resolution via user_roles table
+- Admin-only routes enforced server-side
 
 ---
 
-## 🔄 Data Flow
+## 6. Data Ownership and Persistence
 
-### Wiki Article View
-```
-User clicks /studies/cannabis-anbau-grundlagen
-↓
-Next.js checks pre-rendered cache
-↓
-If fresh: Serve static HTML (instant)
-If stale: Generate on-demand (ISR)
-↓
-Page loads with:
-- Erkläboxen, FAQ, Glossar (client-side)
-- Source links (from sidebar)
-- Related articles
-```
+### 6.1 Canonical production data
 
-### Status Update
-```
-status_probe.mjs (every 30s)
-↓
-GET http://localhost:4000/health
-GET http://localhost:3000/
-↓
-Write status-data.json
-↓
-Frontend / Next.js / Landing reads file
-↓
-Show ampel (🟢 / 🟡 / 🔴)
-```
+Supabase/Postgres is the canonical source for:
+- Auth users and roles
+- Studies and review status
+- Grow cloud records for authenticated sessions
+- Automation run telemetry
 
-### Listing Creation (Protected)
-```
-User (logged in)
-→ POST /listings {title, price, location}
-↓
-Fastify: Verify JWT
-↓
-Prisma: Insert into Database
-↓
-Return: {id, slug, ...}
-↓
-Frontend: Update dashboard
-```
+### 6.2 Transitional local persistence
+
+localStorage remains in use for:
+- Anonymous user flows
+- Cache and offline-friendly UX
+- Backward compatibility during migration
+
+Important constraint:
+- localStorage data is not an authoritative multi-device source.
+- Product decisions should continue reducing local-only critical state.
+
+### 6.3 Legacy schema
+
+Prisma schema under apps/api currently models a different product slice (listing marketplace).
+This is not aligned with the main Grow+Studies product path.
 
 ---
 
-## 🛡️ Security by Design
+## 7. API Architecture
 
-### Authentication
-- JWT in httpOnly cookies (XSS-safe)
-- Refresh tokens separate (if extended sessions needed)
-- No passwords in logs
-- Argon2 hashing for passwords (via bcrypt)
+### 7.1 Primary API surface
 
-### Authorization
-- Role-based (user, provider, admin)
-- Scoped API endpoints (can't access others' listings)
-- Public routes for wiki + health
-- Protected routes for user-specific data
+Next.js API routes in apps/web/src/app/api:
+- Public endpoints
+- Auth context resolution
+- Studies CRUD/review surface
+- Search endpoints
+- Automation endpoints (cron protected)
+- Health/status endpoints
 
-### Input Validation
-- Zod schemas (runtime validation)
-- Prisma prevents SQL injection
-- CORS restrictions
-- Rate limiting on public endpoints
+### 7.2 Access control
 
-### Privacy
-- Minimal user profiling
-- No 3rd-party cookies (goal: 🟢)
-- Logging redacts sensitive fields
-- Optional pseudonymity (no real names required)
+- Bearer token resolution against Supabase auth
+- Role lookup through user_roles
+- Explicit admin guard for privileged endpoints
+
+### 7.3 Reliability pattern
+
+Public endpoints frequently return degraded payloads instead of hard failures where useful.
+This prevents brittle UI states and preserves partial functionality.
 
 ---
 
-## 📈 Scalability Considerations
+## 8. Security Architecture
 
-### Current State (MVP)
-- Single instance (API + Web together)
-- SQLite or PostgreSQL
-- In-memory cache
-- No load balancer needed
+Core controls implemented:
+- Supabase auth and token validation
+- Server-side role checks
+- RLS-based data isolation in Supabase migrations
+- Input validation on API boundaries
+- Cron secret protection for automation routes
 
-### Scaling Path (Future)
-1. **Separate API & Web**
-   - Docker containers
-   - Kubernetes orchestration
-
-2. **Database**
-   - Read replicas
-   - Connection pooling (PgBouncer)
-   - Caching layer (Redis)
-
-3. **Frontend**
-   - CDN for static wiki pages
-   - Image optimization (Next.js Image)
-
-4. **Monitoring**
-   - Prometheus metrics
-   - Grafana dashboards
-   - ELK stack for logs
+Controls to mature further:
+- Full production error tracking enablement
+- Expanded abuse/rate-limit controls on all exposed endpoints
+- Regular secret rotation and hardening automation
 
 ---
 
-## 🚀 Performance Targets
+## 9. Performance and Scalability
 
-| Metric | Target | How |
-|--------|--------|-----|
-| First Contentful Paint (FCP) | < 1s | Pre-rendering, Tailwind CSS |
-| Largest Contentful Paint (LCP) | < 2.5s | Optimized images, lazy loading |
-| Cumulative Layout Shift (CLS) | < 0.1 | Fixed sizes, no late-loaded ads |
-| Time to Interactive (TTI) | < 3.5s | Minimal JS, code splitting |
-| API Response | < 200ms | DB indexing, caching |
+Current strengths:
+- App + API colocated in Next.js runtime for low integration overhead
+- Static knowledge assets and deterministic pipelines
+- Database-backed automation telemetry for observability
 
----
+Current bottlenecks:
+- Dual backend architecture increases cognitive and operational cost
+- Limited shared package usage creates type drift risk between stacks
 
-## 🧪 Testing Strategy
-
-### Current
-- TypeScript for compile-time safety
-- Build validation
-
-### Future
-- Unit tests (Jest) for utilities
-- Integration tests (API routes)
-- E2E tests (Playwright) for wiki
-- Performance tests (k6)
+Scalability direction:
+1. Consolidate primary backend path
+2. Keep domain modules isolated within apps/web
+3. Add focused caching only for measured bottlenecks
+4. Grow observability before aggressive infrastructure expansion
 
 ---
 
-## 📚 Example: Adding a New Wiki Article
+## 10. Reliability and Operations
 
-```typescript
-// 1. Add content to apps/web/src/data/terpira/wiki.ts
-{
-  slug: "my-new-article",
-  title: "My Topic",
-  category: "anbau",
-  difficulty: "einsteiger",
-  simpleExplainers: [ { title, text }, ... ],
-  faq: [ { question, answer }, ... ],
-  glossary: [ { term, definition }, ... ],
-  sourceIds: [ "id1", "id2", ... ],
-  relatedSlugs: [ ... ],
-  // ... other fields
-}
+Operational building blocks:
+- Scheduled automation via vercel.json cron definitions
+- Automation run recording in automation_job_runs
+- Health endpoints for app and engine
+- Structured internal logging wrappers in runtime modules
 
-// 2. Add sources to sourceRegister if needed
-{
-  id: "my-new-source",
-  title: "...",
-  publisher: "...",
-  year: "2024",
-  url: "https://..."
-}
+Production reliability target:
+- Prefer predictable degraded behavior over silent hard crashes
+- Keep all critical automation jobs auditable through run records
 
-// 3. Rebuild
-npm run build
+---
 
-// 4. Deploy (pre-renders automatically)
+## 11. Architectural Debt and Risks
+
+High-priority debt:
+1. Parallel backend stacks with partially overlapping responsibilities
+2. Documentation drift between architecture docs and runtime reality
+3. Incomplete monetization architecture despite plan/entitlement signals in UI
+4. Incomplete observability activation (Sentry wrappers present, runtime integration pending)
+
+Risk impact:
+- Slower delivery velocity
+- Harder onboarding
+- Increased incident/debugging time
+- Product confusion across teams
+
+---
+
+## 12. Target Architecture (Near-term)
+
+Target for next iteration:
+
+```text
+Client
+  -> Next.js (single product gateway)
+    -> Domain modules (Grow, Studies, Engine, Admin)
+      -> Supabase (Auth/Postgres/RLS/Storage)
 ```
 
----
-
-## 🔍 Debugging Tips
-
-### API Issues
-```bash
-# Check health
-curl http://localhost:4000/health
-
-# Check status report
-curl http://localhost:4000/public/status-report
-
-# Logs
-cd apps/api && npm run dev
-# Look for TypeScript errors
-```
-
-### Frontend Issues
-```bash
-# Check dev server
-cd apps/web && npm run dev
-
-# Build cache
-rm -rf .next
-
-# Rebuild
-npm run build
-```
-
-### Wiki Generation
-```bash
-# Check wiki.ts syntax
-npm run typecheck
-
-# Rebuild wiki pages
-rm -rf apps/web/.next
-npm run build
-
-# Check output
-ls -la apps/web/.next/server/app/studies/
-```
+Key outcomes:
+- One product backend path
+- Clear domain ownership
+- Reduced infra duplication
+- Better alignment between roadmap and codebase
 
 ---
 
-## 🎯 Future Improvements
+## 13. Engineering Standards
 
-1. **Full-text search** on wiki articles (Meilisearch, Algolia)
-2. **Internationalization** (i18n for German, English, French?)
-3. **Community ratings** on articles
-4. **Weekly wiki updates** (fetch new papers via RSS)
-5. **Mobile app** (React Native)
-6. **Analytics** (Plausible, Fathom - privacy-first)
+Standards for architecture-safe changes:
+- No new cross-stack duplication between apps/web and apps/api
+- New product features must declare data ownership explicitly
+- API additions require auth and role model definition
+- Every automation route must emit auditable run metadata
+- Architecture-impacting changes require this document update in the same PR
 
 ---
 
-**Last Updated**: 26.03.2026
-**Status**: MVP Architecture
+## 14. Document Metadata
+
+Owner: Product Engineering
+Status: Active
+Last updated: 2026-06-01
+Next review: 2026-07-01

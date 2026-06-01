@@ -127,7 +127,10 @@ export default function DashboardStudiesPage() {
       return;
     }
 
-    void loadDbStudies(1, false);
+    const t = setTimeout(() => {
+      void loadDbStudies(1, false);
+    }, 0);
+    return () => clearTimeout(t);
   }, [loadDbStudies, session]);
 
   const stats = useMemo(() => {
@@ -244,7 +247,7 @@ export default function DashboardStudiesPage() {
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Intern</p>
             <h1 className="text-xl font-bold text-[#10281e] sm:text-2xl">Studien-Review in 1 Minute</h1>
-            <p className="text-sm text-[#4d685a]">Kurz lesen, Quelle prüfen, dann "Rein", "Später" oder "Nein" klicken.</p>
+            <p className="text-sm text-[#4d685a]">Kurz lesen, Quelle prüfen, dann &quot;Rein&quot;, &quot;Später&quot; oder &quot;Nein&quot; klicken.</p>
           </div>
           <div className="flex flex-wrap gap-3 text-sm">
             <Link href="/dashboard" className="font-medium text-[#4d685a] hover:text-[#173126]">Dashboard</Link>

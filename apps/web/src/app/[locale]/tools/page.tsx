@@ -5,7 +5,6 @@ import { toolRegistry } from "@/lib/tools/registry";
 import {
   toolCategoryLabel,
   toolCategoryIcon,
-  toolCategoryColor,
   toolCategoryAccent,
   type ToolCategory,
 } from "@/lib/tools/types";

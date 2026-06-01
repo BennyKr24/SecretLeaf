@@ -25,7 +25,8 @@ export function LocaleBanner() {
     // Only show if browser prefers English
     const browserLang = navigator.language ?? navigator.languages?.[0] ?? "";
     if (browserLang.toLowerCase().startsWith("en")) {
-      setVisible(true);
+      const t = setTimeout(() => setVisible(true), 0);
+      return () => clearTimeout(t);
     }
   }, [locale]);
 

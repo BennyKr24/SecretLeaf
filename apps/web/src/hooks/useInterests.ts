@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const STORAGE_KEY = 'secretleaf.interests';
 
@@ -53,13 +53,8 @@ function writeInterests(interests: Interest[]): void {
 }
 
 export function useInterests() {
-  const [interests, setInterests] = useState<Interest[]>([]);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    setInterests(readInterests());
-    setLoaded(true);
-  }, []);
+  const [interests, setInterests] = useState<Interest[]>(() => readInterests());
+  const [loaded] = useState(() => typeof window !== 'undefined');
 
   const toggle = useCallback((interest: Interest) => {
     setInterests(prev => {

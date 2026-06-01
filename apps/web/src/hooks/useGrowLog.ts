@@ -186,14 +186,18 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
   // Anonymous: localStorage only.
   useEffect(() => {
     if (!growId) {
-      setEntries([]);
-      setLoaded(true);
-      return;
+      const t = setTimeout(() => {
+        setEntries([]);
+        setLoaded(true);
+      }, 0);
+      return () => clearTimeout(t);
     }
     if (!user) {
-      refresh();
-      setLoaded(true);
-      return;
+      const t = setTimeout(() => {
+        refresh();
+        setLoaded(true);
+      }, 0);
+      return () => clearTimeout(t);
     }
     const supabase = getSupabaseBrowserClient();
     dbGetLogEntries(supabase, growId)

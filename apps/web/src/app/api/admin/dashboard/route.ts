@@ -178,10 +178,17 @@ export async function POST(req: Request) {
         const sortBy = (body.sortBy as string) || "created_at";
         const sortDir = body.sortDir === "asc" ? true : false;
 
-        const applyStudiesFilters = (
-          query: any,
+        type FilterableQuery<TSelf> = {
+          eq: (column: string, value: unknown) => TSelf;
+          gte: (column: string, value: unknown) => TSelf;
+          lte: (column: string, value: unknown) => TSelf;
+          ilike: (column: string, pattern: string) => TSelf;
+        };
+
+        const applyStudiesFilters = <TQuery extends FilterableQuery<TQuery>>(
+          query: TQuery,
           useEngineFields: boolean,
-        ) => {
+        ): TQuery => {
           let nextQuery = query;
 
           if (body.quality && body.quality !== "all") {
@@ -223,12 +230,12 @@ export async function POST(req: Request) {
             ? sortBy
             : "created_at";
 
-          let query = supabase
+          const query = supabase
             .from(STUDIES_TABLE)
             .select(useEngineFields ? STUDIES_SELECT_ENGINE : STUDIES_SELECT_LEGACY, { count: "exact" });
 
-          query = applyStudiesFilters(query, useEngineFields);
-          return query.order(safeSortBy, { ascending: sortDir }).range(offset, offset + limit - 1);
+          const filteredQuery = applyStudiesFilters(query, useEngineFields);
+          return filteredQuery.order(safeSortBy, { ascending: sortDir }).range(offset, offset + limit - 1);
         };
 
         let studiesData: Array<Record<string, unknown>> | null = null;
@@ -554,7 +561,14 @@ export async function POST(req: Request) {
         // Supabase admin listUsers returns all users paginated, we'll estimate total
         // The actual total is available through a separate count
         const { data: countData } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1 });
-        const totalUsers = countData?.users ? (authResponse as any)?.total ?? users.length : users.length;
+        const totalFromList = (() => {
+          if (authResponse && typeof authResponse === "object" && "total" in authResponse) {
+            const total = (authResponse as { total?: unknown }).total;
+            if (typeof total === "number") return total;
+          }
+          return null;
+        })();
+        const totalUsers = countData?.users ? (totalFromList ?? users.length) : users.length;
 
         return Response.json({
           users,
@@ -626,7 +640,13 @@ export async function POST(req: Request) {
 
         // Total auth users
         const { data: authCount } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1 });
-        const totalAuthUsers = (authCount as any)?.total ?? 0;
+        const totalAuthUsers = (() => {
+          if (authCount && typeof authCount === "object" && "total" in authCount) {
+            const total = (authCount as { total?: unknown }).total;
+            if (typeof total === "number") return total;
+          }
+          return 0;
+        })();
 
         // Studies count
         const { count: studiesCount } = await supabase

@@ -231,7 +231,7 @@ export function classifyStudy(
   const { matchedTopics, topicFit } = matchTopics(corpus, overrides?.extraClusters);
 
   // Step 5: Soft signals
-  const { flags, scoreDelta: _scoreDelta } = collectSoftSignals(corpus);
+  const { flags } = collectSoftSignals(corpus);
 
   // Note: scoreDelta is NOT applied here — it's used in the scoring engine.
   // Classification only reports the flags.

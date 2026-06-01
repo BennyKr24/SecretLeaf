@@ -17,7 +17,6 @@ import type {
   ClassificationResult,
   EditorialPriority,
   NormalizedStudy,
-  ScoreBreakdown,
   ScoringResult,
   StudyType,
 } from "./types";

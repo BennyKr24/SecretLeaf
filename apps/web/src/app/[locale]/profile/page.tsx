@@ -55,11 +55,7 @@ export default function ProfilePage() {
 
   const [nameInput, setNameInput] = useState("");
   const [touched, setTouched] = useState(false);
-
-  // Sync input when profile name loads from localStorage
-  useEffect(() => {
-    setNameInput(name);
-  }, [name]);
+  const effectiveNameInput = touched ? nameInput : name;
 
   // Redirect to /auth if not logged in
   useEffect(() => {
@@ -80,12 +76,12 @@ export default function ProfilePage() {
   if (!user) return null;
 
   const nameError =
-    touched && nameInput.trim().length < 2 ? t("nameMin") : null;
+    touched && effectiveNameInput.trim().length < 2 ? t("nameMin") : null;
 
   const handleSaveName = async () => {
     setTouched(true);
-    if (nameInput.trim().length < 2) return;
-    await updateName(nameInput.trim());
+    if (effectiveNameInput.trim().length < 2) return;
+    await updateName(effectiveNameInput.trim());
   };
 
   const plan = effectivePlan(user.role, user.plan);
@@ -153,7 +149,7 @@ export default function ProfilePage() {
             <div>
               <input
                 type="text"
-                value={nameInput}
+                value={effectiveNameInput}
                 onChange={(e) => {
                   setNameInput(e.target.value);
                   setTouched(true);

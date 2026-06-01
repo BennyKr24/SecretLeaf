@@ -98,7 +98,7 @@ export function DiagnoseFlow({ category, onBack }: Props) {
         >
           ← Zurück
         </button>
-        <p className="text-sm text-red-500">Fehler: Knoten „{state.nodeId}" nicht gefunden.</p>
+        <p className="text-sm text-red-500">Fehler: Knoten „{state.nodeId}“ nicht gefunden.</p>
       </div>
     );
   }

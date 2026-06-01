@@ -37,17 +37,11 @@ const ROHR_KLASSEN = [
   { durchmesser: 250, maxFlow: 1800 },
 ];
 
-function getLevel(empfohlen: number, waerme: number): ResultLevel {
+function getLevel(empfohlen: number): ResultLevel {
   // If thermal load is much higher than base, it's tight
   if (empfohlen > 1200) return 'rot';
   if (empfohlen > 800) return 'gelb';
   return 'gruen';
-}
-
-function getTempLevel(umgebung: number, ziel: number): ResultLevel {
-  if (umgebung <= ziel) return 'gruen';
-  if (umgebung - ziel <= 5) return 'gelb';
-  return 'rot';
 }
 
 export function calculateVentilation(inputs: VentilationInputs): VentilationOutput {
@@ -77,8 +71,7 @@ export function calculateVentilation(inputs: VentilationInputs): VentilationOutp
   // Recommended duct diameter
   const rohr = ROHR_KLASSEN.find((r) => r.maxFlow >= empfohlenerVolumenstrom) ?? ROHR_KLASSEN[ROHR_KLASSEN.length - 1]!;
 
-  const level = getLevel(empfohlenerVolumenstrom, waermeLast);
-  const tempLevel = getTempLevel(umgebungsTemp, zielTemp);
+  const level = getLevel(empfohlenerVolumenstrom);
 
   const results: ToolResultData[] = [
     {

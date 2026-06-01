@@ -39,11 +39,9 @@ function writeProgress(entries: ReadingProgressMap): void {
 }
 
 export function useReadingProgress() {
-  const [progressMap, setProgressMap] = useState<ReadingProgressMap>({});
+  const [progressMap, setProgressMap] = useState<ReadingProgressMap>(() => readProgress());
 
   useEffect(() => {
-    setProgressMap(readProgress());
-
     function onStorage(event: StorageEvent) {
       if (event.key === READING_PROGRESS_KEY) {
         setProgressMap(readProgress());

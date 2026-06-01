@@ -7,7 +7,7 @@
 // complete action), quick actions and phase timeline.
 // ────────────────────────────────────────────────────────────────────────────
 
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import type { Route } from 'next';
@@ -16,7 +16,7 @@ import { useGrowLog } from '@/hooks/useGrowLog';
 import { useAuth } from '@/hooks/useAuth';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
 import { PHASE_ICONS, PHASE_ORDER } from '@/lib/grow/phases';
-import { TASK_CATEGORY_ICONS, GROW_STATUS_LABELS } from '@/lib/grow/types';
+import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
 import type { GrowTask, Grow, Plant, LogEntry, HarvestData } from '@/lib/grow/types';
 import SmartInsights from '@/components/SmartInsights';
 import {
@@ -217,13 +217,11 @@ function GrowPerformancePanel({
   yieldImpact,
   optScore,
   trend,
-  growId,
 }: {
   isPro: boolean;
   yieldImpact: YieldImpactResult;
   optScore: number;
   trend: GrowTrend | null;
-  growId: string;
 }) {
   const usedPercent = yieldImpact.potentialYield > 0
     ? Math.round((yieldImpact.currentEstimate / yieldImpact.potentialYield) * 100)
@@ -489,14 +487,7 @@ function DailyActionCard({
   isPro: boolean;
 }) {
   const cfg = DAILY_ACTION_CONFIG[action.level];
-  const [showDelta, setShowDelta] = useState(false);
-
-  useEffect(() => {
-    if (scoreDelta == null || scoreDelta === 0) return;
-    setShowDelta(true);
-    const t = setTimeout(() => setShowDelta(false), 3000);
-    return () => clearTimeout(t);
-  }, [scoreDelta]);
+  const showDelta = scoreDelta != null && scoreDelta !== 0;
 
   return (
     <div className={`relative overflow-hidden rounded-2xl border ${cfg.bg} ${cfg.border} px-5 py-4 shadow-md`}>
@@ -1046,7 +1037,7 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
-export default function GrowPage(_props: Props) {
+export default function GrowPage({}: Props) {
   const { id } = useParams<{ id: string }>();
   const { grows, loaded, completeTask, updateGrow, advancePhase } = useGrowState();
   const { entries } = useGrowLog(id);
@@ -1059,8 +1050,8 @@ export default function GrowPage(_props: Props) {
   const [editingPlantNotesId, setEditingPlantNotesId] = useState<string | null>(null);
   const [draftPlantNotes, setDraftPlantNotes] = useState("");
   const [scoreDelta, setScoreDelta] = useState<number | null>(null);
-  const [growTrend, setGrowTrend] = useState<GrowTrend | null>(null);
   const prevEntriesLen = useRef<number | null>(null);
+  const prevScoreRef = useRef<number | null>(null);
 
   const grow = loaded ? (grows.find((g) => g.id === id) ?? null) : null;
   const notFound = loaded && grow === null;
@@ -1070,15 +1061,45 @@ export default function GrowPage(_props: Props) {
     completeTask(grow.id, taskId);
   }, [grow, completeTask]);
 
-  useEffect(() => {
-    if (!grow || grow.plants.length === 0) {
-      setSelectedPlantId(null);
-      return;
+  const effectiveSelectedPlantId = useMemo(() => {
+    if (!grow || grow.plants.length === 0) return null;
+    if (selectedPlantId && grow.plants.some((p) => p.id === selectedPlantId)) {
+      return selectedPlantId;
     }
-    if (!selectedPlantId || !grow.plants.some((p) => p.id === selectedPlantId)) {
-      setSelectedPlantId(grow.plants[0]?.id ?? null);
-    }
+    return grow.plants[0]?.id ?? null;
   }, [grow, selectedPlantId]);
+
+  const healthScoreForEffects = grow ? getGrowHealthScore(grow, entries) : 0;
+  const optScoreForEffects = grow ? getOptimizationScore(grow, entries) : 0;
+
+  useEffect(() => {
+    if (!grow) return;
+    const newLen = entries.length;
+    if (prevEntriesLen.current !== null && newLen > prevEntriesLen.current) {
+      const prev = prevScoreRef.current;
+      if (prev !== null) {
+        setScoreDelta(healthScoreForEffects - prev);
+      }
+    }
+    prevEntriesLen.current = newLen;
+    prevScoreRef.current = healthScoreForEffects;
+  }, [grow, entries.length, healthScoreForEffects]);
+
+  const growTrend = useMemo<GrowTrend | null>(() => {
+    if (!grow || typeof window === 'undefined') return null;
+    const key = `secretleaf.optscore.${grow.id}`;
+    const stored = localStorage.getItem(key);
+    if (stored === null) return null;
+    const prev = Number(stored);
+    if (Number.isNaN(prev) || prev === optScoreForEffects) return null;
+    return computeTrend(prev, optScoreForEffects);
+  }, [grow, optScoreForEffects]);
+
+  useEffect(() => {
+    if (!grow) return;
+    const key = `secretleaf.optscore.${grow.id}`;
+    localStorage.setItem(key, String(optScoreForEffects));
+  }, [grow, optScoreForEffects]);
 
   const startRenamePlant = useCallback((plantId: string, currentName: string) => {
     setEditingPlantId(plantId);
@@ -1121,7 +1142,8 @@ export default function GrowPage(_props: Props) {
       plants: grow.plants.map((plant) => {
         if (plant.id !== plantId) return plant;
         if (trimmed) return { ...plant, notes: trimmed };
-        const { notes: _n, ...rest } = plant;
+        const rest = { ...plant };
+        delete (rest as { notes?: string }).notes;
         return rest;
       }),
     });
@@ -1165,44 +1187,12 @@ export default function GrowPage(_props: Props) {
   const { percent }  = getTaskProgress(grow);
 
   // Intelligence layer
-  const healthScore  = getGrowHealthScore(grow, entries);
+  const healthScore  = healthScoreForEffects;
   const healthStatus = getGrowHealthStatus(healthScore);
   const dailyAction  = getDailyAction(grow, entries);
   const priorities   = getGrowPriorities(grow, entries);
   const yieldImpact  = getTotalYieldImpact(priorities, getPotentialYield(grow));
-  const optScore     = getOptimizationScore(grow, entries);
-
-  // Score delta: compare to score before last entry was added
-  const prevScoreRef = useRef<number | null>(null);
-  useEffect(() => {
-    if (!grow) return;
-    const newLen = entries.length;
-    if (prevEntriesLen.current !== null && newLen > prevEntriesLen.current) {
-      // An entry was just added — compute delta from last known score
-      const prev = prevScoreRef.current;
-      if (prev !== null) {
-        setScoreDelta(healthScore - prev);
-      }
-    }
-    prevEntriesLen.current = newLen;
-    prevScoreRef.current = healthScore;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [entries.length]);
-
-  // Optimization score trend: persist previous score in localStorage, compute delta
-  useEffect(() => {
-    if (!grow) return;
-    const key = `secretleaf.optscore.${grow.id}`;
-    const stored = localStorage.getItem(key);
-    if (stored !== null) {
-      const prev = Number(stored);
-      if (!Number.isNaN(prev) && prev !== optScore) {
-        setGrowTrend(computeTrend(prev, optScore));
-      }
-    }
-    localStorage.setItem(key, String(optScore));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [grow?.id, optScore]);
+  const optScore     = optScoreForEffects;
 
   const showPerformancePanel = entries.length >= 3 || healthScore < 70;
 
@@ -1275,7 +1265,7 @@ export default function GrowPage(_props: Props) {
           );
         })()}
         {/* ── Grow Status Header ───────────────────────── */}
-        <GrowStatusHeader score={healthScore} status={healthStatus} {...(prevScoreRef.current !== null && { prevScore: prevScoreRef.current })} />
+        <GrowStatusHeader score={healthScore} status={healthStatus} />
 
         {/* ── Performance Panel ────────────────────────── */}
         {showPerformancePanel && (
@@ -1284,7 +1274,6 @@ export default function GrowPage(_props: Props) {
             yieldImpact={yieldImpact}
             optScore={optScore}
             trend={growTrend}
-            growId={grow.id}
           />
         )}
 
@@ -1317,7 +1306,7 @@ export default function GrowPage(_props: Props) {
                         plant={plant}
                         growId={grow.id}
                         plantEntries={plantEntries}
-                        isSelected={selectedPlantId === plant.id}
+                        isSelected={effectiveSelectedPlantId === plant.id}
                         isEditing={editingPlantId === plant.id}
                         draftName={draftPlantName}
                         isEditingNotes={editingPlantNotesId === plant.id}

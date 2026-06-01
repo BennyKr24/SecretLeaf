@@ -107,12 +107,15 @@ function AuthPageInner() {
   const emailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setEmailError(null);
-    setPasswordError(null);
-    setConfirmError(null);
-    setGlobalError(null);
-    setInfo(null);
-    setTimeout(() => emailRef.current?.focus(), 50);
+    const t = setTimeout(() => {
+      setEmailError(null);
+      setPasswordError(null);
+      setConfirmError(null);
+      setGlobalError(null);
+      setInfo(null);
+      setTimeout(() => emailRef.current?.focus(), 50);
+    }, 0);
+    return () => clearTimeout(t);
   }, [mode]);
 
   useEffect(() => {

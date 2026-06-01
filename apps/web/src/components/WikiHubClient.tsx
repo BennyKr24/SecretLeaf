@@ -111,10 +111,9 @@ function searchSnippet(article: TerpiraArticle, query: string): string | null {
 
 // ─── Artikel-Karte ────────────────────────────────────────────────────────────
 
-function ArticleCard({ article, categoryLabel, difficultyLabels, isNew, isBookmarked, onToggleBookmark, onOpen, snippet, progressPct }: {
+function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBookmark, onOpen, snippet, progressPct }: {
   article: TerpiraArticle;
   categoryLabel: string;
-  difficultyLabels: Record<string, string>;
   isNew: boolean;
   isBookmarked: boolean;
   onToggleBookmark: (slug: string) => void;
@@ -257,32 +256,41 @@ function ArticleCard({ article, categoryLabel, difficultyLabels, isNew, isBookma
 
 // ─── WikiHubClient ────────────────────────────────────────────────────────────
 
-export default function WikiHubClient({ articles, categoryLabels, difficultyLabels, totalSources }: Props) {
+export default function WikiHubClient({ articles, categoryLabels, totalSources }: Props) {
   const [activeCategory, setActiveCategory] = useState<TerpiraCategory | 'alle'>('alle');
   const [activeDifficulty, setActiveDifficulty] = useState<TerpiraDifficulty | 'alle'>('alle');
   const [freshOnly, setFreshOnly] = useState(false);
   const [sort, setSort] = useState<SortMode>('relevanz');
   const [localSearch, setLocalSearch] = useState('');
-  const [bookmarks, setBookmarks] = useState<string[]>([]);
-  const [recent, setRecent] = useState<string[]>([]);
-  const [progressBySlug, setProgressBySlug] = useState<Record<string, number>>({});
+  const [bookmarks, setBookmarks] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const stored = localStorage.getItem(BOOKMARKS_KEY);
+      return stored ? (JSON.parse(stored) as string[]) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [recent, setRecent] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const stored = localStorage.getItem(RECENT_KEY);
+      return stored ? (JSON.parse(stored) as string[]) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [progressBySlug] = useState<Record<string, number>>(() => {
+    if (typeof window === 'undefined') return {};
+    try {
+      const stored = localStorage.getItem(PROGRESS_KEY);
+      return stored ? (JSON.parse(stored) as Record<string, number>) : {};
+    } catch {
+      return {};
+    }
+  });
   const searchRef = useRef<HTMLInputElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    try {
-      const storedBookmarks = localStorage.getItem(BOOKMARKS_KEY);
-      const storedRecent = localStorage.getItem(RECENT_KEY);
-      const storedProgress = localStorage.getItem(PROGRESS_KEY);
-      if (storedBookmarks) setBookmarks(JSON.parse(storedBookmarks));
-      if (storedRecent) setRecent(JSON.parse(storedRecent));
-      if (storedProgress) setProgressBySlug(JSON.parse(storedProgress));
-    } catch {
-      setBookmarks([]);
-      setRecent([]);
-      setProgressBySlug({});
-    }
-  }, []);
 
   function persist(key: string, value: string[]) {
     localStorage.setItem(key, JSON.stringify(value));
@@ -430,7 +438,6 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
   // Stats
   const totalMinutes = articles.reduce((s, a) => s + a.readMinutes, 0);
   const einsteiger = articles.filter(a => a.difficulty === 'einsteiger').length;
-  const fortgeschritten = articles.filter(a => a.difficulty === 'fortgeschritten').length;
   const profi = articles.filter(a => a.difficulty === 'profi').length;
 
   return (
@@ -607,7 +614,7 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
         </p>
         {localSearch.trim() && (
           <p className="text-xs text-emerald-600 font-medium">
-            Suche: „{localSearch}"
+            Suche: „{localSearch}“
           </p>
         )}
         {!localSearch.trim() && freshOnly && (
@@ -632,7 +639,6 @@ export default function WikiHubClient({ articles, categoryLabels, difficultyLabe
               key={article.slug}
               article={article}
               categoryLabel={categoryLabels[article.category] ?? article.category}
-              difficultyLabels={difficultyLabels}
               isNew={article.lastUpdated >= recentThreshold}
               isBookmarked={bookmarks.includes(article.slug)}
               onToggleBookmark={toggleBookmark}
@@ -714,7 +720,7 @@ function EmptyState({ onReset, query, suggestions, onSelectSuggestion }: {
       <div className="text-4xl mb-3">🔍</div>
       <p className="font-semibold text-slate-700">Keine Artikel gefunden</p>
       <p className="mt-1 text-sm text-slate-500">
-        Für „{query || 'deine Suche'}" gab es keine Treffer. Probiere andere Begriffe oder eine Kategorie.
+        Für „{query || 'deine Suche'}“ gab es keine Treffer. Probiere andere Begriffe oder eine Kategorie.
       </p>
 
       {suggestions.length > 0 && (

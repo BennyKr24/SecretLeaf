@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import type { Route } from "next";
-import { categoryLabels, difficultyLabels, getArticleBySlug, getArticleSources, wikiArticles } from "@/data/terpira/wiki";
+import { categoryLabels, getArticleBySlug, getArticleSources, wikiArticles } from "@/data/terpira/wiki";
 import WikiReadingProgress from "@/components/WikiReadingProgress";
 import WikiAskBot from "@/components/WikiAskBot";
 import WikiArticleToc from "@/components/WikiArticleToc";

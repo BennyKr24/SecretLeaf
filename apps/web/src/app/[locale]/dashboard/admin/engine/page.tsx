@@ -94,7 +94,10 @@ export default function AdminEnginePage() {
   }, [auth]);
 
   useEffect(() => {
-    void fetchLogs();
+    const t = setTimeout(() => {
+      void fetchLogs();
+    }, 0);
+    return () => clearTimeout(t);
   }, [fetchLogs]);
 
   const triggerAction = async (

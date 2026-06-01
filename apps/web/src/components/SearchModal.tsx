@@ -154,10 +154,12 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
   // Query → API-Suche
   useEffect(() => {
     if (!query.trim()) {
-      setResults([]);
-      setTotalResults(0);
-      setSelectedIndex(-1);
-      return;
+      const t = setTimeout(() => {
+        setResults([]);
+        setTotalResults(0);
+        setSelectedIndex(-1);
+      }, 0);
+      return () => clearTimeout(t);
     }
 
     // Debounce 200ms
@@ -321,7 +323,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
                 {results.length === 0 && !isPending && (
                   <div className="py-10 text-center text-slate-500">
                     <p className="text-2xl mb-2">🔍</p>
-                    <p className="text-sm font-medium">Nichts gefunden für „{query}"</p>
+                    <p className="text-sm font-medium">Nichts gefunden für „{query}“</p>
                     <p className="text-xs text-slate-400 mt-1">Versuche andere Schreibweise oder Englisch</p>
                     <Link
                       href={`/search?q=${encodeURIComponent(query)}` as Route}

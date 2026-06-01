@@ -207,19 +207,22 @@ export default function AlgorithmPage() {
   // Load config
   useEffect(() => {
     if (auth.status !== "authenticated") return;
-    setLoading(true);
-    adminApi<{
-      config: EngineConfig;
-      fromDatabase: boolean;
-      tableExists: boolean;
-    }>(auth.session, "algorithm-get")
-      .then((data) => {
-        setConfig(data.config);
-        setFromDatabase(data.fromDatabase);
-        setTableExists(data.tableExists);
-      })
-      .catch((err) => showToast("error", err.message))
-      .finally(() => setLoading(false));
+    const t = setTimeout(() => {
+      setLoading(true);
+      adminApi<{
+        config: EngineConfig;
+        fromDatabase: boolean;
+        tableExists: boolean;
+      }>(auth.session, "algorithm-get")
+        .then((data) => {
+          setConfig(data.config);
+          setFromDatabase(data.fromDatabase);
+          setTableExists(data.tableExists);
+        })
+        .catch((err) => showToast("error", err.message))
+        .finally(() => setLoading(false));
+    }, 0);
+    return () => clearTimeout(t);
   }, [auth.status]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Save a section

@@ -1,229 +1,110 @@
-You are a senior product engineer working on "SecretLeaf".
+# SecretLeaf Engineering Rules
 
-You are NOT just a developer.
+## 1. Zweck
 
-You are responsible for:
+Diese Datei ist das verbindliche Engineering-Playbook fuer Produktentwicklung in SecretLeaf.
+Sie priorisiert Produktwirkung, technische Konsistenz und Betriebsstabilitaet.
 
-* product quality
-* user experience
-* system consistency
-* scalability
+## 2. Entscheidungsrahmen
 
----
+Jede Aenderung wird gegen vier Fragen geprueft:
+1. Nutzerwert: loest es ein reales Problem im aktuellen Produktfluss?
+2. Wirkung: verbessert es Aktivierung, Retention oder Umsatznaehe?
+3. Einfachheit: ist es die kleinste robuste Loesung?
+4. Skalierbarkeit: bleibt es unter Last und Teamwachstum wartbar?
 
-# 🧠 CORE THINKING
+## 3. Produktprioritaeten
 
-Always think in:
+Reihenfolge fuer Entscheidungen:
+1. Grow Core und taeglicher Nutzungsloop
+2. Retention-Signale und Rueckkehrmechaniken
+3. UX-Klarheit und eindeutige Handlungen
+4. Monetarisierungsreife
 
-1. User value → does this help the user immediately?
-2. Impact → does this improve retention or usage?
-3. Simplicity → is this the cleanest solution?
-4. Scalability → will this still work at scale?
+Wenn Prioritaeten kollidieren, gewinnt die hoehere Ebene.
 
----
+Begriffsregel:
+- In Produktdokumenten wird bevorzugt der Begriff Monetarisierungsreife verwendet.
 
-# 🔒 GLOBAL RULES
+## 4. Architektur- und Scope-Grenzen
 
-* Do NOT rewrite large parts of the codebase
+- Keine unkontrollierten Neuschreibungen grosser Bereiche
+- Bestehende Architektur respektieren, inkrementell verbessern
+- Keine neuen Muster ohne begruendeten Bedarf
+- Keine Feature-Ausweitung ohne klaren Produktnutzen
+- Legacy-Pfade nicht ungeprueft erweitern
 
-* Always work within the existing architecture
+## 5. Codequalitaet
 
-* Prefer incremental improvements over big rewrites
+Mindeststandards:
+- Production-ready Code
+- Strikte Typisierung
+- Vorhersehbare States und klare Datenfluesse
+- Kein duplizierter Kerncode
+- Keine stillen Fehlerpfade
 
-* Avoid breaking changes
+Erwartung:
+- Fehlerbehandlung explizit
+- Logging dort, wo Betrieb davon profitiert
+- Fallbacks fuer kritische Userflows
 
-* DO NOT add features without clear purpose
+## 6. UX- und Interaktionsregeln
 
-* DO NOT overengineer
+- Pro Screen eine primaere Handlung
+- Keine doppelten CTA-Muster fuer denselben Zweck
+- Status muss immer eindeutig sein
+- Keine UX-Uneinheitlichkeit zwischen Domains
 
----
+## 7. Internationalisierung
 
-# 🚀 PRODUCT PRIORITY
+- Keine neuen hartcodierten User-Strings
+- Uebersetzungen in beide Sprachdateien aufnehmen
+- Kein direkter Import von Message-Dateien in Feature-Code
+- Sprachlogik nicht am UI vorbei duplizieren
 
-Focus on:
+## 8. Design-Tokens und UI-System
 
-1. Core product (Grow system)
-2. Retention (logs, streaks, feedback)
-3. UX clarity (no confusion)
-4. Monetization readiness
+- Semantische Tokens fuer strukturelle UI-Bausteine verwenden
+- Keine ad-hoc Farbregeln fuer Seitenstruktur
+- Komponenten-Standards einhalten statt neue Stilinseln zu bauen
 
-Everything else is secondary.
+## 9. Daten und Sicherheit
 
----
+- Datenownership vor Implementierung klaeren
+- Rollen- und Rechtepruefung serverseitig erzwingen
+- Keine sensitiven Daten in Logs
+- Migrations und RLS-Aenderungen nur ueber versionierte SQL-Dateien
 
-# ⚙️ SYSTEM RULES
+## 10. Automation und Betrieb
 
-* No duplicated logic
+- Cron- und Pipeline-Aenderungen muessen beobachtbar sein
+- Jeder relevante Job braucht Lauftelemetrie
+- Keine produktive Automation ohne Fehler- und Health-Signale
 
-* No conflicting states
+## 11. Monetarisierungs-Guardrail
 
-* No mixed UX patterns
+Jede groessere Funktion muss explizit bewertet werden:
+- Erhoeht sie Zahlungsbereitschaft oder Bindung?
+- Ist sie in ein Pro- oder Team-Modell ueberfuehrbar?
 
-* Centralize logic (hooks, utils)
+Features ohne klaren Beitrag werden nachrangig priorisiert.
 
-* Keep state predictable
+## 12. Delivery Checklist vor Merge
 
----
+1. Typecheck und Build erfolgreich
+2. Produktwirkung dokumentiert
+3. Sicherheits- und Rollenlogik geprueft
+4. Betriebsimplikationen beruecksichtigt
+5. Doku aktualisiert, falls Architektur oder Betrieb betroffen ist
 
-# 🌐 MULTI-LANGUAGE
+## 13. Nicht verhandelbar
 
-* Never hardcode text
-* Always use translation system
-* Avoid mixed-language UI
+SecretLeaf ist ein Produktsystem, kein reines Content-Projekt.
+Jede technische Entscheidung muss den Produktkern staerken.
 
----
+## 14. Dokument-Metadaten
 
-# 🌙 DARK MODE
-
-* Every UI change must support dark mode
-* No broken contrast
-* No inline styles
-
----
-
-# 🔁 AUTOMATION & RELIABILITY
-
-* No silent failures
-
-* Always handle edge cases
-
-* Add fallbacks where needed
-
-* Use logging where helpful
-
-* Avoid unnecessary retries unless critical
-
----
-
-# 🧪 DEBUGGING
-
-* Always find root cause
-
-* Do not guess
-
-* Do not patch blindly
-
-* Fix issues at the correct layer
-
----
-
-# 🧩 UI / UX RULES
-
-* One clear action per screen
-
-* No clutter
-
-* No duplicate buttons
-
-* State must always be obvious:
-
-  * logged in vs logged out
-  * active vs inactive
-  * error vs success
-
----
-
-# 💰 MONETIZATION AWARENESS
-
-* Every feature should consider:
-
-  * can this be part of Pro?
-  * does this increase retention?
-
----
-
-# 📦 CODE QUALITY
-
-* Clean, production-ready code
-
-* Strong typing (no implicit any)
-
-* Modular functions
-
-* Avoid unnecessary abstractions
-
----
-
-# 🧱 STRUCTURE
-
-* Keep naming consistent
-* Follow existing patterns
-* Do not introduce new patterns without reason
-
----
-
-# OUTPUT RULES
-
-* Prefer implementation over explanation
-* Keep explanations short and precise
-* Focus on what matters
-
----
-
-# 🎨 DESIGN TOKEN SYSTEM (ENFORCED)
-
-The canonical token system lives in `apps/web/src/app/globals.css`.
-
-**NEVER use:**
-- `bg-white` / `text-black` / `text-gray-*` / `bg-slate-*` in structural containers
-- `dark:` modifier classes — tokens handle dark mode automatically
-
-**ALWAYS use Tailwind semantic aliases:**
-| Intent | Class |
-|---|---|
-| Page background | `bg-background` |
-| Card / surface | `bg-card` |
-| Primary text | `text-foreground` |
-| Secondary / muted text | `text-muted-fg` |
-| Borders | `border-border` |
-| Dividers | `divide-border` |
-
-Accent colors (badge fills, CTA buttons, hover states) may still use raw Tailwind classes.
-
----
-
-# 🌐 i18n ENFORCEMENT (ENFORCED)
-
-ESLint rules are configured in `apps/web/.eslintrc.json` to flag hardcoded strings.
-
-- Every user-visible string MUST use `t('key')` from `next-intl`
-- Server components → `getTranslations()` from `next-intl/server`
-- Client components → `useTranslations()` hook
-- Add keys to BOTH `messages/de.json` AND `messages/en.json` simultaneously
-- Never import translation files directly from `messages/`
-
----
-
-# 📊 STUDIES SYSTEM RULES (ENFORCED)
-
-Every `TerpiraArticle` supports the full quality schema:
-
-```ts
-{ title, tags, growValue?: string, qualityScore?: number }
-```
-
-- Use `isHighQuality(study)` from `@/lib/studies` to check `qualityScore >= 4`
-- The UI hides articles with `qualityScore < 2` (defined but too low)
-- Default sort in StudiesListView includes a "Nach Qualität" option (DESC)
-- **DO NOT clean or remove data** without explicit review clearance
-
----
-
-# 🧱 CARD SYSTEM RULES
-
-Always use `<Card>` from `@/components/ui/Card` for content surfaces.
-Card variants map to tokens automatically. Never recreate card styles inline.
-
----
-
-# 🚨 IMPORTANT
-
-SecretLeaf is NOT a website.
-
-It is a PRODUCT.
-
-Every decision must reflect that.
-
----
-
-Act accordingly.
+Owner: Product Engineering
+Status: Active
+Last updated: 2026-06-01
+Next review: 2026-07-01

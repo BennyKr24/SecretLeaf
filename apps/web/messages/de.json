@@ -16,7 +16,7 @@
     "rights": "Alle Rechte vorbehalten"
   },
   "home": {
-    "heroHeadline": "Grow smarter.\nNot harder.",
+    "heroHeadline": "Smarter anbauen.\nNicht härter.",
     "heroSub": "Die Plattform, die dir sagt, was du beim Cannabis-Anbau tun musst. Grow-Tracker, Profi-Tools und sofortige Diagnose in einem System.",
     "eyebrow": "Grow Operating System",
     "coreBadge": "Kernfeature",
@@ -57,7 +57,7 @@
     "step2Title": "Plan erhalten",
     "step2Text": "Das System generiert automatisch einen Grow-Plan mit Phasen und täglichen Tasks.",
     "step3Title": "Grow tracken",
-    "step3Text": "Täglich eintragen: Bewässerung, Düngung, Training. Der Streak motiviert dich zurückzukommen.",
+    "step3Text": "Täglich eintragen: Bewässerung, Nährstoffgabe, Training. Die Serie motiviert dich zurückzukommen.",
     "studiesEyebrow": "Wissensbasis",
     "studiesCount": "wissenschaftliche Artikel",
     "studiesSub": "Gestützt auf {count}+ peer-reviewed Quellen.",
@@ -68,7 +68,7 @@
     "placeholder": "Suchen … (⌘K)",
     "label": "Suchen",
     "noResults": "Keine Ergebnisse gefunden",
-    "trending": "Trending"
+    "trending": "Im Trend"
   },
   "auth": {
     "login": "Anmelden",
@@ -164,10 +164,10 @@
     "weeklyDigestSub": "Modular aufgebaut, damit dieselbe Struktur später direkt per E-Mail versendet werden kann",
     "newGrowStudies": "Neue Grow Studien",
     "importantThisWeek": "Wichtig diese Woche",
-    "trendingTopics": "Trending Themen",
+    "trendingTopics": "Trendthemen",
     "relevantArticles": "{count} relevante Artikel",
     "trendingStartpoint": "Startpunkt: {title}",
-    "continueReadingTitle": "Continue Reading",
+    "continueReadingTitle": "Weiterlesen",
     "continueReadingSub": "Begonnene Artikel direkt an der letzten sinnvollen Stelle wieder aufnehmen",
     "continueLabel": "Fortsetzen",
     "lastRead": "zuletzt {time}",
@@ -227,7 +227,7 @@
     "footerHint": "Die Diagnose ersetzt keine professionelle Beratung und sollte nur als Orientierungshilfe genutzt werden."
   },
   "toolsPage": {
-    "eyebrow": "Grow Tools",
+    "eyebrow": "Grow-Werkzeuge",
     "headline": "Optimiere deinen Grow datenbasiert.",
     "subline": "Berechne Licht, Klima und Nährstoffe präzise — basierend auf echten Anbauwerten. Alle Tools teilen dein Setup.",
     "ctaFeatured": "Meistgenutzte Tools →",

@@ -23,12 +23,6 @@ const CATEGORY_ICONS: Record<string, string> = {
   sicherheit: '🛡️', qualitaet: '🔬', markt: '📊', werkzeuge: '🛠️',
 };
 
-const DIFFICULTY_LABEL: Record<string, string> = {
-  einsteiger: 'Einsteiger',
-  fortgeschritten: 'Fortgeschritten',
-  profi: 'Profi',
-};
-
 function evidenceLevel(sourceCount: number): { label: string; cls: string } {
   if (sourceCount >= 5) return { label: 'Hohe Evidenz', cls: 'evidence-high border' };
   if (sourceCount >= 3) return { label: 'Mittlere Evidenz', cls: 'evidence-med border' };

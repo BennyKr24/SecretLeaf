@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import type { Route } from 'next';
 import { getSetupCoverage, getToolHistory } from '@/hooks/useToolState';
@@ -15,18 +15,15 @@ const COVERAGE_KEYS = [
 ] as const;
 
 export default function ToolsHubClient() {
-  const [coverage, setCoverage] = useState<Record<string, boolean>>({});
-  const [recentSlug, setRecentSlug] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setCoverage(getSetupCoverage());
+  const [coverage] = useState<Record<string, boolean>>(() => {
+    if (typeof window === 'undefined') return {};
+    return getSetupCoverage();
+  });
+  const [recentSlug] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
     const history = getToolHistory();
-    if (history.length > 0) setRecentSlug(history[0]!.slug);
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+    return history.length > 0 ? history[0]!.slug : null;
+  });
 
   const done = COVERAGE_KEYS.filter((c) => coverage[c.key]).length;
   const total = COVERAGE_KEYS.length;

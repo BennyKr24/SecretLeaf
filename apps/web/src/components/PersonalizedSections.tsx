@@ -9,12 +9,6 @@ import type { TerpiraArticle, TerpiraCategory } from '@/lib/terpira/types';
 import { categoryLabels } from '@/data/terpira/wiki';
 import BookmarkButton from './BookmarkButton';
 
-type Props = {
-  allArticles: TerpiraArticle[];
-  categoryArticles: Record<string, TerpiraArticle[]>;
-  allCategories: TerpiraCategory[];
-};
-
 const CATEGORY_ICONS: Record<string, string> = {
   anbau: '🌱', genetik: '🧬', chemie: '⚗️', terpene: '🌺',
   medizin: '🩺', konsumformen: '💨', konzentrate: '💎', recht: '⚖️',

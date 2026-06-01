@@ -1,363 +1,181 @@
-<div align="center">
+# SecretLeaf
 
-# 🌿 SecretLeaf
+SecretLeaf ist eine datenbasierte Cannabis-Plattform mit Fokus auf taegliche Grow-Execution, qualitaetsgesichertes Wissen und automatisierte Studienaufbereitung.
 
-**Grow OS · Wissensplattform · Diagnose · Tools**
+## Produktkern
 
-[![Vercel](https://img.shields.io/badge/Vercel-Live-brightgreen?style=flat-square&logo=vercel)](https://secretleaf.vercel.app)
-[![Version](https://img.shields.io/badge/Version-v2-blue?style=flat-square)](./version.txt)
-[![Branch](https://img.shields.io/badge/Branch-main-purple?style=flat-square&logo=git)](https://github.com/BennyKr24/SecretLeaf)
-[![Issues](https://img.shields.io/github/issues/BennyKr24/SecretLeaf?style=flat-square&color=orange)](https://github.com/BennyKr24/SecretLeaf/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/BennyKr24/SecretLeaf?style=flat-square&color=blueviolet)](https://github.com/BennyKr24/SecretLeaf/commits/main)
-[![Stack](https://img.shields.io/badge/Stack-Next.js_16_·_Supabase_·_Tailwind-0ea5e9?style=flat-square)](https://github.com/BennyKr24/SecretLeaf)
+SecretLeaf besteht aktuell aus vier Kernbereichen:
+- Grow OS: Setup, Plan, Tasks, Log, Multi-Plant, Retention-Mechaniken
+- Studies Hub: Wissens- und Studienoberflaeche mit Review-Status
+- Diagnose und Tools: Entscheidungsbaum plus operative Rechner
+- Admin und Engine: Review, Monitoring, Automation-Runs
 
-</div>
+## Aktueller Status
 
----
+Produktiv nutzbar:
+- Grow-Workflows mit hybrider Persistenz
+- Studien-Pipeline und Cron-Automation
+- Rollenbasierte Adminflaechen fuer Review und Betrieb
 
-## 🚨 Current Focus
+Offene kritische Punkte:
+- Monetarisierungspfad nicht live
+- Observability nur teilweise aktiv
+- Legacy-Backendpfad als Architekturschuld
 
-> Was gerade zählt. Nicht was schön wäre.
+## Architektur auf einen Blick
 
-- 🟢 **Grow OS** — Core vollständig (Plan, Tasks, Log, Multi-Plant, Retention). Kein weiterer Aufbau nötig.
-- 🔴 **Grow-Daten gehören nicht dem User** — localStorage = kein Backup, kein Cross-Device. Migration zu Supabase ist der wichtigste unbuildete Schritt.
-- 🔴 **Keine Monetarisierung** — Kein Stripe, kein Paywall, kein Pro-Tier. Null Einnahmen.
-- 🟡 **Auth existiert, aber hängt in der Luft** — Supabase Auth läuft. Grow-Daten sind trotzdem localStorage-only.
-- 🟡 **Diagnose-Loop bricht ab** — Diagnose endet mit Lognotiz-Vorschlag zum Kopieren. Kein direkter CTA.
+Primaerer Runtime-Pfad:
+- apps/web (Next.js App Router + API Routes)
+- Supabase fuer Auth, Postgres, RLS und Telemetrie
+- Vercel Cron fuer Studien- und Engine-Automation
 
----
+Sekundaerer Runtime-Pfad:
+- apps/api (Fastify + Prisma), aktuell Legacy/parallel
 
-## ⚠️ Critical Gaps
+Detaillierte Architektur: siehe ARCHITECTURE.md
+Detaillierte Betriebsprozesse: siehe DEPLOYMENT.md
 
-- Keine Monetarisierung
-- Grow-Daten: kein Backend, kein Backup, kein Cross-Device
-- Kein Analytics
-- Kein Error-Tracking (Sentry fehlt)
-- Newsletter speichert Emails in localStorage — kein echter Versand
-- Diagnose schreibt nicht in den Log
-- Grow-History nicht zugreifbar
+## Repository-Struktur
 
----
+```text
+SecretLeaf/
+  apps/
+    web/
+    api/
+  packages/
+    shared/
+  scripts/
+  supabase/
+    migrations/
+```
 
-## 🧠 Next Move
+## Lokale Entwicklung
 
-> Genau 3 Schritte. In dieser Reihenfolge.
+Voraussetzungen:
+- Node.js >= 20.11
+- npm
+- Supabase-Projekt und gueltige Environment-Variablen
 
-1. **Grows in Supabase speichern** — Auth ist da, Schema fehlt. `grows`, `log_entries`, `plants` Tabellen erstellen, Store umschalten. Ohne das ist alles andere wertlos.
-2. **Stripe + Pro-Tier** — Feature-Lock definieren + Checkout einbinden. Ohne Einnahmen: Hobby-Projekt.
-3. **Diagnose → Log CTA** — Nach Diagnose: "Jetzt loggen" → `addEntry({ type: "notiz", text: logNote })`. Loop schließen. ~2h Aufwand.
+Empfohlene lokale Env-Dateien:
+- Root: .env.example nach .env kopieren (plattformweite Defaults)
+- API: apps/api/.env.example nach apps/api/.env kopieren
+- Web: apps/web/.env.example nach apps/web/.env.local kopieren
 
----
+Wichtig fuer API-Start lokal:
+- JWT_SECRET muss mindestens 24 Zeichen haben
 
-## ⚡ Quick Actions
-
-| Produkt | |
-|---------|--|
-| 🌱 Grow starten | [/start](https://secretleaf.vercel.app/start) |
-| 📊 Dashboard | [/dashboard/user](https://secretleaf.vercel.app/dashboard/user) |
-| 🩺 Diagnose | [/diagnose](https://secretleaf.vercel.app/diagnose) |
-| 🛠️ Tools | [/tools](https://secretleaf.vercel.app/tools) |
-| 📚 Studien | [/studies](https://secretleaf.vercel.app/studies) |
-
-| Dev | |
-|-----|--|
-| 🚀 Deploy | `./deploy.sh` |
-| 🌱 Dev Server | `npm run dev:web` |
-| 🧪 Type-Check | `npm run typecheck` |
-| 🔨 Build | `npm run build --workspace @secretleaf/web` |
-
-| GitHub | |
-|--------|--|
-| 🐛 Issue | [New Issue](https://github.com/BennyKr24/SecretLeaf/issues/new) |
-| 💡 Ideen | [IDEAS.md](./IDEAS.md) |
-| 📜 History | [Commits](https://github.com/BennyKr24/SecretLeaf/commits/main) |
-
----
-
-## 🛠️ Run Commands
+Install:
 
 ```bash
-./deploy.sh                                       # stage → tsc → next build → push → Vercel
-npm run dev:web                                   # Next.js Dev-Server auf :3000
-npm run dev:api                                   # Fastify API auf :4000 (nicht produktiv)
-npm run typecheck                                 # tsc --noEmit alle Workspaces
-npm run build --workspace @secretleaf/web         # Production Build
-npm run lint                                      # ESLint alle Workspaces
+npm ci
 ```
 
-`deploy.sh` blockiert bei TypeScript- oder Build-Fehlern (Rollback automatisch via `git reset --soft HEAD~1`).  
-Schreibt `version.txt` + `deploy-log.txt` lokal (beide `.gitignore`).
+Wichtige Kommandos:
 
----
-
-## 📊 Product Signals
-
-| Signal | Wert |
-|--------|------|
-| Core Features (Grow OS) | ✅ Wizard · Plan · Phasen · Tasks · Multi-Plant · Log · Alerts |
-| Intelligence Layer | ✅ Plant Scoring · Comparison · Critical Alert · Micro-Insight |
-| Retention | ✅ Streak · Milestones (3/7/14/21/30) · Daily Completion Banner |
-| Tools | ✅ 6 (VPD · Abluft · Licht · Nährstoff · Ertrag · Düngepläne) |
-| Diagnose | ✅ 18 Ergebnisse · 4 Kategorien · Konfidenz-Level |
-| Auth | ✅ Supabase (Login / Register / Reset) |
-| Monetarisierung | ❌ Nicht vorhanden |
-| Cloud-Persistenz (Grow) | ❌ localStorage only |
-| Analytics | ❌ Kein Tracking |
-| Error-Tracking | ❌ Kein Sentry |
-| Newsletter-Versand | ❌ Attrappe (localStorage) |
-| Push-Notifications | ❌ Nicht gebaut |
-
----
-
-## 🧩 System Overview
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        SecretLeaf                               │
-├──────────────────────────┬──────────────────────────────────────┤
-│      GROW OS (Core)       │         WISSEN (statisch)           │
-│                          │                                      │
-│  /start  Wizard          │  /studies  Wiki + Quellenregister    │
-│  /grow/[id]  Übersicht   │  /category  Themenhubs               │
-│    ├─ Phasen-Timeline    │  /database  Dünger-Katalog           │
-│    ├─ Task-Liste         │                                      │
-│    ├─ PlantCard × n      │         PROBLEM-SOLVING              │
-│    └─ Grow Health Row    │                                      │
-│                          │  /diagnose  Entscheidungsbaum        │
-│  /grow/[id]/log          │    ├─ 4 Kategorien                   │
-│    ├─ Eintrag erstellen  │    ├─ 18 Diagnose-Ergebnisse         │
-│    ├─ Plant-Filter       │    └─ Tool-Links pro Ergebnis        │
-│    ├─ Streak-Badge       │                                      │
-│    └─ Completion-Banner  │         KALKULATION                  │
-│                          │                                      │
-│  /dashboard/user         │  /tools  6 Rechner                   │
-│    ├─ Aktiver Grow       │    ├─ VPD · Abluft · Licht           │
-│    ├─ Alert-Banner       │    ├─ Nährstoff · Ertrag             │
-│    └─ Wissens-Feed       │    └─ Düngepläne                     │
-├──────────────────────────┴──────────────────────────────────────┤
-│                       INFRASTRUKTUR                             │
-│                                                                 │
-│  Auth: Supabase (live) ── Grow-Daten: localStorage (⚠ Problem) │
-│  Deploy: ./deploy.sh ── Hosting: Vercel ── Repo: GitHub/main   │
-└─────────────────────────────────────────────────────────────────┘
+```bash
+npm run dev:web
+npm run dev:api
+npm run typecheck
+npm run build --workspace @secretleaf/web
+npm run build --workspace @secretleaf/api
+npm run lint
 ```
 
----
+## Environment-Variablen
 
-## 🎯 Vision
+Minimal fuer produktive API-Funktionalitaet im Web-Runtime:
+- SUPABASE_URL
+- SUPABASE_SERVICE_ROLE_KEY
+- NEXT_PUBLIC_SUPABASE_URL
+- NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY
+- CRON_SECRET
 
-**Kernthese:** Wer täglich loggt, pflegt besser. Wer besser pflegt, erntet mehr. Wer mehr erntet, bleibt.
+Optional fuer Automation-Fehlerspeicher:
+- AUTOMATION_ERROR_MEMORY_MIN_DELAY_MINUTES (Default: 60)
 
-Kein Blog. Kein Info-Portal. Ein Betriebssystem für den Grow — mit täglicher Nutzungsroutine durch Struktur (Plan), Dokumentation (Log), Feedback (Streak, Alerts) und Wissen (Wiki, Diagnose, Tools).
+Siehe DEPLOYMENT.md fuer vollstaendige Betriebs- und Security-Vorgaben.
 
----
+## Health-Checks lokal
 
-## 🧠 Core Principles
+Relevante Endpunkte:
+- Web Runtime Health: /api/health
+- Legacy API Health: http://localhost:4000/health
 
-1. **Lokalität first.** Grow-Daten im localStorage. Kein Account nötig, zero latency. Schuld: kein Cross-Device, kein Backup.
-2. **Plan schlägt Freitext.** 3 Felder → deterministischer Grow-Plan mit Phasen und Tasks.
-3. **Feedback ist unmittelbar.** Nach Speichern: Streak-Pulse, ggf. Milestone-Badge, ggf. Completion-Banner.
-4. **Wissen ist statisch.** Wiki, Diagnose-Tree, Tool-Logik — alles im Code. Änderungen = Code-Änderungen.
-5. **Log auto-schließt Tasks.** Wasser-Eintrag → passende Task auto-completed innerhalb ±3 Tage.
+Hinweis zu degraded im lokalen Setup:
+- /api/health liefert bewusst 503 mit status=degraded, wenn keine gueltige Supabase-Verbindung vorhanden ist (z. B. fehlende SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY oder nicht erreichbare DB).
+- Das ist lokal erwartbar, solange Supabase nicht konfiguriert ist, und bedeutet nicht automatisch einen Build- oder Lint-Fehler.
 
----
+Hinweis zum Studies-Sync-Fehlerspeicher:
+- Wiederholt fehlerhafte Quellen werden mit Fingerprint persistent gespeichert.
+- Diese Fingerprints werden bis zum naechsten Retry-Zeitpunkt automatisch uebersprungen.
+- Bei erfolgreicher Verarbeitung wird der gespeicherte Fehler fuer den Fingerprint wieder entfernt.
 
-## 🚀 Current Product State
+## Daten und Migrationen
 
-### Grow OS
+Produktive SQL- und RLS-Aenderungen liegen unter:
+- supabase/migrations
 
-| Feature | Status | Details |
-|---------|--------|---------|
-| Wizard | ✅ | 3 Felder → `generateGrowPlan()` → persistierter Grow |
-| Phasen | ✅ | Keimung → Sämling → Veg → Blüte → Spätblüte → Ernte |
-| Tasks | ✅ | 6 Kategorien, auto-complete beim Loggen (±3 Tage) |
-| Multi-Plant | ✅ | `Plant[]` pro Grow, rename, Log-Zuordnung |
-| Log-Typen | ✅ | Wasser · Dünger · Training · Notiz · Tool-Ergebnis |
-| Log bearbeiten | ✅ | Datum, Typ, Notiz editierbar |
-| Plant Scoring | ✅ | +10/+5 Aktualität, -3/Tag Bewässerungslücke |
-| Plant Comparison | ✅ | Best/Worst ab ≥3 Score-Differenz |
-| Critical Alert | ✅ | Kein Log >3d oder kein Wasser >3d |
-| Grow Health | ✅ | Stabil wenn keine überfälligen Tasks + keine krit. Pflanzen |
+Regel:
+- Keine produktive Schema-Aenderung ohne Migration und Review.
 
-### Retention
+## CI und Qualitaet
 
-| Feature | Status |
-|---------|--------|
-| Log-Streak | ✅ Tagesgenau, lookback 365 Tage |
-| Milestone-Badges | ✅ bei 3 / 7 / 14 / 21 / 30 Tagen |
-| Streak-Pulse | ✅ 1.5s Animation nach Speichern |
-| Daily Completion Banner | ✅ Slide-in, 5s, nur wenn alles ok |
-| Dashboard Alert Banner | ✅ Reaktiv, verschwindet nach Log |
-| Lesehistorie / Bookmarks | ✅ localStorage (Wiki) |
-| Newsletter | ⚠️ UI vorhanden — kein Versand |
-| Push Notifications | ❌ Nicht gebaut |
+Aktuelle CI-Basis:
+- Dependency-Installation
+- Typecheck fuer web und api
+- Build fuer web und api
 
-### Tools (alle stateless, clientseitig)
+Mindeststandard fuer Merges:
+- Typecheck gruen
+- Build gruen
+- Keine unbegruendete Architekturdrift
 
-VPD · Abluft-Rechner · Licht-Rechner · Nährstoff-Rechner · Ertrags-Schätzer · Düngepläne
+## Engineering-Prinzipien
 
-### Diagnose
+- Produkt vor Content: jede Aenderung muss einen klaren Nutzerjob bedienen
+- Einfache, testbare Loesungen vor Framework-Hopping
+- Kein neuer Scope auf Legacy-Pfaden ohne Architekturentscheid
+- Betriebsfaehigkeit ist Teil der Definition of Done
 
-18 Ergebnisse mit Konfidenz-Level, Handlungsschritten, Tool-Links:
-N/P/K/Ca/Mg/Fe-Mangel · Lockout · Übersalzung · Hitzestress · Kältestress · VPD-hoch · Überwässerung · Spinnmilben · Trauermücken · Thripse · Blattläuse · Botrytis · Breitmilben · Rostmilben · Wurzelläuse
+Verbindliche Richtlinien: siehe AI_RULES.md
 
-**Lücke:** Kein direkter CTA in Log — `logNote` muss manuell kopiert werden.
+## Roadmap-Fokus
 
----
+Jetzt:
+- Monetarisierungskern produktiv machen
+- Observability verbindlich aktivieren
+- Legacy-Umfang kontrolliert reduzieren
 
-## ⚠️ Current Gaps
+Als naechstes:
+- Conversion- und Retention-Messung vertiefen
+- Produkt- und Datenfluesse weiter vereinheitlichen
 
-### 🔴 Kritisch
+Spaeter:
+- Erweiterte Team- und B2B-Modelle
 
-**localStorage nur** — Gerätewechsel = Datenverlust. Auth existiert, Grow-Daten hängen nicht dran.  
-**Keine Monetarisierung** — Kein Stripe, kein Paywall, kein Code dafür.
+## Dokumente
 
-### 🟡 Wichtig
+- ARCHITECTURE.md: technische Ziel- und Ist-Architektur
+- DEPLOYMENT.md: Deployment, Runbook, Incident-Prozesse
+- AI_RULES.md: Engineering- und Produkt-Guardrails
+- IDEAS.md: priorisiertes Innovations-Portfolio
+- PRODUCT.md: Produktstrategie, Kernmetriken, Priorisierungslogik
+- DESIGN_SYSTEM.md: visuelle und interaktive Systemregeln
+- DATABASE.md: Supabase-Datenmodell, RLS und Migrationsstandards
+- LOCALIZATION.md: Sprach- und Terminologie-Standards de/en
+- AI_SYSTEM.md: Studien-Engine, Diagnose und Automation-System
+- WIKI_ARCHITECTURE.md: Taxonomie und Wissensstruktur
+- ROADMAP.md: Sequenzierung Jetzt/Als naechstes/Spaeter
+- STANDARDS.md: technische Mindeststandards fuer Delivery
+- AGENTS.md: Agentenmodell und Guardrails
 
-**Newsletter ist Attrappe** — `NewsletterSignup.tsx` schreibt in localStorage. Kein API-Call.  
-**Diagnose-Loop bricht ab** — `logNote` vorhanden, aber kein CTA → kein direkter Log-Eintrag.  
-**Plant Notes ohne UI** — `Plant.notes?: string` im Typ, nirgendwo editierbar.  
-**Grow-History fehlt** — Abgeschlossene Grows gespeichert, aber keine Ansicht, kein Vergleich.
+## Lizenz und Hinweise
 
-### 🔵 Blind Spots
+Interne Projektrichtlinien und Compliance-Vorgaben gelten zusaetzlich zu diesem Dokument.
 
-Kein Error-Tracking · Kein Analytics · Fastify API ohne produktive DB wertlos.
+## Dokument-Metadaten
 
----
-
-## 🧩 Next Priorities
-
-| Prio | Was | Warum |
-|------|-----|-------|
-| 1 | **Supabase Grow Storage** | Auth da, Schema fehlt. Ohne das: kein Backup, keine Monetarisierung möglich. |
-| 2 | **Stripe + Pro-Tier** | Feature-Lock + Checkout. Ohne Einnahmen: Hobby-Projekt. |
-| 3 | **Diagnose → Log CTA** | Loop schließen. ~2h. Höchste Effizienz/Aufwand-Ratio. |
-| 4 | **Plant Notes UI** | Feld im Typ vorhanden. Nur Textarea fehlt. |
-| 5 | **Newsletter Backend** | Resend/Loops (~2h). Emails sammeln bevor Userwachstum. |
-| 6 | **Grow History View** | Abgeschlossene Grows anzeigen. Basis für Ernte-Tracking. |
-| 7 | **i18n / Englisch** | `next-intl` + `/[locale]` Routing. Internationalisierung = Growth-Multiplikator. Details → [IDEAS.md](./IDEAS.md#-internationalisierung) |
-
----
-
-## 🔁 Product Loops
-
-### Primärer Daily Loop
-```
-Dashboard Alert → "Jetzt pflegen"
-→ /grow/[id]/log?plant=<id>
-→ Eintrag speichern → Task auto-completed
-→ Streak +1 → ggf. Milestone-Badge → Completion-Banner
-→ Dashboard: Alert weg
-```
-
-### Onboarding Loop
-```
-Landing → /start (3 Felder) → Plan generiert
-→ /grow/[id] → Erste Task → Log → Streak beginnt
-```
-
-### Diagnose-Loop *(bricht aktuell ab)*
-```
-Symptom → /diagnose → Entscheidungsbaum → Diagnose + Steps
-→ [Lücke: kein CTA] → Log manuell öffnen und kopieren
-```
-
-### Wissens-Loop *(passiv)*
-```
-/studies → Artikel lesen (Lesehistorie) → Bookmark
-→ Dashboard-Feed personalisiert sich
-```
-
----
-
-## 💡 Feature Backlog
-
-### High Impact
-- Supabase Grow Storage (unlock alles andere)
-- Stripe Pro-Tier (unlock: Einnahmen)
-- Diagnose → Log CTA (~2h)
-- Grow History View
-
-### Medium Impact
-- Plant Notes UI
-- Newsletter Backend (~2h, Resend/Loops)
-- Log-Export CSV/PDF
-- Push Notifications via Service Worker
-- Phasen-Wechsel-Vorschlag (wenn `currentDay > endDay`)
-
-### Low Impact
-- Harvest-Daten strukturiert (Gramm, Strain, Bewertung)
-- Tool-Ergebnisse in Plant-View
-- Dark Mode
-- Grow-Fotos (Upload-Flow)
-
----
-
-## 💡 Ideas
-
-→ [IDEAS.md](./IDEAS.md) — Alle Ideen, frei strukturiert, mit Status-Labels (🔥 / 🌱 / 🧪 / 💀 / ✅)
-
----
-
-## 🛠️ Dev Workflow
-
-### Deployment
-
-```
-./deploy.sh
-```
-
-1. Pre-check: git repo + branch = main
-2. `git add -A` → prüft auf Änderungen
-3. `git commit "deploy vN: [files]"` (reversibel)
-4. `tsc --noEmit` → bei Fehler: Rollback
-5. `next build` → bei Fehler: Rollback
-6. `git push origin main` (auto-rebase bei remote ahead)
-7. `version.txt++`, `deploy-log.txt` schreiben
-
-### Repo-Struktur
-
-```
-apps/
-  web/       Next.js 16, App Router, Tailwind, Supabase Client
-  api/       Fastify + Prisma (konfiguriert, nicht produktiv)
-packages/
-  shared/    (fast leer)
-scripts/     Wiki-Sync, Fertilizer-Prices, Status-Probe
-supabase/    Migrations: Auth, Studies, RLS, Engine
-```
-
-### Datenpersistenz
-
-| Daten | Wo | Problem |
-|-------|-----|---------|
-| Grows, Plants, Log-Entries | localStorage | ⚠️ Kein Backup, Cross-Device |
-| Auth Session | Supabase (cookie) | — |
-| Wiki, Studien, Artikel | Code (static) | — |
-| Dünger-Katalog | Code (`/data/terpira/fertilizers`) | — |
-| Newsletter-Emails | localStorage | ⚠️ Attrappe |
-| Lesehistorie, Bookmarks | localStorage | — |
-
----
-
-## 📊 Key Metrics
-
-*Aktuell kein Tracking vorhanden.*
-
-| Metrik | Signal |
-|--------|--------|
-| Streak ≥ 3 Tage | Habit entsteht |
-| Log-Entries pro Grow | Engagement-Tiefe |
-| Grow-Abschlussrate | Nutzer bleiben bis Ernte |
-| Task-Completion-Rate | Plan ist relevant |
-| Diagnose-to-Log-Rate | Loop schließt sich |
-| Grows pro User *(post-Supabase)* | Retention |
-| Plant-Alert-Click-Rate | Alerts führen zu Handlung |
-
----
-
-## 🧠 Product Rules
-
-1. **Kein Push ohne Build.** `deploy.sh` blockt bei TypeScript- oder Build-Fehlern. Kein Bypass.
-2. **Streak muss brechen.** Er ist kein Kosmetik-Feature. Bricht er nicht, hat er als Retention-Mechanismus keinen Wert.
-3. **localStorage ist ein Schulden-Timeout.** Schnell jetzt. Beim ersten zahlenden Nutzer muss Supabase fertig sein — sonst verliert er beim Gerätewechsel alles.
+Owner: Product Engineering
+Status: Active
+Last updated: 2026-06-01
+Next review: 2026-07-01

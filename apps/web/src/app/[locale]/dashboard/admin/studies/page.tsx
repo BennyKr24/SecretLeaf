@@ -145,7 +145,10 @@ export default function AdminStudiesPage() {
   }, [auth, page, search, quality, priority, sortBy, sortDir, minScore, maxScore, source, dateFrom, dateTo]);
 
   useEffect(() => {
-    void fetchStudies();
+    const t = setTimeout(() => {
+      void fetchStudies();
+    }, 0);
+    return () => clearTimeout(t);
   }, [fetchStudies]);
 
   const handleQuickAction = async (studyId: string, qualityStatus: string) => {

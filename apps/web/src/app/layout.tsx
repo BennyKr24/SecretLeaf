@@ -29,7 +29,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {/* Plausible Analytics — set NEXT_PUBLIC_PLAUSIBLE_DOMAIN to activate */}
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (

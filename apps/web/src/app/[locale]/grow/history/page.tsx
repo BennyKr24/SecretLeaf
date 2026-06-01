@@ -131,7 +131,7 @@ function EmptyHistory() {
       <p className="text-4xl mb-3">🌿</p>
       <p className="font-semibold text-foreground">Noch keine abgeschlossenen Grows</p>
       <p className="mt-1 text-sm text-muted-fg max-w-xs mx-auto">
-        Sobald du einen Grow als "Abgeschlossen" markierst, erscheint er hier mit allen Stats.
+        Sobald du einen Grow als &quot;Abgeschlossen&quot; markierst, erscheint er hier mit allen Stats.
       </p>
       <Link
         href={'/grow' as Route}

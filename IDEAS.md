@@ -1,309 +1,126 @@
-# 💡 SecretLeaf — Ideas
+# SecretLeaf Portfolio Backlog
 
-> Hier landen Gedanken bevor sie Aufgaben werden. Kein Filter.
+## 1. Zweck
 
-🔥 Will ich bauen · 🌱 Interessant · 🧪 Experiment · 💀 Verworfen · ✅ Gebaut
+Dieses Dokument ist kein Sammelbecken fuer lose Ideen.
+Es ist ein priorisiertes Portfolio mit klarer Bewertungslogik und Entscheidungsstatus.
 
----
+Bewertungsskala:
+- Impact: 1 bis 5
+- Effort: 1 bis 5
+- Confidence: 1 bis 5
+- Priority Score: (Impact * Confidence) / Effort
 
-## Übersicht
-
-| Status | Idee | Bereich |
-|--------|------|---------|
-| 🔥 | AI-Diagnose (Pro) | AI |
-| 🔥 | Stripe + Pro-Tier | Monetarisierung |
-| 🔥 | Community Grows | Community |
-| 🌱 | Auto-Phasen-Erkennung | Grow |
-| 🌱 | Harvest Predictor | Grow |
-| 🌱 | Plant Notes UI | Grow |
-| 🌱 | Grow-Fotos | Grow |
-| 🌱 | Grow History View | Grow |
-| 🌱 | Harvest-Daten strukturiert | Grow |
-| 🌱 | Strain-Integration | Grow + Wissen |
-| 🌱 | Phasen-Wechsel-Vorschlag | Grow |
-| 🌱 | Sentry Error-Tracking | Tech |
-| 🌱 | Analytics | Tech |
-| 🌱 | Newsletter Backend | Tech |
-| 🌱 | Push Notifications | UX |
-| 🌱 | Log-Export | UX |
-| 🌱 | Lifetime-Deal | Monetarisierung |
-| 🌱 | Affiliate-Links | Monetarisierung |
-| 🧪 | Auto-Nährstoff-Anpassung | AI |
-| 🧪 | Public Grow Profiles | Community |
-| 🧪 | Tool-Ergebnisse in Plant-View | Grow |
-| 🌱 | Dark Mode (sauber) | UX |
-| 🧪 | Onboarding Tour | UX |
-| 🧪 | Fastify API produktiv | Tech |
-| 🔥 | i18n / Englisch (next-intl) | Internationalisierung |
-| 🌱 | AI Translation Layer | Internationalisierung |
-| ✅ | Plant Scoring + Comparison | Grow |
-| ✅ | Streak + Milestone-Badges | Retention |
-| ✅ | Multi-Plant pro Grow | Grow |
+Status:
+- Planned
+- Discovery
+- Parked
+- Rejected
+- Done
 
 ---
 
-## 🤖 AI
+## 2. Top Prioritaeten (naechste 90 Tage)
 
-- 🔥 **AI-Diagnose (Pro)** — Freitext-Symptom → GPT-4 → `diagnoseResults`. Zugänglicher als Tree. `Voraus: Stripe`
-- 🌱 **Auto-Phasen-Erkennung** — `currentDay > endDay` → Toast mit Wechsel-Vorschlag. ~3h, Daten vorhanden.
-- 🌱 **Harvest Predictor** — `currentDay` vs `endDay` → "Ernte in ~X Tagen" im Dashboard. Nur Mathe + UI.
-- 🧪 **Auto-Nährstoff-Anpassung** — Log-Verlauf → GPT schlägt pH/EC-Anpassung vor. `Voraus: Supabase`
-
-## 🌱 Grow Features
-
-- 🌱 **Plant Notes UI** — `Plant.notes` ist im Typ vorhanden. Nur Textarea in PlantCard fehlt. ~1h.
-- 🌱 **Grow-Fotos** — Upload pro Log-Eintrag oder Plant → visuelles Wachstums-Tracking. `Voraus: Supabase Storage`
-- 🌱 **Harvest-Daten strukturiert** — Gramm, Strain, Bewertung nach Ernte. Basis für Grow-Vergleiche.
-- 🌱 **Grow History View** — Abgeschlossene Grows als Timeline. Daten sind im Store, Ansicht fehlt.
-- 🌱 **Phasen-Wechsel-Vorschlag** — Phase überschritten → Nutzer wird gefragt. Tasks aktualisieren sich.
-- 🌱 **Strain-Integration** — Genetik aus Studies-Hub → Grow-Wizard → Plan-Parameter auto-anpassen.
-- 🧪 **Tool-Ergebnisse in Plant-View** — Kalkulation direkt in Pflanzenkarte, nicht nur als Log-Notiz.
-
-## 👥 Community
-
-- 🔥 **Community Grows** — Anon-Aggregation: "90% mit Coco haben Tag 14 bewässert." `Voraus: Supabase`
-- 🧪 **Public Grow Profiles** — `/grow/public/<shareId>` read-only. Opt-in Sharing.
-
-## 💰 Monetarisierung
-
-- 🔥 **Stripe + Pro-Tier** — Feature-Lock + Checkout. Ohne Einnahmen: Hobby. Pro-Kandidaten: AI-Diagnose, Community, Fotos.
-- 🌱 **Lifetime-Deal** — Einmalzahlung statt Abo. Einfacherer Checkout für die Zielgruppe.
-- 🌱 **Affiliate-Links** — Tool-Links mit Tracking. Passiv, kein Abo nötig.
-
-## 📱 UX & Retention
-
-- 🌱 **Push Notifications** — Service Worker. "Pflanze X 3 Tage nicht bewässert." Hoher Aufwand für den Wert.
-- 🌱 **Log-Export** — CSV oder PDF aller Einträge eines Grows.
-- 🌱 **Dark Mode** — Tailwind `dark:` Präfix vorhanden, aber sauber umsetzen bedeutet mehr als CSS. Details unten.
-- 🧪 **Onboarding Tour** — Erster Grow: Schritt-Erklärung. Erst bei mehr Nutzern sinnvoll.
-
-## � Dark Mode
-
-> Tailwind `dark:` ist da — aber "sauber" bedeutet mehr als ein paar CSS-Klassen.
-
-### Was "sauber" heißt
-
-❌ Nicht: einfach `dark:` vor alle Farben klatschen → inkonsistentes Ergebnis, Flash beim Laden, Hydration-Fehler  
-✅ Sondern: System-Präferenz respektieren, kein FOUC, persistiert, kein Flackern beim SSR
+| Initiative | Bereich | Impact | Effort | Confidence | Score | Status | Warum jetzt |
+|---|---|---:|---:|---:|---:|---|---|
+| Stripe Checkout plus Entitlements | Monetarisierung | 5 | 3 | 4 | 6.7 | Planned | Ohne Umsatz kein valides Produktmodell |
+| Pro Value Loop im Grow OS | Produkt | 5 | 3 | 4 | 6.7 | Planned | Zahlungsgrund muss operativ erlebbar sein |
+| Sentry produktiv aktivieren | Zuverlaessigkeit | 4 | 1 | 5 | 20.0 | Planned | Schnellster Hebel fuer Incident-Transparenz |
+| Analytics Funnel Baseline | Wachstum | 5 | 2 | 4 | 10.0 | Planned | Entscheidungen aktuell ohne belastbare Nutzungsdaten |
+| Diagnose zu Log nahtlos verankern | Retention | 4 | 1 | 5 | 20.0 | Planned | Kurzer Aufwand mit direktem Loop-Effekt |
 
 ---
 
-### Technischer Plan
+## 3. Produkt und Grow
 
-**1. `next-themes` einbinden** — die Standardlösung für Next.js, löst SSR-Hydration-Problem automatisch:
-
-```bash
-npm install next-themes
-```
-
-**2. Provider in `layout.tsx` wrappen:**
-
-```tsx
-import { ThemeProvider } from 'next-themes'
-
-export default function RootLayout({ children }) {
-  return (
-    <html suppressHydrationWarning>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  )
-}
-```
-
-`suppressHydrationWarning` auf `<html>` verhindert den Hydration-Mismatch.  
-`attribute="class"` → Tailwind `dark:` funktioniert sofort.
-
-**3. `tailwind.config.ts` auf `darkMode: 'class'` setzen** (falls noch nicht):
-
-```ts
-export default {
-  darkMode: 'class',
-  // ...
-}
-```
-
-**4. Theme Toggle Komponente:**
-
-```tsx
-'use client'
-import { useTheme } from 'next-themes'
-
-export function ThemeToggle() {
-  const { theme, setTheme } = useTheme()
-  return (
-    <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-      {theme === 'dark' ? '☀️' : '🌙'}
-    </button>
-  )
-}
-```
-
-**5. CSS-Variablen statt Hardcoded-Farben** — für konsistentes Dark Mode über alle Komponenten:
-
-```css
-/* globals.css */
-:root {
-  --bg: #ffffff;
-  --fg: #0a0a0a;
-  --card: #f4f4f5;
-  --border: #e4e4e7;
-}
-
-.dark {
-  --bg: #0a0a0a;
-  --fg: #fafafa;
-  --card: #18181b;
-  --border: #27272a;
-}
-```
-
-Dann in Tailwind-Klassen via `bg-[var(--bg)]` oder eigene Tokens in `tailwind.config.ts`.
+| Initiative | Impact | Effort | Confidence | Score | Status | Abhaengigkeiten |
+|---|---:|---:|---:|---:|---|---|
+| Grow History mit Vergleichsansicht | 4 | 2 | 4 | 8.0 | Discovery | Stabiler Grow-Cloud-Pfad |
+| Plant Notes vollstaendig im UI | 3 | 1 | 5 | 15.0 | Planned | Keine |
+| Harvest Daten strukturiert erfassen | 4 | 2 | 4 | 8.0 | Discovery | History und Reporting |
+| Auto-Phasenwechsel Empfehlung | 3 | 1 | 4 | 12.0 | Planned | Planlogik stabil |
+| Tool-Ergebnisse im Plant-Kontext | 3 | 2 | 3 | 4.5 | Parked | UX-Validierung notwendig |
 
 ---
 
-### Aufwand-Schätzung
+## 4. KI und Wissen
 
-| Schritt | Aufwand |
-|---------|---------|
-| `next-themes` Setup + Provider | ~30min |
-| `tailwind.config.ts` + CSS-Variablen definieren | ~1h |
-| Alle Komponenten auf `dark:` Klassen prüfen/ergänzen | ~4–6h |
-| Toggle UI bauen + in Header einbauen | ~1h |
-| **Gesamt** | **~6–8h** |
-
----
-
-### Was man nicht tun sollte
-
-- ❌ `localStorage` direkt im `useEffect` für Theme-Init → FOUC (Flash of Unstyled Content)
-- ❌ `dark:` nur auf manche Komponenten anwenden → inkonsistentes Design
-- ❌ `useTheme()` in Server Components → crasht (muss `'use client'` sein)
+| Initiative | Impact | Effort | Confidence | Score | Status | Abhaengigkeiten |
+|---|---:|---:|---:|---:|---|---|
+| AI-Diagnose produktionsreif | 4 | 3 | 3 | 4.0 | Discovery | Billing, Rate Limits, Safety-Rails |
+| Engine Scoring kontinuierlich kalibrieren | 4 | 2 | 4 | 8.0 | Planned | Analytics und Review-Daten |
+| AI Translation Layer fuer dynamische Inhalte | 3 | 3 | 3 | 3.0 | Parked | i18n-Basis und Kostenmodell |
+| Studies Quality Workflow mit SLA | 4 | 2 | 4 | 8.0 | Planned | Admin-Betriebskapazitaet |
 
 ---
 
-## �🌐 Internationalisierung
+## 5. Wachstum und Lifecycle
 
-> Sprache ist kein Feature — sondern Growth-Multiplikator. Internationale Reichweite, mehr SEO, mehr Retention.
-
-### Warum überhaupt?
-
-Die Plattform ist aktuell 100% Deutsch. Das limitiert die Reichweite auf DACH.
-Englisch erschließt: UK, US, NL, Skandinavien, internationale Cannabis-Community.
-
----
-
-### Strategie: 3 Content-Typen
-
-| Typ | Inhalt | Übersetzung |
-|-----|--------|-------------|
-| **A) Static UI** | Buttons, Labels, Fehlermeldungen | JSON-Dateien (`messages/en.json`) — 1x manuell, dann wartbar |
-| **B) Structured Content** | Tasks, Phasen-Namen, Diagnose-Texte | Kontrollierte Übersetzung — Qualität wichtig |
-| **C) Dynamic Content** | User-Logs, Freitext-Eingaben | AI on-demand (OpenAI API, gecached) |
-
-❌ Nicht: komplette Seiten automatisch blind übersetzen  
-❌ Nicht: Fachbegriffe ohne Kontrolle übertragen
+| Initiative | Impact | Effort | Confidence | Score | Status | Abhaengigkeiten |
+|---|---:|---:|---:|---:|---|---|
+| Newsletter Backend mit Segmenten | 3 | 2 | 4 | 6.0 | Planned | Provider-Entscheid |
+| Referral Mechanik | 4 | 3 | 3 | 4.0 | Parked | Klare Activation-Kriterien |
+| Push Notifications (Web) | 3 | 3 | 3 | 3.0 | Parked | Consent und Lifecycle-Design |
+| Programmatic SEO fuer Studiencluster | 4 | 3 | 3 | 4.0 | Discovery | IA und Content Governance |
 
 ---
 
-### Schritt-für-Schritt Plan
+## 6. Plattform und Betrieb
 
-**1. `next-intl` integrieren** — beste Wahl für Next.js App Router, SSR-kompatibel, sauber skalierbar.
-
-```bash
-npm install next-intl
-```
-
-**2. Routing umbauen** — App-Struktur auf `/[locale]/` umstellen:
-
-```
-/app
-  /[locale]
-    /page.tsx
-    /grow
-    /tools
-    /diagnose
-    ...
-
-/messages
-  de.json   ← bestehende Texte auslagern
-  en.json   ← englische Übersetzungen
-```
-
-**3. UI-Texte auslagern** — alle hardcodierten Strings in `de.json` → `useTranslations()` Hook:
-
-```tsx
-const t = useTranslations('grow');
-// statt: "Eintrag speichern"
-// jetzt: t('save_entry')
-```
-
-**4. Language Switch bauen** — oben rechts 🌐 DE / EN:
-- Auswahl in `localStorage` merken
-- Fallback: Browser-Sprache (`navigator.language`)
-- Nicht versteckt — prominent im Header
-
-**5. AI Translation Layer** — für dynamischen Content (Diagnose-Texte, Tool-Ergebnisse, Logs):
-
-```ts
-// lib/translate.ts
-async function translateText(text: string, targetLang: 'en' | 'de'): Promise<string> {
-  // 1. Cache prüfen (localStorage / später DB)
-  // 2. OpenAI API call
-  // 3. Ergebnis cachen
-}
-```
-
-**6. Cache-System** — nicht jeden Request übersetzen:
-- Phase 1: `localStorage` Cache (Schlüssel: `hash(text)+lang`)
-- Phase 2: Supabase-Tabelle `translation_cache` (nach Storage-Migration)
+| Initiative | Impact | Effort | Confidence | Score | Status | Abhaengigkeiten |
+|---|---:|---:|---:|---:|---|---|
+| Legacy API Scope reduzieren | 5 | 3 | 4 | 6.7 | Planned | Architekturentscheid |
+| End-to-End Smoke Suite fuer kritische Flows | 4 | 3 | 4 | 5.3 | Discovery | Stabiler Test-Harness |
+| Incident Playbook Automatisierung | 3 | 2 | 4 | 6.0 | Planned | Sentry und Alerting live |
+| Backup and Restore Drill Prozess | 4 | 2 | 5 | 10.0 | Planned | Ops-Terminierung |
 
 ---
 
-### Aufwand-Schätzung
+## 7. Monetarisierungsoptionen
 
-| Schritt | Aufwand | Voraussetzung |
-|---------|---------|---------------|
-| next-intl Setup + Routing | ~4h | — |
-| UI Texte auslagern (Static UI) | ~6–8h | Routing fertig |
-| Language Switch | ~2h | Routing fertig |
-| Structured Content (Diagnose, Tasks) | ~4h | JSON-Struktur klar |
-| AI Translation Layer | ~4h | OpenAI API Key |
-| Cache-System | ~2h | AI Layer fertig |
-| **Gesamt** | **~22–24h** | |
+Bewertungskriterien:
+- Time to revenue
+- Umsetzbarkeit
+- Brutto-Margenpotenzial
 
----
-
-### i18n-Einträge in IDEAS
-
-- 🔥 **i18n Setup (next-intl)** — Routing `/[locale]`, `messages/en.json` + `messages/de.json`. Pflicht-Basis für alles andere. ~4h.
-- 🌱 **AI Translation Layer** — `lib/translate.ts` mit OpenAI-Call + Cache. Für Diagnose-Texte, Tool-Ergebnisse, User-Logs. `Voraus: OpenAI API Key`
-- 🌱 **Language Switch UI** — 🌐 DE/EN Header-Button. localStorage + Browser-Fallback. ~2h.
-- 🌱 **Structured Content Translations** — Tasks, Phasen, Diagnose-Ergebnisse kontrolliert übersetzen (kein Auto-Translate). ~4h.
-- 🌱 **Translation Cache (Supabase)** — Übersetzte Texte in DB cachen statt localStorage. `Voraus: Supabase Storage`
+| Modell | Time to Revenue | Umsetzbarkeit | Margin Potenzial | Status |
+|---|---|---|---|---|
+| Pro Abo fuer Grow Execution | Kurz | Hoch | Hoch | Planned |
+| Team Plan fuer kollaborative Grows | Mittel | Mittel | Hoch | Discovery |
+| Affiliate Layer fuer Tools und Inputs | Kurz | Hoch | Mittel | Discovery |
+| Lifetime Deal | Kurz | Hoch | Niedrig bis Mittel | Parked |
 
 ---
 
-## 🛠️ Tech
+## 8. Geparkt und Verworfen
 
-- 🌱 **Sentry** — 5min Setup, würde sofort echte User-Fehler zeigen. Kein guter Grund warum noch nicht.
-- 🌱 **Analytics** — Plausible ($9/mo, privacy-first) oder Posthog (Free Tier, Session Recordings). Ohne: alle Prios blind.
-- 🌱 **Newsletter Backend** — `NewsletterSignup.tsx` schreibt in localStorage. Resend/Loops.so ~2h.
-- 🧪 **Fastify API produktiv** — Konfiguriert aber wertlos ohne Supabase-Storage für Grows.
+Parked:
+- Public Grow Profiles (kein prioritaerer Umsatzhebel)
+- Onboarding Tour in voller Tiefe (erst nach Funnel-Basis)
+- Vollstaendige mobile App (zu frueh)
 
----
-
-## 💀 Verworfen
-
-<!-- - 💀 **Idee** — Grund -->
+Rejected:
+- Feature-Buendel ohne klare KPI-Verantwortung
+- Neue Produktflaechen ohne direkten Bezug zu Grow Core oder Revenue-Pfad
 
 ---
 
-## ✅ Umgesetzt
+## 9. Governance
 
-- ✅ **Plant Scoring + Comparison** — Scoring via Log-Frequenz + Bewässerungslücken. `apps/web/src/lib/grow/`
-- ✅ **Streak + Milestone-Badges** — 3/7/14/21/30 Tage. `useGrowLog.ts`, RetentionBanner
-- ✅ **Multi-Plant pro Grow** — `Plant[]`, rename, Log-Zuordnung. `store.ts`, `types.ts`
+Regeln fuer neue Eintraege:
+1. Jede Idee braucht Problemstatement und Zielmetrik
+2. Jede Idee bekommt Impact, Effort, Confidence
+3. Ohne Owner kein Planned-Status
+4. Parked nach 90 Tagen ohne Fortschritt erneut bewerten
+
+Review-Rhythmus:
+- Woechentlich: Top Prioritaeten und Blocker
+- Monatlich: Re-Priorisierung des gesamten Portfolios
+
+## 10. Dokument-Metadaten
+
+Owner: Product Engineering
+Status: Active
+Last updated: 2026-06-01
+Next review: 2026-07-01

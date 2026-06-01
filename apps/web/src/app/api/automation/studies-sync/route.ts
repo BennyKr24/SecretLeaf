@@ -1,4 +1,9 @@
 import autoSourcesData from "@/data/terpira/autoSources.json";
+import {
+  clearAutomationErrorMemory,
+  getBlockedFingerprints,
+  rememberAutomationError,
+} from "@/lib/automationErrorMemory";
 import { recordAutomationRun } from "@/lib/automationRuns";
 import { getCronSecret } from "@/lib/env";
 import { logError, logInfo, logWarn } from "@/lib/log";
@@ -99,6 +104,8 @@ type SyncMetrics = {
   inserted: number;
   updated: number;
   skipped: number;
+  blockedByErrorMemory: number;
+  failedWrites: number;
   errors: string[];
   attempts: number;
   sourceGeneratedAt: string | null;
@@ -258,7 +265,7 @@ async function fetchCrossrefSources(maxAttempts: number): Promise<CrossrefFetchR
   };
 }
 
-async function safeRecordAutomationRun(input: Parameters<typeof recordAutomationRun>[0], metrics: SyncMetrics): Promise<void> {
+async function safeRecordAutomationRun(input: Parameters<typeof recordAutomationRun>[0]): Promise<void> {
   try {
     await recordAutomationRun(input);
   } catch (error) {
@@ -274,6 +281,8 @@ export async function GET(req: Request) {
     inserted: 0,
     updated: 0,
     skipped: 0,
+    blockedByErrorMemory: 0,
+    failedWrites: 0,
     errors: [],
     attempts: 1,
     sourceGeneratedAt: (autoSourcesData as { generatedAt?: string }).generatedAt ?? null,
@@ -301,7 +310,7 @@ export async function GET(req: Request) {
         sourceGeneratedAt: metrics.sourceGeneratedAt,
         errorDetails: message,
         metadata: { errors: metrics.errors },
-      }, metrics);
+      });
     } catch {
       // ignore telemetry failure
     }
@@ -318,6 +327,37 @@ export async function GET(req: Request) {
     const supabase = getSupabaseServerClient();
     const crossrefAttemptRaw = Number.parseInt(process.env.STUDY_SYNC_MAX_ATTEMPTS ?? "3", 10);
     const crossrefAttempts = Number.isFinite(crossrefAttemptRaw) ? Math.min(Math.max(crossrefAttemptRaw, 1), 5) : 3;
+
+    const safeRememberSourceError = async (
+      fingerprint: string,
+      stage: "insert" | "update",
+      errorMessage: string,
+    ) => {
+      metrics.failedWrites += 1;
+      metrics.errors.push(`${stage}:${errorMessage}`);
+
+      try {
+        await rememberAutomationError({
+          jobName: JOB_NAME,
+          fingerprint,
+          errorMessage,
+          metadata: { stage },
+        });
+      } catch (memoryError) {
+        const message = memoryError instanceof Error ? memoryError.message : "automation_error_memory_write_failed";
+        metrics.errors.push(message);
+        logWarn("automation.studies-sync.error-memory-write-failed", { message, stage, fingerprint });
+      }
+    };
+
+    const safeClearSourceError = async (fingerprint: string) => {
+      try {
+        await clearAutomationErrorMemory(JOB_NAME, fingerprint);
+      } catch (memoryError) {
+        const message = memoryError instanceof Error ? memoryError.message : "automation_error_memory_clear_failed";
+        logWarn("automation.studies-sync.error-memory-clear-failed", { message, fingerprint });
+      }
+    };
 
     const fetchedExternal = await fetchCrossrefSources(crossrefAttempts);
     metrics.attempts = fetchedExternal.attempts;
@@ -342,9 +382,21 @@ export async function GET(req: Request) {
     const sources = Array.from(dedupedByFingerprint.values());
     metrics.skipped = Math.max(sourceCandidates.length - sources.length, 0);
 
-    metrics.fetched = sources.length;
+    let blockedFingerprints = new Set<string>();
+    try {
+      blockedFingerprints = await getBlockedFingerprints(JOB_NAME);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "automation_error_memory_read_failed";
+      metrics.errors.push(message);
+      logWarn("automation.studies-sync.error-memory-read-failed", { message });
+    }
 
-    if (sources.length === 0) {
+    const runnableSources = sources.filter((source) => !blockedFingerprints.has(source.source_fingerprint));
+    metrics.blockedByErrorMemory = Math.max(sources.length - runnableSources.length, 0);
+    metrics.skipped += metrics.blockedByErrorMemory;
+    metrics.fetched = runnableSources.length;
+
+    if (runnableSources.length === 0) {
       logInfo("automation.studies-sync.empty");
       await safeRecordAutomationRun({
         jobName: JOB_NAME,
@@ -354,18 +406,22 @@ export async function GET(req: Request) {
         fetched: metrics.fetched,
         inserted: 0,
         updated: 0,
-        skipped: 0,
+        skipped: metrics.skipped,
         attempts: metrics.attempts,
         sourceGeneratedAt: metrics.sourceGeneratedAt,
-        metadata: { errors: metrics.errors },
-      }, metrics);
+        metadata: {
+          blockedByErrorMemory: metrics.blockedByErrorMemory,
+          errors: metrics.errors,
+        },
+      });
 
       return Response.json({
         success: true,
         fetched: metrics.fetched,
         inserted: 0,
         updated: 0,
-        skipped: 0,
+        skipped: metrics.skipped,
+        blockedByErrorMemory: metrics.blockedByErrorMemory,
         errors: metrics.errors,
         generatedAt: new Date().toISOString(),
       });
@@ -374,7 +430,7 @@ export async function GET(req: Request) {
     // Explicit insert/update path avoids dependency on ON CONFLICT index inference.
     // Fingerprints are looked up in batches of 100 to avoid PostgREST URL length limits.
 
-    const fingerprints = sources.map((source) => source.source_fingerprint);
+    const fingerprints = runnableSources.map((source) => source.source_fingerprint);
     const FINGERPRINT_BATCH_SIZE = 100;
     const existingByFingerprint = new Map<string, string>();
 
@@ -402,7 +458,7 @@ export async function GET(req: Request) {
           sourceGeneratedAt: metrics.sourceGeneratedAt,
           errorDetails: batchError.message,
           metadata: { errors: metrics.errors },
-        }, metrics);
+        });
 
         return Response.json({ error: batchError.message }, { status: 500 });
       }
@@ -414,37 +470,23 @@ export async function GET(req: Request) {
       }
     }
 
-    const toInsert = sources.filter((source) => !existingByFingerprint.has(source.source_fingerprint));
-    const toUpdate = sources.filter((source) => existingByFingerprint.has(source.source_fingerprint));
+    const toInsert = runnableSources.filter((source) => !existingByFingerprint.has(source.source_fingerprint));
+    const toUpdate = runnableSources.filter((source) => existingByFingerprint.has(source.source_fingerprint));
 
-    const INSERT_BATCH_SIZE = 50;
-    if (toInsert.length > 0) {
-      for (let i = 0; i < toInsert.length; i += INSERT_BATCH_SIZE) {
-        const batch = toInsert.slice(i, i + INSERT_BATCH_SIZE);
-        const { error: insertError } = await supabase.from(STUDIES_TABLE).insert(batch);
-        if (insertError) {
-          logError("automation.studies-sync.insert-failed", { error: insertError.message });
-          metrics.errors.push(insertError.message);
-
-          await safeRecordAutomationRun({
-            jobName: JOB_NAME,
-            startedAt,
-            finishedAt: new Date().toISOString(),
-            success: false,
-            fetched: metrics.fetched,
-            inserted: metrics.inserted,
-            updated: metrics.updated,
-            skipped: metrics.skipped,
-            attempts: metrics.attempts,
-            sourceGeneratedAt: metrics.sourceGeneratedAt,
-            errorDetails: insertError.message,
-            metadata: { errors: metrics.errors },
-          }, metrics);
-
-          return Response.json({ error: insertError.message }, { status: 500 });
-        }
-        metrics.inserted += batch.length;
+    for (const source of toInsert) {
+      const { error: insertError } = await supabase.from(STUDIES_TABLE).insert(source);
+      if (insertError) {
+        logWarn("automation.studies-sync.insert-failed", {
+          error: insertError.message,
+          fingerprint: source.source_fingerprint,
+        });
+        await safeRememberSourceError(source.source_fingerprint, "insert", insertError.message);
+        metrics.skipped += 1;
+        continue;
       }
+
+      metrics.inserted += 1;
+      await safeClearSourceError(source.source_fingerprint);
     }
 
     for (const source of toUpdate) {
@@ -463,41 +505,35 @@ export async function GET(req: Request) {
         .eq("id", studyId);
 
       if (updateError) {
-        logError("automation.studies-sync.update-failed", { error: updateError.message, studyId });
-        metrics.errors.push(updateError.message);
-
-        await safeRecordAutomationRun({
-          jobName: JOB_NAME,
-          startedAt,
-          finishedAt: new Date().toISOString(),
-          success: false,
-          fetched: metrics.fetched,
-          inserted: metrics.inserted,
-          updated: metrics.updated,
-          skipped: metrics.skipped,
-          attempts: metrics.attempts,
-          sourceGeneratedAt: metrics.sourceGeneratedAt,
-          errorDetails: updateError.message,
-          metadata: { errors: metrics.errors, studyId },
-        }, metrics);
-
-        return Response.json({ error: updateError.message }, { status: 500 });
+        logWarn("automation.studies-sync.update-failed", {
+          error: updateError.message,
+          studyId,
+          fingerprint: source.source_fingerprint,
+        });
+        await safeRememberSourceError(source.source_fingerprint, "update", updateError.message);
+        metrics.skipped += 1;
+        continue;
       }
+
+      metrics.updated += 1;
+      await safeClearSourceError(source.source_fingerprint);
     }
 
-    metrics.updated = toUpdate.length;
+    const runSucceeded = metrics.failedWrites === 0;
 
     logInfo("automation.studies-sync.success", {
-      totalCandidates: sources.length,
+      totalCandidates: runnableSources.length,
       inserted: metrics.inserted,
       updated: metrics.updated,
+      blockedByErrorMemory: metrics.blockedByErrorMemory,
+      failedWrites: metrics.failedWrites,
     });
 
     await safeRecordAutomationRun({
       jobName: JOB_NAME,
       startedAt,
       finishedAt: new Date().toISOString(),
-      success: true,
+      success: runSucceeded,
       fetched: metrics.fetched,
       inserted: metrics.inserted,
       updated: metrics.updated,
@@ -509,21 +545,27 @@ export async function GET(req: Request) {
         queryCount: fetchedExternal.queryCount,
         lookbackDays: fetchedExternal.lookbackDays,
         rowsPerQuery: fetchedExternal.rowsPerQuery,
+        blockedByErrorMemory: metrics.blockedByErrorMemory,
+        failedWrites: metrics.failedWrites,
         errors: metrics.errors,
       },
-    }, metrics);
+    });
 
     return Response.json({
-      success: true,
+      success: runSucceeded,
+      partialFailure: metrics.failedWrites > 0,
       fetched: metrics.fetched,
       inserted: metrics.inserted,
       updated: metrics.updated,
       skipped: metrics.skipped,
+      blockedByErrorMemory: metrics.blockedByErrorMemory,
+      failedWrites: metrics.failedWrites,
       errors: metrics.errors,
       generatedAt: new Date().toISOString(),
       notes: [
         "Runs on Vercel cron independent of local PC sessions.",
         "Sync source: static autoSources + external Crossref runtime fetch",
+        "Error memory stores failing fingerprints and retries them later with backoff.",
         `Crossref coverage: ${fetchedExternal.queryCount} queries, lookback ${fetchedExternal.lookbackDays} days, ${fetchedExternal.rowsPerQuery} rows/query.`,
       ],
     });
@@ -546,7 +588,7 @@ export async function GET(req: Request) {
         sourceGeneratedAt: metrics.sourceGeneratedAt,
         errorDetails: message,
         metadata: { errors: metrics.errors },
-      }, metrics);
+      });
     } catch {
       // ignore telemetry failure
     }

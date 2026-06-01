@@ -84,7 +84,10 @@ export default function AdminUsersPage() {
   }, [auth, page, search, roleFilter]);
 
   useEffect(() => {
-    void fetchUsers();
+    const t = setTimeout(() => {
+      void fetchUsers();
+    }, 0);
+    return () => clearTimeout(t);
   }, [fetchUsers]);
 
   // Debounce search

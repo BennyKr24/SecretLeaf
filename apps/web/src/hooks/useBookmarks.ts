@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const STORAGE_KEY = 'secretleaf.bookmarks';
 
@@ -23,11 +23,7 @@ function writeBookmarks(slugs: string[]): void {
 }
 
 export function useBookmarks() {
-  const [bookmarks, setBookmarks] = useState<string[]>([]);
-
-  useEffect(() => {
-    setBookmarks(readBookmarks());
-  }, []);
+  const [bookmarks, setBookmarks] = useState<string[]>(() => readBookmarks());
 
   const toggle = useCallback((slug: string) => {
     setBookmarks(prev => {

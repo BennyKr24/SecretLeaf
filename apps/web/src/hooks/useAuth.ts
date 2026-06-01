@@ -83,8 +83,11 @@ function toAuthUser(user: SessionUser): AuthUser {
  * ```
  */
 export function useAuth(): AuthState {
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<AuthUser | null>(() => {
+    const session = getSession();
+    return session ? toAuthUser(session.user) : null;
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
   const hydrate = useCallback(() => {
     const session = getSession();
@@ -92,11 +95,8 @@ export function useAuth(): AuthState {
     setIsLoading(false);
   }, []);
 
-  // Hydrate from localStorage on mount
+  // Keep auth state in sync across tabs and profile updates
   useEffect(() => {
-    hydrate();
-
-    // Keep in sync across tabs (e.g. login in another tab)
     const handleStorage = (e: StorageEvent) => {
       if (e.key === "secretleaf.session") {
         hydrate();
@@ -121,8 +121,6 @@ export function useAuth(): AuthState {
     const supabase = getSupabaseBrowserClient();
     // fire-and-forget — must not block rendering or auth state
     void runMigration(userId, supabase);
-  // Re-check whenever the session changes (login event)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
   const logout = useCallback(async () => {

@@ -224,9 +224,12 @@ export default function UserDashboardPage() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const raw = localStorage.getItem('secretleaf.last_visit');
-    if (raw) setLastVisit(new Date(raw));
-    localStorage.setItem('secretleaf.last_visit', new Date().toISOString());
+    const t = setTimeout(() => {
+      const raw = localStorage.getItem('secretleaf.last_visit');
+      if (raw) setLastVisit(new Date(raw));
+      localStorage.setItem('secretleaf.last_visit', new Date().toISOString());
+    }, 0);
+    return () => clearTimeout(t);
   }, []);
 
   const digest = useMemo(() => buildWeeklyDigestPayload(wikiArticles), []);

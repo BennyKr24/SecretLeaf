@@ -1,4 +1,4 @@
-import type { CreateStudyInput, StudyRecord } from "@/lib/types";
+import type { StudyRecord } from "@/lib/types";
 import { logError, logWarn } from "@/lib/log";
 import { getAuthenticatedUserWithRole } from "@/lib/serverAuth";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";

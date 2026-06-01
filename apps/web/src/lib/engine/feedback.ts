@@ -84,12 +84,6 @@ export async function recordFeedbackBatch(
 
 // ── Aggregation ─────────────────────────────────────────────────────────────
 
-type FeedbackRow = {
-  study_id: string;
-  event_type: FeedbackEventType;
-  count: number;
-};
-
 /**
  * Compute engagement aggregates for all studies that have feedback.
  * Uses a server-side GROUP BY for efficiency.

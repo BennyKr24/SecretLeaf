@@ -533,7 +533,11 @@ export function search(rawQuery: string, opts?: {
   }
 
   scored.sort((a, b) => b._rawScore - a._rawScore);
-  const results = scored.slice(0, limit).map(({ _rawScore, ...r }) => r);
+  const results = scored.slice(0, limit).map((item) => {
+    const { _rawScore, ...normalized } = item;
+    void _rawScore;
+    return normalized;
+  });
 
   const byKind: Record<SearchResultKind, number> = {
     wiki: 0, fertilizer: 0, source: 0, glossary: 0,

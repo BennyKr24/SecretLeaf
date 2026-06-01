@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Link from 'next/link';
 import { getActiveGrow } from '@/lib/grow/store';
 import type { ToolResultData } from '@/lib/tools/types';
 
@@ -19,13 +20,11 @@ type Props = {
  * - Active grow found → enabled; actual save logic arrives in Phase 6.
  */
 export default function SaveToGrowButton({ toolSlug, summary }: Props) {
-  const [activeGrowName, setActiveGrowName] = useState<string | null>(null);
+  const [activeGrowName] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    return getActiveGrow()?.name ?? null;
+  });
   const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    const grow = getActiveGrow();
-    setActiveGrowName(grow?.name ?? null);
-  }, []);
 
   const hasGrow = activeGrowName !== null;
 
@@ -35,9 +34,9 @@ export default function SaveToGrowButton({ toolSlug, summary }: Props) {
         <span className="text-base">🌱</span>
         <p className="text-xs text-slate-500">
           <span className="font-semibold">Kein aktiver Grow.</span>{' '}
-          <a href="/start" className="text-emerald-600 hover:underline">
+          <Link href="/start" className="text-emerald-600 hover:underline">
             Grow starten
-          </a>{' '}
+          </Link>{' '}
           um Ergebnisse zu speichern.
         </p>
       </div>

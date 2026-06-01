@@ -228,7 +228,11 @@ export function searchStudies(
     mode,
     total: scored.length,
     durationMs: Date.now() - started,
-    items: scored.slice(0, limit).map(({ _rawScore, ...rest }) => rest),
+    items: scored.slice(0, limit).map((item) => {
+      const { _rawScore, ...normalized } = item;
+      void _rawScore;
+      return normalized;
+    }),
     generatedAt: new Date().toISOString(),
   };
 }

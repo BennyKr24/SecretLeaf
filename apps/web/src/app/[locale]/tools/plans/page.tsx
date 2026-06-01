@@ -252,12 +252,6 @@ const budgetLabel: Record<FertilizerPlan["budget"], string> = {
   premium: "Premium"
 };
 
-const setupLabel: Record<PlanSetup, string> = {
-  soil: "Erde",
-  hydro: "Hydro/Coco",
-  hybrid: "Hybrid"
-};
-
 const levelLabel: Record<PlanLevel, string> = {
   einsteiger: "Einsteiger",
   fortgeschritten: "Fortgeschritten",

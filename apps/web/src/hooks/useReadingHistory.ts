@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const STORAGE_KEY = 'secretleaf.history';
 const MAX_HISTORY = 20;
@@ -31,11 +31,7 @@ function writeHistory(entries: HistoryEntry[]): void {
 }
 
 export function useReadingHistory() {
-  const [history, setHistory] = useState<HistoryEntry[]>([]);
-
-  useEffect(() => {
-    setHistory(readHistory());
-  }, []);
+  const [history, setHistory] = useState<HistoryEntry[]>(() => readHistory());
 
   const addEntry = useCallback((entry: Omit<HistoryEntry, 'readAt'>) => {
     setHistory(prev => {

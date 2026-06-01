@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import type { GrowSetup, ToolResultData, ToolSnapshot, ToolStorageData } from '@/lib/tools/types';
 
 const STORAGE_KEY = 'secretleaf.tools.v1';
@@ -35,21 +35,11 @@ type UseToolStateOptions<T extends InputMap> = {
 };
 
 export function useToolState<T extends InputMap>({ slug, defaults, setupKeys }: UseToolStateOptions<T>) {
-  const [inputs, setInputsRaw] = useState<T>(defaults);
-  const [loaded, setLoaded] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Load last snapshot on mount
-  useEffect(() => {
+  const [inputs, setInputsRaw] = useState<T>(() => {
     const storage = readStorage();
-
-    // Find last snapshot for this tool
     const last = storage.history.find((s) => s.slug === slug);
-
-    // Merge: setupProfile shared fields → last snapshot → defaults
     const merged = { ...defaults } as Record<string, number | string | boolean>;
 
-    // Apply shared setup fields
     if (setupKeys) {
       const profile = storage.setupProfile;
       for (const key of setupKeys) {
@@ -60,7 +50,6 @@ export function useToolState<T extends InputMap>({ slug, defaults, setupKeys }: 
       }
     }
 
-    // Apply last snapshot (tool-specific inputs override shared)
     if (last) {
       for (const [k, v] of Object.entries(last.inputs)) {
         if (k in defaults) {
@@ -69,9 +58,10 @@ export function useToolState<T extends InputMap>({ slug, defaults, setupKeys }: 
       }
     }
 
-    setInputsRaw(merged as T);
-    setLoaded(true);
-  }, [slug]); // eslint-disable-line react-hooks/exhaustive-deps
+    return merged as T;
+  });
+  const [loaded] = useState(true);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const setInput = useCallback(<K extends keyof T>(key: K, value: T[K]) => {
     setInputsRaw((prev) => ({ ...prev, [key]: value }));

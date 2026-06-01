@@ -10,7 +10,7 @@ const envSchema = z.object({
   HOST: z.string().default("0.0.0.0"),
   PORT: z.coerce.number().int().min(1).max(65535).default(4000),
   DATABASE_URL: z.string().default("file:./dev.db"),
-  JWT_SECRET: z.string().min(24),
+  JWT_SECRET: z.string().min(24, "JWT_SECRET must be at least 24 characters"),
   ACCESS_TOKEN_TTL: z.string().default("15m"),
   CORS_ORIGIN: z.string().min(1).default("http://localhost:3000")
 });
@@ -19,6 +19,9 @@ const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
   console.error("Invalid environment configuration", parsed.error.flatten().fieldErrors);
+  console.error(
+    "Hint: copy apps/api/.env.example to apps/api/.env and set JWT_SECRET (>=24 chars), e.g. `openssl rand -base64 32`"
+  );
   process.exit(1);
 }
 

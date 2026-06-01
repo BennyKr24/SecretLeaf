@@ -7,12 +7,6 @@ export const dynamic = "force-dynamic";
 
 const STUDIES_TABLE = "studies";
 
-type UpdateStudyPayload = {
-  qualityStatus?: "good" | "pending" | "bad";
-  tags?: string[];
-  reviewNote?: string;
-};
-
 type StudyRow = {
   id: string;
   title: string;

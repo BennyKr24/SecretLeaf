@@ -137,9 +137,11 @@ export function useGrowState(): UseGrowStateReturn {
   useEffect(() => {
     if (!user) {
       // Anonymous: use localStorage as before
-      refresh();
-      setLoaded(true);
-      return;
+      const t = setTimeout(() => {
+        refresh();
+        setLoaded(true);
+      }, 0);
+      return () => clearTimeout(t);
     }
 
     // Logged-in: load from Supabase

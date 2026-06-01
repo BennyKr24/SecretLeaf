@@ -85,7 +85,8 @@ export default function StudiesListView({
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setExpandedSections({});
+    const t = setTimeout(() => setExpandedSections({}), 0);
+    return () => clearTimeout(t);
   }, [category, difficulty, sort, search, activeTag]);
 
   type Result = { article: TerpiraArticle; score: number; snippet: string | null };

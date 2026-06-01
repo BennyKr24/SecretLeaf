@@ -134,7 +134,7 @@ const LOG_TYPE_SLUG_BOOSTS: Partial<Record<LogEntryType, string[]>> = {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function resolveAction(slug: string, growId: string): InsightAction {
+function resolveAction(slug: string): InsightAction {
   const mapped = SLUG_ACTION[slug];
   if (!mapped) return { type: "link", href: `/wiki/${slug}` };
   if (mapped.type === "log") {
@@ -195,7 +195,7 @@ export function getRecommendationsForGrow(grow: Grow, limit = 5): GrowInsight[] 
   return scored.map(({ article, priority }) => ({
     article,
     priority,
-    action: resolveAction(article.slug, grow.id),
+    action: resolveAction(article.slug),
     relatedTask: findRelatedTask(article.slug, allTasks),
   }));
 }
@@ -215,7 +215,7 @@ export function getInsightsForLogType(type: LogEntryType, limit = 2): GrowInsigh
       results.push({
         article,
         priority: resolvePriority(slug),
-        action: resolveAction(slug, ""),
+        action: resolveAction(slug),
       });
     }
     if (results.length >= limit) break;

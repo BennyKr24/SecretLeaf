@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect, useDeferredValue, useRef, Suspense, type ReactNode } from 'react';
+import { useState, useMemo, useEffect, useDeferredValue, useRef, useCallback, Suspense, type ReactNode } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   fertilizerCatalog,
@@ -8,8 +8,7 @@ import {
   FertilizerBase,
   FertilizerProfile,
   FertilizerFormat,
-  FertilizerApplication,
-  fertilizerCoverageStats
+  FertilizerApplication
 } from '@/data/terpira/fertilizers';
 import {
   filterOffers,
@@ -61,12 +60,6 @@ const formatLabelMap: Record<FertilizerFormat, string> = {
   powder: 'Pulver',
   pellets: 'Pellets',
   granules: 'Granulat'
-};
-
-const applicationLabelMap: Record<FertilizerApplication, string> = {
-  water: 'Wasser',
-  soil: 'Erde',
-  both: 'Wasser + Erde'
 };
 
 const useCaseLabelMap: Record<UseCase, string> = {
@@ -199,10 +192,9 @@ function FertilizersPageInner() {
   const [showDetails, setShowDetails] = useState<Set<string>>(new Set());
   const [priceRegion, setPriceRegion] = useState<'all' | 'DE' | 'AT' | 'CH' | 'EU' | 'OTHER'>('all');
   const [priceOnlyAvailable, setPriceOnlyAvailable] = useState(false);
-  const [priceOnlyWithShipping, setPriceOnlyWithShipping] = useState(false);
-  const [excludedShops, setExcludedShops] = useState<string[]>([]);
-  const [sortByCheapestEffective, setSortByCheapestEffective] = useState(false);
-  const [profileName, setProfileName] = useState('');
+  const [priceOnlyWithShipping] = useState(false);
+  const [excludedShops] = useState<string[]>([]);
+  const [sortByCheapestEffective] = useState(false);
   const [profiles, setProfiles] = useState<FilterProfile[]>([]);
   const deferredSearch = useDeferredValue(searchQuery);
 
@@ -317,7 +309,7 @@ function FertilizersPageInner() {
     return f.format === 'liquid' || f.format === 'powder' ? 'water' : 'both';
   };
 
-  const computeMatchScore = (f: FertilizerProfile): number => {
+  const computeMatchScore = useCallback((f: FertilizerProfile): number => {
     let score = 0;
 
     if (selectedPhase === 'all' || f.phase.includes(selectedPhase)) score += 12;
@@ -394,7 +386,7 @@ function FertilizersPageInner() {
     }
 
     return Math.round(score * 10) / 10;
-  };
+  }, [selectedPhase, selectedBase, selectedFormat, selectedApplication, selectedBrand, selectedCost, deferredSearch, searchIndex, expandedSearchTokens, useCase]);
 
   const filtered = useMemo(() => {
     let result = fertilizerCatalog;
@@ -448,7 +440,7 @@ function FertilizersPageInner() {
           return 0;
       }
     });
-  }, [expandedSearchTokens, searchIndex, selectedPhase, selectedBase, selectedFormat, selectedApplication, selectedBrand, selectedCost, sortBy, useCase]);
+  }, [expandedSearchTokens, searchIndex, selectedPhase, selectedBase, selectedFormat, selectedApplication, selectedBrand, selectedCost, sortBy, computeMatchScore]);
 
   const suggestedQueries = useMemo(() => {
     const rawQuery = searchQuery.trim();
@@ -513,28 +505,31 @@ function FertilizersPageInner() {
 
   useEffect(() => {
     if (hasInitializedFromUrl.current) return;
-    const qs = new URLSearchParams(searchParams.toString());
+    const t = setTimeout(() => {
+      const qs = new URLSearchParams(searchParams.toString());
 
-    const queryValue = qs.get('q') ?? '';
-    if (queryValue) setSearchQuery(queryValue);
+      const queryValue = qs.get('q') ?? '';
+      if (queryValue) setSearchQuery(queryValue);
 
-    const phaseValue = qs.get('phase');
-    if (phaseValue && ['veg', 'flower', 'universal'].includes(phaseValue))
-      setSelectedPhase(phaseValue as FertilizerPhase);
+      const phaseValue = qs.get('phase');
+      if (phaseValue && ['veg', 'flower', 'universal'].includes(phaseValue))
+        setSelectedPhase(phaseValue as FertilizerPhase);
 
-    const baseValue = qs.get('base');
-    if (baseValue && ['mineral', 'organic', 'bio-organic', 'hybrid'].includes(baseValue))
-      setSelectedBase(baseValue as FertilizerBase);
+      const baseValue = qs.get('base');
+      if (baseValue && ['mineral', 'organic', 'bio-organic', 'hybrid'].includes(baseValue))
+        setSelectedBase(baseValue as FertilizerBase);
 
-    const costValue = qs.get('cost');
-    if (costValue && ['budget', 'mid', 'premium'].includes(costValue))
-      setSelectedCost(costValue as 'budget' | 'mid' | 'premium');
+      const costValue = qs.get('cost');
+      if (costValue && ['budget', 'mid', 'premium'].includes(costValue))
+        setSelectedCost(costValue as 'budget' | 'mid' | 'premium');
 
-    const useCaseValue = qs.get('useCase');
-    if (useCaseValue && ['balanced', 'hydro-performance', 'soil-organic', 'budget-smart', 'max-yield'].includes(useCaseValue))
-      setUseCase(useCaseValue as UseCase);
+      const useCaseValue = qs.get('useCase');
+      if (useCaseValue && ['balanced', 'hydro-performance', 'soil-organic', 'budget-smart', 'max-yield'].includes(useCaseValue))
+        setUseCase(useCaseValue as UseCase);
 
-    hasInitializedFromUrl.current = true;
+      hasInitializedFromUrl.current = true;
+    }, 0);
+    return () => clearTimeout(t);
   }, [searchParams]);
 
   useEffect(() => {
@@ -561,38 +556,29 @@ function FertilizersPageInner() {
   }, [searchQuery, router, searchParams]);
 
   useEffect(() => {
-    setCurrentPage(1);
+    const t = setTimeout(() => setCurrentPage(1), 0);
+    return () => clearTimeout(t);
   }, [searchQuery, selectedPhase, selectedBase, selectedFormat, selectedApplication, selectedBrand, selectedCost, sortBy, pageSize, useCase]);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(FILTER_PROFILE_STORAGE_KEY);
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as FilterProfile[];
-      if (Array.isArray(parsed)) setProfiles(parsed.slice(0, 12));
-    } catch {
-      // ignore invalid profile storage content
-    }
+    const t = setTimeout(() => {
+      try {
+        const raw = localStorage.getItem(FILTER_PROFILE_STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw) as FilterProfile[];
+        if (Array.isArray(parsed)) setProfiles(parsed.slice(0, 12));
+      } catch {
+        // ignore invalid profile storage content
+      }
+    }, 0);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
     localStorage.setItem(FILTER_PROFILE_STORAGE_KEY, JSON.stringify(profiles));
   }, [profiles]);
 
-  const availableShops = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const offers of Object.values(fertilizerPriceSnapshot.offersByProduct)) {
-      for (const offer of offers) {
-        counts.set(offer.shop, (counts.get(offer.shop) ?? 0) + 1);
-      }
-    }
-    return Array.from(counts.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 24)
-      .map(([shop, count]) => ({ shop, count }));
-  }, []);
-
-  const getVisibleOffers = (productId: string, limit?: number) => {
+  const getVisibleOffers = useCallback((productId: string, limit?: number) => {
     const offers = getOffersForProduct(productId, 20);
     const visible = filterOffers(offers, {
       region: priceRegion,
@@ -603,7 +589,7 @@ function FertilizersPageInner() {
 
     if (typeof limit === 'number') return visible.slice(0, limit);
     return visible;
-  };
+  }, [priceRegion, priceOnlyAvailable, priceOnlyWithShipping, excludedShops]);
 
   const bestEffectiveById = useMemo(() => {
     const map = new Map<string, number | null>();
@@ -612,7 +598,7 @@ function FertilizersPageInner() {
       map.set(item.id, offers[0] ? getEffectivePrice(offers[0]) : null);
     }
     return map;
-  }, [filtered, priceRegion, priceOnlyAvailable, priceOnlyWithShipping, excludedShops]);
+  }, [filtered, getVisibleOffers]);
 
   const sortedVisible = useMemo(() => {
     if (!sortByCheapestEffective) return filtered;
@@ -631,19 +617,6 @@ function FertilizersPageInner() {
   const safePage = Math.min(currentPage, totalPagesVisible);
   const startIndex = (safePage - 1) * pageSize;
   const paged = sortedVisible.slice(startIndex, startIndex + pageSize);
-
-  const toggleExcludedShop = (shop: string) => {
-    setExcludedShops((prev) => (prev.includes(shop) ? prev.filter((s) => s !== shop) : [...prev, shop]));
-  };
-
-  const pricedProducts = useMemo(
-    () =>
-      sortedVisible.filter((item) => {
-        const value = bestEffectiveById.get(item.id);
-        return value != null;
-      }).length,
-    [sortedVisible, bestEffectiveById]
-  );
 
   const toggleDetails = (id: string) => {
     const next = new Set(showDetails);

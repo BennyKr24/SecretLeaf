@@ -109,7 +109,11 @@ function SearchContent() {
 
   // Initial search
   useEffect(() => {
-    if (initialQ) doSearch(initialQ, initialKind);
+    if (!initialQ) return;
+    const t = setTimeout(() => {
+      doSearch(initialQ, initialKind);
+    }, 0);
+    return () => clearTimeout(t);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = (e: React.FormEvent) => {

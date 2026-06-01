@@ -375,16 +375,6 @@ function QuickAddBar({
     return { _date: todayDate, _time: nowTime };
   });
 
-  // Re-sync fields when editingEntry changes (e.g. switching between entries)
-  useEffect(() => {
-    if (editingEntry) {
-      setFields(buildInitialFields(editingEntry));
-    } else {
-      setFields({ _date: todayDate, _time: nowTime });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editingEntry?.id]);
-
   const set = useCallback((key: string, value: string) => {
     setFields((prev) => ({ ...prev, [key]: value }));
   }, []);
@@ -731,7 +721,7 @@ function EntryCard({
 // Page
 // ────────────────────────────────────────────────────────────────────────────
 
-export default function GrowLogPage(_props: Props) {
+export default function GrowLogPage({}: Props) {
   const { id } = useParams<{ id: string }>();
   const searchParams = useSearchParams();
   const { grows, loaded: growLoaded } = useGrowState();
@@ -764,7 +754,7 @@ export default function GrowLogPage(_props: Props) {
     ? grow.plants.every((p) => {
         const pe = entries.filter((e) => e.plantId === p.id);
         if (pe.length === 0) return true;
-        const sinceLog = Math.floor((Date.now() - new Date(pe[0]!.date).getTime()) / 86_400_000);
+        const sinceLog = Math.floor((new Date().getTime() - new Date(pe[0]!.date).getTime()) / 86_400_000);
         return sinceLog <= 3;
       })
     : true;
@@ -787,12 +777,14 @@ export default function GrowLogPage(_props: Props) {
 
   // Show completion banner 600ms after save, hide after 4s
   useEffect(() => {
-    if (!hasTodayEntry || !noCriticalPlants) { setShowCompletion(false); return; }
+    if (!hasTodayEntry || !noCriticalPlants) {
+      const reset = setTimeout(() => setShowCompletion(false), 0);
+      return () => clearTimeout(reset);
+    }
     const t = setTimeout(() => setShowCompletion(true), 600);
     if (completionTimer.current) clearTimeout(completionTimer.current);
     completionTimer.current = setTimeout(() => setShowCompletion(false), 5000);
     return () => { clearTimeout(t); if (completionTimer.current) clearTimeout(completionTimer.current); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasTodayEntry, noCriticalPlants]);
 
   // Dismiss log insight after 8s
@@ -889,13 +881,13 @@ export default function GrowLogPage(_props: Props) {
     setSelectedPlantId(entry.plantId ?? '');
     // Scroll to top so form is visible
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, []);
+  }, [setEditingEntry, setActiveType, setSelectedPlantId]);
 
   const handleCancel = useCallback(() => {
     setEditingEntry(null);
     setActiveType(null);
     setSelectedPlantId('');
-  }, []);
+  }, [setEditingEntry, setActiveType, setSelectedPlantId]);
 
   // ── Loading ─────────────────────────────────────────────────────────────────
 
@@ -953,6 +945,7 @@ export default function GrowLogPage(_props: Props) {
       <div className="mx-auto max-w-2xl space-y-5 px-4 py-5 sm:px-5">
         {/* ── Quick-Add ────────────────────────────────────────────────────── */}
         <QuickAddBar
+          key={editingEntry?.id ?? 'new'}
           activeType={activeType}
           plants={grow.plants}
           selectedPlantId={selectedPlantId}
