@@ -60,99 +60,69 @@ function StudyCard({ article, evidenceLabels }: { article: TerpiraArticle; evide
 
 function ProductDashboardMock() {
   return (
-    <div className="relative mx-auto w-full max-w-[1040px]">
-      <div className="pointer-events-none absolute -inset-10 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.24),transparent_66%)] blur-2xl" />
-      <div className="pointer-events-none absolute -bottom-10 left-10 right-10 h-20 rounded-full bg-emerald-400/25 blur-2xl" />
-      <div className="pointer-events-none absolute inset-x-16 -top-4 h-px bg-gradient-to-r from-transparent via-emerald-100/70 to-transparent" />
+    <div className="relative mx-auto w-full max-w-[940px]" data-parallax="0.12">
+      <div className="pointer-events-none absolute -inset-12 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.2),transparent_66%)] blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-10 left-16 right-16 h-20 rounded-full bg-emerald-400/20 blur-3xl" />
 
-      <div className="relative rounded-[44px] bg-gradient-to-br from-white/35 via-emerald-300/20 to-white/10 p-[1.5px] shadow-[0_28px_120px_rgba(0,0,0,0.7)]">
-        <div className="relative overflow-hidden rounded-[43px] border border-white/10 bg-[#030907] p-2.5">
-          <div className="pointer-events-none absolute bottom-24 left-[7px] z-10 h-10 w-[3px] rounded-full bg-white/20" />
-          <div className="pointer-events-none absolute bottom-[150px] left-[7px] z-10 h-8 w-[3px] rounded-full bg-white/20" />
-          <div className="pointer-events-none absolute right-[7px] top-[145px] z-10 h-12 w-[3px] rounded-full bg-white/25" />
+      <div className="relative rounded-[44px] bg-gradient-to-br from-white/35 via-emerald-300/18 to-white/8 p-[1.5px] shadow-[0_30px_120px_rgba(0,0,0,0.65)]">
+        <div className="relative overflow-hidden rounded-[43px] border border-white/10 bg-[#040907] p-2.5">
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white/10 to-transparent sl-tablet-glare" />
+          <div className="pointer-events-none absolute left-1/2 top-[8px] z-10 h-1 w-24 -translate-x-1/2 rounded-full bg-white/20" />
 
-          <div className="pointer-events-none absolute left-1/2 top-[9px] z-10 h-1 w-24 -translate-x-1/2 rounded-full bg-white/15" />
-          <div className="pointer-events-none absolute left-1/2 top-[7px] z-10 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-emerald-200/70 shadow-[0_0_10px_rgba(52,211,153,0.6)]" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-white/10 to-transparent sl-tablet-glare" />
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black/35 to-transparent" />
+          <div className="rounded-[30px] border border-white/10 bg-[#09120f] p-5 sm:p-6">
+            <div className="mb-5 flex items-center justify-between">
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-300/80">Grow OS</p>
+                <h3 className="mt-1 text-xl font-semibold text-slate-50">Meine Pflanze</h3>
+              </div>
+              <span className="rounded-full border border-emerald-300/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">Live</span>
+            </div>
 
-          <div
-            className="relative overflow-hidden rounded-[30px] border border-emerald-300/25 bg-[#08110f]/85 p-3 shadow-[0_26px_100px_rgba(0,0,0,0.62)] backdrop-blur-xl"
-            style={{ transform: "perspective(1850px) rotateX(7deg) rotateY(-10deg)", transformOrigin: "center" }}
-          >
-            <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-white/10" />
-            <div className="pointer-events-none absolute -left-24 top-[-1px] h-px w-[180%] rotate-[4deg] bg-gradient-to-r from-transparent via-emerald-200/35 to-transparent" />
-            <div className="rounded-2xl border border-white/10 bg-[#0a1512] p-4 sm:p-5">
-              <div className="mb-4 flex items-center justify-between">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-300/80">Grow OS</p>
-                  <h3 className="mt-1 text-lg font-semibold text-slate-100">Meine Grows</h3>
-                </div>
-                <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-[11px] font-semibold text-emerald-200">
-                  AI Diagnose aktiv
-                </span>
+            <div className="grid gap-4 sm:grid-cols-[126px_1fr]">
+              <div className="relative overflow-hidden rounded-2xl border border-emerald-300/20 bg-gradient-to-b from-emerald-300/15 via-emerald-500/6 to-transparent p-2">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.15),transparent_55%)]" />
+                <svg viewBox="0 0 120 120" className="relative h-full w-full">
+                  <defs>
+                    <linearGradient id="plantLeaf" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stopColor="rgba(187,247,208,0.9)" />
+                      <stop offset="100%" stopColor="rgba(22,163,74,0.72)" />
+                    </linearGradient>
+                  </defs>
+                  <g transform="translate(60 66)">
+                    <path d="M0 38 L0 -12" stroke="rgba(110,231,183,0.8)" strokeWidth="2.8" strokeLinecap="round" />
+                    <path d="M0 -8 C 12 -36, 24 -52, 40 -68 C 34 -44, 28 -29, 14 -10 C 9 -6, 4 -4, 0 -8 Z" fill="url(#plantLeaf)" />
+                    <path d="M0 -8 C -12 -36, -24 -52, -40 -68 C -34 -44, -28 -29, -14 -10 C -9 -6, -4 -4, 0 -8 Z" fill="url(#plantLeaf)" />
+                    <path d="M2 -4 C 24 -28, 40 -39, 56 -46 C 44 -34, 32 -25, 18 -14 C 11 -9, 6 -6, 2 -4 Z" fill="url(#plantLeaf)" />
+                    <path d="M-2 -4 C -24 -28, -40 -39, -56 -46 C -44 -34, -32 -25, -18 -14 C -11 -9, -6 -6, -2 -4 Z" fill="url(#plantLeaf)" />
+                  </g>
+                </svg>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-[56px_1.35fr_1fr]">
-                <div className="hidden rounded-xl border border-white/10 bg-[#08100e] p-2 sm:block">
-                  <div className="mb-2 h-7 rounded-md border border-white/10 bg-white/[0.03]" />
-                  <div className="space-y-2">
-                    {["•", "•", "•", "•", "•"].map((dot, index) => (
-                      <div key={`nav-dot-${index}`} className="flex h-7 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-emerald-300/70">
-                        {dot}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                  <div className="mb-2 flex items-center justify-between text-xs text-slate-300">
-                    <span>OG Kush</span>
-                    <span className="text-emerald-300">Bluete - Tag 42</span>
-                  </div>
-                  <div className="mb-3 flex items-center gap-2 rounded-lg border border-white/10 bg-black/20 p-2">
-                    <div className="h-10 w-10 rounded-md border border-emerald-300/30 bg-gradient-to-br from-emerald-200/20 to-emerald-700/20" />
-                    <div className="text-[11px] text-slate-300">
-                      <p className="font-semibold text-emerald-200">Pflanze gesund</p>
-                      <p>Naechster Check in 6h</p>
-                    </div>
+              <div className="space-y-4">
+                <div>
+                  <div className="mb-2 flex items-center justify-between text-sm text-slate-200">
+                    <span>OG Kush · Bluete Tag 42</span>
+                    <span className="font-semibold text-emerald-300">67%</span>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                    <div className="h-full w-[67%] rounded-full bg-gradient-to-r from-emerald-400 to-lime-300" />
-                  </div>
-                  <div className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
-                    <div className="rounded-lg border border-emerald-300/30 bg-emerald-400/10 p-2 text-emerald-200">Gesundheit: sehr gut</div>
-                    <div className="rounded-lg border border-white/10 bg-white/5 p-2 text-slate-300">Bewaesserung: in 2 Tagen</div>
-                    <div className="rounded-lg border border-amber-300/30 bg-amber-300/10 p-2 text-amber-200">Naechste Aufgabe: Duengen</div>
+                    <div className="h-full w-[67%] rounded-full bg-gradient-to-r from-emerald-300 to-green-500" />
                   </div>
                 </div>
 
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
-                  <p className="text-xs text-slate-400">AI Diagnose</p>
-                  <p className="mt-1 text-sm font-semibold text-slate-100">Keine kritischen Signale</p>
-                  <p className="mt-2 text-xs leading-relaxed text-slate-400">VPD und pH innerhalb Zielbereich. Leichter N-Bedarf in 48h moeglich.</p>
-                  <button
-                    type="button"
-                    className="mt-3 rounded-lg border border-emerald-300/40 bg-emerald-400/10 px-3 py-1.5 text-xs font-semibold text-emerald-200 transition hover:bg-emerald-400/20"
-                  >
-                    Details anzeigen
-                  </button>
-                </div>
-              </div>
-
-              <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                {[
-                  { label: "Temperatur", value: "25 C", line: "from-emerald-300 to-green-500" },
-                  { label: "Luftfeuchte", value: "55%", line: "from-cyan-300 to-blue-500" },
-                  { label: "VPD", value: "0.92", line: "from-amber-300 to-yellow-500" },
-                  { label: "pH", value: "6.2", line: "from-fuchsia-300 to-purple-500" },
-                ].map((item) => (
-                  <div key={item.label} className="rounded-lg border border-white/10 bg-white/[0.03] p-2.5">
-                    <p className="text-[10px] uppercase tracking-wider text-slate-500">{item.label}</p>
-                    <p className="mt-1 text-sm font-semibold text-slate-100">{item.value}</p>
-                    <div className={`mt-2 h-1 rounded-full bg-gradient-to-r ${item.line}`} />
+                <div className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-3">
+                  <div className="rounded-xl border border-emerald-300/30 bg-emerald-400/10 px-3 py-2 text-emerald-100">
+                    <p className="text-[10px] uppercase tracking-widest text-emerald-200/80">Gesundheit</p>
+                    <p className="mt-1 font-semibold">Sehr gut</p>
                   </div>
-                ))}
+                  <div className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-slate-200">
+                    <p className="text-[10px] uppercase tracking-widest text-slate-400">Bewaesserung</p>
+                    <p className="mt-1 font-semibold">In 2 Tagen</p>
+                  </div>
+                  <div className="rounded-xl border border-amber-300/30 bg-amber-300/10 px-3 py-2 text-amber-100">
+                    <p className="text-[10px] uppercase tracking-widest text-amber-200/80">Naechste Aufgabe</p>
+                    <p className="mt-1 font-semibold">Duengen</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -164,10 +134,10 @@ function ProductDashboardMock() {
 
 function HeroPlantDecor() {
   return (
-    <div className="pointer-events-none absolute -right-20 -top-8 z-20 hidden h-[700px] w-[430px] lg:block" aria-hidden="true">
-      <div className="absolute right-8 top-14 h-[560px] w-[320px] rounded-full bg-emerald-500/15 blur-[84px]" />
+    <div className="pointer-events-none absolute -right-14 top-[-26px] z-20 hidden h-[680px] w-[390px] xl:block" aria-hidden="true">
+      <div className="absolute right-0 top-16 h-[560px] w-[280px] rounded-full bg-emerald-500/16 blur-[82px]" />
 
-      <svg viewBox="0 0 320 700" className="absolute right-2 top-0 h-[680px] w-[330px] sl-cannabis-cluster sl-plant-leaf--slow">
+      <svg viewBox="0 0 320 700" className="absolute right-[-20px] top-4 h-[640px] w-[310px] sl-cannabis-cluster sl-plant-leaf--slow">
         <defs>
           <linearGradient id="slLeafFill" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="rgba(187,247,208,0.82)" />
@@ -196,7 +166,7 @@ function HeroPlantDecor() {
         </g>
       </svg>
 
-      <svg viewBox="0 0 220 470" className="absolute -right-6 top-[150px] h-[420px] w-[220px] sl-cannabis-cluster sl-plant-leaf--fast">
+      <svg viewBox="0 0 220 470" className="absolute -right-16 top-[176px] h-[360px] w-[190px] sl-cannabis-cluster sl-plant-leaf--fast">
         <defs>
           <linearGradient id="slLeafFillSmall" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="rgba(167,243,208,0.76)" />
@@ -241,36 +211,34 @@ export default async function LandingPage() {
 
       <section className="relative overflow-hidden border-b border-white/5">
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div data-parallax="0.3" className="absolute -top-44 left-1/2 h-[520px] w-[860px] -translate-x-1/2 rounded-full bg-emerald-500/12 blur-[150px]" />
-          <div data-parallax="0.42" className="absolute -top-14 right-[-120px] h-[520px] w-[520px] rounded-full bg-emerald-500/10 blur-[120px] sl-velocity-glow" />
+          <div data-parallax="0.3" className="absolute -top-44 left-1/2 h-[520px] w-[860px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[150px]" />
+          <div data-parallax="0.42" className="absolute -top-14 right-[-120px] h-[520px] w-[520px] rounded-full bg-emerald-500/8 blur-[120px] sl-velocity-glow" />
           <div data-parallax="0.2" className="absolute -bottom-20 right-0 h-[280px] w-[460px] rounded-full bg-teal-500/8 blur-[110px]" />
-          <div className="absolute -left-16 bottom-6 h-[320px] w-[240px] rotate-[-12deg] rounded-[70%_30%_65%_35%/38%_60%_40%_62%] border border-emerald-300/12 bg-gradient-to-br from-emerald-400/12 to-transparent blur-[1px]" />
-          <div className="absolute -right-20 top-8 h-[420px] w-[300px] rotate-[14deg] rounded-[74%_26%_46%_54%/42%_58%_42%_58%] border border-emerald-300/15 bg-gradient-to-br from-emerald-300/15 to-transparent blur-[1px]" />
           <div className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] [background-size:26px_26px]" />
           <div className="absolute inset-x-0 top-[72px] h-px bg-gradient-to-r from-transparent via-emerald-200/30 to-transparent" />
         </div>
 
         <HeroPlantDecor />
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-14">
-          <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] lg:gap-10">
+        <div className="relative mx-auto max-w-7xl px-4 pb-14 pt-12 sm:px-6 sm:pb-20 sm:pt-16">
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:gap-10">
             <div className="order-1 lg:order-2" data-parallax="0.14" data-reveal data-reveal-delay="30">
               <ProductDashboardMock />
             </div>
 
-            <div className="order-2 space-y-6 lg:order-1" data-reveal>
+            <div className="order-2 max-w-[470px] space-y-7 lg:order-1" data-reveal>
               <span className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-widest text-emerald-200">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
                 {t("eyebrow")}
               </span>
 
-              <h1 className="text-4xl font-semibold leading-[1.03] tracking-tight text-white sm:text-5xl lg:text-[64px]">
+              <h1 className="text-5xl font-semibold leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-[78px]">
                 Grow smarter.
                 <br />
                 <span className="bg-gradient-to-r from-emerald-300 to-green-500 bg-clip-text text-transparent">Not harder.</span>
               </h1>
 
-              <p className="max-w-md text-base leading-relaxed text-slate-400 sm:text-lg">{t("heroSub")}</p>
+              <p className="max-w-[460px] text-lg leading-relaxed text-slate-400 sm:text-xl">{t("heroSub")}</p>
 
               <div className="flex flex-wrap gap-3">
                 <CTAButton href="/start" size="lg" variant="primary" className="shadow-xl shadow-emerald-950/50 transition hover:-translate-y-0.5">
@@ -279,40 +247,6 @@ export default async function LandingPage() {
                 <CTAButton href="/tools" size="lg" variant="ghost" className="border border-white/15 bg-white/5 text-slate-200 hover:bg-white/10">
                   {t("ctaTools")}
                 </CTAButton>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 sm:max-w-[420px] sm:grid-cols-4">
-                {[
-                  { icon: "🌱", title: "Grow-Tracker", sub: "Alles im Blick" },
-                  { icon: "🩺", title: "AI Diagnose", sub: "Probleme erkennen" },
-                  { icon: "🧮", title: "Profi-Tools", sub: "Besser entscheiden" },
-                  { icon: "📚", title: "Wissen", sub: "Fundiert growen" },
-                ].map((item) => (
-                  <div key={item.title} className="rounded-lg border border-white/10 bg-white/[0.02] px-2 py-2">
-                    <p className="text-sm">{item.icon}</p>
-                    <p className="mt-1 font-semibold text-slate-200">{item.title}</p>
-                    <p className="text-[11px] text-slate-500">{item.sub}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 text-xs text-slate-400 sm:max-w-[420px] sm:grid-cols-4">
-                <span className="rounded-lg border border-white/10 bg-white/[0.02] px-2 py-2">{articleCount} Artikel</span>
-                <span className="rounded-lg border border-white/10 bg-white/[0.02] px-2 py-2">{sourceCount}+ Quellen</span>
-                <span className="rounded-lg border border-white/10 bg-white/[0.02] px-2 py-2">Live Diagnose</span>
-                <span className="rounded-lg border border-white/10 bg-white/[0.02] px-2 py-2">Taeglich aktualisiert</span>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3 text-sm text-slate-300">
-                <div className="flex -space-x-2">
-                  {["A", "K", "M", "R"].map((ch) => (
-                    <span key={ch} className="flex h-8 w-8 items-center justify-center rounded-full border border-emerald-300/30 bg-emerald-400/10 text-xs font-semibold text-emerald-200">
-                      {ch}
-                    </span>
-                  ))}
-                </div>
-                <span className="text-amber-300">★★★★★</span>
-                <span className="text-slate-400">4,9/5 aus 1.200+ Bewertungen</span>
               </div>
             </div>
           </div>
