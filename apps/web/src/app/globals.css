@@ -307,6 +307,15 @@ html {
   will-change: transform;
 }
 
+.sl-photo-leaf {
+  filter:
+    saturate(1.1)
+    brightness(0.95)
+    drop-shadow(0 12px 36px rgba(0, 0, 0, 0.6));
+  mask-image: radial-gradient(circle at 35% 45%, black 68%, transparent 96%);
+  -webkit-mask-image: radial-gradient(circle at 35% 45%, black 68%, transparent 96%);
+}
+
 .sl-plant-leaf--slow {
   animation-duration: 10.5s;
 }
@@ -325,7 +334,8 @@ html {
   .sl-plant-leaf,
   .sl-plant-leaf--slow,
   .sl-plant-leaf--fast,
-  .sl-cannabis-cluster {
+  .sl-cannabis-cluster,
+  .sl-photo-leaf {
     animation: none !important;
     transition: none !important;
     transform: none !important;

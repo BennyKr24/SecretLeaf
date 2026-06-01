@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Route } from "next";
 import { getTranslations } from "next-intl/server";
 import { wikiArticles, sourceRegister } from "@/data/terpira/wiki";
@@ -78,50 +79,79 @@ function ProductDashboardMock() {
               <span className="rounded-full border border-emerald-300/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">Live</span>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-[126px_1fr]">
-              <div className="relative overflow-hidden rounded-2xl border border-emerald-300/20 bg-gradient-to-b from-emerald-300/15 via-emerald-500/6 to-transparent p-2">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(134,239,172,0.15),transparent_55%)]" />
-                <svg viewBox="0 0 120 120" className="relative h-full w-full">
-                  <defs>
-                    <linearGradient id="plantLeaf" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="rgba(187,247,208,0.9)" />
-                      <stop offset="100%" stopColor="rgba(22,163,74,0.72)" />
-                    </linearGradient>
-                  </defs>
-                  <g transform="translate(60 66)">
-                    <path d="M0 38 L0 -12" stroke="rgba(110,231,183,0.8)" strokeWidth="2.8" strokeLinecap="round" />
-                    <path d="M0 -8 C 12 -36, 24 -52, 40 -68 C 34 -44, 28 -29, 14 -10 C 9 -6, 4 -4, 0 -8 Z" fill="url(#plantLeaf)" />
-                    <path d="M0 -8 C -12 -36, -24 -52, -40 -68 C -34 -44, -28 -29, -14 -10 C -9 -6, -4 -4, 0 -8 Z" fill="url(#plantLeaf)" />
-                    <path d="M2 -4 C 24 -28, 40 -39, 56 -46 C 44 -34, 32 -25, 18 -14 C 11 -9, 6 -6, 2 -4 Z" fill="url(#plantLeaf)" />
-                    <path d="M-2 -4 C -24 -28, -40 -39, -56 -46 C -44 -34, -32 -25, -18 -14 C -11 -9, -6 -6, -2 -4 Z" fill="url(#plantLeaf)" />
-                  </g>
-                </svg>
-              </div>
+            <div className="space-y-4">
+              <div className="grid gap-4 rounded-2xl border border-white/10 bg-black/20 p-3 sm:grid-cols-[150px_1fr]">
+                <div className="relative overflow-hidden rounded-xl border border-emerald-300/20">
+                  <Image
+                    src="https://images.unsplash.com/photo-1536811145290-bc394f5f30f5?auto=format&fit=crop&w=700&q=80"
+                    alt="Cannabis Pflanze"
+                    width={700}
+                    height={700}
+                    className="h-full min-h-[130px] w-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                </div>
 
-              <div className="space-y-4">
-                <div>
-                  <div className="mb-2 flex items-center justify-between text-sm text-slate-200">
-                    <span>OG Kush · Bluete Tag 42</span>
-                    <span className="font-semibold text-emerald-300">67%</span>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-base font-semibold text-slate-100">OG Kush</p>
+                      <p className="text-xs text-slate-400">Bluete · Tag 42</p>
+                    </div>
+                    <p className="text-sm font-semibold text-emerald-300">67%</p>
                   </div>
+
                   <div className="h-2 overflow-hidden rounded-full bg-white/10">
                     <div className="h-full w-[67%] rounded-full bg-gradient-to-r from-emerald-300 to-green-500" />
                   </div>
+
+                  <div className="grid grid-cols-3 gap-2 text-[11px]">
+                    <div>
+                      <p className="text-slate-500">Gesundheit</p>
+                      <p className="font-semibold text-emerald-200">Sehr gut</p>
+                    </div>
+                    <div>
+                      <p className="text-slate-500">Bewaesserung</p>
+                      <p className="font-semibold text-slate-200">In 2 Tagen</p>
+                    </div>
+                    <div>
+                      <p className="text-slate-500">Naechste Aufgabe</p>
+                      <p className="font-semibold text-amber-200">Duengen</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
+                <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Uebersicht</p>
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {[
+                    { label: "Temperatur", value: "25 C", tone: "text-emerald-200" },
+                    { label: "Luftfeuchtigkeit", value: "55%", tone: "text-cyan-200" },
+                    { label: "VPD", value: "0.92", tone: "text-amber-200" },
+                    { label: "pH", value: "6.2", tone: "text-fuchsia-200" },
+                  ].map((item) => (
+                    <div key={item.label} className="rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-2">
+                      <p className="text-[10px] uppercase tracking-wider text-slate-500">{item.label}</p>
+                      <p className={`mt-1 text-base font-semibold ${item.tone}`}>{item.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-2 sm:grid-cols-[1.4fr_1fr]">
+                <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
+                  <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Letzte Aktivitaet</p>
+                  <div className="flex items-center justify-between text-sm text-slate-300">
+                    <span>Bewaesserung · 2.5L · pH 6.3</span>
+                    <span className="text-slate-500">Heute, 08:30</span>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-3">
-                  <div className="rounded-xl border border-emerald-300/30 bg-emerald-400/10 px-3 py-2 text-emerald-100">
-                    <p className="text-[10px] uppercase tracking-widest text-emerald-200/80">Gesundheit</p>
-                    <p className="mt-1 font-semibold">Sehr gut</p>
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-slate-200">
-                    <p className="text-[10px] uppercase tracking-widest text-slate-400">Bewaesserung</p>
-                    <p className="mt-1 font-semibold">In 2 Tagen</p>
-                  </div>
-                  <div className="rounded-xl border border-amber-300/30 bg-amber-300/10 px-3 py-2 text-amber-100">
-                    <p className="text-[10px] uppercase tracking-widest text-amber-200/80">Naechste Aufgabe</p>
-                    <p className="mt-1 font-semibold">Duengen</p>
-                  </div>
+                <div className="rounded-2xl border border-emerald-300/20 bg-emerald-400/[0.06] p-3">
+                  <p className="mb-1 text-[11px] uppercase tracking-widest text-emerald-200/70">AI Diagnose</p>
+                  <p className="text-sm font-semibold text-emerald-100">Pflanze stabil und gesund</p>
                 </div>
               </div>
             </div>
@@ -137,50 +167,22 @@ function HeroPlantDecor() {
     <div className="pointer-events-none absolute -right-14 top-[-26px] z-20 hidden h-[680px] w-[390px] xl:block" aria-hidden="true">
       <div className="absolute right-0 top-16 h-[560px] w-[280px] rounded-full bg-emerald-500/16 blur-[82px]" />
 
-      <svg viewBox="0 0 320 700" className="absolute right-[-20px] top-4 h-[640px] w-[310px] sl-cannabis-cluster sl-plant-leaf--slow">
-        <defs>
-          <linearGradient id="slLeafFill" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="rgba(187,247,208,0.82)" />
-            <stop offset="55%" stopColor="rgba(34,197,94,0.62)" />
-            <stop offset="100%" stopColor="rgba(20,83,45,0.55)" />
-          </linearGradient>
-          <linearGradient id="slLeafVein" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(16,185,129,0.95)" />
-            <stop offset="100%" stopColor="rgba(5,46,22,0.8)" />
-          </linearGradient>
-        </defs>
-
-        <g transform="translate(176 350)">
-          <path d="M0 270 L0 -40" stroke="url(#slLeafVein)" strokeWidth="6" strokeLinecap="round" />
-          <path d="M0 -38 C 20 -160, 50 -250, 84 -330 C 76 -246, 61 -163, 35 -74 C 24 -40, 12 -22, 0 -38 Z" fill="url(#slLeafFill)" />
-          <path d="M0 -36 C -18 -156, -50 -246, -86 -332 C -76 -250, -61 -164, -34 -76 C -24 -42, -12 -24, 0 -36 Z" fill="url(#slLeafFill)" />
-          <path d="M4 -28 C 74 -146, 124 -215, 170 -258 C 142 -187, 108 -129, 58 -72 C 38 -50, 18 -36, 4 -28 Z" fill="url(#slLeafFill)" />
-          <path d="M-4 -28 C -76 -146, -127 -215, -172 -258 C -143 -188, -108 -131, -59 -72 C -39 -49, -20 -35, -4 -28 Z" fill="url(#slLeafFill)" />
-          <path d="M8 -18 C 94 -104, 154 -145, 212 -166 C 170 -124, 122 -90, 66 -52 C 44 -38, 24 -26, 8 -18 Z" fill="url(#slLeafFill)" />
-          <path d="M-8 -18 C -96 -104, -156 -145, -214 -166 C -171 -124, -123 -90, -67 -52 C -44 -37, -24 -24, -8 -18 Z" fill="url(#slLeafFill)" />
-
-          <path d="M0 8 C 22 -14, 42 -20, 56 -22" stroke="url(#slLeafVein)" strokeWidth="2.1" strokeLinecap="round" />
-          <path d="M0 -10 C 26 -44, 48 -54, 72 -62" stroke="url(#slLeafVein)" strokeWidth="2" strokeLinecap="round" />
-          <path d="M0 -6 C -22 -14, -40 -20, -56 -22" stroke="url(#slLeafVein)" strokeWidth="2.1" strokeLinecap="round" />
-          <path d="M0 -12 C -28 -44, -49 -54, -73 -62" stroke="url(#slLeafVein)" strokeWidth="2" strokeLinecap="round" />
-        </g>
-      </svg>
-
-      <svg viewBox="0 0 220 470" className="absolute -right-16 top-[176px] h-[360px] w-[190px] sl-cannabis-cluster sl-plant-leaf--fast">
-        <defs>
-          <linearGradient id="slLeafFillSmall" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="rgba(167,243,208,0.76)" />
-            <stop offset="100%" stopColor="rgba(21,128,61,0.5)" />
-          </linearGradient>
-        </defs>
-        <g transform="translate(118 236)">
-          <path d="M0 182 L0 -26" stroke="rgba(110,231,183,0.82)" strokeWidth="4" strokeLinecap="round" />
-          <path d="M0 -24 C 16 -84, 34 -132, 58 -182 C 53 -136, 44 -90, 26 -40 C 18 -24, 10 -14, 0 -24 Z" fill="url(#slLeafFillSmall)" />
-          <path d="M0 -24 C -16 -84, -34 -132, -60 -182 C -54 -136, -45 -90, -26 -40 C -18 -24, -10 -14, 0 -24 Z" fill="url(#slLeafFillSmall)" />
-          <path d="M6 -16 C 56 -80, 90 -114, 124 -132 C 96 -100, 70 -76, 38 -48 C 26 -36, 14 -26, 6 -16 Z" fill="url(#slLeafFillSmall)" />
-          <path d="M-6 -16 C -56 -80, -92 -114, -126 -132 C -98 -100, -72 -76, -40 -48 C -26 -34, -14 -24, -6 -16 Z" fill="url(#slLeafFillSmall)" />
-        </g>
-      </svg>
+      <Image
+        src="https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&w=900&q=80"
+        alt="Cannabis Blaetter"
+        width={900}
+        height={1200}
+        className="absolute right-[-42px] top-6 h-[620px] w-[310px] object-cover opacity-90 mix-blend-screen sl-photo-leaf sl-plant-leaf--slow"
+        loading="lazy"
+      />
+      <Image
+        src="https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&w=700&q=80"
+        alt="Cannabis Blatt Detail"
+        width={700}
+        height={900}
+        className="absolute right-[-76px] top-[170px] h-[360px] w-[190px] object-cover opacity-80 mix-blend-screen sl-photo-leaf sl-plant-leaf--fast"
+        loading="lazy"
+      />
     </div>
   );
 }
