@@ -60,19 +60,21 @@ function StudyCard({ article, evidenceLabels }: { article: TerpiraArticle; evide
 
 function ProductDashboardMock() {
   return (
-    <div className="relative mx-auto w-full max-w-[980px]">
+    <div className="relative mx-auto w-full max-w-[1020px]">
       <div className="pointer-events-none absolute -inset-10 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.24),transparent_66%)] blur-2xl" />
-      <div className="pointer-events-none absolute -bottom-10 left-10 right-10 h-16 rounded-full bg-emerald-400/25 blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-10 left-10 right-10 h-20 rounded-full bg-emerald-400/25 blur-2xl" />
       <div className="pointer-events-none absolute inset-x-16 -top-4 h-px bg-gradient-to-r from-transparent via-emerald-100/70 to-transparent" />
 
-      <div className="relative rounded-[38px] bg-gradient-to-br from-white/35 via-emerald-300/20 to-white/10 p-[1.5px] shadow-[0_28px_120px_rgba(0,0,0,0.7)]">
-        <div className="relative overflow-hidden rounded-[37px] border border-white/10 bg-[#030907] p-2.5">
+      <div className="relative rounded-[40px] bg-gradient-to-br from-white/35 via-emerald-300/20 to-white/10 p-[1.5px] shadow-[0_28px_120px_rgba(0,0,0,0.7)]">
+        <div className="relative overflow-hidden rounded-[39px] border border-white/10 bg-[#030907] p-2.5">
           <div className="pointer-events-none absolute left-1/2 top-[9px] z-10 h-1 w-24 -translate-x-1/2 rounded-full bg-white/15" />
           <div className="pointer-events-none absolute left-1/2 top-[7px] z-10 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-emerald-200/70 shadow-[0_0_10px_rgba(52,211,153,0.6)]" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-white/10 to-transparent sl-tablet-glare" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black/35 to-transparent" />
 
           <div
             className="relative overflow-hidden rounded-[30px] border border-emerald-300/25 bg-[#08110f]/85 p-3 shadow-[0_26px_100px_rgba(0,0,0,0.62)] backdrop-blur-xl"
-            style={{ transform: "perspective(1800px) rotateX(5deg) rotateY(-7deg)", transformOrigin: "center" }}
+            style={{ transform: "perspective(1800px) rotateX(6deg) rotateY(-8deg)", transformOrigin: "center" }}
           >
             <div className="pointer-events-none absolute inset-0 rounded-[30px] ring-1 ring-white/10" />
             <div className="pointer-events-none absolute -left-24 top-[-1px] h-px w-[180%] rotate-[4deg] bg-gradient-to-r from-transparent via-emerald-200/35 to-transparent" />
@@ -87,11 +89,29 @@ function ProductDashboardMock() {
                 </span>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-[1.4fr_1fr]">
+              <div className="grid gap-3 sm:grid-cols-[56px_1.3fr_1fr]">
+                <div className="hidden rounded-xl border border-white/10 bg-[#08100e] p-2 sm:block">
+                  <div className="mb-2 h-7 rounded-md border border-white/10 bg-white/[0.03]" />
+                  <div className="space-y-2">
+                    {["•", "•", "•", "•", "•"].map((dot, index) => (
+                      <div key={`nav-dot-${index}`} className="flex h-7 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-emerald-300/70">
+                        {dot}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="rounded-xl border border-white/10 bg-white/5 p-3">
                   <div className="mb-2 flex items-center justify-between text-xs text-slate-300">
                     <span>OG Kush</span>
                     <span className="text-emerald-300">Bluete - Tag 42</span>
+                  </div>
+                  <div className="mb-3 flex items-center gap-2 rounded-lg border border-white/10 bg-black/20 p-2">
+                    <div className="h-10 w-10 rounded-md border border-emerald-300/30 bg-gradient-to-br from-emerald-200/20 to-emerald-700/20" />
+                    <div className="text-[11px] text-slate-300">
+                      <p className="font-semibold text-emerald-200">Pflanze gesund</p>
+                      <p>Naechster Check in 6h</p>
+                    </div>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-white/10">
                     <div className="h-full w-[67%] rounded-full bg-gradient-to-r from-emerald-400 to-lime-300" />
@@ -140,11 +160,48 @@ function ProductDashboardMock() {
 
 function HeroPlantDecor() {
   return (
-    <div className="pointer-events-none absolute -right-10 -top-1 z-20 hidden h-[620px] w-[360px] lg:block" aria-hidden="true">
-      <div className="absolute right-10 top-16 h-[430px] w-[220px] rounded-[60%_40%_56%_44%/44%_58%_42%_56%] bg-gradient-to-b from-emerald-300/35 via-emerald-500/22 to-emerald-900/20 blur-[0.5px] sl-plant-leaf sl-plant-leaf--slow" />
-      <div className="absolute right-28 top-50 h-[300px] w-[150px] rotate-[12deg] rounded-[58%_42%_46%_54%/40%_64%_36%_60%] bg-gradient-to-b from-lime-300/35 via-emerald-400/22 to-emerald-900/18 sl-plant-leaf" />
-      <div className="absolute right-0 top-44 h-[360px] w-[170px] -rotate-[10deg] rounded-[62%_38%_52%_48%/46%_56%_44%_54%] bg-gradient-to-b from-emerald-200/30 via-emerald-500/20 to-emerald-950/20 sl-plant-leaf sl-plant-leaf--fast" />
-      <div className="absolute right-4 top-28 h-[470px] w-[290px] rounded-full bg-emerald-500/12 blur-[75px]" />
+    <div className="pointer-events-none absolute -right-16 -top-8 z-20 hidden h-[680px] w-[420px] lg:block" aria-hidden="true">
+      <div className="absolute right-5 top-10 h-[560px] w-[320px] rounded-full bg-emerald-500/14 blur-[82px]" />
+
+      <svg viewBox="0 0 260 640" className="absolute right-10 top-2 h-[620px] w-[250px] sl-leaf-svg sl-plant-leaf--slow">
+        <defs>
+          <linearGradient id="leafMain" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="rgba(187,247,208,0.72)" />
+            <stop offset="60%" stopColor="rgba(34,197,94,0.55)" />
+            <stop offset="100%" stopColor="rgba(20,83,45,0.45)" />
+          </linearGradient>
+        </defs>
+        <g transform="translate(130 330)">
+          <rect x="-2.5" y="-250" width="5" height="520" rx="3" fill="rgba(110,231,183,0.55)" />
+          {[-65, -45, -25, -5, 15, 35, 55].map((angle, index) => (
+            <ellipse key={`r-${index}`} cx="58" cy={-180 + index * 52} rx="56" ry="16" transform={`rotate(${angle})`} fill="url(#leafMain)" />
+          ))}
+          {[-120, -102, -84, -66, -48, -30, -12].map((angle, index) => (
+            <ellipse key={`l-${index}`} cx="-58" cy={-178 + index * 52} rx="56" ry="16" transform={`rotate(${angle})`} fill="url(#leafMain)" />
+          ))}
+          <ellipse cx="0" cy="-216" rx="20" ry="68" fill="url(#leafMain)" />
+          <ellipse cx="0" cy="188" rx="16" ry="48" fill="rgba(34,197,94,0.4)" />
+        </g>
+      </svg>
+
+      <svg viewBox="0 0 240 520" className="absolute -right-8 top-[130px] h-[440px] w-[220px] sl-leaf-svg sl-plant-leaf--fast">
+        <defs>
+          <linearGradient id="leafSide" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="rgba(167,243,208,0.62)" />
+            <stop offset="100%" stopColor="rgba(21,128,61,0.45)" />
+          </linearGradient>
+        </defs>
+        <g transform="translate(120 260)">
+          <rect x="-2" y="-190" width="4" height="390" rx="2" fill="rgba(110,231,183,0.44)" />
+          {[-58, -40, -20, 0, 20, 40].map((angle, index) => (
+            <ellipse key={`s-r-${index}`} cx="44" cy={-128 + index * 44} rx="40" ry="12" transform={`rotate(${angle})`} fill="url(#leafSide)" />
+          ))}
+          {[-122, -104, -86, -68, -50, -32].map((angle, index) => (
+            <ellipse key={`s-l-${index}`} cx="-44" cy={-126 + index * 44} rx="40" ry="12" transform={`rotate(${angle})`} fill="url(#leafSide)" />
+          ))}
+          <ellipse cx="0" cy="-154" rx="14" ry="52" fill="url(#leafSide)" />
+        </g>
+      </svg>
     </div>
   );
 }
