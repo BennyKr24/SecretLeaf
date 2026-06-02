@@ -1,5 +1,6 @@
 import { TerpiraArticle, TerpiraCategory, TerpiraDifficulty, TerpiraSource, GrowCategory } from "@/lib/terpira/types";
 import autoSourcesData from "./autoSources.json";
+import { diagnosticSources, diagnosticArticles, DIAGNOSTIC_GROW_KNOWLEDGE } from "./diagnostics";
 
 export const categoryLabels: Record<TerpiraCategory, string> = {
   anbau: "Anbau & Ernte",
@@ -414,6 +415,11 @@ const autoSources: TerpiraSource[] = (autoSourcesData.sources ?? []).map((source
 const sourceById = new Map<string, TerpiraSource>();
 for (const src of sourceRegisterCore) {
   sourceById.set(src.id, src);
+}
+for (const src of diagnosticSources) {
+  if (!sourceById.has(src.id)) {
+    sourceById.set(src.id, src);
+  }
 }
 for (const src of autoSources) {
   if (!sourceById.has(src.id)) {
@@ -4644,6 +4650,7 @@ const thirdWaveWikiArticles: TerpiraArticle[] = thirdWaveSeeds.map(createLiteArt
 // ─────────────────────────────────────────────────────────────────────────────
 
 const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; growCategory: GrowCategory }> = {
+  ...DIAGNOSTIC_GROW_KNOWLEDGE,
   // ── Core Grow System ──────────────────────────────────────────────────────
   "cannabis-anbau-grundlagen": {
     growValue: "Führ täglich ein Grow-Log mit VPD, EC und pH – drei dokumentierte Runs machen dich besser als beliebig viele undokumentierte.",
@@ -4850,6 +4857,7 @@ export const wikiArticles: TerpiraArticle[] = [
   ...baseWikiArticles,
   ...expansionWikiArticles,
   ...thirdWaveWikiArticles,
+  ...diagnosticArticles,
 ]
   .filter((a) => a.slug in GROW_KNOWLEDGE)
   .map((a) => ({ ...a, ...GROW_KNOWLEDGE[a.slug] }))
