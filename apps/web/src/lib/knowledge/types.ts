@@ -115,6 +115,31 @@ export type KnowledgeToolLink = {
   position: number;
 };
 
+/**
+ * A first-class, actionable tool in the knowledge registry (calculator,
+ * diagnosis, simulator, reference). Mirrors `public.knowledge_tools`.
+ */
+export type KnowledgeTool = {
+  id: string;
+  slug: string;
+  kind: KnowledgeToolKind;
+  title: string;
+  description: string | null;
+  href: string;
+  category: string | null;
+  icon: string | null;
+};
+
+/**
+ * A tool ranked for a specific article by the recommendation engine. `score`
+ * fuses curated links, tag overlap and category affinity; `reason` lists the
+ * signals that fired (e.g. "curated,tag_match").
+ */
+export type KnowledgeToolRecommendation = KnowledgeTool & {
+  score: number;
+  reason: string;
+};
+
 export type KnowledgeRelation = {
   id: string;
   fromArticle: string;
@@ -164,6 +189,24 @@ export type KnowledgeGraph = {
   root: KnowledgeArticleSummary;
   nodes: KnowledgeGraphNode[];
   edges: KnowledgeRelation[];
+};
+
+/**
+ * The unified recommendation for an article: the connected view across the
+ * knowledge graph, the tool registry and the diagnosis system. This is what
+ * turns an article from content into a decision: it answers "now what should
+ * this grower do?" with ranked, actionable next steps.
+ */
+export type KnowledgeRecommendation = {
+  article: KnowledgeArticleSummary;
+  /** All recommended tools, ranked by relevance. */
+  tools: KnowledgeToolRecommendation[];
+  /** The `diagnosis` subset of `tools`, for convenience. */
+  diagnoses: KnowledgeToolRecommendation[];
+  /** The `calculator` subset of `tools`, for convenience. */
+  calculators: KnowledgeToolRecommendation[];
+  /** Closely related articles, drawn from the knowledge graph. */
+  relatedArticles: KnowledgeGraphNode[];
 };
 
 /** Analytics event names persisted to `knowledge_events`. */

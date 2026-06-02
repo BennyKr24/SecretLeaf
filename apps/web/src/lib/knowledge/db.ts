@@ -20,7 +20,9 @@ import type {
   KnowledgeRelation,
   KnowledgeRelationType,
   KnowledgeTag,
+  KnowledgeTool,
   KnowledgeToolLink,
+  KnowledgeToolRecommendation,
 } from "./types";
 
 // ── Row types (snake_case, as returned by Supabase) ───────────────────────────
@@ -357,6 +359,75 @@ export async function getOutgoingRelations(
     .order("weight", { ascending: false });
   if (error) throw error;
   return (data as unknown as RelationRow[]).map(mapRelation);
+}
+
+// ── Tool registry & recommendation engine (Phase 15) ──────────────────────────
+
+type ToolRow = {
+  id: string;
+  slug: string;
+  kind: KnowledgeTool["kind"];
+  title: string;
+  description: string | null;
+  href: string;
+  category: string | null;
+  icon: string | null;
+};
+
+function mapTool(row: ToolRow): KnowledgeTool {
+  return {
+    id: row.id,
+    slug: row.slug,
+    kind: row.kind,
+    title: row.title,
+    description: row.description,
+    href: row.href,
+    category: row.category,
+    icon: row.icon,
+  };
+}
+
+/** Row shape returned by the `knowledge_recommend_tools` SQL function. */
+type ToolRecommendationRow = ToolRow & {
+  tool_id: string;
+  score: number | string;
+  reason: string | null;
+};
+
+/**
+ * Ranked tool recommendations for an article, served by the
+ * `knowledge_recommend_tools` RPC. Relevance fuses curated links, tag overlap
+ * and category affinity in-database, so the relationships live in data rather
+ * than being hardcoded in application code.
+ */
+export async function recommendTools(
+  supabase: SupabaseClient,
+  slug: string,
+  limit = 12,
+): Promise<KnowledgeToolRecommendation[]> {
+  const { data, error } = await supabase.rpc("knowledge_recommend_tools", {
+    root_slug: slug,
+    match_count: Math.min(Math.max(limit, 1), 50),
+  });
+  if (error) throw error;
+  return ((data as ToolRecommendationRow[] | null) ?? []).map((row) => ({
+    ...mapTool({ ...row, id: row.tool_id }),
+    score: Number(row.score),
+    reason: row.reason ?? "",
+  }));
+}
+
+/** The full active tool registry, ordered for display. */
+export async function listTools(
+  supabase: SupabaseClient,
+): Promise<KnowledgeTool[]> {
+  const { data, error } = await supabase
+    .from("knowledge_tools")
+    .select("id, slug, kind, title, description, href, category, icon")
+    .eq("is_active", true)
+    .order("position", { ascending: true });
+  if (error) throw error;
+  return (data as unknown as ToolRow[]).map(mapTool);
 }
 
 // ── Ranked / hybrid search (SR-1, SR-2, AI-1) ─────────────────────────────────

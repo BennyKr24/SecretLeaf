@@ -6,16 +6,18 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { getArticleBySlug } from "./db";
+import { getArticleBySlug, recommendTools } from "./db";
 import type {
   KnowledgeArticle,
   KnowledgeArticleSummary,
   KnowledgeDifficulty,
   KnowledgeGraph,
   KnowledgeGraphNode,
+  KnowledgeRecommendation,
   KnowledgeRelation,
   KnowledgeRelationType,
   KnowledgeStatus,
+  KnowledgeToolRecommendation,
 } from "./types";
 
 // ── Knowledge graph traversal ─────────────────────────────────────────────────
@@ -113,6 +115,75 @@ export async function traverseGraph(
   }
 
   return { root, nodes, edges };
+}
+
+// ── Unified recommendation service (Phase 15) ─────────────────────────────────
+
+export type RecommendOptions = {
+  /** Max tools to return. */
+  toolLimit?: number;
+  /** Max related articles to return. */
+  articleLimit?: number;
+};
+
+/**
+ * The unified recommendation entry point — the connected view that fuses the
+ * knowledge graph, the tool registry and the diagnosis system into a single
+ * decision surface for an article.
+ *
+ * Given an article slug it returns, ranked by relevance:
+ *   • tools        — actionable calculators, diagnoses, simulators, references
+ *   • diagnoses    — the diagnosis subset, surfaced separately for the UI
+ *   • calculators  — the calculator subset, surfaced separately for the UI
+ *   • relatedArticles — closely related knowledge, drawn from the graph
+ *
+ * This is what turns SecretLeaf from a wiki into a cultivation decision
+ * platform: every article points the grower at the next best action.
+ */
+export async function recommendForArticle(
+  supabase: SupabaseClient,
+  slug: string,
+  options: RecommendOptions = {},
+): Promise<KnowledgeRecommendation | null> {
+  const toolLimit = Math.min(Math.max(options.toolLimit ?? 12, 1), 50);
+  const articleLimit = Math.min(Math.max(options.articleLimit ?? 8, 1), 50);
+
+  const article = await getArticleBySlug(supabase, slug);
+  if (!article) return null;
+
+  const summary: KnowledgeArticleSummary = {
+    id: article.id,
+    slug: article.slug,
+    title: article.title,
+    summary: article.summary,
+    categoryId: article.categoryId,
+    difficulty: article.difficulty,
+    status: article.status,
+    readMinutes: article.readMinutes,
+    qualityScore: article.qualityScore,
+    language: article.language,
+    publishedAt: article.publishedAt,
+    updatedAt: article.updatedAt,
+  };
+
+  const [tools, graph] = await Promise.all([
+    recommendTools(supabase, slug, toolLimit),
+    traverseGraph(supabase, slug, { maxDepth: 1, maxNodes: articleLimit }),
+  ]);
+
+  const diagnoses: KnowledgeToolRecommendation[] = tools.filter(
+    (t) => t.kind === "diagnosis",
+  );
+  const calculators: KnowledgeToolRecommendation[] = tools.filter(
+    (t) => t.kind === "calculator",
+  );
+
+  const relatedArticles = (graph?.nodes ?? [])
+    .slice()
+    .sort((a, b) => b.weight - a.weight)
+    .slice(0, articleLimit);
+
+  return { article: summary, tools, diagnoses, calculators, relatedArticles };
 }
 
 // ── Programmatic SEO: schema.org JSON-LD (Phase 10) ───────────────────────────
