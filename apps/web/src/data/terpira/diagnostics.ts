@@ -16,6 +16,8 @@
 // Wave 4: Toxizitäten        – stickstoffueberschuss, kalium-ueberschuss,
 //   / Überschüsse (Phase 19)   calciumueberschuss, salzanreicherung-hohe-ec,
 //                            naehrstoffverbrennung-tipburn
+// Wave 5: Umwelt- &          – hitzestress, kaeltestress, windbrand,
+//   Klimastress (Phase 20)     luftfeuchte-management, co2-management
 //
 // Veröffentlichung läuft über die GROW_KNOWLEDGE-Allowlist in wiki.ts; die
 // passenden Einträge liefert DIAGNOSTIC_GROW_KNOWLEDGE am Dateiende.
@@ -164,6 +166,58 @@ export const diagnosticSources: TerpiraSource[] = [
     sourceType: "manual",
     evidenceLevel: 4,
     tags: ["EC", "Hydroponik", "Nährlösung"],
+  },
+  // ── Umwelt- & Klimastress (Phase 20) ──────────────────────────────────────
+  {
+    id: "chandra-cannabis-photosynthesis-temperature-co2",
+    title:
+      "Photosynthetic response of Cannabis sativa L. to variations in PPFD, temperature and CO2 conditions",
+    publisher: "Physiology and Molecular Biology of Plants",
+    year: "2008",
+    url: "https://link.springer.com/article/10.1007/s12298-008-0027-x",
+    sourceType: "manual",
+    evidenceLevel: 5,
+    tags: ["Cannabis", "Temperatur", "CO2", "Photosynthese"],
+  },
+  {
+    id: "prenger-ling-vpd-greenhouse",
+    title: "Greenhouse Condensation Control: Understanding and Using VPD",
+    publisher: "Ohio State University Extension (AEX-804)",
+    year: "2000",
+    url: "https://ohioline.osu.edu/factsheet/aex-804",
+    sourceType: "manual",
+    evidenceLevel: 4,
+    tags: ["VPD", "Klima", "Luftfeuchte", "Transpiration"],
+  },
+  {
+    id: "wahid-heat-tolerance-overview",
+    title: "Heat tolerance in plants: An overview",
+    publisher: "Environmental and Experimental Botany",
+    year: "2007",
+    url: "https://www.sciencedirect.com/science/article/abs/pii/S0098847207000020",
+    sourceType: "manual",
+    evidenceLevel: 5,
+    tags: ["Hitzestress", "Stressphysiologie", "Temperatur"],
+  },
+  {
+    id: "theocharis-low-temperature-plants",
+    title: "Physiological and molecular changes in plants grown at low temperatures",
+    publisher: "Planta",
+    year: "2012",
+    url: "https://link.springer.com/article/10.1007/s00425-012-1641-y",
+    sourceType: "manual",
+    evidenceLevel: 5,
+    tags: ["Kältestress", "Stressphysiologie", "Temperatur"],
+  },
+  {
+    id: "mortensen-co2-enrichment-review",
+    title: "Review: CO2 enrichment in greenhouses. Crop responses",
+    publisher: "Scientia Horticulturae",
+    year: "1987",
+    url: "https://www.sciencedirect.com/science/article/abs/pii/0304423887900128",
+    sourceType: "manual",
+    evidenceLevel: 4,
+    tags: ["CO2", "Photosynthese", "Klima"],
   },
 ];
 
@@ -2634,6 +2688,829 @@ export const diagnosticArticles: TerpiraArticle[] = [
     sourceIds: ["caplan-cannabis-fertility-rate", "bugbee-electrical-conductivity", "marschner-mineral-nutrition"],
     relatedSlugs: ["salzanreicherung-hohe-ec", "stickstoffueberschuss", "kaliummangel", "bewaesserung-ohne-uebergiessen"],
   },
+  // ===========================================================================
+  // WAVE 5 – UMWELT- & KLIMASTRESS (Phase 20)
+  // ===========================================================================
+  {
+    slug: "hitzestress",
+    title: "Hitzestress bei Cannabis erkennen und beheben",
+    summary:
+      "Nach oben gerollte Blattränder (Tacoing), aufrechte 'Beten'-Haltung und randständige Verbrennungen sind die Leitsymptome. So unterscheidest du Hitzestress von echtem Nährstoffmangel und korrigierst über Blatttemperatur, VPD und Luftbewegung.",
+    category: "anbau",
+    difficulty: "profi",
+    readMinutes: 8,
+    lastUpdated: "2026-06-02",
+    tags: ["Hitzestress", "Temperatur", "VPD", "Klima", "Diagnose"],
+    keyTakeaways: [
+      "Hitzestress entsteht, wenn die Blatttemperatur dauerhaft über den optimalen Korridor (~24–28 °C Blatt) steigt und die Transpiration die Kühlung nicht mehr leisten kann.",
+      "Leitbild ist das nach oben gerollte Blatt (Tacoing) plus aufrechte Blatthaltung — nicht zu verwechseln mit dem nach unten gerollten 'Claw' eines N-Überschusses.",
+      "Korrektur heißt: Lufttemperatur und Strahlungslast senken, VPD ins Fenster bringen und Luftbewegung erhöhen — nicht 'mehr düngen'.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Tacoing (Blattränder nach oben), aufrechte Haltung" },
+      { label: "Wirkmechanismus", value: "Blatttemperatur > Optimum, Stomata schließen" },
+      { label: "Zielkorridor", value: "Lufttemp. 24–28 °C, VPD 1.0–1.5 kPa" },
+      { label: "Schnellkorrektur", value: "Strahlungslast/Temp senken, Luft bewegen" },
+      { label: "Risiko", value: "Fehldiagnose als Nährstoffmangel/-überschuss" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Hitzestress bezeichnet die Schädigung von Stoffwechsel und Gewebe, wenn die Blatttemperatur dauerhaft über den physiologischen Optimalbereich steigt.",
+          "Entscheidend ist die Blatt-, nicht die Lufttemperatur: Unter starker LED-/HPS-Strahlung kann das Blatt mehrere Grad wärmer sein als die Raumluft.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Oberhalb des Temperaturoptimums sinkt die Netto-Photosynthese, weil die Photorespiration steigt und Enzyme (u. a. Rubisco-Aktivase) an Effizienz verlieren.",
+          "Steigt die Verdunstungsanforderung (hohes VPD) über die Wassernachlieferung, schließen die Stomata — die Verdunstungskühlung bricht weg und das Blatt heizt weiter auf.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "Das Blatt rollt die Ränder nach oben ein (Tacoing), um die bestrahlte Fläche zu verkleinern, und richtet sich auf ('Beten') — beides sind aktive Schutzreaktionen.",
+          "Unter der Lampe zeigen sich zuerst die obersten, lampennächsten Blätter; bei anhaltender Last folgen randständige, blasse bis nekrotische Verbrennungen.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1 (leicht): Leichtes Aufstellen der Blätter, beginnendes Tacoing an den lampennächsten Spitzen, abends Erholung.",
+          "Stadium 2 (mittel): Dauerhaftes Tacoing, blasse Ränder, gebleichte Stellen direkt unter der Lampe, gehemmtes Streckungswachstum.",
+          "Stadium 3 (schwer): Randnekrosen, ausgebleichte 'Foxtails' in der Blüte, lockere Knospen und Aroma-/Ertragsverlust.",
+        ],
+        checklist: [
+          "Rollen die Blattränder nach OBEN (nicht unten)?",
+          "Sind nur die lampennächsten Blätter betroffen?",
+          "Bessert sich das Bild in der kühleren Nachtphase?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Lampe zu nah / PPFD zu hoch: Strahlungslast übersteigt die Kühlkapazität des Blatts.",
+          "2. Zu hohe Lufttemperatur: Schwache Abluft/Zuluft, heißer Außenraum, Sommerbetrieb.",
+          "3. Zu hohes VPD: Trockene, heiße Luft erzwingt Stomataschluss trotz feuchtem Substrat.",
+          "4. Schwache Luftbewegung: Hitzenester über dem Canopy ohne Umluft.",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Rollen die Ränder nach oben (Tacoing) und stehen die Blätter aufrecht? Ja → Hitze/VPD statt Nährstoff prüfen.",
+          "Schritt 2: Sind nur die lampennächsten/obersten Blätter betroffen? Ja → Strahlungs-/Temperaturlast wahrscheinlich.",
+          "Schritt 3: Miss Lufttemperatur und VPD am Canopy. Temp > 30 °C oder VPD > 1.6 kPa → Hitzestress bestätigt.",
+          "Schritt 4: Schließe Wurzelprobleme aus (feuchtes Substrat, aber Welke) — Trockenstress kann ähnlich aussehen.",
+        ],
+        checklist: [
+          "Lufttemperatur am Canopy messen (Ziel 24–28 °C)",
+          "VPD am Canopy berechnen (Ziel 1.0–1.5 kPa)",
+          "Lampenabstand/PPFD gegen Herstellerempfehlung prüfen",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. Strahlungslast senken: Lampe höher hängen oder dimmen, bis das Tacoing nachlässt.",
+          "2. Temperatur regeln: Abluft erhöhen, kühlere Zuluft, Lichtphase in die kühleren Stunden legen.",
+          "3. VPD ins Fenster bringen: Bei zu hohem VPD die relative Luftfeuchte anheben, damit die Stomata wieder öffnen.",
+          "4. Luft bewegen: Umluft so einstellen, dass der Canopy gleichmäßig umströmt wird, ohne Windbrand zu erzeugen.",
+        ],
+        checklist: [
+          "Lampe dimmen/höher hängen, Reaktion über 2–3 Tage beobachten",
+          "Abluft/Zuluft auf Zielklima einstellen",
+          "VPD über RH statt über Temperatur allein korrigieren",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Lege einen Klimakorridor fest (Temp 24–28 °C, VPD 1.0–1.5 kPa) und überwache ihn am Canopy, nicht an der Zeltwand.",
+          "Plane Sommer-Hitzewellen ein: Lichtphase nachts, stärkere Abluft, ggf. Klimatisierung.",
+          "Erhöhe PPFD schrittweise und beobachte das Blattverhalten, statt sofort auf Maximum zu fahren.",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "Hitze + hohes VPD verschärfen den Wasserbedarf und können einen sekundären Calciummangel (transpirationsabhängig) auslösen.",
+          "Dauerhaft hohe Temperaturen begünstigen zudem Spinnmilben, die warm-trockene Bedingungen lieben.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Tacoing (nach oben) mit dem 'Claw' eines N-Überschusses (nach unten) verwechseln und falsch reagieren.",
+          "Nur die Temperatur senken, aber das hohe VPD übersehen — die Stomata bleiben geschlossen.",
+          "Gegen die vermeintliche 'Verbrennung' düngen, obwohl es Strahlungs-/Hitzestress ist.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Ein Infrarot-Thermometer auf das Blatt zeigt die echte Blatttemperatur und entlarvt Hitzenester, die der Raumsensor nicht sieht.",
+          "In CO2-angereicherten Räumen liegt das Temperaturoptimum etwas höher — Hitze und CO2-Strategie müssen zusammen geplant werden.",
+        ],
+      },
+    ],
+    warnings: [
+      "Erhöhe bei Tacoing nicht die Düngung — du verschärfst die Salzlast, ohne die Hitze zu lösen.",
+      "Senke VPD nicht durch Übernässen des Substrats; korrigiere die Luftfeuchte, nicht die Gießmenge.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Das Blatt macht einen Taco",
+        text: "Ist es der Pflanze zu heiß, rollt sie die Blattränder nach oben wie eine Taco-Schale, um sich vor der Lampe zu schützen.",
+      },
+      {
+        title: "Kurz erklärt: Schwitzen funktioniert nur mit offenem Fenster",
+        text: "Pflanzen kühlen sich durch Verdunsten über die Blattporen. Ist die Luft zu trocken und heiß, schließen die Poren — und das Blatt wird noch wärmer.",
+      },
+    ],
+    faq: [
+      {
+        question: "Wie unterscheide ich Hitzestress von einem Nährstoffproblem?",
+        answer:
+          "Hitzestress rollt die Blattränder nach OBEN und betrifft zuerst die lampennächsten Blätter. Nährstoffprobleme zeigen typische Farbmuster (Chlorose) und folgen der Mobilität des Nährstoffs, nicht der Lampennähe.",
+      },
+      {
+        question: "Reicht es, die Lampe höher zu hängen?",
+        answer:
+          "Oft ja, wenn die Strahlungslast die Ursache ist. Bleibt das Tacoing, sind meist Lufttemperatur oder VPD zu hoch — dann zusätzlich Abluft und Luftfeuchte regeln.",
+      },
+      {
+        question: "Welche Blatttemperatur ist ideal?",
+        answer:
+          "Grob 24–28 °C am Blatt. Miss mit einem Infrarot-Thermometer direkt am Canopy, da das Blatt unter starker Lampe wärmer ist als die Raumluft.",
+      },
+    ],
+    glossary: [
+      { term: "Tacoing", definition: "Nach oben eingerollte Blattränder als Hitzeschutzreaktion (Form einer Taco-Schale)." },
+      { term: "VPD", definition: "Dampfdruckdefizit; Maß für die 'Trockenheit' der Luft, das die Transpiration und damit die Blattkühlung steuert." },
+      { term: "Blatttemperatur", definition: "Die tatsächliche Temperatur der Blattoberfläche, oft höher als die Raumluft unter Strahlung." },
+    ],
+    sourceIds: ["chandra-cannabis-photosynthesis-temperature-co2", "wahid-heat-tolerance-overview", "prenger-ling-vpd-greenhouse"],
+    relatedSlugs: ["kaeltestress", "vpd-einfach-erklaert", "stickstoffueberschuss", "lichtstress-und-canopy-management"],
+  },
+  {
+    slug: "kaeltestress",
+    title: "Kältestress bei Cannabis erkennen und beheben",
+    summary:
+      "Violett-purpurne Stängel und Blattunterseiten, langsames Wachstum und nach unten gewölbte Blätter sind die Leitsymptome. So trennst du Kältestress von echtem Phosphormangel und stabilisierst Luft- und vor allem Wurzeltemperatur.",
+    category: "anbau",
+    difficulty: "profi",
+    readMinutes: 8,
+    lastUpdated: "2026-06-02",
+    tags: ["Kältestress", "Temperatur", "Wurzelzone", "Klima", "Diagnose"],
+    keyTakeaways: [
+      "Kältestress bremst Enzymaktivität, Wurzelaufnahme und Transpiration; oft ist die Wurzelzonentemperatur (< 18 °C) das eigentliche Problem, nicht die Luft.",
+      "Typisch sind purpurne Verfärbungen (Anthocyane) an Stängeln/Blattunterseiten plus stark verlangsamtes Wachstum — leicht mit P-Mangel zu verwechseln.",
+      "Korrektur heißt: Substrat- und Lufttemperatur anheben, Nachtabsenkung begrenzen und Gießwasser nicht eiskalt verabreichen.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Purpurne Stängel/Blattunterseiten, langsames Wachstum" },
+      { label: "Wirkmechanismus", value: "Enzym- & Wurzelaktivität sinken bei Kälte" },
+      { label: "Zielkorridor", value: "Luft 20–26 °C, Wurzelzone 18–22 °C" },
+      { label: "Schnellkorrektur", value: "Wurzelzone/Luft wärmen, Nachtabsenkung < 8 °C" },
+      { label: "Risiko", value: "Fehldiagnose als Phosphormangel" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Kältestress entsteht, wenn Luft- oder Wurzelzonentemperatur unter den physiologischen Optimalbereich fallen und Stoffwechsel sowie Nährstoffaufnahme verlangsamen.",
+          "Besonders die Wurzeltemperatur ist entscheidend: Kalte Wurzeln nehmen Wasser und Nährstoffe (v. a. P) schlecht auf, selbst wenn die Luft akzeptabel ist.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Niedrige Temperaturen senken die Aktivität temperaturabhängiger Enzyme und die Membranfluidität; Transport- und Aufnahmeprozesse in der Wurzel werden gebremst.",
+          "Als Stressantwort lagert die Pflanze Anthocyane ein — die purpurnen Pigmente, die kältegestresste Stängel und Blattunterseiten typisch verfärben.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "Blätter wölben sich oft nach unten und wirken steif; das Wachstum stagniert, weil Zellteilung und -streckung temperaturlimitiert sind.",
+          "Die purpurne Färbung beginnt an Stielen und Blattadern der Unterseite — bei kühlen Nächten breitet sie sich auf größere Blattflächen aus.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1 (leicht): Leicht purpurne Stängel, etwas langsameres Wachstum, morgens kühles Substrat.",
+          "Stadium 2 (mittel): Deutliche Anthocyan-Färbung, nach unten gewölbte Blätter, sichtbar gehemmte Streckung und Nährstoffaufnahme.",
+          "Stadium 3 (schwer): Wachstumsstillstand, Blattschäden bei Frostnähe, Wurzelfäule-Risiko durch kalte, zu nasse Wurzelzone.",
+        ],
+        checklist: [
+          "Sind Stängel/Blattunterseiten purpurn verfärbt?",
+          "Ist die Substrat-/Wurzeltemperatur < 18 °C?",
+          "Ist die Nacht-/Tag-Differenz größer als ~8–10 °C?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Kalte Wurzelzone: Töpfe auf kaltem Boden, Zelt im ungeheizten Raum, kaltes Gießwasser.",
+          "2. Zu starke Nachtabsenkung: Lampe aus + kalter Raum erzeugt einen Kälteschock.",
+          "3. Zugluft/Kaltluft: Direkte kalte Zuluft auf die Pflanzen.",
+          "4. Genetische Veranlagung: Manche Sorten färben kältebedingt stärker purpurn als andere.",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Purpurne Stängel/Blattunterseiten plus langsames Wachstum? Ja → Kälte vor P-Mangel prüfen.",
+          "Schritt 2: Miss die Substrat-/Wurzeltemperatur. < 18 °C → Kältestress wahrscheinlich.",
+          "Schritt 3: Prüfe die Nachtabsenkung. Tag-Nacht-Differenz > 8–10 °C → Kälteschock möglich.",
+          "Schritt 4: Schließe echten P-Mangel aus (pH/EC, gleichmäßige Versorgung) — purpurne Genetik ist kein Mangel.",
+        ],
+        checklist: [
+          "Wurzelzonentemperatur messen (Ziel 18–22 °C)",
+          "Tag-/Nacht-Temperaturdifferenz protokollieren",
+          "Sorte auf genetische Purpurfärbung prüfen",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. Wurzelzone wärmen: Heizmatte unter die Töpfe, Töpfe vom kalten Boden isolieren.",
+          "2. Lufttemperatur stabilisieren: Heizung/Umluft so regeln, dass die Nachtabsenkung unter ~8 °C bleibt.",
+          "3. Gießwasser temperieren: Auf Raumtemperatur (ca. 20 °C) bringen, nie eiskalt gießen.",
+          "4. Zugluft eliminieren: Kalte Zuluft vorwärmen oder umlenken, damit kein Kaltstrahl auf die Pflanzen trifft.",
+        ],
+        checklist: [
+          "Heizmatte/Isolierung für die Wurzelzone einsetzen",
+          "Nachtabsenkung auf < 8 °C begrenzen",
+          "Gießwasser auf ~20 °C vortemperieren",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Überwache neben der Luft- gezielt die Wurzelzonentemperatur — sie ist der unterschätzte Hebel.",
+          "Plane die Lichtphase so, dass die kälteste Raumphase nicht mit der Dunkelphase zusammenfällt.",
+          "Isoliere Töpfe grundsätzlich vom kalten Untergrund (Platte, Untersetzer, Abstandshalter).",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "Kalte, nasse Wurzelzonen begünstigen Pythium/Wurzelfäule, weil die Sauerstoffaufnahme sinkt und Pathogene profitieren.",
+          "Kälte bremst die Magnesium- und Phosphataufnahme — ein scheinbarer Mangel ist häufig nur ein Temperaturproblem.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Purpurne Stängel reflexartig als P-Mangel mit mehr Phosphor zu 'behandeln'.",
+          "Nur die Luft heizen, aber die kalte Wurzelzone (Boden, Gießwasser) übersehen.",
+          "Eiskaltes Wasser direkt aus der Leitung geben und damit die Wurzeln schocken.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Eine moderate Nachtabsenkung (5–8 °C) kann Internodien kürzen und Farben fördern — der Grat zwischen gewolltem Effekt und Stress ist schmal.",
+          "Bei rein genetisch purpurnen Sorten bleibt das Wachstum normal; Kältestress dagegen geht immer mit Wachstumshemmung einher.",
+        ],
+      },
+    ],
+    warnings: [
+      "Behandle purpurne Verfärbung nicht automatisch als Phosphormangel — prüfe zuerst die Temperatur.",
+      "Vermeide kalte, dauerhaft nasse Wurzelzonen: Sie sind ein direkter Wegbereiter für Wurzelfäule.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Kalte Füße bremsen alles",
+        text: "Sind die Wurzeln zu kalt, arbeitet die Pflanze wie in Zeitlupe — sie trinkt und frisst kaum noch, selbst wenn oben alles passt.",
+      },
+      {
+        title: "Kurz erklärt: Lila ist nicht immer Mangel",
+        text: "Bei Kälte bildet die Pflanze lila Farbstoffe als Schutz. Das sieht aus wie Phosphormangel, ist aber oft nur die niedrige Temperatur.",
+      },
+    ],
+    faq: [
+      {
+        question: "Ist die purpurne Färbung gefährlich?",
+        answer:
+          "Die Farbe selbst nicht. Problematisch ist die Ursache: Geht sie mit gehemmtem Wachstum einher, liegt Kältestress vor und sollte korrigiert werden. Rein genetische Purpurfärbung ohne Wachstumsstopp ist unbedenklich.",
+      },
+      {
+        question: "Luft- oder Wurzeltemperatur — was zählt mehr?",
+        answer:
+          "Häufig die Wurzeltemperatur. Kalte Wurzeln (< 18 °C) bremsen Aufnahme und Wachstum, auch wenn die Luft in Ordnung ist. Miss daher gezielt im Substrat.",
+      },
+      {
+        question: "Wie warm sollte das Gießwasser sein?",
+        answer:
+          "Etwa Raumtemperatur, rund 20 °C. Eiskaltes Wasser schockt die Wurzeln und verstärkt den Kältestress.",
+      },
+    ],
+    glossary: [
+      { term: "Anthocyane", definition: "Purpurne Pflanzenpigmente, die u. a. als Kälte-Stressantwort eingelagert werden." },
+      { term: "Wurzelzonentemperatur", definition: "Temperatur im Substrat/an der Wurzel; steuert Wasser- und Nährstoffaufnahme stark." },
+      { term: "Nachtabsenkung", definition: "Temperaturabfall in der Dunkelphase; zu groß wird sie zum Kältestress." },
+    ],
+    sourceIds: ["theocharis-low-temperature-plants", "chandra-cannabis-photosynthesis-temperature-co2", "pythium-root-rot-hydroponics"],
+    relatedSlugs: ["hitzestress", "wurzelfaeule", "magnesiummangel", "vpd-einfach-erklaert"],
+  },
+  {
+    slug: "windbrand",
+    title: "Windbrand bei Cannabis erkennen und beheben",
+    summary:
+      "Verkrümmte, klauenartig nach unten gebogene Blätter direkt im Luftstrom eines Ventilators — ohne Schädlinge und ohne Farbmuster eines Mangels. So erkennst du Windbrand und stellst die Luftbewegung richtig ein.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 7,
+    lastUpdated: "2026-06-02",
+    tags: ["Windbrand", "Luftbewegung", "Klima", "VPD", "Diagnose"],
+    keyTakeaways: [
+      "Windbrand ist mechanisch-klimatischer Stress durch zu starke, dauerhafte Direktanströmung — nicht durch Nährstoffe oder Schädlinge.",
+      "Leitbild ist lokal begrenzter Schaden genau dort, wo der Luftstrom auftrifft: verkrümmte, nach unten gebogene Blätter, oft mit dunkler 'Klaue'.",
+      "Korrektur heißt: Ventilator nicht direkt auf den Canopy richten, sondern für sanfte, indirekte Umluft sorgen, die die Blätter nur leicht wiegt.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Verkrümmte 'Klauen' nur im direkten Luftstrom" },
+      { label: "Wirkmechanismus", value: "Dauer-Direktanströmung + lokale Austrocknung" },
+      { label: "Zielbild", value: "Blätter wiegen sich leicht, kein Dauerdruck" },
+      { label: "Schnellkorrektur", value: "Ventilator umlenken/abschwächen" },
+      { label: "Risiko", value: "Fehldiagnose als N-Überschuss oder Schädling" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Windbrand bezeichnet die Schädigung von Blättern durch zu starke, dauerhaft auf dieselbe Stelle gerichtete Luftbewegung.",
+          "Er ist primär mechanisch-klimatisch: Der Dauerwind belastet das Gewebe und trocknet die angeströmten Blätter lokal stärker aus.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Konstante starke Anströmung erhöht lokal die Transpiration und den mechanischen Reiz; die betroffenen Blätter verlieren mehr Wasser, als die Pflanze dort nachliefert.",
+          "Die Folge ist eine lokale Überlagerung aus mechanischem Stress und kleinräumig erhöhtem VPD — beschränkt auf die Trefferzone des Luftstroms.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "Betroffene Blätter krümmen und verdrehen sich, biegen sich nach unten und können eine dunkle, klauenartige Form annehmen.",
+          "Charakteristisch ist die scharfe räumliche Begrenzung: Nur die direkt angeströmten Blätter sind betroffen, der Rest der Pflanze bleibt unauffällig.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1 (leicht): Leichtes Verdrehen und Nach-unten-Biegen einzelner Blätter im Luftstrom.",
+          "Stadium 2 (mittel): Deutliche 'Klauen' und Verkrümmungen, lederartige Blattstruktur in der Trefferzone.",
+          "Stadium 3 (schwer): Vertrocknete Blattränder/-spitzen lokal, Wachstumsbeeinträchtigung der angeströmten Triebe.",
+        ],
+        checklist: [
+          "Sind nur Blätter im direkten Ventilatorstrom betroffen?",
+          "Fehlen Schädlinge (Lupe!) und typische Mangel-Farbmuster?",
+          "Verschwindet das Bild nach Umlenken des Lüfters bei Neuwuchs?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Ventilator direkt und dauerhaft auf den Canopy gerichtet.",
+          "2. Zu starke Umluft für die Zeltgröße/Pflanzenzahl.",
+          "3. Feststehender Lüfter ohne Schwenkfunktion, der immer dieselbe Stelle trifft.",
+          "4. Pflanzen zu nah an der Abluft-/Zuluftöffnung mit konzentriertem Luftstrom.",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Sind die Schäden räumlich exakt dort, wo der Luftstrom auftrifft? Ja → Windbrand wahrscheinlich.",
+          "Schritt 2: Schädlinge mit der Lupe ausschließen (keine Milben/Thripse/Kot).",
+          "Schritt 3: Mangel-/Überschuss-Muster ausschließen (keine systemische Chlorose, kein flächiges Bild).",
+          "Schritt 4: Lüfter umlenken und Neuwuchs beobachten — bleibt der Neuwuchs gesund, war es Windbrand.",
+        ],
+        checklist: [
+          "Trefferzone des Luftstroms mit Schadensbild abgleichen",
+          "Blattunterseiten mit Lupe auf Schädlinge prüfen",
+          "Neuwuchs nach Lüfterkorrektur kontrollieren",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. Luftstrom umlenken: Ventilator nicht auf, sondern über/unter dem Canopy oder gegen eine Wand richten, um indirekte Umluft zu erzeugen.",
+          "2. Intensität senken: Drehzahl reduzieren oder Abstand vergrößern, bis sich die Blätter nur noch sanft wiegen.",
+          "3. Schwenkbetrieb nutzen: Oszillierende Lüfter verteilen die Last, statt eine Stelle dauerhaft zu treffen.",
+          "4. Geschädigte Blätter belassen: Sie regenerieren nicht, schaden aber nicht — entscheidend ist gesunder Neuwuchs.",
+        ],
+        checklist: [
+          "Ventilator auf indirekte Umluft umstellen",
+          "Drehzahl/Abstand bis zum 'sanften Wiegen' anpassen",
+          "Oszillation aktivieren, wenn vorhanden",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Ziel ist eine gleichmäßige, sanfte Luftbewegung im ganzen Zelt — die Blätter sollen sich leicht bewegen, nicht im Dauerwind flattern.",
+          "Positioniere Lüfter so, dass die Luft zirkuliert (an Wänden entlang), statt frontal auf Pflanzen zu blasen.",
+          "Passe die Luftbewegung beim Höhenwachstum regelmäßig an, damit kein Trieb in den Dauerstrahl wächst.",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "Gute, sanfte Luftbewegung ist erwünscht: Sie stärkt die Stängel und beugt Schimmel/Mehltau vor — nur der Dauer-Direktstrahl ist schädlich.",
+          "Bei ohnehin hohem VPD verstärkt der Direktwind die lokale Austrocknung; Klima und Luftbewegung sollten zusammen betrachtet werden.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Windbrand als N-Überschuss ('Claw') fehldeuten und die Düngung umstellen.",
+          "Den Lüfter weiter direkt laufen lassen, weil 'viel Wind' pauschal als gut gilt.",
+          "Geschädigte Blätter panisch entfernen, statt einfach die Luftführung zu korrigieren.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Etwas Bewegung ('thigmomorphogenese') kräftigt die Stiele — das Ziel ist Stimulation, nicht Dauerstress.",
+          "In großen Zelten ist eine gleichmäßige, vielfach gebrochene Luftströmung besser als wenige starke Punktquellen.",
+        ],
+      },
+    ],
+    warnings: [
+      "Verwechsle Windbrand nicht mit einem Stickstoffüberschuss — beim Windbrand ist der Schaden streng auf den Luftstrom begrenzt.",
+      "Schalte die Umluft nicht komplett ab: Stehende, feuchte Luft fördert Schimmel und Mehltau.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Dauerföhn aufs Blatt",
+        text: "Bläst ein Ventilator ständig auf dieselbe Stelle, ist das wie ein Dauerföhn — die Blätter dort verkrümmen und trocknen aus, der Rest bleibt gesund.",
+      },
+      {
+        title: "Kurz erklärt: Wiegen ja, flattern nein",
+        text: "Richtig eingestellte Luft lässt die Blätter sanft wiegen. Flattern sie dauerhaft im Strahl, ist der Wind zu stark.",
+      },
+    ],
+    faq: [
+      {
+        question: "Wie unterscheide ich Windbrand von einem Nährstoffüberschuss?",
+        answer:
+          "Windbrand ist räumlich eng auf die Trefferzone des Luftstroms begrenzt und hat keine systemischen Farbmuster. Ein N-Überschuss ('Claw') tritt flächiger und unabhängig vom Ventilator auf.",
+      },
+      {
+        question: "Soll ich die geschädigten Blätter abschneiden?",
+        answer:
+          "Nicht nötig. Sie regenerieren zwar nicht, schaden aber nicht. Wichtiger ist, die Luftführung zu korrigieren, damit der Neuwuchs gesund bleibt.",
+      },
+      {
+        question: "Wie viel Luftbewegung ist richtig?",
+        answer:
+          "So viel, dass sich die Blätter sanft wiegen. Indirekte, zirkulierende Umluft im ganzen Zelt ist besser als ein starker Strahl auf einzelne Pflanzen.",
+      },
+    ],
+    glossary: [
+      { term: "Windbrand", definition: "Blattschaden durch zu starke, dauerhaft direkte Luftanströmung." },
+      { term: "Umluft", definition: "Im Raum zirkulierende Luftbewegung zur gleichmäßigen Klimatisierung." },
+      { term: "Thigmomorphogenese", definition: "Wachstumsanpassung (z. B. kräftigere Stiele) als Reaktion auf mechanische Reize wie Wind." },
+    ],
+    sourceIds: ["prenger-ling-vpd-greenhouse", "ipm-cannabis-arthropods"],
+    relatedSlugs: ["hitzestress", "vpd-einfach-erklaert", "stickstoffueberschuss", "lichtstress-und-canopy-management"],
+  },
+  {
+    slug: "luftfeuchte-management",
+    title: "Luftfeuchte-Probleme bei Cannabis: zu hoch und zu niedrig diagnostizieren",
+    summary:
+      "Zu hohe RH öffnet Schimmel- und Mehltaufenster, zu niedrige RH erzwingt Stomataschluss und transpirationsbedingte Mängel. So liest du die relative Luftfeuchte über das VPD-Fenster der jeweiligen Phase und korrigierst gezielt.",
+    category: "anbau",
+    difficulty: "profi",
+    readMinutes: 9,
+    lastUpdated: "2026-06-02",
+    tags: ["Luftfeuchte", "RH", "VPD", "Klima", "Diagnose"],
+    keyTakeaways: [
+      "Relative Luftfeuchte (RH) ist nur im Zusammenspiel mit der Temperatur sinnvoll — gesteuert wird letztlich das VPD, nicht die RH-Zahl allein.",
+      "Zu hohe RH (niedriges VPD) bremst die Transpiration und öffnet Schimmel-/Mehltaufenster; zu niedrige RH (hohes VPD) erzwingt Stomataschluss und transpirationsbedingte Mängel.",
+      "Korrektur richtet sich nach Phase: Sämling/Veg eher feuchter, späte Blüte deutlich trockener — immer über das VPD-Zielfenster, nicht über Bauchgefühl.",
+    ],
+    quickFacts: [
+      { label: "Leitgröße", value: "VPD statt RH allein (Temp + RH zusammen)" },
+      { label: "Zu hoch (Risiko)", value: "Schimmel/Botrytis/Mehltau, langsame Transpiration" },
+      { label: "Zu niedrig (Risiko)", value: "Stomataschluss, Ca-/Welkesymptome" },
+      { label: "VPD-Korridor", value: "Veg ~0.8–1.1, Blüte ~1.2–1.5 kPa" },
+      { label: "Schnellkorrektur", value: "Be-/Entfeuchter + Luftbewegung, phasengerecht" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Luftfeuchte-Probleme umfassen sowohl zu hohe als auch zu niedrige relative Luftfeuchte (RH) und sind eine der häufigsten Ursachen für scheinbare 'Nährstoffprobleme'.",
+          "Die RH-Zahl allein sagt wenig: Erst zusammen mit der Temperatur ergibt sie das VPD, das die Transpiration und damit Wasser- und Nährstofftransport steuert.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Das VPD beschreibt, wie viel Wasserdampf die Luft noch aufnehmen kann. Niedriges VPD (feucht) bremst die Verdunstung, hohes VPD (trocken) treibt sie an.",
+          "Bei zu niedrigem VPD stockt der Transpirationsstrom — Calcium (rein transpirationsgetrieben) wird schlecht verteilt. Bei zu hohem VPD schließen die Stomata, Photosynthese und Aufnahme sinken.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "Zu feucht: schlaffe, langsam wachsende Pflanzen, Kondens-/Schimmelgefahr, ideale Bedingungen für Botrytis und Echten Mehltau.",
+          "Zu trocken: nach oben gerollte/krause Blätter, schnelle Austrocknung des Substrats, Ca-Mangel- und Welkebilder trotz ausreichender Versorgung.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Zu hoch – leicht: träges Wachstum, Substrat trocknet kaum ab; mittel: erste Mehltau-/Schimmelnester; schwer: Bud Rot in dichten Knospen.",
+          "Zu niedrig – leicht: leicht aufgerollte Blätter, schneller Gießbedarf; mittel: Ca-Mangelbilder, Spitzenwelke; schwer: Stomataschluss, deutliche Wachstumshemmung.",
+          "Mischfälle: Schwankende RH (Tag/Nacht) erzeugt abwechselnd beide Bilder und macht die Diagnose unübersichtlich.",
+        ],
+        checklist: [
+          "Wie hoch ist die RH UND die Temperatur am Canopy?",
+          "Liegt das resultierende VPD im Phasenfenster?",
+          "Gibt es Schimmel-/Mehltauzeichen (zu feucht) oder Welke/Roll (zu trocken)?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Falsches Phasen-Setpoint: Späte Blüte zu feucht oder Sämlinge/Stecklinge zu trocken geführt.",
+          "2. Schwache Klimakontrolle: Kein Be-/Entfeuchter, RH folgt dem Außenklima.",
+          "3. Tag/Nacht-Schwankung: RH steigt nachts (Lampe aus) stark an — Schimmelfenster.",
+          "4. Transpirationslast: Volles Zelt erhöht die RH, leeres/junges Zelt senkt sie.",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Miss RH UND Temperatur am Canopy und berechne das VPD.",
+          "Schritt 2: VPD zu niedrig (z. B. < 0.8 kPa in der Blüte)? → 'zu feucht'-Pfad: Schimmel-/Mehltau-Risiko prüfen.",
+          "Schritt 3: VPD zu hoch (z. B. > 1.6 kPa)? → 'zu trocken'-Pfad: Roll-/Welke-/Ca-Bilder prüfen.",
+          "Schritt 4: Prüfe die Tag/Nacht-Differenz — nächtliche RH-Spitzen sind ein eigener Risikofall.",
+        ],
+        checklist: [
+          "VPD aus RH + Temperatur berechnen (VPD-Rechner)",
+          "Phasenfenster für VPD festlegen (Veg vs. Blüte)",
+          "Nacht-RH separat protokollieren",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. Zu feucht: Entfeuchter einsetzen, Abluft erhöhen, Bestand auslichten, Nacht-RH gezielt senken (späte Blüte 40–50 %).",
+          "2. Zu trocken: Befeuchter einsetzen, Abluft drosseln, RH anheben (Sämling/Veg höher); junge Pflanzen brauchen mehr Feuchte.",
+          "3. Immer über VPD steuern: RH und Temperatur gemeinsam einstellen, statt nur an einer Schraube zu drehen.",
+          "4. Luftbewegung sichern: Sanfte Umluft beugt feuchten Mikroklimata vor, ohne Windbrand zu erzeugen.",
+        ],
+        checklist: [
+          "Be-/Entfeuchter phasengerecht einsetzen",
+          "Nacht-RH in der späten Blüte auf 40–50 % drücken",
+          "VPD als Zielgröße führen, nicht die nackte RH-Zahl",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Lege pro Phase ein VPD-Zielfenster fest (Veg feuchter, Blüte trockener) und überwache es am Canopy.",
+          "Plane die nächtliche RH-Spitze ein: Entfeuchtung/Umluft müssen auch in der Dunkelphase greifen.",
+          "Passe Be-/Entfeuchtung an die Belegung an — ein voll werdendes Zelt verschiebt die RH nach oben.",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "Zu niedriges VPD ist der wichtigste Wegbereiter für Botrytis (Bud Rot) und Echten Mehltau — beide brauchen feuchte, stehende Luft.",
+          "Zu hohes VPD erzeugt transpirationsbedingte Calciummangel- und Welkebilder, die fälschlich als Düngungsfehler gedeutet werden.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Nur die RH-Zahl ansteuern und die Temperatur ignorieren — das VPD bleibt unkontrolliert.",
+          "Die nächtliche RH-Spitze in der späten Blüte übersehen und so Bud Rot riskieren.",
+          "Bei trockenheitsbedingtem Ca-Mangel mehr Cal-Mag geben, statt die Luftfeuchte/VPD zu korrigieren.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Sämlinge/Stecklinge mit kleiner Wurzelmasse brauchen hohe RH (niedriges VPD), um nicht zu welken — hier ist 'zu feucht' phasengerecht.",
+          "In der späten Blüte ist konsequent niedrige RH die billigste Schimmelprävention; sie schlägt jedes Fungizid.",
+        ],
+      },
+    ],
+    warnings: [
+      "Steuere nie die RH-Zahl isoliert — ohne die Temperatur ist sie für die Pflanze bedeutungslos. Führe das VPD.",
+      "Halte die Luftfeuchte in der späten Blüte niedrig (40–50 %): Nächtliche RH-Spitzen sind die häufigste Bud-Rot-Ursache.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Wie voll ist der Luft-Schwamm?",
+        text: "Luft ist wie ein Schwamm für Wasser. Ist er fast voll (hohe Feuchte), kann die Pflanze kaum noch 'schwitzen'. Ist er sehr trocken, saugt er der Pflanze zu schnell Wasser ab.",
+      },
+      {
+        title: "Kurz erklärt: Jung feucht, alt trocken",
+        text: "Junge Pflanzen mögen es feuchter, späte Blüten brauchen es trocken. So vermeidest du Schimmel, ohne junge Pflanzen austrocknen zu lassen.",
+      },
+    ],
+    faq: [
+      {
+        question: "Warum reicht die RH-Zahl allein nicht?",
+        answer:
+          "Weil dieselbe RH bei unterschiedlichen Temperaturen ein völlig anderes VPD ergibt. Entscheidend für Transpiration und Schimmelrisiko ist das VPD aus Temperatur und RH zusammen.",
+      },
+      {
+        question: "Welche RH ist in der Blüte ideal?",
+        answer:
+          "Eher trocken: In der späten Blüte 40–50 %, um Bud Rot und Mehltau vorzubeugen. Junge Pflanzen vertragen und brauchen deutlich mehr Feuchte.",
+      },
+      {
+        question: "Meine Pflanze welkt trotz feuchtem Substrat — was ist los?",
+        answer:
+          "Häufig ist die Luft zu trocken (hohes VPD): Die Stomata schließen und die Wasserverteilung stockt. Prüfe das VPD und hebe die RH an, statt mehr zu gießen.",
+      },
+    ],
+    glossary: [
+      { term: "Relative Luftfeuchte (RH)", definition: "Anteil des aktuellen Wasserdampfs an der maximal möglichen Menge bei gegebener Temperatur." },
+      { term: "VPD", definition: "Dampfdruckdefizit; kombiniert Temperatur und RH zur eigentlichen Steuergröße für Transpiration." },
+      { term: "Setpoint", definition: "Zielwert, auf den die Klimasteuerung (z. B. RH/VPD) geregelt wird." },
+    ],
+    sourceIds: ["prenger-ling-vpd-greenhouse", "punja-cannabis-pathogens", "botrytis-grey-mold-review"],
+    relatedSlugs: ["vpd-einfach-erklaert", "bud-rot-botrytis", "echter-mehltau-powdery-mildew", "calciummangel"],
+  },
+  {
+    slug: "co2-management",
+    title: "CO₂-Mangel und -Überschuss bei Cannabis erkennen und steuern",
+    summary:
+      "Unter starker Beleuchtung wird CO₂ zum limitierenden Faktor: Stagnierende Photosynthese trotz optimalem Licht, Klima und Dünger deutet auf CO₂-Mangel. So erkennst du das Limit und setzt Anreicherung sicher und sinnvoll ein.",
+    category: "anbau",
+    difficulty: "profi",
+    readMinutes: 8,
+    lastUpdated: "2026-06-02",
+    tags: ["CO2", "Photosynthese", "Klima", "Lichtsättigung", "Diagnose"],
+    keyTakeaways: [
+      "CO₂ wird erst bei hohem Licht zum Engpass: Stagniert die Leistung trotz optimalem PPFD, Klima und Dünger, ist oft CO₂ der limitierende Faktor.",
+      "CO₂-Mangel hat kein eindeutiges Einzelsymptom — er ist ein Ausschluss- und Leistungsbefund: 'alles passt, aber es geht nicht schneller voran'.",
+      "Anreicherung lohnt nur bei hohem Licht und dichtem Setup und erfordert höhere Zieltemperaturen sowie strikte Sicherheits-/Mess-Disziplin.",
+    ],
+    quickFacts: [
+      { label: "Leitbefund", value: "Leistungsplateau trotz optimalem Licht/Klima/Dünger" },
+      { label: "Wirkmechanismus", value: "CO₂ limitiert Photosynthese bei Lichtsättigung" },
+      { label: "Umgebung", value: "~400 ppm normal; Anreicherung 800–1200 ppm" },
+      { label: "Voraussetzung", value: "Hohes PPFD + höhere Zieltemperatur (28–30 °C)" },
+      { label: "Risiko", value: "CO₂ ist erstickend — Mess-/Sicherheitspflicht" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "CO₂-Management betrifft sowohl den Mangel (limitierende CO₂-Versorgung bei hohem Licht) als auch den unsachgemäßen Überschuss bei der Anreicherung.",
+          "In einem dicht belegten, gut beleuchteten Zelt kann die CO₂-Konzentration unter den Außenwert fallen, wenn der Luftwechsel zu gering ist — dann limitiert CO₂ die Photosynthese.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Photosynthese braucht Licht UND CO₂. Bei niedrigem Licht limitiert das Licht; bei hohem Licht (Lichtsättigung) wird CO₂ zum begrenzenden Substrat.",
+          "Erhöhtes CO₂ verschiebt das Temperaturoptimum nach oben: Mit Anreicherung profitiert die Pflanze von höheren Temperaturen (etwa 28–30 °C), die ohne CO₂ schon Hitzestress wären.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "CO₂-Mangel zeigt kein klassisches Blattsymptom — er äußert sich als ausbleibender Leistungszuwachs: Wachstum und Ertrag bleiben hinter dem Potenzial zurück, obwohl alle anderen Faktoren stimmen.",
+          "CO₂-Überschuss/Anreicherung ohne Begleitanpassung führt indirekt zu Problemen: zu niedrige Temperatur verschenkt den Effekt, zu hohe Konzentration ist eine Gefahr für Menschen.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1 (Verdacht): Leistung plateaut trotz optimalem PPFD, VPD und Düngung — kein Mangelbild erkennbar.",
+          "Stadium 2 (bestätigt): CO₂-Messung im dichten Zelt liegt deutlich unter 400 ppm in der Lichtphase.",
+          "Überschuss/Fehleinsatz: Anreicherung bei zu niedriger Temperatur (kein Mehrertrag) oder gefährlich hohe ppm ohne Belüftung/Sicherheit.",
+        ],
+        checklist: [
+          "Sind Licht (PPFD), VPD und Dünger nachweislich im Optimum?",
+          "Liegt die gemessene CO₂-Konzentration in der Lichtphase unter ~400 ppm?",
+          "Wäre überhaupt genug Licht da, damit CO₂ zum Limit wird?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Zu geringer Luftwechsel in dicht belegtem, hell beleuchtetem Zelt: CO₂ wird schneller verbraucht als nachgeliefert.",
+          "2. Geschlossener Raum ohne Frischluft, nur Umluft.",
+          "3. Hohes Licht ohne CO₂-Strategie: Lichtpotenzial kann ohne CO₂ nicht ausgeschöpft werden.",
+          "4. Fehlerhafte Anreicherung: zu wenig (wirkungslos) oder zu viel/ungeregelt (gefährlich).",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Sind Licht, Klima (VPD/Temperatur) und Düngung nachweislich optimal und es geht trotzdem nicht voran? → CO₂ als Limit in Betracht ziehen.",
+          "Schritt 2: Miss die CO₂-Konzentration in der Lichtphase. Deutlich < 400 ppm → CO₂-Mangel bestätigt.",
+          "Schritt 3: Prüfe, ob genug Licht (hohes PPFD) vorhanden ist — bei schwachem Licht bringt CO₂ nichts.",
+          "Schritt 4: Vor Anreicherung Temperaturstrategie und Sicherheit (Sensor, Belüftung, Alarm) klären.",
+        ],
+        checklist: [
+          "CO₂-Konzentration in der Lichtphase messen",
+          "PPFD-Niveau gegen Lichtsättigung prüfen",
+          "Sicherheits-/Mess-Setup für Anreicherung verifizieren",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. Erst lüften: In den meisten Zelten löst ausreichender Luftwechsel den CO₂-Mangel bereits, ohne aktive Anreicherung.",
+          "2. Anreicherung nur bei hohem Licht: 800–1200 ppm sinnvoll, wenn PPFD hoch und das Setup dicht und steuerbar ist.",
+          "3. Temperatur mitziehen: Mit CO₂ die Zieltemperatur auf ~28–30 °C anheben, sonst verpufft der Effekt.",
+          "4. Sicherheit zuerst: CO₂-Sensor/-Regler, Belüftungskonzept und Alarm — CO₂ ist in hoher Konzentration erstickend.",
+        ],
+        checklist: [
+          "Luftwechsel erhöhen, bevor angereichert wird",
+          "Anreicherung an hohes PPFD koppeln",
+          "Temperatur-Setpoint mit CO₂ anheben",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Sorge für ausreichenden Frischluftaustausch passend zur Pflanzenmasse und Lichtleistung.",
+          "Treffe die CO₂-Entscheidung bewusst: Ohne hohes Licht ist Anreicherung Geldverschwendung und Risiko.",
+          "Wenn angereichert wird, behandle CO₂ wie ein technisches System mit Sensor, Regelung und Sicherheitskonzept.",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "CO₂-Anreicherung erhöht Photosyntheserate und Wasser-/Nährstoffbedarf — EC und Bewässerung müssen mitskaliert werden.",
+          "Höhere Zieltemperaturen unter CO₂ verschieben das VPD-Fenster; Klima, Licht und CO₂ bilden ein gekoppeltes System.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "CO₂ anreichern, obwohl das Licht zu schwach ist — ohne Lichtsättigung bringt CO₂ keinen Mehrertrag.",
+          "Mit CO₂ die Temperatur nicht anheben und so den Effekt verschenken.",
+          "CO₂ ohne Sensor/Regelung und Sicherheitskonzept einsetzen — gefährlich für Menschen.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "CO₂ lohnt typischerweise erst in versiegelten, stark beleuchteten Räumen mit aktiver Klimatisierung — im einfachen Abluftzelt selten.",
+          "Eine CO₂-Bilanz (Verbrauch vs. Nachlieferung) hilft, den Luftwechsel statt teurer Anreicherung als erste Lösung zu erkennen.",
+        ],
+      },
+    ],
+    warnings: [
+      "CO₂ ist in hoher Konzentration erstickend: Setze Anreicherung nur mit Sensor, Regelung und Sicherheitskonzept ein.",
+      "Reichere CO₂ nicht bei schwachem Licht an — ohne Lichtsättigung entsteht kein Mehrertrag, nur Kosten und Risiko.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Zwei Zutaten fürs Wachstum",
+        text: "Die Pflanze braucht Licht UND CO₂. Ist das Licht stark, aber CO₂ knapp, ist es wie ein voller Motor mit zu wenig Luft — er dreht nicht hoch.",
+      },
+      {
+        title: "Kurz erklärt: Mehr CO₂ nur mit mehr Wärme",
+        text: "Extra CO₂ wirkt nur, wenn es auch wärmer ist. Ohne höhere Temperatur verpufft der Effekt — und ohne starkes Licht bringt CO₂ gar nichts.",
+      },
+    ],
+    faq: [
+      {
+        question: "Woran erkenne ich CO₂-Mangel?",
+        answer:
+          "Nicht an einem Blattsymptom, sondern am Leistungsplateau: Licht, VPD und Dünger sind optimal, aber es geht nicht schneller voran. Eine CO₂-Messung unter ~400 ppm in der Lichtphase bestätigt den Verdacht.",
+      },
+      {
+        question: "Brauche ich eine CO₂-Anlage?",
+        answer:
+          "Meist nicht. Ausreichender Luftwechsel hält CO₂ nahe dem Außenwert. Aktive Anreicherung lohnt nur bei hohem Licht in dichten, versiegelten Setups.",
+      },
+      {
+        question: "Welche CO₂-Werte sind sinnvoll?",
+        answer:
+          "Umgebungsluft liegt bei ~400 ppm. Bei sinnvoller Anreicherung mit hohem Licht sind 800–1200 ppm üblich — immer mit Sensor, Regelung und Sicherheitsvorkehrungen.",
+      },
+    ],
+    glossary: [
+      { term: "ppm", definition: "Parts per million; Maßeinheit der CO₂-Konzentration in der Luft (~400 ppm Außenluft)." },
+      { term: "Lichtsättigung", definition: "Punkt, ab dem mehr Licht keine Mehrleistung bringt, weil CO₂ zum Limit wird." },
+      { term: "CO₂-Anreicherung", definition: "Gezielte Erhöhung der CO₂-Konzentration zur Steigerung der Photosynthese bei hohem Licht." },
+    ],
+    sourceIds: ["chandra-cannabis-photosynthesis-temperature-co2", "mortensen-co2-enrichment-review", "prenger-ling-vpd-greenhouse"],
+    relatedSlugs: ["hitzestress", "vpd-einfach-erklaert", "lichtstress-und-canopy-management", "vpd-und-ec-kombi-rechner-guide"],
+  },
 ];
 
 // ─── Allowlist-Anreicherung (Publikation via GROW_KNOWLEDGE in wiki.ts) ──────
@@ -2737,5 +3614,36 @@ export const DIAGNOSTIC_GROW_KNOWLEDGE: Record<
       "Braune, verbrannte Blattspitzen an den kräftigsten Blättern = Überdüngung; EC senken bzw. spülen und niedrig neu aufbauen — verbrannte Spitzen ergrünen nicht.",
     qualityScore: 5,
     growCategory: "nutrients",
+  },
+  // ─── Wave 5 – Umwelt- & Klimastress (Phase 20) ─────────────────────────────
+  hitzestress: {
+    growValue:
+      "Blattränder nach OBEN gerollt (Tacoing) + aufrechte Haltung an den lampennächsten Blättern = Hitze; Lampe dimmen/höher hängen, Lufttemp. auf 24–28 °C und VPD auf 1.0–1.5 kPa bringen — nicht düngen.",
+    qualityScore: 5,
+    growCategory: "climate",
+  },
+  kaeltestress: {
+    growValue:
+      "Purpurne Stängel/Blattunterseiten + langsames Wachstum = Kälte, kein P-Mangel; Wurzelzone auf 18–22 °C wärmen, Nachtabsenkung < 8 °C halten und Gießwasser auf ~20 °C temperieren.",
+    qualityScore: 5,
+    growCategory: "climate",
+  },
+  windbrand: {
+    growValue:
+      "Verkrümmte 'Klauen' NUR im direkten Ventilatorstrahl, ohne Schädlinge/Mangelmuster = Windbrand; Lüfter auf indirekte, sanfte Umluft umstellen, bei der sich die Blätter nur leicht wiegen.",
+    qualityScore: 4,
+    growCategory: "climate",
+  },
+  "luftfeuchte-management": {
+    growValue:
+      "Steuere VPD, nicht die nackte RH-Zahl: Veg ~0.8–1.1, Blüte ~1.2–1.5 kPa; in der späten Blüte RH auf 40–50 % drücken (auch nachts), um Bud Rot und Mehltau zu vermeiden.",
+    qualityScore: 5,
+    growCategory: "climate",
+  },
+  "co2-management": {
+    growValue:
+      "Leistungsplateau TROTZ optimalem Licht/VPD/Dünger = CO₂-Limit; zuerst Luftwechsel erhöhen, Anreicherung (800–1200 ppm) nur bei hohem PPFD + 28–30 °C und mit Sensor/Sicherheit.",
+    qualityScore: 5,
+    growCategory: "climate",
   },
 };

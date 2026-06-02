@@ -149,22 +149,28 @@ or treatable from the corpus.
 
 ---
 
-## 7. Environmental stress — 🟠 25%
+## 7. Environmental stress — 🟢 67% (Phase 20)
 
 | Topic | Slug | State |
 |-------|------|-------|
-| VPD fundamentals | `vpd-einfach-erklaert` | ✅ Published, B (71) |
-| VPD + EC operating guide | `vpd-und-ec-kombi-rechner-guide` | ✅ Published, B (71) |
-| Light stress / canopy | `lichtstress-und-canopy-management` | ✅ Published, C (60) — uplift |
-| Heat stress | `hitzestress` | ❌ Missing |
-| Cold stress | `kaeltestress` | ❌ Missing |
-| Wind burn | `windbrand` | ❌ Missing |
-| Humidity / RH management | `luftfeuchte-management` | ❌ Missing |
+| VPD fundamentals | `vpd-einfach-erklaert` | ✅ Published, handbook-grade |
+| VPD + EC operating guide | `vpd-und-ec-kombi-rechner-guide` | ✅ Published, handbook-grade |
+| Light stress / canopy | `lichtstress-und-canopy-management` | ✅ Published, handbook-grade |
+| Heat stress | `hitzestress` | ✅ Published (Phase 20) |
+| Cold stress | `kaeltestress` | ✅ Published (Phase 20) |
+| Wind burn | `windbrand` | ✅ Published (Phase 20) |
+| Humidity / RH management (high & low) | `luftfeuchte-management` | ✅ Published (Phase 20) |
 | Overwatering | (inside `bewaesserung-ohne-uebergiessen`) | 🟡 Partial — split out |
 | Underwatering | `unterwaesserung-trockenstress` | ❌ Missing |
 | Light leak / hermaphroditism stress | `lichtleck-und-zwitterbildung` | ❌ Missing |
-| CO₂ deficiency / excess | `co2-management` | ❌ Missing |
+| CO₂ deficiency / excess | `co2-management` | ✅ Published (Phase 20) |
 | pH lockout (env. trigger) | `ph-lockout` | ❌ Missing (only lite antagonism stub) |
+
+> Phase 20 lieferte 5 neue handbook-grade Diagnoseartikel (Hitze, Kälte,
+> Windbrand, Luftfeuchte, CO₂) und verankerte die bereits publizierten
+> VPD-/Lichtstress-Artikel. Damit stehen Umwelt-/Klimasymptome als
+> **Differenzialdiagnose-Partner** zu Mängeln und Toxizitäten bereit
+> (`computeKnowledgeCoverage()`: 8/12 = 67 %, Status *solide*).
 
 ---
 
@@ -228,7 +234,7 @@ itemized topics live in `docs/CONTENT_BACKLOG.md`.
 | **P0** | Pests | 12 | High search demand; identification + staged response; 0%. |
 | **P0** | Diseases | 11 | Safety-critical; 0% pathogen-specific. |
 | **P1** | Nutrient toxicities | 6 | Completes the deficiency↔toxicity differential pairs. |
-| **P1** | Environmental stress | 8 | Differential diagnosis partners for deficiencies. |
+| **P1** | Environmental stress | 3 | Differential diagnosis partners for deficiencies (Phase 20 closed 5/8). |
 | **P2** | Cultivation technique | 7 | Training/harvest methods; high but non-diagnostic demand. |
 | **P2** | Harvest & post-harvest | 3 | Harvest-window + drying complete the lifecycle. |
 | **P3** | Genetics / chemistry uplift | — | Uplift existing orphans rather than net-new. |

@@ -94,7 +94,16 @@ export const KNOWLEDGE_DOMAINS: KnowledgeDomain[] = [
     id: "environmental-stress",
     label: "Umwelt- & Klimastress",
     target: 12,
-    canonicalSlugs: ["vpd-einfach-erklaert"],
+    canonicalSlugs: [
+      "vpd-einfach-erklaert",
+      "vpd-und-ec-kombi-rechner-guide",
+      "lichtstress-und-canopy-management",
+      "hitzestress",
+      "kaeltestress",
+      "windbrand",
+      "luftfeuchte-management",
+      "co2-management",
+    ],
     diagnosticCore: false,
   },
   {
