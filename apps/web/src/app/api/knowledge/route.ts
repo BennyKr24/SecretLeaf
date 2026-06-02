@@ -17,7 +17,17 @@ import {
   searchArticles,
 } from "@/lib/knowledge/db";
 
-export const dynamic = "force-dynamic";
+// Published knowledge is immutable between edits, so it is served through the
+// CDN. API-1 remediation: cache reads at the edge (s-maxage) and serve stale
+// while revalidating, instead of hitting Postgres on every request. Set
+// `revalidate` so the route output is cacheable rather than force-dynamic.
+export const revalidate = 300;
+
+// Shared CDN cache policy for public, read-only knowledge responses.
+const READ_CACHE_HEADERS = {
+  "Cache-Control":
+    "public, s-maxage=300, stale-while-revalidate=86400",
+} as const;
 
 const querySchema = z.object({
   slug: z.string().trim().min(1).max(200).optional(),
@@ -53,12 +63,15 @@ export async function GET(request: Request) {
       if (!article) {
         return Response.json({ error: "Not found" }, { status: 404 });
       }
-      return Response.json({ article });
+      return Response.json({ article }, { headers: READ_CACHE_HEADERS });
     }
 
     if (q) {
       const results = await searchArticles(supabase, q, limit);
-      return Response.json({ query: q, results, total: results.length });
+      return Response.json(
+        { query: q, results, total: results.length },
+        { headers: READ_CACHE_HEADERS },
+      );
     }
 
     const articles = await listArticles(supabase, {
@@ -66,7 +79,10 @@ export async function GET(request: Request) {
       limit,
       offset,
     });
-    return Response.json({ articles, limit, offset });
+    return Response.json(
+      { articles, limit, offset },
+      { headers: READ_CACHE_HEADERS },
+    );
   } catch (error) {
     logError("api.knowledge.exception", {
       message: error instanceof Error ? error.message : String(error),

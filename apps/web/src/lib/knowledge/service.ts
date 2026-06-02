@@ -6,16 +6,16 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import type { SupabaseClient } from "@supabase/supabase-js";
-import {
-  getArticleBySlug,
-  getArticleSummaryById,
-  getOutgoingRelations,
-} from "./db";
+import { getArticleBySlug } from "./db";
 import type {
   KnowledgeArticle,
+  KnowledgeArticleSummary,
+  KnowledgeDifficulty,
   KnowledgeGraph,
   KnowledgeGraphNode,
   KnowledgeRelation,
+  KnowledgeRelationType,
+  KnowledgeStatus,
 } from "./types";
 
 // ── Knowledge graph traversal ─────────────────────────────────────────────────
@@ -25,66 +25,91 @@ export type TraverseOptions = {
   maxDepth?: number;
   /** Maximum number of nodes to return (safety bound for large graphs). */
   maxNodes?: number;
+  /** Maximum edges followed per node (weight-ordered top-K; supernode guard). */
+  perNodeLimit?: number;
+};
+
+/** Row shape returned by the `knowledge_graph_expand` SQL function. */
+type GraphExpandRow = {
+  from_article: string;
+  to_article: string;
+  relation_type: KnowledgeRelationType;
+  weight: number | string;
+  depth: number;
+  to_slug: string;
+  to_title: string;
+  to_summary: string | null;
+  to_category_id: string | null;
+  to_difficulty: KnowledgeDifficulty;
+  to_status: KnowledgeStatus;
+  to_read_minutes: number | null;
+  to_language: string;
+  to_published_at: string | null;
+  to_updated_at: string;
 };
 
 /**
  * Breadth-first traversal of the knowledge graph starting from `rootSlug`.
  *
- * Returns the reachable subgraph (nodes + typed, weighted edges) so future AI
- * systems can expand RAG context, drive diagnostics, or recommend related
- * topics. Visited-set prevents cycles; node/depth bounds keep it cheap.
+ * GR-1 remediation: the traversal runs entirely inside Postgres via the
+ * `knowledge_graph_expand` recursive-CTE function — a single round-trip instead
+ * of the previous per-node + per-neighbor N+1. The function is weight-pruned
+ * (top-K per node), cycle-safe, and returns only published targets.
  */
 export async function traverseGraph(
   supabase: SupabaseClient,
   rootSlug: string,
   options: TraverseOptions = {},
 ): Promise<KnowledgeGraph | null> {
-  const maxDepth = Math.min(Math.max(options.maxDepth ?? 2, 1), 5);
+  const maxDepth = Math.min(Math.max(options.maxDepth ?? 2, 1), 6);
   const maxNodes = Math.min(Math.max(options.maxNodes ?? 50, 1), 500);
+  const perNodeLimit = Math.min(Math.max(options.perNodeLimit ?? 25, 1), 100);
 
   const root = await getArticleBySlug(supabase, rootSlug);
   if (!root) return null;
 
-  const visited = new Set<string>([root.id]);
+  const { data, error } = await supabase.rpc("knowledge_graph_expand", {
+    root_slug: rootSlug,
+    max_depth: maxDepth,
+    max_nodes: maxNodes,
+    per_node_limit: perNodeLimit,
+  });
+  if (error) throw error;
+
+  const rows = (data as GraphExpandRow[] | null) ?? [];
   const nodes: KnowledgeGraphNode[] = [];
   const edges: KnowledgeRelation[] = [];
 
-  let frontier: Array<{ id: string; depth: number }> = [
-    { id: root.id, depth: 0 },
-  ];
-
-  while (frontier.length > 0 && nodes.length < maxNodes) {
-    const next: Array<{ id: string; depth: number }> = [];
-
-    for (const { id, depth } of frontier) {
-      if (depth >= maxDepth) continue;
-
-      const relations = await getOutgoingRelations(supabase, id);
-      for (const relation of relations) {
-        edges.push(relation);
-        if (visited.has(relation.toArticle)) continue;
-        visited.add(relation.toArticle);
-
-        const summary = await getArticleSummaryById(
-          supabase,
-          relation.toArticle,
-        );
-        if (!summary || summary.status !== "published") continue;
-
-        nodes.push({
-          article: summary,
-          relationType: relation.relationType,
-          weight: relation.weight,
-          depth: depth + 1,
-        });
-        next.push({ id: relation.toArticle, depth: depth + 1 });
-
-        if (nodes.length >= maxNodes) break;
-      }
-      if (nodes.length >= maxNodes) break;
-    }
-
-    frontier = next;
+  for (const row of rows) {
+    const summary: KnowledgeArticleSummary = {
+      id: row.to_article,
+      slug: row.to_slug,
+      title: row.to_title,
+      summary: row.to_summary,
+      categoryId: row.to_category_id,
+      difficulty: row.to_difficulty,
+      status: row.to_status,
+      readMinutes: row.to_read_minutes,
+      qualityScore: null,
+      language: row.to_language,
+      publishedAt: row.to_published_at,
+      updatedAt: row.to_updated_at,
+    };
+    const weight = Number(row.weight);
+    nodes.push({
+      article: summary,
+      relationType: row.relation_type,
+      weight,
+      depth: row.depth,
+    });
+    edges.push({
+      id: `${row.from_article}:${row.to_article}:${row.relation_type}`,
+      fromArticle: row.from_article,
+      toArticle: row.to_article,
+      relationType: row.relation_type,
+      weight,
+      note: null,
+    });
   }
 
   return { root, nodes, edges };

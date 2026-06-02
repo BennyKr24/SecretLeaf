@@ -359,25 +359,112 @@ export async function getOutgoingRelations(
   return (data as unknown as RelationRow[]).map(mapRelation);
 }
 
-// ── Full-text search ──────────────────────────────────────────────────────────
+// ── Ranked / hybrid search (SR-1, SR-2, AI-1) ─────────────────────────────────
 
+/** Row shape returned by the `knowledge_hybrid_search` SQL function. */
+type HybridSearchRow = {
+  article_id: string;
+  slug: string;
+  title: string;
+  summary: string | null;
+  category_id: string | null;
+  difficulty: KnowledgeArticle["difficulty"];
+  status: KnowledgeArticle["status"];
+  read_minutes: number | null;
+  quality_score: number | null;
+  language: string;
+  published_at: string | null;
+  updated_at: string;
+  score: number | string;
+};
+
+function mapHybridRow(row: HybridSearchRow): KnowledgeArticleSummary {
+  return {
+    id: row.article_id,
+    slug: row.slug,
+    title: row.title,
+    summary: row.summary,
+    categoryId: row.category_id,
+    difficulty: row.difficulty,
+    status: row.status,
+    readMinutes: row.read_minutes,
+    qualityScore: row.quality_score,
+    language: row.language,
+    publishedAt: row.published_at,
+    updatedAt: row.updated_at,
+  };
+}
+
+/**
+ * Full-text search over the body-inclusive, language-aware `search_tsv`, ranked
+ * by `ts_rank_cd` inside Postgres (SR-2). Backed by the `knowledge_hybrid_search`
+ * RPC; when `queryEmbedding` is supplied it fuses FTS with HNSW vector search
+ * via reciprocal rank fusion (SR-1 / AI-1).
+ */
 export async function searchArticles(
   supabase: SupabaseClient,
   term: string,
   limit = 20,
+  options: { language?: string; queryEmbedding?: number[] } = {},
 ): Promise<KnowledgeArticleSummary[]> {
   const trimmed = term.trim();
   if (!trimmed) return [];
 
-  const { data, error } = await supabase
-    .from("knowledge_articles")
-    .select(ARTICLE_SUMMARY_COLUMNS)
-    .eq("status", "published")
-    .textSearch("search_tsv", trimmed, { type: "websearch", config: "german" })
-    .limit(Math.min(Math.max(limit, 1), 100));
+  const args: Record<string, unknown> = {
+    query_text: trimmed,
+    match_count: Math.min(Math.max(limit, 1), 100),
+    lang: options.language ?? "de",
+  };
+  if (options.queryEmbedding) args.query_embedding = options.queryEmbedding;
 
+  const { data, error } = await supabase.rpc("knowledge_hybrid_search", args);
   if (error) throw error;
-  return (data as unknown as ArticleRow[]).map(mapSummary);
+  return ((data as HybridSearchRow[] | null) ?? []).map(mapHybridRow);
+}
+
+/** Row shape returned by the `knowledge_match_embeddings` SQL function. */
+type EmbeddingMatchRow = {
+  article_id: string;
+  chunk_index: number;
+  content: string;
+  similarity: number;
+  slug: string;
+  title: string;
+};
+
+export type KnowledgeEmbeddingMatch = {
+  articleId: string;
+  chunkIndex: number;
+  content: string;
+  similarity: number;
+  slug: string;
+  title: string;
+};
+
+/**
+ * Pure vector (cosine) nearest-neighbour search over chunk embeddings, served by
+ * the HNSW index (SR-1). Returns the matching chunks of published articles.
+ */
+export async function matchEmbeddings(
+  supabase: SupabaseClient,
+  queryEmbedding: number[],
+  matchCount = 10,
+  minSimilarity = 0,
+): Promise<KnowledgeEmbeddingMatch[]> {
+  const { data, error } = await supabase.rpc("knowledge_match_embeddings", {
+    query_embedding: queryEmbedding,
+    match_count: Math.min(Math.max(matchCount, 1), 100),
+    min_similarity: minSimilarity,
+  });
+  if (error) throw error;
+  return ((data as EmbeddingMatchRow[] | null) ?? []).map((r) => ({
+    articleId: r.article_id,
+    chunkIndex: r.chunk_index,
+    content: r.content,
+    similarity: Number(r.similarity),
+    slug: r.slug,
+    title: r.title,
+  }));
 }
 
 // ── Analytics ─────────────────────────────────────────────────────────────────

@@ -10,7 +10,11 @@ import { logError } from "@/lib/log";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 import { traverseGraph } from "@/lib/knowledge/service";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
+
+const READ_CACHE_HEADERS = {
+  "Cache-Control": "public, s-maxage=300, stale-while-revalidate=86400",
+} as const;
 
 const querySchema = z.object({
   slug: z.string().trim().min(1).max(200),
@@ -46,7 +50,7 @@ export async function GET(request: Request) {
       return Response.json({ error: "Not found" }, { status: 404 });
     }
 
-    return Response.json({ graph });
+    return Response.json({ graph }, { headers: READ_CACHE_HEADERS });
   } catch (error) {
     logError("api.knowledge.graph.exception", {
       message: error instanceof Error ? error.message : String(error),
