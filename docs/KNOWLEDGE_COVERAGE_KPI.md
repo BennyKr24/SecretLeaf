@@ -25,23 +25,25 @@ Der **diagnostische Kern** = Nährstoffmängel + Krankheiten + Schädlinge
 (Zieldatensatz 36). Er ist die wichtigste Teilmetrik, weil er den Wert der
 Diagnose-, Rechner- und AI-Infrastruktur freischaltet. Ziel: **≥ 80 %**.
 
-## 3. Scorecard – Vorher / Nachher (Phase 18)
+## 3. Scorecard – Vorher / Nachher (Phase 18 → Phase 19)
 
-| Domäne                     | Ziel | Vorher | Nachher Phase 18 |
-| -------------------------- | ---- | ------ | ---------------- |
-| Nährstoffmängel            | 12   | 0 %    | **42 %** (5/12)  |
-| Toxizitäten / Überschüsse  | 6    | 0 %    | 0 %              |
-| Krankheiten                | 12   | 0 %    | **25 %** (3/12)  |
-| Schädlinge                 | 12   | 0 %    | **25 %** (3/12)  |
-| Umwelt- & Klimastress      | 12   | 8 %    | 8 %              |
-| Anbautechnik               | 16   | 13 %   | 13 %             |
-| Ernte & Nachernte          | 8    | 13 %   | 13 %             |
-| Genetik & Vermehrung       | 8    | 0 %    | 0 %              |
-| Chemie & Analytik          | 8    | 0 %    | 0 %              |
-| **Diagnostischer Kern**    | 36   | **0 %**| **31 %** (11/36) |
+| Domäne                     | Ziel | Vorher | Phase 18         | Phase 19 (Toxizitäten) |
+| -------------------------- | ---- | ------ | ---------------- | ---------------------- |
+| Nährstoffmängel            | 12   | 0 %    | **42 %** (5/12)  | 42 % (5/12)            |
+| Toxizitäten / Überschüsse  | 6    | 0 %    | 0 %              | **83 %** (5/6)         |
+| Krankheiten                | 12   | 0 %    | **25 %** (3/12)  | 25 % (3/12)            |
+| Schädlinge                 | 12   | 0 %    | **25 %** (3/12)  | 25 % (3/12)            |
+| Umwelt- & Klimastress      | 12   | 8 %    | 8 %              | 8 %                    |
+| Anbautechnik               | 16   | 13 %   | 13 %             | 13 %                   |
+| Ernte & Nachernte          | 8    | 13 %   | 13 %             | 13 %                   |
+| Genetik & Vermehrung       | 8    | 0 %    | 0 %              | 0 %                    |
+| Chemie & Analytik          | 8    | 0 %    | 0 %              | 0 %                    |
+| **Diagnostischer Kern**    | 36   | **0 %**| **31 %** (11/36) | 31 % (11/36)           |
 
 > Werte über `computeKnowledgeCoverage()` reproduzierbar. Phase 18 hebt den
-> diagnostischen Kern erstmals messbar von 0 % auf 31 %.
+> diagnostischen Kern erstmals messbar von 0 % auf 31 %. Phase 19 schaltet die
+> Toxizitäts-Domäne frei (0 % → 83 %), die Voraussetzung für die
+> Differenzialdiagnose **Mangel vs. Überschuss**.
 
 ## 4. Status-Schwellen
 

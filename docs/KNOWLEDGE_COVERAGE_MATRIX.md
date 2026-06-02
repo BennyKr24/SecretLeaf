@@ -87,16 +87,20 @@ tool, AI assistant, and image diagnosis.
 
 ---
 
-## 4. Nutrient toxicities / excess — 🔴 0%
+## 4. Nutrient toxicities / excess — 🟢 83% (Phase 19)
 
-| Topic | Slug (proposed) | State |
+| Topic | Slug | State |
 |-------|-----------------|-------|
-| Nitrogen toxicity (the "claw") | `stickstoffueberschuss` | ❌ Missing |
-| Nutrient burn / over-fertilization | `naehrstoffverbrennung-tipburn` | ❌ Missing |
-| Potassium / cation excess | `kalium-ueberschuss` | ❌ Missing |
-| Salt buildup / high EC | `salzanreicherung-hohe-ec` | ❌ Missing |
+| Nitrogen toxicity (the "claw") | `stickstoffueberschuss` | ✅ Published (Phase 19) |
+| Nutrient burn / over-fertilization | `naehrstoffverbrennung-tipburn` | ✅ Published (Phase 19) |
+| Potassium / cation excess | `kalium-ueberschuss` | ✅ Published (Phase 19) |
+| Calcium excess | `calciumueberschuss` | ✅ Published (Phase 19) |
+| Salt buildup / high EC | `salzanreicherung-hohe-ec` | ✅ Published (Phase 19) |
 | Micronutrient toxicity (Fe/Mn/B) | `mikronaehrstoff-toxizitaet` | ❌ Missing |
-| pH-induced lockout (excess side) | `ph-lockout-ueberschuss` | ❌ Missing (partly in lite antagonism stub) |
+
+> Phase 19 lieferte 5 von 6 Zielartikeln (handbook-grade). Damit ist die
+> Differenzialdiagnose **Mangel vs. Überschuss** für die Makronährstoffe und den
+> Salzhaushalt abgebildet. Offen bleibt die Mikronährstoff-Toxizität.
 
 ---
 

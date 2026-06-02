@@ -60,6 +60,15 @@ und werden über die `GROW_KNOWLEDGE`-Allowlist in `wiki.ts` veröffentlicht
 | `echter-mehltau-powdery-mildew` | Echter Mehltau     | Weißer, abwischbarer Belag auf Blättern |
 | `wurzelfaeule`                  | Wurzelfäule (Pythium) | Welk trotz nassem Substrat |
 
+### Wave 4 – Toxizitäten / Überschüsse (Phase 19)
+| Slug                           | Titel                          | Leitsymptom |
+| ------------------------------ | ------------------------------ | ----------- |
+| `stickstoffueberschuss`        | Stickstoffüberschuss           | Dunkelgrüne, klauenförmige Blätter (The Claw) |
+| `kalium-ueberschuss`           | Kaliumüberschuss               | Mg-/Ca-Mangelbild trotz Dosierung |
+| `calciumueberschuss`           | Calciumüberschuss              | Mg-Mangelbild + steigender pH bei hartem Wasser |
+| `salzanreicherung-hohe-ec`     | Salzstress / hohe EC           | Welke trotz Feuchte + verbrannte Blattränder |
+| `naehrstoffverbrennung-tipburn`| Überdüngung / Nutrient Burn    | Braune, verbrannte Blattspitzen |
+
 Jeder Artikel folgt der 16-Block-Struktur (Definition, wissenschaftlicher
 Hintergrund, Physiologie/Biologie, Symptome nach Schweregrad, Ursachen nach
 Häufigkeit, regelbasierter Diagnose-Entscheidungsbaum, Korrektur-/Sofortmaßnahmen,
@@ -80,7 +89,8 @@ belegte `sourceIds` und Cross-Links (`relatedSlugs`).
 
 - `npx tsc -p tsconfig.json --noEmit` → grün
 - `npx eslint .` → grün
-- Alle 11 Slugs erscheinen in `wikiArticles` und werden als handbook-grade gezählt.
+- Alle 16 Slugs (11 aus Phase 18 + 5 aus Phase 19) erscheinen in `wikiArticles`
+  und werden als handbook-grade gezählt.
 
 ## 6. Knowledge Coverage KPI
 
@@ -90,7 +100,8 @@ und für den diagnostischen Kern wöchentlich sichtbar.
 
 ## 7. Nächste Wellen (Backlog)
 
-Phase 18 ist ein **wiederholbarer Produktionslauf**, kein Einmalprojekt. Folgende
-Wellen füllen die noch kritischen Domänen (Toxizitäten, weitere Krankheiten/
-Schädlinge, Umweltstress) bis zum Zielkorridor: diagnostischer Kern ≥ 80 %, keine
-Domäne unter 50 %.
+Phase 18 ist ein **wiederholbarer Produktionslauf**, kein Einmalprojekt. Phase 19
+hat die Domäne **Toxizitäten / Überschüsse** auf 83 % gehoben (Differenzialdiagnose
+Mangel vs. Überschuss). Folgende Wellen füllen die noch kritischen Domänen
+(Umwelt- & Klimastress, weitere Krankheiten/Schädlinge, Mikronährstoff-Toxizität)
+bis zum Zielkorridor: diagnostischer Kern ≥ 80 %, keine Domäne unter 50 %.

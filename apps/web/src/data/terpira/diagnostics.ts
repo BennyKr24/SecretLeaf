@@ -13,6 +13,9 @@
 // Wave 2: Schädlinge        – spinnmilben, thripse, trauermuecken
 // Wave 3: Krankheiten       – bud-rot-botrytis, echter-mehltau-powdery-mildew,
 //                            wurzelfaeule
+// Wave 4: Toxizitäten        – stickstoffueberschuss, kalium-ueberschuss,
+//   / Überschüsse (Phase 19)   calciumueberschuss, salzanreicherung-hohe-ec,
+//                            naehrstoffverbrennung-tipburn
 //
 // Veröffentlichung läuft über die GROW_KNOWLEDGE-Allowlist in wiki.ts; die
 // passenden Einträge liefert DIAGNOSTIC_GROW_KNOWLEDGE am Dateiende.
@@ -131,6 +134,36 @@ export const diagnosticSources: TerpiraSource[] = [
     sourceType: "manual",
     evidenceLevel: 4,
     tags: ["IPM", "Schädlinge", "Cannabis"],
+  },
+  {
+    id: "munns-salinity-tolerance",
+    title: "Mechanisms of Salinity Tolerance",
+    publisher: "Annual Review of Plant Biology",
+    year: "2008",
+    url: "https://www.annualreviews.org/doi/10.1146/annurev.arplant.59.032607.092911",
+    sourceType: "manual",
+    evidenceLevel: 5,
+    tags: ["Salzstress", "EC", "Osmotischer Stress"],
+  },
+  {
+    id: "caplan-cannabis-fertility-rate",
+    title: "Optimal Rate of Organic Fertilizer during the Flowering Stage of Cannabis",
+    publisher: "HortScience",
+    year: "2017",
+    url: "https://journals.ashs.org/hortsci/view/journals/hortsci/52/12/article-p1796.xml",
+    sourceType: "manual",
+    evidenceLevel: 4,
+    tags: ["Düngung", "Überdüngung", "Cannabis"],
+  },
+  {
+    id: "bugbee-electrical-conductivity",
+    title: "Nutrient Management in Recirculating Hydroponic Culture",
+    publisher: "Utah State University / Acta Horticulturae",
+    year: "2004",
+    url: "https://www.actahort.org/books/648/648_12.htm",
+    sourceType: "manual",
+    evidenceLevel: 4,
+    tags: ["EC", "Hydroponik", "Nährlösung"],
   },
 ];
 
@@ -1775,6 +1808,832 @@ export const diagnosticArticles: TerpiraArticle[] = [
     sourceIds: ["pythium-root-rot-hydroponics", "punja-cannabis-pathogens", "fungus-gnats-bradysia-management"],
     relatedSlugs: ["bewaesserung-ohne-uebergiessen", "trauermuecken", "eisenmangel", "schimmel-und-mykotoxine-bei-cannabis"],
   },
+  // ===========================================================================
+  // WAVE 4 – TOXIZITÄTEN / ÜBERSCHÜSSE (Phase 19)
+  // ===========================================================================
+  // Diagnose funktioniert nur, wenn neben dem Mangel auch der Überschuss als
+  // eigenständige Entität abgebildet ist. Diese Welle hebt die Domäne
+  // "Toxizitäten / Überschüsse" (Coverage Matrix §4) erstmals über 0 %.
+  {
+    slug: "stickstoffueberschuss",
+    title: "Stickstoffüberschuss bei Cannabis erkennen und beheben",
+    summary:
+      "Dunkelgrüne, klauenförmig nach unten gebogene Blätter ('The Claw') sind das Leitsymptom. So unterscheidest du echte N-Toxizität von Überwässerung und drosselst die Stickstoffzufuhr gezielt.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    lastUpdated: "2026-06-02",
+    tags: ["Stickstoff", "Überschuss", "Toxizität", "The Claw", "Diagnose"],
+    keyTakeaways: [
+      "N-Überschuss zeigt sich als sattes Dunkelgrün mit glänzenden, ledrigen Blättern und nach unten gebogenen Spitzen ('Krallen' / The Claw).",
+      "Anders als ein Mangel beginnt die Toxizität an den jungen, kräftig wachsenden Blättern und betrifft das Wachstum insgesamt, nicht nur alte Etagen.",
+      "Korrektur heißt: EC senken, mit pH-korrektem Wasser spülen und in der Blüte den N-Anteil drosseln — zu viel N verzögert die Blüte und mindert Aroma.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Dunkelgrün + klauenförmige Blätter (The Claw)" },
+      { label: "Betroffen zuerst", value: "Junge, kräftige Blätter & Triebspitzen" },
+      { label: "Häufige Ursache", value: "Überdüngung / zu N-betonte Blütephase" },
+      { label: "Schnellkorrektur", value: "Spülen, EC −0.3 bis −0.5, N drosseln" },
+      { label: "Risiko Blüte", value: "Verzögerte Reife, grasiges Aroma" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Stickstoffüberschuss (N-Toxizität) ist eine Überversorgung mit pflanzenverfügbarem Stickstoff (vor allem NO3⁻ und NH4⁺), die das vegetative Wachstum überstimuliert und die generative Entwicklung stört.",
+          "In der Vegetation ist ein leichter N-Überschuss meist kosmetisch; in der Blüte wird er zum echten Ertrags- und Qualitätsproblem, weil die Pflanze in der Streckung 'hängt' statt Blüten anzusetzen.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Überschüssiges Nitrat wird in der Pflanze gespeichert und treibt die Chlorophyll- und Proteinsynthese an — daher das dunkle, fast blaugrüne Laub.",
+          "Ein hoher Ammoniumanteil verschärft das Bild: NH4⁺ stört den Kationenhaushalt (Ca, K, Mg), senkt den Rhizosphären-pH und kann direkte Wurzelschäden verursachen.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "Weil die Toxizität das aktive Wachstum betrifft, sind die jüngsten, kräftigsten Blätter am auffälligsten — sie wirken überdick, ledrig und glänzend.",
+          "Die klassische 'Kralle' (The Claw) entsteht, wenn die Blattspitzen nach unten krümmen, während die Blattmitte noch flach ist; bei fortgeschrittener Toxizität rollt sich das ganze Blatt ein.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1 (leicht): Auffällig dunkelgrünes, glänzendes Laub, Blattspitzen leicht nach unten gebogen.",
+          "Stadium 2 (mittel): Deutliche Krallenbildung, ledrige Blätter, in der Blüte verzögerter Knospenansatz und gestauchte, dichte Triebspitzen.",
+          "Stadium 3 (schwer): Verbrannte Blattspitzen (überlagerter Nährstoff-Burn), eingerollte Blätter, brüchiges Gewebe und sinkende Blütenqualität.",
+        ],
+        checklist: [
+          "Ist das Laub auffällig dunkel statt frischgrün?",
+          "Krümmen sich die Blattspitzen nach unten (Kralle)?",
+          "Sind die JUNGEN Blätter am stärksten betroffen?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Überdüngung: Zu hohe N-Dosis oder zu kurzes Gießintervall, sodass sich N im Substrat anreichert.",
+          "2. Falsche Phasenrezeptur: Vegetationsdünger (hoher N-Anteil) zu lange in die Blüte gefahren.",
+          "3. Organische Akkumulation: Stark vorgedüngte Erde oder Übermaß an organischen N-Quellen, die kontinuierlich mineralisieren.",
+          "4. Niedriger Wasserdurchsatz: Wenig Drainage, sodass Salze und N nicht ausgewaschen werden.",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Sind die jungen Blätter dunkelgrün und klauenförmig? Ja → N-Überschuss wahrscheinlich; Mangel sähe blass aus.",
+          "Schritt 2: Hängen die Blätter schlaff trotz korrekter Feuchte? Trenne von Überwässerung — bei N-Toxizität ist das Laub fest und ledrig, nicht welk-weich.",
+          "Schritt 3: Miss die EC der Drainage gegen den Zulauf. Drainage-EC deutlich höher → Salz-/N-Anreicherung.",
+          "Schritt 4: Prüfe Düngerrezeptur und Phase. N-betonter Dünger in der Blüte → Rezeptur umstellen.",
+        ],
+        checklist: [
+          "Drainage-EC gegen Zulauf-EC vergleichen",
+          "Düngerrezeptur auf N:P:K und Phase prüfen",
+          "Junge vs. alte Blätter gegenüberstellen",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. Spülen: Mit pH-korrektem Wasser (Coco/Hydro 5.8–6.2, Erde 6.2–6.8) das 1.5–3-fache Topfvolumen durchspülen, bis die Drainage-EC sinkt.",
+          "2. EC senken: Die N-betonte Düngung pausieren bzw. die Gesamt-EC um 0.3–0.5 reduzieren und neu hochtasten.",
+          "3. Phasengerecht umstellen: In der Blüte auf P/K-betonte Rezeptur wechseln, N nur als Erhaltungsgabe.",
+          "4. Wasserregime korrigieren: Ausreichend Drainage (10–20 %) sicherstellen, damit Salze nicht akkumulieren.",
+        ],
+        checklist: [
+          "Mit pH-korrektem Wasser spülen, Drainage-EC kontrollieren",
+          "Gesamt-EC schrittweise senken, nicht abrupt nullen",
+          "Blüterezeptur N-arm, P/K-betont fahren",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Dosiere nach EC-Zielwerten der Phase statt nach Gefühl; tägliche Drainage-EC-Kontrolle deckt Anreicherung früh auf.",
+          "Trenne Vegetations- und Blütedünger sauber und reduziere N rechtzeitig zum Blütebeginn.",
+          "Halte ein konstantes Drainagefenster, damit sich keine Salze im Wurzelraum stauen.",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "Hoher NH4⁺-Anteil bei niedrigem pH verschärft die Toxizität und antagonisiert Ca, K und Mg — scheinbare Mängel können Folge von N-Überschuss sein.",
+          "Warme, feuchte Bedingungen mit weichem, überdüngtem Gewebe begünstigen Botrytis und Mehltau; N-Toxizität ist damit auch ein indirektes Krankheitsrisiko.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Die Krallenbildung als Wassermangel fehldeuten und noch mehr gießen oder düngen.",
+          "N in der Blüte zu spät reduzieren — das Aroma wird grasig und die Reife verzögert sich.",
+          "Bei sichtbarem Burn die EC abrupt auf null fahren und damit Stressschocks auslösen.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Eine Blattanalyse kann N-Gehalte über dem phasentypischen Optimum bestätigen, bevor man rein optisch korrigiert.",
+          "In rezirkulierenden Systemen reichert sich Nitrat an; ein periodischer Reservoir-Reset hält die N-Last und EC stabil.",
+        ],
+      },
+    ],
+    warnings: [
+      "Spüle bei N-Toxizität nur mit pH-korrektem Wasser — falscher pH verschärft sonst zusätzlich eine Blockade.",
+      "Reduziere die EC schrittweise; ein abrupter Nährstoffentzug stresst die Pflanze und kann die Blüte zusätzlich bremsen.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum die Kralle?",
+        text: "Zu viel Stickstoff lässt die Blätter überschnell und überdick wachsen. Die Spitzen können nicht mithalten und biegen sich nach unten — wie eine Kralle.",
+      },
+      {
+        title: "Kurz erklärt: Dunkelgrün ist nicht gut",
+        text: "Sehr dunkles, glänzendes Laub wirkt gesund, ist aber oft ein Zeichen für zu viel Stickstoff. Frisches Hellgrün ist das eigentliche Ziel.",
+      },
+    ],
+    faq: [
+      {
+        question: "Ist dunkelgrünes Laub nicht ein gutes Zeichen?",
+        answer:
+          "Nur bis zu einem Punkt. Sattes, aber frisches Grün ist gesund; sehr dunkles, glänzend-ledriges Laub mit gebogenen Spitzen deutet dagegen auf Stickstoffüberschuss hin.",
+      },
+      {
+        question: "Wie unterscheide ich N-Überschuss von Überwässerung?",
+        answer:
+          "Bei N-Toxizität sind die Blätter fest, ledrig und krallenförmig; bei Überwässerung hängen sie weich und schlaff. Ein EC-Vergleich von Zulauf und Drainage gibt zusätzliche Sicherheit.",
+      },
+      {
+        question: "Erholen sich verkrallte Blätter wieder?",
+        answer:
+          "Leicht betroffene Blätter strecken sich nach der Korrektur teils wieder; stark verkrallte oder verbrannte Blätter bleiben geschädigt. Beurteile den Erfolg am Neuaustrieb.",
+      },
+    ],
+    glossary: [
+      { term: "The Claw", definition: "Klauenförmiges Abwärtskrümmen der Blätter, typisches Zeichen für Stickstoffüberschuss." },
+      { term: "Nitrat (NO3⁻)", definition: "Hauptaufnahmeform von Stickstoff; reichert sich bei Überdüngung im Gewebe an." },
+      { term: "EC", definition: "Elektrische Leitfähigkeit der Nährlösung/Drainage als Maß für die Salz- und Nährstoffkonzentration." },
+    ],
+    sourceIds: ["marschner-mineral-nutrition", "bernal-cannabis-nutrient-requirements", "caplan-cannabis-fertility-rate"],
+    relatedSlugs: ["stickstoffmangel", "naehrstoffverbrennung-tipburn", "salzanreicherung-hohe-ec", "naehrstoffbedarf-cannabis-lebenszyklus"],
+  },
+  {
+    slug: "kalium-ueberschuss",
+    title: "Kaliumüberschuss bei Cannabis erkennen und beheben",
+    summary:
+      "Kaliumüberschuss ist selten direkt toxisch, blockiert aber über Kationen-Antagonismus die Aufnahme von Mg, Ca und N. So erkennst du die ausgelösten Sekundärmängel und stellst das Verhältnis neu ein.",
+    category: "anbau",
+    difficulty: "profi",
+    readMinutes: 9,
+    lastUpdated: "2026-06-02",
+    tags: ["Kalium", "Überschuss", "Antagonismus", "Toxizität", "Diagnose"],
+    keyTakeaways: [
+      "Kaliumüberschuss wirkt fast nie direkt toxisch, sondern indirekt: zu viel K⁺ verdrängt Mg²⁺, Ca²⁺ und teils NH4⁺ an den Wurzeltransportern.",
+      "Das Leitbild ist daher ein 'induzierter Magnesium- oder Calciummangel' trotz ausreichender Versorgung mit diesen Nährstoffen.",
+      "Korrektur heißt nicht 'mehr Mg/Ca', sondern das Ionenverhältnis senken: K drosseln, spülen und Ca:Mg:K neu ausbalancieren.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Mg-/Ca-Mangelbild trotz Zufuhr" },
+      { label: "Wirkmechanismus", value: "Kationen-Antagonismus (K verdrängt Mg/Ca)" },
+      { label: "Zielverhältnis", value: "Ca:Mg:K grob 3:1:3 bis 4:1:3" },
+      { label: "Schnellkorrektur", value: "K-Anteil senken, spülen, neu balancieren" },
+      { label: "Risiko", value: "Fehldiagnose als reiner Mg-/Ca-Mangel" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Kaliumüberschuss bezeichnet ein Überangebot an K⁺ in der Wurzelzone, das selten direkte Verbrennungen, aber häufig Aufnahmestörungen anderer Kationen verursacht.",
+          "Weil Cannabis in der Blüte K-betont gedüngt wird, ist ein versehentlicher K-Überschuss in dieser Phase besonders häufig.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "K⁺, Ca²⁺ und Mg²⁺ konkurrieren um dieselben Aufnahme-Transporter an der Wurzelmembran. Ein Überschuss eines Kations senkt die Aufnahme der anderen.",
+          "K hat dabei eine besonders starke Verdrängungswirkung gegenüber Mg und Ca — deshalb erzeugt K-Überschuss bevorzugt Mg- und Ca-Mangelbilder.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "Da Mg phloemmobil ist, erscheint der induzierte Mangel zuerst als interveinale Chlorose an den unteren Blättern — optisch identisch mit einem echten Mg-Mangel.",
+          "Wird zusätzlich Ca verdrängt (immobil), zeigen sich verkrüppelte, fleckige junge Triebe; das Mischbild macht die Diagnose anspruchsvoll.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1 (leicht): Beginnende interveinale Aufhellung unten trotz dosierter Mg-Gabe, leicht erhöhte EC.",
+          "Stadium 2 (mittel): Deutliches Mg-Mangelbild plus erste Ca-Symptome (fleckige junge Blätter), obwohl beide Nährstoffe in der Rezeptur enthalten sind.",
+          "Stadium 3 (schwer): Kombinierte Mg-/Ca-Defizite, nekrotische Flecken, gehemmtes Wachstum und in der Blüte verminderte Knospenfestigkeit.",
+        ],
+        checklist: [
+          "Tritt ein Mg-/Ca-Mangel auf, OBWOHL dosiert wird?",
+          "Ist die Rezeptur in der Blüte stark K-betont?",
+          "Ist die Gesamt-EC eher hoch?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. K-betonte Blüterezeptur überdosiert: 'Bloom-Booster' und PK-Zusätze stapeln sich.",
+          "2. Falsches Ca:Mg:K-Verhältnis: K relativ zu Ca/Mg zu hoch eingestellt.",
+          "3. Salzanreicherung: Wenig Drainage, K akkumuliert im Substrat.",
+          "4. Wasserchemie: Bereits K-reiches Ausgangswasser plus voller Düngerdosis.",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Liegt ein Mg-/Ca-Mangelbild vor, obwohl beide dosiert werden? Ja → Antagonismus durch K-Überschuss in Betracht ziehen.",
+          "Schritt 2: Prüfe die Rezeptur auf das Ca:Mg:K-Verhältnis und auf gestapelte PK-/Bloom-Zusätze.",
+          "Schritt 3: Miss EC der Drainage. Hohe EC + K-betonte Rezeptur → Überschuss wahrscheinlich.",
+          "Schritt 4: Schließe pH-Blockade aus (Wurzelzonen-pH messen), bevor du das Verhältnis korrigierst.",
+        ],
+        checklist: [
+          "Ca:Mg:K-Verhältnis der Rezeptur berechnen",
+          "PK-/Bloom-Zusätze auf Überlagerung prüfen",
+          "Wurzelzonen-pH zum Ausschluss einer Blockade messen",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. K-Last senken: PK-Booster reduzieren oder aussetzen, Gesamt-EC um 0.2–0.4 zurücknehmen.",
+          "2. Spülen: Mit pH-korrektem Wasser durchspülen, um angereichertes K auszuwaschen.",
+          "3. Verhältnis neu setzen: Ca:Mg:K so balancieren, dass Mg/Ca nicht mehr verdrängt werden (Ca:Mg etwa 3:1 bis 4:1, K nicht über den Phasenbedarf).",
+          "4. Nicht blind Mg/Ca hochfahren: Mehr Mg/Ca bei bestehendem K-Überschuss erhöht nur die Gesamt-EC, ohne die Konkurrenz zu lösen.",
+        ],
+        checklist: [
+          "K/PK-Zusätze drosseln, EC senken",
+          "Spülen statt Mg/Ca blind erhöhen",
+          "Ca:Mg:K-Verhältnis dokumentieren und neu einstellen",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Dosiere PK-Booster bewusst und zeitlich begrenzt statt dauerhaft 'auf Maximum'.",
+          "Führe eine Rezepturtabelle mit Ca:Mg:K-Verhältnis, nicht nur Einzeldosen.",
+          "Halte ein konstantes Drainagefenster, damit K nicht akkumuliert.",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "Hohe Transpiration (niedriges VPD-Management, starke PPFD) erhöht den Massenfluss und verschärft den Antagonismus bei knappem Mg.",
+          "Kühle Wurzelzonen bremsen die Mg-Aufnahme zusätzlich — K-Überschuss und Temperaturstress können sich überlagern.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Den induzierten Mg-Mangel mit immer mehr Mg bekämpfen, statt K zu senken.",
+          "PK-Booster als Dauergabe statt als kurzes Fenster einsetzen.",
+          "Den Wurzelzonen-pH übersehen und Antagonismus mit pH-Blockade verwechseln.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Eine Blattanalyse mit hohem K und gleichzeitig niedrigem Mg/Ca bestätigt den Antagonismus eindeutig.",
+          "In rezirkulierenden Systemen verschiebt sich das Ionenverhältnis über die Zeit; ein Reservoir-Reset stabilisiert Ca:Mg:K.",
+        ],
+      },
+    ],
+    warnings: [
+      "Erhöhe bei einem durch K ausgelösten Mangel nicht einfach Mg oder Ca — das steigert nur die EC und löst die Konkurrenz nicht.",
+      "Schließe immer eine pH-Blockade aus, bevor du das Ionenverhältnis korrigierst.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Verdrängung an der Tür",
+        text: "Kalium, Calcium und Magnesium nutzen dieselbe 'Tür' in die Wurzel. Steht zu viel Kalium an, drängelt es sich vor — Magnesium und Calcium kommen nicht durch.",
+      },
+      {
+        title: "Kurz erklärt: Verhältnis statt Menge",
+        text: "Nicht die einzelne Dosis entscheidet, sondern das Verhältnis. Zu viel Kalium erzeugt einen Mangel, obwohl Magnesium eigentlich genug da ist.",
+      },
+    ],
+    faq: [
+      {
+        question: "Ist Kaliumüberschuss direkt giftig für die Pflanze?",
+        answer:
+          "Selten. Das Problem ist meist indirekt: zu viel Kalium blockiert die Aufnahme von Magnesium und Calcium und erzeugt so deren Mangelbilder.",
+      },
+      {
+        question: "Warum hilft mehr Magnesium nicht?",
+        answer:
+          "Weil das Verhältnis, nicht die Menge das Problem ist. Solange Kalium dominiert, verdrängt es Magnesium weiter. Erst Kalium senken, dann balanciert sich die Aufnahme.",
+      },
+      {
+        question: "Wann tritt K-Überschuss am ehesten auf?",
+        answer:
+          "In der Blüte, wenn K-betonte PK-Booster überdosiert oder gestapelt werden. Dosiere sie zeitlich begrenzt und überwache die EC.",
+      },
+    ],
+    glossary: [
+      { term: "Kationen-Antagonismus", definition: "Gegenseitige Aufnahmehemmung positiv geladener Ionen (K⁺, Ca²⁺, Mg²⁺) an der Wurzel." },
+      { term: "Induzierter Mangel", definition: "Ein Mangelbild, das nicht durch fehlende Zufuhr, sondern durch Verdrängung eines anderen Ions entsteht." },
+      { term: "PK-Booster", definition: "Phosphor-/Kalium-betonter Zusatz für die Blüte, häufige Quelle von K-Überschuss." },
+    ],
+    sourceIds: ["marschner-mineral-nutrition", "bryson-plant-nutrition-manual", "bernal-cannabis-nutrient-requirements"],
+    relatedSlugs: ["kaliummangel", "magnesiummangel", "calciummangel", "naehrstoffbedarf-cannabis-lebenszyklus"],
+  },
+  {
+    slug: "calciumueberschuss",
+    title: "Calciumüberschuss bei Cannabis erkennen und beheben",
+    summary:
+      "Zu viel Calcium ist selten direkt giftig, hebt aber den pH an und verdrängt Magnesium und Kalium. So erkennst du den hartwasser- bzw. überdosierten Cal-Mag-Fall und korrigierst Verhältnis und pH.",
+    category: "anbau",
+    difficulty: "profi",
+    readMinutes: 8,
+    lastUpdated: "2026-06-02",
+    tags: ["Calcium", "Überschuss", "Antagonismus", "pH", "Diagnose"],
+    keyTakeaways: [
+      "Calciumüberschuss wirkt überwiegend indirekt: hoher Ca-Anteil verdrängt Mg und K und hebt tendenziell den Wurzelzonen-pH.",
+      "Typisch ist ein Mg-Mangelbild plus mögliche K-Symptome bei hartem Leitungswasser oder überdosiertem Cal-Mag.",
+      "Korrektur heißt: Ca-Zugabe drosseln, bei hartem Wasser teilweise auf RO-Wasser wechseln und pH sowie Ca:Mg neu einstellen.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Mg-/K-Mangelbild + tendenziell hoher pH" },
+      { label: "Wirkmechanismus", value: "Verdrängung von Mg/K, pH-Anhebung" },
+      { label: "Häufige Ursache", value: "Hartes Wasser + zusätzlicher Cal-Mag" },
+      { label: "Zielverhältnis", value: "Ca:Mg etwa 3:1 bis 4:1" },
+      { label: "Schnellkorrektur", value: "Ca drosseln, RO beimischen, pH richten" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Calciumüberschuss ist ein Überangebot an Ca²⁺ in der Wurzelzone. Direkte Toxizität ist selten; das Problem entsteht über Antagonismus und pH-Verschiebung.",
+          "Besonders häufig bei hartem Leitungswasser, dem zusätzlich ein Cal-Mag-Produkt zugesetzt wird, obwohl der Ca-Bedarf längst gedeckt ist.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Ca²⁺ konkurriert mit Mg²⁺ und K⁺ um die Wurzelaufnahme; ein Überschuss senkt deren Verfügbarkeit.",
+          "Calciumreiches (hartes) Wasser ist oft mit Bicarbonaten gepuffert und treibt den pH nach oben, was zusätzlich Mikronährstoffe wie Fe und Mn blockiert.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "Das sichtbare Bild ist meist ein induzierter Mg-Mangel: interveinale Chlorose an unteren Blättern, obwohl Mg dosiert wird.",
+          "Steigt der pH stark, kommen Mikronährstoffsymptome (z. B. Eisenmangel an jungen Blättern) hinzu — ein Mischbild, das leicht fehlinterpretiert wird.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1 (leicht): Leichte interveinale Aufhellung unten trotz Mg-Gabe, Drainage-pH am oberen Rand.",
+          "Stadium 2 (mittel): Klares Mg-Mangelbild plus beginnende Mikronährstoffsymptome an jungen Blättern (pH-bedingt).",
+          "Stadium 3 (schwer): Kombinierte Mg-/Fe-Symptome, stagnierendes Wachstum, mögliche Salzkrusten auf dem Substrat.",
+        ],
+        checklist: [
+          "Hartes Leitungswasser + zusätzlicher Cal-Mag im Einsatz?",
+          "Mg-Mangel trotz Dosierung?",
+          "Liegt der Wurzelzonen-pH am oberen Rand oder darüber?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Hartes Wasser + Cal-Mag: Ca wird doppelt zugeführt.",
+          "2. Überdosierter Cal-Mag bei ohnehin Ca-reicher Basisdüngung.",
+          "3. pH-Drift nach oben durch bicarbonatreiches Wasser.",
+          "4. Salzanreicherung bei zu geringer Drainage.",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Liegt ein Mg-Mangelbild trotz Dosierung vor? Ja → Antagonismus prüfen.",
+          "Schritt 2: Ist das Ausgangswasser hart (hohe Carbonathärte/EC schon vor Düngung)? Ja → Ca-Quelle identifiziert.",
+          "Schritt 3: Miss den Wurzelzonen-pH. Hoch → pH-bedingte Mikronährstoffblockade mitbeteiligt.",
+          "Schritt 4: Prüfe, ob zusätzlich Cal-Mag dosiert wird, obwohl der Ca-Bedarf bereits gedeckt ist.",
+        ],
+        checklist: [
+          "Wasserhärte/EC des Ausgangswassers prüfen",
+          "Cal-Mag-Dosis gegen Wasserchemie abgleichen",
+          "Wurzelzonen-pH messen",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. Ca-Zufuhr drosseln: Cal-Mag bei hartem Wasser reduzieren oder weglassen.",
+          "2. RO beimischen: Hartes Leitungswasser teilweise durch Umkehrosmose-Wasser ersetzen, um Ca und Carbonate zu senken.",
+          "3. pH korrigieren: In den Zielkorridor bringen (Coco/Hydro 5.8–6.2, Erde 6.2–6.8), um Mikronährstoffe freizuschalten.",
+          "4. Verhältnis setzen: Ca:Mg auf etwa 3:1 bis 4:1 bringen, Mg nicht blind hochfahren.",
+        ],
+        checklist: [
+          "Cal-Mag bei hartem Wasser reduzieren",
+          "RO-Anteil erhöhen, EC neu einstellen",
+          "pH in den Zielkorridor bringen",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Miss die Härte/EC deines Ausgangswassers, bevor du Cal-Mag dosierst — hartes Wasser braucht oft keinen Ca-Zusatz.",
+          "Dosiere Ca anhand des Zielwerts in der fertigen Lösung statt pauschal nach Produktempfehlung.",
+          "Überwache den Drainage-pH, um eine schleichende Anhebung früh zu erkennen.",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "Ein erhöhter pH durch Ca/Bicarbonat blockiert Fe, Mn und weitere Mikronährstoffe — der Calciumüberschuss tarnt sich dann als Mikronährstoffmangel.",
+          "Sehr niedriges VPD-Management mit geringer Transpiration kann die Ca-Verteilung verschlechtern und Mischbilder erzeugen.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Bei hartem Wasser zusätzlich Cal-Mag geben und damit Ca doppelt zuführen.",
+          "Den induzierten Mg-Mangel mit mehr Mg statt weniger Ca bekämpfen.",
+          "Den steigenden pH übersehen und die Mikronährstoffsymptome als echten Mangel düngen.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Eine Wasseranalyse (Ca, Mg, Carbonathärte) ist die sauberste Grundlage, um die nötige Cal-Mag-Dosis zu bestimmen.",
+          "In Coco wird Ca teils gepuffert/abgegeben; das verändert die effektive Ca-Last und sollte einkalkuliert werden.",
+        ],
+      },
+    ],
+    warnings: [
+      "Gib bei hartem Leitungswasser nicht reflexartig Cal-Mag dazu — prüfe zuerst die Wasserhärte.",
+      "Korrigiere den pH mit, sonst bleibt die durch Calcium ausgelöste Mikronährstoffblockade bestehen.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Doppelt hält nicht besser",
+        text: "Hartes Wasser bringt oft schon viel Calcium mit. Wer dann noch Cal-Mag dazugibt, überlädt die Pflanze und blockiert Magnesium.",
+      },
+      {
+        title: "Kurz erklärt: Calcium hebt den pH",
+        text: "Calciumreiches Wasser ist meist 'hart' und drückt den pH nach oben. Dadurch werden Spurenelemente wie Eisen blockiert — es sieht dann aus wie ein Eisenmangel.",
+      },
+    ],
+    faq: [
+      {
+        question: "Brauche ich bei hartem Leitungswasser überhaupt Cal-Mag?",
+        answer:
+          "Meist nicht. Hartes Wasser enthält schon viel Calcium und Magnesium. Ein zusätzlicher Cal-Mag kann dann einen Überschuss und einen induzierten Mg-Mangel auslösen.",
+      },
+      {
+        question: "Warum sieht Calciumüberschuss wie ein Magnesiummangel aus?",
+        answer:
+          "Weil zu viel Calcium die Magnesiumaufnahme verdrängt. Die Pflanze zeigt die typische interveinale Chlorose, obwohl Magnesium eigentlich dosiert wird.",
+      },
+      {
+        question: "Wie senke ich den Calciumgehalt im Wasser?",
+        answer:
+          "Mische Umkehrosmose-Wasser bei, um Calcium und Carbonate zu verdünnen, und reduziere oder streiche zusätzliche Cal-Mag-Gaben.",
+      },
+    ],
+    glossary: [
+      { term: "Carbonathärte", definition: "Anteil an Bicarbonaten im Wasser, der den pH puffert und nach oben treibt." },
+      { term: "Cal-Mag", definition: "Calcium-Magnesium-Zusatz; bei hartem Wasser oft überflüssig und Quelle von Ca-Überschuss." },
+      { term: "Umkehrosmose (RO)", definition: "Filterverfahren, das Salze und Härtebildner aus dem Wasser entfernt." },
+    ],
+    sourceIds: ["marschner-mineral-nutrition", "bryson-plant-nutrition-manual", "bernal-cannabis-nutrient-requirements"],
+    relatedSlugs: ["calciummangel", "magnesiummangel", "eisenmangel", "kalium-ueberschuss"],
+  },
+  {
+    slug: "salzanreicherung-hohe-ec",
+    title: "Salzstress und hohe EC bei Cannabis erkennen und beheben",
+    summary:
+      "Eine zu hohe Salzkonzentration im Wurzelraum erzeugt osmotischen Stress: Die Pflanze welkt trotz Feuchte und verbrennt an den Blatträndern. So misst du die EC richtig und spülst gezielt aus.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    lastUpdated: "2026-06-02",
+    tags: ["Salzstress", "EC", "Überdüngung", "Osmotischer Stress", "Diagnose"],
+    keyTakeaways: [
+      "Salzstress entsteht, wenn die EC im Wurzelraum so hoch ist, dass die Pflanze osmotisch kein Wasser mehr ziehen kann — sie welkt trotz nasser Wurzeln.",
+      "Das Drainagewasser ist der entscheidende Messpunkt: eine Drainage-EC deutlich über dem Zulauf zeigt Salzanreicherung an.",
+      "Korrektur ist mechanisch: mit pH-korrektem Wasser spülen, bis die Drainage-EC fällt, danach die Düngung niedriger neu aufbauen.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Welke + verbrannte Blattränder trotz Feuchte" },
+      { label: "Messpunkt", value: "Drainage-EC vs. Zulauf-EC" },
+      { label: "Mechanismus", value: "Osmotischer Stress, Wasseraufnahme blockiert" },
+      { label: "Schnellkorrektur", value: "Spülen mit pH-korrektem Wasser" },
+      { label: "Prävention", value: "10–20 % Drainage je Gabe" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Salzstress (hohe EC) ist die Folge einer zu hohen Gesamtkonzentration gelöster Salze im Wurzelraum, unabhängig davon, welches Einzelnährstoffion dominiert.",
+          "Er ist die gemeinsame Endstrecke vieler Überdüngungsfälle: Egal ob N, K oder Cal-Mag überdosiert wurden — der osmotische Effekt ist ähnlich.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Wasser folgt dem osmotischen Gradienten. Ist die Salzkonzentration außen (Substrat) höher als in der Wurzel, kehrt sich der Fluss um — die Pflanze kann kein Wasser aufnehmen oder verliert es sogar.",
+          "Hohe EC schädigt zudem die Feinwurzeln und Wurzelhaare, was die Aufnahme dauerhaft verschlechtert und Sekundärsymptome auslöst.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "Das paradoxe Leitbild: Die Pflanze welkt, obwohl das Substrat feucht ist — ein osmotischer, kein hydraulischer Wassermangel.",
+          "Hinzu kommen verbrannte, trockene Blattränder und -spitzen (Tipburn), weil die Salzlast das Randgewebe zuerst schädigt.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1 (leicht): Blattränder leicht eingetrocknet, Wuchs verlangsamt, Drainage-EC über Zielwert.",
+          "Stadium 2 (mittel): Deutlicher Tipburn, schlaffes Laub trotz Feuchte, dunkleres Gewebe; teils Salzkrusten auf dem Substrat.",
+          "Stadium 3 (schwer): Großflächige Randnekrosen, kollabierende Wurzelfunktion, starker Wuchsstopp und in der Blüte Ertragsverlust.",
+        ],
+        checklist: [
+          "Welkt die Pflanze TROTZ feuchter Wurzeln?",
+          "Sind Blattränder/-spitzen verbrannt?",
+          "Liegt die Drainage-EC über dem Zulauf?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Überdüngung: Zu hohe Dosis oder zu kurzes Intervall ohne Auswaschung.",
+          "2. Zu wenig Drainage: Ohne Überschusswasser reichern sich Salze an.",
+          "3. Antrocknen zwischen den Gaben: Beim Abtrocknen steigt die EC im Restwasser stark an.",
+          "4. Salzreiches Ausgangswasser plus volle Düngerdosis.",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Welkt die Pflanze trotz Feuchte? Ja → osmotischen Stress (hohe EC) prüfen, nicht mehr gießen aus Reflex.",
+          "Schritt 2: Miss die EC der Drainage und vergleiche mit dem Zulauf. Drainage deutlich höher → Salzanreicherung bestätigt.",
+          "Schritt 3: Prüfe das Drainagevolumen je Gabe. Zu wenig → Salze stauen sich.",
+          "Schritt 4: Schließe Wurzelfäule aus (Welke trotz Feuchte ist auch dort ein Zeichen) — prüfe Wurzelfarbe und -geruch.",
+        ],
+        checklist: [
+          "Drainage-EC und Zulauf-EC mit kalibriertem Messgerät erfassen",
+          "Drainageanteil je Gabe schätzen",
+          "Wurzeln zur Abgrenzung gegen Fäule inspizieren",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. Spülen: Mit pH-korrektem Wasser (Coco/Hydro 5.8–6.2, Erde 6.2–6.8) das 1.5–3-fache Topfvolumen durchspülen, bis die Drainage-EC in den Zielbereich fällt.",
+          "2. Düngung niedriger neu aufbauen: Nach dem Spülen mit reduzierter EC starten und schrittweise hochtasten.",
+          "3. Drainage erhöhen: Künftig 10–20 % Überschusswasser je Gabe einplanen.",
+          "4. Intervall anpassen: Substrat nicht extrem austrocknen lassen, um EC-Spitzen zu vermeiden.",
+        ],
+        checklist: [
+          "Mit pH-korrektem Wasser spülen, Drainage-EC kontrollieren",
+          "Nach dem Spülen mit niedriger EC neu starten",
+          "Drainagefenster dauerhaft auf 10–20 % einstellen",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Dünge nach EC-Zielwerten der Phase und kontrolliere die Drainage-EC regelmäßig.",
+          "Plane bei jeder Gabe genug Überschusswasser ein, damit Salze ausgewaschen werden.",
+          "Kalibriere das EC-Messgerät regelmäßig — Fehlmessungen führen zu schleichender Überdüngung.",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "Hohe Temperaturen und niedrige Luftfeuchte (hoher VPD) steigern die Transpiration und damit die Salzaufnahme — Salzstress tritt dann schneller auf.",
+          "Hohe EC verstärkt scheinbare Einzelnährstoffmängel, weil die osmotische Bremse die Gesamtaufnahme drosselt.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Die Welke als Wassermangel deuten und noch mehr gießen — das verschärft den osmotischen Stress.",
+          "Nur den Zulauf, nie die Drainage messen und so die Anreicherung übersehen.",
+          "Nach dem Spülen sofort wieder mit voller Düngerdosis starten.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "In rezirkulierenden Hydro-Systemen steigt die EC durch Wasserverdunstung; regelmäßiges Nachfüllen mit reinem Wasser hält sie stabil.",
+          "Die Substrat-EC (1:2- oder Pour-Through-Methode) gibt ein präziseres Bild als die reine Zulaufmessung.",
+        ],
+      },
+    ],
+    warnings: [
+      "Gieße bei Welke trotz Feuchte NICHT zusätzlich — das ist osmotischer Stress, kein Wassermangel.",
+      "Spüle nur mit pH-korrektem Wasser; falscher pH löst beim Spülen zusätzliche Blockaden aus.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum Welke trotz nasser Erde?",
+        text: "Ist zu viel Salz im Wasser, kann die Wurzel kein Wasser mehr aufnehmen — egal wie nass es ist. Die Pflanze 'verdurstet' im Nassen.",
+      },
+      {
+        title: "Kurz erklärt: Drainage misst die Wahrheit",
+        text: "Nicht der Zulauf zählt, sondern das, was unten herausläuft. Eine hohe Drainage-EC zeigt, dass sich Salze im Topf gestaut haben.",
+      },
+    ],
+    faq: [
+      {
+        question: "Was ist ein guter EC-Wert für Cannabis?",
+        answer:
+          "Das hängt von Phase und Substrat ab, aber das Prinzip ist wichtiger als der Einzelwert: Vergleiche immer Drainage- und Zulauf-EC. Liegt die Drainage deutlich höher, reichern sich Salze an — unabhängig vom Absolutwert.",
+      },
+      {
+        question: "Wie unterscheide ich Salzstress von Wurzelfäule?",
+        answer:
+          "Beide zeigen Welke trotz Feuchte. Bei Salzstress sind die Wurzeln hell und fest und die Drainage-EC hoch; bei Wurzelfäule sind die Wurzeln braun, schleimig und riechen faulig.",
+      },
+      {
+        question: "Wie viel Wasser brauche ich zum Spülen?",
+        answer:
+          "Etwa das 1.5- bis 3-fache Topfvolumen mit pH-korrektem Wasser, bis die Drainage-EC in den Zielbereich fällt. Danach mit reduzierter Düngung neu aufbauen.",
+      },
+    ],
+    glossary: [
+      { term: "EC", definition: "Elektrische Leitfähigkeit als Maß für die Gesamtsalzkonzentration der Lösung." },
+      { term: "Osmotischer Stress", definition: "Wassermangel durch zu hohe Salzkonzentration außerhalb der Wurzel, trotz feuchtem Substrat." },
+      { term: "Tipburn", definition: "Verbrennung der Blattränder und -spitzen durch Salz-/Nährstoffüberlast." },
+    ],
+    sourceIds: ["munns-salinity-tolerance", "bugbee-electrical-conductivity", "marschner-mineral-nutrition"],
+    relatedSlugs: ["naehrstoffverbrennung-tipburn", "stickstoffueberschuss", "wurzelfaeule", "bewaesserung-ohne-uebergiessen"],
+  },
+  {
+    slug: "naehrstoffverbrennung-tipburn",
+    title: "Überdüngung und Nährstoffverbrennung (Nutrient Burn) erkennen und beheben",
+    summary:
+      "Verbrannte, braune Blattspitzen, die sich nach innen fressen, sind das Leitsymptom der Überdüngung. So grenzt du Nutrient-Burn von Mangel und Lichtstress ab und korrigierst die Dosis.",
+    category: "anbau",
+    difficulty: "einsteiger",
+    readMinutes: 8,
+    lastUpdated: "2026-06-02",
+    tags: ["Überdüngung", "Nutrient Burn", "Tipburn", "EC", "Diagnose"],
+    keyTakeaways: [
+      "Nährstoffverbrennung zeigt sich als gleichmäßig braune, vertrocknete BlattSPITZEN, die sich bei anhaltender Überlast nach innen ausbreiten.",
+      "Es ist das früheste, häufigste Überdosierungssymptom — meist eine Folge zu hoher EC und damit eng mit Salzstress verwandt.",
+      "Korrektur ist einfach: Dosis senken, mit pH-korrektem Wasser spülen und die EC danach phasengerecht niedriger neu aufbauen.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Braune, verbrannte Blattspitzen" },
+      { label: "Ausbreitung", value: "Von der Spitze nach innen" },
+      { label: "Häufige Ursache", value: "Zu hohe Düngerdosis / EC" },
+      { label: "Schnellkorrektur", value: "EC senken, spülen" },
+      { label: "Verwandt mit", value: "Salzstress / hohe EC" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Nährstoffverbrennung (Nutrient Burn, Tipburn) ist die sichtbare Folge einer Überdüngung: Die Salz-/Nährstofflast schädigt zuerst das empfindlichste Gewebe — die Blattspitzen.",
+          "Sie ist oft das erste Warnzeichen, bevor sich daraus ein ausgewachsener Salzstress mit Welke und Randnekrosen entwickelt.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Die Blattspitzen sind die Endpunkte des Transpirationsstroms; dort akkumulieren überschüssige Salze am stärksten und verbrennen das Gewebe.",
+          "Weil der Effekt von der Gesamtsalzlast getrieben wird, ist Nutrient-Burn meist ein EC-Problem, kein Einzelnährstoffdefekt.",
+        ],
+      },
+      {
+        heading: "Pflanzenphysiologie und Erscheinungsbild",
+        content: [
+          "Typisch sind gleichmäßig goldgelb bis braun verfärbte, trockene Blattspitzen, oft mit leicht nach oben 'verbranntem' Rand.",
+          "Bei anhaltender Überdüngung wandert die Nekrose von der Spitze keilförmig ins Blatt; gesundes Gewebe und totes Gewebe sind scharf abgegrenzt.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1 (leicht): Nur die äußersten Blattspitzen sind goldbraun und trocken, vor allem an den kräftigsten oberen Blättern.",
+          "Stadium 2 (mittel): Die Verbrennung greift entlang der Ränder weiter, Blattspitzen wirken 'verbrannt' und gekräuselt.",
+          "Stadium 3 (schwer): Großflächige Randnekrosen, Übergang in Salzstress mit Welke und Wuchsstopp.",
+        ],
+        checklist: [
+          "Sind nur die SPITZEN betroffen (nicht das ganze Blatt)?",
+          "Sind die kräftigsten/obersten Blätter zuerst betroffen?",
+          "Liegt die EC über dem Phasen-Zielwert?",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Zu hohe Düngerdosis: EC über dem Phasenbedarf.",
+          "2. Gestapelte Zusätze: Basisdünger plus mehrere Booster ohne EC-Kontrolle.",
+          "3. Zu wenig Drainage: Salze reichern sich an und erhöhen die effektive Dosis.",
+          "4. Empfindliche Genetik/Phase: Sämlinge und Stecklinge verbrennen schon bei moderater EC.",
+        ],
+      },
+      {
+        heading: "Diagnose — Regelbasierter Entscheidungsbaum",
+        content: [
+          "Schritt 1: Sind nur die Blattspitzen braun und trocken, das übrige Blatt grün? Ja → Nutrient-Burn wahrscheinlich.",
+          "Schritt 2: Sind die kräftigsten, am stärksten transpirierenden Blätter betroffen? Das spricht für Überdüngung, nicht für Mangel (der unten/blass beginnt).",
+          "Schritt 3: Miss die EC von Zulauf und Drainage. Über Zielwert → Dosis zu hoch.",
+          "Schritt 4: Grenze Lichtstress ab: Lichtverbrennung sitzt direkt unter der Lampe an den obersten Blattflächen, nicht nur an den Spitzen.",
+        ],
+        checklist: [
+          "Spitzen- vs. Ganzblattschaden unterscheiden",
+          "EC von Zulauf und Drainage messen",
+          "Abstand zur Lampe / PPFD zur Abgrenzung prüfen",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. Dosis senken: Die EC um 0.2–0.4 reduzieren bzw. eine Gabe mit reinem, pH-korrektem Wasser einschieben.",
+          "2. Spülen bei stärkerem Befall: Mit pH-korrektem Wasser durchspülen, bis die Drainage-EC sinkt.",
+          "3. Neu aufbauen: Mit niedriger EC starten und schrittweise an den Phasenbedarf herantasten.",
+          "4. Drainage sichern: 10–20 % Überschusswasser je Gabe, damit sich nichts staut.",
+        ],
+        checklist: [
+          "EC schrittweise senken",
+          "Bei stärkerem Befall mit pH-korrektem Wasser spülen",
+          "Verbrannte Blattspitzen ergrünen nicht — am Neuaustrieb messen",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Starte neue Pflanzen mit niedriger EC und steigere langsam — 'weniger ist mehr' verhindert die meisten Burns.",
+          "Kontrolliere die EC bei jeder gestapelten Zusatzgabe, statt Produkte blind zu kombinieren.",
+          "Beobachte Sämlinge und Stecklinge besonders: Sie verbrennen früher als ausgewachsene Pflanzen.",
+        ],
+      },
+      {
+        heading: "Umwelt- und Nährstoffwechselwirkungen",
+        content: [
+          "Hoher VPD und starke PPFD erhöhen die Transpiration und damit den Salztransport in die Spitzen — bei knapper Klimaführung verbrennt die Pflanze früher.",
+          "Anhaltender Nutrient-Burn geht in osmotischen Salzstress über; beide Themen gehören diagnostisch zusammen.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Verbrannte Spitzen für einen Nährstoffmangel halten und die Dosis weiter erhöhen.",
+          "Lichtverbrennung mit Nutrient-Burn verwechseln und am falschen Hebel drehen.",
+          "Erwarten, dass die braunen Spitzen wieder grün werden — sie bleiben geschädigt.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Bei wiederkehrendem Burn lohnt eine Substrat-EC-Messung (Pour-Through), um die effektive Wurzelraumlast statt nur den Zulauf zu sehen.",
+          "Empfindliche Sorten profitieren von dauerhaft niedrigeren EC-Zielwerten; passe die Rezeptur genotypspezifisch an.",
+        ],
+      },
+    ],
+    warnings: [
+      "Erhöhe bei verbrannten Spitzen niemals die Dosis — das ist Überdüngung, kein Mangel.",
+      "Verbranntes Gewebe regeneriert nicht; bewerte den Erfolg ausschließlich an neuen Blättern.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum die Spitzen zuerst?",
+        text: "An den Blattspitzen endet der Wasserstrom. Dort sammelt sich überschüssiges Salz und verbrennt das Gewebe — deshalb werden zuerst die Spitzen braun.",
+      },
+      {
+        title: "Kurz erklärt: Weniger ist mehr",
+        text: "Die meisten Verbrennungen kommen von zu viel Dünger. Lieber niedrig dosieren und langsam steigern, als 'auf Verdacht' viel geben.",
+      },
+    ],
+    faq: [
+      {
+        question: "Werden die verbrannten Blattspitzen wieder grün?",
+        answer:
+          "Nein. Abgestorbenes Gewebe regeneriert nicht. Wichtig ist, dass keine neuen Blätter mehr verbrennen — beurteile den Erfolg am Neuaustrieb.",
+      },
+      {
+        question: "Wie unterscheide ich Nutrient-Burn von Lichtverbrennung?",
+        answer:
+          "Nutrient-Burn beginnt an den Blattspitzen und ist EC-getrieben. Lichtverbrennung sitzt an den obersten, lampennächsten Blattflächen und bessert sich mit größerem Lampenabstand.",
+      },
+      {
+        question: "Muss ich bei leichten verbrannten Spitzen sofort spülen?",
+        answer:
+          "Bei nur leicht betroffenen Spitzen reicht meist eine reduzierte EC oder eine Gabe reines, pH-korrektes Wasser. Erst bei stärkerem Befall ist ein vollständiges Spülen nötig.",
+      },
+    ],
+    glossary: [
+      { term: "Nutrient Burn", definition: "Verbrennung des Blattgewebes durch zu hohe Nährstoff-/Salzdosis, beginnend an den Spitzen." },
+      { term: "Tipburn", definition: "Speziell die Verbrennung der Blattspitzen als Frühzeichen der Überdüngung." },
+      { term: "Pour-Through", definition: "Messmethode, bei der die EC/der pH des durchlaufenden Wassers den Wurzelraum abbildet." },
+    ],
+    sourceIds: ["caplan-cannabis-fertility-rate", "bugbee-electrical-conductivity", "marschner-mineral-nutrition"],
+    relatedSlugs: ["salzanreicherung-hohe-ec", "stickstoffueberschuss", "kaliummangel", "bewaesserung-ohne-uebergiessen"],
+  },
 ];
 
 // ─── Allowlist-Anreicherung (Publikation via GROW_KNOWLEDGE in wiki.ts) ──────
@@ -1847,5 +2706,36 @@ export const DIAGNOSTIC_GROW_KNOWLEDGE: Record<
       "Welk TROTZ nassem Substrat + braune, schleimige Wurzeln = Pythium; nicht mehr gießen, Lösung kühlen (< 20 °C) und belüften, System reinigen, Nützlinge einbringen.",
     qualityScore: 5,
     growCategory: "watering",
+  },
+  // ─── Wave 4 – Toxizitäten / Überschüsse (Phase 19) ─────────────────────────
+  stickstoffueberschuss: {
+    growValue:
+      "Dunkelgrüne, klauenförmige Blätter (The Claw) an JUNGEN Trieben = N-Überschuss; mit pH-korrektem Wasser spülen, EC senken und in der Blüte den Stickstoff drosseln.",
+    qualityScore: 5,
+    growCategory: "nutrients",
+  },
+  "kalium-ueberschuss": {
+    growValue:
+      "Mg-/Ca-Mangelbild TROTZ Dosierung = Kalium-Antagonismus; nicht mehr Mg/Ca geben, sondern K/PK-Booster drosseln, spülen und Ca:Mg:K neu balancieren.",
+    qualityScore: 5,
+    growCategory: "nutrients",
+  },
+  calciumueberschuss: {
+    growValue:
+      "Mg-Mangelbild + steigender pH bei hartem Wasser = Calciumüberschuss; Cal-Mag reduzieren, RO-Wasser beimischen, pH richten und Ca:Mg auf ~3:1 bis 4:1 einstellen.",
+    qualityScore: 5,
+    growCategory: "nutrients",
+  },
+  "salzanreicherung-hohe-ec": {
+    growValue:
+      "Welke TROTZ feuchtem Substrat + verbrannte Blattränder = Salzstress; Drainage-EC gegen Zulauf prüfen, mit pH-korrektem Wasser spülen und niedriger neu aufdüngen.",
+    qualityScore: 5,
+    growCategory: "watering",
+  },
+  "naehrstoffverbrennung-tipburn": {
+    growValue:
+      "Braune, verbrannte Blattspitzen an den kräftigsten Blättern = Überdüngung; EC senken bzw. spülen und niedrig neu aufbauen — verbrannte Spitzen ergrünen nicht.",
+    qualityScore: 5,
+    growCategory: "nutrients",
   },
 };

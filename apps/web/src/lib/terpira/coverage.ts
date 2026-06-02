@@ -63,7 +63,13 @@ export const KNOWLEDGE_DOMAINS: KnowledgeDomain[] = [
     id: "toxicities",
     label: "Toxizitäten / Überschüsse",
     target: 6,
-    canonicalSlugs: [],
+    canonicalSlugs: [
+      "stickstoffueberschuss",
+      "kalium-ueberschuss",
+      "calciumueberschuss",
+      "salzanreicherung-hohe-ec",
+      "naehrstoffverbrennung-tipburn",
+    ],
     diagnosticCore: false,
   },
   {
