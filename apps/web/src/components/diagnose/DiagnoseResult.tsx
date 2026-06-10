@@ -6,6 +6,7 @@ import type { Route } from "next";
 import type { DiagnoseResult as DiagnoseResultType, Confidence } from "@/lib/diagnose/tree";
 import { getActiveGrow, createLogEntry } from "@/lib/grow/store";
 import { TranslateButton } from "@/components/TranslateButton";
+import { getDiagnoseKnowledgeContext } from "@/lib/diagnose/knowledge";
 
 // ── Confidence badge ──────────────────────────────────────────────────────────
 
@@ -15,23 +16,23 @@ const CONFIDENCE_CONFIG: Record<
 > = {
   high: {
     label: "Hohe Sicherheit",
-    bg: "bg-emerald-50 border-emerald-200",
-    text: "text-emerald-700",
-    dot: "bg-emerald-500",
+    bg: "bg-primary/15 border-primary/40",
+    text: "text-primary",
+    dot: "bg-primary",
     barWidth: "w-full",
   },
   medium: {
     label: "Mittlere Sicherheit",
-    bg: "bg-amber-50 border-amber-200",
-    text: "text-amber-700",
-    dot: "bg-amber-400",
+    bg: "bg-background border-border",
+    text: "text-foreground",
+    dot: "bg-primary/70",
     barWidth: "w-2/3",
   },
   low: {
     label: "Niedrige Sicherheit",
-    bg: "bg-neutral-100 border-neutral-200",
-    text: "text-neutral-500",
-    dot: "bg-neutral-400",
+    bg: "bg-background border-border",
+    text: "text-muted-fg",
+    dot: "bg-muted-fg",
     barWidth: "w-1/3",
   },
 };
@@ -39,19 +40,30 @@ const CONFIDENCE_CONFIG: Record<
 type Props = {
   result: DiagnoseResultType;
   onReset: () => void;
+  growId?: string | undefined;
+  plantId?: string | undefined;
 };
 
-export function DiagnoseResult({ result, onReset }: Props) {
+export function DiagnoseResult({ result, onReset, growId, plantId }: Props) {
   const [saved, setSaved] = useState(false);
   const activeGrow = getActiveGrow();
   const conf = CONFIDENCE_CONFIG[result.confidence];
+  const knowledge = getDiagnoseKnowledgeContext(result.id);
+  const relatedArticles = knowledge.matches.slice(0, 3);
+
+  const resolvedGrowId = growId ?? activeGrow?.id;
 
   function handleAddToGrow() {
-    if (!activeGrow) return;
+    if (!resolvedGrowId) return;
+    const articleSummary = relatedArticles.map((match) => match.article.title).join(", ");
     createLogEntry({
-      growId: activeGrow.id,
+      growId: resolvedGrowId,
+      ...(plantId ? { plantId } : {}),
       date: new Date().toISOString(),
-      data: { type: "notiz", text: `🔍 Diagnose: ${result.title}\n\n${result.logNote}` },
+      data: {
+        type: "notiz",
+        text: `🔍 Diagnose: ${result.title}\nConfidence: ${knowledge.confidenceScore}/100\nEvidenz: ${knowledge.evidenceLevel}\nVerknüpfte Studien: ${articleSummary || "keine"}\n\n${result.logNote}`,
+      },
     });
     setSaved(true);
   }
@@ -59,11 +71,11 @@ export function DiagnoseResult({ result, onReset }: Props) {
   return (
     <div className="flex flex-col gap-5">
       {/* ── Header: icon + title + confidence ── */}
-      <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm p-5 flex flex-col gap-4">
+      <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="text-3xl leading-none">{result.icon}</span>
-            <h2 className="text-lg font-bold text-neutral-900 leading-snug">
+            <h2 className="text-lg font-bold text-foreground leading-snug">
               <TranslateButton text={result.title} />
             </h2>
           </div>
@@ -77,30 +89,39 @@ export function DiagnoseResult({ result, onReset }: Props) {
         </div>
 
         {/* Confidence bar */}
-        <div className="h-1 rounded-full bg-neutral-100 overflow-hidden">
+        <div className="h-1 rounded-full bg-background overflow-hidden">
           <div className={`h-full rounded-full transition-all ${conf.dot} ${conf.barWidth}`} />
         </div>
 
-        <p className="text-sm text-neutral-500 leading-relaxed">
+        <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-muted-fg">
+          <span className="rounded-full border border-border bg-background px-2.5 py-1">
+            Confidence: {knowledge.confidenceScore}/100
+          </span>
+          <span className="rounded-full border border-border bg-background px-2.5 py-1">
+            Evidenz: {knowledge.evidenceLevel}
+          </span>
+        </div>
+
+        <p className="text-sm text-muted-fg leading-relaxed">
           <TranslateButton text={result.explanation} />
         </p>
       </div>
 
       {/* ── Why this result ── */}
-      <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm px-5 py-4 flex gap-3">
+      <div className="rounded-2xl bg-card border border-border shadow-sm px-5 py-4 flex gap-3">
         <span className="mt-0.5 text-base shrink-0">🧠</span>
         <div className="flex flex-col gap-1">
-          <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
             Warum diese Diagnose?
           </p>
-          <p className="text-sm text-neutral-600 leading-relaxed">
+          <p className="text-sm text-muted-fg leading-relaxed">
             <TranslateButton text={result.reasoning} />
           </p>
         </div>
       </div>
 
       {/* ── Cause ── */}
-      <div className="flex items-start gap-2 rounded-xl bg-amber-50 border border-amber-100 px-4 py-3 text-sm text-amber-800">
+      <div className="flex items-start gap-2 rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground">
         <span className="mt-0.5 shrink-0">⚡</span>
         <span>
           <span className="font-semibold">Ursache: </span>
@@ -109,14 +130,14 @@ export function DiagnoseResult({ result, onReset }: Props) {
       </div>
 
       {/* ── Solution steps ── */}
-      <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm p-5 flex flex-col gap-3">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+      <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-3">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
           Nächste Schritte
         </h3>
         <ol className="flex flex-col gap-2.5">
           {result.steps.map((step, i) => (
-            <li key={i} className="flex items-start gap-3 text-sm text-neutral-700">
-              <span className="shrink-0 mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">
+            <li key={i} className="flex items-start gap-3 text-sm text-foreground">
+              <span className="shrink-0 mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-primary text-xs font-bold">
                 {i + 1}
               </span>
               {step}
@@ -127,8 +148,8 @@ export function DiagnoseResult({ result, onReset }: Props) {
 
       {/* ── Tool links ── */}
       {result.toolLinks.length > 0 && (
-        <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm p-5 flex flex-col gap-3">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+        <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-3">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
             Passende Tools
           </h3>
           <div className="flex flex-col gap-2">
@@ -136,10 +157,10 @@ export function DiagnoseResult({ result, onReset }: Props) {
               <Link
                 key={tool.slug}
                 href={`/tools/${tool.slug}` as Route}
-                className="flex items-center justify-between rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-emerald-50 hover:border-emerald-200 active:scale-[0.98] transition-all px-4 py-3 text-sm font-medium text-neutral-700 group"
+                className="flex items-center justify-between rounded-xl border border-border bg-background hover:bg-primary/10 hover:border-primary/40 active:scale-[0.98] transition-all px-4 py-3 text-sm font-medium text-foreground group"
               >
                 <span>{tool.label}</span>
-                <span className="text-neutral-300 group-hover:text-emerald-500 transition text-base">
+                <span className="text-muted-fg group-hover:text-primary transition text-base">
                   →
                 </span>
               </Link>
@@ -148,30 +169,55 @@ export function DiagnoseResult({ result, onReset }: Props) {
         </div>
       )}
 
+      {relatedArticles.length > 0 && (
+        <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-3">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
+            Passendes Wissen
+          </h3>
+          <div className="flex flex-col gap-2">
+            {relatedArticles.map((match) => (
+              <Link
+                key={match.article.slug}
+                href={`/studies/${match.article.slug}` as Route}
+                className="rounded-xl border border-border bg-background px-4 py-3 transition hover:bg-primary/10 hover:border-primary/40"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-sm font-semibold text-foreground">{match.article.title}</p>
+                  <span className="rounded-full border border-border bg-card px-2 py-0.5 text-[10px] font-semibold text-muted-fg">
+                    {match.evidenceLevel} · {match.confidenceScore}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs leading-relaxed text-muted-fg">{match.reason}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* ── Actions ── */}
       <div className="flex flex-col gap-3">
-        {activeGrow && !saved && (
+        {resolvedGrowId && !saved && (
           <button
             onClick={handleAddToGrow}
-            className="w-full rounded-xl bg-emerald-500 hover:bg-emerald-600 active:scale-95 transition text-white font-semibold py-3 px-4 text-sm"
+            className="w-full rounded-xl bg-primary hover:bg-primary-dark active:scale-95 transition text-white font-semibold py-3 px-4 text-sm"
           >
             📋 Im Grow-Log speichern
           </button>
         )}
         {saved && (
-          <div className="w-full rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 font-semibold py-3 px-4 text-sm text-center">
+          <div className="w-full rounded-xl bg-primary/15 border border-primary/35 text-primary font-semibold py-3 px-4 text-sm text-center">
             ✅ Im Grow-Log gespeichert
           </div>
         )}
-        {!activeGrow && (
-          <p className="text-xs text-neutral-400 text-center">
+        {!resolvedGrowId && (
+          <p className="text-xs text-muted-fg text-center">
             Kein aktiver Grow – Ergebnis kann nicht gespeichert werden.
           </p>
         )}
 
         <button
           onClick={onReset}
-          className="w-full rounded-xl border border-neutral-200 hover:bg-neutral-50 active:scale-95 transition text-neutral-600 font-medium py-3 px-4 text-sm"
+          className="w-full rounded-xl border border-border hover:bg-background active:scale-95 transition text-muted-fg font-medium py-3 px-4 text-sm"
         >
           🔄 Neue Diagnose starten
         </button>

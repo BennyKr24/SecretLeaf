@@ -37,6 +37,7 @@ import {
   getGrows as dbGetGrows,
   type GrowRow,
 } from "@/lib/grow/db";
+import { Analytics } from "@/lib/analytics";
 import { storage, STORAGE_KEYS } from "@/lib/store";
 
 // ── Supabase row → Grow mapper ────────────────────────────────────────────────
@@ -51,7 +52,7 @@ function rowToGrow(row: GrowRow): Grow {
     ...(row.licht_leistung !== null && { lichtLeistung: row.licht_leistung }),
     erfahrung: row.erfahrung as Erfahrung,
     pflanzenAnzahl: row.pflanzen_anzahl,
-    plants: [],                 // plants fetched in a later step
+    plants: row.plants,
     ...(row.flaeche !== null && { flaeche: row.flaeche }),
     startDate: row.start_date,
     currentPhaseId: row.current_phase_id as GrowPhaseId,
@@ -228,7 +229,7 @@ export function useGrowState(): UseGrowStateReturn {
       const supabase = getSupabaseBrowserClient();
       void (async () => {
         try {
-          await dbUpdateGrow(supabase, id, updates);
+          await dbUpdateGrow(supabase, user.id, id, updates);
           // Success: sync localStorage cache from current state
           setGrows((current) => {
             storage.set(STORAGE_KEYS.GROWS, current.map((g) =>
@@ -317,7 +318,7 @@ export function useGrowState(): UseGrowStateReturn {
       const supabase = getSupabaseBrowserClient();
       void (async () => {
         try {
-          await dbUpdateGrow(supabase, growId, { plan: updatedPlan });
+          await dbUpdateGrow(supabase, user.id, growId, { plan: updatedPlan });
           // Success: sync localStorage cache from current state
           setGrows((current) => {
             storage.set(STORAGE_KEYS.GROWS, current);
@@ -335,6 +336,10 @@ export function useGrowState(): UseGrowStateReturn {
   const advancePhase = useCallback(
     (growId: string, phaseId: GrowPhaseId): void => {
       if (!user) {
+        const localGrow = grows.find((g) => g.id === growId) ?? null;
+        if (localGrow && localGrow.currentPhaseId !== phaseId) {
+          Analytics.phaseAdvanced(localGrow.currentPhaseId, phaseId);
+        }
         storeAdvancePhase(growId, phaseId);
         refresh();
         return;
@@ -342,6 +347,9 @@ export function useGrowState(): UseGrowStateReturn {
 
       const prev = grows.find((g) => g.id === growId) ?? null;
       if (!prev) return;
+      if (prev.currentPhaseId !== phaseId) {
+        Analytics.phaseAdvanced(prev.currentPhaseId, phaseId);
+      }
 
       const now = new Date().toISOString();
       const optimistic = withLiveDay({ ...prev, currentPhaseId: phaseId, updatedAt: now });
@@ -352,7 +360,7 @@ export function useGrowState(): UseGrowStateReturn {
       const supabase = getSupabaseBrowserClient();
       void (async () => {
         try {
-          await dbUpdateGrow(supabase, growId, { currentPhaseId: phaseId });
+          await dbUpdateGrow(supabase, user.id, growId, { currentPhaseId: phaseId });
           // Success: sync localStorage cache from current state
           setGrows((current) => {
             storage.set(STORAGE_KEYS.GROWS, current);

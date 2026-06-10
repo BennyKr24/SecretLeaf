@@ -472,7 +472,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
             ref={searchRef}
             value={localSearch}
             onChange={e => setLocalSearch(e.target.value)}
-            placeholder="Wiki durchsuchen… (/ oder Strg+F)"
+            placeholder="Studien durchsuchen… (/ oder Strg+F)"
             className="w-full rounded-xl border border-border bg-card py-2.5 pl-9 pr-10 text-sm
               text-foreground placeholder:text-slate-400 outline-none
               focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all shadow-sm"

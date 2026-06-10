@@ -28,7 +28,7 @@ function KindIcon({ kind }: { kind: SearchResultKind }) {
 }
 
 const KIND_LABEL: Record<SearchResultKind, string> = {
-  wiki: 'Wiki',
+  wiki: 'Studien',
   fertilizer: 'Dünger',
   glossary: 'Glossar',
   source: 'Quelle',
@@ -259,7 +259,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Wiki, Dünger, Begriffe… (↑↓ Navigation · Enter öffnen · Esc schließen)"
+            placeholder="Studien, Dünger, Begriffe… (↑↓ Navigation · Enter öffnen · Esc schließen)"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}

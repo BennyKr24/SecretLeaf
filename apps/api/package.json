@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js",
+    "dev": "node -e \"if(process.env.LEGACY_API_ENABLED!=='1'){console.error('Legacy API ist deaktiviert. Setze LEGACY_API_ENABLED=1 fuer lokale Legacy-Arbeit.');process.exit(1)}\" && tsx watch src/server.ts",
+    "build": "node -e \"if(process.env.LEGACY_API_ENABLED!=='1'){console.error('Legacy API Build ist deaktiviert. Setze LEGACY_API_ENABLED=1 fuer Legacy-Builds.');process.exit(1)}\" && tsc -p tsconfig.json",
+    "start": "node -e \"if(process.env.LEGACY_API_ENABLED!=='1'){console.error('Legacy API Start ist deaktiviert. Setze LEGACY_API_ENABLED=1 fuer Legacy-Start.');process.exit(1)}\" && node dist/server.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "echo 'Add ESLint if required'",
     "prisma:generate": "prisma generate",

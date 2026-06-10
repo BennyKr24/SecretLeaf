@@ -9,6 +9,7 @@ import WikiArticleToc from "@/components/WikiArticleToc";
 import HistoryTracker from "@/components/HistoryTracker";
 import BookmarkButton from "@/components/BookmarkButton";
 import CommunitySignals from '@/components/CommunitySignals';
+import { WikiArticleOpenTracker } from './client';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -17,9 +18,9 @@ type PageProps = {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const article = getArticleBySlug(slug);
-  if (!article) return { title: "Nicht gefunden – SecretLeaf Wiki" };
+  if (!article) return { title: "Nicht gefunden – SecretLeaf Studien" };
   return {
-    title: `${article.title} – SecretLeaf Wiki`,
+    title: `${article.title} – SecretLeaf Studien`,
     description: article.summary,
   };
 }
@@ -57,6 +58,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
         category={article.category}
         readMinutes={article.readMinutes}
       />
+      <WikiArticleOpenTracker slug={article.slug} />
       {/* ── History Tracker (client-side, silent) ────────────── */}
       <HistoryTracker slug={article.slug} title={article.title} category={article.category} />
 
@@ -252,9 +254,9 @@ export default async function WikiArticlePage({ params }: PageProps) {
 
               {/* Wiki-Bot Hinweis */}
               <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
-                <p className="text-xs font-semibold text-emerald-800 mb-1">🤖 Wiki-Bot</p>
+                <p className="text-xs font-semibold text-emerald-800 mb-1">🤖 Studien-Assistent</p>
                 <p className="text-xs text-emerald-700">
-                  Fragen zu diesem Thema? Der Wiki-Bot fasst Inhalte zusammen und verlinkt
+                  Fragen zu diesem Thema? Der Studien-Assistent fasst Inhalte zusammen und verlinkt
                   relevante Artikel. Unten rechts öffnen.
                 </p>
               </div>

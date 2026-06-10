@@ -1,0 +1,187 @@
+{
+  "_note": "Quelle der Wahrheit für alle öffentlichen SecretLeaf-Updates. Kategorien können unter 'categoryMeta' ohne Codeänderungen ergänzt werden. Neue Updates oben einfügen. 'featured: true' maximal einmal gleichzeitig setzen.",
+  "categoryMeta": {
+    "feature":     { "label": "Feature",        "color": "emerald" },
+    "grow-os":     { "label": "Grow OS",         "color": "emerald" },
+    "diagnose":    { "label": "Diagnose",        "color": "violet"  },
+    "datenbank":   { "label": "Datenbank",       "color": "blue"    },
+    "performance": { "label": "Performance",     "color": "cyan"    },
+    "fixes":       { "label": "Fixes",           "color": "amber"   },
+    "mobile":      { "label": "Mobile",          "color": "orange"  },
+    "major":       { "label": "Major Release",   "color": "rose"    }
+  },
+  "updates": [
+    {
+      "slug": "diagnose-grow-kontext",
+      "version": null,
+      "date": "2026-06-01",
+      "title": "Diagnose jetzt mit Grow- und Pflanzen-Kontext",
+      "summary": "Die Diagnose kennt jetzt deinen aktiven Grow und deine Pflanze. Wenn du die Diagnose direkt aus dem Grow oder einer Pflanzen-Karte öffnest, wird der Kontext automatisch übergeben — und das Ergebnis lässt sich ohne manuelle Auswahl im richtigen Log-Eintrag speichern.",
+      "category": "diagnose",
+      "featured": true,
+      "cta": {
+        "label": "Diagnose jetzt starten",
+        "href": "/diagnose",
+        "variant": "primary"
+      },
+      "sections": {
+        "verbessert": [
+          {
+            "headline": "Diagnose mit Grow-ID und Pflanzen-ID",
+            "body": "Bisher öffnete die Diagnose immer ohne Bezug zum aktiven Grow. Jetzt übergibt SecretLeaf beim Aufruf automatisch die Grow-ID und — wenn du sie aus der Pflanzen-Karte öffnest — auch die Pflanzen-ID. Das Ergebnis wird dem richtigen Eintrag zugeordnet.",
+            "items": [
+              "Kein manuelles Auswählen des Grows nach der Diagnose",
+              "Pflanzen-spezifische Log-Einträge werden korrekt zugeordnet",
+              "Diagnose-Button im Schnellzugriff übergibt Grow-Kontext"
+            ]
+          }
+        ],
+        "fixes": [
+          "Diagnose-Button in der Pflanzen-Karte übergab keinen Kontext — behoben",
+          "Schnellzugriff im Grow öffnete Diagnose ohne Grow-ID — behoben"
+        ],
+        "nextSteps": [
+          "Diagnose-Verlauf pro Pflanze in der Grow-Übersicht",
+          "Automatische Empfehlung bei wiederkehrenden Symptomen",
+          "Zurück-zum-Grow Navigation nach dem Speichern eines Diagnose-Ergebnisses"
+        ]
+      }
+    },
+    {
+      "slug": "grow-os-log-system",
+      "version": "v1.4.0",
+      "date": "2026-04-20",
+      "title": "Grow OS – Log System & Dashboard-Fokus",
+      "summary": "Das Grow-Log-System ist vollständig. Tägliche Einträge für Wasser, Dünger, Training und Notizen lassen sich mit einem Klick erfassen. Das Dashboard zeigt deinen Grow jetzt an erster Stelle — offene Aufgaben und der Tages-Status sind sofort sichtbar.",
+      "category": "grow-os",
+      "featured": false,
+      "cta": {
+        "label": "Grow OS öffnen",
+        "href": "/start",
+        "variant": "primary"
+      },
+      "sections": {
+        "neu": [
+          {
+            "headline": "Quick-Add-Bar für tägliche Aktionen",
+            "body": "Die neue Quick-Add-Bar auf der Log-Seite ermöglicht das Erfassen von Wasser, Dünger, Training und Notizen in Sekunden. Kein langer Formularprozess mehr — ein Klick, fertig.",
+            "items": [
+              "4 Log-Typen: Wasser, Dünger, Training, Notiz",
+              "Automatische Zeitstempel und Pflanzen-Zuordnung",
+              "Sofortiges visuelles Feedback nach dem Speichern"
+            ]
+          },
+          {
+            "headline": "Streak-Badge und Tages-Abschluss-Banner",
+            "body": "Ein Streak-Badge zeigt, wie viele Tage in Folge du deinen Grow dokumentiert hast. Wenn der erste Eintrag des Tages gespeichert wird, erscheint ein Abschluss-Banner mit Bestätigung und Streak-Pulse-Animation.",
+            "items": [
+              "Täglicher Streak als Retentions-Motor",
+              "Abschluss-Banner mit visueller Bestätigung",
+              "Streak-Pulse-Animation bei neuen Einträgen"
+            ]
+          }
+        ],
+        "verbessert": [
+          {
+            "headline": "Dashboard: Grow an erster Stelle",
+            "body": "Das Dashboard zeigt den aktiven Grow jetzt als ersten sichtbaren Block. Tages-Status, offene Aufgaben und Pflanzen-Warnungen sind sofort erkennbar — ohne zu scrollen.",
+            "items": [
+              "Tages-Status-Badge: heute gepflegt ✓ / noch kein Eintrag",
+              "Überfällige Tasks werden sofort als Alert angezeigt",
+              "Direkter CTA: Heute loggen & Tasks erledigen"
+            ]
+          }
+        ],
+        "nextSteps": [
+          "Wöchentlicher Grow-Bericht (in-App + E-Mail)",
+          "Foto-Dokumentation pro Pflanze",
+          "Push-Erinnerungen für tägliches Logging"
+        ]
+      }
+    },
+    {
+      "slug": "schaedlingslexikon-v2",
+      "version": null,
+      "date": "2026-04-19",
+      "title": "Schädlingslexikon v2 – Steckbriefe, Nützlingsmatrix & 8 neue Einträge",
+      "summary": "Das Schädlingslexikon wurde grundlegend überarbeitet. 8 neue Schädlingsarten, vollständige wissenschaftliche Steckbriefe mit Lebenszyklen und Schadensschwellen, sowie eine aktualisierte Nützlingsmatrix mit 6 neuen Einträgen.",
+      "category": "datenbank",
+      "featured": false,
+      "cta": {
+        "label": "Schädlingslexikon öffnen",
+        "href": "/studies/pests",
+        "variant": "secondary"
+      },
+      "sections": {
+        "datenbank": {
+          "headline": "Schädlings- und Nützlingsdaten",
+          "body": "Alle bestehenden Einträge wurden mit vollständigen wissenschaftlichen Namen, Körpergrößen, Lebenszyklen, optimalen Befallsbedingungen und quantitativen Schadensschwellen versehen. Acht bisher fehlende Schädlingsarten wurden neu aufgenommen.",
+          "counts": {
+            "Neue Schädlingseinträge": 8,
+            "Neue Nützlingseinträge": 6,
+            "Neue Symptom-Optionen": 5,
+            "Neue externe Quellen": 5,
+            "Gesamte Schädlingseinträge": 18
+          }
+        },
+        "neu": [
+          {
+            "headline": "Professionelle Steckbriefe",
+            "body": "Jeder Schädlings-Eintrag zeigt jetzt einen strukturierten Steckbrief mit Körpergröße in mm, Lebenszyklus in Tagen, optimalen Befallsbedingungen und der quantitativen Aktionsschwelle — damit du weißt, ab wann Handlungsbedarf besteht.",
+            "items": [
+              "Körpergröße (mm) und Lebenszyklus (Tage)",
+              "Optimale Befallsbedingungen (Temp, Luftfeuchtigkeit)",
+              "Quantitative Aktionsschwelle pro Schädling"
+            ]
+          }
+        ],
+        "nextSteps": [
+          "Bebilderter Schädlingsvergleich in der Diagnose",
+          "Automatische Schädlings-Empfehlung basierend auf Grow-Umgebung und -Phase"
+        ]
+      }
+    },
+    {
+      "slug": "volltext-suche-duenger-katalog",
+      "version": "v1.3.0",
+      "date": "2026-03-26",
+      "title": "Volltextsuche & Dünger-Katalog",
+      "summary": "SecretLeaf bekommt eine professionelle Volltextsuche mit Cmd+K-Shortcut, Fuzzy-Matching und Umlaut-Normalisierung. Gleichzeitig startet der kuratierte Dünger-Katalog mit 50+ Profilen, vollständigen NPK-Werten und einem Preisvergleich über 8 deutsche Growshops.",
+      "category": "feature",
+      "featured": false,
+      "cta": {
+        "label": "Suche ausprobieren",
+        "href": "/search",
+        "variant": "secondary"
+      },
+      "sections": {
+        "neu": [
+          {
+            "headline": "Volltextsuche mit Cmd+K",
+            "body": "Ein neues Suchmodal öffnet sich per Cmd+K (Mac) oder Ctrl+K (Windows). Es durchsucht Wiki-Artikel, Dünger, Glossareinträge und Quellen gleichzeitig. Fuzzy-Matching und Umlaut-Normalisierung sorgen dafür, dass auch fehlerhafte Eingaben zum richtigen Ergebnis führen.",
+            "items": [
+              "Tastaturnavigation (↑ ↓ Enter Esc)",
+              "Fuzzy-Matching mit Umlaut-Normalisierung",
+              "Gewichtetes Scoring: Titel ×12, Tags ×7",
+              "Vollsuche-Seite /search mit Kategorie-Filtern und Tag-Facetten"
+            ]
+          },
+          {
+            "headline": "Dünger-Katalog mit 50+ Profilen",
+            "body": "Der neue Dünger-Katalog listet über 50 kuratierte Produkte mit vollständigen NPK-Werten, EC-Bereichen, PPFD-Daten, pH-Bereichen und Dosierungsempfehlungen. Preise werden über 8 deutsche Growshops verglichen.",
+            "items": [
+              "50+ Dünger-Profile mit Vollspecifikation",
+              "Filter nach Wachstumsphase, Format und Basis",
+              "242 Produkte × 5 Shops = 1.208 Preisangebote",
+              "Realistische Preisrange: €5,83 – €23,07 (DE/AT/CH/EU)"
+            ]
+          }
+        ],
+        "nextSteps": [
+          "Persönliche Suchanfragen-Vorschläge basierend auf aktivem Grow",
+          "Dünger-Empfehlung durch die Diagnose"
+        ]
+      }
+    }
+  ]
+}

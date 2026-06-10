@@ -12,8 +12,8 @@ const getArg = (name, fallback) => {
 
 const hasFlag = (name) => args.includes(`--${name}`);
 
-const API_BASE = getArg("api", process.env.API_BASE || "http://localhost:4000");
 const WEB_BASE = getArg("web", process.env.WEB_BASE || "http://localhost:3000");
+const API_BASE = getArg("api", process.env.API_BASE || `${WEB_BASE}/api`);
 const OUTPUT = resolve(getArg("output", process.env.STATUS_OUTPUT || "status-data.json"));
 const INTERVAL_MS = Math.max(5000, Number(getArg("interval", process.env.STATUS_INTERVAL_MS || "30000")) || 30000);
 const WATCH = hasFlag("watch");
@@ -171,9 +171,9 @@ const runProbe = async () => {
   if (!SILENT) {
     const lines = [
       `[status-probe] ${generatedAt}`,
-      `[status-probe] API /health: ${healthProbe.ok ? "OK" : "FAIL"} (${healthProbe.status ?? "ERR"}, ${healthProbe.latencyMs}ms)`,
-      `[status-probe] API /public/overview: ${overviewProbe.ok ? "OK" : "FAIL"} (${overviewProbe.status ?? "ERR"}, ${overviewProbe.latencyMs}ms)`,
-      `[status-probe] API /public/status-report: ${statusProbe.ok ? "OK" : "FAIL"} (${statusProbe.status ?? "ERR"}, ${statusProbe.latencyMs}ms)`,
+      `[status-probe] WEB /api/health: ${healthProbe.ok ? "OK" : "FAIL"} (${healthProbe.status ?? "ERR"}, ${healthProbe.latencyMs}ms)`,
+      `[status-probe] WEB /api/public/overview: ${overviewProbe.ok ? "OK" : "FAIL"} (${overviewProbe.status ?? "ERR"}, ${overviewProbe.latencyMs}ms)`,
+      `[status-probe] WEB /api/public/status-report: ${statusProbe.ok ? "OK" : "FAIL"} (${statusProbe.status ?? "ERR"}, ${statusProbe.latencyMs}ms)`,
       `[status-probe] WEB /: ${webRootProbe.ok ? "OK" : "FAIL"} (${webRootProbe.status ?? "ERR"}, ${webRootProbe.latencyMs}ms)`,
       `[status-probe] WEB /wiki: ${webWikiProbe.ok ? "OK" : "FAIL"} (${webWikiProbe.status ?? "ERR"}, ${webWikiProbe.latencyMs}ms)`,
       `[status-probe] Wrote ${OUTPUT}`

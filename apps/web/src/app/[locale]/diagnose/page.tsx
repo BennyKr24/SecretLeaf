@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import type { Route } from "next";
 import { useTranslations } from "next-intl";
@@ -11,6 +12,9 @@ import { DiagnoseFlow } from "@/components/diagnose/DiagnoseFlow";
 export default function DiagnosePage() {
   const t = useTranslations("diagnosePage");
   const [selected, setSelected] = useState<DiagnoseCategory | null>(null);
+  const searchParams = useSearchParams();
+  const growId = searchParams.get('growId') ?? undefined;
+  const plantId = searchParams.get('plantId') ?? undefined;
 
   if (selected) {
     return (
@@ -19,6 +23,8 @@ export default function DiagnosePage() {
           <DiagnoseFlow
             category={selected}
             onBack={() => setSelected(null)}
+            growId={growId}
+            plantId={plantId}
           />
         </div>
       </div>

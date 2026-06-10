@@ -9,6 +9,7 @@
 import { wikiArticles } from "@/data/terpira/wiki";
 import type { TerpiraArticle } from "@/lib/terpira/types";
 import type { Grow, GrowPhaseId, GrowMedium, GrowTask, LogEntryType } from "@/lib/grow/types";
+import { getGrowRecommendationKnowledge, getToolHrefForStudy, type KnowledgeEvidenceLevel } from "@/lib/knowledge/graph";
 
 // ── Public: Insight priority ──────────────────────────────────────────────────
 
@@ -25,6 +26,10 @@ export type GrowInsight = {
   article: TerpiraArticle;
   priority: InsightPriority;
   action: InsightAction;
+  reason: string;
+  evidenceLevel: KnowledgeEvidenceLevel;
+  confidenceScore: number;
+  expectedBenefit?: string | undefined;
   /** If set, completing the action fulfils this task. */
   relatedTask?: GrowTask | undefined;
 };
@@ -135,8 +140,13 @@ const LOG_TYPE_SLUG_BOOSTS: Partial<Record<LogEntryType, string[]>> = {
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function resolveAction(slug: string): InsightAction {
+  const toolHref = getToolHrefForStudy(slug);
+  if (toolHref) {
+    return { type: "link", href: toolHref };
+  }
+
   const mapped = SLUG_ACTION[slug];
-  if (!mapped) return { type: "link", href: `/wiki/${slug}` };
+  if (!mapped) return { type: "link", href: `/studies/${slug}` };
   if (mapped.type === "log") {
     return { type: "log", logType: mapped.logType };
   }
@@ -174,19 +184,49 @@ function findRelatedTask(slug: string, tasks: GrowTask[]): GrowTask | undefined 
  * Each insight includes: article, priority, action, optional relatedTask.
  */
 export function getRecommendationsForGrow(grow: Grow, limit = 5): GrowInsight[] {
-  const phaseBoosts  = new Set(PHASE_SLUG_BOOSTS[grow.currentPhaseId] ?? []);
+  const allTasks = grow.plan.phases.flatMap((p) => p.tasks);
+  const pendingTasks = allTasks.filter((task) => !task.completed);
+  const recentLogType = pendingTasks[0]?.category === "bewaesserung"
+    ? "wasser"
+    : pendingTasks[0]?.category === "duengung"
+    ? "duenger"
+    : pendingTasks[0]?.category === "training"
+    ? "training"
+    : undefined;
+
+  const matches = getGrowRecommendationKnowledge({
+    phaseId: grow.currentPhaseId,
+    medium: grow.medium,
+    pendingTasks,
+    recentLogType,
+    limit,
+  });
+
+  if (matches.length > 0) {
+    return matches.map((match) => ({
+      article: match.article,
+      priority: match.priority,
+      action: resolveAction(match.article.slug),
+      reason: match.reason,
+      evidenceLevel: match.evidenceLevel,
+      confidenceScore: match.confidenceScore,
+      expectedBenefit: match.expectedBenefit,
+      relatedTask: findRelatedTask(match.article.slug, allTasks),
+    }));
+  }
+
+  const phaseBoosts = new Set(PHASE_SLUG_BOOSTS[grow.currentPhaseId] ?? []);
   const mediumBoosts = new Set(MEDIUM_SLUG_BOOSTS[grow.medium] ?? []);
-  const allTasks     = grow.plan.phases.flatMap((p) => p.tasks);
 
   const scored = wikiArticles
     .filter((a) => Boolean(a.growValue))
     .map((a) => {
       const priority = resolvePriority(a.slug);
       let score = a.qualityScore ?? 0;
-      if (phaseBoosts.has(a.slug))  score += 10;
+      if (phaseBoosts.has(a.slug)) score += 10;
       if (mediumBoosts.has(a.slug)) score += 5;
-      if (priority === "high")      score += 8;
-      if (priority === "medium")    score += 3;
+      if (priority === "high") score += 8;
+      if (priority === "medium") score += 3;
       return { article: a, score, priority };
     })
     .sort((a, b) => b.score - a.score)
@@ -196,6 +236,10 @@ export function getRecommendationsForGrow(grow: Grow, limit = 5): GrowInsight[] 
     article,
     priority,
     action: resolveAction(article.slug),
+    reason: article.growValue ?? article.summary,
+    evidenceLevel: (article.qualityScore ?? 0) >= 5 ? "high" : (article.qualityScore ?? 0) >= 4 ? "medium" : "low",
+    confidenceScore: Math.max((article.qualityScore ?? 3) * 18, 54),
+    expectedBenefit: article.growValue,
     relatedTask: findRelatedTask(article.slug, allTasks),
   }));
 }
@@ -205,6 +249,26 @@ export function getRecommendationsForGrow(grow: Grow, limit = 5): GrowInsight[] 
  * Used for log-triggered inline cards (Part 5).
  */
 export function getInsightsForLogType(type: LogEntryType, limit = 2): GrowInsight[] {
+  const relationBacked = getGrowRecommendationKnowledge({
+    phaseId: "veg",
+    medium: "erde",
+    pendingTasks: [],
+    recentLogType: type,
+    limit,
+  });
+
+  if (relationBacked.length > 0) {
+    return relationBacked.map((match) => ({
+      article: match.article,
+      priority: match.priority,
+      action: resolveAction(match.article.slug),
+      reason: match.reason,
+      evidenceLevel: match.evidenceLevel,
+      confidenceScore: match.confidenceScore,
+      expectedBenefit: match.expectedBenefit,
+    }));
+  }
+
   const boostedSlugs = LOG_TYPE_SLUG_BOOSTS[type];
   if (!boostedSlugs || boostedSlugs.length === 0) return [];
 
@@ -216,6 +280,10 @@ export function getInsightsForLogType(type: LogEntryType, limit = 2): GrowInsigh
         article,
         priority: resolvePriority(slug),
         action: resolveAction(slug),
+        reason: article.growValue ?? article.summary,
+        evidenceLevel: (article.qualityScore ?? 0) >= 5 ? "high" : (article.qualityScore ?? 0) >= 4 ? "medium" : "low",
+        confidenceScore: Math.max((article.qualityScore ?? 3) * 18, 54),
+        expectedBenefit: article.growValue,
       });
     }
     if (results.length >= limit) break;

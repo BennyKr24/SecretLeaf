@@ -90,6 +90,7 @@ function MenuItem({
 export function UserMenu() {
   const { user, isLoggedIn, isLoading, logout } = useAuth();
   const t = useTranslations("userMenu");
+  const nav = useTranslations("nav");
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -184,6 +185,7 @@ export function UserMenu() {
           {/* Navigation items — no items that duplicate the top nav bar */}
           <MenuItem href="/profile" icon="👤" label={t("profile")} onClick={() => setOpen(false)} />
           <MenuItem href="/dashboard/user" icon="📊" label={t("dashboard")} onClick={() => setOpen(false)} />
+          <MenuItem href="/status" icon="🟢" label={nav("status")} onClick={() => setOpen(false)} />
           <MenuItem href="/start" icon="🌱" label={t("myGrows")} onClick={() => setOpen(false)} />
 
           {/* Divider */}

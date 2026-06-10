@@ -1,115 +1,464 @@
-# SecretLeaf Wiki Architecture
+# WIKI_ARCHITECTURE.md
 
-## 1. Zweck
+# SecretLeaf Knowledge Architecture
 
-Dieses Dokument definiert die Informationsarchitektur der Wissensflaeche von SecretLeaf.
-Ziel ist eine langfristig skalierbare, suchbare und fachlich belastbare Cannabis-Wissensplattform.
+Version: 2.0
 
----
+Status: Active
 
-## 2. Zielbild
-
-Die Wiki-Flaeche soll:
-- klare Taxonomie statt lose Artikelansammlung bieten
-- Studienwissen in umsetzbare Grow-Entscheidungen uebersetzen
-- hohe Wiederauffindbarkeit ueber Suche und Verlinkung sichern
+Owner: Product & Knowledge
 
 ---
 
-## 3. Inhaltsdomaenen
+# 1. Mission
 
-Primare Domaenen:
-1. Pflanzenbiologie und Phasen
-2. Naehrstoffe und Mangelbilder
-3. Schaedlinge und Krankheiten
-4. Klima/Licht/VPD
-5. Methoden, Prozesse und Best Practices
-6. Studien und Evidenz
+Die Wissensplattform von SecretLeaf soll die vertrauenswürdigste Wissensquelle für datenbasierten Cannabis-Anbau werden.
 
-Jede Domaene braucht:
-- Kernseite
-- Unterkategorien
-- Querverweise
-- relevante Studienlinks
+Ziel:
+
+Nicht möglichst viele Artikel.
+
+Sondern:
+
+Die schnellste Verbindung zwischen Wissen und Handlung.
 
 ---
 
-## 4. Taxonomie-Regeln
+# 2. Core Principle
 
-Pflichtfelder pro Wissenseintrag:
-- title
-- slug
-- category
-- tags
-- summary
-- source_quality (wo relevant)
-- updated_at
+Wissen existiert nicht isoliert.
 
-Taxonomie-Prinzipien:
-- Ein Hauptthema pro Artikel
-- Tags als Zuschnitt, nicht als Ersatz fuer Kategorien
-- Synonyme in Suche mappen, nicht Kategorien aufblasen
+Jeder Wissenseintrag muss mindestens eines der folgenden Ziele unterstützen:
+
+* Verstehen
+* Entscheiden
+* Handeln
+* Optimieren
 
 ---
 
-## 5. Such- und Navigationsarchitektur
+# 3. Knowledge Model
 
-Mindestanforderungen:
-- Autocomplete fuer haeufige Fachbegriffe
-- Filter nach Kategorie, Relevanz, Qualitaet
-- Sichtbare Verwandte-Themen-Links
-- Lesefortschritt und Rueckkehrpunkte
+Alle Inhalte gehören zu einem definierten Datentyp.
 
-KPI-Ziele:
-- Niedrigere Search-Abbruchrate
-- Hoehere Klicktiefe zu relevanten Detailseiten
-- Schnellere Zeit bis verwertbare Antwort
+Freie Artikel ohne Struktur sind nicht erlaubt.
 
 ---
 
-## 6. Verknuepfung mit Studies und Grow
+# 4. Content Types
 
-Produktregel:
-- Wissensseiten duerfen nicht isoliert bleiben.
-- Wo moeglich: Bruecken zu Tools, Diagnose und Grow-Log.
+## Plant
+
+Pflanzenbezogene Einträge.
 
 Beispiele:
-- Mangelartikel -> Naehrstoffrechner
-- Klimaartikel -> VPD-Tool
-- Studienseite -> konkrete Grow-Interpretation
+
+* Cannabis
+* Autoflower
+* Photoperiodisch
 
 ---
 
-## 7. Qualitaetsgovernance
+## Growth Stage
 
-Review-Pflicht:
-- Fachliche Plausibilitaet
-- Quellenqualitaet
-- Sprachqualitaet de/en
-- Konsistente Terminologie
+Phasen.
 
-Betriebsregel:
-- Veraltete Eintraege markieren und priorisiert ueberarbeiten.
+Beispiele:
 
----
-
-## 8. Risiken und Gegenmassnahmen
-
-Risiken:
-- Kategorie-Drift bei schnellem Content-Wachstum
-- Inkonsistente Begriffe zwischen Wiki und Produktflows
-- Suchrelevanz sinkt ohne laufendes Tuning
-
-Gegenmassnahmen:
-- Monatliche Taxonomie-Reviews
-- Terminologie-Check gegen LOCALIZATION.md
-- Suchdatenbasiertes Re-Ranking
+* Keimung
+* Sämling
+* Wachstumsphase
+* Blütephase
+* Ernte
+* Trocknung
+* Fermentation
 
 ---
 
-## 9. Dokument-Metadaten
+## Nutrient
 
-Owner: Product Engineering
-Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+Nährstoffe.
+
+Beispiele:
+
+* Stickstoff
+* Phosphor
+* Kalium
+* Calcium
+* Magnesium
+
+---
+
+## Deficiency
+
+Mangelbilder.
+
+Beispiele:
+
+* Stickstoffmangel
+* Calciummangel
+
+---
+
+## Toxicity
+
+Überversorgung.
+
+---
+
+## Disease
+
+Krankheiten.
+
+---
+
+## Pest
+
+Schädlinge.
+
+---
+
+## Environment
+
+Umweltparameter.
+
+Beispiele:
+
+* Temperatur
+* Luftfeuchtigkeit
+* VPD
+* CO₂
+
+---
+
+## Technique
+
+Methoden.
+
+Beispiele:
+
+* LST
+* HST
+* SCROG
+* SOG
+
+---
+
+## Equipment
+
+Ausrüstung.
+
+---
+
+## Study
+
+Studien.
+
+---
+
+## Tool
+
+Rechner.
+
+---
+
+## Diagnosis Pattern
+
+Diagnosewissen.
+
+---
+
+# 5. Taxonomy Hierarchy
+
+Level 1
+
+Knowledge Domain
+
+↓
+
+Level 2
+
+Content Type
+
+↓
+
+Level 3
+
+Entity
+
+↓
+
+Level 4
+
+Related Knowledge
+
+---
+
+Beispiel
+
+Nährstoffe
+
+↓
+
+Mangel
+
+↓
+
+Calciummangel
+
+↓
+
+pH
+
+↓
+
+Calcium
+
+↓
+
+Braune Flecken
+
+↓
+
+Diagnose
+
+---
+
+# 6. Required Fields
+
+Jeder Wissenseintrag benötigt:
+
+* id
+* title
+* slug
+* type
+* category
+* summary
+* difficulty
+* updated_at
+
+---
+
+# 7. Scientific Layer
+
+Zusätzliche Felder:
+
+* evidence_level
+* source_count
+* confidence_score
+* reviewed_at
+
+---
+
+# 8. Knowledge Relationships
+
+Pflicht.
+
+Jeder Eintrag muss Beziehungen besitzen.
+
+---
+
+Beispiel
+
+Calciummangel
+
+verknüpft mit:
+
+* Calcium
+* pH
+* Braune Flecken
+* Diagnose
+* Studien
+* Blütephase
+
+---
+
+# 9. Grow OS Integration
+
+Wissensseiten dürfen niemals isoliert sein.
+
+---
+
+Jeder Eintrag muss prüfen:
+
+Gibt es Verbindungen zu:
+
+* Grow
+* Diagnose
+* Tool
+* Studie
+* Aufgabe
+
+---
+
+# 10. Study Architecture
+
+Jede Studie besitzt:
+
+* Titel
+* DOI
+* Autoren
+* Jahr
+* Abstract
+* Evidenzgrad
+* Zusammenfassung
+
+---
+
+Zusätzlich:
+
+Praktische Interpretation.
+
+---
+
+Nicht:
+
+Nur wissenschaftliche Daten.
+
+---
+
+Sondern:
+
+"Was bedeutet das für Grower?"
+
+---
+
+# 11. Diagnosis Integration
+
+Jedes Problem muss verknüpft werden mit:
+
+* Ursachen
+* Symptomen
+* Lösungen
+* Studien
+* Tools
+
+---
+
+# 12. Search Architecture
+
+Suche muss unterstützen:
+
+* Synonyme
+* Fachbegriffe
+* Fehlerschreibweisen
+* deutsche Begriffe
+* englische Begriffe
+
+---
+
+Beispiel:
+
+CalMag
+
+findet:
+
+* Calcium
+* Magnesium
+* Calciummangel
+
+---
+
+# 13. Recommendation Engine
+
+Jeder Eintrag erhält:
+
+Verwandte Themen
+
+Pflicht.
+
+---
+
+Mindestens:
+
+* 5 ähnliche Einträge
+
+---
+
+# 14. Knowledge Graph
+
+Langfristiges Ziel:
+
+Alle Inhalte als Wissensgraph.
+
+Nicht als Artikelsammlung.
+
+---
+
+Jeder Inhalt besitzt Beziehungen.
+
+---
+
+# 15. AI Integration
+
+AI darf Inhalte nutzen für:
+
+* Diagnose
+* Empfehlungen
+* Wissensabfragen
+* Grow-Beratung
+
+---
+
+AI darf keine Wissensinseln erzeugen.
+
+---
+
+# 16. Quality Standards
+
+Ein Eintrag gilt erst als fertig wenn:
+
+* Fachlich korrekt
+* Verknüpft
+* Suchbar
+* Verständlich
+* Lokalisiert
+
+---
+
+# 17. Forbidden Patterns
+
+Verboten:
+
+* Unstrukturierte Artikel
+* Wissensduplikate
+* Isolierte Inhalte
+* Kategorien ohne Beziehungen
+
+---
+
+# 18. Success Metrics
+
+Messen:
+
+* Sucherfolg
+* Klicktiefe
+* Verknüpfungsrate
+* Diagnose-Nutzung
+* Grow-Integration
+
+---
+
+# 19. Long-Term Vision
+
+SecretLeaf wird kein Artikelarchiv.
+
+SecretLeaf wird ein Wissensnetzwerk.
+
+Jede Information soll:
+
+* gefunden
+* verstanden
+* angewendet
+
+werden können.
+
+---
+
+# 20. Final Rule
+
+Wenn ein Inhalt nicht mit dem Grow Workflow verbunden werden kann:
+
+Warum existiert dieser Inhalt überhaupt?
+
+Wissen ohne Handlung erzeugt keinen Produktwert.

@@ -6,7 +6,7 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Grow, LogEntry, LogEntryData } from "@/lib/grow/types";
+import type { Grow, LogEntry, LogEntryData, Plant } from "@/lib/grow/types";
 
 // ── Row type returned from Supabase ──────────────────────────────────────────
 
@@ -29,6 +29,46 @@ export type GrowRow = {
   harvest: Grow["harvest"] | null;
   created_at: string;
   updated_at: string;
+  plants: Plant[];
+};
+
+export type PlantRow = {
+  id: string;
+  grow_id: string;
+  user_id: string;
+  name: string;
+  notes: string | null;
+  created_at: string;
+};
+
+function rowToPlant(row: PlantRow): Plant {
+  return {
+    id: row.id,
+    name: row.name,
+    ...(row.notes !== null && { notes: row.notes }),
+    createdAt: row.created_at,
+  };
+}
+
+async function syncPlants(
+  supabase: SupabaseClient,
+  userId: string,
+  growId: string,
+  plants: Plant[],
+): Promise<void> {
+  if (plants.length === 0) return;
+
+  const rows = plants.map((plant) => ({
+    id: plant.id,
+    grow_id: growId,
+    user_id: userId,
+    name: plant.name,
+    notes: plant.notes ?? null,
+    created_at: plant.createdAt,
+  }));
+
+  const { error } = await supabase.from("plants").upsert(rows, { onConflict: "id" });
+  if (error) throw error;
 };
 
 // ── createGrow ────────────────────────────────────────────────────────────────
@@ -66,7 +106,11 @@ export async function createGrow(
     .single<GrowRow>();
 
   if (error) throw error;
-  return data;
+  await syncPlants(supabase, userId, grow.id, grow.plants);
+  return {
+    ...data,
+    plants: grow.plants,
+  };
 }
 
 // ── getGrows ──────────────────────────────────────────────────────────────────
@@ -76,14 +120,31 @@ export async function createGrow(
  * Returns an empty array when none exist.
  */
 export async function getGrows(supabase: SupabaseClient): Promise<GrowRow[]> {
-  const { data, error } = await supabase
-    .from("grows")
-    .select("*")
-    .order("created_at", { ascending: false })
-    .returns<GrowRow[]>();
+  const [{ data: grows, error: growsError }, { data: plants, error: plantsError }] = await Promise.all([
+    supabase
+      .from("grows")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .returns<Omit<GrowRow, "plants">[]>(),
+    supabase
+      .from("plants")
+      .select("*")
+      .returns<PlantRow[]>(),
+  ]);
 
-  if (error) throw error;
-  return data ?? [];
+  if (growsError) throw growsError;
+  if (plantsError) throw plantsError;
+
+  const plantsByGrowId = new Map<string, Plant[]>();
+  for (const plant of plants ?? []) {
+    const existing = plantsByGrowId.get(plant.grow_id) ?? [];
+    plantsByGrowId.set(plant.grow_id, [...existing, rowToPlant(plant)]);
+  }
+
+  return (grows ?? []).map((grow) => ({
+    ...grow,
+    plants: plantsByGrowId.get(grow.id) ?? [],
+  }));
 }
 
 // ── updateGrow ────────────────────────────────────────────────────────────────
@@ -94,6 +155,7 @@ export async function getGrows(supabase: SupabaseClient): Promise<GrowRow[]> {
  */
 export async function updateGrow(
   supabase: SupabaseClient,
+  userId: string,
   id: string,
   updates: Partial<Omit<Grow, "id" | "createdAt">>,
 ): Promise<void> {
@@ -116,6 +178,10 @@ export async function updateGrow(
 
   const { error } = await supabase.from("grows").update(payload).eq("id", id);
   if (error) throw error;
+
+  if (updates.plants !== undefined) {
+    await syncPlants(supabase, userId, id, updates.plants);
+  }
 }
 
 // ── deleteGrow ────────────────────────────────────────────────────────────────

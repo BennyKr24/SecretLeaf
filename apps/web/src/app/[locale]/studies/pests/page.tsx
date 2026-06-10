@@ -1139,7 +1139,7 @@ export default function PestLexiconPage() {
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-6 py-10">
       <section className="mx-auto max-w-7xl">
         <Link href={"/studies" as Route} className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
-          ← Zurück zum Wiki
+          ← Zurück zu Studien
         </Link>
 
         <div className="mt-4 rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50 to-cyan-50 p-6 shadow-sm">
@@ -1474,7 +1474,7 @@ export default function PestLexiconPage() {
         {/* ── Weiterführende Wiki-Artikel ─────────────────────── */}
         <section id="wiki-artikel" className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm scroll-mt-24">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Vertiefung · Hintergrundartikel</p>
-          <h2 className="mt-1 text-xl font-bold text-slate-900">Weiterführende Wiki-Artikel</h2>
+          <h2 className="mt-1 text-xl font-bold text-slate-900">Weiterführende Fachartikel</h2>
           <p className="mt-1 max-w-2xl text-sm text-slate-600">
             Hintergrundartikel zu Prävention, Hygiene und Umweltfaktoren im professionellen Schädlingsmanagement.
           </p>

@@ -4,6 +4,7 @@ import {
   getBlockedFingerprints,
   rememberAutomationError,
 } from "@/lib/automationErrorMemory";
+import { isAutomationCronAuthorized } from "@/lib/automationCron";
 import { recordAutomationRun } from "@/lib/automationRuns";
 import { getCronSecret } from "@/lib/env";
 import { logError, logInfo, logWarn } from "@/lib/log";
@@ -119,18 +120,6 @@ type CrossrefFetchResult = {
   lookbackDays: number;
   rowsPerQuery: number;
 };
-
-function isCronAuthorized(req: Request, configuredSecret: string): boolean {
-  // Vercel Cron sends: Authorization: Bearer <CRON_SECRET>
-  const auth = req.headers.get("authorization");
-  const bearerToken = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
-  // Manual/legacy calls use x-cron-key header or query param
-  const legacyKey =
-    req.headers.get("x-cron-key") ??
-    new URL(req.url).searchParams.get("x-cron-key");
-  const candidate = bearerToken ?? legacyKey;
-  return candidate === configuredSecret;
-}
 
 function parseBoundedInt(value: string | undefined, fallback: number, min: number, max: number): number {
   const parsed = Number.parseInt(value ?? "", 10);
@@ -318,7 +307,7 @@ export async function GET(req: Request) {
     return Response.json({ error: "CRON_SECRET is not configured" }, { status: 500 });
   }
 
-  if (!isCronAuthorized(req, configuredSecret)) {
+  if (!isAutomationCronAuthorized(req, configuredSecret)) {
     logWarn("automation.studies-sync.unauthorized");
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }

@@ -49,7 +49,7 @@ function InsightCard({
 }) {
   const [showFeedback, setShowFeedback] = useState(false);
   const cfg = PRIORITY_CONFIG[insight.priority];
-  const { article, action, relatedTask } = insight;
+  const { article, action, relatedTask, reason, evidenceLevel, confidenceScore, expectedBenefit } = insight;
 
   const handleAction = useCallback(() => {
     setShowFeedback(true);
@@ -87,6 +87,25 @@ function InsightCard({
           {article.growValue}
         </p>
 
+        <p className="mt-2 text-[11px] leading-snug text-muted-fg">
+          {reason}
+        </p>
+
+        <div className="mt-2 flex flex-wrap gap-1.5 text-[10px] font-semibold">
+          <span className="rounded-full bg-background px-2 py-0.5 text-muted-fg ring-1 ring-border">
+            Evidenz: {evidenceLevel}
+          </span>
+          <span className="rounded-full bg-background px-2 py-0.5 text-muted-fg ring-1 ring-border">
+            Confidence: {confidenceScore}/100
+          </span>
+        </div>
+
+        {expectedBenefit && (
+          <p className="mt-2 text-[11px] font-medium leading-snug text-primary">
+            Nutzen: {expectedBenefit}
+          </p>
+        )}
+
         {/* Tags */}
         <div className="mt-2.5 flex flex-wrap gap-1">
           {article.tags.slice(0, 3).map((tag) => (
@@ -115,7 +134,7 @@ function InsightCard({
             {actionLabel}
           </Link>
           <Link
-            href={`/wiki/${article.slug}` as Route}
+            href={`/studies/${article.slug}` as Route}
             className="text-[11px] font-semibold text-muted-fg hover:text-foreground hover:underline"
           >
             Details →

@@ -244,13 +244,13 @@ const getPriorityCards = (overallStatus: string) => {
       title: "2) Marktbreite erweitern",
       text: "Coverage-Lücken pro Marke priorisieren und Daten-Updates in festen Intervallen planen.",
       href: "/tools/plans",
-      cta: "Coverage Audit"
+      cta: "Abdeckung prüfen"
     },
     {
       title: "3) Wissensqualität sichern",
       text: "Quellen und Fachbereiche aktuell halten, damit Priorisierungen fachlich belastbar bleiben.",
       href: "/studies/sources",
-      cta: "Quellen & Wiki"
+      cta: "Quellen & Studien"
     }
   ];
 };

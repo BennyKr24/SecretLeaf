@@ -8,13 +8,15 @@ import { DiagnoseResult } from "./DiagnoseResult";
 type Props = {
   category: DiagnoseCategory;
   onBack: () => void;
+  growId?: string | undefined;
+  plantId?: string | undefined;
 };
 
 type FlowState =
   | { kind: "question"; nodeId: string; history: string[] }
   | { kind: "result"; resultId: string };
 
-export function DiagnoseFlow({ category, onBack }: Props) {
+export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
   const [state, setState] = useState<FlowState>({
     kind: "question",
     nodeId: category.startNodeId,
@@ -65,11 +67,11 @@ export function DiagnoseFlow({ category, onBack }: Props) {
         <div className="flex flex-col gap-4">
           <button
             onClick={handleReset}
-            className="flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition"
+            className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition"
           >
             ← Zurück
           </button>
-          <p className="text-sm text-neutral-500">Unbekanntes Ergebnis: {state.resultId}</p>
+          <p className="text-sm text-muted-fg">Unbekanntes Ergebnis: {state.resultId}</p>
         </div>
       );
     }
@@ -78,11 +80,11 @@ export function DiagnoseFlow({ category, onBack }: Props) {
         {/* Back button */}
         <button
           onClick={handleReset}
-          className="flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition self-start"
+          className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition self-start"
         >
           ← Neue Diagnose
         </button>
-        <DiagnoseResult result={result} onReset={handleReset} />
+        <DiagnoseResult result={result} onReset={handleReset} growId={growId} plantId={plantId} />
       </div>
     );
   }
@@ -94,7 +96,7 @@ export function DiagnoseFlow({ category, onBack }: Props) {
       <div className="flex flex-col gap-4">
         <button
           onClick={handleBack}
-          className="flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition self-start"
+          className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition self-start"
         >
           ← Zurück
         </button>
@@ -111,7 +113,7 @@ export function DiagnoseFlow({ category, onBack }: Props) {
       <div className="flex items-center gap-3">
         <button
           onClick={handleBack}
-          className="flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition shrink-0"
+          className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition shrink-0"
         >
           ← Zurück
         </button>
@@ -120,7 +122,7 @@ export function DiagnoseFlow({ category, onBack }: Props) {
             <div
               key={i}
               className={`h-1.5 rounded-full transition-all ${
-                i < stepCount - 1 ? "w-6 bg-emerald-300" : "w-8 bg-emerald-500"
+                i < stepCount - 1 ? "w-6 bg-primary/40" : "w-8 bg-primary"
               }`}
             />
           ))}
@@ -130,16 +132,16 @@ export function DiagnoseFlow({ category, onBack }: Props) {
       {/* Category label */}
       <div className="flex items-center gap-2">
         <span className="text-xl">{category.icon}</span>
-        <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+        <span className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
           {category.label}
         </span>
       </div>
 
       {/* Question card */}
-      <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm p-5 flex flex-col gap-4">
-        <p className="text-base font-semibold text-neutral-900 leading-snug">{node.question}</p>
+      <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-4">
+        <p className="text-base font-semibold text-foreground leading-snug">{node.question}</p>
         {node.hint && (
-          <p className="text-xs text-neutral-400 italic leading-relaxed">{node.hint}</p>
+          <p className="text-xs text-muted-fg italic leading-relaxed">{node.hint}</p>
         )}
 
         <div className="flex flex-col gap-2 mt-1">
@@ -147,7 +149,7 @@ export function DiagnoseFlow({ category, onBack }: Props) {
             <button
               key={i}
               onClick={() => handleOption(option)}
-              className="text-left rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-emerald-50 hover:border-emerald-200 active:scale-[0.98] transition-all px-4 py-3 text-sm text-neutral-800 font-medium"
+              className="text-left rounded-xl border border-border bg-background hover:bg-primary/10 hover:border-primary/40 active:scale-[0.98] transition-all px-4 py-3 text-sm text-foreground font-medium"
             >
               {option.label}
             </button>
