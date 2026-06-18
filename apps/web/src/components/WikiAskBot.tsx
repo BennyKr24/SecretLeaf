@@ -8,7 +8,7 @@ import {
   type FormEvent,
   type KeyboardEvent,
 } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { wikiArticles, categoryLabels } from '@/data/terpira/wiki';
 import type { TerpiraArticle } from '@/lib/terpira/types';

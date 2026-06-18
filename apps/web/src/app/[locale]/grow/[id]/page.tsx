@@ -8,7 +8,7 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { useParams } from 'next/navigation';
 import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';

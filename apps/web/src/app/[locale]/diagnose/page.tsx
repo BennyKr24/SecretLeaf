@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { useTranslations } from "next-intl";
 import { diagnoseCategories } from "@/lib/diagnose/tree";

@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { useInterests } from '@/hooks/useInterests';
 import { useBookmarks } from '@/hooks/useBookmarks';

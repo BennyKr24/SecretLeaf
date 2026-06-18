@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { loginWithSupabase, registerWithSupabase, saveSession, getSession } from '@/lib/auth';
 import AuthInput from '@/components/auth/AuthInput';

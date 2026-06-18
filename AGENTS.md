@@ -378,6 +378,143 @@ Iteration fortsetzen.
 Bei Konflikten gilt die höher priorisierte Datei.
 
 ---
+# 11.5 Obsidian Vault Authority
+
+Der Ordner:
+
+```text
+/Obsidian
+```
+
+ist Teil des offiziellen SecretLeaf-Wissenssystems und muss von allen Agenten berücksichtigt werden.
+
+Der Obsidian Vault enthält:
+
+* Vision
+* Mission
+* Produktstrategie
+* Data-Moat-Strategie
+* Knowledge-Graph-Strategie
+* AI-Strategie
+* Datenstrategie
+* Produktentscheidungen
+* Roadmaps
+* Architekturkonzepte
+* langfristige Produktziele
+
+Insbesondere gilt der dokumentierte Stand vom 16.06.2026 als strategische Referenz.
+
+---
+
+## Strategische Wahrheit
+
+Der Code beschreibt den aktuellen Implementierungsstand.
+
+Der Obsidian Vault beschreibt die langfristige Produkt- und Unternehmensstrategie.
+
+Bei Widersprüchen zwischen:
+
+* Code
+* Dokumentation
+* Produktverhalten
+
+muss die Abweichung identifiziert und dokumentiert werden.
+
+Agenten dürfen keine stillschweigenden Architektur- oder Produktentscheidungen treffen, die der dokumentierten Strategie widersprechen.
+
+---
+
+## Pflichtprüfung vor größeren Änderungen
+
+Vor Änderungen an:
+
+* Grow System
+* Datenmodell
+* Supabase
+* Authentifizierung
+* Analytics
+* Automations
+* AI-Systemen
+* Knowledge Graph
+* Recommendation Engine
+* Prediction Engine
+* Outcome Engine
+
+müssen relevante Dokumente im Obsidian Vault geprüft werden.
+
+Insbesondere:
+
+* Vision
+* Datenstrategie
+* Data Moat Strategie
+* Produkt-Roadmap
+* Grow System
+* Knowledge Graph
+* AI Architektur
+
+sind zu berücksichtigen.
+
+---
+
+## Alignment Check
+
+Vor jeder größeren Implementierung prüfen:
+
+1. Unterstützt die Änderung Monthly Active Growers (MAG)?
+2. Unterstützt die Änderung die Erfassung von Grow-Daten?
+3. Unterstützt die Änderung den langfristigen Data Moat?
+4. Unterstützt die Änderung Situation → Decision → Outcome?
+5. Unterstützt die Änderung spätere Similarity-, Recommendation- oder Prediction-Systeme?
+
+Wenn die Antwort überwiegend "Nein" lautet, muss die Änderung kritisch hinterfragt werden.
+
+---
+
+## Vault Synchronisation
+
+Wichtige Erkenntnisse dürfen nicht ausschließlich im Code verbleiben.
+
+Wenn neue Erkenntnisse entstehen bezüglich:
+
+* Architektur
+* Datenmodell
+* Data Moat
+* Analytics
+* AI-Systemen
+* Produktstrategie
+* Skalierung
+* Sicherheit
+
+müssen relevante Dokumente im Obsidian Vault aktualisiert werden.
+
+Mindestens zu aktualisieren:
+
+* Entscheidungsdokumente
+* Architekturdokumente
+* Datenmodell-Dokumente
+* Data-Moat-Dokumente
+
+---
+
+## Repository + Vault Review
+
+Bei Audits, Refactorings und größeren Features sollen Agenten sowohl:
+
+* den aktuellen Code
+* als auch den Obsidian Vault
+
+berücksichtigen.
+
+Die Bewertung darf nicht ausschließlich auf Basis des aktuellen Implementierungsstands erfolgen.
+
+Agenten sollen regelmäßig prüfen:
+
+* Passt die Implementierung zur Vision?
+* Passt die Implementierung zur Produktstrategie?
+* Passt die Implementierung zur Data-Moat-Strategie?
+* Passt die Implementierung zum langfristigen Ziel eines Cannabis Grow Operating Systems?
+
+Erkannte Abweichungen müssen dokumentiert werden.
 
 # 12. Erfolgsdefinition
 

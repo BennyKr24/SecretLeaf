@@ -7,7 +7,7 @@
 // Shows duration, plant count, harvest data (if saved) and basic stats.
 // ────────────────────────────────────────────────────────────────────────────
 
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';
 import type { Grow } from '@/lib/grow/types';

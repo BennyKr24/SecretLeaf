@@ -9,7 +9,7 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import { useMemo, useState, useCallback } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import type { Grow } from '@/lib/grow/types';
 import { getRecommendationsForGrow } from '@/lib/grow/insights';

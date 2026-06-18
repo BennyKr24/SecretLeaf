@@ -1,8 +1,8 @@
 'use client';
 
 import { Suspense, useState, useEffect, useCallback, useTransition } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useRouter, Link } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 import type { Route } from 'next';
 import type { SearchResponse, SearchResult, SearchResultKind } from '@/lib/search/engine';
 

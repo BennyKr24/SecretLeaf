@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { NavigationBar } from "@/components/NavigationBar";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LocaleBanner } from "@/components/LocaleBanner";

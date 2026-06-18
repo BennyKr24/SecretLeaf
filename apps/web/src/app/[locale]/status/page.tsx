@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { getApiHealth, getPublicOverview, getPublicStatusReport } from "@/lib/publicApi";
 import changelogData from "@/data/changelog.json";

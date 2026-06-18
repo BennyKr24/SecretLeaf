@@ -11,7 +11,7 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { useParams, useSearchParams } from 'next/navigation';
 import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';

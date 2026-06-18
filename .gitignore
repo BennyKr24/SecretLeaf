@@ -22,3 +22,6 @@ apps/web/public/
 .vercel
 .env*.local
 .env*
+
+# Sentry Config File
+.env.sentry-build-plugin

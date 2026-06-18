@@ -7,7 +7,7 @@
 // otherwise as <button>. Covers all action surfaces in the product.
 // ────────────────────────────────────────────────────────────────────────────
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 

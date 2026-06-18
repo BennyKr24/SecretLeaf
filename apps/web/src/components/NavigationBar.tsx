@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import SearchBar from "@/components/SearchBar";
 import { UserMenu } from "@/components/UserMenu";
