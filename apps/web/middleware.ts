@@ -1,13 +1,13 @@
-import createMiddleware from "next-intl/middleware";
-import { routing } from "./src/i18n/routing";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export default createMiddleware(routing);
+export function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname === "/") {
+    return NextResponse.redirect(new URL("/de", request.url));
+  }
+  return NextResponse.next();
+}
 
 export const config = {
-  // Match all pathnames except for API routes, static files, etc.
-  matcher: [
-    "/",
-    "/(de|en)/:path*",
-    "/((?!api|_next|_vercel|.*\\..*).*)",
-  ],
+  matcher: ["/"],
 };

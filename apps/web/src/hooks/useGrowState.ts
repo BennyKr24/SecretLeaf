@@ -17,7 +17,6 @@ import type { Grow, CreateGrowInput, GrowPhaseId } from "@/lib/grow/types";
 import type { GrowUmgebung, GrowMedium, LichtTyp, Erfahrung, GrowStatus } from "@/lib/grow/types";
 import {
   getGrows,
-  getActiveGrow,
   getActiveGrowId,
   createGrow as storeCreateGrow,
   updateGrow as storeUpdateGrow,
@@ -118,16 +117,11 @@ export type UseGrowStateReturn = {
 export function useGrowState(): UseGrowStateReturn {
   const { user } = useAuth();
   const [grows, setGrows] = useState<Grow[]>([]);
-  const [activeGrow, setActiveGrow] = useState<Grow | null>(null);
   const [loaded, setLoaded] = useState(false);
 
   // ── Local-state refresh (localStorage path) ─────────────────────────────────
   const refresh = useCallback(() => {
-    const allGrows = getGrows().map(withLiveDay);
-    setGrows(allGrows);
-
-    const active = getActiveGrow();
-    setActiveGrow(active !== null ? withLiveDay(active) : null);
+    setGrows(getGrows().map(withLiveDay));
   }, []);
 
   // ── Initial load ────────────────────────────────────────────────────────────
