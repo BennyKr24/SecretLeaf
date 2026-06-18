@@ -38,6 +38,7 @@ import {
 } from "@/lib/grow/db";
 import { Analytics } from "@/lib/analytics";
 import { storage, STORAGE_KEYS } from "@/lib/store";
+import { captureGrowError } from "@/lib/grow/telemetry";
 
 // ── Supabase row → Grow mapper ────────────────────────────────────────────────
 
@@ -155,6 +156,7 @@ export function useGrowState(): UseGrowStateReturn {
       })
       .catch((err) => {
         console.error("[grows] Supabase load failed, falling back to localStorage:", err);
+        captureGrowError("loadGrows", { userId: user.id }, err);
         refresh();
         setLoaded(true);
       });
@@ -201,6 +203,7 @@ export function useGrowState(): UseGrowStateReturn {
           });
         } catch (err) {
           console.error("[grows] createGrow Supabase failed, rolling back:", err);
+          captureGrowError("createGrow", { userId: user.id, growId: grow.id }, err);
           // Rollback: remove optimistic entry from state only
           setGrows((prev) => prev.filter((g) => g.id !== grow.id));
         }
@@ -241,6 +244,7 @@ export function useGrowState(): UseGrowStateReturn {
           });
         } catch (err) {
           console.error("[grows] updateGrow Supabase failed, rolling back:", err);
+          captureGrowError("updateGrow", { userId: user.id, growId: id }, err);
           if (prev) setGrows((all) => all.map((g) => (g.id === id ? prev : g)));
         }
       })();
@@ -274,6 +278,7 @@ export function useGrowState(): UseGrowStateReturn {
           });
         } catch (err) {
           console.error("[grows] deleteGrow Supabase failed, rolling back:", err);
+          captureGrowError("deleteGrow", { userId: user.id, growId: id }, err);
           if (snapshot) setGrows((prev) => [snapshot, ...prev]);
         }
       })();
@@ -327,6 +332,7 @@ export function useGrowState(): UseGrowStateReturn {
           });
         } catch (err) {
           console.error("[grows] completeTask Supabase failed, rolling back:", err);
+          captureGrowError("completeTask", { userId: user.id, growId, taskId }, err);
           setGrows((all) => all.map((g) => (g.id === growId ? prev : g)));
         }
       })();
@@ -369,6 +375,7 @@ export function useGrowState(): UseGrowStateReturn {
           });
         } catch (err) {
           console.error("[grows] advancePhase Supabase failed, rolling back:", err);
+          captureGrowError("advancePhase", { userId: user.id, growId, newPhaseId: phaseId }, err);
           setGrows((all) => all.map((g) => (g.id === growId ? prev : g)));
         }
       })();

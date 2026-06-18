@@ -591,3 +591,65 @@ Der Produktkern ist:
 Grow → Dokumentation → Diagnose → Empfehlung → Verbesserung
 
 Wenn eine Änderung diesen Kreislauf nicht stärkt, sollte sie hinterfragt werden.
+
+---
+
+# 23. Error Monitoring (Sentry)
+
+## Setup
+
+Sentry ist aktiv für Client, Server und Edge Runtime.
+
+Projekt: `secretleaf / javascript-nextjs`
+
+DSN: via `NEXT_PUBLIC_SENTRY_DSN` (Client) + `SENTRY_DSN` (Server) in `.env.local` / Vercel Environment Variables.
+
+## Konfiguration
+
+| Datei | Zweck |
+|---|---|
+| `apps/web/sentry.client.config.ts` | Browser: Replay (nur bei Fehler, maskAllText) |
+| `apps/web/sentry.server.config.ts` | Node.js Runtime |
+| `apps/web/sentry.edge.config.ts` | Edge Runtime / Middleware |
+| `apps/web/instrumentation.ts` | Next.js 15+ Server Init + `onRequestError` |
+| `apps/web/instrumentation-client.ts` | Next.js 15+ Client Init |
+| `apps/web/next.config.mjs` | `withSentryConfig()` Wrapper + `tunnelRoute: /monitoring` |
+
+## Grow OS Telemetry
+
+Alle Supabase-Write-Fehler im Grow OS werden strukturiert an Sentry gemeldet.
+
+Zentraler Helper: `apps/web/src/lib/grow/telemetry.ts` → `captureGrowError()`
+
+```typescript
+captureGrowError(operation, { userId, growId, entryId }, error)
+```
+
+Sentry-Felder pro Fehler:
+
+- **Tag** `grow.operation`: z.B. `createGrow`, `addLogEntry`, `deleteGrow`
+- **Tag** `supabase.error_code`: z.B. `22P02`, `23505`
+- **User** `id`: Supabase Auth UUID (kein PII)
+- **Extra**: `growId`, `entryId`, `supabaseMessage`
+
+Integrierte Operationen:
+
+| Operation | Hook | Kontext |
+|---|---|---|
+| `loadGrows` | `useGrowState` | userId |
+| `createGrow` | `useGrowState` | userId, growId |
+| `updateGrow` | `useGrowState` | userId, growId |
+| `deleteGrow` | `useGrowState` | userId, growId |
+| `completeTask` | `useGrowState` | userId, growId, taskId |
+| `advancePhase` | `useGrowState` | userId, growId, newPhaseId |
+| `loadLogEntries` | `useGrowLog` | userId, growId |
+| `addLogEntry` | `useGrowLog` | userId, growId, entryId |
+| `deleteLogEntry` | `useGrowLog` | userId, growId, entryId |
+| `updateLogEntry` | `useGrowLog` | userId, growId, entryId |
+
+## Privacy
+
+- Session Replay: nur bei Fehler (`replaysOnErrorSampleRate: 1.0`)
+- `maskAllText: true`, `blockAllMedia: true`
+- `sendDefaultPii: false` (Standard)
+- User-ID wird übermittelt (UUID, kein Name, keine E-Mail)

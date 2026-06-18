@@ -43,6 +43,10 @@
     "node": ">=20.11.0"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.58.0",
     "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "supabase": "^2.108.0-beta.4"
   }
 }
