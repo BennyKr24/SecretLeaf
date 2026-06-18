@@ -149,7 +149,14 @@ export function useGrowState(): UseGrowStateReturn {
     const supabase = getSupabaseBrowserClient();
     dbGetGrows(supabase)
       .then((rows) => {
-        setGrows(rows.map(rowToGrow));
+        const loadedGrows = rows.map(rowToGrow);
+        setGrows(loadedGrows);
+        // On a new device localStorage has no active grow ID.
+        // Default to the most recently created grow so the dashboard isn't blank.
+        if (loadedGrows.length > 0 && !getActiveGrowId()) {
+          const first = loadedGrows[0];
+          if (first) storeSetActiveGrow(first.id);
+        }
         setLoaded(true);
       })
       .catch((err) => {
@@ -375,10 +382,19 @@ export function useGrowState(): UseGrowStateReturn {
     [user, grows, refresh]
   );
 
+  // Derive activeGrow from the current grows list + the persisted active ID.
+  // This ensures correctness for all cases:
+  //   - Anonymous users: grows come from localStorage via refresh()
+  //   - Logged-in, same device: grows from Supabase, active ID from localStorage
+  //   - Logged-in, new device: grows from Supabase, active ID just set above
+  //   - After createGrow: storeCreateGrow() sets ACTIVE_GROW_ID, next render picks it up
+  const activeId = getActiveGrowId();
+  const derivedActiveGrow = activeId ? (grows.find((g) => g.id === activeId) ?? null) : null;
+
   return {
     grows,
-    activeGrow,
-    activeGrowId: getActiveGrowId(),
+    activeGrow: derivedActiveGrow,
+    activeGrowId: activeId,
     loaded,
     createGrow,
     updateGrow,
