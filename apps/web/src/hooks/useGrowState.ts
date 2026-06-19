@@ -18,6 +18,7 @@ import type { GrowUmgebung, GrowMedium, LichtTyp, Erfahrung, GrowStatus } from "
 import {
   getGrows,
   getActiveGrowId,
+  buildGrow,
   createGrow as storeCreateGrow,
   updateGrow as storeUpdateGrow,
   deleteGrow as storeDeleteGrow,
@@ -146,9 +147,12 @@ export function useGrowState(): UseGrowStateReturn {
       .then((rows) => {
         const loadedGrows = rows.map(rowToGrow);
         setGrows(loadedGrows);
+        storage.set(STORAGE_KEYS.GROWS, loadedGrows);
         // On a new device localStorage has no active grow ID.
         // Default to the most recently created grow so the dashboard isn't blank.
-        if (loadedGrows.length > 0 && !getActiveGrowId()) {
+        if (loadedGrows.length === 0) {
+          storage.remove(STORAGE_KEYS.ACTIVE_GROW_ID);
+        } else if (!getActiveGrowId()) {
           const first = loadedGrows[0];
           if (first) storeSetActiveGrow(first.id);
         }
@@ -177,15 +181,18 @@ export function useGrowState(): UseGrowStateReturn {
   const createGrow = useCallback(
     async (input: CreateGrowInput): Promise<Grow> => {
       const plan = generateGrowPlan(input);
-      // Build the grow object via store (generates id, timestamps, plants)
-      const grow = storeCreateGrow(input, plan);
-      const growWithDay = withLiveDay(grow);
 
       if (!user) {
         // Anonymous: localStorage only (unchanged behaviour)
+        const grow = storeCreateGrow(input, plan);
         refresh();
         return grow;
       }
+
+      // Authenticated: do not write localStorage before the Supabase insert.
+      // A failed RLS/network insert must not leave a phantom local grow behind.
+      const grow = buildGrow(input, plan);
+      const growWithDay = withLiveDay(grow);
 
       // Optimistic: add to React state immediately
       setGrows((prev) => [growWithDay, ...prev]);
@@ -198,12 +205,12 @@ export function useGrowState(): UseGrowStateReturn {
           storage.set(STORAGE_KEYS.GROWS, current.map((g) =>
             g.id === grow.id ? grow : g
           ));
+          if (grow.status === "aktiv") storeSetActiveGrow(grow.id);
           return current;
         });
       } catch (err) {
         console.error("[grows] createGrow Supabase failed, rolling back:", err);
         captureGrowError("createGrow", { userId: user.id, growId: grow.id }, err);
-        storeDeleteGrow(grow.id);
         // Rollback: remove optimistic entry from state only
         setGrows((prev) => prev.filter((g) => g.id !== grow.id));
         throw err;
