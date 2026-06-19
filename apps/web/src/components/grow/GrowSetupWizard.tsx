@@ -489,10 +489,10 @@ export default function GrowSetupWizard() {
     }));
   }, []);
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     setSubmitting(true);
     try {
-      const grow = createGrow({
+      const grow = await createGrow({
         name: data.name.trim(),
         umgebung: data.umgebung,
         medium: data.medium,
@@ -505,7 +505,8 @@ export default function GrowSetupWizard() {
       });
       Analytics.growCreated(data.umgebung, data.medium);
       router.push(`/grow/${grow.id}`);
-    } catch {
+    } catch (err) {
+      console.error("[grows] Grow setup failed:", err);
       setSubmitting(false);
     }
   }, [data, createGrow, router]);
