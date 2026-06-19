@@ -145,6 +145,24 @@ export function useGrowState(): UseGrowStateReturn {
     dbGetGrows(supabase)
       .then((rows) => {
         const loadedGrows = rows.map(rowToGrow);
+        // ── TEMP DIAGNOSTIC (incident: grows not persisting) ──
+        try {
+          const entry = {
+            t: new Date().toISOString(),
+            step: "loadGrows",
+            userId: user.id,
+            rowCount: rows.length,
+            ids: loadedGrows.map((g) => g.id),
+          };
+          console.error("GROW_DIAG", "loadGrows", entry);
+          const raw = localStorage.getItem("secretleaf.diag");
+          const arr = raw ? (JSON.parse(raw) as unknown[]) : [];
+          arr.push(entry);
+          localStorage.setItem("secretleaf.diag", JSON.stringify(arr.slice(-50)));
+        } catch {
+          /* ignore */
+        }
+        // ──────────────────────────────────────────────────────
         setGrows(loadedGrows);
         // On a new device localStorage has no active grow ID.
         // Default to the most recently created grow so the dashboard isn't blank.
@@ -181,6 +199,27 @@ export function useGrowState(): UseGrowStateReturn {
       const grow = storeCreateGrow(input, plan);
       const growWithDay = withLiveDay(grow);
 
+      // ── TEMP DIAGNOSTIC (incident: grows not persisting) ──
+      // Persists across the redirect so it survives navigation to /grow/[id].
+      const diag = (step: string, payload: Record<string, unknown>) => {
+        const entry = { t: new Date().toISOString(), step, ...payload };
+        console.error("GROW_DIAG", step, entry);
+        try {
+          const raw = localStorage.getItem("secretleaf.diag");
+          const arr = raw ? (JSON.parse(raw) as unknown[]) : [];
+          arr.push(entry);
+          localStorage.setItem("secretleaf.diag", JSON.stringify(arr.slice(-50)));
+        } catch {
+          /* ignore */
+        }
+      };
+      diag("createGrow:entry", {
+        path: user ? "authenticated" : "anonymous",
+        userId: user?.id ?? null,
+        growId: grow.id,
+      });
+      // ──────────────────────────────────────────────────────
+
       if (!user) {
         // Anonymous: localStorage only (unchanged behaviour)
         refresh();
@@ -193,7 +232,18 @@ export function useGrowState(): UseGrowStateReturn {
       const supabase = getSupabaseBrowserClient();
       void (async () => {
         try {
+          // ── TEMP DIAGNOSTIC: prove whether a JWT is attached at insert time ──
+          const { data: sess } = await supabase.auth.getSession();
+          diag("createGrow:pre-insert", {
+            growId: grow.id,
+            customUserId: user.id,
+            supabaseUserId: sess.session?.user?.id ?? null,
+            idMatch: sess.session?.user?.id === user.id,
+            hasAccessToken: Boolean(sess.session?.access_token),
+          });
+          // ─────────────────────────────────────────────────────────────────────
           await dbCreateGrow(supabase, user.id, grow);
+          diag("createGrow:insert-ok", { growId: grow.id });
           // Success: sync localStorage cache from current state
           setGrows((current) => {
             storage.set(STORAGE_KEYS.GROWS, current.map((g) =>
@@ -202,6 +252,16 @@ export function useGrowState(): UseGrowStateReturn {
             return current;
           });
         } catch (err) {
+          // ── TEMP DIAGNOSTIC: exact Supabase error shape ──
+          const e = err as { message?: string; code?: string; details?: string; hint?: string };
+          diag("createGrow:insert-failed", {
+            growId: grow.id,
+            message: e?.message ?? null,
+            code: e?.code ?? null,
+            details: e?.details ?? null,
+            hint: e?.hint ?? null,
+          });
+          // ─────────────────────────────────────────────────
           console.error("[grows] createGrow Supabase failed, rolling back:", err);
           captureGrowError("createGrow", { userId: user.id, growId: grow.id }, err);
           // Rollback: remove optimistic entry from state only
