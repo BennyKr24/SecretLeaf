@@ -21,7 +21,6 @@ Produktiv nutzbar:
 Offene kritische Punkte:
 - Monetarisierungspfad nicht live
 - Legacy-Backendpfad als Architekturschuld
-- Newsletter-Anmeldung benoetigt fuer Production einen konfigurierten E-Mail-Provider (`LOOPS_API_KEY`)
 
 ## Architektur auf einen Blick
 
@@ -106,7 +105,7 @@ Observability:
 - NEXT_PUBLIC_PLAUSIBLE_DOMAIN (optional; Vercel Analytics ist separat aktiv)
 
 Newsletter:
-- LOOPS_API_KEY (Production; ohne Key antwortet `/api/newsletter` mit 503 statt Signup vorzutäuschen)
+- LOOPS_API_KEY (Production; aktiv fuer Loops Newsletter-Signups)
 
 Siehe DEPLOYMENT.md fuer vollstaendige Betriebs- und Security-Vorgaben.
 
@@ -167,7 +166,6 @@ Verbindliche Richtlinien: siehe AI_RULES.md
 
 Jetzt:
 - Monetarisierungskern produktiv machen
-- `LOOPS_API_KEY` in Production setzen und Newsletter-Signup mit Provider-Readback pruefen
 - Legacy-Umfang kontrolliert reduzieren
 
 Als naechstes:
