@@ -7,6 +7,14 @@ const schema = z.object({
   email: z.string().email('Ungültige E-Mail-Adresse'),
 });
 
+export function GET() {
+  return NextResponse.json({
+    provider: 'loops',
+    configured: Boolean(process.env.LOOPS_API_KEY),
+    environment: process.env.NODE_ENV,
+  });
+}
+
 async function subscribeWithLoops(email: string) {
   const apiKey = process.env.LOOPS_API_KEY;
   if (!apiKey) {
