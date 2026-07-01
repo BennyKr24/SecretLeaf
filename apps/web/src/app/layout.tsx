@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import { getLocale } from "next-intl/server";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-body" });
@@ -42,6 +44,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       </head>
       <body className={`${manrope.variable} ${spaceGrotesk.variable}`}>
         {children}
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
