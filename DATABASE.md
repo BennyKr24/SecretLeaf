@@ -106,9 +106,12 @@ Tabellen:
 
 * grows
 * plants
-* grow_logs
-* grow_tasks
-* grow_reminders
+* log_entries
+
+Hinweis:
+
+* Tasks liegen aktuell im JSONB-Plan eines Grows (`grows.plan`).
+* Separate Tabellen fuer `grow_tasks` und `grow_reminders` sind Zielarchitektur, aber nicht aktueller Produktionsstand.
 
 ---
 
@@ -223,8 +226,8 @@ Ein Grow ist die oberste Einheit.
 Ein Grow besitzt:
 
 * mehrere Pflanzen
-* mehrere Logs
-* mehrere Aufgaben
+* mehrere Log-Eintraege (`log_entries`)
+* einen JSONB-Plan mit Phasen und Aufgaben
 
 ---
 
@@ -238,7 +241,7 @@ Plants
 
 ↓
 
-Logs
+Log Entries
 
 ---
 
@@ -252,8 +255,8 @@ Pflichtfelder:
 
 * id
 * grow_id
-* strain
-* stage
+* user_id
+* name
 * created_at
 
 ---
@@ -271,6 +274,25 @@ Beispiele:
 * Training
 * Diagnose
 * Foto
+
+Produktive Tabelle:
+
+* `log_entries`
+
+Pflichtfelder:
+
+* id
+* grow_id
+* user_id
+* entry_type
+* data
+* logged_at
+* created_at
+
+RLS:
+
+* Nutzer duerfen nur Eintraege zu eigenen Grows lesen/schreiben.
+* Supabase `auth.uid()` ist die einzige Autoritaet fuer RLS-geschuetzte Writes.
 
 ---
 
@@ -495,6 +517,8 @@ Nicht erlaubt:
 
 * verwaiste Datensätze
 * ungültige Referenzen
+* UI-Auth-Zustand ohne echte Supabase-Session als Schreibberechtigung
+* lokale Phantom-Daten im authentifizierten Pfad vor erfolgreichem Server-Write
 
 ---
 
@@ -662,6 +686,7 @@ Verboten:
 * fehlende Foreign Keys
 * fehlende RLS
 * manuelle Produktionsänderungen
+* zweite Auth-Wahrheit neben der Supabase Session
 
 ---
 
@@ -688,3 +713,12 @@ Welches Nutzerproblem löst sie?
 Wenn die Antwort unklar ist:
 
 Die Tabelle wird nicht erstellt.
+
+---
+
+# 27. Document Metadata
+
+Owner: Product Engineering
+Status: Active
+Last updated: 2026-07-01
+Next review: 2026-08-01

@@ -1,6 +1,8 @@
 # SecretLeaf Master Alignment Report
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
+
+Hinweis 2026-07-01: Historischer Alignment-Snapshot. Aktuelle technische Wahrheit steht in README.md, ARCHITECTURE.md, DATABASE.md, DEPLOYMENT.md und im Persistence-Recovery-Checkpoint.
 
 ## Scope
 Abgleich gegen:

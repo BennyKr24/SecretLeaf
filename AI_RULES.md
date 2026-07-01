@@ -106,5 +106,5 @@ Jede technische Entscheidung muss den Produktkern staerken.
 
 Owner: Product Engineering
 Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+Last updated: 2026-07-01
+Next review: 2026-08-01

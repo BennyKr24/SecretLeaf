@@ -1,6 +1,8 @@
 # Grow OS Audit
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
+
+Hinweis 2026-07-01: Historischer Audit-Snapshot. Der produktive Grow-Persistenzpfad wurde seitdem behoben und ist in README.md, ARCHITECTURE.md und `Obsidian/SecretLeaf v2 - Obsidian/07_Technik/Checkpoint_2026-07-01_Persistence_Recovery.md` dokumentiert.
 
 Scope:
 
@@ -191,7 +193,7 @@ Status: Mittel
 2. Diagnose als strukturierten Log-Typ modellieren statt als reine Notiz.
 3. Tool- und Studien-Aktionen mit einem leichten Outcome-Signal in Grow rückführen.# Grow OS Audit
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
 
 ## Scope
 

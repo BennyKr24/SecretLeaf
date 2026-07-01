@@ -1,6 +1,8 @@
 # Product Maturity Report
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
+
+Hinweis 2026-07-01: Historischer Reifegrad-Snapshot. Aktueller Stand zu Grow-Persistenz, Observability und offenen Punkten steht in README.md und DEPLOYMENT.md.
 
 ## Reifegrade
 
@@ -76,7 +78,7 @@ Begründung:
 9. Automatisierte Prüfungen für harte Farb-Utilities auf Kernrouten ergänzen.
 10. Automatisierte Prüfungen für Graph-Vollständigkeit und fehlende Studienbeziehungen ergänzen.# Product Maturity Report
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
 
 ## Reifegrade
 

@@ -80,25 +80,26 @@ Ein zentrales Datenmodell.
 
 ---
 
-## Risiko 5 – Grow-Daten erreichen die Datenbank nicht (akut, Stand 10.06.2026)
+## Risiko 5 – Grow-Daten erreichen die Datenbank nicht (geschlossen, Stand 01.07.2026)
 
 Beschreibung:
 
-Durch einen UUID-Format-Bug (TD-01/TD-02, siehe [[06_Technical_Checkpoint_2026-06-10]]) werden Grow-, Pflanzen- und Erntedaten eingeloggter User aktuell **nicht** in Supabase gespeichert. Sie existieren nur lokal (localStorage) im jeweiligen Browser.
+Durch einen UUID-/Session-/Redirect-Fehler (TD-01/TD-02, siehe [[06_Technical_Checkpoint_2026-06-10]]) wurden Grow-, Pflanzen- und Erntedaten eingeloggter User nicht zuverlässig in Supabase gespeichert. Dieser akute Datenverlustpfad wurde am 01.07.2026 geschlossen; aktueller Nachweis siehe [[Checkpoint_2026-07-01_Persistence_Recovery]].
 
 Folgen:
 
-- Der zentrale Data Moat (longitudinale Grow-Verläufe) ist praktisch leer
-- Similarity-, Recommendation-, Prediction- und Outcome-Engines haben keine Trainingsdaten
-- Datenverlust bei Browserwechsel/-löschung für alle Nutzer
+- Der zentrale Data Moat kann jetzt Grow-Verläufe aufnehmen
+- Similarity-, Recommendation-, Prediction- und Outcome-Engines benötigen weiterhin strukturierte Events, Harvest-Daten und Outcome-Follow-ups
+- Datenverlust bei Browserwechsel/-löschung ist für bestätigte, eingeloggte Nutzer im Kernflow nicht mehr der bekannte Standardfehler
 
-Gegenmaßnahme:
+Gegenmaßnahme / Status:
 
-`generateId()` auf `crypto.randomUUID()` umstellen + Migrationsstrategie für Bestandsdaten (TD-01/TD-02, DL-01). Noch nicht umgesetzt.
+Supabase Session als Auth-Single-Source, serverseitige Persistenz vor Navigation, kein lokaler Phantom-Grow im authentifizierten Pfad, Log-Sync nach Supabase. Status: umgesetzt und runtime-verifiziert am 01.07.2026.
 
 ## Verknüpfte Dokumente
 
 [[06_Data_Moat_Strategie]]
+[[Checkpoint_2026-07-01_Persistence_Recovery]]
 
 [[01_Datenstrategie]]
 

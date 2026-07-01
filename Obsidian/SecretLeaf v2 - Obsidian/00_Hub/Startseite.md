@@ -127,13 +127,13 @@
 
 ## 🆕 Data-Moat-Datenmodell (10.06.2026)
 
-[[06_Data_Moat_Datenmodell]] — Ziel-, Similarity-, Outcome-Datenmodell + Event-System (Konzeption, Voraussetzung: TD-01/02-Fix)
+[[06_Data_Moat_Datenmodell]] — Ziel-, Similarity-, Outcome-Datenmodell + Event-System (Konzeption; TD-01/02 wurde am 01.07.2026 durch Persistence-Recovery geschlossen)
 
 ---
 
 ## 🔧 Technical Checkpoint (10.06.2026)
 
-**Kritisch:** Grow-Daten werden aktuell nicht in Supabase gespeichert (UUID-Bug). Vollständiger Audit: [[06_Technical_Checkpoint_2026-06-10]].
+**Historisch kritisch:** Der Audit vom 10.06.2026 dokumentierte, dass Grow-Daten wegen TD-01/TD-02 nicht in Supabase ankamen. Dieser Kernfehler ist seit [[Checkpoint_2026-07-01_Persistence_Recovery]] behoben; verbleibende offene Punkte sind Newsletter-Provider, Legacy-API-Konsolidierung und selektives Portieren des Audit-Branches.
 
 **Detail-Dokumente (Hauptordner für den Audit-Stand):** [[00_Uebersicht]] | [[01_Architektur]] | [[02_Datenmodell]] | [[03_Datenfluesse]] | [[04_Issues]] | [[05_Decision_Log]] | [[06_Technical_Debt_Register]] | [[07_Data_Moat_Audit]] (alle in `07_Technik/Checkpoint_2026-06-10/`)
 

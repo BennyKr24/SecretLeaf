@@ -1,6 +1,8 @@
 # SecretLeaf Knowledge Graph Audit
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
+
+Hinweis 2026-07-01: Historischer Knowledge-Graph-Audit-Snapshot. Aktuelle Grow-OS-Persistenz ist seit dem Persistence-Recovery geschlossen; Knowledge-Graph-Lücken bleiben separat zu planen.
 
 ## Scope
 Abgleich gegen:

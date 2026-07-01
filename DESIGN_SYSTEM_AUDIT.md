@@ -1,6 +1,8 @@
 # Design System Audit
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
+
+Hinweis 2026-07-01: Historischer Design-Audit-Snapshot. Aktuelle Produkt-/Betriebswahrheit steht in README.md und ARCHITECTURE.md.
 
 Referenz:
 
@@ -93,7 +95,7 @@ Bewertung: 72/100
 2. Grow Log Farb- und Badge-System vereinheitlichen.
 3. Statusfarben nur dort einsetzen, wo sie echte Priorität und nicht reine Dekoration markieren.# Design System Audit
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
 
 ## Referenz
 

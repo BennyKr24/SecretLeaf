@@ -112,6 +112,12 @@ Jede neue Funktion muss mindestens eine dieser Ebenen stärken.
 
 Keine doppelte Datenhaltung.
 
+Seit dem Persistence-Recovery-Incident (2026-07-01) gilt explizit:
+
+* Supabase Session ist die einzige Auth-Quelle fuer RLS-geschuetzte Writes.
+* `secretleaf.session` darf keine eigenstaendige Auth-Wahrheit sein.
+* Im authentifizierten Grow-Pfad gilt: Server-Persistenz vor Navigation und vor dauerhaftem lokalem Cache.
+
 ---
 
 ## Product First
@@ -269,6 +275,26 @@ Verbesserung
 ---
 
 Der Grow Workflow ist der wichtigste Datenfluss im System.
+
+Produktiver Persistenzfluss:
+
+User Session
+
+↓
+
+Supabase RLS (`auth.uid()`)
+
+↓
+
+`grows` / `plants` / `log_entries`
+
+↓
+
+Reload / Logout-Login / zweites Gerät
+
+Der Flow wurde am 2026-07-01 End-to-End bewiesen und ist im Obsidian-Checkpoint dokumentiert:
+
+`Obsidian/SecretLeaf v2 - Obsidian/07_Technik/Checkpoint_2026-07-01_Persistence_Recovery.md`
 
 ---
 

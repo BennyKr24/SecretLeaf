@@ -284,11 +284,11 @@ Dadurch verbessert sich das gesamte System.
 - Inkonsistente Strukturen
     
 
-## ⚠️ Bekanntes kritisches Problem (Stand 10.06.2026)
+## ✅ Persistence-Recovery (Stand 01.07.2026)
 
-Im aktuellen Code sind `grows.id`, `plants.id`, `log_entries.id` als Postgres `uuid` definiert (`default gen_random_uuid()`), aber das Frontend generiert IDs in einem Nicht-UUID-Format. Dadurch schlagen alle Cloud-Inserts für eingeloggte User fehl (Fehler 22P02) und werden per Optimistic-UI-Rollback unsichtbar gemacht. Grow-/Plant-/Ernte-Daten landen aktuell **nicht** in Supabase, nur in localStorage.
+Der am 10.06.2026 dokumentierte UUID-/Persistenzfehler ist seit [[Checkpoint_2026-07-01_Persistence_Recovery]] geschlossen. Eingeloggte Nutzer schreiben Grows, Plants und Log-Einträge produktiv nach Supabase; RLS basiert auf `auth.uid() = user_id`. Der authentifizierte Flow schreibt zuerst serverseitig und navigiert erst danach.
 
-Details: [[06_Technical_Checkpoint_2026-06-10]], `CHECKPOINT_2026-06-10/02_DATENMODELL.md` (Anomalie DB-10), `AUDIT_CREATE_GROW_BUG.md`. Noch nicht behoben — reine Dokumentation.
+Historische Details: [[06_Technical_Checkpoint_2026-06-10]], `CHECKPOINT_2026-06-10/02_DATENMODELL.md` (Anomalie DB-10), `AUDIT_CREATE_GROW_BUG.md`. Aktueller Abschluss: [[Checkpoint_2026-07-01_Persistence_Recovery]].
 
 Zusätzlich existiert produktiv ein umfangreiches "Knowledge OS" (Wiki/Studies/Wissensgraph mit pgvector, FTS, Automations, ~15 Tabellen), das in diesem Dokument noch nicht im Detail erfasst war — siehe `CHECKPOINT_2026-06-10/02_DATENMODELL.md`.
 
@@ -306,6 +306,7 @@ Zusätzlich existiert produktiv ein umfangreiches "Knowledge OS" (Wiki/Studies/W
 [[03_Bilddaten]]
 [[05_Erntedaten]]
 [[06_Technical_Checkpoint_2026-06-10]]
+[[Checkpoint_2026-07-01_Persistence_Recovery]]
 
 ## Änderungsverlauf
 
@@ -316,3 +317,7 @@ Erstversion
 ### V1.1 (10.06.2026)
 
 Hinweis auf kritischen UUID-Bug (TD-01/TD-02) und Knowledge-OS-Erweiterung ergänzt, siehe [[06_Technical_Checkpoint_2026-06-10]].
+
+### V1.2 (01.07.2026)
+
+Persistence-Recovery dokumentiert: TD-01/TD-02 ist geschlossen, Supabase ist wieder produktive Grow-OS-Datenquelle.

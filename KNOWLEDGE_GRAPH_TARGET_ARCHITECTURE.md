@@ -1,6 +1,8 @@
 # SecretLeaf Knowledge Graph Target Architecture
 
-Stand: 2026-06-01
+Zielarchitektur-Snapshot: 2026-06-01
+
+Hinweis 2026-07-01: Zielarchitektur-Snapshot. Der Grow-Persistenz-Blocker aus Juni ist geschlossen; Event-, Outcome- und Knowledge-Graph-Integration bleiben geplante Folgearbeit.
 
 ## Ziel
 

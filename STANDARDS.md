@@ -102,6 +102,8 @@ Vor Merge:
 Nach Deploy:
 - Health-Pruefung
 - Automation-Status pruefen
+- Production-Deployment-SHA gegen erwarteten `main`-Commit pruefen
+- Bei Core-Flows (Grow, Auth, Log) mindestens einen E2E- oder Runtime-Beweis fuehren
 - Regressionen zeitnah dokumentieren
 
 ---
@@ -110,5 +112,5 @@ Nach Deploy:
 
 Owner: Product Engineering
 Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+Last updated: 2026-07-01
+Next review: 2026-08-01

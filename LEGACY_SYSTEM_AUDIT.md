@@ -1,6 +1,8 @@
 # Legacy System Audit
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
+
+Hinweis 2026-07-01: Historischer Legacy-Audit-Snapshot. `apps/api` bleibt Legacy/parallel und soll keinen neuen produktkritischen Scope erhalten, siehe ARCHITECTURE.md und DEPLOYMENT.md.
 
 ## Scope
 

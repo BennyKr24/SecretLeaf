@@ -6,7 +6,7 @@ verknüpft: ["[[06_Data_Moat_Strategie]]", "[[01_Datenstrategie]]", "[[02_Grow_Z
 
 # Data-Moat-Datenmodell — Ziel, Similarity, Outcome, Event-System
 
-> **Zweck dieses Dokuments**: Schließt die in [[07_Technik/Checkpoint_2026-06-10/07_Data_Moat_Audit]] und [[08_Organisation/07_Vault_Audit_2026-06-10]] identifizierten Data-Moat-Lücken mit konkreten Datenmodellen. **Reine Konzeption — kein Code, keine Migration, kein Fix.** Voraussetzung für die Umsetzung ist die Behebung von TD-01/TD-02 (UUID-Bug, [[06_Technical_Checkpoint_2026-06-10]]).
+> **Zweck dieses Dokuments**: Schließt die in [[07_Technik/Checkpoint_2026-06-10/07_Data_Moat_Audit]] und [[08_Organisation/07_Vault_Audit_2026-06-10]] identifizierten Data-Moat-Lücken mit konkreten Datenmodellen. **Reine Konzeption — kein Code, keine Migration, kein Fix.** TD-01/TD-02 (UUID/Persistenz) wurde am 01.07.2026 durch [[Checkpoint_2026-07-01_Persistence_Recovery]] geschlossen; die verbleibende Arbeit betrifft Normalisierung, Events, Outcome-Daten und neue Tabellen.
 
 > Dieses Dokument beantwortet die offenen Fragen aus [[06_Data_Moat_Strategie]] ("Welche Daten sind für Prognosen entscheidend?") und [[02_Grow_Zyklus]] ("Welche Daten sind verpflichtend/optional?").
 
@@ -38,12 +38,12 @@ Jedes der vier Modelle unten ordnet sich diesem Muster zu. Das Event-System ist 
 
 Definiert, welche Daten **pro Grow zentral in Supabase** gespeichert werden müssen, damit Similarity-, Outcome- und Prediction-Funktionen überhaupt möglich sind. Baut auf der bestehenden Tabellenstruktur `grows` / `plants` / `log_entries` auf (siehe [[07_Technik/Checkpoint_2026-06-10/02_Datenmodell]]) — erweitert sie um fehlende Felder und Tabellen, ändert aber nichts am bestehenden Schema selbst.
 
-### 1.2 Bestehende Tabellen (Ist-Zustand, vorausgesetzt TD-01 ist behoben)
+### 1.2 Bestehende Tabellen (Ist-Zustand nach Persistence-Recovery 01.07.2026)
 
 **`grows`** (Migration 11, vorhanden) — deckt bereits ab:
 `umgebung`, `medium`, `licht_typ`, `licht_leistung`, `erfahrung`, `pflanzen_anzahl`, `flaeche`, `start_date`, `current_phase_id`, `status`, `plan` (jsonb), `harvest` (jsonb).
 
-→ **Bewertung**: Spaltenstruktur ist für ein MVP-Zielmodell grundsätzlich ausreichend (siehe auch [[07_Technik/Checkpoint_2026-06-10/07_Data_Moat_Audit]], Abschnitt "Was vorhanden ist"). Die Lücke ist nicht das Schema, sondern dass keine Zeilen ankommen (TD-01) und dass zwei Bereiche fehlen: **Sorte/Genetik** und **strukturierte Erntedaten**.
+→ **Bewertung**: Spaltenstruktur ist für ein MVP-Zielmodell grundsätzlich ausreichend (siehe auch [[07_Technik/Checkpoint_2026-06-10/07_Data_Moat_Audit]], Abschnitt "Was vorhanden ist"). Seit dem Persistence-Recovery kommen Grow-Zeilen serverseitig an. Die verbleibenden Lücken sind **Sorte/Genetik**, **strukturierte Erntedaten** und ein sauber verknüpftes Event-/Outcome-Modell.
 
 **`plants`** (vorhanden) — minimal (`name`, `notes`). Reicht für Einzelpflanzen-Tracking, aber ohne Sorten-Verknüpfung.
 
@@ -222,14 +222,14 @@ Aus den obigen Modellen ergibt sich die Mindest-Datenmenge für ein einfaches Pr
 
 | Event-Typ | Phase im Kernmodell | Beispiel | Heutiger Status |
 |---|---|---|---|
-| `grow_created` | Situation (Start) | Neuer Grow mit Setup-Profil | Analytics-Event `growCreated` existiert (Plausible), aber nicht mit `grows.id` verknüpft solange TD-01 besteht |
+| `grow_created` | Situation (Start) | Neuer Grow mit Setup-Profil | Grow-Persistenz funktioniert; Analytics/Event-Verknüpfung mit `grows.id` ist noch zu modellieren |
 | `phase_changed` | Situation (Update) | Phasenwechsel `vegetation` → `bluete` mit Zeitstempel | Analytics-Event `phaseAdvanced` existiert, aber nicht historisiert in `log_entries`/`grows` |
-| `log_entry_added` | Entscheidung | Gießen, Düngen, Training, Notiz | `log_entries` (Migration 11), funktioniert teilweise (nur online + eingeloggt) |
+| `log_entry_added` | Entscheidung | Gießen, Düngen, Training, Notiz | `log_entries` (Migration 11), online/eingeloggt produktiv synchronisiert |
 | `recommendation_shown` | Entscheidung (Vorschlag) | Empfehlung aus `lib/grow/insights.ts` angezeigt | nicht erfasst |
 | `recommendation_applied` | Entscheidung (Umsetzung) | Nutzer markiert Empfehlung als umgesetzt | nicht erfasst — **zentrale Lücke für Recommendation Engine** |
 | `diagnosis_created` | Situation+Entscheidung | Diagnose erstellt (Symptom → Empfehlung) | nur als TS-Typ, kein Backend (TD-19); `diagnostic_launch` in `knowledge_events` ungenutzt |
 | `diagnosis_outcome_recorded` | Ergebnis (zeitversetzt) | Follow-up: "Empfehlung X führte zu Y" | nicht erfasst — **zentrale Lücke für Outcome Engine** |
-| `harvest_recorded` | Ergebnis (Abschluss) | `harvests`-Eintrag erstellt | Analytics-Event `harvestRecorded` existiert, aber Daten landen nur in `grows.harvest` jsonb, cloud-seitig praktisch leer (TD-01) |
+| `harvest_recorded` | Ergebnis (Abschluss) | `harvests`-Eintrag erstellt | Analytics-Event `harvestRecorded` existiert; strukturierte Harvest-Tabelle fehlt, `grows.harvest` bleibt Zwischenmodell |
 | `grow_abandoned` | Ergebnis (Abbruch) | Grow ohne Ernte beendet (`abbruch_grund`, Abschnitt 1.3) | nicht erfasst — beantwortet offene Frage aus [[02_Grow_Zyklus]] |
 
 ### 4.3 Phasenwechsel-Historie (löst Lücke aus Abschnitt 2.3, Punkt 3)
@@ -265,7 +265,7 @@ Zwei Optionen, **bewusst nicht entschieden** (Aufgabe für Team/Architektur-Revi
 | CHECK-Constraints / kontrollierte Vokabulare (`medium`, `licht_typ`, `umgebung`, `erfahrung`, `entry_type`) | fehlt | 2.3 |
 | Phasenwechsel-Historie | fehlt (nur aktueller Stand) | 4.3 |
 | Diagnose-Outcome-Follow-up-Mechanismus | fehlt | 4.4 |
-| **Voraussetzung für alles**: TD-01/TD-02-Fix (UUID-Bug) | ungelöst | siehe [[06_Technical_Checkpoint_2026-06-10]] |
+| Event-/Outcome-Verknüpfung nach TD-01/TD-02-Fix | offen | siehe [[Checkpoint_2026-07-01_Persistence_Recovery]] und Abschnitt 4 |
 
 ---
 

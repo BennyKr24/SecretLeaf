@@ -166,7 +166,7 @@ Die API soll später genutzt werden für:
 
 Im Code existieren **zwei unabhängige Backends**: Das hier beschriebene API-Layer entspricht `apps/web/src/app/api/*` (Next.js Route Handlers, Supabase). Zusätzlich gibt es `apps/api` (Fastify + Prisma + SQLite, eigenes JWT-Auth, "Marketplace"-Domäne mit User/Listing/Purchase), das vom Web-Frontend offenbar ungenutzt ist und in dieser Architektur nicht vorgesehen war. Strategische Entscheidung nötig (siehe [[01_Produktentscheidungen]]).
 
-Die "Grow API" (Grow erstellen/bearbeiten) ist implementiert, aber durch den UUID-Bug (TD-01) für eingeloggte User nicht funktionsfähig — siehe [[06_Technical_Checkpoint_2026-06-10]]. Die "Bild API" und Teile der "Diagnose API" (Persistenz/Feedback) sind nicht implementiert (Stubs).
+Die "Grow API" (Grow erstellen/bearbeiten) ist seit dem Persistence-Recovery vom 01.07.2026 produktiv funktionsfähig: Grows, Plants und Log-Einträge persistieren über Supabase/RLS und wurden per Reload-, Logout/Login- und Second-Device-Test bestätigt — siehe [[Checkpoint_2026-07-01_Persistence_Recovery]]. Die "Bild API" und Teile der "Diagnose API" (Persistenz/Feedback) sind weiterhin nicht vollständig implementiert (Stubs bzw. zukünftige Produktentscheidung).
 
 ## Verknüpfte Dokumente
 
@@ -180,6 +180,7 @@ Die "Grow API" (Grow erstellen/bearbeiten) ist implementiert, aber durch den UUI
   
 [[06_AI_Assistant_Spec]]
 [[06_Technical_Checkpoint_2026-06-10]]
+[[Checkpoint_2026-07-01_Persistence_Recovery]]
 
 ## Änderungsverlauf
 
@@ -190,3 +191,7 @@ Erstversion
 ### V1.1 (10.06.2026)
 
 Ist-Zustand zu zwei parallelen Backends und Stub-Status der Bild-/Diagnose-API ergänzt, siehe [[06_Technical_Checkpoint_2026-06-10]].
+
+### V1.2 (01.07.2026)
+
+Grow-API-Status nach Persistence-Recovery aktualisiert. Der alte Hinweis auf den nicht funktionsfähigen Grow-Create-Pfad ist durch den Checkpoint vom 01.07.2026 überholt.

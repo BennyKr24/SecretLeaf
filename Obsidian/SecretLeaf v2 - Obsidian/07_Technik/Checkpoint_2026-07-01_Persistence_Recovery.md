@@ -82,9 +82,12 @@ Der Kern-Loop (Situation → Decision → Outcome) ist erstmals End-to-End nachg
 
 ## Offene Punkte
 
-- Duplikat-Grows („Keller" × mehrere) des Testusers aus der Phantom-Migration im Dashboard löschen
-- `SENTRY_AUTH_TOKEN` für Source Maps (separater Branch `fix/sentry-production-hardening`)
-- Log-Auto-Complete nutzt noch localStorage (separater Branch `fix/grow-log-sync`)
+- Erledigt nach Checkpoint: Test-/Duplikat-Grows wurden aus Supabase bereinigt.
+- Erledigt nach Checkpoint: `SENTRY_AUTH_TOKEN` wurde in Vercel gesetzt; Source-Map-Upload ist aktiviert.
+- Erledigt nach Checkpoint: Grow-Log-Einträge und Task-Auto-Complete synchronisieren nach Supabase.
+- Weiter offen: Newsletter-Provider anbinden.
+- Weiter offen: Legacy-API (`apps/api`) konsolidieren oder klar begrenzen.
+- Weiter offen: Audit-Branch `copilot/full-system-audit-rebuild` nur selektiv portieren, nicht blind mergen.
 
 ## Status
 

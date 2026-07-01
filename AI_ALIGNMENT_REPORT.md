@@ -1,6 +1,8 @@
 # AI Alignment Report
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
+
+Hinweis 2026-07-01: Historischer AI-Alignment-Snapshot. Aktuelle offene AI-/Diagnose-Backlog-Punkte sind nicht als Produktionsfehler des Grow-Kernflows zu lesen.
 
 Referenz:
 
@@ -104,7 +106,7 @@ Nicht erfüllt bleibt der Lernkreis:
 3. Diagnose mit Grow- und Pflanzenkontext starten.
 4. Confidence gegen reale Folgeereignisse im Grow-Log kalibrieren.# AI Alignment Report
 
-Stand: 2026-06-01
+Audit-Snapshot: 2026-06-01
 
 ## Referenz
 

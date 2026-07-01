@@ -13,14 +13,15 @@ SecretLeaf besteht aktuell aus vier Kernbereichen:
 ## Aktueller Status
 
 Produktiv nutzbar:
-- Grow-Workflows mit hybrider Persistenz
+- Grow-Workflows mit Supabase-Persistenz fuer Grows, Plants, Log-Eintraege und Task-Fortschritt
 - Studien-Pipeline und Cron-Automation
 - Rollenbasierte Adminflaechen fuer Review und Betrieb
+- Sentry Error Monitoring, Vercel Web Analytics und Speed Insights
 
 Offene kritische Punkte:
 - Monetarisierungspfad nicht live
-- Observability nur teilweise aktiv
 - Legacy-Backendpfad als Architekturschuld
+- Newsletter-Anmeldung ist noch ein Stub ohne produktiven E-Mail-Provider
 
 ## Architektur auf einen Blick
 
@@ -98,6 +99,12 @@ Minimal fuer produktive API-Funktionalitaet im Web-Runtime:
 Optional fuer Automation-Fehlerspeicher:
 - AUTOMATION_ERROR_MEMORY_MIN_DELAY_MINUTES (Default: 60)
 
+Observability:
+- NEXT_PUBLIC_SENTRY_DSN
+- SENTRY_DSN
+- SENTRY_AUTH_TOKEN (nur Vercel/CI; fuer Source-Map-Uploads)
+- NEXT_PUBLIC_PLAUSIBLE_DOMAIN (optional; Vercel Analytics ist separat aktiv)
+
 Siehe DEPLOYMENT.md fuer vollstaendige Betriebs- und Security-Vorgaben.
 
 ## Health-Checks lokal
@@ -119,6 +126,15 @@ Hinweis zum Studies-Sync-Fehlerspeicher:
 
 Produktive SQL- und RLS-Aenderungen liegen unter:
 - supabase/migrations
+
+Aktueller Grow-OS-Persistenzpfad:
+- `grows`
+- `plants`
+- `log_entries`
+
+Auth-Regel:
+- Supabase Session ist die einzige Auth-Quelle fuer RLS-geschuetzte Writes.
+- UI darf eine Nutzer-Session nur als eingeloggt behandeln, wenn eine echte Supabase-Session existiert.
 
 Regel:
 - Keine produktive Schema-Aenderung ohne Migration und Review.
@@ -148,10 +164,11 @@ Verbindliche Richtlinien: siehe AI_RULES.md
 
 Jetzt:
 - Monetarisierungskern produktiv machen
-- Observability verbindlich aktivieren
+- Newsletter-Provider anbinden
 - Legacy-Umfang kontrolliert reduzieren
 
 Als naechstes:
+- PubMed-Quelle und wertvolle Teile aus `copilot/full-system-audit-rebuild` gezielt portieren
 - Conversion- und Retention-Messung vertiefen
 - Produkt- und Datenfluesse weiter vereinheitlichen
 
@@ -182,5 +199,5 @@ Interne Projektrichtlinien und Compliance-Vorgaben gelten zusaetzlich zu diesem 
 
 Owner: Product Engineering
 Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+Last updated: 2026-07-01
+Next review: 2026-08-01
