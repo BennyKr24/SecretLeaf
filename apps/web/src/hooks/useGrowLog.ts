@@ -31,6 +31,7 @@ import {
   getLogEntries as dbGetLogEntries,
   updateLogEntry as dbUpdateLogEntry,
   deleteLogEntry as dbDeleteLogEntry,
+  updateGrow as dbUpdateGrow,
 } from "@/lib/grow/db";
 
 // ── Log → Task mapping ────────────────────────────────────────────────────────
@@ -254,6 +255,19 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
           console.error("[log] addEntry Supabase failed, rolling back:", err);
           captureGrowError("addLogEntry", { userId: user.id, growId: growId ?? undefined, entryId: entry.id }, err);
           setEntries((prev) => prev.filter((e) => e.id !== entry.id));
+        }
+        // Task auto-completion mutated the local plan — mirror it to Supabase
+        // so the completed task survives reload on this and other devices.
+        if (completedTaskId) {
+          try {
+            const updatedGrow = getGrowById(growId);
+            if (updatedGrow) {
+              await dbUpdateGrow(supabase, user.id, growId, { plan: updatedGrow.plan });
+            }
+          } catch (err) {
+            console.error("[log] task auto-complete Supabase sync failed:", err);
+            captureGrowError("completeTask", { userId: user.id, growId: growId ?? undefined, taskId: completedTaskId }, err);
+          }
         }
       })();
 

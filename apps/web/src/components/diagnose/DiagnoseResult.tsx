@@ -4,7 +4,11 @@ import { useState } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import type { DiagnoseResult as DiagnoseResultType, Confidence } from "@/lib/diagnose/tree";
-import { getActiveGrow, createLogEntry } from "@/lib/grow/store";
+import { getActiveGrow, createLogEntry, deleteLogEntry } from "@/lib/grow/store";
+import { createLogEntry as dbCreateLogEntry } from "@/lib/grow/db";
+import { useAuth } from "@/hooks/useAuth";
+import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
+import { captureGrowError } from "@/lib/grow/telemetry";
 import { TranslateButton } from "@/components/TranslateButton";
 import { getDiagnoseKnowledgeContext } from "@/lib/diagnose/knowledge";
 
@@ -45,7 +49,9 @@ type Props = {
 };
 
 export function DiagnoseResult({ result, onReset, growId, plantId }: Props) {
+  const { user } = useAuth();
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
   const activeGrow = getActiveGrow();
   const conf = CONFIDENCE_CONFIG[result.confidence];
   const knowledge = getDiagnoseKnowledgeContext(result.id);
@@ -53,10 +59,11 @@ export function DiagnoseResult({ result, onReset, growId, plantId }: Props) {
 
   const resolvedGrowId = growId ?? activeGrow?.id;
 
-  function handleAddToGrow() {
-    if (!resolvedGrowId) return;
+  async function handleAddToGrow() {
+    if (!resolvedGrowId || saving || saved) return;
+    setSaving(true);
     const articleSummary = relatedArticles.map((match) => match.article.title).join(", ");
-    createLogEntry({
+    const entry = createLogEntry({
       growId: resolvedGrowId,
       ...(plantId ? { plantId } : {}),
       date: new Date().toISOString(),
@@ -65,7 +72,19 @@ export function DiagnoseResult({ result, onReset, growId, plantId }: Props) {
         text: `🔍 Diagnose: ${result.title}\nConfidence: ${knowledge.confidenceScore}/100\nEvidenz: ${knowledge.evidenceLevel}\nVerknüpfte Studien: ${articleSummary || "keine"}\n\n${result.logNote}`,
       },
     });
-    setSaved(true);
+    try {
+      if (user) {
+        const supabase = getSupabaseBrowserClient();
+        await dbCreateLogEntry(supabase, user.id, entry);
+      }
+      setSaved(true);
+    } catch (err) {
+      console.error("[diagnose] Save to grow failed:", err);
+      captureGrowError("addLogEntry", { userId: user?.id ?? "", growId: resolvedGrowId, entryId: entry.id }, err);
+      deleteLogEntry(entry.id);
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
