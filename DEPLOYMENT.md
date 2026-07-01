@@ -65,6 +65,11 @@ Minimum rule:
 - Vercel Speed Insights is enabled via `@vercel/speed-insights`.
 - Optional Plausible tracking can be enabled with NEXT_PUBLIC_PLAUSIBLE_DOMAIN.
 
+### 4.4 Newsletter
+
+- LOOPS_API_KEY enables `/api/newsletter` in production.
+- Without LOOPS_API_KEY, production returns 503 for newsletter signups instead of pretending success.
+
 Notes:
 - Never commit secrets.
 - Keep production and preview secrets separated.
@@ -163,6 +168,7 @@ Mandatory checks:
 - Admin dashboard can load overview metrics
 - Critical Grow OS flow passes when touched: confirmed user -> login -> create grow -> row exists in `grows` -> reload -> second device login
 - If SENTRY_AUTH_TOKEN changed, build logs show successful source-map upload
+- If LOOPS_API_KEY changed, submit `/api/newsletter` once and verify the contact exists in Loops
 
 ---
 
