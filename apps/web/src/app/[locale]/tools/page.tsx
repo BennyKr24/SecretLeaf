@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { getTranslations } from "next-intl/server";
 import { toolRegistry } from "@/lib/tools/registry";

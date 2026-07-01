@@ -7,14 +7,16 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace @secretleaf/api & npm run dev --workspace @secretleaf/web",
+    "dev": "npm run dev:web",
     "dev:web": "npm run dev --workspace @secretleaf/web",
     "dev:api": "npm run dev --workspace @secretleaf/api",
-    "build": "npm run build --workspaces",
-    "lint": "npm run lint --workspaces",
-    "typecheck": "npm run typecheck --workspaces",
+    "build": "npm run build --workspace @secretleaf/web",
+    "lint": "npm run lint --workspace @secretleaf/web",
+    "typecheck": "npm run typecheck --workspace @secretleaf/web",
+    "legacy:api:build": "npm run build --workspace @secretleaf/api",
+    "legacy:api:typecheck": "npm run typecheck --workspace @secretleaf/api",
     "status:update": "node scripts/status_probe.mjs --output=status-data.json",
-    "status:update:local": "node scripts/status_probe.mjs --api=http://localhost:4000 --web=http://localhost:3000 --output=status-data.json",
+    "status:update:local": "node scripts/status_probe.mjs --api=http://localhost:3000/api --web=http://localhost:3000 --output=status-data.json",
     "status:watch": "node scripts/status_probe.mjs --watch --interval=30000 --output=status-data.json",
     "status:ensure": "bash scripts/status_ensure_running.sh",
     "status:autostart:install": "bash scripts/status_autostart_install.sh",
@@ -41,6 +43,10 @@
     "node": ">=20.11.0"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.58.0",
     "@vercel/analytics": "^2.0.1"
+  },
+  "devDependencies": {
+    "supabase": "^2.108.0-beta.4"
   }
 }

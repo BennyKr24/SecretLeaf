@@ -1,4 +1,4 @@
-import { PublicListingsResponse, PublicOverview, PublicStatusReport, ServiceHealth } from "./types";
+import { PublicOverview, PublicStatusReport, ServiceHealth } from "./types";
 import { headers } from "next/headers";
 
 const FALLBACK_API_URL =
@@ -36,40 +36,6 @@ export const getPublicOverview = async (): Promise<PublicOverview | null> => {
     }
 
     return (await response.json()) as PublicOverview;
-  } catch {
-    return null;
-  }
-};
-
-type PublicListingFilter = {
-  locationZone?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  limit?: number;
-};
-
-export const getPublicListings = async (filters: PublicListingFilter): Promise<PublicListingsResponse | null> => {
-  try {
-    const apiBaseUrl = await getApiBaseUrl();
-    const params = new URLSearchParams();
-
-    if (filters.locationZone) params.set("locationZone", filters.locationZone);
-    if (filters.minPrice !== undefined) params.set("minPrice", String(filters.minPrice));
-    if (filters.maxPrice !== undefined) params.set("maxPrice", String(filters.maxPrice));
-    if (filters.limit !== undefined) params.set("limit", String(filters.limit));
-
-    const response = await fetch(`${apiBaseUrl}/api/public/listings?${params.toString()}`, {
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    if (!response.ok) {
-      return null;
-    }
-
-    return (await response.json()) as PublicListingsResponse;
   } catch {
     return null;
   }

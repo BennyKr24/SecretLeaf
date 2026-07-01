@@ -47,4 +47,13 @@ export const Analytics = {
 
   wikiArticleOpened: (slug: string) =>
     track('wiki_article_opened', { slug }),
+
+  updateViewed: (slug: string, category: string, version: string | null, featured: boolean) =>
+    track('update_viewed', { slug, category, version: version ?? 'none', featured }),
+
+  updateCtaClicked: (slug: string, target: string, category: string) =>
+    track('update_cta_clicked', { slug, target, category }),
+
+  updateCategoryViewed: (category: string) =>
+    track('update_category_viewed', { category }),
 } as const;

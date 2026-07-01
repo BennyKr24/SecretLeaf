@@ -1,13 +1,13 @@
 'use client';
 
 import { Suspense, useState, useEffect, useCallback, useTransition } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useRouter, Link } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 import type { Route } from 'next';
 import type { SearchResponse, SearchResult, SearchResultKind } from '@/lib/search/engine';
 
 const KIND_LABEL: Record<SearchResultKind, string> = {
-  wiki: '📚 Wiki',
+  wiki: '📚 Studien',
   fertilizer: '🌿 Dünger',
   glossary: '📖 Glossar',
   source: '🔬 Quelle',
@@ -132,7 +132,7 @@ function SearchContent() {
 
   const kinds: Array<SearchResultKind | 'all'> = ['all', 'wiki', 'fertilizer', 'glossary', 'source'];
   const kindLabel: Record<string, string> = {
-    all: 'Alle', wiki: '📚 Wiki', fertilizer: '🌿 Dünger',
+    all: 'Alle', wiki: '📚 Studien', fertilizer: '🌿 Dünger',
     glossary: '📖 Glossar', source: '🔬 Quellen',
   };
 
@@ -149,7 +149,7 @@ function SearchContent() {
             Intelligente Suche
           </h1>
           <p className="text-slate-400 mb-8">
-            Wiki-Artikel, über 50 Dünger, Glossarbegriffe und Fachquellen – alles durchsuchbar.
+            Studien, über 50 Dünger, Glossarbegriffe und Fachquellen – alles durchsuchbar.
           </p>
 
           <form onSubmit={handleSubmit} className="relative">
@@ -226,7 +226,7 @@ function SearchContent() {
                 : `${data.totalResults} Ergebnisse für „${data.query}“ · ${data.duration_ms} ms`}
             </span>
             <Link href={"/studies" as Route} className="text-emerald-600 hover:text-emerald-700 font-medium">
-              → Wiki Hub
+              → Studienübersicht
             </Link>
           </div>
         )}

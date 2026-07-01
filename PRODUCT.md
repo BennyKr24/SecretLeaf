@@ -1,215 +1,449 @@
-# SecretLeaf Product Blueprint
+# PRODUCT.md
 
-## 1. Zweck
+# SecretLeaf Product Definition
 
-Dieses Dokument definiert die Produktstrategie, Prioritaeten und Messlogik von SecretLeaf.
-Es ist die verbindliche Referenz fuer Produktentscheidungen zwischen Discovery, Delivery und Betrieb.
+Version: 2.0
 
----
+Status: Active
 
-## 2. Produktmission
-
-SecretLeaf hilft Growern, taeglich bessere Entscheidungen zu treffen und Risiko im Grow-Prozess zu reduzieren.
-
-Leitidee:
-- Von verstreutem Wissen zu operativer Klarheit pro Tag
-- Von Bauchgefuehl zu datenbasierter Grow-Execution
-- Von Einmal-Nutzung zu wiederkehrendem Arbeitsfluss
+Owner: Product
 
 ---
 
-## 3. Zielgruppen
+# 1. Mission
 
-Primaere Zielgruppe:
-- Ambitionierte Home-Grower mit Bedarf an Struktur, Verlauf und Entscheidungshilfe
+SecretLeaf hilft Cannabis-Growern dabei, bessere Entscheidungen zu treffen und bessere Ergebnisse zu erzielen.
 
-Sekundaere Zielgruppen:
-- Fortgeschrittene Grower mit mehreren Pflanzen und hohem Dokumentationsbedarf
-- Kleine Teams/Clubs mit Bedarf an Rollen, Transparenz und Standardisierung
+Das Produkt kombiniert:
 
-Nicht-Zielgruppen (aktuell):
-- Breite Social-Network-Anwendung ohne klare Grow-Execution
-- Reine Content-Consumer ohne operative Grow-Arbeit
+* Planung
+* Dokumentation
+* Diagnose
+* Wissen
+* Automatisierung
 
----
-
-## 4. Kernprobleme
-
-1. Grow-Wissen ist fragmentiert und oft nicht handlungsorientiert.
-2. Nutzer wissen haeufig nicht, was als naechstes zu tun ist.
-3. Entscheidungen werden selten im Verlauf dokumentiert und bewertet.
-4. Diagnose/Tools sind oft isoliert und nicht im Tagesablauf verankert.
-5. Produktwert ist ohne klaren Outcome schwierig monetarisierbar.
+in einem einzigen System.
 
 ---
 
-## 5. Produktversprechen
+# 2. Product Identity
 
-SecretLeaf liefert pro Tag einen klaren naechsten Schritt, begruendet mit Daten, Verlauf und qualitaetsgesichertem Wissen.
+SecretLeaf ist das Operating System für den Cannabis-Anbau.
 
-Messbares Versprechen:
-- Schnellere Entscheidungsfindung
-- Weniger vermeidbare Fehler
-- Hoehere Kontinuitaet im Grow-Log
+SecretLeaf ist kein:
 
----
+* Blog
+* Magazin
+* Wiki
+* Tool-Verzeichnis
+* Rechner-Sammlung
 
-## 6. Produktsaeulen
+Diese Elemente unterstützen das Produkt.
 
-### 6.1 Grow OS
-
-Ziel:
-- Operative Steuerung des taeglichen Grow-Loops
-
-Muss koennen:
-- Setup, Plan, Tasks, Log, Multi-Plant
-- Verlaufsdarstellung mit wiederverwendbaren Mustern
-- Klare Prioritaet pro Screen
-
-### 6.2 Studies Hub
-
-Ziel:
-- Vertrauenswuerdige Entscheidungsgrundlagen statt beliebiger Content-Sammlung
-
-Muss koennen:
-- Studien mit Qualitaetsstatus
-- Relevanz fuer konkrete Grow-Entscheidungen
-- Transparente Quellenlage
-
-### 6.3 Diagnose und Tools
-
-Ziel:
-- Konkrete Handlungsempfehlungen statt nur Informationsanzeige
-
-Muss koennen:
-- Probleme strukturiert eingrenzen
-- Ergebnis direkt in Log/Plan ueberfuehren
-- Nachvollziehbarkeit im Verlauf sicherstellen
-
-### 6.4 Admin und Engine
-
-Ziel:
-- Qualitaet, Betrieb und Pipeline-Zuverlaessigkeit absichern
-
-Muss koennen:
-- Review-Workflows
-- Automation-Transparenz
-- Betriebsmetriken und schnelle Eingriffe
+Sie sind nicht das Produkt.
 
 ---
 
-## 7. North Star und KPI-Set
+# 3. Core Promise
 
-North Star Metric:
-- Weekly Active Grow Loops (WAGL)
+Ein Nutzer soll jederzeit wissen:
+
+* Was gerade wichtig ist
+* Was als Nächstes getan werden muss
+* Welche Probleme existieren
+* Wie diese Probleme gelöst werden
+
+SecretLeaf reduziert Unsicherheit.
+
+SecretLeaf reduziert Fehler.
+
+SecretLeaf verbessert Grow-Ergebnisse.
+
+---
+
+# 4. Vision
+
+Die weltweit vertrauenswürdigste Plattform für datenbasierten Cannabis-Anbau.
+
+Langfristig:
+
+Das zentrale Betriebssystem für private und professionelle Grower.
+
+---
+
+# 5. Product Principles
+
+## 5.1 Product First
+
+Workflows vor Content.
+
+Handlungen vor Informationen.
+
+Entscheidungen vor Artikeln.
+
+---
+
+## 5.2 Outcome First
+
+Nutzer kaufen keine Features.
+
+Nutzer kaufen Ergebnisse.
+
+Jedes Feature muss einen konkreten Nutzen liefern.
+
+---
+
+## 5.3 Simplicity First
+
+Komplexität wird aktiv reduziert.
+
+Wenn zwei Lösungen existieren:
+
+Die einfachere Lösung gewinnt.
+
+---
+
+## 5.4 Trust First
+
+Vertrauen ist wichtiger als Wachstum.
+
+Qualität ist wichtiger als Quantität.
+
+---
+
+## 5.5 Premium First
+
+SecretLeaf soll wirken wie:
+
+* Apple
+* Linear
+* Stripe
+* Notion
+* Vercel
+
+Nicht wie:
+
+* ein Hobbyprojekt
+* eine Content-Seite
+* ein KI-Prototyp
+
+---
+
+# 6. Target Users
+
+## Primary User
+
+Home Grower
+
+Merkmale:
+
+* baut privat an
+* möchte bessere Ergebnisse
+* dokumentiert ungern manuell
+* sucht schnelle Antworten
+
+---
+
+## Secondary User
+
+Fortgeschrittener Grower
+
+Merkmale:
+
+* mehrere Pflanzen
+* strukturierte Prozesse
+* datengetriebene Entscheidungen
+
+---
+
+## Future User
+
+Professionelle Cultivation Teams
+
+Nur langfristig relevant.
+
+---
+
+# 7. User Problems
+
+SecretLeaf existiert um folgende Probleme zu lösen:
+
+1. Unsicherheit
+
+"Was soll ich jetzt tun?"
+
+2. Fehler
+
+"Warum entwickelt sich die Pflanze schlecht?"
+
+3. Informationschaos
+
+"Wem kann ich vertrauen?"
+
+4. Dokumentation
+
+"Was habe ich letzte Woche gemacht?"
+
+5. Optimierung
+
+"Wie bekomme ich bessere Ergebnisse?"
+
+---
+
+# 8. Product Hierarchy
+
+## Tier 1
+
+Grow OS
+
+Kernprodukt.
+
+---
+
+## Tier 2
+
+Diagnose
+
+Unterstützt Grow OS.
+
+---
+
+## Tier 3
+
+Tools
+
+Unterstützen Entscheidungen.
+
+---
+
+## Tier 4
+
+Studien
+
+Unterstützen Wissen.
+
+---
+
+## Tier 5
+
+Wiki
+
+Unterstützt Lernen.
+
+---
+
+Wichtig:
+
+Tier 1 hat immer Priorität.
+
+---
+
+# 9. Core Product
+
+Das Herz von SecretLeaf ist der Grow Workflow.
+
+---
+
+Plan
+
+↓
+
+Aufgaben
+
+↓
+
+Dokumentation
+
+↓
+
+Analyse
+
+↓
+
+Diagnose
+
+↓
+
+Verbesserung
+
+---
+
+Jede neue Funktion muss diesen Workflow stärken.
+
+---
+
+# 10. North Star Metric
+
+Aktive Grow-Tage pro Nutzer.
 
 Definition:
-- Anzahl aktiver Nutzer pro Woche mit mindestens einem vollstaendigen Loop:
-  Setup/Plan oder Task-Aktion plus Log-Eintrag plus Rueckkehrsignal innerhalb 7 Tagen.
 
-Fuehrende Indikatoren:
-- Activation Rate: Erstes Setup innerhalb 24h
-- Time to First Value: Zeit bis erste hilfreiche Aktion
-- Task Completion Rate pro Woche
-- Log Continuity: aufeinanderfolgende Log-Tage
-- Diagnose-to-Log Conversion
-
-Nachlaufende Indikatoren:
-- 4-Wochen-Retention
-- Upgrade Rate auf Pro
-- Churn Rate Pro
-- NPS/CSAT in Kernflows
+Anzahl dokumentierter Grow-Tage innerhalb eines aktiven Grows.
 
 ---
 
-## 8. Monetarisierungsmodell
+Warum?
 
-Aktuelle Richtung:
-- Pro Abo fuer operative Mehrwerte im Grow-Alltag
-- Team-Modell als nachgelagerte Expansion
+Zeigt:
 
-Pro-Kernwert (muss klar erlebbar sein):
-- Tiefere Verlaufsanalyse
-- Erweiterte Diagnose- und Entscheidungsunterstuetzung
-- Priorisierte Automationen und Auswertungen
+* Nutzung
+* Retention
+* Produktwert
 
-Guardrail:
-- Kein Feature ohne plausible Verbindung zu Retention, Zahlungsbereitschaft oder beidem.
+gleichzeitig.
 
 ---
 
-## 9. Priorisierungssystem
+# 11. Success Metrics
 
-Bewertung je Initiative:
-- Impact (1-5)
-- Effort (1-5)
-- Confidence (1-5)
-- Priority Score = (Impact * Confidence) / Effort
+## Product
 
-Prioritaetsreihenfolge:
-1. Grow Core Loop Stabilitaet
-2. Retention-Mechaniken
-3. Monetarisierungsreife
-4. Skalierung und Expansion
+Aktive Grows
 
-Stop-Kriterien:
-- Unklare Nutzerwirkung
-- Kein messbarer KPI-Beitrag
-- Hohe technische Komplexitaet ohne strategischen Hebel
+Aktive Grow-Tage
+
+Retention
+
+Diagnose-Nutzung
 
 ---
 
-## 10. 90-Tage-Fokus
+## Business
 
-Jetzt:
-- Stripe Checkout plus Entitlements produktiv setzen
-- Pro Value Loop im Grow OS sichtbar machen
-- Sentry verbindlich aktivieren
-- Funnel Baseline messen
+Conversion
 
-Als naechstes:
-- Diagnose nahtlos mit Log verankern
-- Grow History und Vergleich nutzbar machen
-- Review-Durchsatz im Studies-Bereich verbessern
+MRR
 
-Spaeter:
-- Team-/B2B-Modelle mit klarer Zahlungslogik
-- Ausbau Lifecycle-Systeme auf belastbarer Datenbasis
+ARPU
+
+Churn
 
 ---
 
-## 11. Produktentscheidungen und Governance
+## Knowledge
 
-Pflicht vor groesseren Releases:
-1. Problemstatement und Zielmetrik
-2. KPI-Hypothese und Erfolgskriterium
-3. Scope-Definition und Nicht-Ziele
-4. Rollout-Plan inklusive Monitoring
-5. Post-Launch-Review innerhalb 14 Tage
+Wiki-Nutzung
 
-Entscheidungsregel:
-- Bei Konflikt zwischen Geschwindigkeit und Produktklarheit gewinnt Produktklarheit.
+Studien-Nutzung
+
+Suchanfragen
 
 ---
 
-## 12. Risiken
+# 12. What We Build
 
-Top-Risiken:
-- Feature-Wachstum ohne klaren Kernnutzen
-- Monetarisierung ohne starkes Pro-Wertversprechen
-- UI-Drift zwischen Domains
-- Abhaengigkeit von Legacy-Pfaden
+Hohe Priorität:
 
-Gegenmassnahmen:
-- Strikte Priorisierung ueber Kernmetriken
-- Einheitliche UX- und Design-System-Regeln
-- Laufende Architektur- und Scope-Kontrolle
+* Grow Tracking
+* Grow Journal
+* Diagnose
+* Automatisierung
+* Erinnerungen
+* Analyse
+* AI Unterstützung
 
 ---
 
-## 13. Dokument-Metadaten
+# 13. What We Do Not Build
 
-Owner: Product Engineering
-Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+Keine:
+
+* Social Media Plattform
+* allgemeine Cannabis-News
+* Marktplätze
+* Foren
+* irrelevanten Tools
+
+ohne direkten Bezug zum Grow Workflow.
+
+---
+
+# 14. Product Quality Standard
+
+Eine Funktion gilt erst als fertig wenn:
+
+* technisch stabil
+* verständlich
+* dokumentiert
+* mobil nutzbar
+* übersetzt
+* visuell konsistent
+
+---
+
+# 15. Experience Vision
+
+Der Nutzer soll das Gefühl haben:
+
+"Ich habe mein gesamtes Grow-Projekt unter Kontrolle."
+
+Nicht:
+
+"Ich nutze eine Website."
+
+---
+
+# 16. Design Relationship
+
+Alle Produktentscheidungen müssen mit:
+
+DESIGN_SYSTEM.md
+
+vereinbar sein.
+
+Wenn ein Feature die Einfachheit verschlechtert:
+
+Feature überarbeiten.
+
+---
+
+# 17. Localization Relationship
+
+Alle sichtbaren Texte müssen:
+
+* natürlich wirken
+* fachlich korrekt sein
+* konsistente Cannabis-Terminologie nutzen
+
+LOCALIZATION.md ist verpflichtend.
+
+---
+
+# 18. AI Strategy
+
+AI existiert nicht um AI zu zeigen.
+
+AI existiert um Entscheidungen zu verbessern.
+
+Schlechte AI wird entfernt.
+
+Nützliche AI wird ausgebaut.
+
+---
+
+# 19. Long-Term Vision
+
+SecretLeaf soll die erste Anlaufstelle werden für:
+
+* Planung
+* Dokumentation
+* Diagnose
+* Wissensmanagement
+
+im Cannabis-Anbau.
+
+Nicht die größte Plattform.
+
+Die nützlichste Plattform.
+
+---
+
+# 20. Final Rule
+
+Bei jeder Produktentscheidung fragen:
+
+Verbessert dies den Grow Workflow?
+
+Wenn nein:
+
+Nicht umsetzen.

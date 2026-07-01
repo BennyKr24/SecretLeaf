@@ -9,6 +9,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { storage, STORAGE_KEYS } from "@/lib/store";
 import type { Grow, LogEntry } from "@/lib/grow/types";
+import { generateId, isUuid } from "@/lib/grow/utils";
 
 const MIGRATION_FLAG = "secretleaf.migrated.v1";
 const CHUNK_SIZE = 200;
@@ -26,6 +27,62 @@ export function needsMigration(userId: string): boolean {
   return localStorage.getItem(MIGRATION_FLAG) !== userId;
 }
 
+// ── Legacy ID remapping ───────────────────────────────────────────────────────
+
+/**
+ * Early builds generated short non-UUID ids (e.g. "lop2k3f-ab12xy"), which the
+ * Supabase `uuid` columns reject. Before uploading we rewrite any legacy id to a
+ * fresh UUID while preserving grow → plant → log-entry relationships, and we
+ * persist the remapped data back to localStorage so the local cache stays
+ * consistent with the cloud.
+ *
+ * Idempotent: data that already uses UUIDs is returned unchanged.
+ */
+function remapLegacyIds(grows: Grow[], entries: LogEntry[]): { grows: Grow[]; entries: LogEntry[] } {
+  const growIdMap = new Map<string, string>();
+  const plantIdMap = new Map<string, string>();
+  let changed = false;
+
+  const remappedGrows: Grow[] = grows.map((grow) => {
+    const newGrowId = isUuid(grow.id) ? grow.id : generateId();
+    if (newGrowId !== grow.id) changed = true;
+    growIdMap.set(grow.id, newGrowId);
+
+    const plants = grow.plants.map((plant) => {
+      const newPlantId = isUuid(plant.id) ? plant.id : generateId();
+      if (newPlantId !== plant.id) changed = true;
+      plantIdMap.set(plant.id, newPlantId);
+      return { ...plant, id: newPlantId };
+    });
+
+    return { ...grow, id: newGrowId, plants };
+  });
+
+  const remappedEntries: LogEntry[] = entries.map((entry) => {
+    const newEntryId = isUuid(entry.id) ? entry.id : generateId();
+    if (newEntryId !== entry.id) changed = true;
+    const newGrowId = growIdMap.get(entry.growId) ?? entry.growId;
+    const newPlantId =
+      entry.plantId != null ? plantIdMap.get(entry.plantId) ?? entry.plantId : entry.plantId;
+    return { ...entry, id: newEntryId, growId: newGrowId, ...(newPlantId != null && { plantId: newPlantId }) };
+  });
+
+  if (changed) {
+    // Persist remapped data so the local cache matches what we upload.
+    storage.set(STORAGE_KEYS.GROWS, remappedGrows);
+    storage.set(STORAGE_KEYS.LOG_ENTRIES, remappedEntries);
+    const activeId = storage.get<string>(STORAGE_KEYS.ACTIVE_GROW_ID);
+    if (activeId != null) {
+      const mapped = growIdMap.get(activeId);
+      if (mapped != null && mapped !== activeId) {
+        storage.set(STORAGE_KEYS.ACTIVE_GROW_ID, mapped);
+      }
+    }
+  }
+
+  return { grows: remappedGrows, entries: remappedEntries };
+}
+
 // ── runMigration ──────────────────────────────────────────────────────────────
 
 /**
@@ -39,13 +96,16 @@ export async function runMigration(
   userId: string,
   supabase: SupabaseClient,
 ): Promise<void> {
-  const grows = storage.get<Grow[]>(STORAGE_KEYS.GROWS) ?? [];
-  const entries = storage.get<LogEntry[]>(STORAGE_KEYS.LOG_ENTRIES) ?? [];
+  const localGrows = storage.get<Grow[]>(STORAGE_KEYS.GROWS) ?? [];
+  const localEntries = storage.get<LogEntry[]>(STORAGE_KEYS.LOG_ENTRIES) ?? [];
 
-  if (grows.length === 0) {
+  if (localGrows.length === 0) {
     localStorage.setItem(MIGRATION_FLAG, userId);
     return;
   }
+
+  // Rewrite any legacy non-UUID ids before upload (and update the local cache).
+  const { grows, entries } = remapLegacyIds(localGrows, localEntries);
 
   // ── 1. Upsert grows ─────────────────────────────────────────────────────────
   const growRows = grows.map((g) => ({

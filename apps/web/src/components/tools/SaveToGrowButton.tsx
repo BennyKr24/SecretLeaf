@@ -1,8 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { getActiveGrow } from '@/lib/grow/store';
+import { Link } from '@/i18n/navigation';
+import type { Route } from 'next';
+import { useAuth } from '@/hooks/useAuth';
+import { getSupabaseBrowserClient } from '@/lib/supabaseBrowser';
+import { createLogEntry as dbCreateLogEntry } from '@/lib/grow/db';
+import { createLogEntry as storeCreateLogEntry, deleteLogEntry as storeDeleteLogEntry, getActiveGrow } from '@/lib/grow/store';
 import type { ToolResultData } from '@/lib/tools/types';
 
 type Props = {
@@ -12,21 +16,49 @@ type Props = {
   results: ToolResultData[];
 };
 
-/**
- * T-04 — "Save to Grow" button (structure only).
- *
- * Reads the active grow from localStorage on mount.
- * - No active grow → disabled with hint to start a grow first.
- * - Active grow found → enabled; actual save logic arrives in Phase 6.
- */
-export default function SaveToGrowButton({ toolSlug, summary }: Props) {
-  const [activeGrowName] = useState<string | null>(() => {
+export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props) {
+  const { user } = useAuth();
+  const [activeGrow] = useState(() => {
     if (typeof window === 'undefined') return null;
-    return getActiveGrow()?.name ?? null;
+    return getActiveGrow();
   });
-  const [checked, setChecked] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [error, setError] = useState<string | null>(null);
 
-  const hasGrow = activeGrowName !== null;
+  const hasGrow = activeGrow !== null;
+
+  async function handleSave(): Promise<void> {
+    if (!activeGrow || status === 'saving' || status === 'saved') return;
+
+    setStatus('saving');
+    setError(null);
+
+    const entry = storeCreateLogEntry({
+      growId: activeGrow.id,
+      date: new Date().toISOString(),
+      data: {
+        type: 'tool_result',
+        toolSlug,
+        toolTitle,
+        summary,
+      },
+      notes: `${toolTitle} in Grow gespeichert`,
+    });
+
+    try {
+      if (user) {
+        const supabase = getSupabaseBrowserClient();
+        await dbCreateLogEntry(supabase, user.id, entry);
+      }
+
+      setStatus('saved');
+    } catch (saveError) {
+      console.error('[tools] Save to grow failed:', saveError);
+      storeDeleteLogEntry(entry.id);
+      setStatus('error');
+      setError('Speichern fehlgeschlagen. Bitte erneut versuchen.');
+    }
+  }
 
   if (!hasGrow) {
     return (
@@ -44,27 +76,45 @@ export default function SaveToGrowButton({ toolSlug, summary }: Props) {
   }
 
   return (
-    <button
-      type="button"
-      disabled
-      title="Speichern wird in Phase 6 (Grow Log) implementiert"
-      onClick={() => setChecked(true)}
-      className="flex w-full items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-left opacity-70 transition-all hover:opacity-80 disabled:cursor-not-allowed"
-    >
-      <div className="flex items-center gap-2.5">
-        <span className="text-base">{checked ? '✓' : '💾'}</span>
-        <div>
-          <p className="text-sm font-semibold text-emerald-800">
-            In Grow speichern
-          </p>
-          <p className="text-xs text-emerald-600">
-            {activeGrowName} · {toolSlug} · {summary}
-          </p>
+    <div className="space-y-2">
+      <button
+        type="button"
+        disabled={status === 'saving' || status === 'saved'}
+        onClick={() => {
+          void handleSave();
+        }}
+        className="flex w-full items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-left transition-all hover:border-emerald-300 hover:bg-emerald-100/80 disabled:cursor-not-allowed disabled:opacity-70"
+      >
+        <div className="flex items-center gap-2.5">
+          <span className="text-base">
+            {status === 'saved' ? '✓' : status === 'saving' ? '⏳' : '💾'}
+          </span>
+          <div>
+            <p className="text-sm font-semibold text-emerald-800">
+              {status === 'saved' ? 'Im Grow gespeichert' : 'In Grow speichern'}
+            </p>
+            <p className="text-xs text-emerald-600">
+              {activeGrow.name} · {toolSlug} · {summary}
+            </p>
+          </div>
         </div>
-      </div>
-      <span className="flex-shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
-        Phase 6
-      </span>
-    </button>
+        <span className="flex-shrink-0 rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold text-emerald-700 shadow-sm">
+          {status === 'saved' ? 'Grow Log' : status === 'saving' ? 'Speichert...' : 'Jetzt sichern'}
+        </span>
+      </button>
+
+      {status === 'saved' && (
+        <Link
+          href={`/grow/${activeGrow.id}/log` as Route}
+          className="inline-flex items-center text-xs font-semibold text-emerald-700 hover:underline"
+        >
+          Zum Grow-Log wechseln →
+        </Link>
+      )}
+
+      {status === 'error' && error && (
+        <p className="text-xs font-medium text-rose-600">{error}</p>
+      )}
+    </div>
   );
 }

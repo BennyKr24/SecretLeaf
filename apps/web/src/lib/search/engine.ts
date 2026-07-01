@@ -659,7 +659,7 @@ function buildSuggestions(query: string, resultCount: number): string[] {
   const tokens = tokenize(query);
   const expanded = expandQuery(tokens);
   if (expanded.length > tokens.length) {
-    return [`Tipp: Versuche "${expanded.slice(0, 2).join(" ")}"`, "Wiki durchsuchen", "Dünger Katalog"];
+    return [`Tipp: Versuche "${expanded.slice(0, 2).join(" ")}"`, "Studien durchsuchen", "Dünger Katalog"];
   }
-  return ["Wiki durchsuchen", "Dünger Katalog", "VPD", "EC Dosierung"];
+  return ["Studien durchsuchen", "Dünger Katalog", "VPD", "EC Dosierung"];
 }

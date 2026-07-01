@@ -10,7 +10,7 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import { useCallback, useEffect, useState } from "react";
-import { getSession, clearSession } from "@/lib/auth";
+import { getSession, clearSession, restoreSessionFromSupabase } from "@/lib/auth";
 import { logoutFromSupabase } from "@/lib/auth";
 import type { SessionUser, UserPlan } from "@/lib/types";
 import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
@@ -111,6 +111,49 @@ export function useAuth(): AuthState {
       window.removeEventListener("secretleaf:profileUpdated", handleProfileUpdate);
     };
   }, [hydrate]);
+
+  // Validate the cached session against the LIVE Supabase session.
+  //
+  // The cached `secretleaf.session` token can outlive the actual Supabase auth
+  // session (e.g. after the access token expires and refresh fails). If we kept
+  // trusting it, the "authenticated" data path would run without a JWT and every
+  // RLS-protected write would be rejected (Postgres 42501) — silently losing the
+  // user's grows. Reconciling here guarantees `user` reflects a real Supabase
+  // session, and the `onAuthStateChange` subscription keeps it correct at runtime.
+  useEffect(() => {
+    let active = true;
+
+    const reconcile = () =>
+      restoreSessionFromSupabase()
+        .then((session) => {
+          if (!active) return;
+          setUser(session ? toAuthUser(session.user) : null);
+        })
+        .catch(() => {
+          // Network/API hiccup: leave the optimistic cached user in place rather
+          // than logging the user out on a transient failure.
+        });
+
+    void reconcile();
+
+    const supabase = getSupabaseBrowserClient();
+    const { data: authSub } = supabase.auth.onAuthStateChange((event, sbSession) => {
+      if (!active) return;
+      if (event === "SIGNED_OUT" || !sbSession) {
+        clearSession();
+        setUser(null);
+      } else {
+        // SIGNED_IN / TOKEN_REFRESHED / USER_UPDATED: re-derive from the live
+        // Supabase session (which also rewrites the cached custom session).
+        void reconcile();
+      }
+    });
+
+    return () => {
+      active = false;
+      authSub.subscription.unsubscribe();
+    };
+  }, []);
 
   // Trigger one-time localStorage → Supabase migration when user logs in
   useEffect(() => {

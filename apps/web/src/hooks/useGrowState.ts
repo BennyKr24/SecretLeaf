@@ -17,8 +17,8 @@ import type { Grow, CreateGrowInput, GrowPhaseId } from "@/lib/grow/types";
 import type { GrowUmgebung, GrowMedium, LichtTyp, Erfahrung, GrowStatus } from "@/lib/grow/types";
 import {
   getGrows,
-  getActiveGrow,
   getActiveGrowId,
+  buildGrow,
   createGrow as storeCreateGrow,
   updateGrow as storeUpdateGrow,
   deleteGrow as storeDeleteGrow,
@@ -37,7 +37,9 @@ import {
   getGrows as dbGetGrows,
   type GrowRow,
 } from "@/lib/grow/db";
+import { Analytics } from "@/lib/analytics";
 import { storage, STORAGE_KEYS } from "@/lib/store";
+import { captureGrowError } from "@/lib/grow/telemetry";
 
 // ── Supabase row → Grow mapper ────────────────────────────────────────────────
 
@@ -51,7 +53,7 @@ function rowToGrow(row: GrowRow): Grow {
     ...(row.licht_leistung !== null && { lichtLeistung: row.licht_leistung }),
     erfahrung: row.erfahrung as Erfahrung,
     pflanzenAnzahl: row.pflanzen_anzahl,
-    plants: [],                 // plants fetched in a later step
+    plants: row.plants,
     ...(row.flaeche !== null && { flaeche: row.flaeche }),
     startDate: row.start_date,
     currentPhaseId: row.current_phase_id as GrowPhaseId,
@@ -89,7 +91,7 @@ export type UseGrowStateReturn = {
    * sets it as the active grow if it is the first or its status is "aktiv".
    * Returns the newly created Grow.
    */
-  createGrow: (input: CreateGrowInput) => Grow;
+  createGrow: (input: CreateGrowInput) => Promise<Grow>;
 
   /**
    * Updates fields on an existing grow.
@@ -117,16 +119,11 @@ export type UseGrowStateReturn = {
 export function useGrowState(): UseGrowStateReturn {
   const { user } = useAuth();
   const [grows, setGrows] = useState<Grow[]>([]);
-  const [activeGrow, setActiveGrow] = useState<Grow | null>(null);
   const [loaded, setLoaded] = useState(false);
 
   // ── Local-state refresh (localStorage path) ─────────────────────────────────
   const refresh = useCallback(() => {
-    const allGrows = getGrows().map(withLiveDay);
-    setGrows(allGrows);
-
-    const active = getActiveGrow();
-    setActiveGrow(active !== null ? withLiveDay(active) : null);
+    setGrows(getGrows().map(withLiveDay));
   }, []);
 
   // ── Initial load ────────────────────────────────────────────────────────────
@@ -148,11 +145,22 @@ export function useGrowState(): UseGrowStateReturn {
     const supabase = getSupabaseBrowserClient();
     dbGetGrows(supabase)
       .then((rows) => {
-        setGrows(rows.map(rowToGrow));
+        const loadedGrows = rows.map(rowToGrow);
+        setGrows(loadedGrows);
+        storage.set(STORAGE_KEYS.GROWS, loadedGrows);
+        // On a new device localStorage has no active grow ID.
+        // Default to the most recently created grow so the dashboard isn't blank.
+        if (loadedGrows.length === 0) {
+          storage.remove(STORAGE_KEYS.ACTIVE_GROW_ID);
+        } else if (!getActiveGrowId()) {
+          const first = loadedGrows[0];
+          if (first) storeSetActiveGrow(first.id);
+        }
         setLoaded(true);
       })
       .catch((err) => {
         console.error("[grows] Supabase load failed, falling back to localStorage:", err);
+        captureGrowError("loadGrows", { userId: user.id }, err);
         refresh();
         setLoaded(true);
       });
@@ -171,38 +179,42 @@ export function useGrowState(): UseGrowStateReturn {
   // Anonymous users fall through to the plain localStorage path.
 
   const createGrow = useCallback(
-    (input: CreateGrowInput): Grow => {
+    async (input: CreateGrowInput): Promise<Grow> => {
       const plan = generateGrowPlan(input);
-      // Build the grow object via store (generates id, timestamps, plants)
-      const grow = storeCreateGrow(input, plan);
-      const growWithDay = withLiveDay(grow);
 
       if (!user) {
         // Anonymous: localStorage only (unchanged behaviour)
+        const grow = storeCreateGrow(input, plan);
         refresh();
         return grow;
       }
+
+      // Authenticated: do not write localStorage before the Supabase insert.
+      // A failed RLS/network insert must not leave a phantom local grow behind.
+      const grow = buildGrow(input, plan);
+      const growWithDay = withLiveDay(grow);
 
       // Optimistic: add to React state immediately
       setGrows((prev) => [growWithDay, ...prev]);
 
       const supabase = getSupabaseBrowserClient();
-      void (async () => {
-        try {
-          await dbCreateGrow(supabase, user.id, grow);
-          // Success: sync localStorage cache from current state
-          setGrows((current) => {
-            storage.set(STORAGE_KEYS.GROWS, current.map((g) =>
-              g.id === grow.id ? grow : g
-            ));
-            return current;
-          });
-        } catch (err) {
-          console.error("[grows] createGrow Supabase failed, rolling back:", err);
-          // Rollback: remove optimistic entry from state only
-          setGrows((prev) => prev.filter((g) => g.id !== grow.id));
-        }
-      })();
+      try {
+        await dbCreateGrow(supabase, user.id, grow);
+        // Success: sync localStorage cache from current state
+        setGrows((current) => {
+          storage.set(STORAGE_KEYS.GROWS, current.map((g) =>
+            g.id === grow.id ? grow : g
+          ));
+          if (grow.status === "aktiv") storeSetActiveGrow(grow.id);
+          return current;
+        });
+      } catch (err) {
+        console.error("[grows] createGrow Supabase failed, rolling back:", err);
+        captureGrowError("createGrow", { userId: user.id, growId: grow.id }, err);
+        // Rollback: remove optimistic entry from state only
+        setGrows((prev) => prev.filter((g) => g.id !== grow.id));
+        throw err;
+      }
 
       return grow;
     },
@@ -228,7 +240,7 @@ export function useGrowState(): UseGrowStateReturn {
       const supabase = getSupabaseBrowserClient();
       void (async () => {
         try {
-          await dbUpdateGrow(supabase, id, updates);
+          await dbUpdateGrow(supabase, user.id, id, updates);
           // Success: sync localStorage cache from current state
           setGrows((current) => {
             storage.set(STORAGE_KEYS.GROWS, current.map((g) =>
@@ -239,6 +251,7 @@ export function useGrowState(): UseGrowStateReturn {
           });
         } catch (err) {
           console.error("[grows] updateGrow Supabase failed, rolling back:", err);
+          captureGrowError("updateGrow", { userId: user.id, growId: id }, err);
           if (prev) setGrows((all) => all.map((g) => (g.id === id ? prev : g)));
         }
       })();
@@ -272,6 +285,7 @@ export function useGrowState(): UseGrowStateReturn {
           });
         } catch (err) {
           console.error("[grows] deleteGrow Supabase failed, rolling back:", err);
+          captureGrowError("deleteGrow", { userId: user.id, growId: id }, err);
           if (snapshot) setGrows((prev) => [snapshot, ...prev]);
         }
       })();
@@ -317,7 +331,7 @@ export function useGrowState(): UseGrowStateReturn {
       const supabase = getSupabaseBrowserClient();
       void (async () => {
         try {
-          await dbUpdateGrow(supabase, growId, { plan: updatedPlan });
+          await dbUpdateGrow(supabase, user.id, growId, { plan: updatedPlan });
           // Success: sync localStorage cache from current state
           setGrows((current) => {
             storage.set(STORAGE_KEYS.GROWS, current);
@@ -325,6 +339,7 @@ export function useGrowState(): UseGrowStateReturn {
           });
         } catch (err) {
           console.error("[grows] completeTask Supabase failed, rolling back:", err);
+          captureGrowError("completeTask", { userId: user.id, growId, taskId }, err);
           setGrows((all) => all.map((g) => (g.id === growId ? prev : g)));
         }
       })();
@@ -335,6 +350,10 @@ export function useGrowState(): UseGrowStateReturn {
   const advancePhase = useCallback(
     (growId: string, phaseId: GrowPhaseId): void => {
       if (!user) {
+        const localGrow = grows.find((g) => g.id === growId) ?? null;
+        if (localGrow && localGrow.currentPhaseId !== phaseId) {
+          Analytics.phaseAdvanced(localGrow.currentPhaseId, phaseId);
+        }
         storeAdvancePhase(growId, phaseId);
         refresh();
         return;
@@ -342,6 +361,9 @@ export function useGrowState(): UseGrowStateReturn {
 
       const prev = grows.find((g) => g.id === growId) ?? null;
       if (!prev) return;
+      if (prev.currentPhaseId !== phaseId) {
+        Analytics.phaseAdvanced(prev.currentPhaseId, phaseId);
+      }
 
       const now = new Date().toISOString();
       const optimistic = withLiveDay({ ...prev, currentPhaseId: phaseId, updatedAt: now });
@@ -352,7 +374,7 @@ export function useGrowState(): UseGrowStateReturn {
       const supabase = getSupabaseBrowserClient();
       void (async () => {
         try {
-          await dbUpdateGrow(supabase, growId, { currentPhaseId: phaseId });
+          await dbUpdateGrow(supabase, user.id, growId, { currentPhaseId: phaseId });
           // Success: sync localStorage cache from current state
           setGrows((current) => {
             storage.set(STORAGE_KEYS.GROWS, current);
@@ -360,6 +382,7 @@ export function useGrowState(): UseGrowStateReturn {
           });
         } catch (err) {
           console.error("[grows] advancePhase Supabase failed, rolling back:", err);
+          captureGrowError("advancePhase", { userId: user.id, growId, newPhaseId: phaseId }, err);
           setGrows((all) => all.map((g) => (g.id === growId ? prev : g)));
         }
       })();
@@ -367,10 +390,19 @@ export function useGrowState(): UseGrowStateReturn {
     [user, grows, refresh]
   );
 
+  // Derive activeGrow from the current grows list + the persisted active ID.
+  // This ensures correctness for all cases:
+  //   - Anonymous users: grows come from localStorage via refresh()
+  //   - Logged-in, same device: grows from Supabase, active ID from localStorage
+  //   - Logged-in, new device: grows from Supabase, active ID just set above
+  //   - After createGrow: storeCreateGrow() sets ACTIVE_GROW_ID, next render picks it up
+  const activeId = getActiveGrowId();
+  const derivedActiveGrow = activeId ? (grows.find((g) => g.id === activeId) ?? null) : null;
+
   return {
     grows,
-    activeGrow,
-    activeGrowId: getActiveGrowId(),
+    activeGrow: derivedActiveGrow,
+    activeGrowId: activeId,
     loaded,
     createGrow,
     updateGrow,

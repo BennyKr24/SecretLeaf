@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
+import { Link, useRouter } from '@/i18n/navigation';
 import type { Route } from 'next';
-import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { restoreSessionFromSupabase, logoutFromSupabase } from '@/lib/auth';

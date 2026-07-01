@@ -8,7 +8,7 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { useParams } from 'next/navigation';
 import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';
@@ -19,6 +19,8 @@ import { PHASE_ICONS, PHASE_ORDER } from '@/lib/grow/phases';
 import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
 import type { GrowTask, Grow, Plant, LogEntry, HarvestData } from '@/lib/grow/types';
 import SmartInsights from '@/components/SmartInsights';
+import GrowKnowledgePanel from '@/components/grow/GrowKnowledgePanel';
+import { Analytics } from '@/lib/analytics';
 import {
   getGrowHealthScore,
   getDailyAction,
@@ -45,9 +47,9 @@ function dayLabel(dueDay: number, currentDay: number): string {
 }
 
 function dayLabelClass(dueDay: number, currentDay: number): string {
-  if (dueDay < currentDay) return 'text-rose-600 font-semibold';
-  if (dueDay === currentDay) return 'text-emerald-700 font-semibold';
-  return 'text-slate-400';
+  if (dueDay < currentDay) return 'text-rose-400 font-semibold';
+  if (dueDay === currentDay) return 'text-primary font-semibold';
+  return 'text-muted-fg';
 }
 
 // ── Progress bars ─────────────────────────────────────────────────────────────
@@ -62,20 +64,20 @@ function GrowProgressBar({ grow }: { grow: Grow }) {
     <div className="space-y-3">
       <div>
         <div className="mb-1.5 flex items-center justify-between text-xs">
-          <span className="text-slate-500">Grow-Fortschritt</span>
-          <span className="font-semibold text-slate-700">Tag {grow.currentDay} / {grow.plan.totalDays}</span>
+          <span className="text-muted-fg">Grow-Fortschritt</span>
+          <span className="font-semibold text-foreground">Tag {grow.currentDay} / {grow.plan.totalDays}</span>
         </div>
-        <div className="h-2 overflow-hidden rounded-full bg-slate-100">
-          <div className="h-full rounded-full bg-emerald-500 transition-all duration-500" style={{ width: `${phaseProgress}%` }} />
+        <div className="h-2 overflow-hidden rounded-full bg-surface">
+          <div className="h-full rounded-full bg-primary transition-all duration-500" style={{ width: `${phaseProgress}%` }} />
         </div>
       </div>
       <div>
         <div className="mb-1.5 flex items-center justify-between text-xs">
-          <span className="text-slate-500">Tasks erledigt</span>
-          <span className="font-semibold text-slate-700">{completed} / {total}</span>
+          <span className="text-muted-fg">Tasks erledigt</span>
+          <span className="font-semibold text-foreground">{completed} / {total}</span>
         </div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
-          <div className="h-full rounded-full bg-teal-400 transition-all duration-500" style={{ width: `${percent}%` }} />
+        <div className="h-1.5 overflow-hidden rounded-full bg-surface">
+          <div className="h-full rounded-full bg-primary transition-all duration-500" style={{ width: `${percent}%` }} />
         </div>
       </div>
     </div>
@@ -95,20 +97,20 @@ function PhaseTimeline({ grow }: { grow: Grow }) {
           <div key={phase.id} className="flex items-center gap-1 flex-shrink-0">
             <div className="flex flex-col items-center gap-1">
               <div className={`flex h-8 w-8 items-center justify-center rounded-full text-sm transition-all ${
-                isActive ? 'bg-emerald-500 text-white ring-2 ring-emerald-200' :
-                isPast   ? 'bg-emerald-100 text-emerald-700' :
-                           'bg-slate-100 text-slate-400'
+                isActive ? 'bg-primary text-white ring-2 ring-primary/30' :
+                isPast   ? 'bg-primary/20 text-primary' :
+                           'bg-surface text-muted-fg'
               }`}>
                 {PHASE_ICONS[phase.id]}
               </div>
               <span className={`text-[9px] font-semibold whitespace-nowrap ${
-                isActive ? 'text-emerald-700' : isPast ? 'text-slate-400' : 'text-slate-300'
+                isActive ? 'text-primary' : isPast ? 'text-muted-fg' : 'text-muted-fg/50'
               }`}>
                 {phase.label.replace('phase', '').replace('Vegetations', 'Veg').replace('Spät', 'Spät')}
               </span>
             </div>
             {idx < grow.plan.phases.length - 1 && (
-              <div className={`mb-4 h-px w-4 flex-shrink-0 ${isPast ? 'bg-emerald-200' : 'bg-slate-200'}`} />
+              <div className={`mb-4 h-px w-4 flex-shrink-0 ${isPast ? 'bg-primary/30' : 'bg-border'}`} />
             )}
           </div>
         );
@@ -129,22 +131,22 @@ function TaskItem({ task, currentDay, onComplete }: TaskItemProps) {
   const overdue = task.dueDay < currentDay;
   return (
     <div className={`flex items-start gap-3 rounded-xl border px-4 py-3 transition-all ${
-      overdue ? 'border-rose-100 bg-rose-50/40' : 'border-slate-100 bg-white hover:border-emerald-100'
+      overdue ? 'border-rose-500/20 bg-rose-500/10' : 'border-border bg-card hover:border-primary/20'
     }`}>
       <button
         type="button"
         onClick={() => onComplete(task.id)}
         className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-all ${
           overdue
-            ? 'border-rose-300 hover:border-rose-500 hover:bg-rose-50'
-            : 'border-slate-300 hover:border-emerald-400 hover:bg-emerald-50'
+            ? 'border-rose-400/60 hover:border-rose-400 hover:bg-rose-500/10'
+            : 'border-border hover:border-primary/60 hover:bg-primary/10'
         }`}
         aria-label="Aufgabe erledigen"
       />
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-semibold text-slate-800">{task.title}</p>
+        <p className="text-sm font-semibold text-foreground">{task.title}</p>
         {task.description !== undefined && task.description !== '' && (
-          <p className="mt-0.5 text-xs text-slate-500 leading-snug">{task.description}</p>
+          <p className="mt-0.5 text-xs text-muted-fg leading-snug">{task.description}</p>
         )}
       </div>
       <div className="flex flex-shrink-0 flex-col items-end gap-1">
@@ -185,9 +187,9 @@ function getWorstReason(plantEntries: LogEntry[]): string {
 }
 
 const PLANT_STATUS_CONFIG: Record<PlantStatus, { label: string; classes: string }> = {
-  good:              { label: "OK",     classes: "bg-emerald-100 text-emerald-700" },
-  "needs-attention": { label: "Prüfen", classes: "bg-amber-100 text-amber-700"    },
-  "no-data":         { label: "Neu",    classes: "bg-slate-100 text-slate-500"     },
+  good:              { label: "OK",     classes: "bg-primary/20 text-primary"                      },
+  "needs-attention": { label: "Prüfen", classes: "bg-amber-500/15 text-amber-400"                  },
+  "no-data":         { label: "Neu",    classes: "bg-surface text-muted-fg border border-border"   },
 };
 
 /** True when a plant has no log in > 3 days OR no watering in > 3 days. */
@@ -241,7 +243,7 @@ function GrowPerformancePanel({
           : 'Dein Grow läuft nahe am vollen Potenzial.';
 
   const trendIcon  = !trend || trend.trend === 'stable' ? '→' : trend.trend === 'up' ? '↑' : '↓';
-  const trendColor = !trend || trend.trend === 'stable' ? 'text-slate-400' : trend.trend === 'up' ? 'text-emerald-500' : 'text-rose-500';
+  const trendColor = !trend || trend.trend === 'stable' ? 'text-muted-fg' : trend.trend === 'up' ? 'text-primary' : 'text-rose-400';
   const trendLabel =
     !trend || trend.trend === 'stable'
       ? 'Stabil'
@@ -251,15 +253,15 @@ function GrowPerformancePanel({
 
   if (isPro) {
     return (
-      <div className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50/60 p-4 shadow-sm space-y-3">
+      <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-orange-500/5 p-4 shadow-sm space-y-3">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <p className="text-[11px] font-black uppercase tracking-widest text-amber-700">📊 Ertrag-Performance</p>
+          <p className="text-[11px] font-black uppercase tracking-widest text-amber-400">📊 Ertrag-Performance</p>
           <span className="rounded-full bg-amber-500 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">PRO</span>
         </div>
 
         {/* Entry message — always visible before numbers */}
-        <p className="text-sm font-black text-rose-700 leading-snug">
+        <p className="text-sm font-black text-rose-400 leading-snug">
           {yieldImpact.totalLoss > 0
             ? lossMessage
             : 'Dein Grow läuft nahe am vollen Potenzial.'}
@@ -267,46 +269,46 @@ function GrowPerformancePanel({
 
         {/* Weekly loss rate */}
         {yieldImpact.weeklyLossRate > 0 && (
-          <p className="text-[11px] font-bold text-rose-600 leading-tight">
+          <p className="text-[11px] font-bold text-rose-400 leading-tight">
             ⚠ Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
           </p>
         )}
 
         {/* Projected yield vs Potential */}
-        <div className="rounded-xl border border-white bg-white/80 px-3 py-2.5 shadow-sm space-y-2">
+        <div className="rounded-xl border border-border bg-card px-3 py-2.5 space-y-2">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Wenn nichts geändert wird</p>
-              <p className="text-lg font-black text-slate-900 leading-tight mt-0.5">
+              <p className="text-[10px] font-semibold text-muted-fg uppercase tracking-wider">Wenn nichts geändert wird</p>
+              <p className="text-lg font-black text-foreground leading-tight mt-0.5">
                 ~{yieldImpact.projectedYield}g
-                <span className="text-sm font-semibold text-slate-400"> statt {yieldImpact.potentialYield}g möglich</span>
+                <span className="text-sm font-semibold text-muted-fg"> statt {yieldImpact.potentialYield}g möglich</span>
               </p>
             </div>
             {yieldImpact.lossPercent > 0 && (
-              <p className="text-sm font-black text-rose-600">−{yieldImpact.lossPercent}%</p>
+              <p className="text-sm font-black text-rose-400">−{yieldImpact.lossPercent}%</p>
             )}
           </div>
           {/* Progress bar */}
-          <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+          <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface">
             <div
               className={`h-full rounded-full transition-all duration-700 ${barColor}`}
               style={{ width: `${usedPercent}%` }}
             />
           </div>
-          <p className="text-[10px] text-slate-400 font-medium">{usedPercent}% des Potenzials genutzt</p>
+          <p className="text-[10px] text-muted-fg font-medium">{usedPercent}% des Potenzials genutzt</p>
         </div>
 
         {/* Stats row */}
         <div className="grid grid-cols-3 gap-2">
-          <div className="rounded-xl border border-rose-100 bg-white px-2 py-2 text-center shadow-sm">
-            <p className="text-base font-black text-rose-600">{yieldImpact.totalLoss > 0 ? `−${yieldImpact.totalLoss}g` : '—'}</p>
-            <p className="text-[9px] font-semibold text-rose-400 mt-0.5 leading-tight">Verlust-Risiko</p>
+          <div className="rounded-xl border border-rose-500/20 bg-card px-2 py-2 text-center">
+            <p className="text-base font-black text-rose-400">{yieldImpact.totalLoss > 0 ? `−${yieldImpact.totalLoss}g` : '—'}</p>
+            <p className="text-[9px] font-semibold text-rose-400/70 mt-0.5 leading-tight">Verlust-Risiko</p>
           </div>
-          <div className="rounded-xl border border-emerald-100 bg-white px-2 py-2 text-center shadow-sm">
-            <p className={`text-base font-black ${optScore >= 80 ? 'text-emerald-600' : optScore >= 50 ? 'text-amber-600' : 'text-rose-600'}`}>{optScore}%</p>
-            <p className="text-[9px] font-semibold text-slate-400 mt-0.5 leading-tight">Optimierung</p>
+          <div className="rounded-xl border border-primary/20 bg-card px-2 py-2 text-center">
+            <p className={`text-base font-black ${optScore >= 80 ? 'text-primary' : optScore >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>{optScore}%</p>
+            <p className="text-[9px] font-semibold text-muted-fg mt-0.5 leading-tight">Optimierung</p>
           </div>
-          <div className="rounded-xl border border-slate-100 bg-white px-2 py-2 text-center shadow-sm">
+          <div className="rounded-xl border border-border bg-card px-2 py-2 text-center">
             <p className={`text-base font-black ${trendColor}`}>{trendIcon}</p>
             <p className={`text-[9px] font-semibold mt-0.5 leading-tight ${trendColor}`}>{trendLabel}</p>
           </div>
@@ -314,7 +316,7 @@ function GrowPerformancePanel({
 
         {/* Momentum sentence */}
         {trend && trend.trend !== 'stable' && (
-          <p className={`text-[11px] font-semibold leading-tight ${trend.trend === 'up' ? 'text-emerald-700' : 'text-rose-600'}`}>
+          <p className={`text-[11px] font-semibold leading-tight ${trend.trend === 'up' ? 'text-primary' : 'text-rose-400'}`}>
             {trend.trend === 'up'
               ? `↑ Du hast deinen Grow seit dem letzten Besuch um +${trend.delta} Punkte verbessert.`
               : `↓ Dein Grow hat ${Math.abs(trend.delta)} Punkte verloren — jetzt gegensteuern.`}
@@ -323,7 +325,7 @@ function GrowPerformancePanel({
 
         {/* Recovery upside */}
         {yieldImpact.totalGainPotential > 0 && (
-          <p className="text-[11px] text-emerald-700 font-semibold leading-tight">
+          <p className="text-[11px] text-primary font-semibold leading-tight">
             ↑ +{yieldImpact.totalGainPotential}g mit dieser Aktion zurückholbar.
           </p>
         )}
@@ -334,15 +336,15 @@ function GrowPerformancePanel({
   // FREE — real % shown, exact grams blurred
   return (
     <Link href={'/pricing' as Route} className="block">
-      <div className="relative overflow-hidden rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50/60 p-4 shadow-sm">
+      <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-orange-500/5 p-4 shadow-sm">
 
         {/* Header visible to all */}
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[11px] font-black uppercase tracking-widest text-amber-700">📊 Ertrag-Performance</p>
+          <p className="text-[11px] font-black uppercase tracking-widest text-amber-400">📊 Ertrag-Performance</p>
         </div>
 
         {/* Entry message — always visible before numbers */}
-        <p className="text-sm font-black text-rose-700 mb-3">
+        <p className="text-sm font-black text-rose-400 mb-3">
           {yieldImpact.lossPercent >= 20
             ? 'Du verlierst gerade spürbar Ertrag.'
             : 'Dein Grow läuft unter seinem Potenzial.'}
@@ -350,16 +352,16 @@ function GrowPerformancePanel({
 
         {/* Weekly loss visible, gram projection locked */}
         {yieldImpact.weeklyLossRate > 0 && (
-          <p className="text-[11px] font-bold text-rose-600 mb-2 leading-tight">
+          <p className="text-[11px] font-bold text-rose-400 mb-2 leading-tight">
             ⚠ Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
           </p>
         )}
 
         {/* Progress bar with real %, projection locked */}
-        <div className="rounded-xl border border-white bg-white/80 px-3 py-2.5 shadow-sm space-y-2 mb-3">
+        <div className="rounded-xl border border-border bg-card px-3 py-2.5 space-y-2 mb-3">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">{usedPercent}% des Potenzials genutzt</p>
+              <p className="text-[10px] font-semibold text-muted-fg uppercase tracking-wider">{usedPercent}% des Potenzials genutzt</p>
             </div>
             {yieldImpact.lossPercent > 0 && (
               <p className="text-xs font-black text-rose-600">−{yieldImpact.lossPercent}% Verlustrisiko</p>
@@ -375,23 +377,23 @@ function GrowPerformancePanel({
 
         {/* Blurred stats — real values, hidden */}
         <div className="grid grid-cols-3 gap-2 blur-[4px] select-none pointer-events-none mb-3">
-          <div className="rounded-xl border border-rose-100 bg-white px-2 py-2 text-center">
-            <p className="text-base font-black text-rose-600">{yieldImpact.totalLoss > 0 ? `−${yieldImpact.totalLoss}g` : '—'}</p>
-            <p className="text-[9px] font-semibold text-rose-400 mt-0.5">Verlust-Risiko</p>
+          <div className="rounded-xl border border-rose-500/20 bg-card px-2 py-2 text-center">
+            <p className="text-base font-black text-rose-400">{yieldImpact.totalLoss > 0 ? `−${yieldImpact.totalLoss}g` : '—'}</p>
+            <p className="text-[9px] font-semibold text-rose-400/70 mt-0.5">Verlust-Risiko</p>
           </div>
-          <div className="rounded-xl border border-amber-100 bg-white px-2 py-2 text-center">
-            <p className="text-base font-black text-amber-600">{optScore}%</p>
-            <p className="text-[9px] font-semibold text-slate-400 mt-0.5">Optimierung</p>
+          <div className="rounded-xl border border-amber-500/20 bg-card px-2 py-2 text-center">
+            <p className="text-base font-black text-amber-400">{optScore}%</p>
+            <p className="text-[9px] font-semibold text-muted-fg mt-0.5">Optimierung</p>
           </div>
-          <div className="rounded-xl border border-slate-100 bg-white px-2 py-2 text-center">
+          <div className="rounded-xl border border-border bg-card px-2 py-2 text-center">
             <p className={`text-base font-black ${trendColor}`}>{trendIcon}</p>
             <p className={`text-[9px] font-semibold mt-0.5 ${trendColor}`}>{trendLabel}</p>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="flex items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-100/60 px-3 py-2.5">
-          <p className="text-xs font-bold text-amber-900 leading-snug">Du siehst nur einen Teil — PRO zeigt dir, was du noch verlierst.</p>
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2.5">
+          <p className="text-xs font-bold text-amber-300 leading-snug">Du siehst nur einen Teil — PRO zeigt dir, was du noch verlierst.</p>
           <span className="flex-shrink-0 rounded-full bg-amber-500 px-3 py-1.5 text-[10px] font-black text-white shadow-sm">🌟 PRO</span>
         </div>
       </div>
@@ -573,16 +575,16 @@ function GrowStatusHeader({
   prevScore?: number;
 }) {
   const colors = {
-    green:  { ring: 'ring-emerald-200 border-emerald-200', bg: 'bg-emerald-50',  text: 'text-emerald-700', score: 'text-emerald-600' },
-    yellow: { ring: 'ring-amber-200 border-amber-200',     bg: 'bg-amber-50',    text: 'text-amber-700',   score: 'text-amber-600'   },
-    red:    { ring: 'ring-rose-200 border-rose-200',       bg: 'bg-rose-50',     text: 'text-rose-700',    score: 'text-rose-600'    },
+    green:  { ring: 'ring-primary/30 border-primary/30',       bg: 'bg-primary/10',    text: 'text-primary',    score: 'text-primary'    },
+    yellow: { ring: 'ring-amber-500/30 border-amber-500/30',   bg: 'bg-amber-500/10',  text: 'text-amber-400',  score: 'text-amber-400'  },
+    red:    { ring: 'ring-rose-500/30 border-rose-500/30',     bg: 'bg-rose-500/10',   text: 'text-rose-400',   score: 'text-rose-400'   },
   }[status.color];
 
   const momentum = scoreToMomentum(score, prevScore);
 
   return (
     <div className={`flex items-center gap-4 rounded-2xl border px-4 py-3 ring-1 ${colors.bg} ${colors.ring}`}>
-      <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full ring-2 bg-white ${colors.ring}`}>
+      <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full ring-2 bg-card ${colors.ring}`}>
         <span className="text-2xl leading-none">{scoreToIcon(score)}</span>
       </div>
       <div className="min-w-0 flex-1">
@@ -665,23 +667,23 @@ function PlantComparisonBar({
   return (
     <div className="mb-3 flex items-stretch gap-2">
       {best && (
-        <div className="flex flex-1 items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2.5">
+        <div className="flex flex-1 items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-3 py-2.5">
           <span className="text-base leading-none">🟢</span>
           <div className="min-w-0">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">Beste Pflanze</p>
-            <p className="truncate text-xs font-bold text-emerald-800">{best.name}</p>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-primary">Beste Pflanze</p>
+            <p className="truncate text-xs font-bold text-foreground">{best.name}</p>
           </div>
         </div>
       )}
       {worst && (
-        <div className="flex flex-1 flex-col gap-2 rounded-xl border border-rose-300 bg-rose-50 px-3 py-2.5">
+        <div className="flex flex-1 flex-col gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2.5">
           <div className="flex items-start gap-2">
             <span className="text-base leading-none">🔴</span>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-rose-600">Braucht Pflege</p>
-              <p className="truncate text-xs font-bold text-rose-800">{worst.name}</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-rose-400">Braucht Pflege</p>
+              <p className="truncate text-xs font-bold text-foreground">{worst.name}</p>
               {worstReason && (
-                <p className="mt-0.5 text-[11px] leading-tight text-rose-500">{worstReason}</p>
+                <p className="mt-0.5 text-[11px] leading-tight text-rose-400/80">{worstReason}</p>
               )}
             </div>
           </div>
@@ -724,9 +726,9 @@ type PlantCardProps = {
 };
 
 const CARD_VARIANT_CLASSES: Record<PlantVariant, string> = {
-  default: "border-slate-200 bg-white hover:border-slate-300",
-  best:    "border-emerald-300 bg-emerald-50/40 hover:border-emerald-400",
-  worst:   "border-rose-300 bg-rose-50/40 hover:border-rose-400",
+  default: "border-border bg-card hover:border-border/80",
+  best:    "border-primary/40 bg-primary/10 hover:border-primary/60",
+  worst:   "border-rose-500/30 bg-rose-500/10 hover:border-rose-500/50",
 };
 
 function PlantCard({
@@ -754,21 +756,21 @@ function PlantCard({
   const { label: statusLabel, classes: statusClasses } = PLANT_STATUS_CONFIG[status];
   const microInsight = getPlantMicroInsight(plantEntries);
   const microInsightClass =
-    microInsight.level === 'good'     ? 'text-emerald-600' :
-    microInsight.level === 'critical' ? 'text-rose-600 font-semibold' :
-                                        'text-amber-600';
+    microInsight.level === 'good'     ? 'text-primary' :
+    microInsight.level === 'critical' ? 'text-rose-400 font-semibold' :
+                                        'text-amber-400';
 
   const baseClasses = isSelected
-    ? "border-emerald-400 bg-emerald-50/70 shadow-sm ring-1 ring-emerald-200"
+    ? "border-primary bg-primary/15 shadow-sm ring-1 ring-primary/20"
     : CARD_VARIANT_CLASSES[variant];
 
   return (
     <div className={`rounded-2xl border transition-all ${baseClasses}`}>
       {/* ── Critical alert strip ── */}
       {isCritical && !isSelected && (
-        <div className="flex items-center gap-1.5 border-b border-rose-200 bg-rose-100 px-4 py-1.5">
-          <span className="text-[11px]">&#x26A0;&#xFE0F;</span>
-          <span className="text-[11px] font-bold text-rose-700">Handlung nötig</span>
+        <div className="flex items-center gap-1.5 border-b border-rose-500/20 bg-rose-500/15 px-4 py-1.5">
+          <span className="text-[11px]">⚠️</span>
+          <span className="text-[11px] font-bold text-rose-400">Handlung nötig</span>
         </div>
       )}
       {/* ── Name + status ── */}
@@ -787,11 +789,11 @@ function PlantCard({
               if (e.key === "Escape") onCancel();
             }}
             onClick={(e) => e.stopPropagation()}
-            className="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-sm font-bold text-slate-800 focus:border-emerald-400 focus:outline-none"
+            className="min-w-0 flex-1 rounded-lg border border-border bg-background px-2 py-1 text-sm font-bold text-foreground focus:border-primary focus:outline-none"
             autoFocus
           />
         ) : (
-          <span className="min-w-0 flex-1 truncate text-sm font-bold text-slate-800">
+          <span className="min-w-0 flex-1 truncate text-sm font-bold text-foreground">
             {plant.name}
           </span>
         )}
@@ -816,33 +818,33 @@ function PlantCard({
             onChange={(e) => onDraftNotesChange(e.target.value)}
             placeholder="Notiz zur Pflanze…"
             rows={3}
-            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-700
-              placeholder:text-slate-300 focus:border-emerald-400 focus:outline-none resize-none"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground
+              placeholder:text-muted-fg/50 focus:border-primary focus:outline-none resize-none"
           />
           <div className="flex gap-2">
             <button
               type="button"
               onClick={onSaveNotes}
-              className="rounded-lg bg-emerald-600 px-3 py-1 text-xs font-bold text-white hover:bg-emerald-700"
+              className="rounded-lg bg-primary px-3 py-1 text-xs font-bold text-white hover:bg-primary-dark"
             >
               Speichern
             </button>
             <button
               type="button"
               onClick={onCancelNotes}
-              className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-50"
+              className="rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg hover:bg-surface"
             >
               Abbrechen
             </button>
           </div>
         </div>
       ) : plant.notes ? (
-        <div className="mx-4 mb-3 rounded-lg border border-slate-100 bg-slate-50 px-3 py-2">
-          <p className="text-[11px] text-slate-600 leading-relaxed whitespace-pre-wrap">{plant.notes}</p>
+        <div className="mx-4 mb-3 rounded-lg border border-border bg-surface px-3 py-2">
+          <p className="text-[11px] text-muted-fg leading-relaxed whitespace-pre-wrap">{plant.notes}</p>
           <button
             type="button"
             onClick={(e) => { e.stopPropagation(); onEditNotes(); }}
-            className="mt-1 text-[10px] font-semibold text-slate-400 hover:text-emerald-600 transition-colors"
+            className="mt-1 text-[10px] font-semibold text-muted-fg hover:text-primary transition-colors"
           >
             Notiz bearbeiten
           </button>
@@ -850,20 +852,20 @@ function PlantCard({
       ) : null}
 
       {/* ── Actions ── */}
-      <div className="flex items-center gap-2 border-t border-slate-100 px-4 py-2.5">
+      <div className="flex items-center gap-2 border-t border-border px-4 py-2.5">
         {isEditing ? (
           <>
             <button
               type="button"
               onClick={onSave}
-              className="rounded-lg bg-emerald-600 px-3 py-1 text-xs font-bold text-white hover:bg-emerald-700"
+              className="rounded-lg bg-primary px-3 py-1 text-xs font-bold text-white hover:bg-primary-dark"
             >
               Speichern
             </button>
             <button
               type="button"
               onClick={onCancel}
-              className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-500 hover:bg-slate-50"
+              className="rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg hover:bg-surface"
             >
               Abbrechen
             </button>
@@ -875,21 +877,21 @@ function PlantCard({
               className={`rounded-lg px-3 py-1 text-xs font-bold text-white transition active:scale-[0.97] ${
                 variant === "worst"
                   ? "bg-rose-600 hover:bg-rose-700"
-                  : "bg-emerald-600 hover:bg-emerald-700"
+                  : "bg-primary hover:bg-primary-dark"
               }`}
             >
               {variant === "worst" ? "+ Log jetzt" : "+ Log"}
             </Link>
             <Link
-              href={'/diagnose' as Route}
-              className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 transition hover:border-violet-300 hover:text-violet-600"
+              href={`/diagnose?growId=${growId}&plantId=${plant.id}` as Route}
+              className="rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg transition hover:border-primary/50 hover:text-primary"
             >
               Diagnose
             </Link>
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onRename(); }}
-              className="ml-auto rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-400 transition hover:bg-slate-50"
+              className="ml-auto rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg transition hover:bg-surface"
             >
               Umbenennen
             </button>
@@ -897,7 +899,7 @@ function PlantCard({
               <button
                 type="button"
                 onClick={(e) => { e.stopPropagation(); onEditNotes(); }}
-                className="rounded-lg border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-400 transition hover:bg-slate-50"
+                className="rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg transition hover:bg-surface"
               >
                 + Notiz
               </button>
@@ -927,35 +929,38 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
       notes: notes.trim() || undefined,
       recordedAt: new Date().toISOString(),
     } as HarvestData);
+    if (!existing) {
+      Analytics.harvestRecorded();
+    }
     setEditing(false);
   }
 
   if (!editing && existing) {
     return (
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50/40 p-5 shadow-sm">
+      <div className="rounded-2xl border border-primary/30 bg-primary/10 p-5 shadow-sm">
         <div className="flex items-center justify-between mb-3">
-          <p className="text-sm font-bold text-emerald-700">🌿 Ernte erfasst</p>
+          <p className="text-sm font-bold text-primary">🌿 Ernte erfasst</p>
           <button
             type="button"
             onClick={() => { setEditing(true); }}
-            className="text-xs font-semibold text-emerald-600 hover:underline"
+            className="text-xs font-semibold text-primary hover:underline"
           >
             Bearbeiten
           </button>
         </div>
         <div className="flex items-center gap-4">
           <div className="text-center">
-            <p className="text-2xl font-black text-emerald-700">{existing.grams}g</p>
-            <p className="text-[10px] uppercase tracking-wide text-emerald-600">Trockengewicht</p>
+            <p className="text-2xl font-black text-primary">{existing.grams}g</p>
+            <p className="text-[10px] uppercase tracking-wide text-primary/70">Trockengewicht</p>
           </div>
           <div className="flex gap-1">
             {[1,2,3,4,5].map(s => (
-              <span key={s} className={`text-xl ${s <= existing.rating ? 'text-amber-400' : 'text-slate-200'}`}>★</span>
+              <span key={s} className={`text-xl ${s <= existing.rating ? 'text-amber-400' : 'text-border'}`}>★</span>
             ))}
           </div>
         </div>
         {existing.notes && (
-          <p className="mt-3 rounded-xl bg-emerald-100/60 px-3 py-2 text-xs text-emerald-800 leading-relaxed">
+          <p className="mt-3 rounded-xl bg-primary/15 px-3 py-2 text-xs text-foreground leading-relaxed">
             {existing.notes}
           </p>
         )}
@@ -992,7 +997,7 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
                 key={s}
                 type="button"
                 onClick={() => setRating(s)}
-                className={`text-2xl transition-transform hover:scale-110 ${s <= rating ? 'text-amber-400' : 'text-slate-200'}`}
+                className={`text-2xl transition-transform hover:scale-110 ${s <= rating ? 'text-amber-400' : 'text-border'}`}
               >★</button>
             ))}
           </div>
@@ -1040,7 +1045,7 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
 export default function GrowPage({}: Props) {
   const { id } = useParams<{ id: string }>();
   const { grows, loaded, completeTask, updateGrow, advancePhase } = useGrowState();
-  const { entries } = useGrowLog(id);
+  const { entries, currentStreak } = useGrowLog(id);
   const { user } = useAuth();
   const isPro = user?.plan === 'pro' || user?.plan === 'team' || user?.role === 'TEAM';
 
@@ -1153,11 +1158,11 @@ export default function GrowPage({}: Props) {
 
   if (!loaded) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-4 py-10">
+      <main className="min-h-screen bg-background px-4 py-10">
         <div className="mx-auto max-w-2xl animate-pulse space-y-4">
-          <div className="h-8 w-64 rounded bg-slate-200" />
-          <div className="h-40 rounded-2xl bg-slate-100" />
-          <div className="h-64 rounded-2xl bg-slate-100" />
+          <div className="h-8 w-64 rounded bg-surface" />
+          <div className="h-40 rounded-2xl bg-surface/60" />
+          <div className="h-64 rounded-2xl bg-surface/60" />
         </div>
       </main>
     );
@@ -1165,14 +1170,14 @@ export default function GrowPage({}: Props) {
 
   if (notFound || !grow) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-50 px-5">
+      <main className="flex min-h-screen items-center justify-center bg-background px-5">
         <div className="space-y-4 text-center">
           <span className="text-5xl">🌿</span>
-          <h1 className="text-xl font-bold text-slate-900">Grow nicht gefunden</h1>
-          <p className="text-sm text-slate-500">Dieser Grow existiert nicht oder wurde gelöscht.</p>
+          <h1 className="text-xl font-bold text-foreground">Grow nicht gefunden</h1>
+          <p className="text-sm text-muted-fg">Dieser Grow existiert nicht oder wurde gelöscht.</p>
           <Link
             href={'/start' as Route}
-            className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white hover:bg-primary-dark"
           >
             🌱 Neuen Grow starten
           </Link>
@@ -1197,34 +1202,34 @@ export default function GrowPage({}: Props) {
   const showPerformancePanel = entries.length >= 3 || healthScore < 70;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-4 py-8 sm:px-6">
+    <main className="min-h-screen bg-background px-4 py-8 sm:px-6">
       <div className="mx-auto max-w-2xl space-y-5">
 
         {/* ── Daily Action Card ────────────────────────── */}
         <DailyActionCard action={dailyAction} scoreDelta={scoreDelta} isPro={isPro} />
 
         {/* ── Grow Overview ───────────────────────────── */}
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-          <div className="h-1.5 w-full bg-gradient-to-r from-emerald-400 to-teal-400" />
+        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          <div className="h-1.5 w-full bg-gradient-to-r from-primary to-primary-dark" />
           <div className="p-5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-600">Aktiver Grow</p>
-                <h1 className="mt-1 text-2xl font-bold text-slate-900">{grow.name}</h1>
-                <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">
+                <p className="text-[11px] font-bold uppercase tracking-widest text-primary">Aktiver Grow</p>
+                <h1 className="mt-1 text-2xl font-bold text-foreground">{grow.name}</h1>
+                <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-fg">
                   <span className="flex items-center gap-1">
                     <span>{currentPhase ? PHASE_ICONS[currentPhase.id] : '🌿'}</span>
-                    <span className="font-medium text-slate-700">{currentPhase?.label ?? '—'}</span>
+                    <span className="font-medium text-foreground">{currentPhase?.label ?? '—'}</span>
                   </span>
-                  <span className="text-slate-300">·</span>
+                  <span className="text-border">·</span>
                   <span>Tag {grow.currentDay}</span>
-                  <span className="text-slate-300">·</span>
+                  <span className="text-border">·</span>
                   <span>{grow.pflanzenAnzahl} {grow.pflanzenAnzahl === 1 ? 'Pflanze' : 'Pflanzen'}</span>
                 </div>
               </div>
-              <div className="flex-shrink-0 rounded-xl bg-emerald-50 px-3 py-1.5 text-center">
-                <span className="block text-lg font-black text-emerald-700">{percent}%</span>
-                <span className="text-[10px] font-medium text-emerald-600">erledigt</span>
+              <div className="flex-shrink-0 rounded-xl bg-primary/10 px-3 py-1.5 text-center">
+                <span className="block text-lg font-black text-primary">{percent}%</span>
+                <span className="text-[10px] font-medium text-primary/70">erledigt</span>
               </div>
             </div>
             <div className="mt-4"><GrowProgressBar grow={grow} /></div>
@@ -1244,12 +1249,12 @@ export default function GrowPage({}: Props) {
           if (!nextPhase) return null;
           const overdueDays = grow.currentDay - currentPhase.endDay;
           return (
-            <div className="rounded-2xl border border-emerald-300 bg-emerald-50/60 p-4 flex items-center justify-between gap-3 shadow-sm">
+            <div className="rounded-2xl border border-primary/30 bg-primary/10 p-4 flex items-center justify-between gap-3 shadow-sm">
               <div>
-                <p className="text-sm font-bold text-emerald-800">
+                <p className="text-sm font-bold text-foreground">
                   👉 Bereit für die nächste Phase
                 </p>
-                <p className="text-xs text-emerald-700 mt-0.5">
+                <p className="text-xs text-muted-fg mt-0.5">
                   {currentPhase.label} war vor {overdueDays} {overdueDays === 1 ? 'Tag' : 'Tagen'} geplant abgeschlossen zu sein.
                 </p>
               </div>
@@ -1277,8 +1282,8 @@ export default function GrowPage({}: Props) {
           />
         )}
 
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 className="mb-3 text-base font-bold text-slate-900">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <h2 className="mb-3 text-base font-bold text-foreground">
             Pflanzen ({grow.plants.length})
           </h2>
           {(() => {
@@ -1333,8 +1338,8 @@ export default function GrowPage({}: Props) {
 
         {/* ── Overdue tasks ────────────────────────────── */}
         {overdue.length > 0 && (
-          <div className="rounded-2xl border border-rose-200 bg-rose-50/60 p-5 shadow-sm">
-            <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-rose-700">
+          <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 p-5 shadow-sm">
+            <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-rose-400">
               <span>⚠️</span>
               {overdue.length === 1 ? '1 überfälliger Task' : `${overdue.length} überfällige Tasks`}
             </h2>
@@ -1347,21 +1352,21 @@ export default function GrowPage({}: Props) {
         )}
 
         {/* ── Upcoming tasks ───────────────────────────── */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-base font-bold text-slate-900">
+            <h2 className="text-base font-bold text-foreground">
               {upcoming.length === 0 ? 'Tasks' : `Nächste ${upcoming.length} Tasks`}
             </h2>
-            <Link href={`/grow/${grow.id}/log` as Route} className="text-xs font-semibold text-emerald-600 hover:underline">
+            <Link href={`/grow/${grow.id}/log` as Route} className="text-xs font-semibold text-primary hover:underline">
               Alle →
             </Link>
           </div>
 
           {upcoming.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-slate-200 py-8 text-center">
+            <div className="rounded-xl border border-dashed border-border py-8 text-center">
               <span className="text-3xl">✨</span>
-              <p className="mt-2 text-sm font-semibold text-slate-600">Alle Tasks erledigt!</p>
-              <p className="mt-1 text-xs text-slate-400">Keine weiteren Tasks für diesen Grow geplant.</p>
+              <p className="mt-2 text-sm font-semibold text-muted-fg">Alle Tasks erledigt!</p>
+              <p className="mt-1 text-xs text-muted-fg">Keine weiteren Tasks für diesen Grow geplant.</p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -1373,34 +1378,43 @@ export default function GrowPage({}: Props) {
         </div>
 
         {/* ── Quick Actions ────────────────────────────── */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 className="mb-3 text-sm font-bold text-slate-900">Schnellzugriff</h2>
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <h2 className="mb-3 text-sm font-bold text-foreground">Schnellzugriff</h2>
           <div className="grid grid-cols-3 gap-3">
             <Link
               href={`/grow/${grow.id}/log` as Route}
-              className="flex flex-col items-center gap-2 rounded-xl border border-slate-100 bg-slate-50 px-2 py-3 text-center transition hover:border-emerald-200 hover:bg-emerald-50"
+              className="flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3 text-center transition hover:border-primary/30 hover:bg-primary/10"
             >
               <span className="text-2xl">📓</span>
-              <span className="text-[11px] font-semibold text-slate-700 leading-tight">Log hinzufügen</span>
+              <span className="text-[11px] font-semibold text-muted-fg leading-tight">Log hinzufügen</span>
             </Link>
             <Link
               href={'/tools' as Route}
-              className="flex flex-col items-center gap-2 rounded-xl border border-slate-100 bg-slate-50 px-2 py-3 text-center transition hover:border-cyan-200 hover:bg-cyan-50"
+              className="flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3 text-center transition hover:border-primary/20 hover:bg-primary/10"
             >
               <span className="text-2xl">🧪</span>
-              <span className="text-[11px] font-semibold text-slate-700 leading-tight">Tools öffnen</span>
+              <span className="text-[11px] font-semibold text-muted-fg leading-tight">Tools öffnen</span>
             </Link>
             <Link
-              href={'/diagnose' as Route}
-              className="flex flex-col items-center gap-2 rounded-xl border border-slate-100 bg-slate-50 px-2 py-3 text-center transition hover:border-violet-200 hover:bg-violet-50"
+              href={`/diagnose?growId=${grow.id}` as Route}
+              className="flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3 text-center transition hover:border-primary/20 hover:bg-primary/10"
             >
               <span className="text-2xl">🩺</span>
-              <span className="text-[11px] font-semibold text-slate-700 leading-tight">Diagnose</span>
+              <span className="text-[11px] font-semibold text-muted-fg leading-tight">Diagnose</span>
             </Link>
           </div>
         </div>
 
         {/* ── Smart Insights ───────────────────────────── */}
+        <GrowKnowledgePanel
+          grow={grow}
+          entries={entries}
+          healthScore={healthScore}
+          currentStreak={currentStreak}
+          overdueTasks={overdue.length}
+          growsCount={grows.length}
+        />
+
         <SmartInsights grow={grow} />
 
         {/* ── Harvest Data ─────────────────────────────── */}
@@ -1413,13 +1427,13 @@ export default function GrowPage({}: Props) {
 
         {/* ── Phase description ────────────────────────── */}
         {currentPhase && (
-          <div className="rounded-2xl border border-slate-100 bg-slate-50/60 px-5 py-4">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Aktuelle Phase</p>
-            <p className="mt-1 font-semibold text-slate-800">
+          <div className="rounded-2xl border border-border bg-surface px-5 py-4">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-muted-fg">Aktuelle Phase</p>
+            <p className="mt-1 font-semibold text-foreground">
               {PHASE_ICONS[currentPhase.id]} {currentPhase.label}
             </p>
-            <p className="mt-1 text-sm text-slate-500 leading-relaxed">{currentPhase.description}</p>
-            <p className="mt-2 text-xs text-slate-400">
+            <p className="mt-1 text-sm text-muted-fg leading-relaxed">{currentPhase.description}</p>
+            <p className="mt-2 text-xs text-muted-fg">
               Tag {currentPhase.startDay}–{currentPhase.endDay} · noch {Math.max(0, currentPhase.endDay - grow.currentDay + 1)} Tage
             </p>
           </div>

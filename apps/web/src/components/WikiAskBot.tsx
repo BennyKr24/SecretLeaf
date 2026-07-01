@@ -8,7 +8,7 @@ import {
   type FormEvent,
   type KeyboardEvent,
 } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { wikiArticles, categoryLabels } from '@/data/terpira/wiki';
 import type { TerpiraArticle } from '@/lib/terpira/types';
@@ -271,7 +271,7 @@ export default function WikiAskBot() {
       {/* ── Floating Trigger ──────────────────────────────────────── */}
       <button
         onClick={() => setOpen(true)}
-        aria-label="Wiki-Bot öffnen"
+        aria-label="Studien-Assistent öffnen"
         className={`
           fixed bottom-6 right-6 z-50 flex items-center gap-2
           rounded-full px-4 py-3 shadow-xl transition-all duration-300
@@ -285,14 +285,14 @@ export default function WikiAskBot() {
             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
           />
         </svg>
-        <span className="text-sm font-semibold">Wiki-Bot</span>
+        <span className="text-sm font-semibold">Studien-Assistent</span>
         <span className="inline-flex h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
       </button>
 
       {/* ── Panel Overlay ─────────────────────────────────────────── */}
       {open && (
         <div className="fixed inset-0 z-50 flex items-end justify-end sm:items-end p-4 sm:p-6"
-          role="dialog" aria-modal aria-label="Wiki-Bot">
+          role="dialog" aria-modal aria-label="Studien-Assistent">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/20 backdrop-blur-sm"
@@ -312,7 +312,7 @@ export default function WikiAskBot() {
                   🤖
                 </div>
                 <div>
-                  <p className="font-bold text-sm">Wiki-Bot</p>
+                  <p className="font-bold text-sm">Studien-Assistent</p>
                   <p className="text-xs text-emerald-200">Auf Basis von {wikiArticles.length} Artikeln</p>
                 </div>
               </div>
@@ -338,7 +338,7 @@ export default function WikiAskBot() {
                 <div className="space-y-4">
                   <div className="rounded-xl bg-card border border-border p-4 shadow-sm">
                     <p className="text-sm text-slate-600">
-                      Hallo! Ich bin der <strong className="text-slate-900">Wiki-Bot</strong>.
+                      Hallo! Ich bin der <strong className="text-slate-900">Studien-Assistent</strong>.
                       Frag mich alles rund um Cannabis – ich durchsuche
                       alle {wikiArticles.length} Artikel für dich und fasse die wichtigsten
                       Punkte zusammen.
@@ -392,7 +392,7 @@ export default function WikiAskBot() {
                               />
                             ))}
                           </span>
-                          <span className="text-xs text-slate-400">Durchsuche Wiki…</span>
+                          <span className="text-xs text-slate-400">Durchsuche Studien…</span>
                         </div>
                       ) : msg.role === 'user' ? (
                         <div className="rounded-2xl rounded-tr-sm bg-primary px-4 py-2.5
@@ -443,7 +443,7 @@ export default function WikiAskBot() {
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={handleKey}
-                  placeholder="Frag das Wiki…"
+                  placeholder="Frag zu Studien, Tools oder Diagnose…"
                   disabled={loading}
                   className="flex-1 rounded-xl border border-border bg-background px-4 py-2.5
                     text-sm text-foreground placeholder:text-slate-400 outline-none

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { Route } from "next";
 import { getTranslations } from "next-intl/server";
@@ -97,7 +97,7 @@ function ProductDashboardMock() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-base font-semibold text-slate-100">OG Kush</p>
-                      <p className="text-xs text-slate-400">Bluete · Tag 42</p>
+                      <p className="text-xs text-slate-400">Blüte · Tag 42</p>
                     </div>
                     <p className="text-sm font-semibold text-emerald-300">67%</p>
                   </div>
@@ -112,19 +112,19 @@ function ProductDashboardMock() {
                       <p className="font-semibold text-emerald-200">Sehr gut</p>
                     </div>
                     <div>
-                      <p className="text-slate-500">Bewaesserung</p>
+                      <p className="text-slate-500">Bewässerung</p>
                       <p className="font-semibold text-slate-200">In 2 Tagen</p>
                     </div>
                     <div>
-                      <p className="text-slate-500">Naechste Aufgabe</p>
-                      <p className="font-semibold text-amber-200">Duengen</p>
+                      <p className="text-slate-500">Nächste Aufgabe</p>
+                      <p className="font-semibold text-amber-200">Düngen</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
-                <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Uebersicht</p>
+                <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Übersicht</p>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {[
                     { label: "Temperatur", value: "25 C", tone: "text-emerald-200" },
@@ -142,9 +142,9 @@ function ProductDashboardMock() {
 
               <div className="grid gap-2 sm:grid-cols-[1.4fr_1fr]">
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
-                  <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Letzte Aktivitaet</p>
+                  <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Letzte Aktivität</p>
                   <div className="flex items-center justify-between text-sm text-slate-300">
-                    <span>Bewaesserung · 2.5L · pH 6.3</span>
+                    <span>Bewässerung · 2.5L · pH 6.3</span>
                     <span className="text-slate-500">Heute, 08:30</span>
                   </div>
                 </div>
@@ -169,7 +169,7 @@ function HeroPlantDecor() {
 
       <Image
         src="https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&w=900&q=80"
-        alt="Cannabis Blaetter"
+        alt="Cannabis-Blätter"
         width={900}
         height={1200}
         className="absolute right-[-42px] top-6 h-[620px] w-[310px] object-cover opacity-90 mix-blend-screen sl-photo-leaf sl-plant-leaf--slow"
@@ -257,7 +257,7 @@ export default async function LandingPage() {
 
       <section className="border-b border-white/5 bg-[#040b09]" data-reveal>
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
-          <p className="text-center text-xs uppercase tracking-[0.22em] text-slate-500">Vertraut von ueber 10.000 Growern weltweit</p>
+          <p className="text-center text-xs uppercase tracking-[0.22em] text-slate-500">Vertraut von über 10.000 Growern weltweit</p>
           <div className="mt-4 grid grid-cols-2 gap-3 text-center text-sm text-slate-400 sm:grid-cols-3 lg:grid-cols-6">
             {[
               "GROWER.CH",
@@ -309,7 +309,7 @@ export default async function LandingPage() {
               },
               {
                 title: "AI Diagnose",
-                body: "Erkenne Probleme fruehzeitig und erhalte priorisierte Handlungsempfehlungen.",
+                body: "Erkenne Probleme frühzeitig und erhalte priorisierte Handlungsempfehlungen.",
                 href: "/diagnose",
                 badge: "Risk Detection",
               },
@@ -321,7 +321,7 @@ export default async function LandingPage() {
               },
               {
                 title: "Studien & Wissen",
-                body: "Treffe fundierte Entscheidungen auf Basis gepruefter Quellen.",
+                body: "Treffe fundierte Entscheidungen auf Basis geprüfter Quellen.",
                 href: "/studies",
                 badge: "Evidence Layer",
               },
@@ -383,12 +383,12 @@ export default async function LandingPage() {
               <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-300/80">Workflow</p>
               <h3 className="mt-2 text-2xl font-semibold text-white">Von Setup bis Ernte in einem Flow</h3>
               <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
-                Start mit einem Setup, fuehre taegliche Tasks aus, protokolliere Events und optimiere automatisch mit Diagnose plus Studienkontext.
+                Starte mit einem Setup, führe tägliche Aufgaben aus, protokolliere Events und optimiere automatisch mit Diagnose plus Studienkontext.
               </p>
               <div className="mt-6 space-y-2">
                 {[
                   "Setup Wizard mit Phase, Substrat und Zielprofil",
-                  "Task Board mit Prioritaet und Faelligkeit",
+                  "Task Board mit Priorität und Fälligkeit",
                   "Health, VPD, pH und Diagnose in einem Blick",
                   "Lernschleife mit evidenzbasierten Empfehlungen",
                 ].map((point) => (
@@ -409,7 +409,7 @@ export default async function LandingPage() {
               <div className="mt-6 grid grid-cols-2 gap-2">
                 {[
                   { label: "Aktive Sessions", value: "1.842" },
-                  { label: "Woechentliche Logs", value: "18k+" },
+                  { label: "Wöchentliche Logs", value: "18k+" },
                   { label: "Validierte Quellen", value: `${sourceCount}+` },
                   { label: "Diagnose-Hitrate", value: "92%" },
                 ].map((metric) => (
@@ -441,7 +441,7 @@ export default async function LandingPage() {
               Nicht nur eine Sammlung von Tools.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
-              Genau die Richtung deines Referenzbilds: Produkt zuerst, klare Datenhierarchie, Premium-Visuals und ein konsistenter SaaS-Look ueber die gesamte Homepage.
+              Genau die Richtung deines Referenzbilds: Produkt zuerst, klare Datenhierarchie, Premium-Visuals und ein konsistenter SaaS-Look über die gesamte Homepage.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <CTAButton href="/start" size="lg" variant="primary">Jetzt kostenlos starten</CTAButton>

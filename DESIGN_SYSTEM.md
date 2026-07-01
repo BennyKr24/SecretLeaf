@@ -1,283 +1,612 @@
+# DESIGN_SYSTEM.md
+
 # SecretLeaf Design System
 
-## 1. Zweck
+Version: 2.0
 
-Dieses Dokument definiert die verbindlichen Design-System-Regeln fuer SecretLeaf.
-Es sichert Konsistenz, Lesbarkeit, Geschwindigkeit in der Umsetzung und Markenwiedererkennung.
+Status: Active
 
-Scope:
-- Foundations (Farbe, Typografie, Spacing, Grid, Motion)
-- Komponentenprinzipien
-- Accessibility- und i18n-Regeln
-- Governance fuer Aenderungen
+Owner: Product & Design
 
 ---
 
-## 2. Design-Prinzipien
+# 1. Purpose
 
-1. Klarheit vor Dekoration
-- Jede Flaeche muss den naechsten Schritt sichtbar machen.
+Dieses Dokument definiert die visuelle Identität, UX-Prinzipien und Produktdarstellung von SecretLeaf.
 
-2. Ein Screen, eine primaere Handlung
-- Keine konkurrierenden Haupt-CTAs.
+Ziel:
 
-3. Operative Lesbarkeit
-- Informationen fuer Grow-Entscheidungen muessen in Sekunden erfassbar sein.
+Jede Seite soll wirken wie ein professionelles Softwareprodukt.
 
-4. Konsistenz ueber Domains
-- Grow, Studies, Diagnose und Admin sprechen dieselbe visuelle Sprache.
+Nicht wie:
 
-5. Semantische Tokens statt Ad-hoc-Styling
-- Keine direkten Hex-Farben in Komponenten-Logik.
+* ein Blog
+* ein Dashboard-Template
+* eine Tool-Sammlung
+* ein KI-Projekt
+* eine Cannabis-Webseite
 
----
+Sondern wie:
 
-## 3. Brand und Tonalitaet
-
-Markencharakter:
-- Praezise
-- Vertrauenswuerdig
-- Ruhig, aber handlungsorientiert
-
-UI-Stimme:
-- Kurz, eindeutig, ohne Marketingfloskeln
-- Aktionen als Verben formulieren
-- Status immer explizit benennen
+* Apple
+* Linear
+* Stripe
+* Notion
+* Vercel
 
 ---
 
-## 4. Foundations
+# 2. Design Philosophy
 
-### 4.1 Farbsystem
+## 2.1 Product First
 
-Regel:
-- Farben ueber semantische Rollen, nicht ueber Zufallseinsatz.
+Das Produkt steht immer im Mittelpunkt.
 
-Core Tokens (Beispiel):
-- color.bg.default: #0f1412
-- color.bg.surface: #161d1a
-- color.bg.elevated: #1e2824
-- color.text.primary: #ecf3ef
-- color.text.muted: #a7b8af
-- color.border.default: #2f3d37
-- color.action.primary: #6bbf59
-- color.action.primaryHover: #7ccd68
-- color.state.success: #4fbf8f
-- color.state.warning: #e0b24f
-- color.state.error: #d96868
-- color.state.info: #63a6e0
+Nicht Marketing.
 
-Kontrastanforderung:
-- Mindestkontrast fuer Text: WCAG AA
+Nicht Deko.
 
-### 4.2 Typografie
+Nicht Features.
 
-Rollen:
-- Display: grosse Headlines
-- Heading: Abschnittsueberschriften
-- Body: Standardtext
-- Label: Form/Meta/Badges
-- Mono: Datenwerte und technische Marker
+Nutzer sollen das Produkt sehen.
 
-Empfohlene Groessen:
-- Display: 36/44
-- H1: 30/38
-- H2: 24/32
-- H3: 20/28
-- Body: 16/24
-- Small: 14/20
-- Caption: 12/16
+Nicht darüber lesen.
 
-Regeln:
-- Maximal zwei Schriftfamilien
-- Zeilenlaenge fuer Fliesstext ideal 60-80 Zeichen
-- Keine vollstaendig grossgeschriebenen laengeren CTA-Texte
+---
 
-### 4.3 Spacing und Layout
+## 2.2 Simplicity Wins
 
-Spacing Scale:
-- 4, 8, 12, 16, 24, 32, 48, 64
+Weniger gewinnt.
 
-Layout-Regeln:
-- Konsistente vertikale Rhythmen
-- Genug Luft zwischen Gruppen mit unterschiedlicher Funktion
-- Keine ungeplanten Mischabstaende
+Jedes zusätzliche Element benötigt eine Rechtfertigung.
 
-Grid:
-- Desktop: 12 Spalten
-- Tablet: 8 Spalten
-- Mobile: 4 Spalten
+Wenn ein Element entfernt werden kann, ohne den Kernnutzen zu verlieren:
 
-### 4.4 Radius, Border, Shadow
+Entfernen.
 
-Radius:
-- xs: 4
-- sm: 8
-- md: 12
-- lg: 16
-- xl: 24
+---
 
-Border:
-- Standard: 1px solid color.border.default
-- Focus: 2px mit klarer Kontrastfarbe
+## 2.3 Premium Before Density
 
-Shadow (sparsam):
-- Nur fuer Layer-Hierarchie, nicht als Deko-Muster
+Premium-Wirkung ist wichtiger als Informationsmenge.
 
-### 4.5 Motion
+Lieber:
 
-Leitlinie:
-- Motion erklaert Strukturveraenderung oder Feedback.
+* 5 perfekte Elemente
+
+als:
+
+* 20 durchschnittliche Elemente
+
+---
+
+## 2.4 Calm Interfaces
+
+Interfaces sollen ruhig wirken.
+
+Vermeiden:
+
+* visuelles Chaos
+* aggressive Farben
+* übermäßige Animationen
+* unnötige Icons
+
+---
+
+# 3. Brand Positioning
+
+SecretLeaf ist:
+
+"Das Grow Operating System"
+
+SecretLeaf ist nicht:
+
+* Wikipedia für Cannabis
+* Grow Blog
+* Tool Verzeichnis
+* Rechner Sammlung
+
+Alle Designs müssen dieses Selbstverständnis unterstützen.
+
+---
+
+# 4. Visual Identity
+
+## Stil
+
+Modern.
+
+Premium.
+
+Minimalistisch.
+
+Technologisch.
+
+Vertrauenswürdig.
+
+---
+
+## Referenzen
+
+Primär:
+
+* Apple
+* Linear
+* Stripe
+
+Sekundär:
+
+* Arc Browser
+* Notion
+* Vercel
+
+---
+
+## Verbotene Referenzen
+
+Nicht orientieren an:
+
+* Admin Templates
+* Bootstrap Dashboards
+* Themeforest Layouts
+* KI Landing Pages
+* Crypto Websites
+
+---
+
+# 5. Color System
+
+## Background
+
+Primary:
+#05070A
+
+Secondary:
+#0A1115
+
+Surface:
+#101820
+
+---
+
+## Brand Green
+
+Primary:
+#22C55E
+
+Secondary:
+#16A34A
+
+Hover:
+#34D399
+
+---
+
+## Text
+
+Primary:
+#FFFFFF
+
+Secondary:
+rgba(255,255,255,0.72)
+
+Muted:
+rgba(255,255,255,0.50)
+
+---
+
+## Status
+
+Success:
+#22C55E
+
+Warning:
+#FACC15
+
+Error:
+#EF4444
+
+Info:
+#38BDF8
+
+---
+
+# 6. Typography
+
+## Font
+
+Primary:
+
+Inter
+
+Fallback:
+
+System UI
+
+---
+
+## Hero Heading
+
+72px–96px
+
+Weight:
+700–800
+
+Max 2 Zeilen.
+
+---
+
+## Section Heading
+
+36px–48px
+
+Weight:
+700
+
+---
+
+## Body
+
+16px–18px
+
+Line Height:
+1.6
+
+---
+
+# 7. White Space Rules
+
+Mehr Weißraum.
+
+Mehr Ruhe.
+
+Mehr Fokus.
+
+---
+
+Minimum Section Padding:
+
+120px
+
+---
+
+Card Padding:
+
+24px–32px
+
+---
+
+Hero Padding:
+
+160px+
+
+---
+
+# 8. Layout Principles
+
+## Desktop
+
+Content Max Width:
+
+1400px
+
+---
+
+Hero Layout
+
+40 % Text
+
+60 % Produkt
+
+---
+
+Produkt immer größer als Marketingtext.
+
+---
+
+# 9. Hero Section Rules
+
+Hero Sections sind die wichtigste Komponente.
+
+---
+
+Maximal:
+
+* 1 Headline
+* 1 Subheadline
+* 2 CTA Buttons
+* 1 Haupt-Mockup
+
+---
+
+Nicht erlaubt:
+
+* 10 Karten
+* Statistikwände
+* Toolübersichten
+* Featuregalerien
+
+---
+
+Hero Ziel:
+
+Innerhalb von 3 Sekunden beantworten:
+
+1. Was ist SecretLeaf?
+2. Warum brauche ich es?
+3. Was mache ich als Nächstes?
+
+---
+
+# 10. Product Mockup Rules
+
+Produkt-Mockups sind keine Wireframes.
+
+Produkt-Mockups sind keine Illustrationen.
+
+Produkt-Mockups sind keine Platzhalter.
+
+---
+
+Sie müssen zeigen:
+
+* echte Pflanzen
+* echte Daten
+* echte Diagnosen
+* echte Workflows
+* echten Nutzen
+
+---
+
+Verboten:
+
+* leere States
+* generische Symbole
+* Dummy Inhalte
+* Beispieltexte
+
+---
+
+# 11. Product Presentation Philosophy
+
+Produkte verkaufen Ergebnisse.
+
+Nicht Interfaces.
+
+---
+
+Deshalb zeigen wir:
+
+* Pflanzen
+* Fortschritt
+* Aufgaben
+* Diagnosen
+* Erkenntnisse
+
+Nicht:
+
+* Menüs
+* Navigationen
+* technische Einstellungen
+
+---
+
+# 12. Visual Density Rules
+
+Wenn zwei Elemente denselben Zweck erfüllen:
+
+Eines entfernen.
+
+---
+
+Wenn eine Information nicht kritisch ist:
+
+Ausblenden.
+
+---
+
+Wenn ein Bereich überladen wirkt:
+
+Reduzieren.
+
+---
+
+Fokus schlägt Informationsmenge.
+
+---
+
+# 13. Cards
+
+Cards sind sekundär.
+
+Nicht das Hauptelement.
+
+---
+
+Cards:
+
+* Radius 20–24px
+* dezente Border
+* subtile Schatten
+* dunkle Flächen
+
+---
+
+Keine übertriebenen Glows.
+
+Keine Neon-Effekte.
+
+---
+
+# 14. Buttons
+
+Primary:
+
+Brand Green
+
+---
+
+Secondary:
+
+Ghost
+
+---
+
+Nur eine Primary Action pro Bereich.
+
+---
+
+# 15. Animations
+
+Animationen müssen funktional sein.
+
+---
 
 Dauer:
-- Fast: 120ms
-- Base: 180ms
-- Slow: 260ms
 
-Easing:
-- Standard: ease-out
-- Entry: cubic-bezier(0.2, 0.8, 0.2, 1)
-
-Reduzierte Bewegung:
-- Respect prefers-reduced-motion; keine kritische Information nur ueber Animation.
+150–300ms
 
 ---
 
-## 5. Interaktionsmuster
+Verboten:
 
-### 5.1 CTA-Hierarchie
-
-- Primary: genau eine pro Screen
-- Secondary: ergaenzende Aktionen
-- Tertiary: low-emphasis links/inline actions
-
-### 5.2 Feedback-Zustaende
-
-Pflichtzustaende fuer interaktive Komponenten:
-- default
-- hover
-- focus-visible
-- active
-- loading
-- disabled
-- error (wo relevant)
-
-### 5.3 Formulare
-
-Regeln:
-- Labels immer sichtbar (keine Placeholder-only Loesung)
-- Hilfstexte direkt am Feld
-- Fehlertexte konkret und loesungsorientiert
-- Primar-Action erst aktivierbar bei validen Pflichtfeldern
+* Bounce
+* Spin
+* aggressive Bewegungen
 
 ---
 
-## 6. Komponentenrichtlinien
+# 16. Landing Page Rules
 
-### 6.1 Core-Komponenten
-
-Diese Komponenten muessen systemkonform bleiben:
-- Button
-- Input/Textarea/Select
-- Card
-- Badge/Tag
-- Modal/Sheet
-- Toast/Alert
-- Table/List
-- Navigation (Top, Side, Bottom je Breakpoint)
-
-### 6.2 Komponenten-Checkliste
-
-Vor Merge:
-1. Nutzt semantische Tokens
-2. Hat alle Pflichtzustaende
-3. Erfuellt Keyboard-Navigation
-4. Hat Screenreader-taugliche Labels
-5. Verwendet i18n-Strings statt Hardcoding
+Landing Pages verkaufen das Produkt.
 
 ---
 
-## 7. Accessibility
+Reihenfolge:
 
-Pflichtstandards:
-- WCAG AA als Minimum
-- Sichtbarer Focus fuer Tastaturnutzung
-- Semantische HTML-Struktur
-- Aria nur bei Bedarf, nicht als Ersatz fuer korrektes Markup
-- Fehler und Erfolg nicht nur ueber Farbe kommunizieren
+Hero
 
-QA-Mindestumfang:
-- Keyboard-only Durchgang
-- Screenreader Spot-Check in Kernflows
-- Kontrastpruefung fuer neue Farbtoken
+↓
 
----
+Trust
 
-## 8. Internationalisierung im UI
+↓
 
-Regeln:
-- Alle User-Strings ueber i18n-Schicht
-- Textlaenge de/en bei Layout mitdenken
-- Keine feste Pixelbreite fuer zentrale Buttons/Labels
-- Datums-, Zahlen- und Waehrungsformat lokalisiert darstellen
+Produktvorteile
+
+↓
+
+Features
+
+↓
+
+CTA
 
 ---
 
-## 9. Responsive Verhalten
+Nicht:
 
-Breakpoints (Richtwerte):
-- sm: >= 480
-- md: >= 768
-- lg: >= 1024
-- xl: >= 1280
-
-Regeln:
-- Mobile first
-- Informationsdichte auf kleinen Screens reduzieren, nicht nur verkleinern
-- Kritische Aktionen im Daumenbereich erreichbar halten
+Features zuerst.
 
 ---
 
-## 10. Design-System Governance
+# 17. Dashboard Rules
 
-Aenderungsprozess:
-1. Problem und Nutzen beschreiben
-2. Betroffene Tokens/Komponenten benennen
-3. Auswirkungen auf bestehende Screens pruefen
-4. Dokumentation im gleichen PR aktualisieren
+Dashboard = Arbeitsfläche.
 
-Review-Gates:
-- Product Review (Nutzerwirkung)
-- UX Review (Konsistenz)
-- Engineering Review (Umsetzbarkeit)
-- Accessibility Review (AA-Konformitaet)
-
-No-Go:
-- Neue Stilinsel ohne Systembezug
-- Harte Farbwerte in Feature-Komponenten
-- Ad-hoc-Breakpoints ohne Begruendung
+Nicht Marketing.
 
 ---
 
-## 11. Implementierungs-Hinweise
+Zeige:
 
-Empfohlen:
-- Token-Quelle zentral halten
-- Komponenten in klaren Layern pflegen (primitive, composite, domain)
-- Storybook oder gleichwertige Vorschau fuer visuelle Regressionen nutzen
-
-Definition of Done fuer neue UI:
-- Funktional korrekt
-- Visuell systemkonform
-- i18n-konform
-- Accessibility geprueft
-- Dokumentiert
+* relevante Daten
+* nächste Schritte
+* Prioritäten
 
 ---
 
-## 12. Dokument-Metadaten
+Verstecke:
 
-Owner: Product Engineering
-Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+* unnötige Informationen
+* seltene Aktionen
+
+---
+
+# 18. Mobile Rules
+
+Mobile First.
+
+---
+
+Dashboard Inhalte priorisieren.
+
+---
+
+Hero Mockup vor langen Textblöcken.
+
+---
+
+Buttons immer Daumenbereich beachten.
+
+---
+
+# 19. Localization Rules
+
+Texte müssen:
+
+* natürlich wirken
+* fachlich korrekt sein
+* konsistent sein
+
+---
+
+Verboten:
+
+* Google Translate Stil
+* gemischte Sprache
+* kaputte Umlaute
+
+---
+
+# 20. Apple Test
+
+Vor jeder Veröffentlichung fragen:
+
+Würde Apple das veröffentlichen?
+
+---
+
+# 21. Linear Test
+
+Wirkt die Seite wie Linear?
+
+Wenn nein:
+
+Überarbeiten.
+
+---
+
+# 22. Stripe Test
+
+Ist die Seite vertrauenswürdig genug für Zahlungsdaten?
+
+Wenn nein:
+
+Überarbeiten.
+
+---
+
+# 23. Final Rule
+
+Jede Designentscheidung muss eine dieser Eigenschaften verbessern:
+
+* Klarheit
+* Fokus
+* Vertrauen
+* Produktverständnis
+* Premium-Wirkung
+
+Wenn nicht:
+
+Nicht umsetzen.

@@ -25,6 +25,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 import { storage, STORAGE_KEYS } from "@/lib/store";
+import { captureGrowError } from "@/lib/grow/telemetry";
 import {
   createLogEntry as dbCreateLogEntry,
   getLogEntries as dbGetLogEntries,
@@ -207,6 +208,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
       })
       .catch((err) => {
         console.error("[log] Supabase load failed, falling back to localStorage:", err);
+        captureGrowError("loadLogEntries", { userId: user.id, growId: growId ?? undefined }, err);
         refresh();
         setLoaded(true);
       });
@@ -250,6 +252,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
           });
         } catch (err) {
           console.error("[log] addEntry Supabase failed, rolling back:", err);
+          captureGrowError("addLogEntry", { userId: user.id, growId: growId ?? undefined, entryId: entry.id }, err);
           setEntries((prev) => prev.filter((e) => e.id !== entry.id));
         }
       })();
@@ -282,6 +285,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
           });
         } catch (err) {
           console.error("[log] deleteEntry Supabase failed, rolling back:", err);
+          captureGrowError("deleteLogEntry", { userId: user.id, growId: growId ?? undefined, entryId: id }, err);
           if (snapshot) {
             setEntries((prev) =>
               [snapshot, ...prev].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -323,6 +327,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
           });
         } catch (err) {
           console.error("[log] updateEntry Supabase failed, rolling back:", err);
+          captureGrowError("updateLogEntry", { userId: user.id, growId: growId ?? undefined, entryId: id }, err);
           setEntries((all) => all.map((e) => (e.id === id ? prev : e)));
         }
       })();

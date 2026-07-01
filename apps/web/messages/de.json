@@ -5,6 +5,7 @@
     "tools": "Tools",
     "diagnose": "Diagnose",
     "studies": "Studien",
+    "status": "Status",
     "login": "Anmelden"
   },
   "footer": {
@@ -22,7 +23,7 @@
     "coreBadge": "Kernfeature",
     "ctaStart": "Grow starten",
     "ctaTools": "Tools entdecken",
-    "ctaGetStarted": "Jetzt starten →",
+    "ctaGetStarted": "Grow starten →",
     "trustArticles": "Fachartikel",
     "trustSources": "Wiss. Quellen",
     "trustFree": "Kostenlos nutzbar",

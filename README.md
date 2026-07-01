@@ -81,6 +81,11 @@ npm run build --workspace @secretleaf/api
 npm run lint
 ```
 
+Architekturkonforme Defaults:
+- `npm run dev`, `npm run build`, `npm run lint`, `npm run typecheck` laufen absichtlich nur auf dem primären `apps/web`-Pfad.
+- Legacy-API-Validierung läuft nur explizit über `npm run legacy:api:typecheck` und `npm run legacy:api:build`.
+- Legacy-API-Skripte benötigen zusätzlich `LEGACY_API_ENABLED=1` als bewusstes Opt-in.
+
 ## Environment-Variablen
 
 Minimal fuer produktive API-Funktionalitaet im Web-Runtime:
@@ -122,8 +127,8 @@ Regel:
 
 Aktuelle CI-Basis:
 - Dependency-Installation
-- Typecheck fuer web und api
-- Build fuer web und api
+- Typecheck fuer web
+- Build fuer web
 
 Mindeststandard fuer Merges:
 - Typecheck gruen

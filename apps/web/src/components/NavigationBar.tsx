@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import SearchBar from "@/components/SearchBar";
 import { UserMenu } from "@/components/UserMenu";
@@ -64,6 +64,12 @@ export function NavigationBar() {
             className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-150 font-medium text-slate-500 dark:text-slate-400"
           >
             {t("studies")}
+          </Link>
+          <Link
+            href="/status"
+            className="nav-link px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-150 font-medium text-slate-500 dark:text-slate-400"
+          >
+            {t("status")}
           </Link>
         </div>
 

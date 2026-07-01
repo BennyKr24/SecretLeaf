@@ -1,4 +1,5 @@
 import createNextIntlPlugin from "next-intl/plugin";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -19,4 +20,15 @@ const nextConfig = {
   typedRoutes: false,
 };
 
-export default withNextIntl(nextConfig);
+export default withSentryConfig(withNextIntl(nextConfig), {
+  org: "secretleaf",
+  project: "javascript-nextjs",
+  // Upload source maps only in CI
+  silent: !process.env.CI,
+  // Route Sentry requests through Next.js to avoid ad-blockers
+  // Note: /monitoring must not match existing middleware routes
+  tunnelRoute: "/monitoring",
+  widenClientFileUpload: true,
+  // Disable Sentry telemetry
+  telemetry: false,
+});

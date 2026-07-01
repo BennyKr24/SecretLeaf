@@ -1,4 +1,5 @@
 import { searchStudies } from "@/lib/search/studyAlgorithms";
+import { isAutomationCronAuthorized } from "@/lib/automationCron";
 import { recordAutomationRun } from "@/lib/automationRuns";
 import { getCronSecret } from "@/lib/env";
 import { logError, logInfo, logWarn } from "@/lib/log";
@@ -32,15 +33,7 @@ export async function GET(req: Request) {
     return Response.json({ error: "CRON_SECRET is not configured" }, { status: 500 });
   }
 
-  // Vercel Cron sends: Authorization: Bearer <CRON_SECRET>
-  const auth = req.headers.get("authorization");
-  const bearerToken = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
-  const legacyKey =
-    req.headers.get("x-cron-key") ??
-    new URL(req.url).searchParams.get("x-cron-key");
-  const headerSecret = bearerToken ?? legacyKey;
-
-  if (headerSecret !== configuredSecret) {
+  if (!isAutomationCronAuthorized(req, configuredSecret)) {
     logWarn("automation.study-refresh.unauthorized");
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
