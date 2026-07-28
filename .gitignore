@@ -21,3 +21,11 @@ apps/web/public/
 *.tsbuildinfo
 .vercel
 .env*.local
+
+# Local Supabase CLI state (per-machine, not tracked)
+supabase/.branches/
+supabase/.temp/
+supabase/snippets/
+
+# Obsidian vault config (per-machine)
+.obsidian/

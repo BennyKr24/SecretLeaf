@@ -24,14 +24,14 @@ BEGIN
   LIMIT 1;
 
   IF v_user_id IS NULL THEN
-    RAISE EXCEPTION 'User with email gimber.l@web.de not found in auth.users';
+    RAISE NOTICE 'User with email gimber.l@web.de not found in auth.users — skipping TEAM role assignment (expected on fresh/non-prod environments)';
+  ELSE
+    INSERT INTO public.user_roles (user_id, role)
+    VALUES (v_user_id, 'TEAM')
+    ON CONFLICT (user_id)
+    DO UPDATE SET role = 'TEAM', updated_at = now();
+
+    RAISE NOTICE 'Role TEAM assigned to user % (gimber.l@web.de)', v_user_id;
   END IF;
-
-  INSERT INTO public.user_roles (user_id, role)
-  VALUES (v_user_id, 'TEAM')
-  ON CONFLICT (user_id)
-  DO UPDATE SET role = 'TEAM', updated_at = now();
-
-  RAISE NOTICE 'Role TEAM assigned to user % (gimber.l@web.de)', v_user_id;
 END;
 $$;
