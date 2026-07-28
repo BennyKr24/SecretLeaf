@@ -2,7 +2,7 @@
 
 ## 1. Zweck
 
-Dieses Dokument definiert, welche AI- und Automations-Agenten in SecretLeaf welche Aufgaben uebernehmen duerfen.
+Dieses Dokument definiert, welche AI- und Automations-Agenten in SecretLeaf welche Aufgaben übernehmen dürfen.
 Ziel ist ein kontrolliertes, nachvollziehbares und sicheres Agentensystem.
 
 ---
@@ -10,7 +10,7 @@ Ziel ist ein kontrolliertes, nachvollziehbares und sicheres Agentensystem.
 ## 2. Agentenklassen
 
 1. Produkt-Agenten
-- Unterstuetzen Discovery, Priorisierung, KPI-Reviews.
+- Unterstützen Discovery, Priorisierung, KPI-Reviews.
 
 2. Wissens-Agenten
 - Unterstuetzen Studienaufbereitung, Taxonomie und Quellenstruktur.
