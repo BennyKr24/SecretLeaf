@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Route } from "next";
 import type { DiagnoseResult as DiagnoseResultType, Confidence } from "@/lib/diagnose/tree";
-import { getActiveGrow, createLogEntry } from "@/lib/grow/store";
+import { getActiveGrow } from "@/lib/grow/store";
+import { useGrowLog } from "@/hooks/useGrowLog";
 import { TranslateButton } from "@/components/TranslateButton";
 
 // ── Confidence badge ──────────────────────────────────────────────────────────
@@ -44,12 +45,12 @@ type Props = {
 export function DiagnoseResult({ result, onReset }: Props) {
   const [saved, setSaved] = useState(false);
   const activeGrow = getActiveGrow();
+  const { addEntry } = useGrowLog(activeGrow?.id ?? null);
   const conf = CONFIDENCE_CONFIG[result.confidence];
 
   function handleAddToGrow() {
     if (!activeGrow) return;
-    createLogEntry({
-      growId: activeGrow.id,
+    addEntry({
       date: new Date().toISOString(),
       data: { type: "notiz", text: `🔍 Diagnose: ${result.title}\n\n${result.logNote}` },
     });
