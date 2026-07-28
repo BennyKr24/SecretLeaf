@@ -82,7 +82,7 @@ export function DiagnoseFlow({ category, onBack }: Props) {
         >
           ← Neue Diagnose
         </button>
-        <DiagnoseResult result={result} onReset={handleReset} />
+        <DiagnoseResult result={result} category={category.id} onReset={handleReset} />
       </div>
     );
   }

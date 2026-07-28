@@ -6,6 +6,9 @@ import type { Route } from "next";
 import type { DiagnoseResult as DiagnoseResultType, Confidence } from "@/lib/diagnose/tree";
 import { getActiveGrow } from "@/lib/grow/store";
 import { useGrowLog } from "@/hooks/useGrowLog";
+import { useAuth } from "@/hooks/useAuth";
+import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
+import { createDiagnosis, createRecommendation } from "@/lib/diagnose/db";
 import { TranslateButton } from "@/components/TranslateButton";
 
 // ── Confidence badge ──────────────────────────────────────────────────────────
@@ -39,13 +42,15 @@ const CONFIDENCE_CONFIG: Record<
 
 type Props = {
   result: DiagnoseResultType;
+  category: string;
   onReset: () => void;
 };
 
-export function DiagnoseResult({ result, onReset }: Props) {
+export function DiagnoseResult({ result, category, onReset }: Props) {
   const [saved, setSaved] = useState(false);
   const activeGrow = getActiveGrow();
   const { addEntry } = useGrowLog(activeGrow?.id ?? null);
+  const { user } = useAuth();
   const conf = CONFIDENCE_CONFIG[result.confidence];
 
   function handleAddToGrow() {
@@ -55,6 +60,35 @@ export function DiagnoseResult({ result, onReset }: Props) {
       data: { type: "notiz", text: `🔍 Diagnose: ${result.title}\n\n${result.logNote}` },
     });
     setSaved(true);
+
+    // Persist the diagnosis + recommendation for logged-in users so
+    // efficacy becomes queryable later. Anonymous/offline users only get
+    // the local log entry above — diagnoses/recommendations RLS requires
+    // a real auth.uid().
+    if (user) {
+      void (async () => {
+        try {
+          const supabase = getSupabaseBrowserClient();
+          const diagnosisId = await createDiagnosis(supabase, user.id, {
+            growId: activeGrow.id,
+            category,
+            resultKey: result.id,
+            confidence: result.confidence,
+            title: result.title,
+            cause: result.cause,
+            reasoning: result.reasoning,
+          });
+          await createRecommendation(supabase, user.id, {
+            diagnosisId,
+            growId: activeGrow.id,
+            steps: result.steps,
+            toolLinks: result.toolLinks,
+          });
+        } catch (err) {
+          console.error("[diagnose] failed to persist diagnosis chain:", err);
+        }
+      })();
+    }
   }
 
   return (
