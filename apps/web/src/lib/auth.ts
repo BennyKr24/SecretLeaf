@@ -74,10 +74,14 @@ export const getSession = (): SessionData | null => {
 
 export const saveSession = (session: SessionData) => {
   localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+  // Native "storage" events don't fire in the tab that made the change, so
+  // same-tab listeners (e.g. useAuth) need this to notice login/logout.
+  window.dispatchEvent(new Event("secretleaf:authChanged"));
 };
 
 export const clearSession = () => {
   localStorage.removeItem(SESSION_KEY);
+  window.dispatchEvent(new Event("secretleaf:authChanged"));
 };
 
 export const registerWithSupabase = async (input: SupabaseAuthInput): Promise<SessionData | null> => {

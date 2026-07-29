@@ -83,17 +83,27 @@ function toAuthUser(user: SessionUser): AuthUser {
  * ```
  */
 export function useAuth(): AuthState {
-  const [user, setUser] = useState<AuthUser | null>(() => {
-    const session = getSession();
-    return session ? toAuthUser(session.user) : null;
-  });
-  const [isLoading, setIsLoading] = useState(false);
+  // Start as logged-out/loading unconditionally — matches what the server
+  // renders (no access to localStorage there). Reading the real session in
+  // the useState initializer instead would make the client's first render
+  // diverge from the SSR output (localStorage IS available synchronously on
+  // the client, even before hydration commits), which is exactly what
+  // caused the "Anmelden" vs "Dashboard" hydration-mismatch warning. The
+  // real session is only read after mount, in the effect below.
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const hydrate = useCallback(() => {
     const session = getSession();
     setUser(session ? toAuthUser(session.user) : null);
     setIsLoading(false);
   }, []);
+
+  // Initial client-only read of the real session.
+  useEffect(() => {
+    const t = setTimeout(hydrate, 0);
+    return () => clearTimeout(t);
+  }, [hydrate]);
 
   // Keep auth state in sync across tabs and profile updates
   useEffect(() => {
@@ -104,11 +114,18 @@ export function useAuth(): AuthState {
     };
     // Re-hydrate when profile name changes (same tab, via useProfile)
     const handleProfileUpdate = () => hydrate();
+    // Re-hydrate on same-tab login/logout (saveSession/clearSession) — the
+    // native "storage" event above only fires in *other* tabs, so without
+    // this, a NavigationBar mounted before login stays stuck showing
+    // logged-out state after a same-tab login until a full page reload.
+    const handleAuthChanged = () => hydrate();
     window.addEventListener("storage", handleStorage);
     window.addEventListener("secretleaf:profileUpdated", handleProfileUpdate);
+    window.addEventListener("secretleaf:authChanged", handleAuthChanged);
     return () => {
       window.removeEventListener("storage", handleStorage);
       window.removeEventListener("secretleaf:profileUpdated", handleProfileUpdate);
+      window.removeEventListener("secretleaf:authChanged", handleAuthChanged);
     };
   }, [hydrate]);
 
