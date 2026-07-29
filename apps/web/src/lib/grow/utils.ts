@@ -8,16 +8,14 @@ import type { GrowPhase } from "./types";
 // ── ID Generation ─────────────────────────────────────────────────────────────
 
 /**
- * Generates a short, collision-resistant ID for client-side use.
- * Format: `<base36-timestamp>-<base36-random>` e.g. "lop2k3f-ab12xy"
- *
- * Upgrade path: swap for `crypto.randomUUID()` or server-generated UUIDs
- * when migrating to a backend.
+ * Generates an ID for client-side use. Grows, plants, and log entries all
+ * map to `uuid` columns in Supabase (see lib/grow/db.ts, lib/grow/migration.ts)
+ * so the id must be a real UUID even for entities created while offline —
+ * otherwise the localStorage → Supabase sync rejects it with
+ * "invalid input syntax for type uuid".
  */
 export function generateId(): string {
-  const ts = Date.now().toString(36);
-  const rand = Math.random().toString(36).slice(2, 8);
-  return `${ts}-${rand}`;
+  return crypto.randomUUID();
 }
 
 // ── Day Computation ───────────────────────────────────────────────────────────
