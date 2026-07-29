@@ -17,6 +17,16 @@ import type {
 } from "./types";
 import { generateId } from "./utils";
 
+/**
+ * Notifies same-tab listeners (e.g. useActiveGrow) that the active grow
+ * pointer changed. The native "storage" event only fires in *other* tabs,
+ * so callers that mutate ACTIVE_GROW_ID need this for same-tab reactivity.
+ */
+function notifyActiveGrowChanged(): void {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new Event("secretleaf:activeGrowChanged"));
+}
+
 function createDefaultPlants(count: number): Plant[] {
   const now = new Date().toISOString();
   return Array.from({ length: Math.max(1, count) }, (_, index) => ({
@@ -108,6 +118,7 @@ export function createGrow(input: CreateGrowInput, plan?: GrowPlan): Grow {
 
   if (existing.length === 0 || input.status === "aktiv") {
     storage.set(STORAGE_KEYS.ACTIVE_GROW_ID, grow.id);
+    notifyActiveGrowChanged();
   }
 
   return grow;
@@ -193,12 +204,14 @@ export function deleteGrow(id: string): void {
     const next =
       remaining.find((g) => g.status === "aktiv") ?? remaining[0] ?? null;
     storage.set(STORAGE_KEYS.ACTIVE_GROW_ID, next?.id ?? null);
+    notifyActiveGrowChanged();
   }
 }
 
 /** Sets the active grow by ID. No-ops silently if the grow does not exist. */
 export function setActiveGrow(id: string): void {
   storage.set(STORAGE_KEYS.ACTIVE_GROW_ID, id);
+  notifyActiveGrowChanged();
 }
 
 // ── Log Entry Reads ───────────────────────────────────────────────────────────

@@ -5,10 +5,12 @@ import { useTranslations } from "next-intl";
 import SearchBar from "@/components/SearchBar";
 import { UserMenu } from "@/components/UserMenu";
 import { useAuth } from "@/hooks/useAuth";
+import { useActiveGrow } from "@/hooks/useActiveGrow";
 
 export function NavigationBar() {
   const t = useTranslations("nav");
   const { isLoggedIn } = useAuth();
+  const activeGrow = useActiveGrow();
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl">
@@ -30,11 +32,11 @@ export function NavigationBar() {
         {/* Primary Navigation */}
         <div className="hidden md:flex items-center gap-0.5 text-[13.5px] text-slate-600 dark:text-slate-300">
           <Link
-            href="/start"
+            href={activeGrow ? `/grow/${activeGrow.id}` : "/start"}
             className="nav-link flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-150"
           >
             <span className="text-[12px]">🌱</span>
-            {t("startGrow")}
+            {activeGrow ? t("myGrow") : t("startGrow")}
           </Link>
           {!isLoggedIn && (
             <Link
