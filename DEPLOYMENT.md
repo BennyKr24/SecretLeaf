@@ -57,6 +57,18 @@ Minimum rule:
 - NEXT_PUBLIC_SENTRY_DSN
 - SENTRY_DSN
 - SENTRY_ENVIRONMENT
+- SENTRY_AUTH_TOKEN (Vercel/CI only; required for source-map uploads)
+
+### 4.3 Product analytics
+
+- Vercel Web Analytics is enabled via `@vercel/analytics`.
+- Vercel Speed Insights is enabled via `@vercel/speed-insights`.
+- Optional Plausible tracking can be enabled with NEXT_PUBLIC_PLAUSIBLE_DOMAIN.
+
+### 4.4 Newsletter
+
+- LOOPS_API_KEY enables `/api/newsletter` in production.
+- Without LOOPS_API_KEY, production returns 503 for newsletter signups instead of pretending success.
 
 Notes:
 - Never commit secrets.
@@ -137,9 +149,15 @@ Post-migration verification checklist:
 
 1. Merge to main
 2. Allow platform deployment to complete
-3. Validate health endpoints
-4. Validate one protected admin/API flow
-5. Validate latest cron runs after first schedule window
+3. Verify the GitHub deployment SHA for Production matches the pushed main commit
+4. Validate health endpoints
+5. Validate one protected admin/API flow
+6. Validate latest cron runs after first schedule window
+
+Important Vercel rule:
+- `fix/*` and feature branches create Preview deployments only.
+- Production deploys from `main`.
+- A fix is not production-complete until `gh api "repos/BennyKr24/SecretLeaf/deployments?environment=Production"` shows the expected SHA with `success`.
 
 ### 8.3 Post-deploy validation
 
@@ -148,6 +166,9 @@ Mandatory checks:
 - /api/public/status-report returns non-error payload
 - /api/automation/health returns expected run diagnostics
 - Admin dashboard can load overview metrics
+- Critical Grow OS flow passes when touched: confirmed user -> login -> create grow -> row exists in `grows` -> reload -> second device login
+- If SENTRY_AUTH_TOKEN changed, build logs show successful source-map upload
+- If LOOPS_API_KEY changed, submit `/api/newsletter` once and verify the contact exists in Loops
 
 ---
 
@@ -159,6 +180,8 @@ Mandatory checks:
 2. Supabase logs/insights
 3. automation_job_runs table
 4. CI workflow outcomes
+5. Sentry errors with uploaded source maps
+6. Vercel Web Analytics and Speed Insights
 
 ### 9.2 Minimum KPIs
 
@@ -185,10 +208,12 @@ Severity model:
 
 Immediate response playbook:
 1. Triage scope and user impact
-2. Check latest deploy and migration history
-3. Inspect automation_job_runs and health endpoints
-4. Roll back code if regression is confirmed
-5. Publish internal incident summary with action items
+2. Check latest Production deploy SHA and whether a fix is only in Preview
+3. Check latest deploy and migration history
+4. Inspect automation_job_runs and health endpoints
+5. For persistence incidents, prove database state directly (`count(*)`, row readback, RLS error code)
+6. Roll back code if regression is confirmed
+7. Publish internal incident summary with action items
 
 ---
 
@@ -272,5 +297,5 @@ Before introducing new deployment surface for apps/api:
 
 Owner: Product Engineering
 Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+Last updated: 2026-07-01
+Next review: 2026-08-01

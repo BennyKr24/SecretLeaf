@@ -1,33 +1,34 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
-// ────────────────────────────────────────────────────────────────────────────
-// POST /api/newsletter
-//
-// Receives an email address and adds it to a mailing list.
-//
-// Current implementation: logs the signup + returns success.
-//
-// To connect to a real email provider, replace the TODO block:
-//
-//   Resend (recommended):
-//     const resend = new Resend(process.env.RESEND_API_KEY);
-//     await resend.contacts.create({
-//       email,
-//       audienceId: process.env.RESEND_AUDIENCE_ID!,
-//     });
-//
-//   Loops.so:
-//     await fetch('https://app.loops.so/api/v1/contacts/create', {
-//       method: 'POST',
-//       headers: { Authorization: `Bearer ${process.env.LOOPS_API_KEY}` },
-//       body: JSON.stringify({ email }),
-//     });
-// ────────────────────────────────────────────────────────────────────────────
+const LOOPS_CONTACTS_URL = 'https://app.loops.so/api/v1/contacts/create';
 
 const schema = z.object({
   email: z.string().email('Ungültige E-Mail-Adresse'),
 });
+
+async function subscribeWithLoops(email: string) {
+  const apiKey = process.env.LOOPS_API_KEY;
+  if (!apiKey) {
+    return { configured: false as const };
+  }
+
+  const response = await fetch(LOOPS_CONTACTS_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  if (!response.ok) {
+    const providerMessage = await response.text().catch(() => '');
+    throw new Error(`Loops signup failed: ${response.status} ${providerMessage}`.trim());
+  }
+
+  return { configured: true as const };
+}
 
 export async function POST(req: Request) {
   let body: unknown;
@@ -47,9 +48,26 @@ export async function POST(req: Request) {
 
   const { email } = parsed.data;
 
-  // TODO: Replace this block with your email provider
-  // For now: log the signup server-side
-  console.log('[Newsletter] New signup:', email);
+  try {
+    const result = await subscribeWithLoops(email);
+
+    if (!result.configured) {
+      if (process.env.NODE_ENV === 'production') {
+        return NextResponse.json(
+          { error: 'Newsletter ist aktuell nicht konfiguriert.' },
+          { status: 503 },
+        );
+      }
+
+      console.info('[Newsletter] Provider not configured; accepted local dry-run signup.');
+    }
+  } catch (error) {
+    console.error('[Newsletter] Signup failed:', error);
+    return NextResponse.json(
+      { error: 'Newsletter-Anmeldung fehlgeschlagen. Bitte versuche es später erneut.' },
+      { status: 502 },
+    );
+  }
 
   return NextResponse.json({ ok: true });
 }

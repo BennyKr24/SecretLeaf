@@ -11,6 +11,7 @@ type UserRoleRow = {
 
 function normalizeRole(value: string | null | undefined): UserRole {
   if (value === "ADMIN") return "ADMIN";
+  if (value === "TEAM") return "TEAM";
   if (value === "PROVIDER") return "PROVIDER";
   return "CONSUMER";
 }

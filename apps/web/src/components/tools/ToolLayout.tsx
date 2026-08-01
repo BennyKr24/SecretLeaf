@@ -1,7 +1,9 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
+import { useEffect } from 'react';
+import { Analytics } from '@/lib/analytics';
 import type { ToolMeta, ToolCategory } from '@/lib/tools/types';
 import { toolCategoryLabel, toolCategoryIcon, toolCategoryColor } from '@/lib/tools/types';
 import { getToolBySlug } from '@/lib/tools/registry';
@@ -36,6 +38,10 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
     .map((s) => getToolBySlug(s))
     .filter(Boolean) as ToolMeta[];
   const CategoryIcon = toolCategoryIcon[meta.category];
+
+  useEffect(() => {
+    Analytics.toolUsed(meta.slug);
+  }, [meta.slug]);
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 sm:px-6 sm:py-10">

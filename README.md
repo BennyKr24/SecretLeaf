@@ -13,13 +13,13 @@ SecretLeaf besteht aktuell aus vier Kernbereichen:
 ## Aktueller Status
 
 Produktiv nutzbar:
-- Grow-Workflows mit hybrider Persistenz
+- Grow-Workflows mit Supabase-Persistenz fuer Grows, Plants, Log-Eintraege und Task-Fortschritt
 - Studien-Pipeline und Cron-Automation
 - Rollenbasierte Adminflaechen fuer Review und Betrieb
+- Sentry Error Monitoring, Vercel Web Analytics und Speed Insights
 
 Offene kritische Punkte:
 - Monetarisierungspfad nicht live
-- Observability nur teilweise aktiv
 - Legacy-Backendpfad als Architekturschuld
 
 ## Architektur auf einen Blick
@@ -81,6 +81,11 @@ npm run build --workspace @secretleaf/api
 npm run lint
 ```
 
+Architekturkonforme Defaults:
+- `npm run dev`, `npm run build`, `npm run lint`, `npm run typecheck` laufen absichtlich nur auf dem primären `apps/web`-Pfad.
+- Legacy-API-Validierung läuft nur explizit über `npm run legacy:api:typecheck` und `npm run legacy:api:build`.
+- Legacy-API-Skripte benötigen zusätzlich `LEGACY_API_ENABLED=1` als bewusstes Opt-in.
+
 ## Environment-Variablen
 
 Minimal fuer produktive API-Funktionalitaet im Web-Runtime:
@@ -92,6 +97,15 @@ Minimal fuer produktive API-Funktionalitaet im Web-Runtime:
 
 Optional fuer Automation-Fehlerspeicher:
 - AUTOMATION_ERROR_MEMORY_MIN_DELAY_MINUTES (Default: 60)
+
+Observability:
+- NEXT_PUBLIC_SENTRY_DSN
+- SENTRY_DSN
+- SENTRY_AUTH_TOKEN (nur Vercel/CI; fuer Source-Map-Uploads)
+- NEXT_PUBLIC_PLAUSIBLE_DOMAIN (optional; Vercel Analytics ist separat aktiv)
+
+Newsletter:
+- LOOPS_API_KEY (Production; aktiv fuer Loops Newsletter-Signups)
 
 Siehe DEPLOYMENT.md fuer vollstaendige Betriebs- und Security-Vorgaben.
 
@@ -115,6 +129,15 @@ Hinweis zum Studies-Sync-Fehlerspeicher:
 Produktive SQL- und RLS-Aenderungen liegen unter:
 - supabase/migrations
 
+Aktueller Grow-OS-Persistenzpfad:
+- `grows`
+- `plants`
+- `log_entries`
+
+Auth-Regel:
+- Supabase Session ist die einzige Auth-Quelle fuer RLS-geschuetzte Writes.
+- UI darf eine Nutzer-Session nur als eingeloggt behandeln, wenn eine echte Supabase-Session existiert.
+
 Regel:
 - Keine produktive Schema-Aenderung ohne Migration und Review.
 
@@ -122,8 +145,8 @@ Regel:
 
 Aktuelle CI-Basis:
 - Dependency-Installation
-- Typecheck fuer web und api
-- Build fuer web und api
+- Typecheck fuer web
+- Build fuer web
 
 Mindeststandard fuer Merges:
 - Typecheck gruen
@@ -143,10 +166,10 @@ Verbindliche Richtlinien: siehe AI_RULES.md
 
 Jetzt:
 - Monetarisierungskern produktiv machen
-- Observability verbindlich aktivieren
 - Legacy-Umfang kontrolliert reduzieren
 
 Als naechstes:
+- PubMed-Quelle und wertvolle Teile aus `copilot/full-system-audit-rebuild` gezielt portieren
 - Conversion- und Retention-Messung vertiefen
 - Produkt- und Datenfluesse weiter vereinheitlichen
 
@@ -177,5 +200,5 @@ Interne Projektrichtlinien und Compliance-Vorgaben gelten zusaetzlich zu diesem 
 
 Owner: Product Engineering
 Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+Last updated: 2026-07-01
+Next review: 2026-08-01

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useRef, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import type { TerpiraArticle, TerpiraCategory, TerpiraDifficulty } from '@/lib/terpira/types';
 
@@ -475,7 +475,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
             ref={searchRef}
             value={localSearch}
             onChange={e => setLocalSearch(e.target.value)}
-            placeholder="Wiki durchsuchen… (/ oder Strg+F)"
+            placeholder="Studien durchsuchen… (/ oder Strg+F)"
             className="w-full rounded-xl border border-border bg-card py-2.5 pl-9 pr-10 text-sm
               text-foreground placeholder:text-muted-fg outline-none
               focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all shadow-sm"

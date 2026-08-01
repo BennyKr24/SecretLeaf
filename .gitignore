@@ -20,6 +20,10 @@ backups/
 *.tsbuildinfo
 .vercel
 .env*.local
+.env*
+
+# Sentry Config File
+.env.sentry-build-plugin
 
 # Local Supabase CLI state (per-machine, not tracked)
 supabase/.branches/

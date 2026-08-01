@@ -1,305 +1,681 @@
-# SecretLeaf Architecture
+# ARCHITECTURE.md
 
-## 1. Purpose and Scope
+# SecretLeaf System Architecture
 
-This document describes the current technical architecture of SecretLeaf and the intended target structure.
-It is an engineering reference for product, development, and operations.
+Version: 2.0
 
-Scope of this document:
-- System boundaries and runtime topology
-- Domain architecture
-- Data ownership and persistence
-- Security model
-- Reliability and operations fundamentals
-- Known architectural debt and migration direction
-
-Out of scope:
-- UI style rules (see AI_RULES.md)
-- Deployment steps (see DEPLOYMENT.md)
-
----
-
-## 2. Reality Check: Current System
-
-SecretLeaf currently runs as a monorepo with two server paths:
-
-1. apps/web (Next.js)
-- Primary product runtime
-- App Router pages and API routes
-- Supabase-backed auth, studies, automation telemetry
-- Grow product features with hybrid storage (Supabase + local cache)
-
-2. apps/api (Fastify + Prisma)
-- Legacy/parallel API stack
-- Listing/marketplace-oriented routes
-- Separate Prisma schema (SQLite datasource in current config)
-- Not the primary production path for the core product
-
-This duality is the main architectural complexity today.
-
----
-
-## 3. Monorepo Structure
-
-```text
-SecretLeaf/
-  apps/
-    web/                 # Primary product runtime (Next.js)
-    api/                 # Legacy parallel API (Fastify + Prisma)
-  packages/
-    shared/              # Shared types (currently minimal)
-  scripts/               # Ops and data automation scripts
-  supabase/
-    migrations/          # Production DB/RLS migrations
-```
-
-Key principle:
-- Product-critical development is centered in apps/web and supabase/migrations.
-
----
-
-## 4. Runtime Topology
-
-### 4.1 Primary runtime (production)
-
-```text
-Client (Browser)
-  -> Next.js app (apps/web)
-    -> App Router pages
-    -> Next.js API routes (/api/*)
-      -> Supabase (Auth + Postgres + RLS)
-      -> External sources (Crossref)
-```
-
-### 4.2 Legacy runtime (secondary)
-
-```text
-Client/Internal caller
-  -> Fastify API (apps/api)
-    -> Prisma Client
-      -> SQLite/Postgres (depends on env)
-```
-
-Strategic direction:
-- Keep one primary backend path for product-critical use cases.
-- Decommission or isolate legacy routes that do not support the current product thesis.
-
----
-
-## 5. Domain Architecture
-
-SecretLeaf currently contains four major domains.
-
-### 5.1 Grow OS Domain
-
-Purpose:
-- Guided grow operations and daily execution
-
-Core capabilities:
-- Grow setup and planning
-- Multi-plant management
-- Task generation and completion
-- Grow log entries and retention mechanics
-
-Persistence model:
-- Logged-in users: Supabase tables (grows, plants, log_entries)
-- Anonymous/offline fallback: local storage adapter
-- Migration path from local to cloud exists and is idempotent
-
-### 5.2 Studies and Knowledge Domain
-
-Purpose:
-- Structured knowledge and source-backed content
-
-Core capabilities:
-- Static knowledge base pages
-- Study records with quality status
-- Search and filtering
-
-Persistence model:
-- Curated data in code + Supabase table storage for synchronized studies
-
-### 5.3 Automation and Study Engine Domain
-
-Purpose:
-- Continuous ingestion, normalization, classification, scoring, persistence
-
-Core capabilities:
-- Scheduled ingestion via cron routes
-- Deterministic, rule-based pipeline
-- Telemetry via automation_job_runs
-- Health monitoring endpoint and circuit breaker support
-
-Persistence model:
-- Supabase studies + automation_job_runs
-
-### 5.4 Admin and Governance Domain
-
-Purpose:
-- Operate quality, runs, settings, and roles
-
-Core capabilities:
-- Admin dashboard API actions
-- Study review workflows
-- Engine trigger/reprocess/adapt actions
-
-Security model:
-- Role resolution via user_roles table
-- Admin-only routes enforced server-side
-
----
-
-## 6. Data Ownership and Persistence
-
-### 6.1 Canonical production data
-
-Supabase/Postgres is the canonical source for:
-- Auth users and roles
-- Studies and review status
-- Grow cloud records for authenticated sessions
-- Automation run telemetry
-
-### 6.2 Transitional local persistence
-
-localStorage remains in use for:
-- Anonymous user flows
-- Cache and offline-friendly UX
-- Backward compatibility during migration
-
-Important constraint:
-- localStorage data is not an authoritative multi-device source.
-- Product decisions should continue reducing local-only critical state.
-
-### 6.3 Legacy schema
-
-Prisma schema under apps/api currently models a different product slice (listing marketplace).
-This is not aligned with the main Grow+Studies product path.
-
----
-
-## 7. API Architecture
-
-### 7.1 Primary API surface
-
-Next.js API routes in apps/web/src/app/api:
-- Public endpoints
-- Auth context resolution
-- Studies CRUD/review surface
-- Search endpoints
-- Automation endpoints (cron protected)
-- Health/status endpoints
-
-### 7.2 Access control
-
-- Bearer token resolution against Supabase auth
-- Role lookup through user_roles
-- Explicit admin guard for privileged endpoints
-
-### 7.3 Reliability pattern
-
-Public endpoints frequently return degraded payloads instead of hard failures where useful.
-This prevents brittle UI states and preserves partial functionality.
-
----
-
-## 8. Security Architecture
-
-Core controls implemented:
-- Supabase auth and token validation
-- Server-side role checks
-- RLS-based data isolation in Supabase migrations
-- Input validation on API boundaries
-- Cron secret protection for automation routes
-
-Controls to mature further:
-- Full production error tracking enablement
-- Expanded abuse/rate-limit controls on all exposed endpoints
-- Regular secret rotation and hardening automation
-
----
-
-## 9. Performance and Scalability
-
-Current strengths:
-- App + API colocated in Next.js runtime for low integration overhead
-- Static knowledge assets and deterministic pipelines
-- Database-backed automation telemetry for observability
-
-Current bottlenecks:
-- Dual backend architecture increases cognitive and operational cost
-- Limited shared package usage creates type drift risk between stacks
-
-Scalability direction:
-1. Consolidate primary backend path
-2. Keep domain modules isolated within apps/web
-3. Add focused caching only for measured bottlenecks
-4. Grow observability before aggressive infrastructure expansion
-
----
-
-## 10. Reliability and Operations
-
-Operational building blocks:
-- Scheduled automation via vercel.json cron definitions
-- Automation run recording in automation_job_runs
-- Health endpoints for app and engine
-- Structured internal logging wrappers in runtime modules
-
-Production reliability target:
-- Prefer predictable degraded behavior over silent hard crashes
-- Keep all critical automation jobs auditable through run records
-
----
-
-## 11. Architectural Debt and Risks
-
-High-priority debt:
-1. Parallel backend stacks with partially overlapping responsibilities
-2. Documentation drift between architecture docs and runtime reality
-3. Incomplete monetization architecture despite plan/entitlement signals in UI
-4. Incomplete observability activation (Sentry wrappers present, runtime integration pending)
-
-Risk impact:
-- Slower delivery velocity
-- Harder onboarding
-- Increased incident/debugging time
-- Product confusion across teams
-
----
-
-## 12. Target Architecture (Near-term)
-
-Target for next iteration:
-
-```text
-Client
-  -> Next.js (single product gateway)
-    -> Domain modules (Grow, Studies, Engine, Admin)
-      -> Supabase (Auth/Postgres/RLS/Storage)
-```
-
-Key outcomes:
-- One product backend path
-- Clear domain ownership
-- Reduced infra duplication
-- Better alignment between roadmap and codebase
-
----
-
-## 13. Engineering Standards
-
-Standards for architecture-safe changes:
-- No new cross-stack duplication between apps/web and apps/api
-- New product features must declare data ownership explicitly
-- API additions require auth and role model definition
-- Every automation route must emit auditable run metadata
-- Architecture-impacting changes require this document update in the same PR
-
----
-
-## 14. Document Metadata
+Status: Active
 
 Owner: Product Engineering
-Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+
+---
+
+# 1. Purpose
+
+Dieses Dokument definiert die Zielarchitektur von SecretLeaf.
+
+Es beschreibt:
+
+* Produktarchitektur
+* Systemarchitektur
+* Datenflüsse
+* Verantwortlichkeiten
+* Skalierungsstrategie
+
+ARCHITECTURE.md ist die technische Wahrheit des Systems.
+
+---
+
+# 2. Mission
+
+SecretLeaf ist ein Grow Operating System.
+
+Alle Systeme existieren, um den Grow Workflow zu unterstützen.
+
+Nicht umgekehrt.
+
+---
+
+# 3. Product Architecture
+
+SecretLeaf besteht aus vier Kernbereichen.
+
+## Grow OS
+
+Kernprodukt.
+
+Verantwortlich für:
+
+* Grows
+* Pflanzen
+* Aufgaben
+* Dokumentation
+* Fortschritt
+
+---
+
+## Knowledge System
+
+Verantwortlich für:
+
+* Wiki
+* Studien
+* Evidenz
+* Suchfunktionen
+
+---
+
+## AI System
+
+Verantwortlich für:
+
+* Diagnose
+* Empfehlungen
+* Copilot
+* Wissensextraktion
+
+---
+
+## Platform System
+
+Verantwortlich für:
+
+* Nutzer
+* Rollen
+* Abonnements
+* Analytics
+* Automationen
+
+---
+
+# 4. System Hierarchy
+
+Priorität:
+
+1. Grow OS
+
+2. AI
+
+3. Knowledge
+
+4. Platform
+
+---
+
+Jede neue Funktion muss mindestens eine dieser Ebenen stärken.
+
+---
+
+# 5. Architecture Principles
+
+## Single Source of Truth
+
+Keine doppelte Datenhaltung.
+
+Seit dem Persistence-Recovery-Incident (2026-07-01) gilt explizit:
+
+* Supabase Session ist die einzige Auth-Quelle fuer RLS-geschuetzte Writes.
+* `secretleaf.session` darf keine eigenstaendige Auth-Wahrheit sein.
+* Im authentifizierten Grow-Pfad gilt: Server-Persistenz vor Navigation und vor dauerhaftem lokalem Cache.
+
+---
+
+## Product First
+
+Architektur dient dem Produkt.
+
+---
+
+## Scalability First
+
+Lösungen müssen langfristig skalierbar sein.
+
+---
+
+## Simplicity First
+
+Komplexität wird aktiv reduziert.
+
+---
+
+## Documentation First
+
+Architekturänderungen müssen dokumentiert werden.
+
+---
+
+# 6. Core Systems
+
+## Frontend
+
+Technologie:
+
+Next.js
+
+Verantwortung:
+
+* UI
+* Nutzerinteraktion
+* Dashboards
+* Routing
+
+---
+
+## Backend
+
+Technologie:
+
+Route Handler + Server Services
+
+Verantwortung:
+
+* Geschäftslogik
+* Sicherheit
+* Datenzugriff
+
+---
+
+## Database
+
+Technologie:
+
+Supabase PostgreSQL
+
+Verantwortung:
+
+* Persistenz
+* Rollen
+* Datenmodell
+
+---
+
+## Automation
+
+Verantwortung:
+
+* Studien
+* Jobs
+* Synchronisation
+
+---
+
+# 7. Domain Architecture
+
+## Identity Domain
+
+* Nutzer
+* Rollen
+* Teams
+
+---
+
+## Grow Domain
+
+* Grows
+* Pflanzen
+* Logs
+* Aufgaben
+
+---
+
+## Knowledge Domain
+
+* Wiki
+* Studien
+* Taxonomie
+
+---
+
+## AI Domain
+
+* Diagnose
+* Empfehlungen
+* Feedback
+
+---
+
+## Platform Domain
+
+* Analytics
+* Billing
+* Notifications
+
+---
+
+# 8. Grow OS Architecture
+
+Zentrale User Journey:
+
+Grow
+
+↓
+
+Pflanzen
+
+↓
+
+Logs
+
+↓
+
+Analyse
+
+↓
+
+Diagnose
+
+↓
+
+Empfehlung
+
+↓
+
+Verbesserung
+
+---
+
+Der Grow Workflow ist der wichtigste Datenfluss im System.
+
+Produktiver Persistenzfluss:
+
+User Session
+
+↓
+
+Supabase RLS (`auth.uid()`)
+
+↓
+
+`grows` / `plants` / `log_entries`
+
+↓
+
+Reload / Logout-Login / zweites Gerät
+
+Der Flow wurde am 2026-07-01 End-to-End bewiesen und ist im Obsidian-Checkpoint dokumentiert:
+
+`Obsidian/SecretLeaf v2 - Obsidian/07_Technik/Checkpoint_2026-07-01_Persistence_Recovery.md`
+
+---
+
+# 9. Knowledge Architecture
+
+Knowledge besteht aus:
+
+* Wiki
+* Studien
+* Taxonomie
+* Knowledge Graph
+
+---
+
+Wissen darf niemals isoliert sein.
+
+Jeder Inhalt soll mit dem Grow Workflow verbunden werden.
+
+---
+
+# 10. AI Architecture
+
+AI unterstützt:
+
+* Diagnose
+* Empfehlungen
+* Wissenszugriff
+
+---
+
+AI trifft keine autonomen Entscheidungen.
+
+AI liefert:
+
+* Kontext
+* Wahrscheinlichkeit
+* Handlungsempfehlungen
+
+---
+
+# 11. Automation Architecture
+
+Automationen sind produktunterstützend.
+
+Nicht produktbestimmend.
+
+---
+
+Kernaufgaben:
+
+* Studienaktualisierung
+* Qualitätsbewertung
+* Datenpflege
+* Monitoring
+
+---
+
+# 12. Data Flow
+
+User
+
+↓
+
+Frontend
+
+↓
+
+Backend
+
+↓
+
+Supabase
+
+↓
+
+Business Logic
+
+↓
+
+Response
+
+---
+
+Keine Client-seitige Sicherheitslogik.
+
+---
+
+# 13. Security Architecture
+
+Pflicht:
+
+* RLS
+* Server Validation
+* Rollenprüfung
+
+---
+
+Nicht erlaubt:
+
+* Sicherheitslogik nur im Frontend
+
+---
+
+# 14. Knowledge Graph Strategy
+
+Langfristig werden Wissensdaten als Graph modelliert.
+
+---
+
+Beispiel:
+
+Calcium
+
+↓
+
+Calciummangel
+
+↓
+
+Symptome
+
+↓
+
+Diagnose
+
+↓
+
+Studien
+
+↓
+
+Empfehlungen
+
+---
+
+Ziel:
+
+Zusammenhänge sichtbar machen.
+
+---
+
+# 15. AI Copilot Architecture
+
+Langfristiges Ziel:
+
+Persönlicher Grow Copilot.
+
+---
+
+Nutzer fragt:
+
+"Was sollte ich heute tun?"
+
+---
+
+System nutzt:
+
+* Grow Daten
+* Logs
+* Diagnosen
+* Studien
+
+---
+
+Erzeugt:
+
+* Prioritäten
+* Empfehlungen
+* Warnungen
+
+---
+
+# 16. Analytics Architecture
+
+Alle wichtigen Nutzeraktionen werden erfasst.
+
+---
+
+Beispiele:
+
+* Grow erstellt
+* Diagnose gestartet
+* Studie gelesen
+* Aufgabe abgeschlossen
+
+---
+
+Ziel:
+
+Produktentscheidungen datenbasiert treffen.
+
+---
+
+# 17. Billing Architecture
+
+Zukünftige Architektur.
+
+---
+
+Pläne:
+
+* Free
+* Pro
+* Team
+
+---
+
+Billing ist von Produktlogik getrennt.
+
+---
+
+# 18. Deployment Architecture
+
+Umgebungen:
+
+* Development
+* Preview
+* Production
+
+---
+
+Deployment muss reproduzierbar sein.
+
+---
+
+# 19. Legacy Strategy
+
+Legacy-Systeme werden schrittweise entfernt.
+
+---
+
+Nicht erlaubt:
+
+Parallele Produktarchitekturen ohne Dokumentation.
+
+---
+
+Jede Legacy-Komponente benötigt:
+
+* Zweck
+* Migrationsplan
+* Enddatum
+
+---
+
+## Verbindliche Legacy-Entscheidung: apps/api (Fastify + Prisma)
+
+Zweck:
+
+* kurzfristige lokale Kompatibilität für alte Integrationen
+* Referenz für frühere API-Strukturen
+
+Migrationsplan:
+
+1. Keine neuen Features im Legacy-Pfad
+2. Alle neuen Produktfunktionen ausschließlich in `apps/web` Route Handlern
+3. Legacy-Endpunkte schrittweise auf Next.js Route Handler migrieren oder abschalten
+4. Entfernen von Prisma/SQLite-Abhängigkeiten nach Abschluss der Migration
+
+Enddatum:
+
+* Ziel: 2026-09-30 (vollständige Deaktivierung von `apps/api` im Produktpfad)
+
+Risikoregel:
+
+* Solange `apps/api` existiert, darf es kein Source-of-Truth für produktive Daten sein.
+* Supabase PostgreSQL bleibt die einzige produktive Datenquelle.
+
+---
+
+# 20. Architecture Decision Rules
+
+Vor jeder Architekturentscheidung fragen:
+
+1. Vereinfacht es das System?
+2. Verbessert es die Skalierbarkeit?
+3. Verbessert es die Wartbarkeit?
+4. Unterstützt es den Grow Workflow?
+
+Wenn mindestens eine Antwort "Nein" ist:
+
+Lösung überarbeiten.
+
+---
+
+# 21. Long-Term Target Architecture
+
+SecretLeaf soll langfristig bestehen aus:
+
+Grow OS
+
+*
+
+Knowledge Graph
+
+*
+
+AI Copilot
+
+*
+
+Automation Layer
+
+*
+
+Platform Layer
+
+---
+
+Nicht aus einer Sammlung einzelner Tools.
+
+---
+
+# 22. Final Rule
+
+Jede technische Entscheidung muss den Produktkern stärken.
+
+Der Produktkern ist:
+
+Grow → Dokumentation → Diagnose → Empfehlung → Verbesserung
+
+Wenn eine Änderung diesen Kreislauf nicht stärkt, sollte sie hinterfragt werden.
+
+---
+
+# 23. Error Monitoring (Sentry)
+
+## Setup
+
+Sentry ist aktiv für Client, Server und Edge Runtime.
+
+Projekt: `secretleaf / javascript-nextjs`
+
+DSN: via `NEXT_PUBLIC_SENTRY_DSN` (Client) + `SENTRY_DSN` (Server) in `.env.local` / Vercel Environment Variables.
+
+## Konfiguration
+
+| Datei | Zweck |
+|---|---|
+| `apps/web/sentry.client.config.ts` | Browser: Replay (nur bei Fehler, maskAllText) |
+| `apps/web/sentry.server.config.ts` | Node.js Runtime |
+| `apps/web/sentry.edge.config.ts` | Edge Runtime / Middleware |
+| `apps/web/instrumentation.ts` | Next.js 15+ Server Init + `onRequestError` |
+| `apps/web/instrumentation-client.ts` | Next.js 15+ Client Init |
+| `apps/web/next.config.mjs` | `withSentryConfig()` Wrapper + `tunnelRoute: /monitoring` |
+
+## Grow OS Telemetry
+
+Alle Supabase-Write-Fehler im Grow OS werden strukturiert an Sentry gemeldet.
+
+Zentraler Helper: `apps/web/src/lib/grow/telemetry.ts` → `captureGrowError()`
+
+```typescript
+captureGrowError(operation, { userId, growId, entryId }, error)
+```
+
+Sentry-Felder pro Fehler:
+
+- **Tag** `grow.operation`: z.B. `createGrow`, `addLogEntry`, `deleteGrow`
+- **Tag** `supabase.error_code`: z.B. `22P02`, `23505`
+- **User** `id`: Supabase Auth UUID (kein PII)
+- **Extra**: `growId`, `entryId`, `supabaseMessage`
+
+Integrierte Operationen:
+
+| Operation | Hook | Kontext |
+|---|---|---|
+| `loadGrows` | `useGrowState` | userId |
+| `createGrow` | `useGrowState` | userId, growId |
+| `updateGrow` | `useGrowState` | userId, growId |
+| `deleteGrow` | `useGrowState` | userId, growId |
+| `completeTask` | `useGrowState` | userId, growId, taskId |
+| `advancePhase` | `useGrowState` | userId, growId, newPhaseId |
+| `loadLogEntries` | `useGrowLog` | userId, growId |
+| `addLogEntry` | `useGrowLog` | userId, growId, entryId |
+| `deleteLogEntry` | `useGrowLog` | userId, growId, entryId |
+| `updateLogEntry` | `useGrowLog` | userId, growId, entryId |
+
+## Privacy
+
+- Session Replay: nur bei Fehler (`replaysOnErrorSampleRate: 1.0`)
+- `maskAllText: true`, `blockAllMedia: true`
+- `sendDefaultPii: false` (Standard)
+- User-ID wird übermittelt (UUID, kein Name, keine E-Mail)

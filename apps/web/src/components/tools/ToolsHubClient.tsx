@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { getSetupCoverage, getToolHistory } from '@/hooks/useToolState';
 import { toolRegistry } from '@/lib/tools/registry';

@@ -1,9 +1,10 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { INTEREST_META, type Interest } from '@/hooks/useInterests';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 const INTEREST_ORDER = Object.keys(INTEREST_META) as Interest[];
 

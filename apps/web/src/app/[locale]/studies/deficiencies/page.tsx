@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { areaLabel, riskClass, riskLabel, stageLabel, type GrowArea, type PlantStage, type RiskLevel } from "@/lib/terpira/lexicon";
 
@@ -693,7 +693,7 @@ export default function DeficiencyLexiconPage() {
     <main className="min-h-screen bg-background px-6 py-10">
       <section className="mx-auto max-w-7xl">
         <Link href={"/studies" as Route} className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800">
-          ← Zurück zum Wiki
+          ← Zurück zu Studien
         </Link>
 
         <div className="mt-4 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 bg-gradient-to-r from-emerald-50 to-cyan-50 dark:from-emerald-950/30 dark:to-cyan-950/30 p-6 shadow-sm">
@@ -719,7 +719,7 @@ export default function DeficiencyLexiconPage() {
             <a href="#filter" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Filter</a>
             <a href="#lexikon" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Lexikon</a>
             <a href="#lebenszyklus" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Nährstoffbedarf-Hub</a>
-            <a href="#wiki-artikel" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Wiki-Artikel</a>
+            <a href="#wiki-artikel" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Fachartikel</a>
             <a href="#matrix" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Korrektur-Matrix</a>
             <a href="#ampel" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">24h-Ampel</a>
             <a href="#downloads" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Downloads</a>
@@ -927,7 +927,7 @@ export default function DeficiencyLexiconPage() {
               <h2 className="mt-1 text-xl font-bold text-foreground">Nährstoffbedarf und Kulturkontext</h2>
               <p className="mt-1 max-w-2xl text-sm text-foreground/80">
                 Diese Lexikon-Seite bleibt bei Diagnose, Ursachen und Korrektur. Die phasenweise Nährstofflogik,
-                Substratunterschiede und Antagonismen liegen in eigenen Wiki-Artikeln, damit Evidenz nicht an zwei Stellen parallel gepflegt wird.
+                Substratunterschiede und Antagonismen liegen in eigenen Fachartikeln, damit Evidenz nicht an zwei Stellen parallel gepflegt wird.
               </p>
             </div>
           </div>
@@ -961,7 +961,7 @@ export default function DeficiencyLexiconPage() {
         {/* ── Weiterführende Wiki-Artikel ───────────────────────── */}
         <section id="wiki-artikel" className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Vertiefung · Studienbasis</p>
-          <h2 className="mt-1 text-xl font-bold text-foreground">Weiterführende Wiki-Artikel</h2>
+          <h2 className="mt-1 text-xl font-bold text-foreground">Weiterführende Fachartikel</h2>
           <p className="mt-1 max-w-2xl text-sm text-foreground/80">
             Vertiefende Artikel zu Nährstoffen, Substraten und Anbausystemen mit nachvollziehbarer Studienbasis.
           </p>

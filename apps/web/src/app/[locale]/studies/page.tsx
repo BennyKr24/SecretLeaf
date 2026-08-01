@@ -1,7 +1,7 @@
 import type { Route } from "next";
 import { categoryLabels, wikiArticles, sourceRegister } from "@/data/terpira/wiki";
 import StudiesListView from "@/components/StudiesListView";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 
 export const metadata = {

@@ -86,6 +86,25 @@ export function getActiveGrow(): Grow | null {
 
 // ── Grow Writes ───────────────────────────────────────────────────────────────
 
+/** Builds a new Grow object without persisting it. */
+export function buildGrow(input: CreateGrowInput, plan?: GrowPlan): Grow {
+  const now = new Date().toISOString();
+  const defaultPlan: GrowPlan = { phases: [], totalDays: 0, generatedAt: now };
+  const plants = input.plants?.length
+    ? input.plants
+    : createDefaultPlants(input.pflanzenAnzahl);
+
+  return {
+    ...input,
+    plants,
+    id: generateId(),
+    plan: plan ?? defaultPlan,
+    currentDay: 1, // will be recomputed at runtime via computeCurrentDay
+    createdAt: now,
+    updatedAt: now,
+  };
+}
+
 /**
  * Creates and persists a new Grow.
  *
@@ -97,22 +116,8 @@ export function getActiveGrow(): Grow | null {
  *   b) Its status is "aktiv".
  */
 export function createGrow(input: CreateGrowInput, plan?: GrowPlan): Grow {
-  const now = new Date().toISOString();
-  const defaultPlan: GrowPlan = { phases: [], totalDays: 0, generatedAt: now };
   const existing = getGrows();
-  const plants = input.plants?.length
-    ? input.plants
-    : createDefaultPlants(input.pflanzenAnzahl);
-
-  const grow: Grow = {
-    ...input,
-    plants,
-    id: generateId(),
-    plan: plan ?? defaultPlan,
-    currentDay: 1, // will be recomputed at runtime via computeCurrentDay
-    createdAt: now,
-    updatedAt: now,
-  };
+  const grow = buildGrow(input, plan);
 
   storage.set(STORAGE_KEYS.GROWS, [...existing, grow]);
 

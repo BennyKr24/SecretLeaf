@@ -1,6 +1,6 @@
 {
   "_note": "Diese Datei wird automatisch durch scripts/generate-changelog.mjs aktualisiert. Manuelle Eintraege bleiben erhalten solange ihr Hash 'manual' ist.",
-  "generatedAt": "2026-04-20T20:44:48.204Z",
+  "generatedAt": "2026-06-10T11:34:46.574Z",
   "releases": [
     {
       "hash": "manual",
@@ -17,6 +17,236 @@
         "Dünger-Katalog mit 50+ Profilen (NPK, EC-Bereich, PPFD, pH, Dosierung)",
         "Interaktive Seite /fertilizers mit Filter nach Wachstumsphase, Format und Basis",
         "PPFD- und EC-Daten in Wiki-Artikeln ergänzt"
+      ]
+    },
+    {
+      "hash": "980a431d8036bf2a63930f8d3a9f1576eb6d6f87",
+      "version": null,
+      "date": "2026-06-10",
+      "title": "checkpoint audit + analytics + cron-auth cleanup before persistence fix",
+      "type": "chore",
+      "changes": [
+        "checkpoint audit + analytics + cron-auth cleanup before persistence fix"
+      ]
+    },
+    {
+      "hash": "e63f7dfa75fe61ffbe432e1911a9317be4924131",
+      "version": null,
+      "date": "2026-06-01",
+      "title": "rebuild hero mockup as realistic product application",
+      "type": "feature",
+      "changes": [
+        "rebuild hero mockup as realistic product application"
+      ]
+    },
+    {
+      "hash": "0dfc7667fe2af99459a67a97d30f4196b84a7866",
+      "version": null,
+      "date": "2026-06-01",
+      "title": "rebuild hero into minimal premium product focus",
+      "type": "feature",
+      "changes": [
+        "rebuild hero into minimal premium product focus"
+      ]
+    },
+    {
+      "hash": "41ab409b2de8a07fb067280102b4367061bfa480",
+      "version": null,
+      "date": "2026-06-01",
+      "title": "tighten hero tablet realism and cannabis leaf cluster",
+      "type": "feature",
+      "changes": [
+        "tighten hero tablet realism and cannabis leaf cluster"
+      ]
+    },
+    {
+      "hash": "be85ba68d5704e0a2e84f3c77a16e771d33b9b51",
+      "version": null,
+      "date": "2026-06-01",
+      "title": "refine hero closer to reference with leaf silhouettes",
+      "type": "feature",
+      "changes": [
+        "refine hero closer to reference with leaf silhouettes"
+      ]
+    },
+    {
+      "hash": "65ba145c20428c85f0cf0c0cc87c62117d983e11",
+      "version": null,
+      "date": "2026-06-01",
+      "title": "craft premium hero with tablet frame and reactive plant decor",
+      "type": "feature",
+      "changes": [
+        "craft premium hero with tablet frame and reactive plant decor"
+      ]
+    },
+    {
+      "hash": "132ea1c53fe3853b8fe81bbe295a41dcc3ab7b43",
+      "version": null,
+      "date": "2026-06-01",
+      "title": "finalize premium homepage match and automation reliability updates",
+      "type": "feature",
+      "changes": [
+        "finalize premium homepage match and automation reliability updates"
+      ]
+    },
+    {
+      "hash": "78159446f4598c686c2700e66297c0eb38204887",
+      "version": null,
+      "date": "2026-05-02",
+      "title": "deploy v8: AI_RULES.md,apps/web/.eslintrc.json apps/web/instrumentation.ts,apps/web/messages/de.json apps/web/messages/en.json, +44 more",
+      "type": "update",
+      "changes": [
+        "deploy v8: AI_RULES.md,apps/web/.eslintrc.json apps/web/instrumentation.ts,apps/web/messages/de.json apps/web/messages/en.json, +44 more"
+      ]
+    },
+    {
+      "hash": "6a12672d1dd8ae586f10f5040e0a63b7ba5482af",
+      "version": null,
+      "date": "2026-04-23",
+      "title": "deploy v7: apps/web/messages/de.json,apps/web/messages/en.json apps/web/src/app/[locale]/dashboard/user/page.tsx,apps/web/src/app/[locale]/diagnose/page.tsx apps/web/src/app/[locale]/start/page.tsx, +4 more",
+      "type": "update",
+      "changes": [
+        "deploy v7: apps/web/messages/de.json,apps/web/messages/en.json apps/web/src/app/[locale]/dashboard/user/page.tsx,apps/web/src/app/[locale]/diagnose/page.tsx apps/web/src/app/[locale]/start/page.tsx, +4 more"
+      ]
+    },
+    {
+      "hash": "f6ff17b0f4309c40bca5a4d274470520a7d72a8f",
+      "version": null,
+      "date": "2026-04-23",
+      "title": "deploy v6: apps/web/messages/de.json,apps/web/messages/en.json apps/web/src/app/[locale]/page.tsx,apps/web/src/app/globals.css apps/web/src/components/NavigationBar.tsx, +1 more",
+      "type": "update",
+      "changes": [
+        "deploy v6: apps/web/messages/de.json,apps/web/messages/en.json apps/web/src/app/[locale]/page.tsx,apps/web/src/app/globals.css apps/web/src/components/NavigationBar.tsx, +1 more"
+      ]
+    },
+    {
+      "hash": "967f11ee66dc162ad3f338966d179fe4457fbe59",
+      "version": null,
+      "date": "2026-04-23",
+      "title": "deploy v5: apps/web/messages/de.json,apps/web/messages/en.json apps/web/src/app/[locale]/profile/page.tsx,apps/web/src/components/UserMenu.tsx apps/web/src/hooks/useAuth.ts, +3 more",
+      "type": "update",
+      "changes": [
+        "deploy v5: apps/web/messages/de.json,apps/web/messages/en.json apps/web/src/app/[locale]/profile/page.tsx,apps/web/src/components/UserMenu.tsx apps/web/src/hooks/useAuth.ts, +3 more"
+      ]
+    },
+    {
+      "hash": "c805faefef79bf48bd10654bf0a659fe235b1f4d",
+      "version": null,
+      "date": "2026-04-23",
+      "title": "deploy v4: apps/web/src/lib/types.ts,packages/shared/src/index.ts supabase/migrations/202604230010_team_role.sql",
+      "type": "update",
+      "changes": [
+        "deploy v4: apps/web/src/lib/types.ts,packages/shared/src/index.ts supabase/migrations/202604230010_team_role.sql"
+      ]
+    },
+    {
+      "hash": "eb11b4cd0014953f795bdf33f0477c455def86eb",
+      "version": null,
+      "date": "2026-04-23",
+      "title": "deploy v3: apps/web/messages/de.json,apps/web/messages/en.json apps/web/src/app/[locale]/layout.tsx,apps/web/src/components/LanguageSwitcher.tsx apps/web/src/components/UserMenu.tsx, +1 more",
+      "type": "update",
+      "changes": [
+        "deploy v3: apps/web/messages/de.json,apps/web/messages/en.json apps/web/src/app/[locale]/layout.tsx,apps/web/src/components/LanguageSwitcher.tsx apps/web/src/components/UserMenu.tsx, +1 more"
+      ]
+    },
+    {
+      "hash": "dd7161080d782dc9936248303db04cbefb28ffe6",
+      "version": null,
+      "date": "2026-04-23",
+      "title": "deploy v2: AI_RULES.md,IDEAS.md README.md,apps/web/messages/de.json apps/web/messages/en.json, +62 more",
+      "type": "update",
+      "changes": [
+        "deploy v2: AI_RULES.md,IDEAS.md README.md,apps/web/messages/de.json apps/web/messages/en.json, +62 more"
+      ]
+    },
+    {
+      "hash": "b6ef6f767c25909367c0bdda866469c577b90eb9",
+      "version": null,
+      "date": "2026-04-21",
+      "title": "deploy v2: .gitignore,apps/web/src/app/dashboard/user/page.tsx apps/web/src/app/diagnose/page.tsx,apps/web/src/app/grow/[id]/log/page.tsx apps/web/src/app/grow/[id]/page.tsx, +7 more",
+      "type": "update",
+      "changes": [
+        "deploy v2: .gitignore,apps/web/src/app/dashboard/user/page.tsx apps/web/src/app/diagnose/page.tsx,apps/web/src/app/grow/[id]/log/page.tsx apps/web/src/app/grow/[id]/page.tsx, +7 more"
+      ]
+    },
+    {
+      "hash": "1ecde74acdc45f005909a1e9cc32e7b5074b576f",
+      "version": null,
+      "date": "2026-04-21",
+      "title": "Merge pull request #6 from BennyKr24/copilot/implement-multi-plant-system",
+      "type": "update",
+      "changes": [
+        "Merge pull request #6 from BennyKr24/copilot/implement-multi-plant-system"
+      ]
+    },
+    {
+      "hash": "5d844ed87de8da38fba1bb3d312e6863718149f9",
+      "version": null,
+      "date": "2026-04-21",
+      "title": "Initial plan",
+      "type": "update",
+      "changes": [
+        "Initial plan"
+      ]
+    },
+    {
+      "hash": "c2b46ce913e369d36ae10ded852ec7bf0e298e65",
+      "version": null,
+      "date": "2026-04-20",
+      "title": "auto-complete matching task when logging water/feed/training",
+      "type": "feature",
+      "changes": [
+        "auto-complete matching task when logging water/feed/training"
+      ]
+    },
+    {
+      "hash": "de2c14007ab9ba909449608a4515185a2b87b3b7",
+      "version": null,
+      "date": "2026-04-20",
+      "title": "edit existing entries + date/time editing",
+      "type": "feature",
+      "changes": [
+        "edit existing entries + date/time editing"
+      ]
+    },
+    {
+      "hash": "7047cfad47ec45914b489d7b8a7dec94958c146a",
+      "version": null,
+      "date": "2026-04-20",
+      "title": "use useParams() instead of React.use(params) in grow client pages",
+      "type": "fix",
+      "changes": [
+        "use useParams() instead of React.use(params) in grow client pages"
+      ]
+    },
+    {
+      "hash": "ae5c0fe5b24e7d93fe4924659e4d433edfab795a",
+      "version": null,
+      "date": "2026-04-20",
+      "title": "params is Promise in Next.js 15+ — use React.use(params) in grow pages",
+      "type": "fix",
+      "changes": [
+        "params is Promise in Next.js 15+ — use React.use(params) in grow pages"
+      ]
+    },
+    {
+      "hash": "f216d097aa934bb57a5fb5eac84379596c06f648",
+      "version": null,
+      "date": "2026-04-20",
+      "title": "grow not found — notFound state never reset on re-render",
+      "type": "fix",
+      "changes": [
+        "grow not found — notFound state never reset on re-render"
+      ]
+    },
+    {
+      "hash": "82a65443de1a05256b1db57c767176790d831d72",
+      "version": null,
+      "date": "2026-04-20",
+      "title": "TS build errors — exactOptionalPropertyTypes, invalid setupKeys, missing createGrow fields",
+      "type": "fix",
+      "changes": [
+        "TS build errors — exactOptionalPropertyTypes, invalid setupKeys, missing createGrow fields"
       ]
     },
     {

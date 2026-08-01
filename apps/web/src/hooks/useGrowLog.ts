@@ -25,11 +25,13 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 import { storage, STORAGE_KEYS } from "@/lib/store";
+import { captureGrowError } from "@/lib/grow/telemetry";
 import {
   createLogEntry as dbCreateLogEntry,
   getLogEntries as dbGetLogEntries,
   updateLogEntry as dbUpdateLogEntry,
   deleteLogEntry as dbDeleteLogEntry,
+  updateGrow as dbUpdateGrow,
 } from "@/lib/grow/db";
 
 // ── Log → Task mapping ────────────────────────────────────────────────────────
@@ -207,6 +209,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
       })
       .catch((err) => {
         console.error("[log] Supabase load failed, falling back to localStorage:", err);
+        captureGrowError("loadLogEntries", { userId: user.id, growId: growId ?? undefined }, err);
         refresh();
         setLoaded(true);
       });
@@ -250,7 +253,21 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
           });
         } catch (err) {
           console.error("[log] addEntry Supabase failed, rolling back:", err);
+          captureGrowError("addLogEntry", { userId: user.id, growId: growId ?? undefined, entryId: entry.id }, err);
           setEntries((prev) => prev.filter((e) => e.id !== entry.id));
+        }
+        // Task auto-completion mutated the local plan — mirror it to Supabase
+        // so the completed task survives reload on this and other devices.
+        if (completedTaskId) {
+          try {
+            const updatedGrow = getGrowById(growId);
+            if (updatedGrow) {
+              await dbUpdateGrow(supabase, user.id, growId, { plan: updatedGrow.plan });
+            }
+          } catch (err) {
+            console.error("[log] task auto-complete Supabase sync failed:", err);
+            captureGrowError("completeTask", { userId: user.id, growId: growId ?? undefined, taskId: completedTaskId }, err);
+          }
         }
       })();
 
@@ -282,6 +299,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
           });
         } catch (err) {
           console.error("[log] deleteEntry Supabase failed, rolling back:", err);
+          captureGrowError("deleteLogEntry", { userId: user.id, growId: growId ?? undefined, entryId: id }, err);
           if (snapshot) {
             setEntries((prev) =>
               [snapshot, ...prev].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -323,6 +341,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
           });
         } catch (err) {
           console.error("[log] updateEntry Supabase failed, rolling back:", err);
+          captureGrowError("updateLogEntry", { userId: user.id, growId: growId ?? undefined, entryId: id }, err);
           setEntries((all) => all.map((e) => (e.id === id ? prev : e)));
         }
       })();

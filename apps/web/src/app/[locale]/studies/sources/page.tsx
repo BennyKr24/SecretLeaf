@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { sourceRegister } from "@/data/terpira/wiki";
 
@@ -74,7 +74,7 @@ export default function WikiSourcesPage() {
     <main className="min-h-screen px-6 py-12">
       <section className="mx-auto max-w-6xl rounded-2xl border border-[#d8e8dd] bg-card/90 p-8 shadow-sm">
         <Link href={"/studies" as Route} className="text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
-          ← Zurück zum Wiki
+          ← Zurück zu Studien
         </Link>
 
         <h1 className="mt-4 text-4xl font-bold text-[#10281e]">Quellenregister</h1>
@@ -232,7 +232,7 @@ export default function WikiSourcesPage() {
 
         {filtered.length === 0 && (
           <div className="mt-6 rounded-xl border border-dashed border-border bg-background p-6 text-center text-sm text-foreground/80">
-            Keine Quellen fuer den aktuellen Filter gefunden. Versuche einen anderen Suchbegriff oder wechsle den Typfilter.
+            Keine Quellen für den aktuellen Filter gefunden. Versuche einen anderen Suchbegriff oder wechsle den Typfilter.
           </div>
         )}
       </section>

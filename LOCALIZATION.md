@@ -1,94 +1,490 @@
-# SecretLeaf Localization Standard
+# LOCALIZATION.md
 
-## 1. Zweck
+# SecretLeaf Localization & Language Standard
 
-Dieses Dokument definiert die verbindlichen Lokalisierungsregeln fuer SecretLeaf.
-Schwerpunkt ist professionelle deutsche Fachsprache im Cannabis-Kontext sowie konsistente de/en-Qualitaet.
+Version: 2.0
 
----
+Status: Active
 
-## 2. Sprachstrategie
-
-Unterstuetzte Sprachen:
-- Deutsch (de) als fachliche Leitvariante
-- Englisch (en) als gleichwertige Produktsprache
-
-Leitprinzip:
-- Nicht woertlich uebersetzen, sondern fachlich korrekt und produkttauglich formulieren.
+Owner: Product & Localization
 
 ---
 
-## 3. Terminologie-Guardrails (Deutsch)
+# 1. Purpose
 
-Bevorzugte Fachbegriffe:
-- Naehrstoffgabe statt Feeding
-- Bluetephase statt Flower Stage
-- Keimung statt Germination
-- Wachstumsphase statt Vegetative Stage (wenn Kontext Phase)
-- Ernte statt Harvest (in Fliesstexten)
+Dieses Dokument definiert die verbindlichen Sprach-, Übersetzungs- und Terminologieregeln für SecretLeaf.
 
-Regel:
-- Ein Begriff pro Konzept. Keine Synonymmischung innerhalb desselben Flows.
+Ziel:
+
+Alle Texte müssen wirken wie ein professionelles Softwareprodukt für Cannabis-Anbau.
+
+Nicht wie:
+
+* Google Translate
+* Reddit-Kommentare
+* Forum-Beiträge
+* KI-generierte Texte
+* Marketing-Blabla
+
+Sondern wie:
+
+* professionelle Grow-Software
+* Fachliteratur
+* wissenschaftliche Dokumentation
+* Premium SaaS
 
 ---
 
-## 4. Qualitaetskriterien
+# 2. Supported Languages
 
-Nicht erlaubt:
-- Sichtbare maschinelle Uebersetzungsartefakte
-- Englische Restbegriffe in deutschen Kernflows ohne Notwendigkeit
-- Kaputte Umlaute oder Zeichensatzfehler
-- Uneinheitliche Ansprache innerhalb eines Screens
+Primär:
+
+* Deutsch (de)
+
+Sekundär:
+
+* Englisch (en)
+
+Deutsch ist die fachliche Referenzsprache.
+
+Neue Konzepte werden zuerst fachlich korrekt auf Deutsch definiert.
+
+Danach erfolgt die englische Lokalisierung.
+
+---
+
+# 3. Brand Voice
+
+SecretLeaf spricht:
+
+* professionell
+* sachlich
+* verständlich
+* datenbasiert
+* vertrauenswürdig
+
+---
+
+Nicht:
+
+* übertrieben werblich
+* aggressiv
+* umgangssprachlich
+* jugendlich
+* unseriös
+
+---
+
+# 4. Tone of Voice
+
+## Standard
+
+Ruhig.
+
+Kompetent.
+
+Präzise.
+
+---
+
+Beispiel:
+
+Gut:
+
+"Die Luftfeuchtigkeit liegt aktuell über dem empfohlenen Bereich."
+
+Schlecht:
+
+"Deine Luftfeuchtigkeit ist viel zu hoch!"
+
+---
+
+# 5. UX Writing Principles
+
+Jeder Text muss:
+
+1. Klar sein
+2. Kurz sein
+3. Verständlich sein
+4. Handlungsorientiert sein
+
+---
+
+Nutzer sollen sofort verstehen:
+
+* Was passiert?
+* Warum passiert es?
+* Was muss ich tun?
+
+---
+
+# 6. CTA Rules
+
+Buttons enthalten möglichst:
+
+Verb + Objekt
+
+---
+
+Gut:
+
+* Grow starten
+* Diagnose öffnen
+* Pflanze hinzufügen
+* Eintrag speichern
+
+---
+
+Schlecht:
+
+* Los geht's
+* Weiter
+* Hier klicken
+* Jetzt testen
+
+---
+
+# 7. Cannabis Terminology
+
+## Pflichtbegriffe
+
+| Englisch         | Deutsch            |
+| ---------------- | ------------------ |
+| Germination      | Keimung            |
+| Seedling         | Sämling            |
+| Vegetative Stage | Wachstumsphase     |
+| Flowering Stage  | Blütephase         |
+| Harvest          | Ernte              |
+| Drying           | Trocknung          |
+| Curing           | Fermentation       |
+| Nutrient Feeding | Nährstoffgabe      |
+| Diagnosis        | Diagnose           |
+| Deficiency       | Mangel             |
+| Toxicity         | Überversorgung     |
+| Training         | Pflanzentraining   |
+| Yield            | Ertrag             |
+| Light Schedule   | Beleuchtungszyklus |
+
+---
+
+# 8. Grow Terminology
+
+Diese Begriffe dürfen nicht beliebig übersetzt werden.
+
+| Begriff      |
+| ------------ |
+| VPD          |
+| EC           |
+| PPM          |
+| pH           |
+| DLI          |
+| PPFD         |
+| LST          |
+| HST          |
+| SCROG        |
+| SOG          |
+| Runoff       |
+| Top Dressing |
+
+Diese Begriffe bleiben bestehen.
+
+Bei Bedarf mit Erklärung.
+
+---
+
+# 9. Scientific Language
+
+Studien müssen klingen wie Fachliteratur.
+
+---
+
+Vermeiden:
+
+* sensationsorientierte Aussagen
+* unbelegte Behauptungen
+* Marketing-Sprache
+
+---
+
+Nutzen:
+
+* neutrale Formulierungen
+* Wahrscheinlichkeiten
+* Quellenbezug
+
+---
+
+# 10. Diagnosis Language Rules
+
+Diagnosen müssen immer gleich aufgebaut sein.
+
+---
+
+1. Problem
+
+2. Wahrscheinliche Ursache
+
+3. Begründung
+
+4. Handlungsempfehlung
+
+---
+
+Beispiel:
+
+Problem
+
+Blattspitzen verfärben sich.
+
+---
+
+Wahrscheinliche Ursache
+
+Leichte Überversorgung.
+
+---
+
+Begründung
+
+Typische Verfärbungen an den Blattspitzen.
+
+---
+
+Empfohlene Maßnahme
+
+EC leicht reduzieren.
+
+---
+
+# 11. Error Messages
+
+Fehler müssen lösbar sein.
+
+---
+
+Falsch:
+
+"Ein Fehler ist aufgetreten."
+
+---
+
+Richtig:
+
+"Die Pflanze konnte nicht gespeichert werden. Bitte prüfe deine Internetverbindung und versuche es erneut."
+
+---
+
+# 12. Empty States
+
+Leere Zustände müssen hilfreich sein.
+
+---
+
+Falsch:
+
+"Keine Daten"
+
+---
+
+Richtig:
+
+"Du hast noch keine Pflanzen angelegt. Starte deinen ersten Grow."
+
+---
+
+# 13. Dashboard Language
+
+Dashboards zeigen:
+
+* Status
+* Aktionen
+* Fortschritt
+
+Nicht:
+
+lange Texte.
+
+---
+
+Kurze Labels bevorzugen.
+
+---
+
+# 14. Wiki Language Rules
+
+Wiki-Inhalte müssen:
+
+* objektiv
+* vollständig
+* fachlich korrekt
+
+sein.
+
+---
+
+Kein Marketing.
+
+Keine Meinungen.
+
+Keine Spekulation.
+
+---
+
+# 15. Study Language Rules
+
+Studienseiten verwenden:
+
+* wissenschaftliche Sprache
+* neutrale Zusammenfassungen
+* nachvollziehbare Aussagen
+
+---
+
+Nicht:
+
+"Diese Studie beweist..."
+
+Sondern:
+
+"Die Studie deutet darauf hin..."
+
+---
+
+# 16. SEO Localization
+
+Jede Sprache erhält eigene:
+
+* Titel
+* Beschreibungen
+* Headings
+
+---
+
+Keine automatische Übersetzung.
+
+---
+
+# 17. Umlaute
 
 Pflicht:
-- Fachsprache muss fuer Grower sofort plausibel sein
-- CTA-Texte als klare Verben
-- Fehlermeldungen mit konkreter Handlungsanweisung
+
+* ä
+* ö
+* ü
+* Ä
+* Ö
+* Ü
+* ß
 
 ---
 
-## 5. Technische Regeln
+Verboten:
 
-- Keine neuen hartcodierten User-Strings im Komponenten-Code.
-- Strings liegen in den Message-Dateien pro Locale.
-- Keys werden stabil gehalten; keine semantischen Duplikate.
-- Neue Strings immer de und en gemeinsam liefern.
+* ae
+* oe
+* ue
 
----
-
-## 6. Review-Workflow
-
-Pflicht-Check vor Merge:
-1. Fachbegriff korrekt?
-2. Tonalitaet konsistent?
-3. de/en beide gepflegt?
-4. Layout robust bei laengeren deutschen Strings?
-5. Sonderzeichen korrekt dargestellt?
+außer in technischen IDs.
 
 ---
 
-## 7. SEO- und Lesbarkeitsaspekte
+# 18. Encoding Rules
 
-- Title/Description pro Locale natuerlich formulieren
-- Keine Keyword-Stopfung
-- Fachbegriffe konsistent in Headings und UI
+UTF-8 ist verpflichtend.
 
 ---
 
-## 8. Bekannte Risiken
-
-- Historische String-Reste mit inkonsistenter Begriffswahl
-- Domain-Mischsprache in Diagnose/Tools
-- Fehlende zentrale Glossar-Durchsetzung
-
-Massnahme:
-- Terminologie-Glossar bei jedem Release gegen neue Strings pruefen.
+Alle Texte müssen korrekt dargestellt werden.
 
 ---
 
-## 9. Dokument-Metadaten
+Keine Zeichenfehler.
 
-Owner: Product Engineering
-Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+---
+
+# 19. Consistency Rules
+
+Ein Konzept = ein Begriff.
+
+---
+
+Wenn ein Begriff eingeführt wurde:
+
+muss er überall identisch verwendet werden.
+
+---
+
+Beispiel:
+
+Immer:
+
+"Nährstoffgabe"
+
+Nicht wechselnd:
+
+* Fütterung
+* Feeding
+* Nährstoffversorgung
+
+---
+
+# 20. Forbidden Terms
+
+Verboten:
+
+* Grow Hack
+* Geheimtipp
+* Wunderlösung
+* Magisch
+* Revolutionär
+* Garantiert
+
+---
+
+Verboten:
+
+* Bro-Sprache
+* Slang
+* Reddit-Jargon
+
+---
+
+# 21. Quality Checklist
+
+Vor jeder Veröffentlichung prüfen:
+
+* Fachlich korrekt?
+* Natürlich formuliert?
+* Umlaute korrekt?
+* Terminologie korrekt?
+* CTA klar?
+* Fehlertexte verständlich?
+* Deutsch und Englisch vorhanden?
+
+---
+
+# 22. Localization Review Gate
+
+Ein Text gilt erst als fertig wenn:
+
+* fachlich korrekt
+* sprachlich natürlich
+* konsistent
+* produkttauglich
+* verständlich
+
+ist.
+
+---
+
+# 23. Final Rule
+
+SecretLeaf spricht wie ein professionelles Produkt.
+
+Nicht wie ein Übersetzungstool.
+
+Nicht wie ein Forum.
+
+Nicht wie ein Marketingtext.
+
+Sondern wie die führende Softwareplattform für datenbasierten Cannabis-Anbau.

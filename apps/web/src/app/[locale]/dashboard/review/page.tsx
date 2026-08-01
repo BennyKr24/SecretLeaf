@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import autoSourcesData from "@/data/terpira/autoSources.json";

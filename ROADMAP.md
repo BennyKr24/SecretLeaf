@@ -21,7 +21,7 @@ Sie dient als verbindliche Planungsbasis fuer Delivery und Sequenzierung.
 Jetzt (0-90 Tage):
 - Monetarisierungskern live schalten
 - Kernfluesse messen und stabilisieren
-- Observability verbindlich machen
+- Outcome-, Event- und Adoption-Messung vertiefen
 
 Als naechstes (3-6 Monate):
 - Tieferes Retention-System
@@ -39,7 +39,7 @@ Spaeter (6-12 Monate):
 Top-Initiativen:
 1. Stripe Checkout plus Entitlements produktiv
 2. Pro Value Loop im Grow OS sichtbar und messbar
-3. Sentry + Incident-Baseline verbindlich
+3. Outcome-Events und Feature-Adoption im Grow OS verbindlich messen
 4. Funnel Analytics fuer Activation und Retention
 5. Diagnose-Ergebnisse nahtlos in Log-Flow
 
@@ -105,5 +105,5 @@ Entscheidungsregel:
 
 Owner: Product Engineering
 Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+Last updated: 2026-07-01
+Next review: 2026-08-01

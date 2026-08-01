@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useMemo, useEffect, useDeferredValue, useRef, useCallback, Suspense, type ReactNode } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 import {
   fertilizerCatalog,
   FertilizerPhase,
@@ -17,7 +18,7 @@ import {
   getEffectivePrice,
   getOffersForProduct
 } from '@/data/terpira/fertilizerPrices';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 
 type SortField = 'best-match' | 'name' | 'npk-total' | 'cost' | 'ec-min' | 'ppfd-min';

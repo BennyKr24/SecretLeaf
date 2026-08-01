@@ -7,15 +7,50 @@ import type { GrowPhase } from "./types";
 
 // ── ID Generation ─────────────────────────────────────────────────────────────
 
+/** RFC 4122 v4 UUID matcher (used to detect legacy non-UUID ids during migration). */
+const UUID_V4_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+/** Returns true when `value` is a valid RFC 4122 v4 UUID. */
+export function isUuid(value: string): boolean {
+  return UUID_V4_REGEX.test(value);
+}
+
 /**
- * Generates an ID for client-side use. Grows, plants, and log entries all
- * map to `uuid` columns in Supabase (see lib/grow/db.ts, lib/grow/migration.ts)
- * so the id must be a real UUID even for entities created while offline —
- * otherwise the localStorage → Supabase sync rejects it with
- * "invalid input syntax for type uuid".
+ * Generates an RFC 4122 v4 UUID.
+ *
+ * Supabase grow tables (`grows`, `plants`, `log_entries`) use `uuid` primary
+ * keys, so client-generated ids MUST be valid UUIDs — otherwise every insert
+ * fails with `invalid input syntax for type uuid` and data is silently lost.
+ *
+ * Prefers the native `crypto.randomUUID()`; falls back to a `getRandomValues`
+ * implementation for older runtimes / insecure contexts.
  */
 export function generateId(): string {
-  return crypto.randomUUID();
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+
+  if (typeof crypto !== "undefined" && typeof crypto.getRandomValues === "function") {
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    // Set version (4) and variant (10xx) bits per RFC 4122.
+    bytes[6] = (bytes[6]! & 0x0f) | 0x40;
+    bytes[8] = (bytes[8]! & 0x3f) | 0x80;
+    let hex = "";
+    for (let i = 0; i < 16; i++) {
+      hex += bytes[i]!.toString(16).padStart(2, "0");
+      if (i === 3 || i === 5 || i === 7 || i === 9) hex += "-";
+    }
+    return hex;
+  }
+
+  // Last-resort fallback (no crypto available — should never happen in browsers).
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 
 // ── Day Computation ───────────────────────────────────────────────────────────

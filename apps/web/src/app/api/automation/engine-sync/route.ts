@@ -10,6 +10,7 @@
 // ──────────────────────────────────────────────────────────────────────────────
 
 import { recordAutomationRun } from "@/lib/automationRuns";
+import { isAutomationCronAuthorized } from "@/lib/automationCron";
 import { runPipeline } from "@/lib/engine";
 import type { PipelineConfig } from "@/lib/engine";
 import { getCronSecret } from "@/lib/env";
@@ -19,16 +20,6 @@ import { getSupabaseServerClient } from "@/lib/supabaseServer";
 export const dynamic = "force-dynamic";
 
 const JOB_NAME = "engine-sync";
-
-function isCronAuthorized(req: Request, configuredSecret: string): boolean {
-  // Vercel Cron sends: Authorization: Bearer <CRON_SECRET>
-  const auth = req.headers.get("authorization");
-  const bearerToken = auth?.startsWith("Bearer ") ? auth.slice(7) : null;
-  const legacyKey =
-    req.headers.get("x-cron-key") ??
-    new URL(req.url).searchParams.get("x-cron-key");
-  return (bearerToken ?? legacyKey) === configuredSecret;
-}
 
 export async function GET(req: Request) {
   const startedAt = new Date().toISOString();
@@ -44,7 +35,7 @@ export async function GET(req: Request) {
     return Response.json({ error: "CRON_SECRET is not configured" }, { status: 500 });
   }
 
-  if (!isCronAuthorized(req, configuredSecret)) {
+  if (!isAutomationCronAuthorized(req, configuredSecret)) {
     logWarn("automation.engine-sync.unauthorized");
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }

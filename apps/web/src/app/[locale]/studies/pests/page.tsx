@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { areaLabel, riskClass, riskLabel, stageLabel, type GrowArea, type PlantStage, type RiskLevel } from "@/lib/terpira/lexicon";
 
@@ -1139,7 +1139,7 @@ export default function PestLexiconPage() {
     <main className="min-h-screen bg-background px-6 py-10">
       <section className="mx-auto max-w-7xl">
         <Link href={"/studies" as Route} className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800">
-          ← Zurück zum Wiki
+          ← Zurück zu Studien
         </Link>
 
         <div className="mt-4 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 bg-gradient-to-r from-emerald-50 to-cyan-50 p-6 shadow-sm">
@@ -1474,7 +1474,7 @@ export default function PestLexiconPage() {
         {/* ── Weiterführende Wiki-Artikel ─────────────────────── */}
         <section id="wiki-artikel" className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Vertiefung · Hintergrundartikel</p>
-          <h2 className="mt-1 text-xl font-bold text-foreground">Weiterführende Wiki-Artikel</h2>
+          <h2 className="mt-1 text-xl font-bold text-foreground">Weiterführende Fachartikel</h2>
           <p className="mt-1 max-w-2xl text-sm text-foreground/80">
             Hintergrundartikel zu Prävention, Hygiene und Umweltfaktoren im professionellen Schädlingsmanagement.
           </p>

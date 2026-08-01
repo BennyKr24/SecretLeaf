@@ -7,7 +7,7 @@
 // otherwise as <button>. Covers all action surfaces in the product.
 // ────────────────────────────────────────────────────────────────────────────
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
@@ -21,12 +21,12 @@ export type CTAButtonSize = "sm" | "md" | "lg";
 const BASE =
   "inline-flex items-center justify-center gap-2 font-semibold rounded-xl " +
   "transition-all duration-150 select-none " +
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 " +
   "disabled:opacity-50 disabled:pointer-events-none";
 
 const VARIANTS: Record<CTAButtonVariant, string> = {
   primary:
-    "bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 active:scale-[0.98]",
+    "bg-[var(--primary)] text-white shadow-sm hover:bg-[var(--primary-dark)] active:scale-[0.98]",
   secondary:
     "border border-border bg-card text-foreground/90 shadow-sm " +
     "hover:border-emerald-300 hover:text-emerald-700 active:scale-[0.98]",

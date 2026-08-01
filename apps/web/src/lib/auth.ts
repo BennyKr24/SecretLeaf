@@ -142,14 +142,16 @@ export const loginWithSupabase = async (input: SupabaseAuthInput): Promise<Sessi
 };
 
 export const restoreSessionFromSupabase = async (): Promise<SessionData | null> => {
-  const existing = getSession();
-
   const supabase = getSupabaseBrowserClient();
   const { data, error } = await supabase.auth.getSession();
 
   if (error || !data.session || !data.session.user) {
-    // No valid Supabase session – fall back to cached if token still present
-    if (existing) return existing;
+    // Supabase has no live session. The cached custom session (if any) is stale:
+    // treating it as authenticated would let RLS-protected writes (grows, plants,
+    // log entries) run without a JWT, so `auth.uid()` is NULL and Postgres rejects
+    // every insert with 42501 — silently losing user data. Clear it and force a
+    // fresh login so UI auth state always matches the real Supabase session.
+    clearSession();
     return null;
   }
 

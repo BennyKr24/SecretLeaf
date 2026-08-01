@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { categoryLabels, wikiArticles } from "@/data/terpira/wiki";
 import StudiesListView from "@/components/StudiesListView";

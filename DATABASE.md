@@ -1,180 +1,724 @@
+# DATABASE.md
+
 # SecretLeaf Database Architecture
 
-## 1. Zweck
+Version: 2.0
 
-Dieses Dokument beschreibt das produktive Datenmodell von SecretLeaf auf Supabase/Postgres.
-Es ist die Referenz fuer Tabellen, Rollen, RLS, Indizes, Constraints und Migrationsregeln.
+Status: Active
 
----
+Owner: Product Engineering
 
-## 2. Systemkontext
-
-Primarsystem:
-- Supabase Postgres als kanonische Datenquelle fuer Auth, Studien, Rollen, Grow-Daten und Automation-Telemetrie.
-
-Migrationspfad:
-- Versionierte SQL-Migrationen unter supabase/migrations.
-
-Wichtig:
-- apps/api Prisma-Schema modelliert einen Legacy-Bereich und ist nicht das kanonische Produktmodell.
+Primary Database: Supabase PostgreSQL
 
 ---
 
-## 3. Kernentitaeten
+# 1. Purpose
 
-### 3.1 Rollen und Zugriff
+Dieses Dokument definiert das kanonische Datenmodell von SecretLeaf.
 
-Tabelle:
-- public.user_roles
+Es ist die einzige verbindliche Quelle für:
 
-Schluessel:
-- user_id (PK, FK auf auth.users)
+* Datenmodell
+* Tabellen
+* Beziehungen
+* Rollen
+* RLS
+* Constraints
+* Migrationen
+* Datenqualitätsregeln
 
-Rollenstand:
-- CONSUMER
-- PROVIDER
-- ADMIN
-- TEAM
+---
 
-RLS-Kernregeln:
-- Nutzer koennen eigene Rollen-Zuordnung lesen.
-- Initiale Self-Insert-Regel fuer CONSUMER vorhanden.
-- Rollenpruefungen steuern privilegierte Operationen in Studien- und Admin-Flows.
+# 2. Core Principle
 
-### 3.2 Studien und Wissensdaten
+Die Datenbank dient dem Produkt.
 
-Tabelle:
-- public.studies
+Nicht umgekehrt.
 
-Relevante Felder (Auszug):
-- quality_status, reviewed_by, reviewed_at, review_note
-- source_fingerprint (unique)
-- doi, study_type, relevance_score, editorial_priority
-- matched_topics[], flags[], fetched_at
+Das Datenmodell muss:
 
-Indexierung (Auszug):
-- unique source_fingerprint
-- quality_status + created_at
-- relevance_score
-- editorial_priority + relevance_score
-- doi (partial), fetched_at
-- GIN auf matched_topics und flags
+* einfach
+* nachvollziehbar
+* skalierbar
+* wartbar
 
-RLS-Kernregeln:
-- Authenticated read/insert
-- Update/Delete nur fuer PROVIDER-Rolle
+sein.
 
-### 3.3 Automations-Telemetrie
+---
 
-Tabelle:
-- public.automation_job_runs
+# 3. Single Source of Truth
 
-Zweck:
-- Persistente Laufhistorie fuer Cron- und Engine-Jobs
+Supabase PostgreSQL ist die einzige produktive Datenquelle.
 
-Relevante Felder:
-- job_name, started_at, finished_at, success
-- fetched/inserted/updated/skipped/attempts
-- error_details, metadata
+---
 
-RLS:
-- authenticated select
+Nicht erlaubt:
 
-### 3.4 Engine-Lernsystem
+* doppelte Datenhaltung
+* konkurrierende Systeme
+* parallele Wahrheiten
+
+---
+
+Ausnahmen müssen dokumentiert werden.
+
+---
+
+# 4. Domain Architecture
+
+SecretLeaf wird in fachliche Domänen unterteilt.
+
+---
+
+## Identity Domain
+
+Verantwortlich für:
+
+* Nutzer
+* Rollen
+* Teams
+* Berechtigungen
+
+---
 
 Tabellen:
-- public.study_feedback
-- public.scoring_weights_history
-- public.engine_config
 
-Zweck:
-- Feedback-Signale speichern
-- Gewichtungsanpassungen auditierbar machen
-- Engine-Konfiguration dynamisch steuern
+* auth.users
+* public.user_roles
+* public.teams
+* public.team_members
 
-RLS:
-- service_role Full Access fuer kritische Steuerungstabellen
-- study_feedback mit authenticated own insert/select
+---
 
-### 3.5 Grow Domain
+## Grow OS Domain
+
+Verantwortlich für:
+
+* Grows
+* Pflanzen
+* Aktivitäten
+* Aufgaben
+* Erinnerungen
+
+---
 
 Tabellen:
-- public.grows
-- public.plants
-- public.log_entries
+
+* grows
+* plants
+* log_entries
+
+Hinweis:
+
+* Tasks liegen aktuell im JSONB-Plan eines Grows (`grows.plan`).
+* Separate Tabellen fuer `grow_tasks` und `grow_reminders` sind Zielarchitektur, aber nicht aktueller Produktionsstand.
+
+---
+
+## Knowledge Domain
+
+Verantwortlich für:
+
+* Wiki
+* Studien
+* Taxonomie
+* Wissensgraph
+
+---
+
+Tabellen:
+
+* studies
+* wiki_entries
+* wiki_relationships
+* categories
+* tags
+
+---
+
+## AI Domain
+
+Verantwortlich für:
+
+* Diagnosen
+* Empfehlungen
+* AI Feedback
+* AI Historie
+
+---
+
+Tabellen:
+
+* diagnoses
+* recommendations
+* ai_feedback
+* ai_runs
+
+---
+
+## Platform Domain
+
+Verantwortlich für:
+
+* Analytics
+* Abonnements
+* Benachrichtigungen
+* Automationen
+
+---
+
+Tabellen:
+
+* subscriptions
+* notifications
+* events
+* automation_job_runs
+
+---
+
+# 5. Identity Model
+
+## Users
+
+Referenz:
+
+auth.users
+
+---
+
+Jeder Nutzer besitzt:
+
+* id
+* email
+* created_at
+
+---
+
+## Roles
+
+Tabelle:
+
+user_roles
+
+---
+
+Erlaubte Rollen:
+
+* CONSUMER
+* PROVIDER
+* ADMIN
+* TEAM
+
+---
+
+Keine Freitext-Rollen.
+
+---
+
+# 6. Grow Model
+
+## Grow
+
+Ein Grow ist die oberste Einheit.
+
+---
+
+Ein Grow besitzt:
+
+* mehrere Pflanzen
+* mehrere Log-Eintraege (`log_entries`)
+* einen JSONB-Plan mit Phasen und Aufgaben
+
+---
+
+Beziehung:
+
+Grow
+
+↓
+
+Plants
+
+↓
+
+Log Entries
+
+---
+
+## Plant
+
+Eine Pflanze gehört genau einem Grow.
+
+---
+
+Pflichtfelder:
+
+* id
+* grow_id
+* user_id
+* name
+* created_at
+
+---
+
+## Log Entry
+
+Dokumentiert Ereignisse.
+
+---
+
+Beispiele:
+
+* Bewässerung
+* Nährstoffgabe
+* Training
+* Diagnose
+* Foto
+
+Produktive Tabelle:
+
+* `log_entries`
+
+Pflichtfelder:
+
+* id
+* grow_id
+* user_id
+* entry_type
+* data
+* logged_at
+* created_at
+
+RLS:
+
+* Nutzer duerfen nur Eintraege zu eigenen Grows lesen/schreiben.
+* Supabase `auth.uid()` ist die einzige Autoritaet fuer RLS-geschuetzte Writes.
+
+---
+
+# 7. Knowledge Model
+
+Alle Wissensdaten sind strukturierte Entitäten.
+
+---
+
+Keine unstrukturierten Artikel.
+
+---
+
+## Wiki Entry
+
+Pflichtfelder:
+
+* id
+* title
+* slug
+* type
+* summary
+* category
+* updated_at
+
+---
+
+## Study
+
+Pflichtfelder:
+
+* title
+* doi
+* source
+* quality_status
+* study_type
+* evidence_level
+
+---
+
+# 8. Knowledge Graph
+
+Langfristig besitzt SecretLeaf einen Wissensgraphen.
+
+---
+
+Jeder Eintrag muss Beziehungen besitzen.
+
+---
+
+Beispiel:
+
+Calcium
+
+↓
+
+Calciummangel
+
+↓
+
+Symptome
+
+↓
+
+Diagnose
+
+↓
+
+Studien
+
+---
+
+Tabelle:
+
+wiki_relationships
+
+---
+
+# 9. Diagnosis Model
+
+Diagnosen sind eigene Entitäten.
+
+---
+
+Diagnose enthält:
+
+* Symptome
+* Ursachen
+* Wahrscheinlichkeit
+* Empfehlungen
+
+---
+
+Diagnosen dürfen nicht nur Textblöcke sein.
+
+---
+
+# 10. Recommendation Model
+
+Empfehlungen müssen nachvollziehbar sein.
+
+---
+
+Jede Empfehlung speichert:
+
+* Quelle
+* Zeitpunkt
+* Auslöser
+* Nutzerfeedback
+
+---
+
+# 11. Analytics Model
+
+Analytics sind Pflicht.
+
+---
+
+Tabelle:
+
+events
+
+---
+
+Pflichtfelder:
+
+* event_name
+* user_id
+* created_at
+* metadata
+
+---
+
+Beispiele:
+
+* grow_created
+* diagnosis_opened
+* study_viewed
+* task_completed
+
+---
+
+# 12. Subscription Model
+
+Vorbereitung für Monetarisierung.
+
+---
+
+Tabelle:
+
+subscriptions
+
+---
+
+Pflichtfelder:
+
+* user_id
+* plan
+* status
+* current_period_end
+
+---
+
+Pläne:
+
+* FREE
+* PRO
+* TEAM
+
+---
+
+# 13. Notification Model
+
+Benachrichtigungen sind eigene Entitäten.
+
+---
+
+Nicht als freie JSON-Daten speichern.
+
+---
+
+Tabelle:
+
+notifications
+
+---
+
+# 14. Automation Model
+
+Tabelle:
+
+automation_job_runs
+
+---
+
+Speichert:
+
+* Laufzeit
+* Erfolg
+* Fehler
+* Metadaten
+
+---
 
 Zweck:
-- Authentifizierte Grow-Workflows persistent speichern
 
-RLS-Kernregeln:
-- Owner-basiert ueber user_id
+Auditierbarkeit.
 
 ---
 
-## 4. Beziehungen
+# 15. Data Integrity Rules
 
-Wesentliche Relationen:
-- auth.users 1:1 user_roles
-- studies 1:n study_feedback
-- grows 1:n plants
-- grows 1:n log_entries
-- plants optional 1:n log_entries
+Pflicht:
 
----
-
-## 5. RLS- und Security-Prinzipien
-
-Pflichtregeln:
-- Jede produktive Tabelle mit Nutzerdaten hat RLS aktiviert.
-- Jede privilegierte Mutation ist rollenbasiert abgesichert.
-- Security-Logik wird nicht nur im Client, sondern serverseitig durchgesetzt.
-
-Empfehlung fuer naechste Iteration:
-- Einheitliches Policy-Naming-Schema fuer alle Tabellen.
-- Policy-Tests fuer kritische Rollenfaelle (CONSUMER/PROVIDER/ADMIN/TEAM).
+* Primary Keys
+* Foreign Keys
+* Constraints
 
 ---
 
-## 6. Index- und Performance-Strategie
+Nicht erlaubt:
 
-Aktuelle Staerken:
-- Zielgerichtete Kompositindizes fuer Studienfilterung
-- GIN-Indizes fuer Array-Suchen
-- Zeitbasierte Indizes fuer Job-Historie
-
-Naechste Optimierungen:
-1. Regelmaessige Pruefung auf ungenutzte Indizes
-2. Query-basierte Indexvalidierung pro Release
-3. Optionales Partitionskonzept fuer sehr grosse automation_job_runs
+* verwaiste Datensätze
+* ungültige Referenzen
+* UI-Auth-Zustand ohne echte Supabase-Session als Schreibberechtigung
+* lokale Phantom-Daten im authentifizierten Pfad vor erfolgreichem Server-Write
 
 ---
 
-## 7. Migrationsstandard
+# 16. Naming Convention
 
-Nicht verhandelbar:
-- Keine produktive Schemaaenderung ohne Migration.
-- Migrationen sind idempotent oder sauber sequenziert.
-- Rollforward vor Rollback; destruktive Rollbacks nur mit Impact-Analyse.
+Tabellen:
 
-Release-Check nach Migration:
-1. RLS-Verhalten validiert
-2. Kritische API-Routen gesund
-3. Schreibpfade fuer studies/grow/logs intakt
-4. Automation-Telemetrie schreibt fehlerfrei
+snake_case
+
+Plural.
 
 ---
 
-## 8. Bekannte Risiken
+Beispiele:
 
-- Legacy-Paralleldatenmodell in apps/api kann Begriffs- und Ownership-Drift erzeugen.
-- Team-Rollenzuordnung per harter E-Mail-Migration ist operativ fragil.
-- Fehlende formale DB-Test-Suite fuer Policies und Constraints.
+* grows
+* plants
+* studies
 
 ---
 
-## 9. Dokument-Metadaten
+Spalten:
+
+snake_case
+
+---
+
+IDs:
+
+UUID
+
+---
+
+# 17. Row Level Security
+
+Pflicht für alle produktiven Tabellen.
+
+---
+
+Regeln:
+
+Nutzer sehen nur eigene Daten.
+
+---
+
+Privilegierte Operationen:
+
+rollenbasiert.
+
+---
+
+Keine Sicherheitslogik ausschließlich im Frontend.
+
+---
+
+# 18. Index Strategy
+
+Indizes nur für reale Queries.
+
+---
+
+Vermeiden:
+
+* unnötige Indizes
+* doppelte Indizes
+
+---
+
+Regelmäßige Prüfung:
+
+* Nutzung
+* Performance
+* Kosten
+
+---
+
+# 19. Migration Strategy
+
+Jede Schemaänderung benötigt:
+
+Migration.
+
+---
+
+Nicht erlaubt:
+
+Manuelle Produktionsänderungen.
+
+---
+
+Migrationen müssen:
+
+* reproduzierbar
+* nachvollziehbar
+* versioniert
+
+sein.
+
+---
+
+# 20. Data Quality Rules
+
+Jeder Datensatz muss:
+
+* valide
+* vollständig
+* konsistent
+
+sein.
+
+---
+
+Fehlende Pflichtfelder sind nicht erlaubt.
+
+---
+
+# 21. Backup Strategy
+
+Regelmäßige Backups.
+
+---
+
+Wiederherstellung muss getestet werden.
+
+---
+
+Backups gelten nicht als erfolgreich, wenn keine Recovery geprüft wurde.
+
+---
+
+# 22. Performance Principles
+
+Optimierung nach Messung.
+
+---
+
+Keine frühzeitige Komplexität.
+
+---
+
+Einfachste funktionierende Lösung bevorzugen.
+
+---
+
+# 23. Future Domains
+
+Geplante Erweiterungen:
+
+* Achievements
+* Grow Benchmarks
+* Team Collaboration
+* Marketplace Integrationen
+* AI Memory
+* Knowledge Graph Expansion
+
+---
+
+# 24. Forbidden Patterns
+
+Verboten:
+
+* doppelte Datenhaltung
+* konkurrierende Datenquellen
+* unstrukturierte JSON-Sammlungen
+* fehlende Foreign Keys
+* fehlende RLS
+* manuelle Produktionsänderungen
+* zweite Auth-Wahrheit neben der Supabase Session
+
+---
+
+# 25. Architecture Relationship
+
+DATABASE.md ist die Wahrheit für:
+
+* Tabellen
+* Beziehungen
+* Datenmodell
+
+ARCHITECTURE.md beschreibt Systeme.
+
+DATABASE.md beschreibt Daten.
+
+---
+
+# 26. Final Rule
+
+Jede neue Tabelle muss eine Frage beantworten:
+
+Welches Nutzerproblem löst sie?
+
+Wenn die Antwort unklar ist:
+
+Die Tabelle wird nicht erstellt.
+
+---
+
+# 27. Document Metadata
 
 Owner: Product Engineering
 Status: Active
-Last updated: 2026-06-01
-Next review: 2026-07-01
+Last updated: 2026-07-01
+Next review: 2026-08-01
