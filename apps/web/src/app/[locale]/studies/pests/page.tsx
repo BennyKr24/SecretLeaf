@@ -1136,101 +1136,101 @@ export default function PestLexiconPage() {
   const lightboxCurrentSrc = lightbox ? lightbox.images[lightbox.index] ?? lightbox.images[0] ?? null : null;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-6 py-10">
+    <main className="min-h-screen bg-background px-6 py-10">
       <section className="mx-auto max-w-7xl">
-        <Link href={"/studies" as Route} className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
+        <Link href={"/studies" as Route} className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800">
           ← Zurück zum Wiki
         </Link>
 
-        <div className="mt-4 rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50 to-cyan-50 p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700">Register</p>
-          <h1 className="mt-1 text-4xl font-bold text-slate-900">Schädlings-Lexikon Cannabis</h1>
-          <p className="mt-2 max-w-3xl text-sm text-slate-700">
+        <div className="mt-4 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 bg-gradient-to-r from-emerald-50 to-cyan-50 p-6 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Register</p>
+          <h1 className="mt-1 text-4xl font-bold text-foreground">Schädlings-Lexikon Cannabis</h1>
+          <p className="mt-2 max-w-3xl text-sm text-foreground/80">
             Kompakter Überblick über häufige Schädlinge an Cannabispflanzen, mit Symptomen, Monitoring,
             Prävention und integrierten Gegenmaßnahmen. Sortiert nach Schädlingsart, Risiko und Anbauumgebung.
           </p>
           <div className="mt-4 flex flex-wrap gap-2 text-xs">
-            <span className="rounded-full border border-emerald-200 bg-white px-3 py-1 font-semibold text-emerald-800">{pestLexicon.length} Einträge</span>
-            <span className="rounded-full border border-cyan-200 bg-white px-3 py-1 font-semibold text-cyan-800">Mit Bildmaterial</span>
-            <span className="rounded-full border border-slate-200 bg-white px-3 py-1 font-semibold text-slate-700">Filterbar</span>
+            <span className="rounded-full border border-emerald-200 dark:border-emerald-900/40 bg-card px-3 py-1 font-semibold text-emerald-800 dark:text-emerald-400">{pestLexicon.length} Einträge</span>
+            <span className="rounded-full border border-cyan-200 dark:border-cyan-900/40 bg-card px-3 py-1 font-semibold text-cyan-800 dark:text-cyan-400">Mit Bildmaterial</span>
+            <span className="rounded-full border border-border bg-card px-3 py-1 font-semibold text-foreground/80">Filterbar</span>
           </div>
-          <p className="mt-3 text-xs text-slate-600">
+          <p className="mt-3 text-xs text-foreground/80">
             Bildmaterial aus frei lizenzierten Referenzfotos (Wikimedia Commons), je Eintrag eindeutig zugeordnet.
             Bildnachweise:
-            <a href="/terpira/pests/ATTRIBUTION.md" target="_blank" rel="noreferrer" className="ml-1 font-semibold text-emerald-700 underline">
+            <a href="/terpira/pests/ATTRIBUTION.md" target="_blank" rel="noreferrer" className="ml-1 font-semibold text-emerald-700 dark:text-emerald-400 underline">
               Attribution ansehen
             </a>
           </p>
         </div>
 
-        <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Schnellzugriff</p>
+        <section className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Schnellzugriff</p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <a href="#filter" className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700">Filter</a>
-            <a href="#lexikon" className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700">Lexikon</a>
-            <a href="#nuetzlinge" className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700">Nützlings-Matrix</a>
-            <a href="#ampel" className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700">24h-Ampel</a>
-            <a href="#downloads" className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700">Downloads</a>
-            <a href="#quellen" className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:text-emerald-700">Quellen</a>
+            <a href="#filter" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Filter</a>
+            <a href="#lexikon" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Lexikon</a>
+            <a href="#nuetzlinge" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Nützlings-Matrix</a>
+            <a href="#ampel" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">24h-Ampel</a>
+            <a href="#downloads" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Downloads</a>
+            <a href="#quellen" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Quellen</a>
           </div>
 
           <div className="mt-4 grid gap-3 lg:grid-cols-3">
-            <article className="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+            <article className="rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 p-4">
               <p className="text-sm font-bold text-emerald-900">Modus 1: Schnellhilfe</p>
-              <p className="mt-1 text-xs text-emerald-800">Bei akutem Befall direkt mit 24h-Ampel und Protokollen starten.</p>
+              <p className="mt-1 text-xs text-emerald-800 dark:text-emerald-400">Bei akutem Befall direkt mit 24h-Ampel und Protokollen starten.</p>
               <div className="mt-2 flex gap-2 text-xs">
-                <a href="#ampel" className="rounded-full border border-emerald-300 bg-white px-2.5 py-1 font-semibold text-emerald-700">Zur Ampel</a>
-                <a href="#downloads" className="rounded-full border border-emerald-300 bg-white px-2.5 py-1 font-semibold text-emerald-700">Zu Protokollen</a>
+                <a href="#ampel" className="rounded-full border border-emerald-300 bg-card px-2.5 py-1 font-semibold text-emerald-700 dark:text-emerald-400">Zur Ampel</a>
+                <a href="#downloads" className="rounded-full border border-emerald-300 bg-card px-2.5 py-1 font-semibold text-emerald-700 dark:text-emerald-400">Zu Protokollen</a>
               </div>
             </article>
-            <article className="rounded-xl border border-cyan-200 bg-cyan-50 p-4">
+            <article className="rounded-xl border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 p-4">
               <p className="text-sm font-bold text-cyan-900">Modus 2: Analyse</p>
-              <p className="mt-1 text-xs text-cyan-800">Symptome filtern und Arten sauber eingrenzen.</p>
+              <p className="mt-1 text-xs text-cyan-800 dark:text-cyan-400">Symptome filtern und Arten sauber eingrenzen.</p>
               <div className="mt-2 flex gap-2 text-xs">
-                <a href="#filter" className="rounded-full border border-cyan-300 bg-white px-2.5 py-1 font-semibold text-cyan-700">Zu Filtern</a>
-                <a href="#lexikon" className="rounded-full border border-cyan-300 bg-white px-2.5 py-1 font-semibold text-cyan-700">Zu Einträgen</a>
+                <a href="#filter" className="rounded-full border border-cyan-300 bg-card px-2.5 py-1 font-semibold text-cyan-700 dark:text-cyan-400">Zu Filtern</a>
+                <a href="#lexikon" className="rounded-full border border-cyan-300 bg-card px-2.5 py-1 font-semibold text-cyan-700 dark:text-cyan-400">Zu Einträgen</a>
               </div>
             </article>
-            <article className="rounded-xl border border-amber-200 bg-amber-50 p-4">
+            <article className="rounded-xl border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 p-4">
               <p className="text-sm font-bold text-amber-900">Modus 3: Prävention</p>
-              <p className="mt-1 text-xs text-amber-800">Nützlingsstrategie und Referenzen für belastbare Standardabläufe nutzen.</p>
+              <p className="mt-1 text-xs text-amber-800 dark:text-amber-400">Nützlingsstrategie und Referenzen für belastbare Standardabläufe nutzen.</p>
               <div className="mt-2 flex gap-2 text-xs">
-                <a href="#nuetzlinge" className="rounded-full border border-amber-300 bg-white px-2.5 py-1 font-semibold text-amber-700">Zur Matrix</a>
-                <a href="#quellen" className="rounded-full border border-amber-300 bg-white px-2.5 py-1 font-semibold text-amber-700">Zu Quellen</a>
+                <a href="#nuetzlinge" className="rounded-full border border-amber-300 bg-card px-2.5 py-1 font-semibold text-amber-700 dark:text-amber-400">Zur Matrix</a>
+                <a href="#quellen" className="rounded-full border border-amber-300 bg-card px-2.5 py-1 font-semibold text-amber-700 dark:text-amber-400">Zu Quellen</a>
               </div>
             </article>
           </div>
         </section>
 
-        <section id="filter" className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm scroll-mt-24">
+        <section id="filter" className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
           <div className="grid gap-3 md:grid-cols-[1.2fr_repeat(4,minmax(0,1fr))]">
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Schädlingsname, Symptom oder Lateinname suchen..."
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm text-slate-700 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+              className="w-full rounded-xl border border-border px-3 py-2 text-sm text-foreground/80 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
             />
-            <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value as PestCategory | "alle")} className="rounded-xl border border-slate-300 px-3 py-2 text-sm">
+            <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value as PestCategory | "alle")} className="rounded-xl border border-border px-3 py-2 text-sm">
               <option value="alle">Alle Arten</option>
               <option value="saugend">Saugende</option>
               <option value="blattfresser">Blatt-/Blütenfresser</option>
               <option value="substrat">Substrat</option>
               <option value="wurzel">Wurzel</option>
             </select>
-            <select value={activeRisk} onChange={(e) => setActiveRisk(e.target.value as RiskLevel | "alle")} className="rounded-xl border border-slate-300 px-3 py-2 text-sm">
+            <select value={activeRisk} onChange={(e) => setActiveRisk(e.target.value as RiskLevel | "alle")} className="rounded-xl border border-border px-3 py-2 text-sm">
               <option value="alle">Alle Risiken</option>
               <option value="niedrig">Niedrig</option>
               <option value="mittel">Mittel</option>
               <option value="hoch">Hoch</option>
               <option value="kritisch">Kritisch</option>
             </select>
-            <select value={activeArea} onChange={(e) => setActiveArea(e.target.value as GrowArea | "alle")} className="rounded-xl border border-slate-300 px-3 py-2 text-sm">
+            <select value={activeArea} onChange={(e) => setActiveArea(e.target.value as GrowArea | "alle")} className="rounded-xl border border-border px-3 py-2 text-sm">
               <option value="alle">Alle Umgebungen</option>
               <option value="indoor">Indoor</option>
               <option value="outdoor">Outdoor</option>
               <option value="beides">Indoor + Outdoor</option>
             </select>
-            <select value={activeStage} onChange={(e) => setActiveStage(e.target.value as PlantStage | "alle")} className="rounded-xl border border-slate-300 px-3 py-2 text-sm">
+            <select value={activeStage} onChange={(e) => setActiveStage(e.target.value as PlantStage | "alle")} className="rounded-xl border border-border px-3 py-2 text-sm">
               <option value="alle">Alle Phasen</option>
               <option value="keimling">Keimling</option>
               <option value="veg">Veg</option>
@@ -1247,7 +1247,7 @@ export default function PestLexiconPage() {
                   key={key}
                   type="button"
                   onClick={() => setActiveCategory(active ? "alle" : typedKey)}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold ${active ? "border-emerald-300 bg-emerald-50 text-emerald-700" : "border-slate-200 bg-slate-50 text-slate-700"}`}
+                  className={`rounded-full border px-3 py-1 text-xs font-semibold ${active ? "border-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400" : "border-border bg-background text-foreground/80"}`}
                 >
                   {categoryLabel[typedKey]} ({count})
                 </button>
@@ -1255,23 +1255,23 @@ export default function PestLexiconPage() {
             })}
           </div>
 
-          <p className="mt-4 text-sm text-slate-600">
-            <span className="font-semibold text-slate-900">{filtered.length}</span> Treffer im Schädlings-Lexikon
+          <p className="mt-4 text-sm text-foreground/80">
+            <span className="font-semibold text-foreground">{filtered.length}</span> Treffer im Schädlings-Lexikon
           </p>
         </section>
 
-        <section className="mt-6 rounded-2xl border border-cyan-200 bg-cyan-50/50 p-5 shadow-sm">
+        <section className="mt-6 rounded-2xl border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50/50 dark:bg-cyan-950/50 p-5 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-cyan-700">Schnelldiagnose</p>
-              <h2 className="text-xl font-bold text-slate-900">Symptom-Check in 30 Sekunden</h2>
-              <p className="mt-1 text-sm text-slate-700">Symptome markieren und die wahrscheinlichsten Schädlinge priorisiert anzeigen lassen.</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-cyan-700 dark:text-cyan-400">Schnelldiagnose</p>
+              <h2 className="text-xl font-bold text-foreground">Symptom-Check in 30 Sekunden</h2>
+              <p className="mt-1 text-sm text-foreground/80">Symptome markieren und die wahrscheinlichsten Schädlinge priorisiert anzeigen lassen.</p>
             </div>
             {selectedSymptoms.length > 0 && (
               <button
                 type="button"
                 onClick={() => setSelectedSymptoms([])}
-                className="rounded-lg border border-cyan-300 bg-white px-3 py-1.5 text-xs font-semibold text-cyan-700 hover:bg-cyan-100"
+                className="rounded-lg border border-cyan-300 bg-card px-3 py-1.5 text-xs font-semibold text-cyan-700 dark:text-cyan-400 hover:bg-cyan-100 dark:bg-cyan-950/40"
               >
                 Auswahl zurücksetzen
               </button>
@@ -1288,8 +1288,8 @@ export default function PestLexiconPage() {
                   onClick={() => toggleSymptom(option.id)}
                   className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
                     active
-                      ? "border-cyan-300 bg-cyan-100 text-cyan-800"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-cyan-300"
+                      ? "border-cyan-300 bg-cyan-100 dark:bg-cyan-950/40 text-cyan-800 dark:text-cyan-400"
+                      : "border-border bg-card text-foreground/80 hover:border-cyan-300"
                   }`}
                 >
                   {option.label}
@@ -1301,35 +1301,35 @@ export default function PestLexiconPage() {
           <div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             {quickDiagnosis.length > 0 ? (
               quickDiagnosis.map(({ pest, score }) => (
-                <article key={`diag-${pest.id}`} className="rounded-xl border border-cyan-200 bg-white p-4">
+                <article key={`diag-${pest.id}`} className="rounded-xl border border-cyan-200 dark:border-cyan-900/40 bg-card p-4">
                   <div className="flex items-center justify-between gap-2">
-                    <p className="font-bold text-slate-900">{pest.name}</p>
-                    <span className="rounded-full border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-xs font-semibold text-cyan-700">
+                    <p className="font-bold text-foreground">{pest.name}</p>
+                    <span className="rounded-full border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 px-2 py-0.5 text-xs font-semibold text-cyan-700 dark:text-cyan-400">
                       Treffer {score}
                     </span>
                   </div>
-                  <p className="mt-1 text-xs text-slate-500">{pest.latinName}</p>
-                  <p className="mt-2 text-sm text-slate-700">{pest.short}</p>
+                  <p className="mt-1 text-xs text-muted-fg">{pest.latinName}</p>
+                  <p className="mt-2 text-sm text-foreground/80">{pest.short}</p>
                   <div className="mt-2 flex items-center gap-2">
                     <span className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${riskClass[pest.risk]}`}>
                       {riskLabel[pest.risk]}
                     </span>
-                    <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-semibold text-slate-700">
+                    <span className="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-foreground/80">
                       {categoryLabel[pest.category]}
                     </span>
                   </div>
                 </article>
               ))
             ) : (
-              <p className="text-sm text-slate-600">Keine Diagnose aktiv. Wähle mindestens ein Symptom aus.</p>
+              <p className="text-sm text-foreground/80">Keine Diagnose aktiv. Wähle mindestens ein Symptom aus.</p>
             )}
           </div>
         </section>
 
         <section id="lexikon" className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3 scroll-mt-24">
           {filtered.map((entry) => (
-            <article key={entry.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <div className="grid h-48 grid-cols-3 gap-1 bg-slate-100 p-1">
+            <article key={entry.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+              <div className="grid h-48 grid-cols-3 gap-1 bg-background p-1">
                 {entry.images.map((src, index) => (
                   <button
                     key={src}
@@ -1352,34 +1352,34 @@ export default function PestLexiconPage() {
               </div>
               <div className="p-4">
                 <div className="mb-2 flex flex-wrap items-center gap-2">
-                  <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-semibold text-slate-700">{categoryLabel[entry.category]}</span>
+                  <span className="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-foreground/80">{categoryLabel[entry.category]}</span>
                   <span className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${riskClass[entry.risk]}`}>{riskLabel[entry.risk]}</span>
-                  <span className="rounded-full border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-xs font-semibold text-cyan-700">{entry.images.length} Fotos</span>
+                  <span className="rounded-full border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 px-2 py-0.5 text-xs font-semibold text-cyan-700 dark:text-cyan-400">{entry.images.length} Fotos</span>
                 </div>
-                <h2 className="text-xl font-bold text-slate-900">{entry.name}</h2>
-                <p className="text-xs italic text-slate-500">{entry.latinName}</p>
-                <p className="mt-2 text-sm text-slate-600">{entry.short}</p>
+                <h2 className="text-xl font-bold text-foreground">{entry.name}</h2>
+                <p className="text-xs italic text-muted-fg">{entry.latinName}</p>
+                <p className="mt-2 text-sm text-foreground/80">{entry.short}</p>
 
                 <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
-                  <p className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 font-semibold text-slate-700">Umgebung: {areaLabel[entry.growArea]}</p>
-                  <p className="rounded-lg border border-slate-200 bg-slate-50 px-2 py-1 font-semibold text-slate-700">Phase: {stageLabel[entry.stage]}</p>
+                  <p className="rounded-lg border border-border bg-background px-2 py-1 font-semibold text-foreground/80">Umgebung: {areaLabel[entry.growArea]}</p>
+                  <p className="rounded-lg border border-border bg-background px-2 py-1 font-semibold text-foreground/80">Phase: {stageLabel[entry.stage]}</p>
                 </div>
 
                 {/* Professioneller Steckbrief */}
                 {(entry.sizeMm ?? entry.lifecycleDays ?? entry.optimalConditions ?? entry.actionThreshold) && (
-                  <div className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50/50 p-3 text-xs text-slate-700 space-y-1">
-                    {entry.sizeMm && <p><span className="font-semibold text-slate-900">Größe:</span> {entry.sizeMm}</p>}
-                    {entry.lifecycleDays && <p><span className="font-semibold text-slate-900">Lebenszyklus:</span> {entry.lifecycleDays}</p>}
-                    {entry.optimalConditions && <p><span className="font-semibold text-slate-900">Optimalbedingungen:</span> {entry.optimalConditions}</p>}
-                    {entry.actionThreshold && <p><span className="font-semibold text-slate-900">Schadensschwelle:</span> {entry.actionThreshold}</p>}
+                  <div className="mt-3 rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/50 dark:bg-emerald-950/50 p-3 text-xs text-foreground/80 space-y-1">
+                    {entry.sizeMm && <p><span className="font-semibold text-foreground">Größe:</span> {entry.sizeMm}</p>}
+                    {entry.lifecycleDays && <p><span className="font-semibold text-foreground">Lebenszyklus:</span> {entry.lifecycleDays}</p>}
+                    {entry.optimalConditions && <p><span className="font-semibold text-foreground">Optimalbedingungen:</span> {entry.optimalConditions}</p>}
+                    {entry.actionThreshold && <p><span className="font-semibold text-foreground">Schadensschwelle:</span> {entry.actionThreshold}</p>}
                   </div>
                 )}
 
-                <details className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
-                  <summary className="cursor-pointer text-sm font-semibold text-slate-800">Vollprofil öffnen</summary>
-                  <div className="mt-3 space-y-3 text-sm text-slate-700">
+                <details className="mt-3 rounded-xl border border-border bg-background p-3">
+                  <summary className="cursor-pointer text-sm font-semibold text-foreground">Vollprofil öffnen</summary>
+                  <div className="mt-3 space-y-3 text-sm text-foreground/80">
                     <div>
-                      <p className="font-semibold text-slate-900">Symptome</p>
+                      <p className="font-semibold text-foreground">Symptome</p>
                       <ul className="mt-1 list-disc space-y-1 pl-4">
                         {entry.symptoms.map((item) => (
                           <li key={item}>{item}</li>
@@ -1387,7 +1387,7 @@ export default function PestLexiconPage() {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-semibold text-slate-900">Monitoring</p>
+                      <p className="font-semibold text-foreground">Monitoring</p>
                       <ul className="mt-1 list-disc space-y-1 pl-4">
                         {entry.monitoring.map((item) => (
                           <li key={item}>{item}</li>
@@ -1395,7 +1395,7 @@ export default function PestLexiconPage() {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-semibold text-slate-900">Prävention</p>
+                      <p className="font-semibold text-foreground">Prävention</p>
                       <ul className="mt-1 list-disc space-y-1 pl-4">
                         {entry.prevention.map((item) => (
                           <li key={item}>{item}</li>
@@ -1403,7 +1403,7 @@ export default function PestLexiconPage() {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-semibold text-slate-900">Biologische Maßnahmen</p>
+                      <p className="font-semibold text-foreground">Biologische Maßnahmen</p>
                       <ul className="mt-1 list-disc space-y-1 pl-4">
                         {entry.treatmentBio.map((item) => (
                           <li key={item}>{item}</li>
@@ -1411,7 +1411,7 @@ export default function PestLexiconPage() {
                       </ul>
                     </div>
                     <div>
-                      <p className="font-semibold text-slate-900">Integrierte Strategie</p>
+                      <p className="font-semibold text-foreground">Integrierte Strategie</p>
                       <ul className="mt-1 list-disc space-y-1 pl-4">
                         {entry.treatmentIntegrated.map((item) => (
                           <li key={item}>{item}</li>
@@ -1426,12 +1426,12 @@ export default function PestLexiconPage() {
         </section>
 
         <section className="mt-6 grid gap-5 lg:grid-cols-2">
-          <article id="nuetzlinge" className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm scroll-mt-24">
-            <h2 className="text-xl font-bold text-slate-900">Nützlinge pro Schädling</h2>
-            <p className="mt-1 text-sm text-slate-600">Schnellmatrix für Auswahl und Ausbringungszeitpunkt.</p>
+          <article id="nuetzlinge" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
+            <h2 className="text-xl font-bold text-foreground">Nützlinge pro Schädling</h2>
+            <p className="mt-1 text-sm text-foreground/80">Schnellmatrix für Auswahl und Ausbringungszeitpunkt.</p>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[640px] text-sm">
-                <thead className="bg-slate-50 text-slate-600">
+                <thead className="bg-background text-foreground/80">
                   <tr>
                     <th className="px-3 py-2 text-left">Schädling</th>
                     <th className="px-3 py-2 text-left">Nützling</th>
@@ -1441,11 +1441,11 @@ export default function PestLexiconPage() {
                 </thead>
                 <tbody>
                   {beneficialMatrix.map((row) => (
-                    <tr key={`${row.pest}-${row.beneficial}`} className="border-t border-slate-100">
-                      <td className="px-3 py-2 font-semibold text-slate-900">{row.pest}</td>
-                      <td className="px-3 py-2 text-slate-700">{row.beneficial}</td>
-                      <td className="px-3 py-2 text-slate-700">{row.targetStage}</td>
-                      <td className="px-3 py-2 text-slate-700">{row.deploymentWindow}</td>
+                    <tr key={`${row.pest}-${row.beneficial}`} className="border-t border-border">
+                      <td className="px-3 py-2 font-semibold text-foreground">{row.pest}</td>
+                      <td className="px-3 py-2 text-foreground/80">{row.beneficial}</td>
+                      <td className="px-3 py-2 text-foreground/80">{row.targetStage}</td>
+                      <td className="px-3 py-2 text-foreground/80">{row.deploymentWindow}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1453,14 +1453,14 @@ export default function PestLexiconPage() {
             </div>
           </article>
 
-          <article id="ampel" className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm scroll-mt-24">
-            <h2 className="text-xl font-bold text-slate-900">24h-Ampel: Sofortmaßnahmen</h2>
-            <p className="mt-1 text-sm text-slate-600">Was in den ersten 24 Stunden nach Befallsfund passieren sollte.</p>
+          <article id="ampel" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
+            <h2 className="text-xl font-bold text-foreground">24h-Ampel: Sofortmaßnahmen</h2>
+            <p className="mt-1 text-sm text-foreground/80">Was in den ersten 24 Stunden nach Befallsfund passieren sollte.</p>
             <div className="mt-3 space-y-3">
               {first24hChecklist.map((item) => (
-                <section key={item.level} className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-                  <p className="text-sm font-bold text-slate-900">{item.level}: {item.title}</p>
-                  <ul className="mt-1 list-disc space-y-1 pl-4 text-sm text-slate-700">
+                <section key={item.level} className="rounded-xl border border-border bg-background p-3">
+                  <p className="text-sm font-bold text-foreground">{item.level}: {item.title}</p>
+                  <ul className="mt-1 list-disc space-y-1 pl-4 text-sm text-foreground/80">
                     {item.points.map((point) => (
                       <li key={point}>{point}</li>
                     ))}
@@ -1472,39 +1472,39 @@ export default function PestLexiconPage() {
         </section>
 
         {/* ── Weiterführende Wiki-Artikel ─────────────────────── */}
-        <section id="wiki-artikel" className="mt-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm scroll-mt-24">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Vertiefung · Hintergrundartikel</p>
-          <h2 className="mt-1 text-xl font-bold text-slate-900">Weiterführende Wiki-Artikel</h2>
-          <p className="mt-1 max-w-2xl text-sm text-slate-600">
+        <section id="wiki-artikel" className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Vertiefung · Hintergrundartikel</p>
+          <h2 className="mt-1 text-xl font-bold text-foreground">Weiterführende Wiki-Artikel</h2>
+          <p className="mt-1 max-w-2xl text-sm text-foreground/80">
             Hintergrundartikel zu Prävention, Hygiene und Umweltfaktoren im professionellen Schädlingsmanagement.
           </p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {([
-              { slug: "integrierte-schaedlingspraevention-grow", title: "Integrierte Schädlingsprävention im Grow", tag: "IPM · Prävention", tagColor: "border-emerald-200 bg-emerald-50 text-emerald-700", desc: "Systematischer Ansatz zur Vorbeugung statt Bekämpfung – Monitoring, Schwellenwerte und Nützlingseinsatz." },
-              { slug: "mutterpflanzen-und-clone-hygiene", title: "Mutterpflanzen und Clone-Hygiene", tag: "Hygiene · Klone", tagColor: "border-amber-200 bg-amber-50 text-amber-700", desc: "Wie Schädlinge und Pathogene über Klone eingeschleppt werden – und wie konsequente Hygiene das verhindert." },
-              { slug: "schimmel-und-mykotoxine-bei-cannabis", title: "Schimmel und Mykotoxine bei Cannabis", tag: "Schimmel · Sicherheit", tagColor: "border-rose-200 bg-rose-50 text-rose-700", desc: "Botrytis, Aspergillus und Co.: Erkennungsmerkmale, Risikofaktoren und Maßnahmen bei Pilzbefall." },
-              { slug: "cannabis-substrat-und-wurzelzone", title: "Substrat und Wurzelzone", tag: "Substrat · Wurzel", tagColor: "border-sky-200 bg-sky-50 text-sky-700", desc: "Wie Substratfeuchte und Wurzelgesundheit Schädlingsdruck und Pathogenbefall direkt beeinflussen." },
+              { slug: "integrierte-schaedlingspraevention-grow", title: "Integrierte Schädlingsprävention im Grow", tag: "IPM · Prävention", tagColor: "border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400", desc: "Systematischer Ansatz zur Vorbeugung statt Bekämpfung – Monitoring, Schwellenwerte und Nützlingseinsatz." },
+              { slug: "mutterpflanzen-und-clone-hygiene", title: "Mutterpflanzen und Clone-Hygiene", tag: "Hygiene · Klone", tagColor: "border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400", desc: "Wie Schädlinge und Pathogene über Klone eingeschleppt werden – und wie konsequente Hygiene das verhindert." },
+              { slug: "schimmel-und-mykotoxine-bei-cannabis", title: "Schimmel und Mykotoxine bei Cannabis", tag: "Schimmel · Sicherheit", tagColor: "border-rose-200 dark:border-rose-900/40 bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400", desc: "Botrytis, Aspergillus und Co.: Erkennungsmerkmale, Risikofaktoren und Maßnahmen bei Pilzbefall." },
+              { slug: "cannabis-substrat-und-wurzelzone", title: "Substrat und Wurzelzone", tag: "Substrat · Wurzel", tagColor: "border-sky-200 dark:border-sky-900/40 bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400", desc: "Wie Substratfeuchte und Wurzelgesundheit Schädlingsdruck und Pathogenbefall direkt beeinflussen." },
             ] as { slug: string; title: string; tag: string; tagColor: string; desc: string }[]).map((link) => (
               <Link
                 key={link.slug}
                 href={`/studies/${link.slug}` as Route}
-                className="group flex flex-col gap-1.5 rounded-xl border border-slate-200 bg-slate-50 p-4 transition hover:border-emerald-300 hover:bg-emerald-50"
+                className="group flex flex-col gap-1.5 rounded-xl border border-border bg-background p-4 transition hover:border-emerald-300 hover:bg-emerald-50 dark:bg-emerald-950/30"
               >
                 <span className={`self-start rounded-full border px-2 py-0.5 text-[10px] font-semibold ${link.tagColor}`}>
                   {link.tag}
                 </span>
-                <p className="text-sm font-bold text-slate-900 group-hover:text-emerald-800 leading-snug">{link.title}</p>
-                <p className="text-xs text-slate-600 leading-relaxed">{link.desc}</p>
-                <span className="mt-auto text-xs font-semibold text-emerald-600 group-hover:underline">Artikel lesen →</span>
+                <p className="text-sm font-bold text-foreground group-hover:text-emerald-800 dark:text-emerald-400 leading-snug">{link.title}</p>
+                <p className="text-xs text-foreground/80 leading-relaxed">{link.desc}</p>
+                <span className="mt-auto text-xs font-semibold text-emerald-600 dark:text-emerald-400 group-hover:underline">Artikel lesen →</span>
               </Link>
             ))}
           </div>
         </section>
 
         <section className="mt-6 grid gap-5 lg:grid-cols-2">
-          <article id="quellen" className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm scroll-mt-24">
-            <h2 className="text-xl font-bold text-slate-900">Externe Internetquellen</h2>
-            <p className="mt-1 text-sm text-slate-600">Direkte Referenzen für vertiefende IPM- und Artenrecherche.</p>
+          <article id="quellen" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
+            <h2 className="text-xl font-bold text-foreground">Externe Internetquellen</h2>
+            <p className="mt-1 text-sm text-foreground/80">Direkte Referenzen für vertiefende IPM- und Artenrecherche.</p>
             <div className="mt-3 space-y-2">
               {externalSources.map((source) => (
                 <a
@@ -1512,28 +1512,28 @@ export default function PestLexiconPage() {
                   href={source.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="block rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 hover:border-emerald-300 hover:bg-emerald-50"
+                  className="block rounded-lg border border-border bg-background px-3 py-2 hover:border-emerald-300 hover:bg-emerald-50 dark:bg-emerald-950/30"
                 >
-                  <p className="text-sm font-semibold text-slate-800">{source.title}</p>
-                  <p className="text-xs text-slate-500">Typ: {source.kind}</p>
+                  <p className="text-sm font-semibold text-foreground">{source.title}</p>
+                  <p className="text-xs text-muted-fg">Typ: {source.kind}</p>
                 </a>
               ))}
             </div>
           </article>
 
-          <article id="downloads" className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm scroll-mt-24">
-            <h2 className="text-xl font-bold text-slate-900">IPM-Protokolle herunterladen</h2>
-            <p className="mt-1 text-sm text-slate-600">Sofort einsetzbare Text-Protokolle für Teams und Grow-Räume.</p>
+          <article id="downloads" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
+            <h2 className="text-xl font-bold text-foreground">IPM-Protokolle herunterladen</h2>
+            <p className="mt-1 text-sm text-foreground/80">Sofort einsetzbare Text-Protokolle für Teams und Grow-Räume.</p>
             <div className="mt-3 space-y-2">
               {protocolDownloads.map((file) => (
                 <a
                   key={file.href}
                   href={file.href}
                   download
-                  className="block rounded-lg border border-cyan-200 bg-cyan-50 px-3 py-2 hover:border-cyan-300 hover:bg-cyan-100"
+                  className="block rounded-lg border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 px-3 py-2 hover:border-cyan-300 hover:bg-cyan-100"
                 >
                   <p className="text-sm font-semibold text-cyan-900">{file.title}</p>
-                  <p className="text-xs text-cyan-700">TXT-Download</p>
+                  <p className="text-xs text-cyan-700 dark:text-cyan-400">TXT-Download</p>
                 </a>
               ))}
             </div>
@@ -1541,7 +1541,7 @@ export default function PestLexiconPage() {
         </section>
 
         {filtered.length === 0 && (
-          <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-sm text-slate-600">
+          <div className="mt-8 rounded-2xl border border-dashed border-border bg-background p-8 text-center text-sm text-foreground/80">
             Keine Schädlings-Einträge mit den aktuellen Filtern gefunden. Passe Suche oder Filter an.
           </div>
         )}

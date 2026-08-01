@@ -61,7 +61,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         {children}
 
         {/* Footer */}
-        <footer className="border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+        <footer className="border-t border-border bg-card">
           <div className="mx-auto max-w-6xl px-5 py-10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex items-center gap-2.5">
@@ -69,11 +69,11 @@ export default async function LocaleLayout({ children, params }: Props) {
                   🌿
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">SecretLeaf</p>
-                  <p className="text-[11px] text-slate-400 dark:text-slate-500">{t("tagline")}</p>
+                  <p className="text-sm font-semibold text-foreground">SecretLeaf</p>
+                  <p className="text-[11px] text-muted-fg">{t("tagline")}</p>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-slate-500 dark:text-slate-400">
+              <div className="flex flex-wrap gap-x-6 gap-y-2 text-[13px] text-muted-fg">
                 <Link href="/studies" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
                   {t("studies")}
                 </Link>
@@ -87,7 +87,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                   {t("sources")}
                 </Link>
               </div>
-              <p className="text-[11px] text-slate-400 dark:text-slate-500">
+              <p className="text-[11px] text-muted-fg">
                 © {new Date().getFullYear()} SecretLeaf · {t("rights")}
               </p>
             </div>

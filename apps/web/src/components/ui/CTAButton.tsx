@@ -28,10 +28,10 @@ const VARIANTS: Record<CTAButtonVariant, string> = {
   primary:
     "bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 active:scale-[0.98]",
   secondary:
-    "border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm " +
-    "hover:border-emerald-300 dark:hover:border-emerald-700 hover:text-emerald-700 dark:hover:text-emerald-400 active:scale-[0.98]",
+    "border border-border bg-card text-foreground/90 shadow-sm " +
+    "hover:border-emerald-300 hover:text-emerald-700 active:scale-[0.98]",
   ghost:
-    "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100 active:bg-slate-200 dark:active:bg-slate-700",
+    "text-muted-fg hover:bg-card hover:text-foreground active:bg-border/60",
   danger:
     "border border-rose-200 dark:border-rose-900 bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-400 shadow-sm " +
     "hover:bg-rose-100 dark:hover:bg-rose-900 hover:border-rose-300 active:scale-[0.98]",

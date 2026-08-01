@@ -7,9 +7,9 @@ import { fertilizerCoverageStats } from "@/data/terpira/fertilizers";
 import type { StatusEvent } from "@/lib/types";
 
 const levelClasses: Record<string, string> = {
-  green: "bg-emerald-100 text-emerald-700 border-emerald-200",
-  yellow: "bg-amber-100 text-amber-700 border-amber-200",
-  red: "bg-rose-100 text-rose-700 border-rose-200"
+  green: "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/40",
+  yellow: "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-900/40",
+  red: "bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-900/40"
 };
 
 const levelDotClasses: Record<string, string> = {
@@ -138,21 +138,21 @@ const getImpactModel = (overallStatus: string, apiLevel: string, dbLevel: string
 };
 
 const typeLabels: Record<string, { label: string; cls: string }> = {
-  feature:     { label: "Feature",      cls: "bg-emerald-100 text-emerald-700 border-emerald-200" },
-  fix:         { label: "Bugfix",       cls: "bg-amber-100   text-amber-700   border-amber-200"   },
-  security:    { label: "Sicherheit",   cls: "bg-rose-100    text-rose-700    border-rose-200"    },
-  performance: { label: "Performance",  cls: "bg-blue-100    text-blue-700    border-blue-200"    },
-  release:     { label: "Release",      cls: "bg-violet-100  text-violet-700  border-violet-200"  },
-  docs:        { label: "Doku",         cls: "bg-slate-100   text-slate-700   border-slate-200"   },
-  chore:       { label: "Intern",       cls: "bg-slate-100   text-slate-600   border-slate-200"   },
-  update:      { label: "Update",       cls: "bg-cyan-100    text-cyan-700    border-cyan-200"    },
+  feature:     { label: "Feature",      cls: "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/40" },
+  fix:         { label: "Bugfix",       cls: "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-900/40" },
+  security:    { label: "Sicherheit",   cls: "bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-900/40" },
+  performance: { label: "Performance",  cls: "bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-900/40" },
+  release:     { label: "Release",      cls: "bg-violet-100 dark:bg-violet-950/40 text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-900/40" },
+  docs:        { label: "Doku",         cls: "bg-border text-foreground/80 border-border" },
+  chore:       { label: "Intern",       cls: "bg-border text-foreground/80 border-border" },
+  update:      { label: "Update",       cls: "bg-cyan-100 dark:bg-cyan-950/40 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-900/40" },
 };
 
 const getFreshnessMeta = (iso: string | null) => {
   if (!iso) {
     return {
       label: "Kein Timestamp",
-      className: "bg-rose-100 text-rose-700 border-rose-200"
+      className: "bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-900/40"
     };
   }
 
@@ -162,27 +162,27 @@ const getFreshnessMeta = (iso: string | null) => {
   if (diffHours <= 1) {
     return {
       label: "Sehr aktuell",
-      className: "bg-emerald-100 text-emerald-700 border-emerald-200"
+      className: "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/40"
     };
   }
 
   if (diffHours <= 24) {
     return {
       label: `${diffHours}h alt`,
-      className: "bg-emerald-100 text-emerald-700 border-emerald-200"
+      className: "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/40"
     };
   }
 
   if (diffHours <= 72) {
     return {
       label: `${diffHours}h alt`,
-      className: "bg-amber-100 text-amber-700 border-amber-200"
+      className: "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-900/40"
     };
   }
 
   return {
     label: `${diffHours}h alt`,
-    className: "bg-rose-100 text-rose-700 border-rose-200"
+    className: "bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-900/40"
   };
 };
 
@@ -316,18 +316,18 @@ export default async function StatusPage() {
     .slice(0, 8);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#ecf7f0] via-[#f6fbf8] to-[#ffffff]">
-      <header className="border-b border-[#cfe3d6] bg-[#f7fcf9]/95 backdrop-blur">
+    <main className="min-h-screen bg-background">
+      <header className="border-b border-border bg-card/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#145c3b] to-[#1f7a4f] text-sm font-bold text-white shadow-sm">S</div>
             <div>
-              <div className="text-xl font-bold tracking-tight text-[#123024]">SecretLeaf Status Cockpit</div>
-              <div className="text-xs text-[#4d685a]">Live-Lage, Datenfrische, Prioritätensteuerung</div>
+              <div className="text-xl font-bold tracking-tight text-foreground">SecretLeaf Status Cockpit</div>
+              <div className="text-xs text-muted-fg">Live-Lage, Datenfrische, Prioritätensteuerung</div>
             </div>
           </div>
 
-          <Link href="/" className="rounded-lg border border-[#d6e5d9] bg-white px-4 py-2 text-sm font-medium text-[#123024] hover:bg-[#f5faf7]">
+          <Link href="/" className="rounded-lg border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:bg-background">
             Zurück zur Homepage
           </Link>
         </div>
@@ -335,18 +335,18 @@ export default async function StatusPage() {
 
       <section className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-          <section className="rounded-[28px] border border-[#cfe3d6] bg-white p-7 shadow-sm">
-            <p className="inline-flex rounded-full border border-[#b8d7c5] bg-[#e7f5ec] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#17613f]">
+          <section className="rounded-[28px] border border-border bg-card p-7 shadow-sm">
+            <p className="inline-flex rounded-full border border-emerald-200 dark:border-emerald-900/40 bg-emerald-100 dark:bg-emerald-950/40 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
               Status Cockpit 2026
             </p>
-            <h1 className="mt-4 text-5xl font-bold leading-tight text-[#10281e]">{impactModel.headline}</h1>
-            <p className="mt-3 max-w-3xl text-lg leading-relaxed text-[#4d685a]">
+            <h1 className="mt-4 text-5xl font-bold leading-tight text-foreground">{impactModel.headline}</h1>
+            <p className="mt-3 max-w-3xl text-lg leading-relaxed text-muted-fg">
               Diese Seite priorisiert zuerst den Betriebszustand und die Datenfrische. Danach folgen Wirkung, Verlauf und die nächsten sinnvollen Arbeitsansichten.
             </p>
 
-            <div className="mt-4 rounded-2xl border border-[#dceadf] bg-[#f4faf6] px-4 py-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#3f6a55]">Neu auf dieser Seite</p>
-              <p className="mt-1 text-sm text-[#355b49]">
+            <div className="mt-4 rounded-2xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 px-4 py-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Neu auf dieser Seite</p>
+              <p className="mt-1 text-sm text-emerald-800 dark:text-emerald-300">
                 Priorisierungs-Block, Freshness-Badges und direkte Arbeitsnavigation wurden als erste Ebene integriert.
               </p>
             </div>
@@ -371,26 +371,26 @@ export default async function StatusPage() {
             </div>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-sm font-semibold text-[#123024]">{generatedAt}</div>
-                <div className="mt-1 text-xs text-[#4d685a]">letztes Update</div>
+              <div className="rounded-2xl border border-border bg-background p-4">
+                <div className="text-sm font-semibold text-foreground">{generatedAt}</div>
+                <div className="mt-1 text-xs text-muted-fg">letztes Update</div>
                 <span className={`mt-2 inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold ${statusFreshness.className}`}>
                   {statusFreshness.label}
                 </span>
               </div>
-              <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-sm font-semibold text-[#123024]">{sourceLabel}</div>
-                <div className="mt-1 text-xs text-[#4d685a]">Datenquelle</div>
+              <div className="rounded-2xl border border-border bg-background p-4">
+                <div className="text-sm font-semibold text-foreground">{sourceLabel}</div>
+                <div className="mt-1 text-xs text-muted-fg">Datenquelle</div>
               </div>
-              <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-sm font-semibold text-[#123024]">{statusReport?.windowDays ?? 30} Tage</div>
-                <div className="mt-1 text-xs text-[#4d685a]">Rückblick</div>
+              <div className="rounded-2xl border border-border bg-background p-4">
+                <div className="text-sm font-semibold text-foreground">{statusReport?.windowDays ?? 30} Tage</div>
+                <div className="mt-1 text-xs text-muted-fg">Rückblick</div>
               </div>
-              <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-sm font-semibold text-[#123024]">
+              <div className="rounded-2xl border border-border bg-background p-4">
+                <div className="text-sm font-semibold text-foreground">
                   {latestCoverageSnapshot ? new Date(latestCoverageSnapshot.date).toLocaleString("de-DE") : "n/a"}
                 </div>
-                <div className="mt-1 text-xs text-[#4d685a]">Coverage Snapshot</div>
+                <div className="mt-1 text-xs text-muted-fg">Coverage Snapshot</div>
                 <span className={`mt-2 inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold ${coverageFreshness.className}`}>
                   {coverageFreshness.label}
                 </span>
@@ -398,158 +398,158 @@ export default async function StatusPage() {
             </div>
           </section>
 
-          <aside className="rounded-[28px] border border-[#cfe3d6] bg-white p-7 shadow-sm">
+          <aside className="rounded-[28px] border border-border bg-card p-7 shadow-sm">
             <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[overallStatus]}`}>
               <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[overallStatus]}`} />
               {overallStatus === "red" ? "Aktiver Incident" : overallStatus === "yellow" ? "Eingeschränkter Betrieb" : "Kein aktiver Incident"}
             </div>
-            <h2 className="mt-4 text-2xl font-bold text-[#10281e]">{impactModel.summaryTitle}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-[#4d685a]">{impactModel.summaryText}</p>
+            <h2 className="mt-4 text-2xl font-bold text-foreground">{impactModel.summaryTitle}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-fg">{impactModel.summaryText}</p>
 
-            <div className="mt-4 rounded-xl border border-[#dceadf] bg-[#f8fcf9] px-3 py-2 text-xs text-[#4d685a]">
+            <div className="mt-4 rounded-xl border border-border bg-background px-3 py-2 text-xs text-muted-fg">
               Ansicht zuletzt neu priorisiert für Status + Coverage + Quellenkontext.
             </div>
 
             <div className="mt-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-              <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-2xl font-bold text-[#123024]">{overallStatus.toUpperCase()}</div>
-                <div className="mt-1 text-xs text-[#4d685a]">Gesamtstatus</div>
+              <div className="rounded-2xl border border-border bg-background p-4">
+                <div className="text-2xl font-bold text-foreground">{overallStatus.toUpperCase()}</div>
+                <div className="mt-1 text-xs text-muted-fg">Gesamtstatus</div>
               </div>
-              <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-2xl font-bold text-[#123024]">{liveStudyCoveragePercent}%</div>
-                <div className="mt-1 text-xs text-[#4d685a]">Studien-Coverage (good)</div>
+              <div className="rounded-2xl border border-border bg-background p-4">
+                <div className="text-2xl font-bold text-foreground">{liveStudyCoveragePercent}%</div>
+                <div className="mt-1 text-xs text-muted-fg">Studien-Coverage (good)</div>
               </div>
-              <div className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-                <div className="text-2xl font-bold text-[#123024]">{livePendingStudies}</div>
-                <div className="mt-1 text-xs text-[#4d685a]">offene Studien-Reviews</div>
+              <div className="rounded-2xl border border-border bg-background p-4">
+                <div className="text-2xl font-bold text-foreground">{livePendingStudies}</div>
+                <div className="mt-1 text-xs text-muted-fg">offene Studien-Reviews</div>
               </div>
             </div>
 
-            <div className="mt-4 rounded-2xl border border-[#d6e5d9] bg-[#f8fcf9] p-4">
-              <h3 className="text-base font-semibold text-[#123024]">Aktuelle Auswirkung</h3>
-              <p className="mt-2 text-sm text-[#4d685a]">{impactModel.impactText}</p>
+            <div className="mt-4 rounded-2xl border border-border bg-background p-4">
+              <h3 className="text-base font-semibold text-foreground">Aktuelle Auswirkung</h3>
+              <p className="mt-2 text-sm text-muted-fg">{impactModel.impactText}</p>
             </div>
           </aside>
         </div>
 
-        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Systemstatus</p>
-          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Systemzustand auf einen Blick</h2>
-          <p className="mt-2 text-sm text-[#4d685a]">
+        <section className="mt-8 rounded-[28px] border border-border bg-card p-6 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Systemstatus</p>
+          <h2 className="mt-2 text-2xl font-bold text-foreground">Systemzustand auf einen Blick</h2>
+          <p className="mt-2 text-sm text-muted-fg">
             API- und Datenbankstatus, letzte Pipeline-Ausführung sowie Datenaktualität in einer kompakten Übersicht.
           </p>
 
           <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <article className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">API-Status</p>
-              <p className="mt-1 text-2xl font-bold text-[#123024]">{apiLevel.toUpperCase()}</p>
+            <article className="rounded-2xl border border-border bg-background p-4">
+              <p className="text-xs text-muted-fg">API-Status</p>
+              <p className="mt-1 text-2xl font-bold text-foreground">{apiLevel.toUpperCase()}</p>
             </article>
-            <article className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">Datenbank-Verbindung</p>
-              <p className="mt-1 text-2xl font-bold text-[#123024]">{dbLevel.toUpperCase()}</p>
+            <article className="rounded-2xl border border-border bg-background p-4">
+              <p className="text-xs text-muted-fg">Datenbank-Verbindung</p>
+              <p className="mt-1 text-2xl font-bold text-foreground">{dbLevel.toUpperCase()}</p>
             </article>
-            <article className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">Pipeline-Health</p>
-              <p className="mt-1 text-2xl font-bold text-[#123024]">{pipelineHealthLabel}</p>
+            <article className="rounded-2xl border border-border bg-background p-4">
+              <p className="text-xs text-muted-fg">Pipeline-Health</p>
+              <p className="mt-1 text-2xl font-bold text-foreground">{pipelineHealthLabel}</p>
             </article>
-            <article className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">Letzter Pipeline-Run</p>
-              <p className="mt-1 text-sm font-semibold text-[#123024]">{pipelineLastRun}</p>
+            <article className="rounded-2xl border border-border bg-background p-4">
+              <p className="text-xs text-muted-fg">Letzter Pipeline-Run</p>
+              <p className="mt-1 text-sm font-semibold text-foreground">{pipelineLastRun}</p>
             </article>
-            <article className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">Letztes Update</p>
-              <p className="mt-1 text-sm font-semibold text-[#123024]">{generatedAt}</p>
+            <article className="rounded-2xl border border-border bg-background p-4">
+              <p className="text-xs text-muted-fg">Letztes Update</p>
+              <p className="mt-1 text-sm font-semibold text-foreground">{generatedAt}</p>
             </article>
-            <article className="rounded-2xl border border-[#d6e5d9] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">Anzahl Studien</p>
-              <p className="mt-1 text-2xl font-bold text-[#123024]">{totalStudies}</p>
+            <article className="rounded-2xl border border-border bg-background p-4">
+              <p className="text-xs text-muted-fg">Anzahl Studien</p>
+              <p className="mt-1 text-2xl font-bold text-foreground">{totalStudies}</p>
             </article>
           </div>
         </section>
 
         <section className="mt-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Betrieb</p>
-          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Aktueller Systemzustand</h2>
-          <p className="mt-2 text-sm text-[#4d685a]">Erst die Live-Fähigkeit prüfen, dann Fachzahlen interpretieren.</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Betrieb</p>
+          <h2 className="mt-2 text-2xl font-bold text-foreground">Aktueller Systemzustand</h2>
+          <p className="mt-2 text-sm text-muted-fg">Erst die Live-Fähigkeit prüfen, dann Fachzahlen interpretieren.</p>
 
           <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <div className="rounded-2xl border border-[#d6e5d9] bg-white p-5 shadow-sm">
-              <div className="text-xs text-[#4d685a]">Statische Website</div>
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <div className="text-xs text-muted-fg">Statische Website</div>
               <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-700">
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
                 ERREICHBAR
               </div>
-              <p className="mt-3 text-sm text-[#4d685a]">Die Statusseite bleibt als Referenzpunkt online, auch wenn Live-Dienste fehlen.</p>
+              <p className="mt-3 text-sm text-muted-fg">Die Statusseite bleibt als Referenzpunkt online, auch wenn Live-Dienste fehlen.</p>
             </div>
 
-            <div className="rounded-2xl border border-[#d6e5d9] bg-white p-5 shadow-sm">
-              <div className="text-xs text-[#4d685a]">API / Backend</div>
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <div className="text-xs text-muted-fg">API / Backend</div>
               <div className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[apiLevel]}`}>
                 <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[apiLevel]}`} />
                 {apiLevel.toUpperCase()}
               </div>
-              <p className="mt-3 text-sm text-[#4d685a]">{health?.status === "ok" ? "API antwortet auf Health-Checks und Statusdaten." : "API ist nicht stabil als Live-Dienst erreichbar."}</p>
+              <p className="mt-3 text-sm text-muted-fg">{health?.status === "ok" ? "API antwortet auf Health-Checks und Statusdaten." : "API ist nicht stabil als Live-Dienst erreichbar."}</p>
             </div>
 
-            <div className="rounded-2xl border border-[#d6e5d9] bg-white p-5 shadow-sm">
-              <div className="text-xs text-[#4d685a]">Datenbank</div>
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <div className="text-xs text-muted-fg">Datenbank</div>
               <div className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[dbLevel]}`}>
                 <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[dbLevel]}`} />
                 {dbLevel.toUpperCase()}
               </div>
-              <p className="mt-3 text-sm text-[#4d685a]">{dbLevel === "green" ? "Datenbasis meldet verfügbare Live-Daten." : "Datenbankabfragen sind eingeschränkt oder nicht produktiv erreichbar."}</p>
+              <p className="mt-3 text-sm text-muted-fg">{dbLevel === "green" ? "Datenbasis meldet verfügbare Live-Daten." : "Datenbankabfragen sind eingeschränkt oder nicht produktiv erreichbar."}</p>
             </div>
 
-            <div className="rounded-2xl border border-[#d6e5d9] bg-white p-5 shadow-sm">
-              <div className="text-xs text-[#4d685a]">Statusquelle</div>
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <div className="text-xs text-muted-fg">Statusquelle</div>
               <div className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[sourceLabel === "Live API" ? "green" : "yellow"]}`}>
                 <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[sourceLabel === "Live API" ? "green" : "yellow"]}`} />
                 {sourceLabel}
               </div>
-              <p className="mt-3 text-sm text-[#4d685a]">{sourceLabel === "Live API" ? "Werte kommen direkt aus den Status-Endpoints." : "Mindestens ein Live-Endpoint fehlt, die Seite bleibt aber als Statuskanal verfügbar."}</p>
+              <p className="mt-3 text-sm text-muted-fg">{sourceLabel === "Live API" ? "Werte kommen direkt aus den Status-Endpoints." : "Mindestens ein Live-Endpoint fehlt, die Seite bleibt aber als Statuskanal verfügbar."}</p>
             </div>
           </div>
         </section>
 
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
-          <section className="rounded-2xl border border-[#d6e5d9] bg-white p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Nutzerwirkung</p>
-            <h2 className="mt-2 text-2xl font-bold text-[#10281e]">{impactModel.impactTitle}</h2>
-            <p className="mt-2 text-sm text-[#4d685a]">{impactModel.impactText}</p>
-            <ul className="mt-4 space-y-3 text-sm text-[#4d685a]">
+          <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Nutzerwirkung</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">{impactModel.impactTitle}</h2>
+            <p className="mt-2 text-sm text-muted-fg">{impactModel.impactText}</p>
+            <ul className="mt-4 space-y-3 text-sm text-muted-fg">
               {impactModel.impactItems.map((item) => (
-                <li key={item} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] px-4 py-3">{item}</li>
+                <li key={item} className="rounded-xl border border-border bg-background px-4 py-3">{item}</li>
               ))}
             </ul>
           </section>
 
-          <section className="rounded-2xl border border-[#d6e5d9] bg-white p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Aktion</p>
-            <h2 className="mt-2 text-2xl font-bold text-[#10281e]">{impactModel.actionTitle}</h2>
-            <p className="mt-2 text-sm text-[#4d685a]">{impactModel.actionText}</p>
-            <ul className="mt-4 space-y-3 text-sm text-[#4d685a]">
+          <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Aktion</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">{impactModel.actionTitle}</h2>
+            <p className="mt-2 text-sm text-muted-fg">{impactModel.actionText}</p>
+            <ul className="mt-4 space-y-3 text-sm text-muted-fg">
               {impactModel.actionItems.map((item) => (
-                <li key={item} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] px-4 py-3">{item}</li>
+                <li key={item} className="rounded-xl border border-border bg-background px-4 py-3">{item}</li>
               ))}
             </ul>
           </section>
         </div>
 
-        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Priorisierung</p>
-          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Was jetzt zuerst wichtig ist</h2>
-          <p className="mt-2 text-sm text-[#4d685a]">
+        <section className="mt-8 rounded-[28px] border border-border bg-card p-6 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Priorisierung</p>
+          <h2 className="mt-2 text-2xl font-bold text-foreground">Was jetzt zuerst wichtig ist</h2>
+          <p className="mt-2 text-sm text-muted-fg">
             Diese Reihenfolge ist die operative Arbeitsreihenfolge nach Statuslage.
           </p>
 
           <div className="mt-5 grid gap-4 lg:grid-cols-3">
             {priorityCards.map((card) => (
-              <article key={card.title} className="rounded-2xl border border-[#dfece3] bg-[#fbfefc] p-5">
-                <h3 className="text-lg font-semibold text-[#123024]">{card.title}</h3>
-                <p className="mt-2 text-sm text-[#4d685a]">{card.text}</p>
+              <article key={card.title} className="rounded-2xl border border-border bg-background p-5">
+                <h3 className="text-lg font-semibold text-foreground">{card.title}</h3>
+                <p className="mt-2 text-sm text-muted-fg">{card.text}</p>
                 <Link
                   href={card.href as Route}
-                  className="mt-4 inline-flex items-center rounded-lg border border-[#c8ddcf] bg-white px-3 py-1.5 text-xs font-semibold text-[#1f7a4f] hover:bg-[#eef7f1]"
+                  className="mt-4 inline-flex items-center rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-background"
                 >
                   {card.cta}
                 </Link>
@@ -558,66 +558,66 @@ export default async function StatusPage() {
           </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Link href="/status" className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+            <Link href="/status" className="rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground hover:bg-background">
               Status Fokus
             </Link>
-            <Link href={"/tools/plans" as Route} className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+            <Link href={"/tools/plans" as Route} className="rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground hover:bg-background">
               Coverage Audit
             </Link>
-            <Link href={"/studies/sources" as Route} className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+            <Link href={"/studies/sources" as Route} className="rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground hover:bg-background">
               Quellenregister
             </Link>
-            <Link href={"/database/fertilizers" as Route} className="rounded-xl border border-[#dfece3] bg-white px-4 py-3 text-sm font-medium text-[#123024] hover:bg-[#f4faf6]">
+            <Link href={"/database/fertilizers" as Route} className="rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground hover:bg-background">
               Dünger-Katalog
             </Link>
           </div>
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Coverage Verlauf</p>
-          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Dünger-Marktabdeckung im Zeitverlauf</h2>
-          <p className="mt-2 text-sm text-[#4d685a]">
+        <section className="mt-8 rounded-[28px] border border-border bg-card p-6 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Coverage Verlauf</p>
+          <h2 className="mt-2 text-2xl font-bold text-foreground">Dünger-Marktabdeckung im Zeitverlauf</h2>
+          <p className="mt-2 text-sm text-muted-fg">
             Live Studien-Coverage: {overview?.stats.goodStudies ?? 0} von {overview?.stats.totalStudies ?? 0} als good markiert ({liveStudyCoveragePercent}%).
           </p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            <div className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">Datenfrische</p>
+            <div className="rounded-xl border border-border bg-background p-4">
+              <p className="text-xs text-muted-fg">Datenfrische</p>
               <div className={`mt-2 inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${coverageFreshness.className}`}>
                 {coverageFreshness.label}
               </div>
             </div>
-            <div className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">Trend vs. letzter Snapshot</p>
-              <p className="mt-2 text-2xl font-bold text-[#123024]">
+            <div className="rounded-xl border border-border bg-background p-4">
+              <p className="text-xs text-muted-fg">Trend vs. letzter Snapshot</p>
+              <p className="mt-2 text-2xl font-bold text-foreground">
                 {coverageDelta == null ? "n/a" : `${coverageDelta > 0 ? "+" : ""}${coverageDelta}%`}
               </p>
             </div>
-            <div className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
-              <p className="text-xs text-[#6b8577]">Offene Reviews</p>
-              <p className="mt-2 text-2xl font-bold text-[#123024]">{livePendingStudies}</p>
+            <div className="rounded-xl border border-border bg-background p-4">
+              <p className="text-xs text-muted-fg">Offene Reviews</p>
+              <p className="mt-2 text-2xl font-bold text-foreground">{livePendingStudies}</p>
             </div>
           </div>
 
           <div className="mt-5 grid gap-3 md:grid-cols-5">
             {coverageHistory.map((point) => (
-              <article key={point.date} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
-                <time className="text-xs text-[#6b8577]">{new Date(point.date).toLocaleDateString("de-DE")}</time>
-                <div className="mt-2 text-2xl font-bold text-[#123024]">{point.coverage}%</div>
-                <div className="mt-1 h-2 rounded bg-[#e5f2ea] overflow-hidden">
-                  <div className="h-full bg-[#1f7a4f]" style={{ width: `${Math.min(point.coverage, 100)}%` }} />
+              <article key={point.date} className="rounded-xl border border-border bg-background p-4">
+                <time className="text-xs text-muted-fg">{new Date(point.date).toLocaleDateString("de-DE")}</time>
+                <div className="mt-2 text-2xl font-bold text-foreground">{point.coverage}%</div>
+                <div className="mt-1 h-2 rounded bg-emerald-100 dark:bg-emerald-950/40 overflow-hidden">
+                  <div className="h-full bg-emerald-600 dark:bg-emerald-500" style={{ width: `${Math.min(point.coverage, 100)}%` }} />
                 </div>
-                <p className="mt-2 text-xs text-[#4d685a]">{point.coveredProducts}/{point.marketEstimate}</p>
-                <p className="mt-1 text-xs text-[#6b8577]">{point.note}</p>
+                <p className="mt-2 text-xs text-muted-fg">{point.coveredProducts}/{point.marketEstimate}</p>
+                <p className="mt-1 text-xs text-muted-fg">{point.note}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-[#d6e5d9] bg-white p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Verlauf</p>
-          <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Statusverlauf letzte 30 Tage</h2>
-          <p className="mt-2 text-sm text-[#4d685a]">Links älter, rechts aktueller. Die Punkte zeigen den groben Statusverlauf.</p>
+        <section className="mt-8 rounded-[28px] border border-border bg-card p-6 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Verlauf</p>
+          <h2 className="mt-2 text-2xl font-bold text-foreground">Statusverlauf letzte 30 Tage</h2>
+          <p className="mt-2 text-sm text-muted-fg">Links älter, rechts aktueller. Die Punkte zeigen den groben Statusverlauf.</p>
 
           <div className="mt-5 grid gap-2" style={{ gridTemplateColumns: `repeat(${historyDays.length}, minmax(0, 1fr))` }}>
             {historyDays.map((day) => (
@@ -629,7 +629,7 @@ export default async function StatusPage() {
             ))}
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-4 text-xs text-[#4d685a]">
+          <div className="mt-4 flex flex-wrap gap-4 text-xs text-muted-fg">
             <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> Grün — stabil</span>
             <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-amber-500" /> Gelb — eingeschränkt</span>
             <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-rose-500" /> Rot — Störung</span>
@@ -637,25 +637,25 @@ export default async function StatusPage() {
         </section>
 
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
-          <section className="rounded-2xl border border-[#d6e5d9] bg-white p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Historie</p>
-            <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Risikoreport letzte 30 Tage</h2>
-            <p className="mt-2 text-sm text-[#4d685a]">Fokus auf potenziell problematische Ereignisse für Nutzer und Betriebsstabilität.</p>
+          <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Historie</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">Risikoreport letzte 30 Tage</h2>
+            <p className="mt-2 text-sm text-muted-fg">Fokus auf potenziell problematische Ereignisse für Nutzer und Betriebsstabilität.</p>
 
             <div className="mt-5 space-y-3">
               {(statusReport?.events ?? []).map((event: StatusEvent) => (
-                <article key={event.key} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
+                <article key={event.key} className="rounded-xl border border-border bg-background p-4">
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
                       <span className={`h-3 w-3 rounded-full ${levelDotClasses[event.level]}`} />
-                      <h3 className="font-semibold text-[#123024]">{event.label}</h3>
+                      <h3 className="font-semibold text-foreground">{event.label}</h3>
                     </div>
                     <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${levelClasses[event.level]}`}>
                       {event.level.toUpperCase()} | {event.count}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm text-[#4d685a]">{event.description}</p>
-                  <p className="mt-1 text-xs text-[#6b8577]">
+                  <p className="mt-2 text-sm text-muted-fg">{event.description}</p>
+                  <p className="mt-1 text-xs text-muted-fg">
                     Letztes Ereignis: {event.lastSeen ? new Date(event.lastSeen).toLocaleString("de-DE") : "kein Treffer im Zeitraum"}
                   </p>
                 </article>
@@ -663,36 +663,36 @@ export default async function StatusPage() {
             </div>
           </section>
 
-          <section className="rounded-2xl border border-[#d6e5d9] bg-white p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1f7a4f]">Chronik</p>
-            <h2 className="mt-2 text-2xl font-bold text-[#10281e]">Letzte Patches, Releases und Prioritätswechsel</h2>
-            <p className="mt-2 text-sm text-[#4d685a]">Automatisch aus Git-Commits generiert und als Kontext für Betriebs- und Produktentscheidungen nutzbar.</p>
+          <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Chronik</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">Letzte Patches, Releases und Prioritätswechsel</h2>
+            <p className="mt-2 text-sm text-muted-fg">Automatisch aus Git-Commits generiert und als Kontext für Betriebs- und Produktentscheidungen nutzbar.</p>
 
             <div className="mt-5 space-y-3">
               {changelog.map((entry) => {
                 const tl = typeLabels[entry.type] ?? typeLabels["update"]!;
                 return (
-                  <article key={entry.hash} className="rounded-xl border border-[#dfece3] bg-[#fbfefc] p-4">
+                  <article key={entry.hash} className="rounded-xl border border-border bg-background p-4">
                     <div className="flex flex-wrap items-center gap-2">
                       <span className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold ${tl.cls}`}>{tl.label}</span>
                       {entry.version && (
-                        <span className="rounded-full border border-[#d6e5d9] bg-white px-2.5 py-0.5 text-xs font-mono text-[#4d685a]">v{entry.version}</span>
+                        <span className="rounded-full border border-border bg-card px-2.5 py-0.5 text-xs font-mono text-muted-fg">v{entry.version}</span>
                       )}
-                      <time className="ml-auto text-xs text-[#6b8577]">
+                      <time className="ml-auto text-xs text-muted-fg">
                         {new Date(entry.date).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}
                       </time>
                     </div>
-                    <h3 className="mt-2 text-sm font-semibold text-[#123024]">{entry.title}</h3>
+                    <h3 className="mt-2 text-sm font-semibold text-foreground">{entry.title}</h3>
                     {entry.changes.length > 0 && (
                       <ul className="mt-2 space-y-1">
                         {entry.changes.slice(0, 4).map((change: string, i: number) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-[#4d685a]">
+                          <li key={i} className="flex items-start gap-2 text-xs text-muted-fg">
                             <span className="mt-0.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-emerald-400" />
                             {change}
                           </li>
                         ))}
                         {entry.changes.length > 4 && (
-                          <li className="text-xs text-[#6b8577] pl-3.5">+ {entry.changes.length - 4} weitere Änderungen</li>
+                          <li className="text-xs text-muted-fg pl-3.5">+ {entry.changes.length - 4} weitere Änderungen</li>
                         )}
                       </ul>
                     )}

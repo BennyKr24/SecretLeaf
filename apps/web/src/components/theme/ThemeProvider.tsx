@@ -21,14 +21,24 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "system";
-    const stored = localStorage.getItem("theme") as Theme | null;
-    return stored && ["light", "dark", "system"].includes(stored)
-      ? stored
-      : "system";
-  });
+  // Start at "system" (matches SSR) — localStorage is only readable on the
+  // client, so reading a stored "light"/"dark" preference here would make
+  // the first client render diverge from the server-rendered HTML. The
+  // effect below re-applies the real stored preference immediately after
+  // mount, before paint is visible to the user.
+  const [theme, setThemeState] = useState<Theme>("system");
   const [resolvedTheme, setResolvedTheme] = useState<"light" | "dark">("light");
+
+  // Pick up the real stored preference once we're on the client.
+  useEffect(() => {
+    const stored = localStorage.getItem("theme") as Theme | null;
+    if (stored && ["light", "dark", "system"].includes(stored) && stored !== "system") {
+      // Deliberate mount-only sync from localStorage (client-only source) to
+      // avoid a hydration mismatch — see comment on the initializer above.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setThemeState(stored);
+    }
+  }, []);
 
   // Apply theme class to html element
   useEffect(() => {

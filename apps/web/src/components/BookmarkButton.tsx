@@ -27,8 +27,8 @@ export default function BookmarkButton({ slug, size = 'md', className = '' }: Pr
       }}
       className={`inline-flex items-center justify-center rounded-lg border transition-all duration-150
         ${saved
-          ? 'border-emerald-200 bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
-          : 'border-slate-200 bg-white text-slate-400 hover:border-emerald-200 hover:text-emerald-600 hover:bg-emerald-50'
+          ? 'border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-950/50'
+          : 'border-border bg-card text-muted-fg hover:border-emerald-200 hover:text-emerald-600 hover:bg-emerald-50'
         } ${sizeClasses} ${className}`}
     >
       {saved ? (

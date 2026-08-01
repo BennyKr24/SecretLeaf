@@ -54,14 +54,14 @@ function OnboardingInner() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f8fafb] flex flex-col items-center justify-center px-5 py-10">
+    <main className="min-h-screen bg-background flex flex-col items-center justify-center px-5 py-10">
       <div className="w-full max-w-md">
 
         {/* Logo */}
         <div className="mb-8 text-center">
           <Link href="/" className="inline-flex items-center gap-2 group">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-base transition-transform group-hover:scale-110">🌿</span>
-            <span className="text-[15px] font-bold text-slate-900 tracking-tight">SecretLeaf</span>
+            <span className="text-[15px] font-bold text-foreground tracking-tight">SecretLeaf</span>
           </Link>
         </div>
 
@@ -70,10 +70,10 @@ function OnboardingInner() {
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-100 text-2xl mb-4">
             ✦
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">
             Welche Themen interessieren dich?
           </h1>
-          <p className="mt-2 text-sm text-slate-500 leading-relaxed">
+          <p className="mt-2 text-sm text-muted-fg leading-relaxed">
             Wähle deine Schwerpunkte – wir passen Inhalte und Empfehlungen entsprechend an.
           </p>
         </div>
@@ -91,25 +91,25 @@ function OnboardingInner() {
                 className={`flex items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-150 select-none
                   ${active
                     ? 'border-emerald-400 bg-emerald-50 shadow-sm ring-1 ring-emerald-300/60'
-                    : 'border-slate-200 bg-white hover:border-emerald-200 hover:bg-emerald-50/30'
+                    : 'border-border bg-card hover:border-emerald-200 hover:bg-emerald-50/30'
                   }`}
               >
                 <span className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl text-xl transition-all duration-150
-                  ${active ? 'bg-emerald-100' : 'bg-slate-100'}`}>
+                  ${active ? 'bg-emerald-100' : 'bg-border'}`}>
                   {meta.icon}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className={`text-[14px] font-bold transition-colors ${active ? 'text-emerald-800' : 'text-slate-800'}`}>
+                  <p className={`text-[14px] font-bold transition-colors ${active ? 'text-emerald-800' : 'text-foreground'}`}>
                     {meta.label}
                   </p>
-                  <p className="text-xs text-slate-500 mt-0.5">
+                  <p className="text-xs text-muted-fg mt-0.5">
                     {meta.categories.slice(0, 3).join(' · ')}
                   </p>
                 </div>
                 <div className={`flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full border transition-all duration-150
                   ${active
                     ? 'border-emerald-500 bg-emerald-500'
-                    : 'border-slate-300 bg-white'
+                    : 'border-border bg-card'
                   }`}
                 >
                   {active && (
@@ -144,10 +144,10 @@ function OnboardingInner() {
           }
         </button>
 
-        <p className="mt-4 text-center text-xs text-slate-400">
+        <p className="mt-4 text-center text-xs text-muted-fg">
           Du kannst deine Interessen jederzeit in deinem Dashboard anpassen.
           {selected.length === 0 && (
-            <> · <button type="button" onClick={handleSkip} className="text-slate-500 underline-offset-2 hover:underline">
+            <> · <button type="button" onClick={handleSkip} className="text-muted-fg underline-offset-2 hover:underline">
               Überspringen
             </button></>
           )}

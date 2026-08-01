@@ -79,9 +79,9 @@ function QualityBadge({ status }: { status: string }) {
 function PriorityBadge({ priority }: { priority: string | null }) {
   if (!priority) return null;
   const config: Record<string, string> = {
-    high: "bg-[#e5f4ea] text-[#1f7a4f]",
+    high: "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400",
     medium: "bg-blue-100 text-blue-700",
-    low: "bg-slate-100 text-slate-600",
+    low: "bg-border text-foreground/80",
   };
   return (
     <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${config[priority] ?? config.low}`}>
@@ -214,38 +214,38 @@ export default function AdminStudiesPage() {
     <div>
       <div className="mb-7 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs text-[#8fa89a]">
-            <span>Admin</span><span>/</span><span className="font-semibold text-[#4d685a]">Studien</span>
+          <div className="flex items-center gap-2 text-xs text-muted-fg">
+            <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Studien</span>
           </div>
           <div className="mt-1 flex items-center gap-3">
             <span className="text-2xl">🔬</span>
             <div>
-              <h1 className="text-2xl font-bold text-[#10281e]">Studien-Management</h1>
-              <p className="text-sm text-[#4d685a]">Alle Studien filtern, sortieren, prüfen und bearbeiten.</p>
+              <h1 className="text-2xl font-bold text-foreground">Studien-Management</h1>
+              <p className="text-sm text-muted-fg">Alle Studien filtern, sortieren, prüfen und bearbeiten.</p>
             </div>
           </div>
         </div>
         {data && (
-          <span className="rounded-full bg-[#e5f4ea] px-3 py-1 text-sm font-semibold text-[#1f7a4f]">
+          <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-3 py-1 text-sm font-semibold text-emerald-700 dark:text-emerald-400">
             {data.total} Studien
           </span>
         )}
       </div>
 
       {/* Filters */}
-      <div className="mb-4 rounded-2xl border border-[#d8e8dd] bg-white p-4 shadow-sm">
+      <div className="mb-4 rounded-2xl border border-border bg-card p-4 shadow-sm">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <input
             type="text"
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(1); }}
             placeholder="Titel suchen..."
-            className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
+            className="rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
           />
-          <select value={quality} onChange={(e) => { setQuality(e.target.value); setPage(1); }} className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm">
+          <select value={quality} onChange={(e) => { setQuality(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm">
             {QUALITY_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
-          <select value={priority} onChange={(e) => { setPriority(e.target.value); setPage(1); }} className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm">
+          <select value={priority} onChange={(e) => { setPriority(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm">
             {PRIORITY_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           <input
@@ -253,20 +253,20 @@ export default function AdminStudiesPage() {
             value={source}
             onChange={(e) => { setSource(e.target.value); setPage(1); }}
             placeholder="Quelle filtern..."
-            className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
+            className="rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
           />
         </div>
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
-          <input type="number" value={minScore} onChange={(e) => { setMinScore(e.target.value); setPage(1); }} placeholder="Min Score" className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm" />
-          <input type="number" value={maxScore} onChange={(e) => { setMaxScore(e.target.value); setPage(1); }} placeholder="Max Score" className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm" />
-          <input type="date" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setPage(1); }} className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm" />
-          <input type="date" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(1); }} className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm" />
-          <select value={sortBy} onChange={(e) => { setSortBy(e.target.value); setPage(1); }} className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm">
+          <input type="number" value={minScore} onChange={(e) => { setMinScore(e.target.value); setPage(1); }} placeholder="Min Score" className="rounded-xl border border-border px-3 py-2 text-sm" />
+          <input type="number" value={maxScore} onChange={(e) => { setMaxScore(e.target.value); setPage(1); }} placeholder="Max Score" className="rounded-xl border border-border px-3 py-2 text-sm" />
+          <input type="date" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm" />
+          <input type="date" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm" />
+          <select value={sortBy} onChange={(e) => { setSortBy(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm">
             {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
           </select>
           <button
             onClick={() => setSortDir((d) => (d === "desc" ? "asc" : "desc"))}
-            className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm font-medium text-[#4d685a] hover:bg-[#f6faf7]"
+            className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-muted-fg hover:bg-background"
           >
             {sortDir === "desc" ? "↓ Absteigend" : "↑ Aufsteigend"}
           </button>
@@ -284,58 +284,58 @@ export default function AdminStudiesPage() {
 
       {/* Loading */}
       {loading && (
-        <div className="flex items-center gap-3 rounded-2xl border border-[#d8e8dd] bg-white p-8">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#1f7a4f] border-t-transparent" />
-          <span className="text-sm text-[#4d685a]">Studien werden geladen...</span>
+        <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-8">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
+          <span className="text-sm text-muted-fg">Studien werden geladen...</span>
         </div>
       )}
 
       {/* Study Table */}
       {!loading && data && (
         <>
-          <div className="overflow-hidden rounded-2xl border border-[#d8e8dd] bg-white shadow-sm">
+          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-[#d8e8dd] bg-[#f6faf7]">
-                    <th className="px-4 py-3 font-semibold text-[#4d685a]">Titel</th>
-                    <th className="px-3 py-3 font-semibold text-[#4d685a]">Score</th>
-                    <th className="px-3 py-3 font-semibold text-[#4d685a]">Qualität</th>
-                    <th className="px-3 py-3 font-semibold text-[#4d685a]">Priorität</th>
-                    <th className="px-3 py-3 font-semibold text-[#4d685a]">Typ</th>
-                    <th className="px-3 py-3 font-semibold text-[#4d685a]">Quelle</th>
-                    <th className="px-3 py-3 font-semibold text-[#4d685a]">Datum</th>
-                    <th className="px-3 py-3 font-semibold text-[#4d685a]">Aktionen</th>
+                  <tr className="border-b border-border bg-background">
+                    <th className="px-4 py-3 font-semibold text-muted-fg">Titel</th>
+                    <th className="px-3 py-3 font-semibold text-muted-fg">Score</th>
+                    <th className="px-3 py-3 font-semibold text-muted-fg">Qualität</th>
+                    <th className="px-3 py-3 font-semibold text-muted-fg">Priorität</th>
+                    <th className="px-3 py-3 font-semibold text-muted-fg">Typ</th>
+                    <th className="px-3 py-3 font-semibold text-muted-fg">Quelle</th>
+                    <th className="px-3 py-3 font-semibold text-muted-fg">Datum</th>
+                    <th className="px-3 py-3 font-semibold text-muted-fg">Aktionen</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.studies.map((study) => (
-                    <tr key={study.id} className="border-b border-[#eef3f0] transition hover:bg-[#fbfefc]">
+                    <tr key={study.id} className="border-b border-border transition hover:bg-background">
                       <td className="max-w-xs px-4 py-3">
-                        <p className="truncate font-medium text-[#10281e]" title={study.title}>{study.title}</p>
-                        {study.first_author && <p className="truncate text-xs text-[#8fa89a]">{study.first_author}</p>}
+                        <p className="truncate font-medium text-foreground" title={study.title}>{study.title}</p>
+                        {study.first_author && <p className="truncate text-xs text-muted-fg">{study.first_author}</p>}
                       </td>
                       <td className="px-3 py-3">
-                        <span className="font-mono font-semibold text-[#10281e]">{study.relevance_score ?? "—"}</span>
+                        <span className="font-mono font-semibold text-foreground">{study.relevance_score ?? "—"}</span>
                       </td>
                       <td className="px-3 py-3"><QualityBadge status={study.quality_status} /></td>
                       <td className="px-3 py-3"><PriorityBadge priority={study.editorial_priority} /></td>
-                      <td className="px-3 py-3 text-xs text-[#6b8577]">{study.study_type ?? "—"}</td>
-                      <td className="max-w-[120px] truncate px-3 py-3 text-xs text-[#6b8577]" title={study.origin_label ?? ""}>{study.origin_label ?? "—"}</td>
-                      <td className="px-3 py-3 text-xs text-[#6b8577]">{formatDate(study.created_at)}</td>
+                      <td className="px-3 py-3 text-xs text-muted-fg">{study.study_type ?? "—"}</td>
+                      <td className="max-w-[120px] truncate px-3 py-3 text-xs text-muted-fg" title={study.origin_label ?? ""}>{study.origin_label ?? "—"}</td>
+                      <td className="px-3 py-3 text-xs text-muted-fg">{formatDate(study.created_at)}</td>
                       <td className="px-3 py-3">
                         <div className="flex gap-1">
                           <button onClick={() => void handleQuickAction(study.id, "good")} className="rounded-lg bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100" title="Genehmigen">✓</button>
                           <button onClick={() => void handleQuickAction(study.id, "bad")} className="rounded-lg bg-red-50 px-2 py-1 text-xs font-medium text-red-700 hover:bg-red-100" title="Ablehnen">✗</button>
                           <button onClick={() => openEdit(study)} className="rounded-lg bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100" title="Bearbeiten">✎</button>
-                          <button onClick={() => setDeletingId(study.id)} className="rounded-lg bg-slate-50 px-2 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100" title="Löschen">⌫</button>
+                          <button onClick={() => setDeletingId(study.id)} className="rounded-lg bg-background px-2 py-1 text-xs font-medium text-foreground/80 hover:bg-border" title="Löschen">⌫</button>
                         </div>
                       </td>
                     </tr>
                   ))}
                   {data.studies.length === 0 && (
                     <tr>
-                      <td colSpan={8} className="px-4 py-12 text-center text-sm text-[#4d685a]">
+                      <td colSpan={8} className="px-4 py-12 text-center text-sm text-muted-fg">
                         Keine Studien für die aktuellen Filter gefunden.
                       </td>
                     </tr>
@@ -348,21 +348,21 @@ export default function AdminStudiesPage() {
           {/* Pagination */}
           {data.totalPages > 1 && (
             <div className="mt-4 flex items-center justify-between">
-              <p className="text-xs text-[#6b8577]">
+              <p className="text-xs text-muted-fg">
                 Seite {data.page} von {data.totalPages} · {data.total} Studien
               </p>
               <div className="flex gap-2">
                 <button
                   disabled={page <= 1}
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm font-medium text-[#4d685a] transition hover:bg-[#f6faf7] disabled:opacity-40"
+                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition hover:bg-background disabled:opacity-40"
                 >
                   Zurück
                 </button>
                 <button
                   disabled={page >= data.totalPages}
                   onClick={() => setPage((p) => p + 1)}
-                  className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm font-medium text-[#4d685a] transition hover:bg-[#f6faf7] disabled:opacity-40"
+                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition hover:bg-background disabled:opacity-40"
                 >
                   Weiter
                 </button>
@@ -375,29 +375,29 @@ export default function AdminStudiesPage() {
       {/* Edit Modal */}
       {editing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="w-full max-w-lg rounded-2xl border border-[#d8e8dd] bg-white p-6 shadow-xl">
-            <h2 className="text-lg font-bold text-[#10281e]">Studie bearbeiten</h2>
+          <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-6 shadow-xl">
+            <h2 className="text-lg font-bold text-foreground">Studie bearbeiten</h2>
             <div className="mt-4 space-y-3">
               <div>
-                <label className="mb-1 block text-xs font-medium text-[#4d685a]">Titel</label>
-                <input value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} className="w-full rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm" />
+                <label className="mb-1 block text-xs font-medium text-muted-fg">Titel</label>
+                <input value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm" />
               </div>
               <div>
-                <label className="mb-1 block text-xs font-medium text-[#4d685a]">Beschreibung</label>
-                <textarea value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} rows={3} className="w-full rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm" />
+                <label className="mb-1 block text-xs font-medium text-muted-fg">Beschreibung</label>
+                <textarea value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} rows={3} className="w-full rounded-xl border border-border px-3 py-2 text-sm" />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-[#4d685a]">Qualitätsstatus</label>
-                  <select value={editing.qualityStatus} onChange={(e) => setEditing({ ...editing, qualityStatus: e.target.value })} className="w-full rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm">
+                  <label className="mb-1 block text-xs font-medium text-muted-fg">Qualitätsstatus</label>
+                  <select value={editing.qualityStatus} onChange={(e) => setEditing({ ...editing, qualityStatus: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm">
                     <option value="pending">Offen</option>
                     <option value="good">Gut</option>
                     <option value="bad">Schlecht</option>
                   </select>
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-[#4d685a]">Priorität</label>
-                  <select value={editing.editorialPriority} onChange={(e) => setEditing({ ...editing, editorialPriority: e.target.value })} className="w-full rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm">
+                  <label className="mb-1 block text-xs font-medium text-muted-fg">Priorität</label>
+                  <select value={editing.editorialPriority} onChange={(e) => setEditing({ ...editing, editorialPriority: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm">
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
                     <option value="low">Low</option>
@@ -405,15 +405,15 @@ export default function AdminStudiesPage() {
                 </div>
               </div>
               <div>
-                <label className="mb-1 block text-xs font-medium text-[#4d685a]">Tags (kommagetrennt)</label>
-                <input value={editing.tags} onChange={(e) => setEditing({ ...editing, tags: e.target.value })} className="w-full rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm" />
+                <label className="mb-1 block text-xs font-medium text-muted-fg">Tags (kommagetrennt)</label>
+                <input value={editing.tags} onChange={(e) => setEditing({ ...editing, tags: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm" />
               </div>
             </div>
             <div className="mt-5 flex justify-end gap-3">
-              <button onClick={() => setEditing(null)} className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm font-medium text-[#4d685a] hover:bg-[#f6faf7]">
+              <button onClick={() => setEditing(null)} className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg hover:bg-background">
                 Abbrechen
               </button>
-              <button onClick={() => void handleSaveEdit()} disabled={saving} className="rounded-xl bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f] disabled:opacity-50">
+              <button onClick={() => void handleSaveEdit()} disabled={saving} className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50">
                 {saving ? "Speichert..." : "Speichern"}
               </button>
             </div>
@@ -424,11 +424,11 @@ export default function AdminStudiesPage() {
       {/* Delete Confirm Modal */}
       {deletingId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="w-full max-w-sm rounded-2xl border border-[#d8e8dd] bg-white p-6 shadow-xl">
-            <h2 className="text-lg font-bold text-[#10281e]">Studie löschen?</h2>
-            <p className="mt-2 text-sm text-[#4d685a]">Diese Aktion kann nicht rückgängig gemacht werden.</p>
+          <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-6 shadow-xl">
+            <h2 className="text-lg font-bold text-foreground">Studie löschen?</h2>
+            <p className="mt-2 text-sm text-muted-fg">Diese Aktion kann nicht rückgängig gemacht werden.</p>
             <div className="mt-5 flex justify-end gap-3">
-              <button onClick={() => setDeletingId(null)} className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm font-medium text-[#4d685a] hover:bg-[#f6faf7]">
+              <button onClick={() => setDeletingId(null)} className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg hover:bg-background">
                 Abbrechen
               </button>
               <button onClick={() => void handleDelete(deletingId)} className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">

@@ -242,7 +242,7 @@ function AuthPageInner() {
         <div className="lg:hidden mb-8">
           <Link href="/" className="inline-flex items-center gap-2 group">
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-sm transition-transform group-hover:scale-110">🌿</span>
-            <span className="text-[15px] font-bold text-slate-900 tracking-tight">SecretLeaf</span>
+            <span className="text-[15px] font-bold text-foreground tracking-tight">SecretLeaf</span>
           </Link>
         </div>
 
@@ -250,8 +250,8 @@ function AuthPageInner() {
           {mode === 'forgot' ? (
             <>
               <div className="mb-7">
-                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Passwort zurücksetzen</h1>
-                  <p className="mt-2 text-sm text-slate-500 leading-relaxed">
+                <h1 className="text-2xl font-bold text-foreground tracking-tight">Passwort zurücksetzen</h1>
+                  <p className="mt-2 text-sm text-muted-fg leading-relaxed">
                   Gib deine E-Mail-Adresse ein – wir senden dir einen Link zum Zurücksetzen.
                 </p>
               </div>
@@ -292,7 +292,7 @@ function AuthPageInner() {
                   </button>
                 </form>
               )}
-              <p className="mt-6 text-center text-sm text-slate-500">
+              <p className="mt-6 text-center text-sm text-muted-fg">
                 <button type="button" onClick={() => switchMode('login')}
                   className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
                   ← Zurück zum Login
@@ -302,20 +302,20 @@ function AuthPageInner() {
           ) : (
             <>
               <div className="mb-6">
-                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+                <h1 className="text-2xl font-bold text-foreground tracking-tight">
                   {mode === 'login' ? 'Willkommen zurück' : 'Konto erstellen'}
                 </h1>
-                <p className="mt-1.5 text-sm text-slate-500">
+                <p className="mt-1.5 text-sm text-muted-fg">
                   {mode === 'login' ? 'Melde dich an, um fortzufahren.' : 'Kostenlos registrieren und loslegen.'}
                 </p>
               </div>
 
               {/* Mode tabs */}
-              <div className="mb-6 flex rounded-xl border border-slate-200 bg-slate-50 p-1 gap-1">
+              <div className="mb-6 flex rounded-xl border border-border bg-background p-1 gap-1">
                 {(['login', 'register'] as const).map(m => (
                   <button key={m} type="button" onClick={() => switchMode(m)}
                     className={`flex-1 rounded-lg py-2 text-sm font-semibold transition-all duration-150 ${
-                      mode === m ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                      mode === m ? 'bg-card text-foreground shadow-sm' : 'text-muted-fg hover:text-foreground/80'
                     }`}>
                     {m === 'login' ? 'Anmelden' : 'Registrieren'}
                   </button>
@@ -382,7 +382,7 @@ function AuthPageInner() {
                 {mode === 'login' && (
                   <div className="flex justify-end">
                     <button type="button" onClick={() => switchMode('forgot')}
-                      className="text-xs font-medium text-slate-500 hover:text-emerald-600 transition-colors">
+                      className="text-xs font-medium text-muted-fg hover:text-emerald-600 transition-colors">
                       Passwort vergessen?
                     </button>
                   </div>
@@ -421,15 +421,15 @@ function AuthPageInner() {
           {/* Trust strip (mobile) */}
           <div className="lg:hidden mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2">
             {trustItems.map(t => (
-              <span key={t.label} className="flex items-center gap-1.5 text-[11px] text-slate-400">
+              <span key={t.label} className="flex items-center gap-1.5 text-[11px] text-muted-fg">
                 <span className="text-emerald-500">{t.icon}</span>
                 {t.label}
               </span>
             ))}
           </div>
 
-          <p className="mt-6 text-center text-xs text-slate-400">
-            <Link href="/" className="font-medium text-slate-500 hover:text-emerald-600 transition-colors">
+          <p className="mt-6 text-center text-xs text-muted-fg">
+            <Link href="/" className="font-medium text-muted-fg hover:text-emerald-600 transition-colors">
               ← Zur Startseite
             </Link>
           </p>

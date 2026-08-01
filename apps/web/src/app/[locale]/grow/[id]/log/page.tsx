@@ -130,7 +130,7 @@ function StreakBadge({ streak, pulse }: { streak: number; pulse: boolean }) {
 
   if (streak === 0) {
     return (
-      <div className={`inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-semibold text-slate-500 transition-all duration-300 ${pulse ? 'scale-110 border-emerald-300 bg-emerald-50 text-emerald-700' : ''}`}>
+      <div className={`inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-semibold text-muted-fg transition-all duration-300 ${pulse ? 'scale-110 border-emerald-300 bg-emerald-50 text-emerald-700' : ''}`}>
         <span>{pulse ? '🔥' : '🌱'}</span>
         <span className="hidden sm:inline">{pulse ? '1 Tag gestartet!' : 'Noch kein Streak'}</span>
       </div>
@@ -386,7 +386,7 @@ function QuickAddBar({
   };
 
   return (
-    <div className={`rounded-2xl border bg-white p-4 ${isEditing ? 'border-amber-300 ring-1 ring-amber-200' : 'border-slate-200'}`}>
+    <div className={`rounded-2xl border bg-card p-4 ${isEditing ? 'border-amber-300 ring-1 ring-amber-200' : 'border-border'}`}>
       {isEditing && (
         <div className="mb-3 flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2">
           <span className="text-sm">✏️</span>
@@ -396,13 +396,13 @@ function QuickAddBar({
 
       {/* Plant scope selector */}
       <div className="mb-3">
-        <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+        <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
           Gültigkeit
         </label>
         <select
           value={selectedPlantId}
           onChange={(e) => onSelectPlant(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+          className="w-full rounded-xl border border-border bg-card px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
         >
           <option value="">Gesamter Grow</option>
           {plants.map((plant) => (
@@ -428,8 +428,8 @@ function QuickAddBar({
               activeType === type
                 ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-900/20'
                 : isEditing
-                ? 'border border-slate-100 bg-slate-50 text-slate-300'
-                : 'border border-slate-200 bg-slate-50 text-slate-600 hover:border-emerald-300 hover:text-emerald-700'
+                ? 'border border-border bg-background text-muted-fg'
+                : 'border border-border bg-background text-foreground/80 hover:border-emerald-300 hover:text-emerald-700'
             }`}
           >
             <span>{LOG_ENTRY_TYPE_ICONS[type]}</span>
@@ -444,7 +444,7 @@ function QuickAddBar({
           {activeType === 'wasser' && (
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
                   Menge (Liter)
                 </label>
                 <input
@@ -454,11 +454,11 @@ function QuickAddBar({
                   placeholder="z.B. 1.5"
                   value={fields['mengeLiter'] ?? ''}
                   onChange={(e) => set('mengeLiter', e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                  className="w-full rounded-xl border border-border px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
                   pH-Wert
                 </label>
                 <input
@@ -469,7 +469,7 @@ function QuickAddBar({
                   placeholder="z.B. 6.2"
                   value={fields['ph'] ?? ''}
                   onChange={(e) => set('ph', e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                  className="w-full rounded-xl border border-border px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
                 />
               </div>
             </div>
@@ -478,7 +478,7 @@ function QuickAddBar({
           {activeType === 'duenger' && (
             <>
               <div>
-                <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
                   Produkt
                 </label>
                 <input
@@ -486,12 +486,12 @@ function QuickAddBar({
                   placeholder="z.B. BioBizz Grow"
                   value={fields['produkt'] ?? ''}
                   onChange={(e) => set('produkt', e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                  className="w-full rounded-xl border border-border px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
                     EC (mS/cm)
                   </label>
                   <input
@@ -501,11 +501,11 @@ function QuickAddBar({
                     placeholder="z.B. 1.4"
                     value={fields['ec'] ?? ''}
                     onChange={(e) => set('ec', e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                    className="w-full rounded-xl border border-border px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
                     Menge (Liter)
                   </label>
                   <input
@@ -515,7 +515,7 @@ function QuickAddBar({
                     placeholder="z.B. 2.0"
                     value={fields['mengeLiter'] ?? ''}
                     onChange={(e) => set('mengeLiter', e.target.value)}
-                    className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                    className="w-full rounded-xl border border-border px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
                   />
                 </div>
               </div>
@@ -524,13 +524,13 @@ function QuickAddBar({
 
           {activeType === 'training' && (
             <div>
-              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
                 Methode
               </label>
               <select
                 value={fields['methode'] ?? ''}
                 onChange={(e) => set('methode', e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                className="w-full rounded-xl border border-border bg-card px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
               >
                 <option value="">Methode wählen …</option>
                 {(Object.entries(TRAINING_METHOD_LABELS) as [TrainingMethod, string][]).map(
@@ -546,7 +546,7 @@ function QuickAddBar({
 
           {activeType === 'notiz' && (
             <div>
-              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
                 Notiz
               </label>
               <textarea
@@ -554,7 +554,7 @@ function QuickAddBar({
                 placeholder="Was ist dir heute aufgefallen?"
                 value={fields['text'] ?? ''}
                 onChange={(e) => set('text', e.target.value)}
-                className="w-full resize-none rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                className="w-full resize-none rounded-xl border border-border px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
               />
             </div>
           )}
@@ -562,23 +562,23 @@ function QuickAddBar({
           {/* Optional notes field for non-text types */}
           {activeType !== 'notiz' && (
             <div>
-              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                Zusatznotiz <span className="font-normal normal-case text-slate-300">(optional)</span>
+              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
+                Zusatznotiz <span className="font-normal normal-case text-muted-fg">(optional)</span>
               </label>
               <input
                 type="text"
                 placeholder="Weitere Bemerkungen …"
                 value={fields['notes'] ?? ''}
                 onChange={(e) => set('notes', e.target.value)}
-                className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                className="w-full rounded-xl border border-border px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
               />
             </div>
           )}
 
           {/* Date + time row */}
-          <div className="grid grid-cols-2 gap-3 border-t border-slate-100 pt-3">
+          <div className="grid grid-cols-2 gap-3 border-t border-border pt-3">
             <div>
-              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
                 Datum
               </label>
               <input
@@ -586,18 +586,18 @@ function QuickAddBar({
                 max={new Date().toISOString().slice(0, 10)}
                 value={fields['_date'] ?? todayDate}
                 onChange={(e) => set('_date', e.target.value)}
-                className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                className="w-full rounded-xl border border-border px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
               />
             </div>
             <div>
-              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                Uhrzeit <span className="font-normal normal-case text-slate-300">(optional)</span>
+              <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
+                Uhrzeit <span className="font-normal normal-case text-muted-fg">(optional)</span>
               </label>
               <input
                 type="time"
                 value={fields['_time'] ?? ''}
                 onChange={(e) => set('_time', e.target.value)}
-                className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+                className="w-full rounded-xl border border-border px-3 py-2 text-sm focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
               />
             </div>
           </div>
@@ -616,7 +616,7 @@ function QuickAddBar({
             </button>
             <button
               onClick={onCancel}
-              className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-500 transition hover:bg-slate-50"
+              className="rounded-xl border border-border px-4 py-2.5 text-sm font-semibold text-muted-fg transition hover:bg-background"
             >
               Abbrechen
             </button>
@@ -651,29 +651,29 @@ function EntryCard({
   const summary = entrySummary(entry);
 
   return (
-    <div className={`group flex items-start gap-3 rounded-xl border bg-white px-4 py-3 transition-all hover:border-slate-200 ${
-      isNew ? 'border-emerald-300 shadow-sm shadow-emerald-100' : 'border-slate-100'
+    <div className={`group flex items-start gap-3 rounded-xl border bg-card px-4 py-3 transition-all hover:border-border ${
+      isNew ? 'border-emerald-300 shadow-sm shadow-emerald-100' : 'border-border'
     }`}>
       {/* Icon */}
-      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-slate-100 bg-slate-50 text-base">
+      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-border bg-background text-base">
         {icon}
       </span>
 
       {/* Content */}
       <div className="min-w-0 flex-1">
-        <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{label}</p>
+        <p className="text-[11px] font-bold uppercase tracking-wider text-muted-fg">{label}</p>
         <p className="mt-0.5 text-[11px] font-semibold text-emerald-700">
           {plantName ?? 'Gesamter Grow'}
         </p>
-        <p className="mt-0.5 text-sm font-medium leading-snug text-slate-800">{summary}</p>
+        <p className="mt-0.5 text-sm font-medium leading-snug text-foreground">{summary}</p>
         {entry.notes && (
-          <p className="mt-1 text-xs leading-relaxed text-slate-400">{entry.notes}</p>
+          <p className="mt-1 text-xs leading-relaxed text-muted-fg">{entry.notes}</p>
         )}
       </div>
 
       {/* Time + actions */}
       <div className="flex flex-shrink-0 flex-col items-end gap-1">
-        <span className="text-[11px] text-slate-400">{time}</span>
+        <span className="text-[11px] text-muted-fg">{time}</span>
         {confirming ? (
           <div className="flex items-center gap-1">
             <button
@@ -684,7 +684,7 @@ function EntryCard({
             </button>
             <button
               onClick={() => setConfirming(false)}
-              className="rounded-lg px-2 py-0.5 text-[10px] font-semibold text-slate-400 hover:bg-slate-50"
+              className="rounded-lg px-2 py-0.5 text-[10px] font-semibold text-muted-fg hover:bg-background"
             >
               Nein
             </button>
@@ -694,7 +694,7 @@ function EntryCard({
             {/* Edit */}
             <button
               onClick={() => onEdit(entry)}
-              className="rounded-lg p-1 text-slate-300 hover:bg-amber-50 hover:text-amber-500"
+              className="rounded-lg p-1 text-muted-fg hover:bg-amber-50 hover:text-amber-500"
               aria-label="Eintrag bearbeiten"
             >
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -704,7 +704,7 @@ function EntryCard({
             {/* Delete */}
             <button
               onClick={() => setConfirming(true)}
-              className="rounded-lg p-1 text-slate-300 hover:bg-slate-50 hover:text-slate-500"
+              className="rounded-lg p-1 text-muted-fg hover:bg-background hover:text-muted-fg"
               aria-label="Eintrag löschen"
             >
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -893,7 +893,7 @@ export default function GrowLogPage({}: Props) {
 
   if (!growLoaded || !logLoaded) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-50">
+      <main className="flex min-h-screen items-center justify-center bg-background">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-emerald-200 border-t-emerald-600" />
       </main>
     );
@@ -901,9 +901,9 @@ export default function GrowLogPage({}: Props) {
 
   if (!grow) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-slate-50 px-4 text-center">
+      <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background px-4 text-center">
         <span className="text-4xl">🌿</span>
-        <h1 className="text-lg font-bold text-slate-800">Grow nicht gefunden</h1>
+        <h1 className="text-lg font-bold text-foreground">Grow nicht gefunden</h1>
         <Link href="/dashboard/user" className="text-sm font-semibold text-emerald-600 hover:underline">
           Zurück zum Dashboard
         </Link>
@@ -916,15 +916,15 @@ export default function GrowLogPage({}: Props) {
   const plantNameById = new Map((grow?.plants ?? []).map((plant) => [plant.id, plant.name]));
 
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main className="min-h-screen bg-background">
       {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <div className="border-b border-slate-200 bg-white">
+      <div className="border-b border-border bg-card">
         <div className="mx-auto max-w-2xl px-4 py-4 sm:px-5">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <Link
                 href={`/grow/${id}` as Route}
-                className="flex h-8 w-8 items-center justify-center rounded-xl border border-slate-200 text-slate-500 transition hover:bg-slate-50"
+                className="flex h-8 w-8 items-center justify-center rounded-xl border border-border text-muted-fg transition hover:bg-background"
                 aria-label="Zurück zum Grow"
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -933,8 +933,8 @@ export default function GrowLogPage({}: Props) {
               </Link>
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-600">Grow Log</p>
-                <h1 className="text-base font-bold leading-tight text-slate-900">{grow.name}</h1>
-                <p className="text-xs text-slate-400">Tag {grow.currentDay} · {entries.length} Einträge</p>
+                <h1 className="text-base font-bold leading-tight text-foreground">{grow.name}</h1>
+                <p className="text-xs text-muted-fg">Tag {grow.currentDay} · {entries.length} Einträge</p>
               </div>
             </div>
             <StreakBadge streak={currentStreak} pulse={streakPulse} />
@@ -974,7 +974,7 @@ export default function GrowLogPage({}: Props) {
             className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
               activePlantFilter === null
                 ? 'bg-emerald-600 text-white'
-                : 'border border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+                : 'border border-border bg-card text-foreground/80 hover:border-emerald-300'
             }`}
           >
             Alle
@@ -984,7 +984,7 @@ export default function GrowLogPage({}: Props) {
             className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
               activePlantFilter === ''
                 ? 'bg-emerald-600 text-white'
-                : 'border border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+                : 'border border-border bg-card text-foreground/80 hover:border-emerald-300'
             }`}
           >
             Gesamter Grow
@@ -996,7 +996,7 @@ export default function GrowLogPage({}: Props) {
               className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
                 activePlantFilter === plant.id
                   ? 'bg-emerald-600 text-white'
-                  : 'border border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+                  : 'border border-border bg-card text-foreground/80 hover:border-emerald-300'
               }`}
             >
               {plant.name}
@@ -1006,10 +1006,10 @@ export default function GrowLogPage({}: Props) {
 
         {/* ── Timeline ────────────────────────────────────────────────────── */}
         {grouped.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-slate-200 py-14 text-center">
+          <div className="rounded-2xl border border-dashed border-border py-14 text-center">
             <span className="text-3xl">📋</span>
-            <p className="mt-3 text-sm font-semibold text-slate-500">Noch keine Einträge</p>
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-3 text-sm font-semibold text-muted-fg">Noch keine Einträge</p>
+            <p className="mt-1 text-xs text-muted-fg">
               Wähle oben eine Kategorie und speichere deinen ersten Log.
             </p>
           </div>
@@ -1018,11 +1018,11 @@ export default function GrowLogPage({}: Props) {
             {grouped.map((group) => (
               <div key={group.date}>
                 <div className="mb-2 flex items-center gap-3">
-                  <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                  <p className="text-[11px] font-bold uppercase tracking-widest text-muted-fg">
                     {group.label}
                   </p>
-                  <div className="h-px flex-1 bg-slate-100" />
-                  <span className="text-[11px] text-slate-300">{group.entries.length}</span>
+                  <div className="h-px flex-1 bg-background" />
+                  <span className="text-[11px] text-muted-fg">{group.entries.length}</span>
                 </div>
                 <div className="space-y-2">
                   {group.entries.map((entry) => (

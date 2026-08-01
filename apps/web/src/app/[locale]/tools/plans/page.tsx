@@ -347,72 +347,72 @@ export default function FertilizerPlansPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 p-6">
+    <main className="min-h-screen bg-background p-6">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8">
           <Link href={"/tools" as Route} className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700 hover:text-emerald-800">
             ← Zurück zu Werkzeuge
           </Link>
-          <h1 className="mt-3 text-4xl font-bold text-slate-900">Düngerpläne</h1>
-          <p className="mt-2 max-w-3xl text-slate-600">
+          <h1 className="mt-3 text-4xl font-bold text-foreground">Düngerpläne</h1>
+          <p className="mt-2 max-w-3xl text-foreground/80">
             Vorgefertigte Düngepläne auf Basis der Produkte im SecretLeaf-Katalog. Alle Pläne sind als belastbare
             Startpunkte gedacht und sollten anhand von Pflanzenzustand, Wasserwerten und Lichtintensität angepasst werden.
           </p>
         </div>
 
         <section className="mb-8 grid gap-4 md:grid-cols-3">
-          <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Planbibliothek</p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">{plans.length}</p>
-            <p className="text-sm text-slate-500">kuratierte Düngepläne</p>
+          <article className="rounded-xl border border-border bg-card p-5 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Planbibliothek</p>
+            <p className="mt-1 text-2xl font-bold text-foreground">{plans.length}</p>
+            <p className="text-sm text-muted-fg">kuratierte Düngepläne</p>
           </article>
-          <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Produkte referenziert</p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">{uniqueProductCount}</p>
-            <p className="text-sm text-slate-500">aus dem Katalog</p>
+          <article className="rounded-xl border border-border bg-card p-5 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Produkte referenziert</p>
+            <p className="mt-1 text-2xl font-bold text-foreground">{uniqueProductCount}</p>
+            <p className="text-sm text-muted-fg">aus dem Katalog</p>
           </article>
-          <article className="rounded-xl border border-cyan-200 bg-cyan-50 p-5 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-wide text-cyan-700">Hinweis</p>
-            <p className="mt-1 text-sm font-medium text-cyan-900">
+          <article className="rounded-xl border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 p-5 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-wide text-cyan-700 dark:text-cyan-400">Hinweis</p>
+            <p className="mt-1 text-sm font-medium text-cyan-900 dark:text-cyan-200">
               Werte sind Startkorridore, keine starre Rezeptur. Immer in kleinen Schritten anpassen.
             </p>
           </article>
         </section>
 
-        <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <section className="mb-8 rounded-xl border border-border bg-card p-5 shadow-sm">
           <div className="grid gap-3 lg:grid-cols-[1.2fr_repeat(5,minmax(0,1fr))_220px_auto]">
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Plan suchen, z. B. Hydro, Budget oder Qualität..."
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm"
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm"
             />
-            <select value={activeSetup} onChange={(e) => setActiveSetup(e.target.value as PlanSetup | "all")} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+            <select value={activeSetup} onChange={(e) => setActiveSetup(e.target.value as PlanSetup | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
               <option value="all">Alle Setups</option>
               <option value="soil">Erde</option>
               <option value="hydro">Hydro/Coco</option>
               <option value="hybrid">Hybrid</option>
             </select>
-            <select value={activeBudget} onChange={(e) => setActiveBudget(e.target.value as FertilizerPlan["budget"] | "all")} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+            <select value={activeBudget} onChange={(e) => setActiveBudget(e.target.value as FertilizerPlan["budget"] | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
               <option value="all">Alle Budgets</option>
               <option value="budget">Budget</option>
               <option value="mid">Mittel</option>
               <option value="premium">Premium</option>
             </select>
-            <select value={activeLevel} onChange={(e) => setActiveLevel(e.target.value as PlanLevel | "all")} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+            <select value={activeLevel} onChange={(e) => setActiveLevel(e.target.value as PlanLevel | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
               <option value="all">Alle Stufen</option>
               <option value="einsteiger">Einsteiger</option>
               <option value="fortgeschritten">Fortgeschritten</option>
               <option value="profi">Profi</option>
             </select>
-            <select value={activeGoal} onChange={(e) => setActiveGoal(e.target.value as PlanGoal | "all")} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+            <select value={activeGoal} onChange={(e) => setActiveGoal(e.target.value as PlanGoal | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
               <option value="all">Alle Ziele</option>
               <option value="stabil">Stabilität</option>
               <option value="einfach">Einfachheit</option>
               <option value="ertrag">Ertrag</option>
               <option value="qualitaet">Qualität</option>
             </select>
-            <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value as PlanCategory | "all")} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+            <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value as PlanCategory | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
               <option value="all">Alle Kategorien</option>
               <option value="starter">Starter</option>
               <option value="stabilitaet">Stabilität</option>
@@ -420,7 +420,7 @@ export default function FertilizerPlansPage() {
               <option value="qualitaet">Qualität</option>
               <option value="leistung">Leistung</option>
             </select>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as "recommended" | "durationAsc" | "durationDesc")} className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm">
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as "recommended" | "durationAsc" | "durationDesc")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
               <option value="recommended">Sortierung: Empfohlen</option>
               <option value="durationAsc">Sortierung: Kurze Laufzeit</option>
               <option value="durationDesc">Sortierung: Lange Laufzeit</option>
@@ -429,7 +429,7 @@ export default function FertilizerPlansPage() {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 hover:border-rose-300 hover:text-rose-700"
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-foreground/80 hover:border-rose-300 hover:text-rose-700"
               >
                 Zurücksetzen
               </button>
@@ -445,7 +445,7 @@ export default function FertilizerPlansPage() {
                 className={`rounded-full border px-3 py-1 text-xs font-semibold ${
                   activeCategory === key
                     ? "border-emerald-300 bg-emerald-50 text-emerald-800"
-                    : "border-slate-200 bg-white text-slate-700 hover:border-emerald-200"
+                    : "border-border bg-card text-foreground/80 hover:border-emerald-200"
                 }`}
               >
                 {categoryLabel[key as PlanCategory]} ({count})
@@ -454,14 +454,14 @@ export default function FertilizerPlansPage() {
           </div>
         </section>
 
-        <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Schnellnavigation</p>
+        <section className="mb-8 rounded-xl border border-border bg-card p-5 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Schnellnavigation</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {filteredPlans.map((plan) => (
               <a
                 key={`jump-${plan.id}`}
                 href={`#${plan.id}`}
-                className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
+                className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-800"
               >
                 {plan.title}
               </a>
@@ -469,14 +469,14 @@ export default function FertilizerPlansPage() {
           </div>
         </section>
 
-        <section className="mb-8 rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-          <div className="border-b border-slate-200 px-5 py-4">
-            <h2 className="text-lg font-bold text-slate-900">Vergleich auf einen Blick</h2>
-            <p className="text-sm text-slate-500">Welcher Plan passt zu Setup, Budget und Steuerungsgrad.</p>
+        <section className="mb-8 rounded-xl border border-border bg-card shadow-sm overflow-hidden">
+          <div className="border-b border-border px-5 py-4">
+            <h2 className="text-lg font-bold text-foreground">Vergleich auf einen Blick</h2>
+            <p className="text-sm text-muted-fg">Welcher Plan passt zu Setup, Budget und Steuerungsgrad.</p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-sm">
-              <thead className="bg-slate-50 text-slate-600">
+              <thead className="bg-background text-foreground/80">
                 <tr>
                   <th className="px-4 py-3 text-left">Plan</th>
                   <th className="px-4 py-3 text-left">Setup</th>
@@ -487,21 +487,21 @@ export default function FertilizerPlansPage() {
               </thead>
               <tbody>
                 {filteredPlans.map((plan) => (
-                  <tr key={`row-${plan.id}`} className="border-t border-slate-100">
-                    <td className="px-4 py-3 font-semibold text-slate-900">
+                  <tr key={`row-${plan.id}`} className="border-t border-border">
+                    <td className="px-4 py-3 font-semibold text-foreground">
                       <a href={`#${plan.id}`} className="hover:text-emerald-700 hover:underline">
                         {plan.title}
                       </a>
                     </td>
-                    <td className="px-4 py-3 text-slate-700">{plan.cultivation}</td>
-                    <td className="px-4 py-3 text-slate-700">{levelLabel[plan.level]}</td>
+                    <td className="px-4 py-3 text-foreground/80">{plan.cultivation}</td>
+                    <td className="px-4 py-3 text-foreground/80">{levelLabel[plan.level]}</td>
                     <td className="px-4 py-3">
                       <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${budgetBadge[plan.budget]}`}>
                         {budgetLabel[plan.budget]}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-slate-700">{plan.phRange}</td>
-                    <td className="px-4 py-3 text-slate-700">{plan.stages.length} Stufen / {plan.durationWeeks} Wochen</td>
+                    <td className="px-4 py-3 text-foreground/80">{plan.phRange}</td>
+                    <td className="px-4 py-3 text-foreground/80">{plan.stages.length} Stufen / {plan.durationWeeks} Wochen</td>
                   </tr>
                 ))}
               </tbody>
@@ -511,28 +511,28 @@ export default function FertilizerPlansPage() {
 
         <section className="space-y-6">
           {filteredPlans.map((plan) => (
-            <article id={plan.id} key={plan.id} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm scroll-mt-24">
+            <article id={plan.id} key={plan.id} className="rounded-2xl border border-border bg-card p-6 shadow-sm scroll-mt-24">
               <div className="grid gap-5 lg:grid-cols-[280px_1fr]">
-                <aside className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-                  <h2 className="text-xl font-bold text-slate-900">{plan.title}</h2>
-                  <p className="mt-2 text-sm text-slate-600">{plan.subtitle}</p>
+                <aside className="rounded-xl border border-border bg-background p-4">
+                  <h2 className="text-xl font-bold text-foreground">{plan.title}</h2>
+                  <p className="mt-2 text-sm text-foreground/80">{plan.subtitle}</p>
                   <div className="mt-4 space-y-2 text-xs">
-                    <p className="rounded-lg border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700">
+                    <p className="rounded-lg border border-border bg-card px-3 py-2 font-semibold text-foreground/80">
                       Setup: {plan.cultivation}
                     </p>
-                    <p className="rounded-lg border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700">
+                    <p className="rounded-lg border border-border bg-card px-3 py-2 font-semibold text-foreground/80">
                       pH: {plan.phRange}
                     </p>
                     <p className={`rounded-lg border px-3 py-2 font-semibold ${budgetBadge[plan.budget]}`}>
                       Budget: {budgetLabel[plan.budget]}
                     </p>
-                    <p className="rounded-lg border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700">
+                    <p className="rounded-lg border border-border bg-card px-3 py-2 font-semibold text-foreground/80">
                       Level: {levelLabel[plan.level]}
                     </p>
-                    <p className="rounded-lg border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700">
+                    <p className="rounded-lg border border-border bg-card px-3 py-2 font-semibold text-foreground/80">
                       Ziel: {goalLabel[plan.goal]}
                     </p>
-                    <p className="rounded-lg border border-slate-200 bg-white px-3 py-2 font-semibold text-slate-700">
+                    <p className="rounded-lg border border-border bg-card px-3 py-2 font-semibold text-foreground/80">
                       Laufzeit: {plan.durationWeeks} Wochen
                     </p>
                   </div>
@@ -543,19 +543,19 @@ export default function FertilizerPlansPage() {
 
                 <div className="space-y-4">
                   {plan.stages.map((stage, stageIndex) => (
-                    <section key={stage.label} className="rounded-xl border border-slate-200 bg-white p-4">
+                    <section key={stage.label} className="rounded-xl border border-border bg-card p-4">
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-xs font-bold text-white">
+                          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-foreground text-xs font-bold text-background">
                             {stageIndex + 1}
                           </span>
-                          <p className="text-sm font-bold text-slate-900">{stage.label}</p>
+                          <p className="text-sm font-bold text-foreground">{stage.label}</p>
                         </div>
                         <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">
                           Ziel-EC {stage.targetEc}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-600">{stage.notes}</p>
+                      <p className="text-xs text-foreground/80">{stage.notes}</p>
 
                       <div className="mt-3 grid gap-2 sm:grid-cols-2">
                         {stage.productIds.map((id) => {
@@ -565,10 +565,10 @@ export default function FertilizerPlansPage() {
                             <Link
                               key={`${stage.label}-${id}`}
                               href={`/database/fertilizers?q=${encodeURIComponent(product.name)}` as Route}
-                              className="block rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 hover:border-emerald-300 hover:bg-emerald-50"
+                              className="block rounded-lg border border-border bg-background px-3 py-2 hover:border-emerald-300 hover:bg-emerald-50"
                             >
-                              <p className="text-sm font-semibold text-slate-800">{product.name}</p>
-                              <p className="text-xs text-slate-500">{product.brand} · NPK {product.npk.n}-{product.npk.p}-{product.npk.k}</p>
+                              <p className="text-sm font-semibold text-foreground">{product.name}</p>
+                              <p className="text-xs text-muted-fg">{product.brand} · NPK {product.npk.n}-{product.npk.p}-{product.npk.k}</p>
                             </Link>
                           );
                         })}
@@ -581,9 +581,9 @@ export default function FertilizerPlansPage() {
           ))}
 
           {filteredPlans.length === 0 && (
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
-              <p className="text-lg font-semibold text-slate-700">Kein Plan passt zu den aktuellen Filtern.</p>
-              <p className="mt-1 text-sm text-slate-500">Filter lockern oder auf Reset klicken, um alle Pläne wieder zu sehen.</p>
+            <div className="rounded-2xl border border-dashed border-border bg-background p-10 text-center">
+              <p className="text-lg font-semibold text-foreground/80">Kein Plan passt zu den aktuellen Filtern.</p>
+              <p className="mt-1 text-sm text-muted-fg">Filter lockern oder auf Reset klicken, um alle Pläne wieder zu sehen.</p>
               <button
                 type="button"
                 onClick={resetFilters}
@@ -596,18 +596,18 @@ export default function FertilizerPlansPage() {
         </section>
 
         <section className="mt-8 grid gap-4 lg:grid-cols-2">
-          <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900">Betriebs-Checkliste je Woche</h3>
-            <ul className="mt-3 space-y-2 text-sm text-slate-700">
+          <article className="rounded-xl border border-border bg-card p-5 shadow-sm">
+            <h3 className="text-lg font-bold text-foreground">Betriebs-Checkliste je Woche</h3>
+            <ul className="mt-3 space-y-2 text-sm text-foreground/80">
               <li>Reservoir/Drain-Werte dokumentieren (EC, pH, Temperatur).</li>
               <li>Nur in kleinen Schritten anpassen: max. EC +0.1 bis +0.2 pro Woche.</li>
               <li>Bei Stress erst Bewässerungsrhythmus prüfen, dann Nährstoffmenge.</li>
               <li>Bei Blattspitzenbrand EC kurzfristig senken und stabilisieren.</li>
             </ul>
           </article>
-          <article className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h3 className="text-lg font-bold text-slate-900">Kurze Antworten</h3>
-            <div className="mt-3 space-y-2 text-sm text-slate-700">
+          <article className="rounded-xl border border-border bg-card p-5 shadow-sm">
+            <h3 className="text-lg font-bold text-foreground">Kurze Antworten</h3>
+            <div className="mt-3 space-y-2 text-sm text-foreground/80">
               <p><span className="font-semibold">Kann ich Pläne mischen?</span> Ja, aber nur stufenweise und mit 1-2 Wochen Übergang.</p>
               <p><span className="font-semibold">Welcher Plan für Anfänger?</span> Starter-Filter aktivieren und mit Budget Klar oder Erde Ausgewogen starten.</p>
               <p><span className="font-semibold">Wann PK-Booster?</span> Erst in stabiler Blüte und nie bei unstabilem pH/EC.</p>

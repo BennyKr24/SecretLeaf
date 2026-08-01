@@ -1153,7 +1153,7 @@ export default function GrowPage({}: Props) {
 
   if (!loaded) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-4 py-10">
+      <main className="min-h-screen bg-background px-4 py-10">
         <div className="mx-auto max-w-2xl animate-pulse space-y-4">
           <div className="h-8 w-64 rounded bg-slate-200" />
           <div className="h-40 rounded-2xl bg-slate-100" />
@@ -1197,7 +1197,7 @@ export default function GrowPage({}: Props) {
   const showPerformancePanel = entries.length >= 3 || healthScore < 70;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-4 py-8 sm:px-6">
+    <main className="min-h-screen bg-background px-4 py-8 sm:px-6">
       <div className="mx-auto max-w-2xl space-y-5">
 
         {/* ── Daily Action Card ────────────────────────── */}

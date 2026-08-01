@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GrowSetup, ToolResultData, ToolSnapshot, ToolStorageData } from '@/lib/tools/types';
 
 const STORAGE_KEY = 'secretleaf.tools.v1';
@@ -34,34 +34,55 @@ type UseToolStateOptions<T extends InputMap> = {
   setupKeys?: Array<keyof GrowSetup>;
 };
 
+function mergeStoredInputs<T extends InputMap>(
+  slug: string,
+  defaults: T,
+  setupKeys: Array<keyof GrowSetup> | undefined,
+): T {
+  const storage = readStorage();
+  const last = storage.history.find((s) => s.slug === slug);
+  const merged = { ...defaults } as Record<string, number | string | boolean>;
+
+  if (setupKeys) {
+    const profile = storage.setupProfile;
+    for (const key of setupKeys) {
+      const k = key as string;
+      if (k in profile && profile[k as keyof GrowSetup] !== undefined) {
+        merged[k] = profile[k as keyof GrowSetup] as number | string | boolean;
+      }
+    }
+  }
+
+  if (last) {
+    for (const [k, v] of Object.entries(last.inputs)) {
+      if (k in defaults) {
+        merged[k] = v;
+      }
+    }
+  }
+
+  return merged as T;
+}
+
 export function useToolState<T extends InputMap>({ slug, defaults, setupKeys }: UseToolStateOptions<T>) {
-  const [inputs, setInputsRaw] = useState<T>(() => {
-    const storage = readStorage();
-    const last = storage.history.find((s) => s.slug === slug);
-    const merged = { ...defaults } as Record<string, number | string | boolean>;
-
-    if (setupKeys) {
-      const profile = storage.setupProfile;
-      for (const key of setupKeys) {
-        const k = key as string;
-        if (k in profile && profile[k as keyof GrowSetup] !== undefined) {
-          merged[k] = profile[k as keyof GrowSetup] as number | string | boolean;
-        }
-      }
-    }
-
-    if (last) {
-      for (const [k, v] of Object.entries(last.inputs)) {
-        if (k in defaults) {
-          merged[k] = v;
-        }
-      }
-    }
-
-    return merged as T;
-  });
-  const [loaded] = useState(true);
+  // Start from plain defaults (matches SSR output exactly) — localStorage is
+  // only readable on the client, so merging it in during the first render
+  // would make that render diverge from the server-rendered HTML and trigger
+  // a hydration mismatch. Merge the real stored values in after mount instead.
+  const [inputs, setInputsRaw] = useState<T>(defaults);
+  const [loaded, setLoaded] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    // Deliberate mount-only sync from localStorage (client-only source) to
+    // avoid a hydration mismatch — see comment on the initializer above.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setInputsRaw(mergeStoredInputs(slug, defaults, setupKeys));
+    setLoaded(true);
+    // Only re-run when the tool identity changes — `defaults`/`setupKeys` are
+    // expected to be stable per-tool literals, not reactive dependencies.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
 
   const setInput = useCallback(<K extends keyof T>(key: K, value: T[K]) => {
     setInputsRaw((prev) => ({ ...prev, [key]: value }));

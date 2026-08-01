@@ -30,7 +30,7 @@ function StatCard({
   color?: "default" | "green" | "blue" | "purple" | "amber";
 }) {
   const colors = {
-    default: "border-[#d8e8dd]",
+    default: "border-border",
     green: "border-emerald-200",
     blue: "border-blue-200",
     purple: "border-purple-200",
@@ -38,10 +38,10 @@ function StatCard({
   };
 
   return (
-    <div className={`rounded-2xl border bg-white p-5 shadow-sm ${colors[color]}`}>
-      <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">{label}</p>
-      <p className="mt-2 text-3xl font-bold text-[#10281e]">{value}</p>
-      {description && <p className="mt-1 text-xs text-[#6b8577]">{description}</p>}
+    <div className={`rounded-2xl border bg-card p-5 shadow-sm ${colors[color]}`}>
+      <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-fg">{label}</p>
+      <p className="mt-2 text-3xl font-bold text-foreground">{value}</p>
+      {description && <p className="mt-1 text-xs text-muted-fg">{description}</p>}
     </div>
   );
 }
@@ -76,22 +76,22 @@ export default function AdminSystemPage() {
   return (
     <div>
       <div className="mb-7">
-        <div className="flex items-center gap-2 text-xs text-[#8fa89a]">
-          <span>Admin</span><span>/</span><span className="font-semibold text-[#4d685a]">System</span>
+        <div className="flex items-center gap-2 text-xs text-muted-fg">
+          <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">System</span>
         </div>
         <div className="mt-1 flex items-center gap-3">
           <span className="text-2xl">🖥️</span>
           <div>
-            <h1 className="text-2xl font-bold text-[#10281e]">System</h1>
-            <p className="text-sm text-[#4d685a]">Systemstatistiken, Benutzer-Metriken und Konfiguration im Überblick.</p>
+            <h1 className="text-2xl font-bold text-foreground">System</h1>
+            <p className="text-sm text-muted-fg">Systemstatistiken, Benutzer-Metriken und Konfiguration im Überblick.</p>
           </div>
         </div>
       </div>
 
       {loading && (
-        <div className="flex items-center gap-3 rounded-2xl border border-[#d8e8dd] bg-white p-8">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#1f7a4f] border-t-transparent" />
-          <span className="text-sm text-[#4d685a]">System-Daten werden geladen...</span>
+        <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-8">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
+          <span className="text-sm text-muted-fg">System-Daten werden geladen...</span>
         </div>
       )}
 
@@ -103,7 +103,7 @@ export default function AdminSystemPage() {
         <>
           {/* User Distribution */}
           <div className="mb-6">
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">
               Benutzer nach Rolle
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -135,7 +135,7 @@ export default function AdminSystemPage() {
 
           {/* Platform Metrics */}
           <div className="mb-6">
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">
               Plattform-Metriken
             </h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -156,28 +156,28 @@ export default function AdminSystemPage() {
           {/* Environment Configuration */}
           {envConfig && (
             <div className="mb-6">
-              <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">
+              <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">
                 Umgebungs-Konfiguration
               </h2>
-              <div className="rounded-2xl border border-[#d8e8dd] bg-white p-5 shadow-sm">
-                <p className="mb-4 text-xs text-[#6b8577]">
+              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+                <p className="mb-4 text-xs text-muted-fg">
                   Nur Lesen. Diese Werte stammen aus Umgebungsvariablen und können hier nicht geändert werden.
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  <div className="rounded-xl bg-[#f6faf7] px-4 py-3">
-                    <p className="text-xs font-semibold text-[#4d685a]">Lookback Days</p>
-                    <p className="mt-1 text-lg font-bold text-[#10281e]">{envConfig.lookbackDays}</p>
-                    <p className="text-[10px] text-[#8fa89a]">Tage rückwärts bei Studien-Sync</p>
+                  <div className="rounded-xl bg-background px-4 py-3">
+                    <p className="text-xs font-semibold text-muted-fg">Lookback Days</p>
+                    <p className="mt-1 text-lg font-bold text-foreground">{envConfig.lookbackDays}</p>
+                    <p className="text-[10px] text-muted-fg">Tage rückwärts bei Studien-Sync</p>
                   </div>
-                  <div className="rounded-xl bg-[#f6faf7] px-4 py-3">
-                    <p className="text-xs font-semibold text-[#4d685a]">Max Attempts</p>
-                    <p className="mt-1 text-lg font-bold text-[#10281e]">{envConfig.maxAttempts}</p>
-                    <p className="text-[10px] text-[#8fa89a]">Max. Wiederholungsversuche</p>
+                  <div className="rounded-xl bg-background px-4 py-3">
+                    <p className="text-xs font-semibold text-muted-fg">Max Attempts</p>
+                    <p className="mt-1 text-lg font-bold text-foreground">{envConfig.maxAttempts}</p>
+                    <p className="text-[10px] text-muted-fg">Max. Wiederholungsversuche</p>
                   </div>
-                  <div className="rounded-xl bg-[#f6faf7] px-4 py-3">
-                    <p className="text-xs font-semibold text-[#4d685a]">Study Limit</p>
-                    <p className="mt-1 text-lg font-bold text-[#10281e]">{envConfig.studyLimit}</p>
-                    <p className="text-[10px] text-[#8fa89a]">Max. Studien pro Pipeline-Run</p>
+                  <div className="rounded-xl bg-background px-4 py-3">
+                    <p className="text-xs font-semibold text-muted-fg">Study Limit</p>
+                    <p className="mt-1 text-lg font-bold text-foreground">{envConfig.studyLimit}</p>
+                    <p className="text-[10px] text-muted-fg">Max. Studien pro Pipeline-Run</p>
                   </div>
                 </div>
               </div>
@@ -186,26 +186,26 @@ export default function AdminSystemPage() {
 
           {/* System Health Info */}
           <div>
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">
               System-Info
             </h2>
-            <div className="rounded-2xl border border-[#d8e8dd] bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <div className="grid gap-3 sm:grid-cols-2">
-                <div className="flex items-start justify-between rounded-xl bg-[#f6faf7] px-4 py-3">
-                  <span className="text-xs font-semibold text-[#4d685a]">Framework</span>
-                  <span className="text-xs font-mono text-[#10281e]">Next.js</span>
+                <div className="flex items-start justify-between rounded-xl bg-background px-4 py-3">
+                  <span className="text-xs font-semibold text-muted-fg">Framework</span>
+                  <span className="text-xs font-mono text-foreground">Next.js</span>
                 </div>
-                <div className="flex items-start justify-between rounded-xl bg-[#f6faf7] px-4 py-3">
-                  <span className="text-xs font-semibold text-[#4d685a]">Auth</span>
-                  <span className="text-xs font-mono text-[#10281e]">Supabase Auth</span>
+                <div className="flex items-start justify-between rounded-xl bg-background px-4 py-3">
+                  <span className="text-xs font-semibold text-muted-fg">Auth</span>
+                  <span className="text-xs font-mono text-foreground">Supabase Auth</span>
                 </div>
-                <div className="flex items-start justify-between rounded-xl bg-[#f6faf7] px-4 py-3">
-                  <span className="text-xs font-semibold text-[#4d685a]">Datenbank</span>
-                  <span className="text-xs font-mono text-[#10281e]">Supabase Postgres</span>
+                <div className="flex items-start justify-between rounded-xl bg-background px-4 py-3">
+                  <span className="text-xs font-semibold text-muted-fg">Datenbank</span>
+                  <span className="text-xs font-mono text-foreground">Supabase Postgres</span>
                 </div>
-                <div className="flex items-start justify-between rounded-xl bg-[#f6faf7] px-4 py-3">
-                  <span className="text-xs font-semibold text-[#4d685a]">Zeitstempel</span>
-                  <span className="text-xs font-mono text-[#10281e]">
+                <div className="flex items-start justify-between rounded-xl bg-background px-4 py-3">
+                  <span className="text-xs font-semibold text-muted-fg">Zeitstempel</span>
+                  <span className="text-xs font-mono text-foreground">
                     {new Date().toLocaleString("de-DE", { timeZone: "Europe/Berlin" })}
                   </span>
                 </div>

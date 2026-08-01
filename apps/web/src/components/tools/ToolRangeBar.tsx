@@ -29,8 +29,8 @@ export default function ToolRangeBar({ label, value, min, max, unit, zones }: Pr
 
   return (
     <div className="space-y-2">
-      {label && <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">{label}</p>}
-      <div className="relative h-3 w-full overflow-hidden rounded-full bg-slate-100">
+      {label && <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">{label}</p>}
+      <div className="relative h-3 w-full overflow-hidden rounded-full bg-background">
         {zones.map((zone) => {
           const left = ((zone.from - min) / range) * 100;
           const width = ((zone.to - zone.from) / range) * 100;
@@ -48,7 +48,7 @@ export default function ToolRangeBar({ label, value, min, max, unit, zones }: Pr
           style={{ left: `${markerPercent}%` }}
         />
       </div>
-      <div className="flex justify-between text-[10px] text-slate-400">
+      <div className="flex justify-between text-[10px] text-muted-fg">
         <span>{min}{unit ? ` ${unit}` : ''}</span>
         {zones.map((zone) => (
           <span key={zone.label} className="text-center">{zone.label}</span>

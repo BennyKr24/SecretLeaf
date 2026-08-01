@@ -91,7 +91,7 @@ function SaveButton({
     <button
       onClick={onClick}
       disabled={saving}
-      className="rounded-xl bg-[#1f7a4f] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#17613f] disabled:opacity-50"
+      className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50"
     >
       {saving ? "Wird gespeichert..." : label}
     </button>
@@ -108,10 +108,10 @@ function SectionCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-[#d8e8dd] bg-white p-6 shadow-sm">
-      <h3 className="text-lg font-bold text-[#10281e]">{title}</h3>
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+      <h3 className="text-lg font-bold text-foreground">{title}</h3>
       {description && (
-        <p className="mt-1 text-sm text-[#4d685a]">{description}</p>
+        <p className="mt-1 text-sm text-muted-fg">{description}</p>
       )}
       <div className="mt-4">{children}</div>
     </div>
@@ -143,7 +143,7 @@ function SetupRequired() {
           </p>
           <button
             onClick={() => setShowSql(!showSql)}
-            className="mt-3 rounded-lg border border-amber-300 bg-white px-4 py-1.5 text-sm font-medium text-amber-900 hover:bg-amber-50"
+            className="mt-3 rounded-lg border border-amber-300 bg-card px-4 py-1.5 text-sm font-medium text-amber-900 hover:bg-amber-50"
           >
             {showSql ? "SQL ausblenden" : "Migration-SQL anzeigen"}
           </button>
@@ -273,14 +273,14 @@ export default function AlgorithmPage() {
         {/* Header */}
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs text-[#8fa89a]">
-              <span>Admin</span><span>/</span><span className="font-semibold text-[#4d685a]">Algorithmus</span>
+            <div className="flex items-center gap-2 text-xs text-muted-fg">
+              <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Algorithmus</span>
             </div>
             <div className="mt-1 flex items-center gap-3">
               <span className="text-2xl">🧬</span>
               <div>
-                <h1 className="text-2xl font-bold text-[#10281e]">Algorithmus-Konfiguration</h1>
-                <p className="text-sm text-[#4d685a]">Keywords, Quellen, Ausschlüsse, Scoring-Parameter und mehr.</p>
+                <h1 className="text-2xl font-bold text-foreground">Algorithmus-Konfiguration</h1>
+                <p className="text-sm text-muted-fg">Keywords, Quellen, Ausschlüsse, Scoring-Parameter und mehr.</p>
               </div>
             </div>
           </div>
@@ -312,15 +312,15 @@ export default function AlgorithmPage() {
         {!tableExists && <SetupRequired />}
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-1.5 rounded-xl border border-[#d8e8dd] bg-white p-1.5">
+        <div className="flex flex-wrap gap-1.5 rounded-xl border border-border bg-card p-1.5">
           {TABS.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
               className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition ${
                 activeTab === tab.key
-                  ? "bg-[#1f7a4f] text-white"
-                  : "text-[#4d685a] hover:bg-[#f6faf7]"
+                  ? "bg-emerald-600 dark:bg-emerald-500 text-white"
+                  : "text-muted-fg hover:bg-background"
               }`}
             >
               <span>{tab.icon}</span>
@@ -332,7 +332,7 @@ export default function AlgorithmPage() {
         {/* Content */}
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#1f7a4f] border-t-transparent" />
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
           </div>
         ) : config ? (
           <div>
@@ -450,19 +450,19 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
           {keywords.map((kw, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg border border-[#d8e8dd] bg-[#f6faf7] px-3 py-2"
+              className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
             >
               <button
                 onClick={() => toggleKeyword(idx)}
                 className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
                   kw.enabled
-                    ? "border-[#1f7a4f] bg-[#1f7a4f] text-white"
-                    : "border-[#d8e8dd] bg-white text-transparent"
+                    ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                    : "border-border bg-card text-transparent"
                 }`}
               >
                 ✓
               </button>
-              <code className="flex-1 text-sm text-[#10281e]">{kw.term}</code>
+              <code className="flex-1 text-sm text-foreground">{kw.term}</code>
               <StatusBadge ok={kw.enabled} />
               <button
                 onClick={() => removeKeyword(idx)}
@@ -482,11 +482,11 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
             onChange={(e) => setNewTerm(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addKeyword()}
             placeholder="Neues Keyword..."
-            className="flex-1 rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm text-[#10281e] placeholder:text-[#a0b4a8] focus:border-[#1f7a4f] focus:outline-none focus:ring-1 focus:ring-[#1f7a4f]"
+            className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-fg focus:border-emerald-600 dark:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-[#1f7a4f]"
           />
           <button
             onClick={addKeyword}
-            className="rounded-lg bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f]"
+            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
           >
             + Hinzufügen
           </button>
@@ -499,7 +499,7 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("required_keywords")}
-            className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm text-[#4d685a] hover:bg-[#f6faf7]"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -580,26 +580,26 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
           {sources.map((src, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg border border-[#d8e8dd] bg-[#f6faf7] px-3 py-2"
+              className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
             >
               <button
                 onClick={() => toggleSource(idx)}
                 className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
                   src.enabled
-                    ? "border-[#1f7a4f] bg-[#1f7a4f] text-white"
-                    : "border-[#d8e8dd] bg-white text-transparent"
+                    ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                    : "border-border bg-card text-transparent"
                 }`}
               >
                 ✓
               </button>
-              <span className="flex-1 text-sm font-medium text-[#10281e]">
+              <span className="flex-1 text-sm font-medium text-foreground">
                 {src.name}
               </span>
               <span
                 className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
                   src.quality === "high"
-                    ? "bg-blue-100 text-blue-700"
-                    : "bg-gray-100 text-gray-600"
+                    ? "bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400"
+                    : "bg-border text-foreground/80"
                 }`}
               >
                 {src.quality.toUpperCase()}
@@ -621,19 +621,19 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
             onChange={(e) => setNewSource(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addSource()}
             placeholder="Publisher-Name..."
-            className="flex-1 rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+            className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
           />
           <select
             value={newQuality}
             onChange={(e) => setNewQuality(e.target.value as "high" | "mid")}
-            className="rounded-lg border border-[#d8e8dd] bg-white px-2 py-2 text-sm"
+            className="rounded-lg border border-border bg-card px-2 py-2 text-sm"
           >
             <option value="high">High</option>
             <option value="mid">Mid</option>
           </select>
           <button
             onClick={addSource}
-            className="rounded-lg bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f]"
+            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
           >
             +
           </button>
@@ -646,7 +646,7 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("preferred_sources")}
-            className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm text-[#4d685a] hover:bg-[#f6faf7]"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -659,7 +659,7 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
         description="Studien von diesen Publishern werden automatisch abgelehnt."
       >
         {blocked.length === 0 && (
-          <p className="text-sm italic text-[#a0b4a8]">
+          <p className="text-sm italic text-muted-fg">
             Keine blockierten Quellen konfiguriert.
           </p>
         )}
@@ -692,7 +692,7 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
               setNewBlocked((b) => ({ ...b, name: e.target.value }))
             }
             placeholder="Name..."
-            className="rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+            className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
           />
           <input
             type="text"
@@ -701,7 +701,7 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
               setNewBlocked((b) => ({ ...b, pattern: e.target.value }))
             }
             placeholder="Pattern (regex)..."
-            className="rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+            className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
           />
           <button
             onClick={addBlocked}
@@ -786,13 +786,13 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
           {hardcoded.map((rule, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg bg-[#f6faf7] px-3 py-2"
+              className="flex items-center gap-3 rounded-lg bg-background px-3 py-2"
             >
-              <span className="text-xs text-[#4d685a]">🔒</span>
-              <code className="flex-1 text-xs text-[#10281e]">
+              <span className="text-xs text-muted-fg">🔒</span>
+              <code className="flex-1 text-xs text-foreground">
                 {rule.pattern}
               </code>
-              <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] text-gray-500">
+              <span className="rounded-full bg-border px-2 py-0.5 text-[10px] text-muted-fg">
                 {rule.reason}
               </span>
             </div>
@@ -806,7 +806,7 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
         description="Regex-Muster die auf Titel + Abstract geprüft werden. Treffer werden sofort abgelehnt."
       >
         {rules.length === 0 && (
-          <p className="text-sm italic text-[#a0b4a8]">
+          <p className="text-sm italic text-muted-fg">
             Keine eigenen Regeln definiert.
           </p>
         )}
@@ -814,19 +814,19 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
           {rules.map((rule, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg border border-[#d8e8dd] bg-[#f6faf7] px-3 py-2"
+              className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
             >
               <button
                 onClick={() => toggleRule(idx)}
                 className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
                   rule.enabled
-                    ? "border-[#1f7a4f] bg-[#1f7a4f] text-white"
-                    : "border-[#d8e8dd] bg-white text-transparent"
+                    ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                    : "border-border bg-card text-transparent"
                 }`}
               >
                 ✓
               </button>
-              <code className="flex-1 text-sm text-[#10281e]">
+              <code className="flex-1 text-sm text-foreground">
                 {rule.pattern}
               </code>
               <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] text-amber-700">
@@ -850,7 +850,7 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
               setNewExclusion((ex) => ({ ...ex, pattern: e.target.value }))
             }
             placeholder="Regex-Pattern (z.B. aquaculture|fish farm)"
-            className="rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+            className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
           />
           <div className="flex gap-2">
             <input
@@ -860,11 +860,11 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
                 setNewExclusion((ex) => ({ ...ex, reason: e.target.value }))
               }
               placeholder="Grund (z.B. off-topic)"
-              className="flex-1 rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+              className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
             />
             <button
               onClick={addRule}
-              className="rounded-lg bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f]"
+              className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
             >
               +
             </button>
@@ -880,7 +880,7 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("custom_exclusions")}
-            className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm text-[#4d685a] hover:bg-[#f6faf7]"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -997,14 +997,14 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
           {hardcoded.map((c) => (
             <div
               key={c.key}
-              className="rounded-lg border border-[#d8e8dd] bg-[#f6faf7] p-3"
+              className="rounded-lg border border-border bg-background p-3"
             >
               <div className="flex items-center gap-2">
                 <span className="text-xs">🔒</span>
-                <span className="font-semibold text-sm text-[#10281e]">
+                <span className="font-semibold text-sm text-foreground">
                   {c.label}
                 </span>
-                <code className="rounded bg-[#d8e8dd] px-1.5 py-0.5 text-[10px] text-[#4d685a]">
+                <code className="rounded bg-border px-1.5 py-0.5 text-[10px] text-muted-fg">
                   {c.key}
                 </code>
               </div>
@@ -1012,7 +1012,7 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
                 {c.queries.map((q, i) => (
                   <span
                     key={i}
-                    className="rounded-full bg-white px-2 py-0.5 text-[11px] text-[#4d685a] border border-[#d8e8dd]"
+                    className="rounded-full bg-card px-2 py-0.5 text-[11px] text-muted-fg border border-border"
                   >
                     {q}
                   </span>
@@ -1029,7 +1029,7 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
         description="Erstelle eigene Cluster mit Suchbegriffen und Matching-Patterns. Diese werden zusätzlich zu den System-Clustern verwendet."
       >
         {customClusters.length === 0 && (
-          <p className="text-sm italic text-[#a0b4a8]">
+          <p className="text-sm italic text-muted-fg">
             Keine eigenen Cluster definiert.
           </p>
         )}
@@ -1037,23 +1037,23 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
           {customClusters.map((cluster, idx) => (
             <div
               key={idx}
-              className="rounded-lg border border-[#d8e8dd] bg-[#f6faf7] p-3"
+              className="rounded-lg border border-border bg-background p-3"
             >
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => toggleCluster(idx)}
                   className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
                     cluster.enabled
-                      ? "border-[#1f7a4f] bg-[#1f7a4f] text-white"
-                      : "border-[#d8e8dd] bg-white text-transparent"
+                      ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                      : "border-border bg-card text-transparent"
                   }`}
                 >
                   ✓
                 </button>
-                <span className="font-semibold text-sm text-[#10281e]">
+                <span className="font-semibold text-sm text-foreground">
                   {cluster.label}
                 </span>
-                <code className="rounded bg-[#d8e8dd] px-1.5 py-0.5 text-[10px] text-[#4d685a]">
+                <code className="rounded bg-border px-1.5 py-0.5 text-[10px] text-muted-fg">
                   {cluster.key}
                 </code>
                 <StatusBadge ok={cluster.enabled} />
@@ -1065,14 +1065,14 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
                 </button>
               </div>
               <div className="mt-2">
-                <span className="text-[10px] font-semibold uppercase text-[#4d685a]">
+                <span className="text-[10px] font-semibold uppercase text-muted-fg">
                   Queries:
                 </span>
                 <div className="mt-1 flex flex-wrap gap-1">
                   {cluster.queries.map((q, i) => (
                     <span
                       key={i}
-                      className="rounded-full bg-white px-2 py-0.5 text-[11px] text-[#4d685a] border border-[#d8e8dd]"
+                      className="rounded-full bg-card px-2 py-0.5 text-[11px] text-muted-fg border border-border"
                     >
                       {q}
                     </span>
@@ -1080,14 +1080,14 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
                 </div>
               </div>
               <div className="mt-2">
-                <span className="text-[10px] font-semibold uppercase text-[#4d685a]">
+                <span className="text-[10px] font-semibold uppercase text-muted-fg">
                   Include-Patterns:
                 </span>
                 <div className="mt-1 flex flex-wrap gap-1">
                   {cluster.includePatterns.map((p, i) => (
                     <code
                       key={i}
-                      className="rounded bg-white px-1.5 py-0.5 text-[10px] text-[#10281e] border border-[#d8e8dd]"
+                      className="rounded bg-card px-1.5 py-0.5 text-[10px] text-foreground border border-border"
                     >
                       {p}
                     </code>
@@ -1099,8 +1099,8 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
         </div>
 
         {/* Add new cluster */}
-        <div className="mt-4 rounded-lg border border-dashed border-[#d8e8dd] p-4">
-          <p className="mb-3 text-sm font-semibold text-[#10281e]">
+        <div className="mt-4 rounded-lg border border-dashed border-border p-4">
+          <p className="mb-3 text-sm font-semibold text-foreground">
             Neuen Cluster erstellen
           </p>
           <div className="grid grid-cols-2 gap-3">
@@ -1111,7 +1111,7 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
                 setNewCluster((c) => ({ ...c, key: e.target.value }))
               }
               placeholder="Cluster-Key (z.B. genetik)"
-              className="rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+              className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
             />
             <input
               type="text"
@@ -1120,7 +1120,7 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
                 setNewCluster((c) => ({ ...c, label: e.target.value }))
               }
               placeholder="Anzeige-Name (z.B. Genetik & Züchtung)"
-              className="rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+              className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
             />
             <textarea
               value={newCluster.queries}
@@ -1129,7 +1129,7 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
               }
               placeholder={"Suchbegriffe (einer pro Zeile)\nz.B. cannabis genetics\ncannabis breeding"}
               rows={3}
-              className="rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+              className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
             />
             <textarea
               value={newCluster.includePatterns}
@@ -1141,12 +1141,12 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
               }
               placeholder={"Include-Patterns (einer pro Zeile)\nz.B. genetic\nbreeding\ngenome"}
               rows={3}
-              className="rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+              className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
             />
           </div>
           <button
             onClick={addCluster}
-            className="mt-3 rounded-lg bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f]"
+            className="mt-3 rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
           >
             + Cluster erstellen
           </button>
@@ -1159,7 +1159,7 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("topic_clusters")}
-            className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm text-[#4d685a] hover:bg-[#f6faf7]"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -1210,7 +1210,7 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
         <div className="grid grid-cols-3 gap-4">
           {/* Min Accept Score */}
           <div>
-            <label className="text-xs font-semibold uppercase text-[#4d685a]">
+            <label className="text-xs font-semibold uppercase text-muted-fg">
               Min. Accept Score
             </label>
             <div className="mt-1 flex items-center gap-2">
@@ -1224,18 +1224,18 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
                 }
                 className="flex-1 accent-[#1f7a4f]"
               />
-              <span className="w-10 text-right text-sm font-bold text-[#10281e]">
+              <span className="w-10 text-right text-sm font-bold text-foreground">
                 {sp.minAcceptScore}
               </span>
             </div>
-            <p className="mt-0.5 text-[10px] text-[#a0b4a8]">
+            <p className="mt-0.5 text-[10px] text-muted-fg">
               Studien unter diesem Score werden abgelehnt
             </p>
           </div>
 
           {/* Crossref Rows */}
           <div>
-            <label className="text-xs font-semibold uppercase text-[#4d685a]">
+            <label className="text-xs font-semibold uppercase text-muted-fg">
               Crossref Rows/Query
             </label>
             <div className="mt-1 flex items-center gap-2">
@@ -1250,18 +1250,18 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
                 }
                 className="flex-1 accent-[#1f7a4f]"
               />
-              <span className="w-10 text-right text-sm font-bold text-[#10281e]">
+              <span className="w-10 text-right text-sm font-bold text-foreground">
                 {sp.crossrefRowsPerQuery}
               </span>
             </div>
-            <p className="mt-0.5 text-[10px] text-[#a0b4a8]">
+            <p className="mt-0.5 text-[10px] text-muted-fg">
               Ergebnisse pro Crossref-Suche
             </p>
           </div>
 
           {/* Fuzzy Threshold */}
           <div>
-            <label className="text-xs font-semibold uppercase text-[#4d685a]">
+            <label className="text-xs font-semibold uppercase text-muted-fg">
               Fuzzy Dedup Threshold
             </label>
             <div className="mt-1 flex items-center gap-2">
@@ -1275,11 +1275,11 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
                 }
                 className="flex-1 accent-[#1f7a4f]"
               />
-              <span className="w-10 text-right text-sm font-bold text-[#10281e]">
+              <span className="w-10 text-right text-sm font-bold text-foreground">
                 {Math.round(sp.fuzzyThreshold * 100)}%
               </span>
             </div>
-            <p className="mt-0.5 text-[10px] text-[#a0b4a8]">
+            <p className="mt-0.5 text-[10px] text-muted-fg">
               Ähnlichkeit ab der Duplikat erkannt wird
             </p>
           </div>
@@ -1303,12 +1303,12 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
             <div key={key}>
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-sm font-medium text-[#10281e]">
+                  <span className="text-sm font-medium text-foreground">
                     {label}
                   </span>
-                  <span className="ml-2 text-xs text-[#a0b4a8]">{desc}</span>
+                  <span className="ml-2 text-xs text-muted-fg">{desc}</span>
                 </div>
-                <span className="text-sm font-bold text-[#1f7a4f]">
+                <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
                   {Math.round(sp.weights[key] * 100)}%
                 </span>
               </div>
@@ -1333,7 +1333,7 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("scoring_params")}
-            className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm text-[#4d685a] hover:bg-[#f6faf7]"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -1409,19 +1409,19 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
           {terms.map((term, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg border border-[#d8e8dd] bg-[#f6faf7] px-3 py-2"
+              className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
             >
               <button
                 onClick={() => toggleTerm(idx)}
                 className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
                   term.enabled
-                    ? "border-[#1f7a4f] bg-[#1f7a4f] text-white"
-                    : "border-[#d8e8dd] bg-white text-transparent"
+                    ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                    : "border-border bg-card text-transparent"
                 }`}
               >
                 ✓
               </button>
-              <code className="flex-1 text-sm text-[#10281e]">
+              <code className="flex-1 text-sm text-foreground">
                 {term.term}
               </code>
               <button
@@ -1430,7 +1430,7 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
                 className={`rounded-md border px-2 py-0.5 text-[10px] font-mono transition ${
                   term.wordBoundary
                     ? "border-blue-300 bg-blue-100 text-blue-700"
-                    : "border-[#d8e8dd] bg-white text-[#a0b4a8]"
+                    : "border-border bg-card text-muted-fg"
                 }`}
               >
                 \\b
@@ -1454,20 +1454,20 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
             onChange={(e) => setNewTerm(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addTerm()}
             placeholder="Neuer Anker-Begriff..."
-            className="flex-1 rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm focus:border-[#1f7a4f] focus:outline-none"
+            className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
           />
-          <label className="flex items-center gap-1.5 rounded-lg border border-[#d8e8dd] bg-white px-3 py-2 text-sm">
+          <label className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm">
             <input
               type="checkbox"
               checked={newWordBoundary}
               onChange={(e) => setNewWordBoundary(e.target.checked)}
               className="accent-[#1f7a4f]"
             />
-            <span className="text-xs text-[#4d685a]">\\b</span>
+            <span className="text-xs text-muted-fg">\\b</span>
           </label>
           <button
             onClick={addTerm}
-            className="rounded-lg bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#17613f]"
+            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
           >
             + Hinzufügen
           </button>
@@ -1490,7 +1490,7 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("cannabis_anchor")}
-            className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm text-[#4d685a] hover:bg-[#f6faf7]"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
           >
             Zurücksetzen
           </button>

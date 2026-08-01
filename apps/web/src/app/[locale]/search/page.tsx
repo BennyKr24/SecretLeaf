@@ -14,20 +14,20 @@ const KIND_LABEL: Record<SearchResultKind, string> = {
 };
 
 const KIND_COLOR: Record<SearchResultKind, string> = {
-  wiki: 'text-emerald-700 bg-emerald-100 border-emerald-200',
-  fertilizer: 'text-amber-700 bg-amber-100 border-amber-200',
-  glossary: 'text-teal-700 bg-teal-100 border-teal-200',
-  source: 'text-slate-600 bg-slate-100 border-slate-200',
+  wiki: 'text-emerald-700 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/40',
+  fertilizer: 'text-amber-700 dark:text-amber-400 bg-amber-100 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/40',
+  glossary: 'text-teal-700 dark:text-teal-400 bg-teal-100 dark:bg-teal-950/40 border-teal-200 dark:border-teal-900/40',
+  source: 'text-foreground/80 bg-background border-border',
 };
 
 function HighlightedText({ text }: { text: string }) {
   const html = text.replace(
     /\*\*(.+?)\*\*/g,
-    '<mark class="bg-yellow-100 text-yellow-900 rounded px-0.5 not-italic">$1</mark>'
+    '<mark class="bg-yellow-100 dark:bg-yellow-950/40 text-yellow-900 rounded px-0.5 not-italic">$1</mark>'
   );
   return (
     <span
-      className="text-sm text-slate-600"
+      className="text-sm text-foreground/80"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
@@ -37,10 +37,10 @@ function ResultCard({ result }: { result: SearchResult }) {
   return (
     <Link
       href={result.url as Route}
-      className="group block bg-white rounded-xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition-all p-5"
+      className="group block bg-card rounded-xl border border-border hover:border-emerald-300 hover:shadow-md transition-all p-5"
     >
       <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-lg">
+        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-background border border-border flex items-center justify-center text-lg">
           {result.kind === 'wiki' && '📚'}
           {result.kind === 'fertilizer' && '🌿'}
           {result.kind === 'glossary' && '📖'}
@@ -48,7 +48,7 @@ function ResultCard({ result }: { result: SearchResult }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
-            <h3 className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
+            <h3 className="font-bold text-foreground group-hover:text-emerald-700 dark:text-emerald-400 transition-colors">
               {result.title}
             </h3>
             {result.badge && (
@@ -60,21 +60,21 @@ function ResultCard({ result }: { result: SearchResult }) {
               {KIND_LABEL[result.kind]}
             </span>
           </div>
-          <p className="text-xs text-slate-500 mb-2">{result.subtitle}</p>
+          <p className="text-xs text-muted-fg mb-2">{result.subtitle}</p>
           {result.highlight ? (
             <HighlightedText text={result.highlight} />
           ) : (
-            <p className="text-sm text-slate-600 line-clamp-2">{result.description}</p>
+            <p className="text-sm text-foreground/80 line-clamp-2">{result.description}</p>
           )}
           <div className="flex flex-wrap gap-1 mt-2">
             {result.tags.slice(0, 4).map((tag) => (
-              <span key={tag} className="px-2 py-0.5 bg-slate-100 text-slate-600 text-xs rounded">
+              <span key={tag} className="px-2 py-0.5 bg-background text-foreground/80 text-xs rounded">
                 {tag}
               </span>
             ))}
           </div>
         </div>
-        <div className="text-xs text-slate-300 font-mono flex-shrink-0 mt-1">
+        <div className="text-xs text-muted-fg font-mono flex-shrink-0 mt-1">
           {result.score}
         </div>
       </div>
@@ -137,7 +137,7 @@ function SearchContent() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
+    <main className="min-h-screen bg-background">
       {/* Hero / Suchleiste */}
       <div className="bg-gradient-to-br from-[#0f2419] via-[#1a3a26] to-[#0f2419] px-6 py-16">
         <div className="max-w-3xl mx-auto text-center">
@@ -148,13 +148,13 @@ function SearchContent() {
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
             Intelligente Suche
           </h1>
-          <p className="text-slate-400 mb-8">
+          <p className="text-muted-fg mb-8">
             Wiki-Artikel, über 50 Dünger, Glossarbegriffe und Fachquellen – alles durchsuchbar.
           </p>
 
           <form onSubmit={handleSubmit} className="relative">
             <div className="flex items-center bg-white/10 backdrop-blur border border-white/20 rounded-2xl px-5 py-3 gap-3 focus-within:bg-white/15 focus-within:border-emerald-400/50 transition-all">
-              <svg className="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-muted-fg flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
@@ -171,7 +171,7 @@ function SearchContent() {
                 <button
                   type="button"
                   onClick={() => { setQuery(''); setData(null); setHasSearched(false); }}
-                  className="text-slate-500 hover:text-slate-300 transition"
+                  className="text-muted-fg hover:text-slate-300 transition"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -201,12 +201,12 @@ function SearchContent() {
                 className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${
                   activeKind === k
                     ? 'bg-emerald-600 text-white border-emerald-600'
-                    : 'bg-white text-slate-600 border-slate-200 hover:border-emerald-300'
+                    : 'bg-card text-foreground/80 border-border hover:border-emerald-300'
                 }`}
               >
                 {kindLabel[k]}
                 {data && count !== undefined && (
-                  <span className={`ml-2 text-xs ${activeKind === k ? 'text-emerald-200' : 'text-slate-400'}`}>
+                  <span className={`ml-2 text-xs ${activeKind === k ? 'text-emerald-200' : 'text-muted-fg'}`}>
                     {count}
                   </span>
                 )}
@@ -217,7 +217,7 @@ function SearchContent() {
 
         {/* Status-Bar */}
         {data && hasSearched && (
-          <div className="flex items-center justify-between mb-4 text-sm text-slate-500">
+          <div className="flex items-center justify-between mb-4 text-sm text-muted-fg">
             <span>
               {isPending
                 ? 'Suche läuft…'
@@ -225,7 +225,7 @@ function SearchContent() {
                 ? 'Keine Ergebnisse'
                 : `${data.totalResults} Ergebnisse für „${data.query}“ · ${data.duration_ms} ms`}
             </span>
-            <Link href={"/studies" as Route} className="text-emerald-600 hover:text-emerald-700 font-medium">
+            <Link href={"/studies" as Route} className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 font-medium">
               → Wiki Hub
             </Link>
           </div>
@@ -234,7 +234,7 @@ function SearchContent() {
         {/* Ergebnisse */}
         {isPending && (
           <div className="flex items-center justify-center py-16">
-            <div className="flex items-center gap-3 text-slate-500">
+            <div className="flex items-center gap-3 text-muted-fg">
               <div className="w-5 h-5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
               <span>Suche läuft…</span>
             </div>
@@ -252,16 +252,16 @@ function SearchContent() {
         {!isPending && data?.isEmpty && (
           <div className="text-center py-16">
             <p className="text-4xl mb-3">🔍</p>
-            <h2 className="text-xl font-bold text-slate-800 mb-2">Keine Treffer gefunden</h2>
-            <p className="text-slate-500 mb-4">Für „{data.query}“ gibt es keine Ergebnisse.</p>
+            <h2 className="text-xl font-bold text-foreground mb-2">Keine Treffer gefunden</h2>
+            <p className="text-muted-fg mb-4">Für „{data.query}“ gibt es keine Ergebnisse.</p>
             {data.suggestions.length > 0 && (
               <div className="flex flex-wrap gap-2 justify-center">
-                <span className="text-sm text-slate-500">Meintest du vielleicht:</span>
+                <span className="text-sm text-muted-fg">Meintest du vielleicht:</span>
                 {data.suggestions.map((s) => (
                   <button
                     key={s}
                     onClick={() => { setQuery(s); doSearch(s, activeKind); }}
-                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-sm hover:bg-emerald-200 transition"
+                    className="px-3 py-1.5 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 rounded-lg text-sm hover:bg-emerald-200 dark:hover:bg-emerald-950/60 transition"
                   >
                     {s}
                   </button>
@@ -273,17 +273,17 @@ function SearchContent() {
 
         {/* Tag-Facets */}
         {data && !data.isEmpty && data.facets.byTag.length > 0 && (
-          <div className="mt-8 bg-white rounded-xl border border-slate-200 p-5">
-            <h3 className="text-sm font-semibold text-slate-700 mb-3">Verwandte Themen</h3>
+          <div className="mt-8 bg-card rounded-xl border border-border p-5">
+            <h3 className="text-sm font-semibold text-foreground/80 mb-3">Verwandte Themen</h3>
             <div className="flex flex-wrap gap-2">
               {data.facets.byTag.map(({ tag, count }) => (
                 <button
                   key={tag}
                   onClick={() => { setQuery(tag); doSearch(tag, 'all'); }}
-                  className="flex items-center gap-1 px-3 py-1.5 bg-slate-100 hover:bg-emerald-100 text-slate-700 hover:text-emerald-700 rounded-lg text-sm transition"
+                  className="flex items-center gap-1 px-3 py-1.5 bg-background hover:bg-emerald-100 dark:bg-emerald-950/40 text-foreground/80 hover:text-emerald-700 dark:text-emerald-400 rounded-lg text-sm transition"
                 >
                   {tag}
-                  <span className="text-xs text-slate-400">{count}</span>
+                  <span className="text-xs text-muted-fg">{count}</span>
                 </button>
               ))}
             </div>
@@ -293,7 +293,7 @@ function SearchContent() {
         {/* Leer-Zustand */}
         {!hasSearched && !isPending && (
           <div className="text-center py-12">
-            <p className="text-slate-500 text-base mb-6">
+            <p className="text-muted-fg text-base mb-6">
               Durchsuche Fachartikel, Datenbankeinträge, Werkzeuge und wissenschaftliche Quellen.
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -306,11 +306,11 @@ function SearchContent() {
                 <Link
                   key={item.href}
                   href={item.href as Route}
-                  className="bg-white border border-slate-200 hover:border-emerald-300 rounded-xl p-4 text-center transition-all hover:shadow-sm"
+                  className="bg-card border border-border hover:border-emerald-300 rounded-xl p-4 text-center transition-all hover:shadow-sm"
                 >
                   <div className="text-2xl mb-1">{item.label.split(' ')[0]}</div>
-                  <div className="text-sm font-medium text-slate-700">{item.label.slice(3)}</div>
-                  <div className="text-xs text-slate-500 mt-1">{item.count}</div>
+                  <div className="text-sm font-medium text-foreground/80">{item.label.slice(3)}</div>
+                  <div className="text-xs text-muted-fg mt-1">{item.count}</div>
                 </Link>
               ))}
             </div>

@@ -139,11 +139,11 @@ function synthesizeAnswer(query: string, results: ScoredArticle[]): string {
 function RenderAnswer({ text }: { text: string }) {
   const lines = text.split('\n');
   return (
-    <div className="space-y-1.5 text-sm leading-6 text-slate-700">
+    <div className="space-y-1.5 text-sm leading-6 text-foreground/80">
       {lines.map((line, i) => {
         if (line.startsWith('**') && line.endsWith('**')) {
           return (
-            <p key={i} className="font-semibold text-slate-900 mt-2">
+            <p key={i} className="font-semibold text-foreground mt-2">
               {line.slice(2, -2)}
             </p>
           );
@@ -308,7 +308,7 @@ export default function WikiAskBot() {
             <div className="flex items-center justify-between px-5 py-4
               bg-gradient-to-r from-primary-deep to-primary text-white flex-shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-base">
+                <div className="w-8 h-8 rounded-full bg-card/20 flex items-center justify-center text-base">
                   🤖
                 </div>
                 <div>
@@ -319,12 +319,12 @@ export default function WikiAskBot() {
               <div className="flex items-center gap-2">
                 {messages.length > 0 && (
                   <button onClick={reset}
-                    className="text-xs text-white/60 hover:text-white px-2 py-1 rounded-lg hover:bg-white/10 transition">
+                    className="text-xs text-white/60 hover:text-white px-2 py-1 rounded-lg hover:bg-card/10 transition">
                     Zurücksetzen
                   </button>
                 )}
                 <button onClick={() => setOpen(false)}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/10 transition">
+                  className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-card/10 transition">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -337,19 +337,19 @@ export default function WikiAskBot() {
               {messages.length === 0 ? (
                 <div className="space-y-4">
                   <div className="rounded-xl bg-card border border-border p-4 shadow-sm">
-                    <p className="text-sm text-slate-600">
-                      Hallo! Ich bin der <strong className="text-slate-900">Wiki-Bot</strong>.
+                    <p className="text-sm text-foreground/80">
+                      Hallo! Ich bin der <strong className="text-foreground">Wiki-Bot</strong>.
                       Frag mich alles rund um Cannabis – ich durchsuche
                       alle {wikiArticles.length} Artikel für dich und fasse die wichtigsten
                       Punkte zusammen.
                     </p>
-                    <p className="mt-2 text-xs text-slate-400">
+                    <p className="mt-2 text-xs text-muted-fg">
                       Läuft vollständig lokal · keine Daten verlassen deinen Browser
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider px-1 mb-2">
+                    <p className="text-xs font-semibold text-muted-fg uppercase tracking-wider px-1 mb-2">
                       Schnellstart
                     </p>
                     <div className="grid grid-cols-2 gap-2">
@@ -382,17 +382,17 @@ export default function WikiAskBot() {
 
                     <div className={`max-w-[85%] ${msg.role === 'user' ? 'max-w-[75%]' : ''}`}>
                       {msg.thinking ? (
-                        <div className="rounded-2xl rounded-tl-sm bg-white border border-slate-200
+                        <div className="rounded-2xl rounded-tl-sm bg-card border border-border
                           shadow-sm px-4 py-3 flex items-center gap-2">
                           <span className="flex gap-1">
                             {[0, 1, 2].map(i => (
                               <span key={i}
-                                className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce"
+                                className="w-1.5 h-1.5 rounded-full bg-muted-fg animate-bounce"
                                 style={{ animationDelay: `${i * 150}ms` }}
                               />
                             ))}
                           </span>
-                          <span className="text-xs text-slate-400">Durchsuche Wiki…</span>
+                          <span className="text-xs text-muted-fg">Durchsuche Wiki…</span>
                         </div>
                       ) : msg.role === 'user' ? (
                         <div className="rounded-2xl rounded-tr-sm bg-primary px-4 py-2.5
@@ -407,20 +407,20 @@ export default function WikiAskBot() {
                           </div>
                           {msg.sources && msg.sources.length > 0 && (
                             <div className="px-1 space-y-1">
-                              <p className="text-xs text-slate-400 font-medium">Artikel dazu:</p>
+                              <p className="text-xs text-muted-fg font-medium">Artikel dazu:</p>
                               {msg.sources.map(src => (
                                 <Link
                                   key={src.slug}
                                     href={`/studies/${src.slug}` as Route}
                                   onClick={() => setOpen(false)}
-                                  className="flex items-start gap-2 rounded-lg border border-slate-200
-                                    bg-white px-3 py-2 text-xs hover:border-emerald-300
+                                  className="flex items-start gap-2 rounded-lg border border-border
+                                    bg-card px-3 py-2 text-xs hover:border-emerald-300
                                     hover:bg-emerald-50 transition-all"
                                 >
                                   <span className="text-emerald-500 mt-0.5">→</span>
                                   <div>
-                                    <p className="font-semibold text-slate-800">{src.title}</p>
-                                    <p className="text-slate-400">{src.category}</p>
+                                    <p className="font-semibold text-foreground">{src.title}</p>
+                                    <p className="text-muted-fg">{src.category}</p>
                                   </div>
                                 </Link>
                               ))}
@@ -446,7 +446,7 @@ export default function WikiAskBot() {
                   placeholder="Frag das Wiki…"
                   disabled={loading}
                   className="flex-1 rounded-xl border border-border bg-background px-4 py-2.5
-                    text-sm text-foreground placeholder:text-slate-400 outline-none
+                    text-sm text-foreground placeholder:text-muted-fg outline-none
                     focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all
                     disabled:opacity-50"
                 />
@@ -462,7 +462,7 @@ export default function WikiAskBot() {
                   </svg>
                 </button>
               </form>
-              <p className="mt-1.5 text-center text-xs text-slate-400">
+              <p className="mt-1.5 text-center text-xs text-muted-fg">
                 Inhalte dienen der Information · kein Ersatz für medizinischen Rat
               </p>
             </div>

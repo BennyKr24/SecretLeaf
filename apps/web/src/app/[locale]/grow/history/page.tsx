@@ -26,9 +26,9 @@ function growDuration(grow: Grow): number {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  abgeschlossen: 'bg-emerald-100 text-emerald-700',
-  pausiert:      'bg-amber-100 text-amber-700',
-  abgebrochen:   'bg-rose-100 text-rose-700',
+  abgeschlossen: 'bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400',
+  pausiert:      'bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400',
+  abgebrochen:   'bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400',
 };
 
 // ── History Card ──────────────────────────────────────────────────────────────
@@ -36,7 +36,7 @@ const STATUS_STYLES: Record<string, string> = {
 function GrowHistoryCard({ grow }: { grow: Grow }) {
   const duration = growDuration(grow);
   const harvest = (grow as Grow & { harvest?: { grams: number; rating: number; notes?: string } }).harvest;
-  const statusStyle = STATUS_STYLES[grow.status] ?? 'bg-slate-100 text-slate-600';
+  const statusStyle = STATUS_STYLES[grow.status] ?? 'bg-border text-foreground/80';
 
   return (
     <article className="rounded-2xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow p-5">
@@ -80,14 +80,14 @@ function GrowHistoryCard({ grow }: { grow: Grow }) {
 
       {/* Setup tags */}
       <div className="flex flex-wrap gap-1.5 mb-4">
-        <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+        <span className="rounded-full bg-border px-2.5 py-1 text-[11px] font-medium text-foreground/80">
           {GROW_UMGEBUNG_LABELS[grow.umgebung]}
         </span>
-        <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+        <span className="rounded-full bg-border px-2.5 py-1 text-[11px] font-medium text-foreground/80">
           {GROW_MEDIUM_LABELS[grow.medium]}
         </span>
         {grow.lichtLeistung && (
-          <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+          <span className="rounded-full bg-border px-2.5 py-1 text-[11px] font-medium text-foreground/80">
             {grow.lichtLeistung}W
           </span>
         )}
@@ -95,7 +95,7 @@ function GrowHistoryCard({ grow }: { grow: Grow }) {
 
       {/* Harvest notes */}
       {harvest?.notes && (
-        <p className="mb-4 rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 text-xs text-emerald-800 leading-relaxed">
+        <p className="mb-4 rounded-xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 px-3 py-2 text-xs text-emerald-800 dark:text-emerald-300 leading-relaxed">
           {harvest.notes}
         </p>
       )}
@@ -104,7 +104,7 @@ function GrowHistoryCard({ grow }: { grow: Grow }) {
       {harvest && (
         <div className="flex items-center gap-1 mb-4">
           {[1, 2, 3, 4, 5].map(star => (
-            <span key={star} className={`text-lg leading-none ${star <= harvest.rating ? 'text-amber-400' : 'text-slate-200'}`}>
+            <span key={star} className={`text-lg leading-none ${star <= harvest.rating ? 'text-amber-400' : 'text-border'}`}>
               ★
             </span>
           ))}
@@ -161,9 +161,9 @@ export default function GrowHistoryPage() {
     return (
       <main className="min-h-screen bg-background px-4 py-10">
         <div className="mx-auto max-w-3xl animate-pulse space-y-4">
-          <div className="h-8 w-64 rounded bg-slate-200" />
-          <div className="h-40 rounded-2xl bg-slate-100" />
-          <div className="h-40 rounded-2xl bg-slate-100" />
+          <div className="skeleton h-8 w-64 rounded" />
+          <div className="skeleton h-40 rounded-2xl" />
+          <div className="skeleton h-40 rounded-2xl" />
         </div>
       </main>
     );

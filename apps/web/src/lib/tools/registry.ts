@@ -1,3 +1,4 @@
+import { Fan, Lightbulb, FlaskConical, TrendingUp, Droplets } from "lucide-react";
 import type { ToolMeta } from "./types";
 
 export const toolRegistry: ToolMeta[] = [
@@ -6,7 +7,7 @@ export const toolRegistry: ToolMeta[] = [
     title: "Abluft-Rechner",
     shortDescription: "Luftumwälzung und Lüftergröße berechnen",
     category: "klima",
-    icon: "🌡️",
+    icon: Fan,
     difficulty: "einsteiger",
     relatedArticleSlugs: ["indoor-outdoor-anbau-vergleich"],
     relatedToolSlugs: ["licht-rechner", "naehrstoff-rechner"],
@@ -17,7 +18,7 @@ export const toolRegistry: ToolMeta[] = [
     title: "Licht-Rechner",
     shortDescription: "PPFD, DLI und Lichtintensität berechnen",
     category: "licht",
-    icon: "💡",
+    icon: Lightbulb,
     difficulty: "einsteiger",
     relatedArticleSlugs: ["indoor-outdoor-anbau-vergleich"],
     relatedToolSlugs: ["abluft-rechner", "naehrstoff-rechner"],
@@ -28,7 +29,7 @@ export const toolRegistry: ToolMeta[] = [
     title: "Nährstoff-Rechner",
     shortDescription: "EC-Ziel und Dosierung für dein Substrat berechnen",
     category: "naehrstoffe",
-    icon: "🧪",
+    icon: FlaskConical,
     difficulty: "fortgeschritten",
     relatedArticleSlugs: [
       "naehrstoffbedarf-cannabis-lebenszyklus",
@@ -42,7 +43,7 @@ export const toolRegistry: ToolMeta[] = [
     title: "Ertrags-Schätzer",
     shortDescription: "Ertragsprognose basierend auf Setup und Erfahrung",
     category: "planung",
-    icon: "📐",
+    icon: TrendingUp,
     difficulty: "einsteiger",
     relatedArticleSlugs: [
       "indoor-outdoor-anbau-vergleich",
@@ -56,7 +57,7 @@ export const toolRegistry: ToolMeta[] = [
     title: "VPD-Rechner",
     shortDescription: "Optimalen VPD-Wert für jede Wachstumsphase berechnen",
     category: "klima",
-    icon: "💨",
+    icon: Droplets,
     difficulty: "fortgeschritten",
     relatedArticleSlugs: [],
     relatedToolSlugs: ["abluft-rechner", "licht-rechner"],

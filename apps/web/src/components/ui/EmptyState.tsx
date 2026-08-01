@@ -57,7 +57,7 @@ export function EmptyState({
     <div
       className={[
         "flex flex-col items-center gap-4 rounded-3xl",
-        "border border-dashed border-slate-200 bg-slate-50/80",
+        "border border-dashed border-border bg-background/80",
         "text-center",
         SIZES[size],
         className,
@@ -74,9 +74,9 @@ export function EmptyState({
       </span>
 
       <div className="space-y-1.5">
-        <p className="text-sm font-semibold text-slate-800">{title}</p>
+        <p className="text-sm font-semibold text-foreground">{title}</p>
         {description !== undefined && description !== "" && (
-          <p className="max-w-xs text-sm text-slate-500 leading-relaxed">
+          <p className="max-w-xs text-sm text-muted-fg leading-relaxed">
             {description}
           </p>
         )}

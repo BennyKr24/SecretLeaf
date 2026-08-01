@@ -1,4 +1,5 @@
 import type { TerpiraDifficulty } from "@/lib/terpira/types";
+import { Thermometer, Lightbulb, FlaskConical, Ruler, type LucideIcon } from "lucide-react";
 
 // ── Tool Categories ─────────────────────────────────────────────────────────
 
@@ -11,11 +12,11 @@ export const toolCategoryLabel: Record<ToolCategory, string> = {
   planung: "Planung",
 };
 
-export const toolCategoryIcon: Record<ToolCategory, string> = {
-  klima: "🌡️",
-  licht: "💡",
-  naehrstoffe: "🧪",
-  planung: "📐",
+export const toolCategoryIcon: Record<ToolCategory, LucideIcon> = {
+  klima: Thermometer,
+  licht: Lightbulb,
+  naehrstoffe: FlaskConical,
+  planung: Ruler,
 };
 
 export const toolCategoryColor: Record<ToolCategory, string> = {
@@ -46,7 +47,7 @@ export type ToolMeta = {
   title: string;
   shortDescription: string;
   category: ToolCategory;
-  icon: string;
+  icon: LucideIcon;
   difficulty: TerpiraDifficulty;
   relatedArticleSlugs: string[];
   relatedToolSlugs: string[];

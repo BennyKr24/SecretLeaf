@@ -90,7 +90,7 @@ export function CardSection({
   className?: string;
 }) {
   return (
-    <div className={`border-t border-slate-100 pt-4 mt-4 ${className}`}>
+    <div className={`border-t border-border pt-4 mt-4 ${className}`}>
       {children}
     </div>
   );

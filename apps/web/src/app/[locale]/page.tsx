@@ -62,28 +62,27 @@ function StudyCard({ article, evidenceLabels }: { article: TerpiraArticle; evide
 function ProductDashboardMock() {
   return (
     <div className="relative mx-auto w-full max-w-[940px]" data-parallax="0.12">
-      <div className="pointer-events-none absolute -inset-12 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.2),transparent_66%)] blur-2xl" />
-      <div className="pointer-events-none absolute -bottom-10 left-16 right-16 h-20 rounded-full bg-emerald-400/20 blur-3xl" />
+      <div className="pointer-events-none absolute -inset-12 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.16),transparent_66%)] blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-10 left-16 right-16 h-20 rounded-full bg-emerald-400/15 blur-3xl" />
 
-      <div className="relative rounded-[44px] bg-gradient-to-br from-white/35 via-emerald-300/18 to-white/8 p-[1.5px] shadow-[0_30px_120px_rgba(0,0,0,0.65)]">
-        <div className="relative overflow-hidden rounded-[43px] border border-white/10 bg-[#040907] p-2.5">
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white/10 to-transparent sl-tablet-glare" />
-          <div className="pointer-events-none absolute left-1/2 top-[8px] z-10 h-1 w-24 -translate-x-1/2 rounded-full bg-white/20" />
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0a1310] shadow-[0_24px_90px_rgba(0,0,0,0.55)]">
+        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-300/80">Grow OS</p>
+            <h3 className="mt-1 text-xl font-semibold text-slate-50">Meine Pflanze</h3>
+          </div>
+          <span className="flex items-center gap-1.5 rounded-full border border-emerald-300/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Live
+          </span>
+        </div>
 
-          <div className="rounded-[30px] border border-white/10 bg-[#09120f] p-5 sm:p-6">
-            <div className="mb-5 flex items-center justify-between">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-300/80">Grow OS</p>
-                <h3 className="mt-1 text-xl font-semibold text-slate-50">Meine Pflanze</h3>
-              </div>
-              <span className="rounded-full border border-emerald-300/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">Live</span>
-            </div>
-
-            <div className="space-y-4">
+        <div className="p-5 sm:p-6">
+          <div className="space-y-4">
               <div className="grid gap-4 rounded-2xl border border-white/10 bg-black/20 p-3 sm:grid-cols-[150px_1fr]">
                 <div className="relative overflow-hidden rounded-xl border border-emerald-300/20">
                   <Image
-                    src="https://images.unsplash.com/photo-1536811145290-bc394f5f30f5?auto=format&fit=crop&w=700&q=80"
+                    src="/images/hero/plant-thumbnail.png"
                     alt="Cannabis Pflanze"
                     width={700}
                     height={700}
@@ -97,7 +96,7 @@ function ProductDashboardMock() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-base font-semibold text-slate-100">OG Kush</p>
-                      <p className="text-xs text-slate-400">Bluete · Tag 42</p>
+                      <p className="text-xs text-slate-400">Blüte · Tag 42</p>
                     </div>
                     <p className="text-sm font-semibold text-emerald-300">67%</p>
                   </div>
@@ -112,19 +111,19 @@ function ProductDashboardMock() {
                       <p className="font-semibold text-emerald-200">Sehr gut</p>
                     </div>
                     <div>
-                      <p className="text-slate-500">Bewaesserung</p>
+                      <p className="text-slate-500">Bewässerung</p>
                       <p className="font-semibold text-slate-200">In 2 Tagen</p>
                     </div>
                     <div>
-                      <p className="text-slate-500">Naechste Aufgabe</p>
-                      <p className="font-semibold text-amber-200">Duengen</p>
+                      <p className="text-slate-500">Nächste Aufgabe</p>
+                      <p className="font-semibold text-amber-200">Düngen</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
-                <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Uebersicht</p>
+                <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Übersicht</p>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                   {[
                     { label: "Temperatur", value: "25 C", tone: "text-emerald-200" },
@@ -142,9 +141,9 @@ function ProductDashboardMock() {
 
               <div className="grid gap-2 sm:grid-cols-[1.4fr_1fr]">
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
-                  <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Letzte Aktivitaet</p>
+                  <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Letzte Aktivität</p>
                   <div className="flex items-center justify-between text-sm text-slate-300">
-                    <span>Bewaesserung · 2.5L · pH 6.3</span>
+                    <span>Bewässerung · 2.5L · pH 6.3</span>
                     <span className="text-slate-500">Heute, 08:30</span>
                   </div>
                 </div>
@@ -158,7 +157,6 @@ function ProductDashboardMock() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
@@ -168,18 +166,18 @@ function HeroPlantDecor() {
       <div className="absolute right-0 top-16 h-[560px] w-[280px] rounded-full bg-emerald-500/16 blur-[82px]" />
 
       <Image
-        src="https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&w=900&q=80"
-        alt="Cannabis Blaetter"
-        width={900}
-        height={1200}
+        src="/images/hero/plant-background.png"
+        alt="Cannabis Blüten"
+        width={887}
+        height={1774}
         className="absolute right-[-42px] top-6 h-[620px] w-[310px] object-cover opacity-90 mix-blend-screen sl-photo-leaf sl-plant-leaf--slow"
         loading="lazy"
       />
       <Image
-        src="https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&w=700&q=80"
+        src="/images/hero/leaf-detail.png"
         alt="Cannabis Blatt Detail"
-        width={700}
-        height={900}
+        width={910}
+        height={1727}
         className="absolute right-[-76px] top-[170px] h-[360px] w-[190px] object-cover opacity-80 mix-blend-screen sl-photo-leaf sl-plant-leaf--fast"
         loading="lazy"
       />
@@ -409,7 +407,7 @@ export default async function LandingPage() {
               <div className="mt-6 grid grid-cols-2 gap-2">
                 {[
                   { label: "Aktive Sessions", value: "1.842" },
-                  { label: "Woechentliche Logs", value: "18k+" },
+                  { label: "Wöchentliche Logs", value: "18k+" },
                   { label: "Validierte Quellen", value: `${sourceCount}+` },
                   { label: "Diagnose-Hitrate", value: "92%" },
                 ].map((metric) => (
@@ -441,7 +439,7 @@ export default async function LandingPage() {
               Nicht nur eine Sammlung von Tools.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
-              Genau die Richtung deines Referenzbilds: Produkt zuerst, klare Datenhierarchie, Premium-Visuals und ein konsistenter SaaS-Look ueber die gesamte Homepage.
+              Grow-Tracker, Diagnose und Tools teilen sich ein Setup und dieselben Daten — kein Wechseln zwischen Insel-Lösungen, keine doppelte Eingabe.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <CTAButton href="/start" size="lg" variant="primary">Jetzt kostenlos starten</CTAButton>

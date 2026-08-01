@@ -60,7 +60,7 @@ function evidenceMeta(sourceCount: number) {
   }
   return {
     label: 'Redaktionell',
-    cls: 'border-slate-200 bg-slate-100 text-slate-600',
+    cls: 'border-border bg-border text-foreground/80',
   };
 }
 
@@ -136,7 +136,7 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-1.5">
             <span className="text-base leading-none">{CATEGORY_ICONS[article.category] ?? '📄'}</span>
-            <span className="text-xs font-medium text-slate-500">{categoryLabel}</span>
+            <span className="text-xs font-medium text-muted-fg">{categoryLabel}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <button
@@ -146,7 +146,7 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
               className={`inline-flex h-6 w-6 items-center justify-center rounded-full border text-xs transition-all
                 ${isBookmarked
                   ? 'border-amber-300 bg-amber-100 text-amber-700'
-                  : 'border-border bg-card text-slate-400 hover:border-amber-200 hover:text-amber-600'
+                  : 'border-border bg-card text-muted-fg hover:border-amber-200 hover:text-amber-600'
                 }`}
             >
               {isBookmarked ? '★' : '☆'}
@@ -165,10 +165,10 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
         </div>
 
         {/* Titel & Summary */}
-        <h3 className="text-base font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-emerald-800 transition-colors">
+        <h3 className="text-base font-bold text-foreground leading-snug line-clamp-2 group-hover:text-emerald-800 transition-colors">
           {article.title}
         </h3>
-        <p className="mt-2 text-sm text-slate-500 line-clamp-2 flex-1">
+        <p className="mt-2 text-sm text-muted-fg line-clamp-2 flex-1">
           {article.summary}
         </p>
 
@@ -182,12 +182,12 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
         {article.tags.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1">
             {article.tags.slice(0, 3).map(tag => (
-              <span key={tag} className="rounded-md bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
+              <span key={tag} className="rounded-md bg-border px-2 py-0.5 text-xs text-foreground/80">
                 {tag}
               </span>
             ))}
             {article.tags.length > 3 && (
-              <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs text-slate-400">
+              <span className="rounded-md bg-border px-2 py-0.5 text-xs text-muted-fg">
                 +{article.tags.length - 3}
               </span>
             )}
@@ -197,7 +197,7 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
         {/* Key Takeaways */}
         <ul className="mt-3 space-y-1">
           {article.keyTakeaways.slice(0, 2).map(kp => (
-            <li key={kp} className="flex items-start gap-1.5 text-xs text-slate-600">
+            <li key={kp} className="flex items-start gap-1.5 text-xs text-foreground/80">
               <span className="text-emerald-500 flex-shrink-0 mt-0.5 font-bold">•</span>
               <span className="line-clamp-1">{kp}</span>
             </li>
@@ -219,7 +219,7 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
 
       {/* Footer */}
       <div className="flex items-center justify-between gap-2 border-t border-border px-5 py-3 bg-background/50">
-        <div className="flex items-center gap-3 text-xs text-slate-400">
+        <div className="flex items-center gap-3 text-xs text-muted-fg">
           <span className="flex items-center gap-1">
             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -262,33 +262,36 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
   const [freshOnly, setFreshOnly] = useState(false);
   const [sort, setSort] = useState<SortMode>('relevanz');
   const [localSearch, setLocalSearch] = useState('');
-  const [bookmarks, setBookmarks] = useState<string[]>(() => {
-    if (typeof window === 'undefined') return [];
+  // Start empty (matches SSR) and load the real localStorage-backed values
+  // after mount — reading them in the useState initializer would make the
+  // first client render diverge from the server-rendered HTML.
+  const [bookmarks, setBookmarks] = useState<string[]>([]);
+  const [recent, setRecent] = useState<string[]>([]);
+  const [progressBySlug, setProgressBySlug] = useState<Record<string, number>>({});
+
+  // Deliberate mount-only sync from localStorage (client-only source) to
+  // avoid a hydration mismatch — see comment on the initializers above.
+  useEffect(() => {
     try {
-      const stored = localStorage.getItem(BOOKMARKS_KEY);
-      return stored ? (JSON.parse(stored) as string[]) : [];
+      const storedBookmarks = localStorage.getItem(BOOKMARKS_KEY);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (storedBookmarks) setBookmarks(JSON.parse(storedBookmarks) as string[]);
     } catch {
-      return [];
+      // ignore
     }
-  });
-  const [recent, setRecent] = useState<string[]>(() => {
-    if (typeof window === 'undefined') return [];
     try {
-      const stored = localStorage.getItem(RECENT_KEY);
-      return stored ? (JSON.parse(stored) as string[]) : [];
+      const storedRecent = localStorage.getItem(RECENT_KEY);
+      if (storedRecent) setRecent(JSON.parse(storedRecent) as string[]);
     } catch {
-      return [];
+      // ignore
     }
-  });
-  const [progressBySlug] = useState<Record<string, number>>(() => {
-    if (typeof window === 'undefined') return {};
     try {
-      const stored = localStorage.getItem(PROGRESS_KEY);
-      return stored ? (JSON.parse(stored) as Record<string, number>) : {};
+      const storedProgress = localStorage.getItem(PROGRESS_KEY);
+      if (storedProgress) setProgressBySlug(JSON.parse(storedProgress) as Record<string, number>);
     } catch {
-      return {};
+      // ignore
     }
-  });
+  }, []);
   const searchRef = useRef<HTMLInputElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
 
@@ -454,9 +457,9 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
         ].map(stat => (
           <div key={stat.label}
             className={`rounded-2xl border p-4 shadow-sm ${stat.cls ?? 'border-border bg-card'}`}>
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{stat.label}</p>
-            <p className="mt-1 text-2xl font-bold text-slate-900">{stat.value}</p>
-            <p className="text-xs text-slate-400">{stat.sub}</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">{stat.label}</p>
+            <p className="mt-1 text-2xl font-bold text-foreground">{stat.value}</p>
+            <p className="text-xs text-muted-fg">{stat.sub}</p>
           </div>
         ))}
       </div>
@@ -464,7 +467,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
       {/* ── Suchzeile ───────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px]">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-fg"
             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
@@ -474,12 +477,12 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
             onChange={e => setLocalSearch(e.target.value)}
             placeholder="Wiki durchsuchen… (/ oder Strg+F)"
             className="w-full rounded-xl border border-border bg-card py-2.5 pl-9 pr-10 text-sm
-              text-foreground placeholder:text-slate-400 outline-none
+              text-foreground placeholder:text-muted-fg outline-none
               focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all shadow-sm"
           />
           {localSearch && (
             <button onClick={() => setLocalSearch('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80">
               ✕
             </button>
           )}
@@ -503,7 +506,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
         {hasFilters && (
           <button onClick={resetFilters}
             className="rounded-xl border border-border bg-card px-3 py-2.5 text-sm
-              text-slate-600 hover:text-red-600 hover:border-red-200 transition-all shadow-sm">
+              text-foreground/80 hover:text-red-600 hover:border-red-200 transition-all shadow-sm">
             Zurücksetzen
           </button>
         )}
@@ -515,13 +518,13 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
         <div className="grid gap-4 lg:grid-cols-2">
           {recentArticles.length > 0 && (
             <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Zuletzt gelesen</p>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Zuletzt gelesen</p>
               <div className="mt-2 space-y-2">
                 {recentArticles.slice(0, 4).map((entry) => (
                   <Link
                     key={entry.slug}
                     href={`/studies/${entry.slug}` as Route}
-                    className="block rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-emerald-200 hover:text-emerald-700 transition-all"
+                    className="block rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground/80 hover:border-emerald-200 hover:text-emerald-700 transition-all"
                   >
                     {entry.title}
                   </Link>
@@ -538,7 +541,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
                   <Link
                     key={entry.slug}
                     href={`/studies/${entry.slug}` as Route}
-                    className="block rounded-lg border border-amber-100 bg-white px-3 py-2 text-sm text-slate-700 hover:border-amber-300 hover:text-amber-800 transition-all"
+                    className="block rounded-lg border border-amber-100 bg-card px-3 py-2 text-sm text-foreground/80 hover:border-amber-300 hover:text-amber-800 transition-all"
                   >
                     {entry.title}
                   </Link>
@@ -572,7 +575,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
 
       {/* ── Schwierigkeits-Filter ────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Level:</span>
+        <span className="text-xs font-semibold text-muted-fg uppercase tracking-wide">Level:</span>
         {(['alle', 'einsteiger', 'fortgeschritten', 'profi'] as const).map(diff => {
           const meta = diff !== 'alle' ? DIFFICULTY_META[diff] : null;
           const isActive = activeDifficulty === diff;
@@ -582,8 +585,8 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
               onClick={() => setActiveDifficulty(diff)}
               className={`rounded-full px-3 py-1 text-xs font-semibold transition-all
                 ${isActive
-                  ? `ring-2 ${meta ? `${meta.bg} ${meta.color} ${meta.ring}` : 'ring-slate-300 bg-slate-200 text-slate-800'}`
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? `ring-2 ${meta ? `${meta.bg} ${meta.color} ${meta.ring}` : 'ring-border bg-border text-foreground'}`
+                  : 'bg-border text-foreground/80 hover:bg-border'
                 }`}
             >
               {diff === 'alle' ? 'Alle Level'
@@ -598,7 +601,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
           className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
             freshOnly
               ? 'ring-2 ring-emerald-300 bg-emerald-100 text-emerald-800'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              : 'bg-border text-foreground/80 hover:bg-border'
           }`}
         >
           Neu 7 Tage
@@ -607,8 +610,8 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
 
       {/* ── Ergebnis-Header ─────────────────────────────────────── */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500">
-          <span className="font-semibold text-slate-900">{filtered.length}</span>
+        <p className="text-sm text-muted-fg">
+          <span className="font-semibold text-foreground">{filtered.length}</span>
           {' '}von {articles.length} Artikeln
           {hasFilters && ' (gefiltert)'}
         </p>
@@ -652,28 +655,28 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
 
       {/* ── Quick-Links-Footer ───────────────────────────────────── */}
       <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-        <p className="text-sm font-semibold text-slate-700">Mehr entdecken</p>
+        <p className="text-sm font-semibold text-foreground/80">Mehr entdecken</p>
         <div className="mt-3 flex flex-wrap gap-3">
           <Link href={"/studies/sources" as Route}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200
-              bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-emerald-300
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border
+              bg-background px-3 py-2 text-sm text-foreground/80 hover:border-emerald-300
               hover:bg-emerald-50 hover:text-emerald-800 transition-all">
             🔬 {totalSources} Wissenschaftliche Quellen
           </Link>
           <Link href={"/database/fertilizers" as Route}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200
-              bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-amber-300
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border
+              bg-background px-3 py-2 text-sm text-foreground/80 hover:border-amber-300
               hover:bg-amber-50 hover:text-amber-800 transition-all">
             🌿 Dünger-Katalog
           </Link>
           <Link href={"/search" as Route}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200
-              bg-slate-50 px-3 py-2 text-sm text-slate-700 hover:border-cyan-300
+          className="inline-flex items-center gap-1.5 rounded-lg border border-border
+              bg-background px-3 py-2 text-sm text-foreground/80 hover:border-cyan-300
               hover:bg-cyan-50 hover:text-cyan-800 transition-all">
             🔍 Volltext-Suche
           </Link>
         </div>
-        <p className="mt-4 text-xs text-slate-400">
+        <p className="mt-4 text-xs text-muted-fg">
           Redaktioneller Hinweis: Inhalte dienen der Aufklärung und ersetzen keine medizinische, rechtliche oder regulatorische Beratung.
         </p>
       </div>
@@ -693,13 +696,13 @@ function CategoryTab({ label, icon, count, active, onClick }: {
         font-medium transition-all duration-150
         ${active
           ? 'bg-primary text-white shadow-md shadow-emerald-900/20'
-          : 'bg-card border border-border text-slate-700 hover:border-emerald-300 hover:text-emerald-700 shadow-sm'
+          : 'bg-card border border-border text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 shadow-sm'
         }`}
     >
       <span className="text-base leading-none">{icon}</span>
       <span>{label}</span>
       <span className={`rounded-full px-1.5 py-0.5 text-xs font-bold ${
-        active ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-500'
+        active ? 'bg-card/20 text-white' : 'bg-border text-muted-fg'
       }`}>
         {count}
       </span>
@@ -716,10 +719,10 @@ function EmptyState({ onReset, query, suggestions, onSelectSuggestion }: {
   onSelectSuggestion: (value: string) => void;
 }) {
   return (
-    <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 py-16 text-center">
+    <div className="rounded-2xl border-2 border-dashed border-border bg-background py-16 text-center">
       <div className="text-4xl mb-3">🔍</div>
-      <p className="font-semibold text-slate-700">Keine Artikel gefunden</p>
-      <p className="mt-1 text-sm text-slate-500">
+      <p className="font-semibold text-foreground/80">Keine Artikel gefunden</p>
+      <p className="mt-1 text-sm text-muted-fg">
         Für „{query || 'deine Suche'}“ gab es keine Treffer. Probiere andere Begriffe oder eine Kategorie.
       </p>
 

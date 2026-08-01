@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Route } from "next";
 import { useTranslations } from "next-intl";
+import { Stethoscope } from "lucide-react";
 import { diagnoseCategories } from "@/lib/diagnose/tree";
 import type { DiagnoseCategory } from "@/lib/diagnose/tree";
 import { DiagnoseFlow } from "@/components/diagnose/DiagnoseFlow";
@@ -14,7 +15,7 @@ export default function DiagnosePage() {
 
   if (selected) {
     return (
-      <div className="min-h-screen bg-neutral-50 dark:bg-slate-950">
+      <div className="min-h-screen bg-background">
         <div className="max-w-lg mx-auto px-4 py-8">
           <DiagnoseFlow
             category={selected}
@@ -26,18 +27,21 @@ export default function DiagnosePage() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-background">
       <div className="max-w-lg mx-auto px-4 py-8 flex flex-col gap-8">
         {/* Header */}
         <div className="flex flex-col gap-1">
           <Link
             href={"/" as Route}
-            className="text-sm text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 transition mb-2 inline-block"
+            className="text-sm text-muted-fg hover:text-foreground/80 transition mb-2 inline-block"
           >
             {t("backHome")}
           </Link>
-          <h1 className="text-2xl font-bold text-neutral-900 dark:text-slate-100">🩺 {t("title")}</h1>
-          <p className="text-sm text-neutral-500 dark:text-slate-400">
+          <h1 className="flex items-center gap-2 text-2xl font-bold text-foreground">
+            <Stethoscope className="h-5 w-5 text-emerald-600" strokeWidth={2} />
+            {t("title")}
+          </h1>
+          <p className="text-sm text-muted-fg">
             {t("subtitle")}
           </p>
         </div>
@@ -48,10 +52,12 @@ export default function DiagnosePage() {
             <button
               key={category.id}
               onClick={() => setSelected(category)}
-              className="flex flex-col items-start gap-3 rounded-2xl border border-neutral-200 bg-white dark:border-slate-700 dark:bg-slate-800 shadow-sm hover:shadow-md hover:border-emerald-200 active:scale-[0.97] transition-all p-5 text-left"
+              className="flex flex-col items-start gap-3 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md hover:border-emerald-200 active:scale-[0.97] transition-all p-5 text-left"
             >
-              <span className="text-3xl">{category.icon}</span>
-              <span className="text-sm font-semibold text-neutral-800 dark:text-slate-100 leading-snug">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400">
+                <category.icon className="h-5 w-5" strokeWidth={2} />
+              </span>
+              <span className="text-sm font-semibold text-foreground leading-snug">
                 {category.label}
               </span>
             </button>
@@ -59,7 +65,7 @@ export default function DiagnosePage() {
         </div>
 
         {/* Hint */}
-        <p className="text-xs text-neutral-400 dark:text-slate-500 text-center leading-relaxed">
+        <p className="text-xs text-muted-fg text-center leading-relaxed">
           {t("footerHint")}
         </p>
       </div>

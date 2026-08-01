@@ -17,7 +17,6 @@ npm-debug.log*
 backups/
 *.tar.gz
 *.tar
-apps/web/public/
 *.tsbuildinfo
 .vercel
 .env*.local

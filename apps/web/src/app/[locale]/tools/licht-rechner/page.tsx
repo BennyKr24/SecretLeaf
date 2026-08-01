@@ -45,10 +45,10 @@ export default function LichtRechnerPage() {
 
   if (!loaded) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-6 py-10">
+      <main className="min-h-screen bg-background px-6 py-10">
         <div className="mx-auto max-w-6xl animate-pulse space-y-4">
-          <div className="h-8 w-48 rounded bg-slate-200" />
-          <div className="h-64 rounded-2xl bg-slate-100" />
+          <div className="h-8 w-48 rounded skeleton" />
+          <div className="h-64 skeleton rounded-2xl" />
         </div>
       </main>
     );
@@ -58,10 +58,10 @@ export default function LichtRechnerPage() {
     <ToolLayout meta={meta} tips={TIPS}>
       <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
         {/* ── Inputs ──────────────────────────────────── */}
-        <div className="space-y-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="space-y-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div>
-            <h2 className="text-base font-bold text-slate-900">Deine Lichtsituation</h2>
-            <p className="mt-0.5 text-xs text-slate-400">Passe die Werte an dein Setup an — die Ergebnisse ändern sich sofort.</p>
+            <h2 className="text-base font-bold text-foreground">Deine Lichtsituation</h2>
+            <p className="mt-0.5 text-xs text-muted-fg">Passe die Werte an dein Setup an — die Ergebnisse ändern sich sofort.</p>
           </div>
 
           <ToolSlider

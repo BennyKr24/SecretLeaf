@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { Route } from 'next';
 import { getSetupCoverage, getToolHistory } from '@/hooks/useToolState';
@@ -15,42 +15,49 @@ const COVERAGE_KEYS = [
 ] as const;
 
 export default function ToolsHubClient() {
-  const [coverage] = useState<Record<string, boolean>>(() => {
-    if (typeof window === 'undefined') return {};
-    return getSetupCoverage();
-  });
-  const [recentSlug] = useState<string | null>(() => {
-    if (typeof window === 'undefined') return null;
+  // Start with the same empty state the server renders — localStorage is
+  // only readable on the client, so reading it in the useState initializer
+  // would make the first client render diverge from the SSR output and
+  // trigger a hydration mismatch. Populate the real values post-mount instead.
+  const [coverage, setCoverage] = useState<Record<string, boolean>>({});
+  const [recentSlug, setRecentSlug] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Deliberate mount-only sync from localStorage (client-only source) to
+    // avoid a hydration mismatch — see comment on the initializers above.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCoverage(getSetupCoverage());
     const history = getToolHistory();
-    return history.length > 0 ? history[0]!.slug : null;
-  });
+    setRecentSlug(history.length > 0 ? history[0]!.slug : null);
+  }, []);
 
   const done = COVERAGE_KEYS.filter((c) => coverage[c.key]).length;
   const total = COVERAGE_KEYS.length;
   const percent = Math.round((done / total) * 100);
 
   const recentTool = recentSlug ? toolRegistry.find((t) => t.slug === recentSlug) : null;
+  const RecentCategoryIcon = recentTool ? toolCategoryIcon[recentTool.category] : null;
 
   return (
     <div className="space-y-4">
       {/* ── Zuletzt genutzt (most prominent, shown first) ── */}
       {recentTool && (
         <section>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-400">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
             Weiter machen
           </p>
           <Link
             href={`/tools/${recentTool.slug}` as Route}
-            className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md"
+            className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md"
           >
-            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl text-xl ring-1 ring-slate-100">
-              {recentTool.icon}
+            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ring-1 ring-border">
+              <recentTool.icon className="h-5 w-5" strokeWidth={2} />
             </div>
             <div className="min-w-0">
               <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${toolCategoryColor[recentTool.category]}`}>
-                {toolCategoryIcon[recentTool.category]} {toolCategoryLabel[recentTool.category]}
+                {RecentCategoryIcon && <RecentCategoryIcon className="h-3 w-3" strokeWidth={2.5} />} {toolCategoryLabel[recentTool.category]}
               </span>
-              <p className="mt-0.5 text-sm font-bold text-slate-900 transition-colors group-hover:text-emerald-700">
+              <p className="mt-0.5 text-sm font-bold text-foreground transition-colors group-hover:text-emerald-700">
                 {recentTool.title}
               </p>
             </div>
@@ -62,11 +69,11 @@ export default function ToolsHubClient() {
       )}
 
       {/* ── Grow-Check ─────────────────────────────────── */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-sm font-bold text-slate-900">Grow-Check</h2>
-            <p className="mt-0.5 text-xs text-slate-400">
+            <h2 className="text-sm font-bold text-foreground">Grow-Check</h2>
+            <p className="mt-0.5 text-xs text-muted-fg">
               {done === 0
                 ? 'Kein Bereich analysiert — starte mit dem ersten Tool.'
                 : done === total
@@ -75,12 +82,12 @@ export default function ToolsHubClient() {
             </p>
           </div>
           <span className="text-2xl font-bold tabular-nums text-emerald-600">
-            {done}<span className="text-sm font-medium text-slate-300">/{total}</span>
+            {done}<span className="text-sm font-medium text-muted-fg">/{total}</span>
           </span>
         </div>
 
         {/* Progress bar */}
-        <div className="mt-4 overflow-hidden rounded-full bg-slate-100" style={{ height: 8 }}>
+        <div className="mt-4 overflow-hidden rounded-full bg-background" style={{ height: 8 }}>
           <div
             className="h-full rounded-full bg-emerald-500 transition-all duration-700"
             style={{ width: `${percent}%` }}
@@ -99,7 +106,7 @@ export default function ToolsHubClient() {
                   ${
                     isDone
                       ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                      : 'border-slate-200 bg-slate-50 text-slate-500 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700'
+                      : 'border-border bg-background text-muted-fg hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700'
                   }`}
               >
                 {isDone ? '✓' : '○'} {c.label}

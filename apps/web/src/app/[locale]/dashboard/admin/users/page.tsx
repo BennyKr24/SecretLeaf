@@ -24,9 +24,9 @@ type UsersResponse = {
 
 const ROLES = ["CONSUMER", "PROVIDER", "ADMIN"] as const;
 const ROLE_COLORS: Record<string, string> = {
-  ADMIN: "bg-purple-100 text-purple-700",
-  PROVIDER: "bg-blue-100 text-blue-700",
-  CONSUMER: "bg-[#e5f4ea] text-[#1f7a4f]",
+  ADMIN: "bg-purple-100 dark:bg-purple-950/40 text-purple-700 dark:text-purple-400",
+  PROVIDER: "bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400",
+  CONSUMER: "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400",
 };
 
 function formatDate(iso: string | null): string {
@@ -140,31 +140,31 @@ export default function AdminUsersPage() {
   return (
     <div>
       <div className="mb-7">
-        <div className="flex items-center gap-2 text-xs text-[#8fa89a]">
-          <span>Admin</span><span>/</span><span className="font-semibold text-[#4d685a]">Benutzer</span>
+        <div className="flex items-center gap-2 text-xs text-muted-fg">
+          <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Benutzer</span>
         </div>
         <div className="mt-1 flex items-center gap-3">
           <span className="text-2xl">👥</span>
           <div>
-            <h1 className="text-2xl font-bold text-[#10281e]">Benutzerverwaltung</h1>
-            <p className="text-sm text-[#4d685a]">Rollen verwalten, Benutzerkonten einsehen und administrieren.</p>
+            <h1 className="text-2xl font-bold text-foreground">Benutzerverwaltung</h1>
+            <p className="text-sm text-muted-fg">Rollen verwalten, Benutzerkonten einsehen und administrieren.</p>
           </div>
         </div>
       </div>
 
       {/* Stats Row */}
       <div className="mb-6 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-[#d8e8dd] bg-white p-4 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">Gesamt</p>
-          <p className="mt-1 text-2xl font-bold text-[#10281e]">{total}</p>
+        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-fg">Gesamt</p>
+          <p className="mt-1 text-2xl font-bold text-foreground">{total}</p>
         </div>
-        <div className="rounded-2xl border border-[#d8e8dd] bg-white p-4 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">Aktuelle Seite</p>
-          <p className="mt-1 text-2xl font-bold text-[#10281e]">{users.length}</p>
+        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-fg">Aktuelle Seite</p>
+          <p className="mt-1 text-2xl font-bold text-foreground">{users.length}</p>
         </div>
-        <div className="rounded-2xl border border-[#d8e8dd] bg-white p-4 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">Seite</p>
-          <p className="mt-1 text-2xl font-bold text-[#10281e]">{page} / {totalPages || 1}</p>
+        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-fg">Seite</p>
+          <p className="mt-1 text-2xl font-bold text-foreground">{page} / {totalPages || 1}</p>
         </div>
       </div>
 
@@ -190,13 +190,13 @@ export default function AdminUsersPage() {
             placeholder="Suche nach E-Mail oder ID..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full max-w-sm rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
+            className="w-full max-w-sm rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
           />
         </div>
         <select
           value={roleFilter}
           onChange={(e) => { setRoleFilter(e.target.value); setPage(1); }}
-          className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm outline-none transition focus:border-[#5ca87f] focus:ring-2 focus:ring-[#cfe8d6]"
+          className="rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
         >
           <option value="all">Alle Rollen</option>
           <option value="CONSUMER">Consumer</option>
@@ -205,46 +205,46 @@ export default function AdminUsersPage() {
         </select>
         <button
           onClick={() => void fetchUsers()}
-          className="rounded-xl border border-[#d8e8dd] px-3 py-2 text-sm font-medium text-[#4d685a] transition hover:bg-[#f6faf7]"
+          className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-muted-fg transition hover:bg-background"
         >
           Aktualisieren
         </button>
       </div>
 
       {/* Users Table */}
-      <div className="min-h-[400px] overflow-hidden rounded-2xl border border-[#d8e8dd] bg-white shadow-sm">
+      <div className="min-h-[400px] overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
         {loading ? (
           <div className="flex min-h-[400px] items-center justify-center gap-3">
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#1f7a4f] border-t-transparent" />
-            <span className="text-sm text-[#4d685a]">Benutzer werden geladen...</span>
+            <div className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
+            <span className="text-sm text-muted-fg">Benutzer werden geladen...</span>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-[#d8e8dd] bg-[#f6faf7]">
-                  <th className="px-4 py-3 font-semibold text-[#4d685a]">E-Mail</th>
-                  <th className="px-3 py-3 font-semibold text-[#4d685a]">Rolle</th>
-                  <th className="px-3 py-3 font-semibold text-[#4d685a]">Provider</th>
-                  <th className="px-3 py-3 font-semibold text-[#4d685a]">Bestätigt</th>
-                  <th className="px-3 py-3 font-semibold text-[#4d685a]">Registriert</th>
-                  <th className="px-3 py-3 font-semibold text-[#4d685a]">Letzter Login</th>
-                  <th className="px-3 py-3 font-semibold text-[#4d685a]">Aktionen</th>
+                <tr className="border-b border-border bg-background">
+                  <th className="px-4 py-3 font-semibold text-muted-fg">E-Mail</th>
+                  <th className="px-3 py-3 font-semibold text-muted-fg">Rolle</th>
+                  <th className="px-3 py-3 font-semibold text-muted-fg">Provider</th>
+                  <th className="px-3 py-3 font-semibold text-muted-fg">Bestätigt</th>
+                  <th className="px-3 py-3 font-semibold text-muted-fg">Registriert</th>
+                  <th className="px-3 py-3 font-semibold text-muted-fg">Letzter Login</th>
+                  <th className="px-3 py-3 font-semibold text-muted-fg">Aktionen</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr key={user.id} className="border-b border-[#eef3f0] transition hover:bg-[#fbfefc]">
+                  <tr key={user.id} className="border-b border-border transition hover:bg-background">
                     <td className="px-4 py-3">
-                      <div className="font-medium text-[#10281e]">{user.email ?? "—"}</div>
-                      <div className="text-[10px] font-mono text-[#8fa89a]">{user.id.slice(0, 8)}…</div>
+                      <div className="font-medium text-foreground">{user.email ?? "—"}</div>
+                      <div className="text-[10px] font-mono text-muted-fg">{user.id.slice(0, 8)}…</div>
                     </td>
                     <td className="px-3 py-3">
-                      <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${ROLE_COLORS[user.role] ?? "bg-gray-100 text-gray-700"}`}>
+                      <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${ROLE_COLORS[user.role] ?? "bg-border text-foreground/80"}`}>
                         {user.role}
                       </span>
                     </td>
-                    <td className="px-3 py-3 text-xs text-[#6b8577] capitalize">{user.provider}</td>
+                    <td className="px-3 py-3 text-xs text-muted-fg capitalize">{user.provider}</td>
                     <td className="px-3 py-3">
                       {user.emailConfirmed ? (
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-600">
@@ -256,13 +256,13 @@ export default function AdminUsersPage() {
                         </span>
                       )}
                     </td>
-                    <td className="px-3 py-3 text-xs text-[#6b8577]">{formatDate(user.createdAt)}</td>
-                    <td className="px-3 py-3 text-xs text-[#6b8577]">{formatDate(user.lastSignIn)}</td>
+                    <td className="px-3 py-3 text-xs text-muted-fg">{formatDate(user.createdAt)}</td>
+                    <td className="px-3 py-3 text-xs text-muted-fg">{formatDate(user.lastSignIn)}</td>
                     <td className="px-3 py-3">
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() => { setEditingUser(user); setEditRole(user.role); }}
-                          className="rounded-lg px-2 py-1 text-xs font-medium text-[#1f7a4f] transition hover:bg-[#e5f4ea]"
+                          className="rounded-lg px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 transition hover:bg-emerald-100 dark:bg-emerald-950/40"
                           title="Rolle bearbeiten"
                         >
                           ✎ Rolle
@@ -280,7 +280,7 @@ export default function AdminUsersPage() {
                 ))}
                 {users.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-[#4d685a]">
+                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-muted-fg">
                       Keine Benutzer gefunden.
                     </td>
                   </tr>
@@ -294,19 +294,19 @@ export default function AdminUsersPage() {
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-between">
-          <p className="text-xs text-[#6b8577]">{total} Benutzer insgesamt</p>
+          <p className="text-xs text-muted-fg">{total} Benutzer insgesamt</p>
           <div className="flex gap-2">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
-              className="rounded-xl border border-[#d8e8dd] px-3 py-1.5 text-xs font-medium text-[#4d685a] transition hover:bg-[#f6faf7] disabled:opacity-40"
+              className="rounded-xl border border-border px-3 py-1.5 text-xs font-medium text-muted-fg transition hover:bg-background disabled:opacity-40"
             >
               ← Zurück
             </button>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
-              className="rounded-xl border border-[#d8e8dd] px-3 py-1.5 text-xs font-medium text-[#4d685a] transition hover:bg-[#f6faf7] disabled:opacity-40"
+              className="rounded-xl border border-border px-3 py-1.5 text-xs font-medium text-muted-fg transition hover:bg-background disabled:opacity-40"
             >
               Weiter →
             </button>
@@ -317,9 +317,9 @@ export default function AdminUsersPage() {
       {/* Edit Role Modal */}
       {editingUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="mx-4 w-full max-w-md rounded-2xl border border-[#d8e8dd] bg-white p-6 shadow-xl">
-            <h3 className="text-lg font-bold text-[#10281e]">Rolle bearbeiten</h3>
-            <p className="mt-1 text-sm text-[#4d685a]">
+          <div className="mx-4 w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-xl">
+            <h3 className="text-lg font-bold text-foreground">Rolle bearbeiten</h3>
+            <p className="mt-1 text-sm text-muted-fg">
               Benutzer: <span className="font-mono font-medium">{editingUser.email ?? editingUser.id}</span>
             </p>
 
@@ -329,8 +329,8 @@ export default function AdminUsersPage() {
                   key={role}
                   className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition ${
                     editRole === role
-                      ? "border-[#1f7a4f] bg-[#e5f4ea]"
-                      : "border-[#d8e8dd] hover:bg-[#f6faf7]"
+                      ? "border-emerald-600 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950/40"
+                      : "border-border hover:bg-background"
                   }`}
                 >
                   <input
@@ -342,8 +342,8 @@ export default function AdminUsersPage() {
                     className="accent-[#1f7a4f]"
                   />
                   <div>
-                    <p className="text-sm font-semibold text-[#10281e]">{role}</p>
-                    <p className="text-xs text-[#6b8577]">
+                    <p className="text-sm font-semibold text-foreground">{role}</p>
+                    <p className="text-xs text-muted-fg">
                       {role === "ADMIN" && "Voller Zugriff auf das Admin-Panel und alle Funktionen."}
                       {role === "PROVIDER" && "Kann Angebote erstellen und Studien bearbeiten."}
                       {role === "CONSUMER" && "Standard-Benutzer. Kann Studien lesen und suchen."}
@@ -356,14 +356,14 @@ export default function AdminUsersPage() {
             <div className="mt-5 flex justify-end gap-3">
               <button
                 onClick={() => setEditingUser(null)}
-                className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm font-medium text-[#4d685a] transition hover:bg-[#f6faf7]"
+                className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition hover:bg-background"
               >
                 Abbrechen
               </button>
               <button
                 onClick={() => void handleRoleChange()}
                 disabled={actionLoading || editRole === editingUser.role}
-                className="rounded-xl bg-[#1f7a4f] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#17613f] disabled:opacity-50"
+                className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50"
               >
                 {actionLoading ? "Wird gespeichert..." : "Rolle speichern"}
               </button>
@@ -375,11 +375,11 @@ export default function AdminUsersPage() {
       {/* Delete Confirmation Modal */}
       {deletingUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="mx-4 w-full max-w-md rounded-2xl border border-red-200 bg-white p-6 shadow-xl">
+          <div className="mx-4 w-full max-w-md rounded-2xl border border-red-200 bg-card p-6 shadow-xl">
             <h3 className="text-lg font-bold text-red-700">Benutzer löschen</h3>
-            <p className="mt-2 text-sm text-[#4d685a]">
+            <p className="mt-2 text-sm text-muted-fg">
               Bist du sicher, dass du den Benutzer{" "}
-              <span className="font-mono font-semibold text-[#10281e]">
+              <span className="font-mono font-semibold text-foreground">
                 {deletingUser.email ?? deletingUser.id}
               </span>{" "}
               endgültig löschen möchtest?
@@ -391,7 +391,7 @@ export default function AdminUsersPage() {
             <div className="mt-5 flex justify-end gap-3">
               <button
                 onClick={() => setDeletingUser(null)}
-                className="rounded-xl border border-[#d8e8dd] px-4 py-2 text-sm font-medium text-[#4d685a] transition hover:bg-[#f6faf7]"
+                className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition hover:bg-background"
               >
                 Abbrechen
               </button>

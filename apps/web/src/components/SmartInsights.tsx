@@ -23,9 +23,9 @@ const PRIORITY_CONFIG: Record<InsightPriority, {
   badge: string;
   border: string;
 }> = {
-  high:   { label: "Dringend",     dot: "bg-rose-500",    badge: "bg-rose-100 text-rose-700",     border: "border-rose-200" },
-  medium: { label: "Empfohlen",    dot: "bg-amber-400",   badge: "bg-amber-100 text-amber-700",   border: "border-amber-200" },
-  low:    { label: "Lernwert",     dot: "bg-slate-300",   badge: "bg-slate-100 text-slate-500",   border: "border-slate-200" },
+  high:   { label: "Dringend",     dot: "bg-rose-500",    badge: "bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400",     border: "border-rose-200 dark:border-rose-900/40" },
+  medium: { label: "Empfohlen",    dot: "bg-amber-400",   badge: "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400",   border: "border-amber-200 dark:border-amber-900/40" },
+  low:    { label: "Lernwert",     dot: "bg-border",   badge: "bg-border text-muted-fg",   border: "border-border" },
 };
 
 const ACTION_LABEL: Record<string, string> = {
@@ -109,7 +109,7 @@ function InsightCard({
                 ? "bg-rose-600 hover:bg-rose-700"
                 : insight.priority === "medium"
                 ? "bg-emerald-600 hover:bg-emerald-700"
-                : "bg-slate-600 hover:bg-slate-700"
+                : "bg-slate-600 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600"
             }`}
           >
             {actionLabel}
@@ -168,7 +168,7 @@ export default function SmartInsights({ grow }: Props) {
       <div className="mb-4 flex items-center gap-2">
         <span className="text-base leading-none">⚡</span>
         <h2 className="text-sm font-bold text-foreground">Nächste Schritte</h2>
-        <span className="ml-auto rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
+        <span className="ml-auto rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
           {visible.length} offen
         </span>
       </div>

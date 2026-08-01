@@ -55,13 +55,13 @@ function StatCard({
     blue: "border-l-4 border-l-blue-400",
   };
   return (
-    <div className={`rounded-2xl border border-[#d8e8dd] bg-white p-5 shadow-sm ${accent ? accents[accent] : ""}`}>
+    <div className={`rounded-2xl border border-border bg-card p-5 shadow-sm ${accent ? accents[accent] : ""}`}>
       <div className="flex items-start justify-between">
-        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#8fa89a]">{label}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-fg">{label}</p>
         {icon && <span className="text-xl opacity-70">{icon}</span>}
       </div>
-      <p className="mt-2 text-3xl font-bold text-[#10281e]">{value}</p>
-      {sub && <p className="mt-1 text-xs text-[#6b8577]">{sub}</p>}
+      <p className="mt-2 text-3xl font-bold text-foreground">{value}</p>
+      {sub && <p className="mt-1 text-xs text-muted-fg">{sub}</p>}
     </div>
   );
 }
@@ -120,17 +120,17 @@ export default function AdminOverviewPage() {
       {/* Header */}
       <div className="mb-7 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#8fa89a]">{todayLabel}</p>
-          <h1 className="mt-1 text-2xl font-bold text-[#10281e]">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-fg">{todayLabel}</p>
+          <h1 className="mt-1 text-2xl font-bold text-foreground">
             {greeting}, {username} 👋
           </h1>
-          <p className="mt-1 text-sm text-[#4d685a]">
+          <p className="mt-1 text-sm text-muted-fg">
             Hier ist dein aktueller Systemüberblick.
           </p>
         </div>
         <Link
           href="/dashboard/admin/engine"
-          className="inline-flex items-center gap-2 rounded-xl bg-[#1f7a4f] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#17613f]"
+          className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 dark:bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
         >
           <span>⚙️</span>
           Engine steuern
@@ -138,9 +138,9 @@ export default function AdminOverviewPage() {
       </div>
 
       {loading && (
-        <div className="flex items-center gap-3 rounded-2xl border border-[#d8e8dd] bg-white p-8">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#1f7a4f] border-t-transparent" />
-          <span className="text-sm text-[#4d685a]">Daten werden geladen…</span>
+        <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-8">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
+          <span className="text-sm text-muted-fg">Daten werden geladen…</span>
         </div>
       )}
 
@@ -207,10 +207,10 @@ export default function AdminOverviewPage() {
           {/* Pipeline + Last Run */}
           <div className="mt-5 grid gap-4 lg:grid-cols-2">
             {/* Pipeline Status */}
-            <div className="rounded-2xl border border-[#d8e8dd] bg-white p-5 shadow-sm">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <div className="flex items-center justify-between">
-                <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-[#8fa89a]">Pipeline Status</h2>
-                <Link href="/dashboard/admin/engine" className="text-xs font-medium text-[#1f7a4f] hover:underline">
+                <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-muted-fg">Pipeline Status</h2>
+                <Link href="/dashboard/admin/engine" className="text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
                   Details →
                 </Link>
               </div>
@@ -226,15 +226,15 @@ export default function AdminOverviewPage() {
                 )}
               </div>
               <div className="mt-4 grid grid-cols-2 gap-2">
-                <div className="rounded-xl bg-[#f6faf7] p-3">
-                  <p className="text-xs text-[#8fa89a]">Fehler letzte 10 Runs</p>
-                  <p className={`mt-0.5 text-xl font-bold ${data.errorCount > 0 ? "text-red-600" : "text-[#1f7a4f]"}`}>
+                <div className="rounded-xl bg-background p-3">
+                  <p className="text-xs text-muted-fg">Fehler letzte 10 Runs</p>
+                  <p className={`mt-0.5 text-xl font-bold ${data.errorCount > 0 ? "text-red-600" : "text-emerald-700 dark:text-emerald-400"}`}>
                     {data.errorCount}
                   </p>
                 </div>
-                <div className="rounded-xl bg-[#f6faf7] p-3">
-                  <p className="text-xs text-[#8fa89a]">Automation Runs 24h</p>
-                  <p className="mt-0.5 text-xl font-bold text-[#10281e]">
+                <div className="rounded-xl bg-background p-3">
+                  <p className="text-xs text-muted-fg">Automation Runs 24h</p>
+                  <p className="mt-0.5 text-xl font-bold text-foreground">
                     {systemStats?.automationRunsLast24h ?? "—"}
                   </p>
                 </div>
@@ -242,16 +242,16 @@ export default function AdminOverviewPage() {
             </div>
 
             {/* Last Run */}
-            <div className="rounded-2xl border border-[#d8e8dd] bg-white p-5 shadow-sm">
-              <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-[#8fa89a]">Letzter Pipeline-Durchlauf</h2>
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+              <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-muted-fg">Letzter Pipeline-Durchlauf</h2>
               {data.lastRun ? (
                 <div className="mt-3">
                   <div className="flex items-center gap-2">
                     <span className={`inline-block h-2.5 w-2.5 rounded-full ${data.lastRun.success ? "bg-emerald-500" : "bg-red-500"}`} />
-                    <span className="font-semibold text-[#10281e]">
+                    <span className="font-semibold text-foreground">
                       {data.lastRun.success ? "Erfolgreich" : "Fehlgeschlagen"}
                     </span>
-                    <span className="ml-auto text-xs text-[#8fa89a]">{formatDate(data.lastRun.finishedAt)}</span>
+                    <span className="ml-auto text-xs text-muted-fg">{formatDate(data.lastRun.finishedAt)}</span>
                   </div>
                   {data.lastRun.metadata && (
                     <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
@@ -268,9 +268,9 @@ export default function AdminOverviewPage() {
                         </div>
                       )}
                       {typeof data.lastRun.metadata.durationMs === "number" && (
-                        <div className="rounded-xl bg-[#f6faf7] px-2 py-2 text-center">
-                          <p className="text-lg font-bold text-[#10281e]">{Math.round((data.lastRun.metadata.durationMs as number) / 1000)}s</p>
-                          <p className="text-[#8fa89a]">Dauer</p>
+                        <div className="rounded-xl bg-background px-2 py-2 text-center">
+                          <p className="text-lg font-bold text-foreground">{Math.round((data.lastRun.metadata.durationMs as number) / 1000)}s</p>
+                          <p className="text-muted-fg">Dauer</p>
                         </div>
                       )}
                     </div>
@@ -282,7 +282,7 @@ export default function AdminOverviewPage() {
                   )}
                 </div>
               ) : (
-                <div className="mt-4 flex items-center gap-2 text-sm text-[#6b8577]">
+                <div className="mt-4 flex items-center gap-2 text-sm text-muted-fg">
                   <span>—</span>
                   <span>Noch kein Pipeline-Durchlauf aufgezeichnet.</span>
                 </div>
@@ -295,8 +295,8 @@ export default function AdminOverviewPage() {
             <>
               <div className="mt-5">
                 <div className="mb-3 flex items-center justify-between">
-                  <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-[#8fa89a]">Benutzerübersicht</h2>
-                  <Link href="/dashboard/admin/users" className="text-xs font-medium text-[#1f7a4f] hover:underline">
+                  <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-muted-fg">Benutzerübersicht</h2>
+                  <Link href="/dashboard/admin/users" className="text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
                     Alle Benutzer →
                   </Link>
                 </div>
@@ -310,7 +310,7 @@ export default function AdminOverviewPage() {
 
               {/* Quick Actions */}
               <div className="mt-5">
-                <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.15em] text-[#8fa89a]">Schnellzugriff</h2>
+                <h2 className="mb-3 text-xs font-bold uppercase tracking-[0.15em] text-muted-fg">Schnellzugriff</h2>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                   {([
                     {
@@ -345,11 +345,11 @@ export default function AdminOverviewPage() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`group rounded-2xl border border-[#d8e8dd] bg-white p-4 shadow-sm transition hover:shadow-md ${item.color}`}
+                      className={`group rounded-2xl border border-border bg-card p-4 shadow-sm transition hover:shadow-md ${item.color}`}
                     >
                       <p className="text-2xl">{item.icon}</p>
-                      <p className="mt-2 text-sm font-semibold text-[#10281e]">{item.title}</p>
-                      <p className="mt-0.5 text-xs text-[#6b8577]">{item.sub}</p>
+                      <p className="mt-2 text-sm font-semibold text-foreground">{item.title}</p>
+                      <p className="mt-0.5 text-xs text-muted-fg">{item.sub}</p>
                     </Link>
                   ))}
                 </div>

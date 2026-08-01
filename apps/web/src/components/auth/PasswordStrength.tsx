@@ -16,7 +16,7 @@ type Props = {
 type Level = { label: string; color: string; bg: string; width: string };
 
 function getLevel(pw: string): Level {
-  if (pw.length === 0) return { label: '', color: 'bg-slate-200', bg: 'bg-slate-100', width: 'w-0' };
+  if (pw.length === 0) return { label: '', color: 'bg-border', bg: 'bg-background', width: 'w-0' };
 
   let score = 0;
   if (pw.length >= MIN_PASSWORD_LENGTH) score++;
@@ -25,11 +25,11 @@ function getLevel(pw: string): Level {
   if (/[0-9]/.test(pw)) score++;
   if (/[^A-Za-z0-9]/.test(pw)) score++;
 
-  if (score <= 1) return { label: 'Sehr schwach', color: 'bg-red-400',    bg: 'bg-slate-100', width: 'w-1/5' };
-  if (score === 2) return { label: 'Schwach',      color: 'bg-orange-400', bg: 'bg-slate-100', width: 'w-2/5' };
-  if (score === 3) return { label: 'Mittel',       color: 'bg-amber-400',  bg: 'bg-slate-100', width: 'w-3/5' };
-  if (score === 4) return { label: 'Gut',          color: 'bg-emerald-400',bg: 'bg-slate-100', width: 'w-4/5' };
-  return               { label: 'Stark',           color: 'bg-emerald-500',bg: 'bg-slate-100', width: 'w-full' };
+  if (score <= 1) return { label: 'Sehr schwach', color: 'bg-red-400',    bg: 'bg-background', width: 'w-1/5' };
+  if (score === 2) return { label: 'Schwach',      color: 'bg-orange-400', bg: 'bg-background', width: 'w-2/5' };
+  if (score === 3) return { label: 'Mittel',       color: 'bg-amber-400',  bg: 'bg-background', width: 'w-3/5' };
+  if (score === 4) return { label: 'Gut',          color: 'bg-emerald-400',bg: 'bg-background', width: 'w-4/5' };
+  return               { label: 'Stark',           color: 'bg-emerald-500',bg: 'bg-background', width: 'w-full' };
 }
 
 export default function PasswordStrength({ password }: Props) {
@@ -42,8 +42,8 @@ export default function PasswordStrength({ password }: Props) {
         <div className={`h-full rounded-full transition-all duration-300 ${level.color} ${level.width}`} />
       </div>
       {level.label && (
-        <p className="text-[11px] text-slate-500">
-          Passwortstärke: <span className="font-semibold text-slate-700">{level.label}</span>
+        <p className="text-[11px] text-muted-fg">
+          Passwortstärke: <span className="font-semibold text-foreground/80">{level.label}</span>
         </p>
       )}
     </div>

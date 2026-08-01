@@ -63,8 +63,8 @@ function SectionHeader({ title, subtitle, badge }: { title: string; subtitle?: s
   return (
     <div className="mb-4 flex items-end justify-between gap-3">
       <div>
-        <h2 className="text-[15px] font-bold tracking-tight text-slate-900 sm:text-lg">{title}</h2>
-        {subtitle && <p className="mt-1 text-xs text-slate-500 sm:text-sm">{subtitle}</p>}
+        <h2 className="text-[15px] font-bold tracking-tight text-foreground sm:text-lg">{title}</h2>
+        {subtitle && <p className="mt-1 text-xs text-muted-fg sm:text-sm">{subtitle}</p>}
       </div>
       {badge !== undefined && badge !== 0 && badge !== '0' && (
         <span className="inline-flex min-w-7 items-center justify-center rounded-full bg-emerald-100 px-2 py-1 text-[11px] font-bold text-emerald-700">
@@ -77,9 +77,9 @@ function SectionHeader({ title, subtitle, badge }: { title: string; subtitle?: s
 
 function EmptyState({ icon, text, action }: { icon: string; text: string; action?: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-3xl border border-dashed border-slate-200 bg-slate-50/80 px-6 py-10 text-center">
+    <div className="flex flex-col items-center gap-3 rounded-3xl border border-dashed border-border bg-background/80 px-6 py-10 text-center">
       <span className="text-3xl">{icon}</span>
-      <p className="max-w-sm text-sm text-slate-500">{text}</p>
+      <p className="max-w-sm text-sm text-muted-fg">{text}</p>
       {action}
     </div>
   );
@@ -87,10 +87,10 @@ function EmptyState({ icon, text, action }: { icon: string; text: string; action
 
 function MetricCard({ icon, label, value, tone = 'default' }: { icon: string; label: string; value: number | string; tone?: 'default' | 'accent' }) {
   return (
-    <div className={`rounded-3xl border px-4 py-4 shadow-sm backdrop-blur ${tone === 'accent' ? 'border-emerald-200 bg-emerald-50/70' : 'border-white/60 bg-white/80'}`}>
+    <div className={`rounded-3xl border px-4 py-4 shadow-sm backdrop-blur ${tone === 'accent' ? 'border-emerald-200 bg-emerald-50/70' : 'border-border bg-card/80'}`}>
       <span className="text-lg">{icon}</span>
-      <p className="mt-2 text-2xl font-bold leading-none text-slate-900">{value}</p>
-      <p className="mt-1 text-xs font-medium text-slate-500">{label}</p>
+      <p className="mt-2 text-2xl font-bold leading-none text-foreground">{value}</p>
+      <p className="mt-1 text-xs font-medium text-muted-fg">{label}</p>
     </div>
   );
 }
@@ -101,13 +101,13 @@ function ArticleCard({ article, variant = 'default' }: { article: TerpiraArticle
     return (
       <Link
         href={`/studies/${article.slug}`}
-        className="group flex items-start gap-3 rounded-2xl border border-slate-100 bg-white dark:border-slate-700 dark:bg-slate-800 px-4 py-3 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:bg-emerald-50/40"
+        className="group flex items-start gap-3 rounded-2xl border border-border bg-card px-4 py-3 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:bg-emerald-50/40"
       >
         <div className="min-w-0 flex-1">
-          <p className="line-clamp-1 text-[13px] font-semibold text-slate-800 dark:text-slate-100 transition-colors group-hover:text-emerald-700">
+          <p className="line-clamp-1 text-[13px] font-semibold text-foreground transition-colors group-hover:text-emerald-700">
             {article.title}
           </p>
-          <p className="mt-0.5 text-xs text-slate-400">
+          <p className="mt-0.5 text-xs text-muted-fg">
             {categoryLabels[article.category]} · {article.readMinutes} {t('minReadTime')}
           </p>
           <div className="mt-2">
@@ -122,7 +122,7 @@ function ArticleCard({ article, variant = 'default' }: { article: TerpiraArticle
   return (
     <Link
       href={`/studies/${article.slug}`}
-      className="group flex flex-col rounded-3xl border border-slate-100 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md"
+      className="group flex flex-col rounded-3xl border border-border bg-card p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md"
     >
       <div className="mb-3 flex items-start justify-between gap-2">
         <span className="inline-block rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">
@@ -130,14 +130,14 @@ function ArticleCard({ article, variant = 'default' }: { article: TerpiraArticle
         </span>
         <BookmarkButton slug={article.slug} size="sm" className="flex-shrink-0" />
       </div>
-      <h3 className="line-clamp-2 text-[14px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-emerald-700">
+      <h3 className="line-clamp-2 text-[14px] font-bold leading-snug text-foreground transition-colors group-hover:text-emerald-700">
         {article.title}
       </h3>
-      <p className="mt-2 line-clamp-2 flex-1 text-xs text-slate-500">{article.summary}</p>
+      <p className="mt-2 line-clamp-2 flex-1 text-xs text-muted-fg">{article.summary}</p>
       <div className="mt-3">
         <CommunitySignals article={article} allArticles={wikiArticles} compact />
       </div>
-      <div className="mt-3 flex items-center gap-3 text-[11px] text-slate-400">
+      <div className="mt-3 flex items-center gap-3 text-[11px] text-muted-fg">
         <span>{article.readMinutes} {t('minReadTime')}</span>
         <span>·</span>
         <span className="capitalize">{article.difficulty}</span>
@@ -158,12 +158,12 @@ function ContinueReadingCard({ article, progress, updatedAt, sectionId }: {
   return (
     <a
       href={href}
-      className="group flex min-w-[280px] snap-start flex-col rounded-3xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md sm:min-w-0"
+      className="group flex min-w-[280px] snap-start flex-col rounded-3xl border border-border bg-card p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md sm:min-w-0"
     >
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-600">{t('continueLabel')}</p>
-          <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-slate-900 dark:text-slate-100 transition-colors group-hover:text-emerald-700">
+          <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-foreground transition-colors group-hover:text-emerald-700">
             {article.title}
           </h3>
         </div>
@@ -171,11 +171,11 @@ function ContinueReadingCard({ article, progress, updatedAt, sectionId }: {
           {progress}%
         </span>
       </div>
-      <p className="mt-2 text-xs text-slate-500">{categoryLabels[article.category]} · {t('lastRead', { time: timeAgo(updatedAt, t) })}</p>
-      <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">
+      <p className="mt-2 text-xs text-muted-fg">{categoryLabels[article.category]} · {t('lastRead', { time: timeAgo(updatedAt, t) })}</p>
+      <div className="mt-4 h-2 overflow-hidden rounded-full bg-border">
         <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400" style={{ width: `${progress}%` }} />
       </div>
-      <div className="mt-4 flex items-center justify-between text-xs text-slate-400">
+      <div className="mt-4 flex items-center justify-between text-xs text-muted-fg">
         <span>{sectionId ? t('resumeAt', { section: sectionId.replace('-', ' ') }) : t('readDirectly')}</span>
         <span className="font-semibold text-emerald-600">{t('openBtn')}</span>
       </div>
@@ -308,21 +308,21 @@ export default function UserDashboardPage() {
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[#f4f8f5] dark:bg-slate-950">
+      <main className="flex min-h-screen items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-3">
           <svg className="h-6 w-6 animate-spin text-emerald-500" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>
-          <p className="text-sm text-slate-500">{t('loading')}</p>
+          <p className="text-sm text-muted-fg">{t('loading')}</p>
         </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#f4f8f5_0%,#fbfcfb_32%,#ffffff_100%)] dark:bg-slate-950">
-      <section className="relative overflow-hidden border-b border-emerald-100/60 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_38%),linear-gradient(135deg,#0f2e1f_0%,#174b34_46%,#f4f8f5_100%)] dark:bg-none dark:bg-slate-900 text-white">
+    <main className="min-h-screen bg-background">
+      <section className="relative overflow-hidden border-b border-emerald-100/60 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_38%),linear-gradient(135deg,#0f2e1f_0%,#174b34_46%,#f4f8f5_100%)] text-white">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-[-5%] top-[-10%] h-52 w-52 rounded-full bg-emerald-300/20 blur-3xl" />
           <div className="absolute right-[-5%] top-12 h-44 w-44 rounded-full bg-teal-200/15 blur-3xl" />
@@ -402,11 +402,11 @@ export default function UserDashboardPage() {
           </a>
         )}
         {activeGrow ? (
-          <section className="rounded-[28px] border border-emerald-200 bg-white dark:bg-slate-800 p-4 shadow-[0_8px_40px_-8px_rgba(5,150,105,0.18)] ring-1 ring-emerald-100 sm:p-6">
+          <section className="rounded-[28px] border border-emerald-200 bg-card p-4 shadow-[0_8px_40px_-8px_rgba(5,150,105,0.18)] ring-1 ring-emerald-100 sm:p-6">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-600">{t('activeGrowEyebrow')}</p>
-                <h2 className="mt-1 text-lg font-bold text-slate-900 dark:text-slate-100">{activeGrow.name}</h2>
+                <h2 className="mt-1 text-lg font-bold text-foreground">{activeGrow.name}</h2>
               </div>
               <Link
                 href={`/grow/${activeGrow.id}` as Route}
@@ -426,16 +426,16 @@ export default function UserDashboardPage() {
                   : 0;
                 return (
                   <>
-                    <span className="flex items-center gap-1 text-slate-600">
+                    <span className="flex items-center gap-1 text-foreground/80">
                       {phase ? PHASE_ICONS[phase.id] : '🌿'}
                       <span className="font-medium">{phase?.label ?? '—'}</span>
                     </span>
-                    <span className="text-slate-300">·</span>
-                    <span className="text-slate-500">{t('growDayProgress', { current: activeGrow.currentDay, total: activeGrow.plan.totalDays })}</span>
-                    <span className="text-slate-300">·</span>
-                    <span className="text-slate-500">{t('growTaskProgress', { done: completed, total, percent })}</span>
+                    <span className="text-muted-fg">·</span>
+                    <span className="text-muted-fg">{t('growDayProgress', { current: activeGrow.currentDay, total: activeGrow.plan.totalDays })}</span>
+                    <span className="text-muted-fg">·</span>
+                    <span className="text-muted-fg">{t('growTaskProgress', { done: completed, total, percent })}</span>
                     <div className="mt-2 w-full">
-                      <div className="h-1.5 overflow-hidden rounded-full bg-slate-100">
+                      <div className="h-1.5 overflow-hidden rounded-full bg-border">
                         <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${phaseProgress}%` }} />
                       </div>
                     </div>
@@ -462,7 +462,7 @@ export default function UserDashboardPage() {
             {(() => {
               const tasks = getUpcomingTasks(activeGrow, 3);
               if (tasks.length === 0) return (
-                <p className="rounded-xl border border-dashed border-slate-200 py-4 text-center text-xs text-slate-400">{t('allTasksDone')}</p>
+                <p className="rounded-xl border border-dashed border-border py-4 text-center text-xs text-muted-fg">{t('allTasksDone')}</p>
               );
               return (
                 <div className="space-y-2">
@@ -476,11 +476,11 @@ export default function UserDashboardPage() {
                           ? t('taskOverdue', { days: Math.abs(diff) })
                           : t('taskInDays', { days: diff });
                     return (
-                      <div key={task.id} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-2.5">
+                      <div key={task.id} className="flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-2.5">
                         <span className="text-base flex-shrink-0">{TASK_CATEGORY_ICONS[task.category]}</span>
-                        <p className="flex-1 text-sm font-medium text-slate-800">{task.title}</p>
+                        <p className="flex-1 text-sm font-medium text-foreground">{task.title}</p>
                         <span className={`flex-shrink-0 text-[10px] font-semibold ${
-                          diff < 0 ? 'text-rose-600' : diff === 0 ? 'text-emerald-700' : 'text-slate-400'
+                          diff < 0 ? 'text-rose-600' : diff === 0 ? 'text-emerald-700' : 'text-muted-fg'
                         }`}>{dueLbl}</span>
                       </div>
                     );
@@ -524,23 +524,23 @@ export default function UserDashboardPage() {
             <div className="mt-2 flex gap-2">
               <Link
                 href={'/tools' as Route}
-                className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-xs font-semibold text-slate-500 transition hover:border-cyan-200 hover:text-cyan-700"
+                className="flex-1 rounded-xl border border-border bg-card px-3 py-2 text-center text-xs font-semibold text-muted-fg transition hover:border-cyan-200 hover:text-cyan-700"
               >
                 {t('toolsLink')}
               </Link>
               <Link
                 href={'/diagnose' as Route}
-                className="flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-center text-xs font-semibold text-slate-500 transition hover:border-violet-200 hover:text-violet-700"
+                className="flex-1 rounded-xl border border-border bg-card px-3 py-2 text-center text-xs font-semibold text-muted-fg transition hover:border-violet-200 hover:text-violet-700"
               >
                 {t('diagnoseLink')}
               </Link>
             </div>
           </section>
         ) : (
-          <section className="rounded-[28px] border border-dashed border-emerald-200 bg-emerald-50/40 dark:bg-slate-800/40 p-5 text-center">
+          <section className="rounded-[28px] border border-dashed border-emerald-200 bg-emerald-50/40 dark:bg-emerald-950/20 p-5 text-center">
             <span className="text-3xl">🌱</span>
-            <h2 className="mt-2 text-base font-bold text-slate-800 dark:text-slate-100">{t('noActiveGrowTitle')}</h2>
-            <p className="mt-1 text-sm text-slate-500">{t('noActiveGrowSub')}</p>
+            <h2 className="mt-2 text-base font-bold text-foreground">{t('noActiveGrowTitle')}</h2>
+            <p className="mt-1 text-sm text-muted-fg">{t('noActiveGrowSub')}</p>
             <Link
               href={'/start' as Route}
               className="mt-3 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-700"
@@ -552,24 +552,24 @@ export default function UserDashboardPage() {
         </div>{/* /primary */}
 
         {/* ═══════════════════ SECONDARY — Wissensbasis ═══════════════════ */}
-        <div className="mt-12 space-y-8 border-t border-slate-200 pt-10">
+        <div className="mt-12 space-y-8 border-t border-border pt-10">
           <div className="flex items-center gap-3">
-            <p className="flex-shrink-0 text-[11px] font-bold uppercase tracking-widest text-slate-400">📚 {t('knowledgeBaseEyebrow')}</p>
-            <div className="h-px flex-1 bg-slate-100" />
+            <p className="flex-shrink-0 text-[11px] font-bold uppercase tracking-widest text-muted-fg">📚 {t('knowledgeBaseEyebrow')}</p>
+            <div className="h-px flex-1 bg-border" />
           </div>
 
-        <section className="rounded-[28px] border border-slate-200/70 bg-white/85 dark:bg-slate-800/85 p-4 shadow-[0_20px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur sm:p-6">
+        <section className="rounded-[28px] border border-border bg-card/85 p-4 shadow-[0_20px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur sm:p-6">
           <SectionHeader
             title={t('smartNotificationsTitle')}
             subtitle={t('smartNotificationsSub')}
             badge={newSinceLastVisit.length + interestMatches.length}
           />
           <div className="grid gap-4 lg:grid-cols-2">
-            <div className="rounded-3xl border border-emerald-100 bg-[linear-gradient(180deg,rgba(236,253,245,0.9),rgba(255,255,255,0.95))] p-4">
+            <div className="rounded-3xl border border-emerald-100 dark:border-emerald-900/40 bg-[linear-gradient(180deg,rgba(236,253,245,0.9),rgba(255,255,255,0.95))] dark:bg-[linear-gradient(180deg,rgba(6,78,59,0.35),rgba(15,17,23,0.6))] p-4">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">{t('newSinceLastVisit')}</p>
-                  <p className="mt-1 text-sm text-slate-600">{t('newSinceLastVisitSub')}</p>
+                  <p className="mt-1 text-sm text-foreground/80">{t('newSinceLastVisitSub')}</p>
                 </div>
                 <span className="rounded-full bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white">{newSinceLastVisit.length}</span>
               </div>
@@ -584,11 +584,11 @@ export default function UserDashboardPage() {
               )}
             </div>
 
-            <div className="rounded-3xl border border-sky-100 bg-[linear-gradient(180deg,rgba(240,249,255,0.9),rgba(255,255,255,0.95))] p-4">
+            <div className="rounded-3xl border border-sky-100 dark:border-sky-900/40 bg-[linear-gradient(180deg,rgba(240,249,255,0.9),rgba(255,255,255,0.95))] dark:bg-[linear-gradient(180deg,rgba(12,74,110,0.35),rgba(15,17,23,0.6))] p-4">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600">{t('fitsYourInterests')}</p>
-                  <p className="mt-1 text-sm text-slate-600">{t('fitsYourInterestsSub')}</p>
+                  <p className="mt-1 text-sm text-foreground/80">{t('fitsYourInterestsSub')}</p>
                 </div>
                 <span className="rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-bold text-white">{interestMatches.length}</span>
               </div>
@@ -613,7 +613,7 @@ export default function UserDashboardPage() {
           </div>
         </section>
 
-        <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+        <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
           <SectionHeader
             title={t('weeklyDigestTitle')}
             subtitle={t('weeklyDigestSub')}
@@ -621,7 +621,7 @@ export default function UserDashboardPage() {
           />
 
           <div className="-mx-1 flex snap-x gap-4 overflow-x-auto px-1 pb-2 lg:grid lg:grid-cols-[1.15fr_1.15fr_0.9fr] lg:overflow-visible">
-            <div className="min-w-[290px] snap-start rounded-3xl border border-emerald-100 bg-[linear-gradient(180deg,rgba(236,253,245,0.95),rgba(255,255,255,1))] p-4 lg:min-w-0">
+            <div className="min-w-[290px] snap-start rounded-3xl border border-emerald-100 dark:border-emerald-900/40 bg-[linear-gradient(180deg,rgba(236,253,245,0.95),rgba(255,255,255,1))] dark:bg-[linear-gradient(180deg,rgba(6,78,59,0.35),rgba(15,17,23,0.6))] p-4 lg:min-w-0">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">{t('newGrowStudies')}</p>
               <div className="mt-3 space-y-3">
                 {digest.newGrowStudies.map((article) => (
@@ -630,7 +630,7 @@ export default function UserDashboardPage() {
               </div>
             </div>
 
-            <div className="min-w-[290px] snap-start rounded-3xl border border-amber-100 bg-[linear-gradient(180deg,rgba(255,251,235,0.95),rgba(255,255,255,1))] p-4 lg:min-w-0">
+            <div className="min-w-[290px] snap-start rounded-3xl border border-amber-100 dark:border-amber-900/40 bg-[linear-gradient(180deg,rgba(255,251,235,0.95),rgba(255,255,255,1))] dark:bg-[linear-gradient(180deg,rgba(69,26,3,0.35),rgba(15,17,23,0.6))] p-4 lg:min-w-0">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600">{t('importantThisWeek')}</p>
               <div className="mt-3 space-y-3">
                 {digest.importantThisWeek.map((article) => (
@@ -639,25 +639,25 @@ export default function UserDashboardPage() {
               </div>
             </div>
 
-            <div className="min-w-[290px] snap-start rounded-3xl border border-rose-100 bg-[linear-gradient(180deg,rgba(255,241,242,0.95),rgba(255,255,255,1))] p-4 lg:min-w-0">
+            <div className="min-w-[290px] snap-start rounded-3xl border border-rose-100 dark:border-rose-900/40 bg-[linear-gradient(180deg,rgba(255,241,242,0.95),rgba(255,255,255,1))] dark:bg-[linear-gradient(180deg,rgba(76,5,25,0.35),rgba(15,17,23,0.6))] p-4 lg:min-w-0">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-600">{t('trendingTopics')}</p>
               <div className="mt-3 space-y-3">
                 {digest.trendingTopics.map((topic) => (
                   <Link
                     key={topic.label}
                     href={`/studies/${topic.sampleArticle.slug}`}
-                    className="block rounded-2xl border border-white/70 bg-white/80 p-4 shadow-sm transition-all duration-150 hover:border-rose-200 hover:bg-rose-50/40"
+                    className="block rounded-2xl border border-border bg-card/80 p-4 shadow-sm transition-all duration-150 hover:border-rose-200 hover:bg-rose-50/40"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="text-sm font-bold text-slate-900">{topic.label}</p>
-                        <p className="mt-1 text-xs text-slate-500">{t('relevantArticles', { count: topic.articleCount })}</p>
+                        <p className="text-sm font-bold text-foreground">{topic.label}</p>
+                        <p className="mt-1 text-xs text-muted-fg">{t('relevantArticles', { count: topic.articleCount })}</p>
                       </div>
                       <span className="rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-700">
                         +{topic.momentum}
                       </span>
                     </div>
-                    <p className="mt-3 line-clamp-2 text-xs text-slate-600">{t('trendingStartpoint', { title: topic.sampleArticle.title })}</p>
+                    <p className="mt-3 line-clamp-2 text-xs text-foreground/80">{t('trendingStartpoint', { title: topic.sampleArticle.title })}</p>
                   </Link>
                 ))}
               </div>
@@ -665,7 +665,7 @@ export default function UserDashboardPage() {
           </div>
         </section>
 
-        <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+        <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
           <SectionHeader
             title={t('continueReadingTitle')}
             subtitle={t('continueReadingSub')}
@@ -697,7 +697,7 @@ export default function UserDashboardPage() {
         </section>
 
         <div className="grid gap-8 xl:grid-cols-[1.3fr_0.9fr]">
-          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+          <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
             <SectionHeader title={t('savedStudiesTitle')} subtitle={t('savedStudiesSub')} badge={bookmarkedArticles.length} />
             {bookmarkedArticles.length === 0 ? (
               <EmptyState
@@ -718,27 +718,27 @@ export default function UserDashboardPage() {
             )}
           </section>
 
-          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+          <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
             <SectionHeader title={t('streakActivityTitle')} subtitle={t('streakActivitySub')} />
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
               <div className="rounded-3xl border border-amber-100 bg-amber-50/70 p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">{t('readingStreakLabel')}</p>
-                <p className="mt-2 text-3xl font-bold text-slate-900">{readingStreak}</p>
-                <p className="mt-1 text-sm text-slate-600">{readingStreak === 1 ? t('dayInRow') : t('daysInRow')}</p>
+                <p className="mt-2 text-3xl font-bold text-foreground">{readingStreak}</p>
+                <p className="mt-1 text-sm text-foreground/80">{readingStreak === 1 ? t('dayInRow') : t('daysInRow')}</p>
               </div>
               <div className="rounded-3xl border border-emerald-100 bg-emerald-50/70 p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">{t('activityScoreLabel')}</p>
-                <p className="mt-2 text-3xl font-bold text-slate-900">{activityScore}</p>
-                <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/80">
+                <p className="mt-2 text-3xl font-bold text-foreground">{activityScore}</p>
+                <div className="mt-3 h-2 overflow-hidden rounded-full bg-card/80">
                   <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400" style={{ width: `${activityScore}%` }} />
                 </div>
               </div>
             </div>
 
-            <div className="mt-5 rounded-3xl border border-slate-100 bg-slate-50/80 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{t('recentlyViewed')}</p>
+            <div className="mt-5 rounded-3xl border border-border bg-background/80 p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-fg">{t('recentlyViewed')}</p>
               {historyArticles.length === 0 ? (
-                <p className="mt-3 text-sm text-slate-500">{t('noReadHistory')}</p>
+                <p className="mt-3 text-sm text-muted-fg">{t('noReadHistory')}</p>
               ) : (
                 <div className="mt-3 space-y-2">
                   {historyArticles.map((article) => {
@@ -747,11 +747,11 @@ export default function UserDashboardPage() {
                       <Link
                         key={article.slug}
                         href={`/studies/${article.slug}`}
-                        className="flex items-center justify-between gap-3 rounded-2xl border border-white bg-white px-4 py-3 text-sm transition-colors hover:border-emerald-200 hover:bg-emerald-50/40"
+                        className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-sm transition-colors hover:border-emerald-200 hover:bg-emerald-50/40"
                       >
                         <div className="min-w-0 flex-1">
-                          <p className="line-clamp-1 font-semibold text-slate-800">{article.title}</p>
-                          <p className="mt-0.5 text-xs text-slate-400">{categoryLabels[article.category]} · {entry ? timeAgo(entry.readAt, t) : ''}</p>
+                          <p className="line-clamp-1 font-semibold text-foreground">{article.title}</p>
+                          <p className="mt-0.5 text-xs text-muted-fg">{categoryLabels[article.category]} · {entry ? timeAgo(entry.readAt, t) : ''}</p>
                         </div>
                         <span className="text-xs font-semibold text-emerald-600">{t('openLink')}</span>
                       </Link>
@@ -763,7 +763,7 @@ export default function UserDashboardPage() {
                 <div className="mt-4 flex justify-end">
                   {confirmClearHistoryVisible ? (
                     <div className="flex items-center gap-2 text-xs">
-                      <span className="text-slate-500">{t('confirmClearHistory')}</span>
+                      <span className="text-muted-fg">{t('confirmClearHistory')}</span>
                       <button
                         type="button"
                         onClick={() => { clearHistory(); setConfirmClearHistoryVisible(false); }}
@@ -774,7 +774,7 @@ export default function UserDashboardPage() {
                       <button
                         type="button"
                         onClick={() => setConfirmClearHistoryVisible(false)}
-                        className="text-slate-400 transition-colors hover:text-slate-600"
+                        className="text-muted-fg transition-colors hover:text-foreground/80"
                       >
                         {t('confirmCancel')}
                       </button>
@@ -783,7 +783,7 @@ export default function UserDashboardPage() {
                     <button
                       type="button"
                       onClick={() => setConfirmClearHistoryVisible(true)}
-                      className="text-xs text-slate-400 transition-colors hover:text-red-500"
+                      className="text-xs text-muted-fg transition-colors hover:text-red-500"
                     >
                       {t('clearHistory')}
                     </button>
@@ -794,7 +794,7 @@ export default function UserDashboardPage() {
           </section>
         </div>
 
-        <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+        <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
           <SectionHeader title={t('recommendedTitle')} subtitle={t('recommendedSub')} badge={recommendedArticles.length} />
           {recommendedArticles.length === 0 && interests.length === 0 ? (
             <EmptyState
@@ -816,7 +816,7 @@ export default function UserDashboardPage() {
         </section>
 
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+          <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
             <SectionHeader title={t('myInterestsTitle')} subtitle={t('myInterestsSub')} />
             <div className="flex flex-wrap gap-2">
               {INTEREST_ORDER.map((interest) => {
@@ -829,7 +829,7 @@ export default function UserDashboardPage() {
                     onClick={() => toggleInterest(interest)}
                     className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-[13px] font-semibold transition-all duration-150 ${active
                       ? 'border-emerald-300 bg-emerald-600 text-white shadow-sm'
-                      : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700'
+                      : 'border-border bg-background text-foreground/80 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700'
                     }`}
                   >
                     <span>{meta.icon}</span>
@@ -845,7 +845,7 @@ export default function UserDashboardPage() {
             )}
           </section>
 
-          <section className="rounded-[28px] border border-slate-200/70 bg-white/90 dark:bg-slate-800/90 p-4 shadow-sm sm:p-6">
+          <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
             <SectionHeader title={t('quickAccessTitle')} subtitle={t('quickAccessSub')} />
             <div className="grid grid-cols-2 gap-3">
               {[
@@ -857,10 +857,10 @@ export default function UserDashboardPage() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="group flex flex-col items-center gap-2 rounded-3xl border border-slate-100 bg-slate-50/70 px-4 py-5 text-center transition-all duration-150 hover:border-emerald-200 hover:bg-emerald-50/40"
+                  className="group flex flex-col items-center gap-2 rounded-3xl border border-border bg-background/70 px-4 py-5 text-center transition-all duration-150 hover:border-emerald-200 hover:bg-emerald-50/40"
                 >
                   <span className="text-2xl">{item.icon}</span>
-                  <span className="text-[13px] font-semibold text-slate-700 transition-colors group-hover:text-emerald-700">{item.label}</span>
+                  <span className="text-[13px] font-semibold text-foreground/80 transition-colors group-hover:text-emerald-700">{item.label}</span>
                 </Link>
               ))}
             </div>

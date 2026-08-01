@@ -11,7 +11,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 function Avatar({ user }: { user: AuthUser }) {
   return (
-    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-[12px] font-bold text-white ring-2 ring-white dark:ring-slate-900 select-none flex-shrink-0">
+    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-600 text-[12px] font-bold text-white ring-2 ring-background select-none flex-shrink-0">
       {user.initials}
     </span>
   );
@@ -36,7 +36,7 @@ function PlanBadge({ plan, role }: { plan: "free" | "pro" | "team"; role: string
     );
   }
   return (
-    <span className="ml-1 rounded-full bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+    <span className="ml-1 rounded-full bg-border px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-muted-fg">
       Free
     </span>
   );
@@ -60,7 +60,7 @@ function MenuItem({
   const base =
     "flex w-full items-center gap-2.5 px-3 py-2 text-[13.5px] font-medium rounded-lg transition-colors duration-100 ";
   const safe =
-    "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100";
+    "text-foreground/80 hover:bg-background hover:text-foreground";
   const dangerCls =
     "text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950";
 
@@ -126,7 +126,7 @@ export function UserMenu() {
   if (isLoading) {
     return (
       <div className="flex items-center gap-2">
-        <div className="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 animate-pulse" />
+        <div className="h-8 w-8 rounded-full bg-border animate-pulse" />
       </div>
     );
   }
@@ -155,7 +155,7 @@ export function UserMenu() {
         aria-expanded={open}
         aria-haspopup="true"
         aria-label={t("openMenu")}
-        className="flex items-center gap-2 rounded-xl p-1 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+        className="flex items-center gap-2 rounded-xl p-1 hover:bg-background transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
       >
         <Avatar user={user} />
       </button>
@@ -163,18 +163,18 @@ export function UserMenu() {
       {open && (
         <div
           role="menu"
-          className="absolute right-0 top-[calc(100%+8px)] z-50 w-56 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl shadow-black/10 dark:shadow-black/40 p-1.5 animate-in fade-in slide-in-from-top-2 duration-150"
+          className="absolute right-0 top-[calc(100%+8px)] z-50 w-56 rounded-2xl border border-border bg-card shadow-xl shadow-black/10 dark:shadow-black/40 p-1.5 animate-in fade-in slide-in-from-top-2 duration-150"
         >
           {/* User identity header */}
-          <div className="px-3 py-2.5 mb-1 rounded-lg bg-slate-50 dark:bg-slate-800/60">
+          <div className="px-3 py-2.5 mb-1 rounded-lg bg-background">
             <div className="flex items-center gap-2.5">
               <Avatar user={user} />
               <div className="min-w-0">
-                <p className="text-[13px] font-semibold text-slate-900 dark:text-slate-100 truncate flex items-center gap-1">
+                <p className="text-[13px] font-semibold text-foreground truncate flex items-center gap-1">
                   {user.displayName}
                   <PlanBadge plan={user.plan} role={user.role} />
                 </p>
-                <p className="text-[11px] text-slate-400 dark:text-slate-500 capitalize">
+                <p className="text-[11px] text-muted-fg capitalize">
                   {user.role.toLowerCase()}
                 </p>
               </div>
@@ -187,20 +187,20 @@ export function UserMenu() {
           <MenuItem href="/start" icon="🌱" label={t("myGrows")} onClick={() => setOpen(false)} />
 
           {/* Divider */}
-          <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
+          <div className="my-1 border-t border-border" />
 
           {/* Preferences (inline) */}
           <div className="px-3 py-1.5 flex items-center justify-between gap-2">
-            <span className="text-[12px] font-medium text-slate-400 dark:text-slate-500">{t("theme")}</span>
+            <span className="text-[12px] font-medium text-muted-fg">{t("theme")}</span>
             <ThemeToggle />
           </div>
           <div className="px-3 py-1.5 flex items-center justify-between gap-2">
-            <span className="text-[12px] font-medium text-slate-400 dark:text-slate-500">{t("language")}</span>
+            <span className="text-[12px] font-medium text-muted-fg">{t("language")}</span>
             <LanguageSwitcher />
           </div>
 
           {/* Divider */}
-          <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
+          <div className="my-1 border-t border-border" />
 
           <MenuItem icon="🚪" label={t("logout")} onClick={handleLogout} danger />
         </div>

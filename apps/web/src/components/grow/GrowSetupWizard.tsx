@@ -63,8 +63,8 @@ function StepHeader({ step, title, subtitle }: StepHeaderProps) {
       <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-600">
         Schritt {step} von {TOTAL_STEPS}
       </p>
-      <h2 className="mt-1 text-xl font-bold text-slate-900">{title}</h2>
-      <p className="mt-0.5 text-sm text-slate-500">{subtitle}</p>
+      <h2 className="mt-1 text-xl font-bold text-foreground">{title}</h2>
+      <p className="mt-0.5 text-sm text-muted-fg">{subtitle}</p>
     </div>
   );
 }
@@ -85,20 +85,20 @@ function OptionCard({ label, description, icon, selected, onSelect }: OptionCard
       className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all ${
         selected
           ? 'border-emerald-400 bg-emerald-50 ring-1 ring-emerald-300'
-          : 'border-slate-200 bg-white hover:border-emerald-200 hover:bg-emerald-50/30'
+          : 'border-border bg-card hover:border-emerald-200 hover:bg-emerald-50/30'
       }`}
     >
       <span className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-xl ${
-        selected ? 'bg-emerald-100' : 'bg-slate-50'
+        selected ? 'bg-emerald-100' : 'bg-background'
       }`}>
         {icon}
       </span>
       <div className="min-w-0">
-        <p className={`text-sm font-semibold ${selected ? 'text-emerald-800' : 'text-slate-800'}`}>
+        <p className={`text-sm font-semibold ${selected ? 'text-emerald-800' : 'text-foreground'}`}>
           {label}
         </p>
         {description && (
-          <p className="mt-0.5 text-xs text-slate-500 leading-snug">{description}</p>
+          <p className="mt-0.5 text-xs text-muted-fg leading-snug">{description}</p>
         )}
       </div>
       {selected && (
@@ -119,7 +119,7 @@ function ProgressBar({ step }: { step: number }) {
         <div
           key={i}
           className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-            i < step ? 'bg-emerald-500' : i === step - 1 ? 'bg-emerald-300' : 'bg-slate-200'
+            i < step ? 'bg-emerald-500' : i === step - 1 ? 'bg-emerald-300' : 'bg-border'
           }`}
         />
       ))}
@@ -143,18 +143,18 @@ function Counter({ value, onChange, min = 1, max = 20 }: CounterProps) {
         type="button"
         disabled={value <= min}
         onClick={() => onChange(Math.max(min, value - 1))}
-        className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-lg font-bold text-slate-600 transition hover:border-emerald-300 hover:text-emerald-700 disabled:opacity-40"
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card text-lg font-bold text-foreground/80 transition hover:border-emerald-300 hover:text-emerald-700 disabled:opacity-40"
       >
         −
       </button>
-      <span className="min-w-[2.5rem] text-center text-2xl font-bold text-slate-900 tabular-nums">
+      <span className="min-w-[2.5rem] text-center text-2xl font-bold text-foreground tabular-nums">
         {value}
       </span>
       <button
         type="button"
         disabled={value >= max}
         onClick={() => onChange(Math.min(max, value + 1))}
-        className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-lg font-bold text-slate-600 transition hover:border-emerald-300 hover:text-emerald-700 disabled:opacity-40"
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card text-lg font-bold text-foreground/80 transition hover:border-emerald-300 hover:text-emerald-700 disabled:opacity-40"
       >
         +
       </button>
@@ -187,7 +187,7 @@ function Step1({ data, update, onNext }: Step1Props) {
       />
 
       <div className="mb-6">
-        <label htmlFor="grow-name" className="mb-1.5 block text-sm font-semibold text-slate-700">
+        <label htmlFor="grow-name" className="mb-1.5 block text-sm font-semibold text-foreground/80">
           Grow Name
         </label>
         <input
@@ -197,11 +197,11 @@ function Step1({ data, update, onNext }: Step1Props) {
           placeholder="z.B. Balkon Sommer 2026"
           value={data.name}
           onChange={(e) => update('name', e.target.value)}
-          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-900 placeholder-slate-400 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
+          className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground placeholder-muted-fg outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
         />
       </div>
 
-      <p className="mb-3 text-sm font-semibold text-slate-700">Wo wird angebaut?</p>
+      <p className="mb-3 text-sm font-semibold text-foreground/80">Wo wird angebaut?</p>
       <div className="space-y-2">
         {(Object.keys(UMGEBUNG_META) as GrowUmgebung[]).map((u) => (
           <OptionCard
@@ -264,7 +264,7 @@ function Step2({ data, update, onNext, onBack }: Step2Props) {
         subtitle="Diese Werte bestimmen den Grow-Plan und die Task-Häufigkeit."
       />
 
-      <p className="mb-3 text-sm font-semibold text-slate-700">Substrat</p>
+      <p className="mb-3 text-sm font-semibold text-foreground/80">Substrat</p>
       <div className="mb-5 space-y-2">
         {(Object.keys(MEDIUM_META) as GrowMedium[]).map((m) => (
           <OptionCard
@@ -278,7 +278,7 @@ function Step2({ data, update, onNext, onBack }: Step2Props) {
         ))}
       </div>
 
-      <p className="mb-3 text-sm font-semibold text-slate-700">Lichtquelle</p>
+      <p className="mb-3 text-sm font-semibold text-foreground/80">Lichtquelle</p>
       <div className="space-y-2">
         {availableLicht.map((l) => (
           <OptionCard
@@ -296,7 +296,7 @@ function Step2({ data, update, onNext, onBack }: Step2Props) {
         <button
           type="button"
           onClick={onBack}
-          className="flex-1 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-600 transition hover:border-emerald-300"
+          className="flex-1 rounded-xl border border-border bg-card px-5 py-3 text-sm font-bold text-foreground/80 transition hover:border-emerald-300"
         >
           ← Zurück
         </button>
@@ -336,7 +336,7 @@ function Step3({ data, update, onNext, onBack }: Step3Props) {
         subtitle="Dein Level bestimmt die Komplexität des Grow-Plans."
       />
 
-      <p className="mb-3 text-sm font-semibold text-slate-700">Dein Erfahrungslevel</p>
+      <p className="mb-3 text-sm font-semibold text-foreground/80">Dein Erfahrungslevel</p>
       <div className="mb-6 space-y-2">
         {(Object.keys(ERFAHRUNG_META) as Erfahrung[]).map((e) => (
           <OptionCard
@@ -350,8 +350,8 @@ function Step3({ data, update, onNext, onBack }: Step3Props) {
         ))}
       </div>
 
-      <div className="rounded-xl border border-slate-200 bg-white px-5 py-4">
-        <p className="mb-3 text-sm font-semibold text-slate-700">Anzahl Pflanzen</p>
+      <div className="rounded-xl border border-border bg-card px-5 py-4">
+        <p className="mb-3 text-sm font-semibold text-foreground/80">Anzahl Pflanzen</p>
         <div className="flex items-center gap-4">
           <Counter
             value={data.pflanzenAnzahl}
@@ -359,7 +359,7 @@ function Step3({ data, update, onNext, onBack }: Step3Props) {
             min={1}
             max={20}
           />
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-muted-fg">
             {data.pflanzenAnzahl === 1 ? '1 Pflanze' : `${data.pflanzenAnzahl} Pflanzen`}
           </p>
         </div>
@@ -369,7 +369,7 @@ function Step3({ data, update, onNext, onBack }: Step3Props) {
         <button
           type="button"
           onClick={onBack}
-          className="flex-1 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-600 transition hover:border-emerald-300"
+          className="flex-1 rounded-xl border border-border bg-card px-5 py-3 text-sm font-bold text-foreground/80 transition hover:border-emerald-300"
         >
           ← Zurück
         </button>
@@ -392,11 +392,11 @@ type SummaryRowProps = { label: string; value: string; icon: string };
 function SummaryRow({ label, value, icon }: SummaryRowProps) {
   return (
     <div className="flex items-center justify-between gap-3 py-2.5">
-      <span className="flex items-center gap-2 text-sm text-slate-500">
+      <span className="flex items-center gap-2 text-sm text-muted-fg">
         <span className="text-base">{icon}</span>
         {label}
       </span>
-      <span className="text-sm font-semibold text-slate-800">{value}</span>
+      <span className="text-sm font-semibold text-foreground">{value}</span>
     </div>
   );
 }
@@ -418,7 +418,7 @@ function Step4({ data, onBack, onSubmit, submitting }: Step4Props) {
       />
 
       {/* Summary card */}
-      <div className="mb-6 divide-y divide-slate-100 rounded-2xl border border-slate-200 bg-slate-50 px-5">
+      <div className="mb-6 divide-y divide-border rounded-2xl border border-border bg-background px-5">
         <SummaryRow label="Grow Name" value={data.name} icon="🌱" />
         <SummaryRow label="Umgebung"  value={GROW_UMGEBUNG_LABELS[data.umgebung]} icon="📍" />
         <SummaryRow label="Substrat"  value={GROW_MEDIUM_LABELS[data.medium]}     icon="🪴" />
@@ -428,9 +428,9 @@ function Step4({ data, onBack, onSubmit, submitting }: Step4Props) {
       </div>
 
       {/* What happens next */}
-      <div className="mb-6 rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3">
-        <p className="text-xs font-semibold text-emerald-700">Was als nächstes passiert:</p>
-        <ul className="mt-1.5 space-y-1 text-xs text-emerald-600">
+      <div className="mb-6 rounded-xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 px-4 py-3">
+        <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">Was als nächstes passiert:</p>
+        <ul className="mt-1.5 space-y-1 text-xs text-emerald-600 dark:text-emerald-400">
           <li>✓ Grow-Plan mit Phasen wird generiert</li>
           <li>✓ Tägliche Tasks für dein Level werden zugewiesen</li>
           <li>✓ Du wirst direkt zu deinem Grow weitergeleitet</li>
@@ -442,7 +442,7 @@ function Step4({ data, onBack, onSubmit, submitting }: Step4Props) {
           type="button"
           disabled={submitting}
           onClick={onBack}
-          className="flex-1 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-600 transition hover:border-emerald-300 disabled:opacity-40"
+          className="flex-1 rounded-xl border border-border bg-card px-5 py-3 text-sm font-bold text-foreground/80 transition hover:border-emerald-300 disabled:opacity-40"
         >
           ← Zurück
         </button>

@@ -11,17 +11,17 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
 const AuthInput = forwardRef<HTMLInputElement, Props>(
   ({ label, error, id, className = '', ...rest }, ref) => (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="block text-sm font-medium text-slate-700">
+      <label htmlFor={id} className="block text-sm font-medium text-foreground/80">
         {label}
       </label>
       <input
         ref={ref}
         id={id}
-        className={`w-full rounded-xl border bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400
+        className={`w-full rounded-xl border bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-fg
           outline-none transition-all duration-150
           ${error
             ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
-            : 'border-slate-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100'
+            : 'border-border focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100'
           } ${className}`}
         {...rest}
       />

@@ -14,7 +14,7 @@ const PasswordField = forwardRef<HTMLInputElement, Props>(
 
     return (
       <div className="space-y-1.5">
-        <label htmlFor={id} className="block text-sm font-medium text-slate-700">
+        <label htmlFor={id} className="block text-sm font-medium text-foreground/80">
           {label}
         </label>
         <div className="relative">
@@ -22,11 +22,11 @@ const PasswordField = forwardRef<HTMLInputElement, Props>(
             ref={ref}
             id={id}
             type={visible ? 'text' : 'password'}
-            className={`w-full rounded-xl border bg-white px-4 py-3 pr-11 text-sm text-slate-900 placeholder:text-slate-400
+            className={`w-full rounded-xl border bg-card px-4 py-3 pr-11 text-sm text-foreground placeholder:text-muted-fg
               outline-none transition-all duration-150
               ${error
                 ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
-                : 'border-slate-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100'
+                : 'border-border focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100'
               } ${className}`}
             {...rest}
           />
@@ -34,7 +34,7 @@ const PasswordField = forwardRef<HTMLInputElement, Props>(
             type="button"
             aria-label={visible ? 'Passwort verbergen' : 'Passwort anzeigen'}
             onClick={() => setVisible(v => !v)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded"
           >
             {visible ? (
               /* eye-slash */

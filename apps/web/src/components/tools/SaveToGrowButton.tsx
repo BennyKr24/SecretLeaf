@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getActiveGrow } from '@/lib/grow/store';
 import type { ToolResultData } from '@/lib/tools/types';
@@ -20,19 +20,27 @@ type Props = {
  * - Active grow found → enabled; actual save logic arrives in Phase 6.
  */
 export default function SaveToGrowButton({ toolSlug, summary }: Props) {
-  const [activeGrowName] = useState<string | null>(() => {
-    if (typeof window === 'undefined') return null;
-    return getActiveGrow()?.name ?? null;
-  });
+  // Start null (matches SSR) and read the real value after mount — reading
+  // localStorage in the useState initializer would make the first client
+  // render diverge from the server-rendered HTML and trigger a hydration
+  // mismatch for anyone with an active grow already saved.
+  const [activeGrowName, setActiveGrowName] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    // Deliberate mount-only sync from localStorage (client-only source) to
+    // avoid a hydration mismatch — see comment on the initializer above.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setActiveGrowName(getActiveGrow()?.name ?? null);
+  }, []);
 
   const hasGrow = activeGrowName !== null;
 
   if (!hasGrow) {
     return (
-      <div className="flex items-center gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3">
+      <div className="flex items-center gap-2 rounded-xl border border-dashed border-border bg-background px-4 py-3">
         <span className="text-base">🌱</span>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-muted-fg">
           <span className="font-semibold">Kein aktiver Grow.</span>{' '}
           <Link href="/start" className="text-emerald-600 hover:underline">
             Grow starten

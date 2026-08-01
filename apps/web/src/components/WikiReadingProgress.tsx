@@ -47,7 +47,7 @@ export default function WikiReadingProgress({ slug, title, category, readMinutes
 
   return (
     <div
-      className={`fixed top-14 left-0 right-0 z-30 h-0.5 bg-slate-100 transition-opacity duration-300 ${
+      className={`fixed top-14 left-0 right-0 z-30 h-0.5 bg-border transition-opacity duration-300 ${
         visible ? 'opacity-100' : 'opacity-0'
       }`}
       role="progressbar"

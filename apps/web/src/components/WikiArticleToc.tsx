@@ -44,8 +44,8 @@ export default function WikiArticleToc({ sections }: Props) {
   }, [sections]);
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-3">
+    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg mb-3">
         Inhaltsverzeichnis
       </p>
       <ol className="space-y-1">
@@ -57,12 +57,12 @@ export default function WikiArticleToc({ sections }: Props) {
               <a
                 href={`#${id}`}
                 className={`group flex items-center gap-2 rounded-lg px-2 py-1.5 text-sm transition-colors ${
-                  active ? 'bg-emerald-50 text-emerald-800' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-700'
+                  active ? 'bg-emerald-50 text-emerald-800' : 'text-foreground/80 hover:bg-background hover:text-emerald-700'
                 }`}
               >
                 <span
                   className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors ${
-                    active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-500 group-hover:bg-emerald-100 group-hover:text-emerald-700'
+                    active ? 'bg-emerald-100 text-emerald-700' : 'bg-border text-muted-fg group-hover:bg-emerald-100 group-hover:text-emerald-700'
                   }`}
                 >
                   {idx + 1}

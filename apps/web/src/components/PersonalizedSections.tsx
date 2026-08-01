@@ -42,11 +42,11 @@ function MiniCard({ article }: { article: TerpiraArticle }) {
     <div className="relative">
       <Link
         href={`/studies/${article.slug}` as Route}
-        className="card-lift group flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-4
+        className="card-lift group flex flex-col gap-2 rounded-xl border border-border bg-card p-4
           hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-50"
       >
         <div className="flex items-start justify-between gap-1.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-50 border border-slate-100 text-base flex-shrink-0 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-background border border-border text-base flex-shrink-0 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors">
             {CATEGORY_ICONS[article.category] ?? '📄'}
           </span>
           {sourceCount > 0 && (
@@ -55,13 +55,13 @@ function MiniCard({ article }: { article: TerpiraArticle }) {
             </span>
           )}
         </div>
-        <h3 className="text-[12.5px] font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug line-clamp-2">
+        <h3 className="text-[12.5px] font-semibold text-foreground group-hover:text-emerald-700 transition-colors leading-snug line-clamp-2">
           {article.title}
         </h3>
-        <div className="mt-auto flex items-center gap-1.5 text-[11px] text-slate-400 pt-1 border-t border-slate-50">
-          <span className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${DIFFICULTY_DOT[article.difficulty] ?? 'bg-slate-300'}`} />
+        <div className="mt-auto flex items-center gap-1.5 text-[11px] text-muted-fg pt-1 border-t border-border">
+          <span className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${DIFFICULTY_DOT[article.difficulty] ?? 'bg-border'}`} />
           <span>{DIFFICULTY_LABEL[article.difficulty]}</span>
-          <span className="text-slate-200">·</span>
+          <span className="text-border">·</span>
           <span>{article.readMinutes} Min</span>
         </div>
       </Link>
@@ -81,16 +81,16 @@ function SavedStudiesPanel({ allArticles }: { allArticles: TerpiraArticle[] }) {
   if (saved.length === 0) return null;
 
   return (
-    <section className="border-b border-slate-100 bg-white">
+    <section className="border-b border-border bg-card">
       <div className="mx-auto max-w-6xl px-5 py-10">
         <div className="mb-5 flex items-end justify-between">
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 tracking-widest uppercase mb-2">
               🔖 Meine Sammlung
             </span>
-            <h2 className="text-xl font-bold tracking-tight text-slate-900">Gespeicherte Studien</h2>
+            <h2 className="text-xl font-bold tracking-tight text-foreground">Gespeicherte Studien</h2>
           </div>
-          <span className="text-xs text-slate-400">{saved.length} gespeichert</span>
+          <span className="text-xs text-muted-fg">{saved.length} gespeichert</span>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {saved.slice(0, 8).map(article => (
@@ -116,14 +116,14 @@ function ReadingHistoryPanel({ allArticles }: { allArticles: TerpiraArticle[] })
   if (articles.length === 0) return null;
 
   return (
-    <section className="border-b border-slate-100 bg-slate-50/40">
+    <section className="border-b border-border bg-background/40">
       <div className="mx-auto max-w-6xl px-5 py-10">
         <div className="mb-5 flex items-end justify-between">
           <div>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 border border-slate-200 px-2.5 py-0.5 text-[10px] font-bold text-slate-600 tracking-widest uppercase mb-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-border border border-border px-2.5 py-0.5 text-[10px] font-bold text-foreground/80 tracking-widest uppercase mb-2">
               📖 Weiterlesen
             </span>
-            <h2 className="text-xl font-bold tracking-tight text-slate-900">Zuletzt gelesen</h2>
+            <h2 className="text-xl font-bold tracking-tight text-foreground">Zuletzt gelesen</h2>
           </div>
         </div>
         <div className="space-y-1.5">
@@ -133,18 +133,18 @@ function ReadingHistoryPanel({ allArticles }: { allArticles: TerpiraArticle[] })
               <Link
                 key={article.slug}
                 href={`/studies/${article.slug}` as Route}
-                className="group flex items-center gap-4 rounded-xl border border-transparent bg-white px-5 py-3.5
+                className="group flex items-center gap-4 rounded-xl border border-transparent bg-card px-5 py-3.5
                   hover:border-emerald-100 hover:shadow-sm hover:bg-emerald-50/20 transition-all duration-150"
               >
-                <span className="w-5 text-center text-xs font-bold text-slate-300 flex-shrink-0 tabular-nums">
+                <span className="w-5 text-center text-xs font-bold text-muted-fg flex-shrink-0 tabular-nums">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <span className="text-base flex-shrink-0">{CATEGORY_ICONS[article.category] ?? '📄'}</span>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-semibold text-slate-800 group-hover:text-emerald-700 transition-colors line-clamp-1">
+                  <h3 className="text-sm font-semibold text-foreground group-hover:text-emerald-700 transition-colors line-clamp-1">
                     {article.title}
                   </h3>
-                  <p className="text-xs text-slate-400 line-clamp-1 mt-0.5">{categoryLabels[article.category]}</p>
+                  <p className="text-xs text-muted-fg line-clamp-1 mt-0.5">{categoryLabels[article.category]}</p>
                 </div>
                 {sourceCount > 0 && (
                   <span className="hidden sm:inline-flex items-center flex-shrink-0 rounded-md bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-600">
@@ -152,7 +152,7 @@ function ReadingHistoryPanel({ allArticles }: { allArticles: TerpiraArticle[] })
                   </span>
                 )}
                 <BookmarkButton slug={article.slug} size="sm" />
-                <svg className="w-3.5 h-3.5 text-slate-200 group-hover:text-emerald-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <svg className="w-3.5 h-3.5 text-border group-hover:text-emerald-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
@@ -199,20 +199,20 @@ function PersonalizedCategorySections({ categoryArticles, allCategories }: {
         {sectionsToShow.map(cat => {
           const articles = (categoryArticles[cat] ?? []).slice(0, 4);
           return (
-            <div key={cat} className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-              <div className="border-b border-slate-100 bg-gradient-to-r from-slate-50/80 to-white px-5 py-4 flex items-center justify-between">
+            <div key={cat} className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+              <div className="border-b border-border bg-gradient-to-r from-background/80 to-card px-5 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white border border-slate-100 text-base shadow-sm">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-card border border-border text-base shadow-sm">
                     {CATEGORY_ICONS[cat] ?? '📄'}
                   </span>
-                  <h3 className="text-sm font-bold text-slate-900">{categoryLabels[cat]}</h3>
+                  <h3 className="text-sm font-bold text-foreground">{categoryLabels[cat]}</h3>
                   <span className="rounded-full bg-emerald-50 border border-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
                     {categoryArticles[cat]?.length ?? 0} Artikel
                   </span>
                 </div>
                 <Link
                   href={`/category/${cat}` as Route}
-                  className="group flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-emerald-600 transition-colors"
+                  className="group flex items-center gap-1 text-xs font-medium text-muted-fg hover:text-emerald-600 transition-colors"
                 >
                   Alle
                   <svg className="w-3 h-3 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -220,24 +220,24 @@ function PersonalizedCategorySections({ categoryArticles, allCategories }: {
                   </svg>
                 </Link>
               </div>
-              <div className="grid gap-px bg-slate-100 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
                 {articles.map(article => {
                   const srcCount = article.sourceIds?.length ?? 0;
                   return (
-                    <div key={article.slug} className="relative bg-white group">
+                    <div key={article.slug} className="relative bg-card group">
                       <Link
                         href={`/studies/${article.slug}` as Route}
                         className="flex flex-col gap-1.5 p-4 h-full hover:bg-emerald-50/30 transition-colors duration-150"
                       >
-                        <h4 className="text-[12.5px] font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug line-clamp-2">
+                        <h4 className="text-[12.5px] font-semibold text-foreground group-hover:text-emerald-700 transition-colors leading-snug line-clamp-2">
                           {article.title}
                         </h4>
-                        <div className="mt-auto flex items-center gap-1.5 text-[11px] text-slate-400 pt-1.5 border-t border-slate-50">
-                          <span className={`h-1.5 w-1.5 rounded-full ${DIFFICULTY_DOT[article.difficulty] ?? 'bg-slate-300'}`} />
+                        <div className="mt-auto flex items-center gap-1.5 text-[11px] text-muted-fg pt-1.5 border-t border-border">
+                          <span className={`h-1.5 w-1.5 rounded-full ${DIFFICULTY_DOT[article.difficulty] ?? 'bg-border'}`} />
                           <span>{DIFFICULTY_LABEL[article.difficulty]}</span>
                           {srcCount > 0 && (
                             <>
-                              <span className="text-slate-200">·</span>
+                              <span className="text-border">·</span>
                               <span className="text-emerald-600 font-semibold">{srcCount}×</span>
                             </>
                           )}
@@ -274,14 +274,14 @@ function RecommendedStudies({ allArticles }: { allArticles: TerpiraArticle[] }) 
   if (recommended.length === 0) return null;
 
   return (
-    <section className="border-b border-slate-100 bg-white">
+    <section className="border-b border-border bg-card">
       <div className="mx-auto max-w-6xl px-5 py-10">
         <div className="mb-5">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-50 border border-purple-200 px-2.5 py-0.5 text-[10px] font-bold text-purple-700 tracking-widest uppercase mb-2">
             ✦ Empfohlen für dich
           </span>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900">Passend zu deinen Interessen</h2>
-          <p className="mt-1 text-sm text-slate-400">Artikel, die zu deiner Auswahl passen – noch nicht gelesen</p>
+          <h2 className="text-xl font-bold tracking-tight text-foreground">Passend zu deinen Interessen</h2>
+          <p className="mt-1 text-sm text-muted-fg">Artikel, die zu deiner Auswahl passen – noch nicht gelesen</p>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {recommended.map(article => (

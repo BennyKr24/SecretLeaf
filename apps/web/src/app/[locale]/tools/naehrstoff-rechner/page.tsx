@@ -46,10 +46,10 @@ export default function NaehrstoffRechnerPage() {
 
   if (!loaded) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-6 py-10">
+      <main className="min-h-screen bg-background px-6 py-10">
         <div className="mx-auto max-w-6xl animate-pulse space-y-4">
-          <div className="h-8 w-48 rounded bg-slate-200" />
-          <div className="h-64 rounded-2xl bg-slate-100" />
+          <div className="h-8 w-48 rounded skeleton" />
+          <div className="h-64 skeleton rounded-2xl" />
         </div>
       </main>
     );
@@ -59,10 +59,10 @@ export default function NaehrstoffRechnerPage() {
     <ToolLayout meta={meta} tips={TIPS}>
       <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
         {/* ── Inputs ──────────────────────────────────── */}
-        <div className="space-y-6 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="space-y-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div>
-            <h2 className="text-base font-bold text-slate-900">Deine Nährlösung</h2>
-            <p className="mt-0.5 text-xs text-slate-400">Basisdosierung steht auf dem Produkt — oder nutze 2.0 ml/L als Startwert.</p>
+            <h2 className="text-base font-bold text-foreground">Deine Nährlösung</h2>
+            <p className="mt-0.5 text-xs text-muted-fg">Basisdosierung steht auf dem Produkt — oder nutze 2.0 ml/L als Startwert.</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -138,16 +138,16 @@ export default function NaehrstoffRechnerPage() {
               hint="Herstellerangabe oder Erfahrungswert"
             />
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">Produktname</label>
+              <label className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Produktname</label>
               <input
                 type="text"
                 value={inputs.produktName}
                 onChange={(e) => setInput('produktName', e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-900 outline-none
+                className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-medium text-foreground outline-none
                   transition-all hover:border-emerald-300 focus:ring-2 focus:ring-emerald-200"
                 placeholder="z. B. BioBizz, Canna …"
               />
-              <p className="text-xs text-slate-400">Für eigene Zuordnung</p>
+              <p className="text-xs text-muted-fg">Für eigene Zuordnung</p>
             </div>
           </div>
         </div>

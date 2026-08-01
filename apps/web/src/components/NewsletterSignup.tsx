@@ -37,16 +37,16 @@ export default function NewsletterSignup() {
   };
 
   return (
-    <section className="border-t border-slate-100 bg-gradient-to-br from-emerald-950/8 to-white">
+    <section className="border-t border-border bg-gradient-to-br from-emerald-950/8 to-card">
       <div className="mx-auto max-w-6xl px-5 py-14">
         <div className="mx-auto max-w-xl text-center">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[10px] font-bold text-emerald-700 tracking-widest uppercase mb-4">
             📬 Wöchentliche Zusammenfassung
           </span>
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-2xl font-bold tracking-tight text-foreground">
             Jede Woche das Wichtigste
           </h2>
-          <p className="mt-3 text-sm text-slate-500 leading-relaxed">
+          <p className="mt-3 text-sm text-muted-fg leading-relaxed">
             Neue Studien, Top-Anbau-Wissen und aktuelle Erkenntnisse – kompakt zusammengefasst.
             Kein Spam, jederzeit abmeldbar.
           </p>
@@ -63,8 +63,8 @@ export default function NewsletterSignup() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="deine@email.de"
-                className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900
-                  placeholder:text-slate-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100
+                className="flex-1 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground
+                  placeholder:text-muted-fg focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100
                   transition-all duration-150"
               />
               <button
@@ -83,7 +83,7 @@ export default function NewsletterSignup() {
             <p className="mt-2 text-xs text-red-500">{errorMsg ?? 'Etwas ist schiefgelaufen. Bitte versuche es erneut.'}</p>
           )}
 
-          <div className="mt-5 flex flex-wrap justify-center gap-5 text-[11px] text-slate-400">
+          <div className="mt-5 flex flex-wrap justify-center gap-5 text-[11px] text-muted-fg">
             {[
               '✓ Wöchentlich, kein Spam',
               '✓ Neue Top-Studien',

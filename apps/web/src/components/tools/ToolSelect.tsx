@@ -15,11 +15,11 @@ type Props = {
 export default function ToolSelect({ label, value, onChange, options }: Props) {
   return (
     <div className="space-y-1.5">
-      <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</label>
+      <label className="text-xs font-semibold uppercase tracking-wide text-muted-fg">{label}</label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-900 outline-none
+        className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-medium text-foreground outline-none
           transition-all hover:border-emerald-300 focus:ring-2 focus:ring-emerald-200"
       >
         {options.map((opt) => (

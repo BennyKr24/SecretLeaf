@@ -19,7 +19,7 @@ function effectivePlan(role: string, plan: string): EffectivePlan {
 const planBadgeClass: Record<EffectivePlan, string> = {
   team: "bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300",
   pro: "bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300",
-  free: "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400",
+  free: "bg-border text-muted-fg",
 };
 
 // ── Section wrapper ───────────────────────────────────────────────────────────
@@ -32,8 +32,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-4">
+    <div className="rounded-2xl border border-border bg-card p-6">
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-fg mb-4">
         {label}
       </p>
       {children}
@@ -67,8 +67,8 @@ export default function ProfilePage() {
   // ── Loading skeleton ────────────────────────────────────────────────────────
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
-        <div className="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 animate-pulse" />
+      <main className="min-h-screen bg-background flex items-center justify-center">
+        <div className="h-10 w-10 rounded-full bg-border animate-pulse" />
       </main>
     );
   }
@@ -102,14 +102,14 @@ export default function ProfilePage() {
           : t("save");
 
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <main className="min-h-screen bg-background">
       <div className="max-w-xl mx-auto px-5 py-12 space-y-5">
         {/* Page header */}
         <div className="mb-2">
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+          <h1 className="text-2xl font-bold text-foreground">
             {t("title")}
           </h1>
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+          <p className="mt-1 text-sm text-muted-fg">
             {t("subtitle")}
           </p>
         </div>
@@ -132,11 +132,11 @@ export default function ProfilePage() {
             <div>
               <button
                 disabled
-                className="rounded-lg border border-slate-200 dark:border-slate-700 px-3.5 py-2 text-sm font-medium text-slate-400 dark:text-slate-500 cursor-not-allowed"
+                className="rounded-lg border border-border px-3.5 py-2 text-sm font-medium text-muted-fg cursor-not-allowed"
               >
                 {t("avatarUpload")}
               </button>
-              <p className="mt-1.5 text-[11px] text-slate-400 dark:text-slate-500">
+              <p className="mt-1.5 text-[11px] text-muted-fg">
                 {t("avatarHint")}
               </p>
             </div>
@@ -159,10 +159,10 @@ export default function ProfilePage() {
                 }}
                 placeholder={t("namePlaceholder")}
                 className={[
-                  "w-full rounded-xl border px-4 py-2.5 text-sm bg-transparent text-slate-900 dark:text-slate-100 outline-none transition-colors",
+                  "w-full rounded-xl border px-4 py-2.5 text-sm bg-transparent text-foreground outline-none transition-colors",
                   nameError
                     ? "border-rose-400 dark:border-rose-600 focus:ring-2 focus:ring-rose-400/20"
-                    : "border-slate-200 dark:border-slate-700 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20",
+                    : "border-border focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20",
                 ].join(" ")}
               />
               {nameError && (
@@ -187,10 +187,10 @@ export default function ProfilePage() {
 
         {/* Email */}
         <Section label={t("email")}>
-          <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+          <p className="text-sm font-medium text-foreground">
             {user.email ?? user.username}
           </p>
-          <p className="mt-2 text-[12px] text-slate-400 dark:text-slate-500">
+          <p className="mt-2 text-[12px] text-muted-fg">
             {t("emailChangeSoon")}
           </p>
         </Section>
@@ -203,7 +203,7 @@ export default function ProfilePage() {
             >
               {planLabel[plan]}
             </span>
-            <p className="text-[12px] text-slate-400 dark:text-slate-500">
+            <p className="text-[12px] text-muted-fg">
               {t("planUpgradeHint")}
             </p>
           </div>

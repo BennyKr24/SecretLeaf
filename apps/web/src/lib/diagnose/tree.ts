@@ -1,5 +1,7 @@
 // ── Diagnose-System: Entscheidungsbaum ─────────────────────────────────────
 
+import { Leaf, Sprout, Thermometer, Bug, type LucideIcon } from "lucide-react";
+
 export type DiagnoseToolLink = {
   slug: string;
   label: string;
@@ -36,7 +38,7 @@ export type DiagnoseNode = {
 export type DiagnoseCategory = {
   id: string;
   label: string;
-  icon: string;
+  icon: LucideIcon;
   startNodeId: string;
 };
 
@@ -571,25 +573,25 @@ export const diagnoseCategories: DiagnoseCategory[] = [
   {
     id: "blaetter",
     label: "Blätter",
-    icon: "🍃",
+    icon: Leaf,
     startNodeId: "blaetter-start",
   },
   {
     id: "wachstum",
     label: "Wachstum & Wurzeln",
-    icon: "🌱",
+    icon: Sprout,
     startNodeId: "wachstum-start",
   },
   {
     id: "klima",
     label: "Klima & Umgebung",
-    icon: "🌡️",
+    icon: Thermometer,
     startNodeId: "klima-start",
   },
   {
     id: "schaedlinge",
     label: "Schädlinge",
-    icon: "🐛",
+    icon: Bug,
     startNodeId: "schaedlinge-start",
   },
 ];

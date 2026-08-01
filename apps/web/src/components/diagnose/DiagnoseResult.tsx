@@ -33,9 +33,9 @@ const CONFIDENCE_CONFIG: Record<
   },
   low: {
     label: "Niedrige Sicherheit",
-    bg: "bg-neutral-100 border-neutral-200",
-    text: "text-neutral-500",
-    dot: "bg-neutral-400",
+    bg: "bg-border border-border",
+    text: "text-muted-fg",
+    dot: "bg-muted-fg",
     barWidth: "w-1/3",
   },
 };
@@ -94,11 +94,11 @@ export function DiagnoseResult({ result, category, onReset }: Props) {
   return (
     <div className="flex flex-col gap-5">
       {/* ── Header: icon + title + confidence ── */}
-      <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm p-5 flex flex-col gap-4">
+      <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="text-3xl leading-none">{result.icon}</span>
-            <h2 className="text-lg font-bold text-neutral-900 leading-snug">
+            <h2 className="text-lg font-bold text-foreground leading-snug">
               <TranslateButton text={result.title} />
             </h2>
           </div>
@@ -112,23 +112,23 @@ export function DiagnoseResult({ result, category, onReset }: Props) {
         </div>
 
         {/* Confidence bar */}
-        <div className="h-1 rounded-full bg-neutral-100 overflow-hidden">
+        <div className="h-1 rounded-full bg-border overflow-hidden">
           <div className={`h-full rounded-full transition-all ${conf.dot} ${conf.barWidth}`} />
         </div>
 
-        <p className="text-sm text-neutral-500 leading-relaxed">
+        <p className="text-sm text-muted-fg leading-relaxed">
           <TranslateButton text={result.explanation} />
         </p>
       </div>
 
       {/* ── Why this result ── */}
-      <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm px-5 py-4 flex gap-3">
+      <div className="rounded-2xl bg-card border border-border shadow-sm px-5 py-4 flex gap-3">
         <span className="mt-0.5 text-base shrink-0">🧠</span>
         <div className="flex flex-col gap-1">
-          <p className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
             Warum diese Diagnose?
           </p>
-          <p className="text-sm text-neutral-600 leading-relaxed">
+          <p className="text-sm text-foreground/80 leading-relaxed">
             <TranslateButton text={result.reasoning} />
           </p>
         </div>
@@ -144,13 +144,13 @@ export function DiagnoseResult({ result, category, onReset }: Props) {
       </div>
 
       {/* ── Solution steps ── */}
-      <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm p-5 flex flex-col gap-3">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+      <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-3">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
           Nächste Schritte
         </h3>
         <ol className="flex flex-col gap-2.5">
           {result.steps.map((step, i) => (
-            <li key={i} className="flex items-start gap-3 text-sm text-neutral-700">
+            <li key={i} className="flex items-start gap-3 text-sm text-foreground/80">
               <span className="shrink-0 mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">
                 {i + 1}
               </span>
@@ -162,8 +162,8 @@ export function DiagnoseResult({ result, category, onReset }: Props) {
 
       {/* ── Tool links ── */}
       {result.toolLinks.length > 0 && (
-        <div className="rounded-2xl bg-white border border-neutral-200 shadow-sm p-5 flex flex-col gap-3">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400">
+        <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-3">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
             Passende Tools
           </h3>
           <div className="flex flex-col gap-2">
@@ -171,10 +171,10 @@ export function DiagnoseResult({ result, category, onReset }: Props) {
               <Link
                 key={tool.slug}
                 href={`/tools/${tool.slug}` as Route}
-                className="flex items-center justify-between rounded-xl border border-neutral-200 bg-neutral-50 hover:bg-emerald-50 hover:border-emerald-200 active:scale-[0.98] transition-all px-4 py-3 text-sm font-medium text-neutral-700 group"
+                className="flex items-center justify-between rounded-xl border border-border bg-background hover:bg-emerald-50 hover:border-emerald-200 active:scale-[0.98] transition-all px-4 py-3 text-sm font-medium text-foreground/80 group"
               >
                 <span>{tool.label}</span>
-                <span className="text-neutral-300 group-hover:text-emerald-500 transition text-base">
+                <span className="text-muted-fg group-hover:text-emerald-500 transition text-base">
                   →
                 </span>
               </Link>
@@ -199,14 +199,14 @@ export function DiagnoseResult({ result, category, onReset }: Props) {
           </div>
         )}
         {!activeGrow && (
-          <p className="text-xs text-neutral-400 text-center">
+          <p className="text-xs text-muted-fg text-center">
             Kein aktiver Grow – Ergebnis kann nicht gespeichert werden.
           </p>
         )}
 
         <button
           onClick={onReset}
-          className="w-full rounded-xl border border-neutral-200 hover:bg-neutral-50 active:scale-95 transition text-neutral-600 font-medium py-3 px-4 text-sm"
+          className="w-full rounded-xl border border-border hover:bg-background active:scale-95 transition text-foreground/80 font-medium py-3 px-4 text-sm"
         >
           🔄 Neue Diagnose starten
         </button>

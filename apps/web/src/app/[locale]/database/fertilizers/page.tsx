@@ -77,9 +77,9 @@ const costLabelMap = {
 };
 
 const costColorMap = {
-  budget: 'text-green-600 bg-green-50',
-  mid: 'text-amber-600 bg-amber-50',
-  premium: 'text-rose-600 bg-rose-50'
+  budget: 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/30',
+  mid: 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30',
+  premium: 'text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/30'
 };
 
 const UMLAUT_MAP: Record<string, string> = {
@@ -164,7 +164,7 @@ function highlightMatches(text: string, terms: string[]): ReactNode {
     const isMatch = uniqueTerms.some((term) => normalizedPart === normalizeSearch(term));
     if (!isMatch) return <span key={`${part}-${index}`}>{part}</span>;
     return (
-      <mark key={`${part}-${index}`} className="rounded bg-amber-100 px-0.5 text-amber-900">
+      <mark key={`${part}-${index}`} className="rounded bg-amber-100 dark:bg-amber-950/40 px-0.5 text-amber-900">
         {part}
       </mark>
     );
@@ -646,18 +646,18 @@ function FertilizersPageInner() {
     useCase !== 'balanced';
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-card">
 
       {/* ── Sticky filter bar ──────────────────────────────────────── */}
-      <div className="sticky top-[60px] z-20 border-b border-slate-200 bg-white/95 backdrop-blur-sm shadow-sm">
+      <div className="sticky top-[60px] z-20 border-b border-border bg-card/95 backdrop-blur-sm shadow-sm">
         <div className="mx-auto max-w-7xl px-4 py-3">
 
           {/* Row 1: breadcrumb + search */}
           <div className="flex flex-wrap items-center gap-3">
-            <Link href={"/database" as Route} className="shrink-0 text-xs font-medium text-slate-400 hover:text-emerald-600">
+            <Link href={"/database" as Route} className="shrink-0 text-xs font-medium text-muted-fg hover:text-emerald-600 dark:text-emerald-400">
               ← Katalog
             </Link>
-            <div className="h-4 w-px bg-slate-200" />
+            <div className="h-4 w-px bg-border" />
             <div className="relative min-w-[180px] flex-1 max-w-sm">
               <input
                 ref={searchInputRef}
@@ -665,12 +665,12 @@ function FertilizersPageInner() {
                 placeholder="Suchen… (Taste /)"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-3 pr-8 text-sm focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                className="w-full rounded-lg border border-border bg-background py-2 pl-3 pr-8 text-sm focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80"
                 >
                   ×
                 </button>
@@ -686,7 +686,7 @@ function FertilizersPageInner() {
                   className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
                     selectedPhase === p
                       ? 'border-emerald-500 bg-emerald-500 text-white'
-                      : 'border-slate-200 bg-white text-slate-500 hover:border-emerald-300 hover:text-emerald-700'
+                      : 'border-border bg-card text-muted-fg hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400'
                   }`}
                 >
                   {p === 'all' ? 'Alle Phasen' : phaseLabelMap[p]}
@@ -703,7 +703,7 @@ function FertilizersPageInner() {
                   className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
                     selectedCost === c
                       ? 'border-slate-700 bg-slate-700 text-white'
-                      : 'border-slate-200 bg-white text-slate-500 hover:border-slate-400'
+                      : 'border-border bg-card text-muted-fg hover:border-slate-400'
                   }`}
                 >
                   {c === 'all' ? 'Alle Preise' : costLabelMap[c]}
@@ -712,7 +712,7 @@ function FertilizersPageInner() {
             </div>
 
             <div className="ml-auto flex items-center gap-2 shrink-0">
-              <span className="hidden sm:inline text-xs text-slate-400 tabular-nums">
+              <span className="hidden sm:inline text-xs text-muted-fg tabular-nums">
                 {totalVisible} Treffer
               </span>
               {hasActiveFilters && (
@@ -722,7 +722,7 @@ function FertilizersPageInner() {
                     setSelectedFormat('all'); setSelectedApplication('all'); setSelectedBrand('all');
                     setSelectedCost('all'); setUseCase('balanced'); setSortBy('best-match');
                   }}
-                  className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-500 hover:border-rose-300 hover:text-rose-600"
+                  className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-fg hover:border-rose-300 hover:text-rose-600 dark:text-rose-400"
                 >
                   Filter löschen ×
                 </button>
@@ -730,7 +730,7 @@ function FertilizersPageInner() {
               <select
                 value={viewMode}
                 onChange={(e) => setViewMode(e.target.value as ViewMode)}
-                className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+                className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
               >
                 <option value="grid">⊞ Kacheln</option>
                 <option value="list">☰ Liste</option>
@@ -743,7 +743,7 @@ function FertilizersPageInner() {
             <select
               value={selectedBase}
               onChange={(e) => setSelectedBase(e.target.value as FertilizerBase | 'all')}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
             >
               <option value="all">Alle Typen</option>
               <option value="mineral">Mineral</option>
@@ -754,7 +754,7 @@ function FertilizersPageInner() {
             <select
               value={selectedFormat}
               onChange={(e) => setSelectedFormat(e.target.value as FertilizerFormat | 'all')}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
             >
               <option value="all">Alle Formate</option>
               <option value="liquid">Flüssig</option>
@@ -765,7 +765,7 @@ function FertilizersPageInner() {
             <select
               value={selectedApplication}
               onChange={(e) => setSelectedApplication(e.target.value as FertilizerApplication | 'all')}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
             >
               <option value="all">Wasser / Erde</option>
               <option value="water">Nur Wasser</option>
@@ -775,7 +775,7 @@ function FertilizersPageInner() {
             <select
               value={selectedBrand}
               onChange={(e) => setSelectedBrand(e.target.value)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
             >
               <option value="all">Alle Marken</option>
               {brands.map((b) => <option key={b} value={b}>{b}</option>)}
@@ -783,7 +783,7 @@ function FertilizersPageInner() {
             <select
               value={useCase}
               onChange={(e) => setUseCase(e.target.value as UseCase)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
             >
               <option value="balanced">Verwendung: Alle</option>
               <option value="hydro-performance">Hydro / Coco</option>
@@ -794,7 +794,7 @@ function FertilizersPageInner() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortField)}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
             >
               <option value="best-match">Sortierung: Beste Treffer</option>
               <option value="name">A – Z</option>
@@ -805,7 +805,7 @@ function FertilizersPageInner() {
             <select
               value={priceRegion}
               onChange={(e) => setPriceRegion(e.target.value as 'all' | 'DE' | 'AT' | 'CH' | 'EU' | 'OTHER')}
-              className="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-600"
+              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
             >
               <option value="all">Preise: Alle Länder</option>
               <option value="DE">Deutschland</option>
@@ -813,12 +813,12 @@ function FertilizersPageInner() {
               <option value="CH">Schweiz</option>
               <option value="EU">EU</option>
             </select>
-            <label className="inline-flex items-center gap-1.5 text-xs text-slate-500 cursor-pointer">
+            <label className="inline-flex items-center gap-1.5 text-xs text-muted-fg cursor-pointer">
               <input
                 type="checkbox"
                 checked={priceOnlyAvailable}
                 onChange={(e) => setPriceOnlyAvailable(e.target.checked)}
-                className="h-3.5 w-3.5 rounded border-slate-300"
+                className="h-3.5 w-3.5 rounded border-border"
               />
               Nur verfügbar
             </label>
@@ -828,7 +828,7 @@ function FertilizersPageInner() {
           {activeFilterChips.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1.5">
               {activeFilterChips.map((chip) => (
-                <span key={chip.key} className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800">
+                <span key={chip.key} className="inline-flex items-center gap-1 rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-400">
                   {chip.label}
                 </span>
               ))}
@@ -838,9 +838,9 @@ function FertilizersPageInner() {
           {/* Spell-check suggestions */}
           {suggestedQueries.length > 0 && (
             <div className="mt-2 flex flex-wrap items-center gap-1.5">
-              <span className="text-xs text-amber-700 font-medium">Meintest du:</span>
+              <span className="text-xs text-amber-700 dark:text-amber-400 font-medium">Meintest du:</span>
               {suggestedQueries.map((s) => (
-                <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800 hover:bg-amber-100">
+                <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400 hover:bg-amber-100">
                   {s}
                 </button>
               ))}
@@ -854,7 +854,7 @@ function FertilizersPageInner() {
 
         {/* Top brand chips */}
         <div className="mb-5 flex flex-wrap items-center gap-2">
-          <span className="text-xs font-medium text-slate-400 shrink-0">Marken:</span>
+          <span className="text-xs font-medium text-muted-fg shrink-0">Marken:</span>
           {topBrands.map((brand) => (
             <button
               key={brand}
@@ -862,7 +862,7 @@ function FertilizersPageInner() {
               className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${
                 selectedBrand === brand
                   ? 'border-emerald-500 bg-emerald-500 text-white'
-                  : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+                  : 'border-border bg-card text-foreground/80 hover:border-emerald-300'
               }`}
             >
               {brand}
@@ -872,14 +872,14 @@ function FertilizersPageInner() {
 
         {/* No results */}
         {totalVisible === 0 ? (
-          <div className="rounded-2xl border border-slate-100 bg-slate-50 py-16 text-center">
+          <div className="rounded-2xl border border-border bg-background py-16 text-center">
             <p className="text-2xl">🔍</p>
-            <p className="mt-3 font-semibold text-slate-700">Keine Dünger gefunden</p>
-            <p className="mt-1 text-sm text-slate-500">Versuche weniger Filter oder eine andere Suche.</p>
+            <p className="mt-3 font-semibold text-foreground/80">Keine Dünger gefunden</p>
+            <p className="mt-1 text-sm text-muted-fg">Versuche weniger Filter oder eine andere Suche.</p>
             {suggestedQueries.length > 0 && (
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                 {suggestedQueries.map((s) => (
-                  <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-emerald-200 bg-white px-3 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-50">
+                  <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-emerald-200 dark:border-emerald-900/40 bg-card px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:bg-emerald-950/30">
                     {s}
                   </button>
                 ))}
@@ -907,7 +907,7 @@ function FertilizersPageInner() {
                 return (
                   <article
                     key={fert.id}
-                    className={`group flex flex-col rounded-2xl border border-slate-200 bg-white transition-shadow hover:shadow-md ${viewMode === 'list' ? 'sm:flex-row sm:items-start' : ''}`}
+                    className={`group flex flex-col rounded-2xl border border-border bg-card transition-shadow hover:shadow-md ${viewMode === 'list' ? 'sm:flex-row sm:items-start' : ''}`}
                   >
                     {/* Card top */}
                     <div className={`flex flex-col gap-2 p-4 ${viewMode === 'list' ? 'flex-1' : ''}`}>
@@ -915,8 +915,8 @@ function FertilizersPageInner() {
                       {/* Brand + badges row */}
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0 flex-1">
-                          <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{fert.brand}</p>
-                          <h3 className="mt-0.5 text-base font-bold leading-snug text-slate-900">
+                          <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-fg">{fert.brand}</p>
+                          <h3 className="mt-0.5 text-base font-bold leading-snug text-foreground">
                             {highlightMatches(fert.name, highlightTerms)}
                           </h3>
                         </div>
@@ -925,11 +925,11 @@ function FertilizersPageInner() {
                             {costLabelMap[fert.cost]}
                           </span>
                           {bestPrice != null ? (
-                            <span className="rounded-full border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-xs font-bold text-cyan-800">
+                            <span className="rounded-full border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 px-2 py-0.5 text-xs font-bold text-cyan-800 dark:text-cyan-400">
                               ab {formatEuro(bestPrice)}
                             </span>
                           ) : (
-                            <span className="rounded-full border border-slate-100 bg-slate-50 px-2 py-0.5 text-xs text-slate-400">
+                            <span className="rounded-full border border-border bg-background px-2 py-0.5 text-xs text-muted-fg">
                               Kein Preis
                             </span>
                           )}
@@ -939,44 +939,44 @@ function FertilizersPageInner() {
                       {/* Phase chips */}
                       <div className="flex flex-wrap gap-1">
                         {fert.phase.map((p) => (
-                          <span key={p} className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-semibold text-emerald-700">
+                          <span key={p} className="rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400">
                             {phaseLabelMap[p]}
                           </span>
                         ))}
-                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
+                        <span className="rounded-full bg-background px-2 py-0.5 text-[11px] font-medium text-muted-fg">
                           {baseLabelMap[fert.base]}
                         </span>
-                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
+                        <span className="rounded-full bg-background px-2 py-0.5 text-[11px] font-medium text-muted-fg">
                           {formatLabelMap[fert.format]}
                         </span>
                       </div>
 
                       {/* Description */}
-                      <p className="text-xs leading-relaxed text-slate-500 line-clamp-2">
+                      <p className="text-xs leading-relaxed text-muted-fg line-clamp-2">
                         {highlightMatches(fert.description, highlightTerms)}
                       </p>
 
                       {/* NPK + EC strip */}
-                      <div className="mt-1 flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2 text-xs">
-                        <span className="font-bold text-blue-600">N {fert.npk.n}</span>
+                      <div className="mt-1 flex items-center gap-3 rounded-xl bg-background px-3 py-2 text-xs">
+                        <span className="font-bold text-blue-600 dark:text-blue-400">N {fert.npk.n}</span>
                         <span className="font-bold text-orange-500">P {fert.npk.p}</span>
                         <span className="font-bold text-red-500">K {fert.npk.k}</span>
-                        <span className="ml-auto text-slate-400">EC {fert.ec_range.min}–{fert.ec_range.max}</span>
+                        <span className="ml-auto text-muted-fg">EC {fert.ec_range.min}–{fert.ec_range.max}</span>
                         {fert.yeild_potential === 'very_high' && <span title="Sehr hohes Ertragspotenzial" className="text-amber-500">★★★</span>}
                         {fert.yeild_potential === 'high' && <span title="Hohes Ertragspotenzial" className="text-amber-400">★★</span>}
-                        {fert.yeild_potential === 'average' && <span title="Durchschnittliches Ertragspotenzial" className="text-slate-300">★</span>}
+                        {fert.yeild_potential === 'average' && <span title="Durchschnittliches Ertragspotenzial" className="text-muted-fg">★</span>}
                       </div>
 
                       {/* Tags (max 3) */}
                       {fert.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1">
                           {fert.tags.slice(0, 3).map((tag) => (
-                            <span key={tag} className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-500">
+                            <span key={tag} className="rounded bg-background px-1.5 py-0.5 text-[11px] text-muted-fg">
                               {highlightMatches(tag, highlightTerms)}
                             </span>
                           ))}
                           {fert.tags.length > 3 && (
-                            <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px] text-slate-400">
+                            <span className="rounded bg-background px-1.5 py-0.5 text-[11px] text-muted-fg">
                               +{fert.tags.length - 3}
                             </span>
                           )}
@@ -985,21 +985,21 @@ function FertilizersPageInner() {
                     </div>
 
                     {/* Details toggle */}
-                    <div className="border-t border-slate-100">
+                    <div className="border-t border-border">
                       <button
                         onClick={() => toggleDetails(fert.id)}
-                        className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-semibold text-slate-500 hover:bg-slate-50 hover:text-emerald-700"
+                        className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-semibold text-muted-fg hover:bg-background hover:text-emerald-700 dark:text-emerald-400"
                       >
                         <span>{isOpen ? 'Details schließen' : 'Details & Preisvergleich'}</span>
                         <span className="text-base leading-none">{isOpen ? '▲' : '▼'}</span>
                       </button>
 
                       {isOpen && (
-                        <div className="space-y-4 border-t border-slate-100 px-4 pb-4 pt-3">
+                        <div className="space-y-4 border-t border-border px-4 pb-4 pt-3">
 
                           {/* Prices */}
                           <div>
-                            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Preisvergleich</p>
+                            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-fg">Preisvergleich</p>
                             {offers.length > 0 ? (
                               <div className="space-y-2">
                                 {offers.map((offer) => (
@@ -1008,55 +1008,55 @@ function FertilizersPageInner() {
                                     href={offer.productUrl}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2 hover:border-emerald-200 hover:bg-emerald-50"
+                                    className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-3 py-2 hover:border-emerald-200 dark:border-emerald-900/40 hover:bg-emerald-50 dark:bg-emerald-950/30"
                                   >
                                     <div className="min-w-0 flex-1">
-                                      <p className="truncate text-xs font-semibold text-slate-700">{offer.shop}</p>
-                                      <p className="truncate text-[11px] text-slate-400">{offer.title}</p>
+                                      <p className="truncate text-xs font-semibold text-foreground/80">{offer.shop}</p>
+                                      <p className="truncate text-[11px] text-muted-fg">{offer.title}</p>
                                     </div>
                                     <div className="shrink-0 text-right">
-                                      <p className="text-sm font-bold text-emerald-700">{formatEuro(getEffectivePrice(offer))}</p>
+                                      <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">{formatEuro(getEffectivePrice(offer))}</p>
                                       {offer.shipping != null && (
-                                        <p className="text-[11px] text-slate-400">+{formatEuro(offer.shipping)} Versand</p>
+                                        <p className="text-[11px] text-muted-fg">+{formatEuro(offer.shipping)} Versand</p>
                                       )}
                                     </div>
                                   </a>
                                 ))}
                               </div>
                             ) : (
-                              <p className="text-xs text-slate-400">Keine Preise für den gewählten Filter.</p>
+                              <p className="text-xs text-muted-fg">Keine Preise für den gewählten Filter.</p>
                             )}
                           </div>
 
                           {/* Nutrient detail */}
                           <div>
-                            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Nährstoffprofil</p>
+                            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-fg">Nährstoffprofil</p>
                             <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div className="rounded-lg bg-slate-50 px-3 py-2">
-                                <span className="font-semibold text-slate-600">NPK:</span>{' '}
+                              <div className="rounded-lg bg-background px-3 py-2">
+                                <span className="font-semibold text-foreground/80">NPK:</span>{' '}
                                 {fert.npk.n}–{fert.npk.p}–{fert.npk.k}
                               </div>
                               {fert.ph_range && (
-                                <div className="rounded-lg bg-slate-50 px-3 py-2">
-                                  <span className="font-semibold text-slate-600">pH:</span>{' '}
+                                <div className="rounded-lg bg-background px-3 py-2">
+                                  <span className="font-semibold text-foreground/80">pH:</span>{' '}
                                   {fert.ph_range.min}–{fert.ph_range.max}
                                 </div>
                               )}
                               {fert.dilutionRatio && (
-                                <div className="rounded-lg bg-slate-50 px-3 py-2 font-mono">
-                                  <span className="font-sans font-semibold text-slate-600">Dosierung:</span>{' '}
+                                <div className="rounded-lg bg-background px-3 py-2 font-mono">
+                                  <span className="font-sans font-semibold text-foreground/80">Dosierung:</span>{' '}
                                   {fert.dilutionRatio}
                                 </div>
                               )}
                               {fert.ppfd_recommendation && (
-                                <div className="rounded-lg bg-slate-50 px-3 py-2">
-                                  <span className="font-semibold text-slate-600">PPFD:</span>{' '}
+                                <div className="rounded-lg bg-background px-3 py-2">
+                                  <span className="font-semibold text-foreground/80">PPFD:</span>{' '}
                                   {fert.ppfd_recommendation.min}–{fert.ppfd_recommendation.max} µmol
                                 </div>
                               )}
                             </div>
                             {fert.micronutrients.length > 0 && (
-                              <p className="mt-2 text-[11px] text-slate-500">
+                              <p className="mt-2 text-[11px] text-muted-fg">
                                 <span className="font-semibold">Mikronährstoffe:</span>{' '}
                                 {fert.micronutrients.join(', ')}
                               </p>
@@ -1074,7 +1074,7 @@ function FertilizersPageInner() {
             {totalVisible > pageSize && (
               <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-2">
-                  <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={safePage === 1} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 disabled:opacity-40 hover:border-emerald-300">
+                  <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={safePage === 1} className="rounded-lg border border-border px-4 py-2 text-sm text-foreground/80 disabled:opacity-40 hover:border-emerald-300">
                     ← Zurück
                   </button>
                   {Array.from({ length: totalPagesVisible }, (_, i) => i + 1)
@@ -1082,28 +1082,28 @@ function FertilizersPageInner() {
                     .map((p, i, arr) => {
                       const prev = arr[i - 1];
                       return [
-                        prev != null && p - prev > 1 ? <span key={`gap-${p}`} className="px-1 text-slate-400">…</span> : null,
+                        prev != null && p - prev > 1 ? <span key={`gap-${p}`} className="px-1 text-muted-fg">…</span> : null,
                         <button
                           key={p}
                           onClick={() => setCurrentPage(p)}
                           className={`rounded-lg border px-3.5 py-2 text-sm font-medium ${
                             p === safePage
-                              ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
-                              : 'border-slate-200 bg-white text-slate-600 hover:border-emerald-300'
+                              ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400'
+                              : 'border-border bg-card text-foreground/80 hover:border-emerald-300'
                           }`}
                         >
                           {p}
                         </button>
                       ];
                     })}
-                  <button onClick={() => setCurrentPage((p) => Math.min(totalPagesVisible, p + 1))} disabled={safePage === totalPagesVisible} className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 disabled:opacity-40 hover:border-emerald-300">
+                  <button onClick={() => setCurrentPage((p) => Math.min(totalPagesVisible, p + 1))} disabled={safePage === totalPagesVisible} className="rounded-lg border border-border px-4 py-2 text-sm text-foreground/80 disabled:opacity-40 hover:border-emerald-300">
                     Weiter →
                   </button>
                 </div>
                 <select
                   value={pageSize}
                   onChange={(e) => setPageSize(Number(e.target.value))}
-                  className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600"
+                  className="rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground/80"
                 >
                   <option value={12}>12 / Seite</option>
                   <option value={24}>24 / Seite</option>
@@ -1115,7 +1115,7 @@ function FertilizersPageInner() {
         )}
 
         {/* Footer note */}
-        <p className="mt-10 text-center text-[11px] text-slate-400">
+        <p className="mt-10 text-center text-[11px] text-muted-fg">
           Preisquelle: {fertilizerPriceSnapshot.source} · zuletzt aktualisiert:{' '}
           {fertilizerPriceSnapshot.updatedAt
             ? new Date(fertilizerPriceSnapshot.updatedAt).toLocaleDateString('de-DE')
@@ -1129,7 +1129,7 @@ function FertilizersPageInner() {
 
 export default function FertilizersPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+    <Suspense fallback={<div className="min-h-screen bg-card" />}>
       <FertilizersPageInner />
     </Suspense>
   );
