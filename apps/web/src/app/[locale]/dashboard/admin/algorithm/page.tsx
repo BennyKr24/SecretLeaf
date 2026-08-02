@@ -900,18 +900,11 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
     includePatterns: "",
   });
 
-  // Hardcoded clusters (read-only display)
+  // Hardcoded clusters (read-only display). Kept in sync with
+  // apps/web/src/lib/engine/config.ts TOPIC_CLUSTERS — medizin-evidenz,
+  // pharmakologie and markt-regulierung were dropped, they don't match
+  // SecretLeaf's grow-focused Wissenssystem scope.
   const hardcoded = [
-    {
-      key: "medizin-evidenz",
-      label: "Medizin & Evidenz",
-      queries: ["medical cannabis", "cannabinoid pain", "cbd anxiety", "cannabis sleep"],
-    },
-    {
-      key: "pharmakologie",
-      label: "Pharmakologie",
-      queries: ["cannabis pharmacokinetics", "cannabinoid pharmacology", "thc cbd interactions"],
-    },
     {
       key: "qualitaet-labor",
       label: "Qualität & Labor",
@@ -921,11 +914,6 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
       key: "anbau-postharvest",
       label: "Anbau & Post-Harvest",
       queries: ["cannabis cultivation thc cbd terpene profile", "cannabis curing drying storage", "cannabis postharvest terpene retention", "cannabis greenhouse indoor environmental control"],
-    },
-    {
-      key: "markt-regulierung",
-      label: "Markt & Regulierung",
-      queries: ["cannabis regulation", "cannabis market", "medical cannabis policy"],
     },
   ];
 

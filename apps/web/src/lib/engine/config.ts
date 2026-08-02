@@ -25,44 +25,13 @@ export type TopicCluster = {
   include: RegExp[];
 };
 
+// Only clusters that match SecretLeaf's documented Wissenssystem philosophy
+// (Growing, Krankheiten, Naehrstoffe, Sorten, Cannabinoide, Terpene, Extrakte,
+// Ernte, Trocknung, Curing — see Obsidian/04_Wissen/01_Cannabis_Wissenssystem.md).
+// medizin-evidenz / pharmakologie / markt-regulierung were dropped: a home-grow
+// knowledge base has no editorial use for clinical, pharmacology, or market/
+// regulation studies, and pulling them in was most of the low-relevance backlog.
 export const TOPIC_CLUSTERS: TopicCluster[] = [
-  {
-    key: "medizin-evidenz",
-    queries: [
-      "medical cannabis",
-      "cannabinoid pain",
-      "cbd anxiety",
-      "cannabis sleep",
-    ],
-    include: [
-      /pain/i,
-      /anxiety/i,
-      /sleep/i,
-      /clinical/i,
-      /patient/i,
-      /therapy/i,
-      /efficacy/i,
-      /medical cannabis/i,
-      /cannabinoid/i,
-    ],
-  },
-  {
-    key: "pharmakologie",
-    queries: [
-      "cannabis pharmacokinetics",
-      "cannabinoid pharmacology",
-      "thc cbd interactions",
-    ],
-    include: [
-      /pharmacokinetic/i,
-      /pharmacology/i,
-      /bioavailability/i,
-      /drug interaction/i,
-      /metabolism/i,
-      /dose/i,
-      /oral mucosal/i,
-    ],
-  },
   {
     key: "qualitaet-labor",
     queries: [
@@ -121,23 +90,6 @@ export const TOPIC_CLUSTERS: TopicCluster[] = [
       /chemotype/i,
       /cannabinoid composition/i,
       /breeding/i,
-    ],
-  },
-  {
-    key: "markt-regulierung",
-    queries: [
-      "cannabis regulation",
-      "cannabis market",
-      "medical cannabis policy",
-    ],
-    include: [
-      /regulation/i,
-      /policy/i,
-      /market/i,
-      /dispensar/i,
-      /legalization/i,
-      /public health/i,
-      /retail/i,
     ],
   },
 ];

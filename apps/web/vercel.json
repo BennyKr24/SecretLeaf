@@ -6,10 +6,6 @@
       "schedule": "17 4 * * *"
     },
     {
-      "path": "/api/automation/studies-sync",
-      "schedule": "27 4 * * *"
-    },
-    {
       "path": "/api/automation/engine-sync",
       "schedule": "37 4 * * *"
     },

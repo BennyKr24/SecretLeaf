@@ -25,6 +25,7 @@ import type {
 import { classifyStudy } from "./classify";
 import { scoreStudy } from "./score";
 import { STUDIES_TABLE } from "./config";
+import { loadConfigSection } from "./configLoader";
 import type { PipelineLogger } from "./logger";
 
 // ── Default Config ──────────────────────────────────────────────────────────
@@ -58,6 +59,7 @@ type StoredStudyRow = {
   affiliation_hints: string[] | null;
   source_fingerprint: string;
   fetched_at: string | null;
+  quality_status: string;
 };
 
 function rowToNormalizedStudy(row: StoredStudyRow): NormalizedStudy {
@@ -68,7 +70,12 @@ function rowToNormalizedStudy(row: StoredStudyRow): NormalizedStudy {
     url: row.source,
     publisher: row.origin_label ?? "unknown",
     year: row.fetched_at ? new Date(row.fetched_at).getFullYear().toString() : "0",
-    abstract: row.description ?? row.abstract_snippet,
+    // abstract_snippet is the true (truncated) source abstract; description is
+    // the German editorial review summary built FROM that abstract at ingest
+    // time. Preferring description here was reclassifying studies against a
+    // lossy, translated proxy instead of the real text — that silently wiped
+    // matched_topics on previously well-classified studies.
+    abstract: row.abstract_snippet ?? row.description,
     firstAuthor: row.first_author,
     affiliations: row.affiliation_hints ?? [],
     fingerprint: row.source_fingerprint,
@@ -82,6 +89,7 @@ function rowToNormalizedStudy(row: StoredStudyRow): NormalizedStudy {
  * Fetch a batch of studies eligible for reprocessing.
  *
  * Selection criteria:
+ * - Still pending (never touch studies a human already reviewed as good/bad)
  * - Older than minAgeHours
  * - Score <= maxScoreForReprocess (catches low+mid scorers first)
  * - Ordered by oldest fetched_at first (prioritize stale data)
@@ -98,8 +106,9 @@ async function fetchReprocessCandidates(
   const { data, error } = await supabase
     .from(STUDIES_TABLE)
     .select(
-      "id, title, description, source, doi, study_type, evidence_level, publisher_quality, topic_fit, relevance_score, editorial_priority, matched_topics, flags, first_author, abstract_snippet, origin_label, affiliation_hints, source_fingerprint, fetched_at",
+      "id, title, description, source, doi, study_type, evidence_level, publisher_quality, topic_fit, relevance_score, editorial_priority, matched_topics, flags, first_author, abstract_snippet, origin_label, affiliation_hints, source_fingerprint, fetched_at, quality_status",
     )
+    .eq("quality_status", "pending")
     .order("fetched_at", { ascending: true, nullsFirst: true })
     .limit(config.batchSize * 4);
 
@@ -185,18 +194,27 @@ async function applyReprocessUpdate(
  * @param supabase - Supabase service-role client
  * @param logger - Pipeline logger for observability
  * @param configOverrides - Optional config overrides
- * @param minAcceptScore - Minimum score for the accept gate (from PipelineConfig)
+ * @param minAcceptScore - Minimum score for the accept gate. Defaults to the
+ *   live `engine_config.scoring_params.minAcceptScore` (same source the
+ *   ingestion pipeline uses) so reprocessing can't silently drift from
+ *   whatever threshold is actually configured. Pass explicitly to override.
  */
 export async function runReprocessLoop(
   supabase: SupabaseClient,
   logger: PipelineLogger,
   configOverrides?: Partial<ReprocessConfig>,
-  minAcceptScore: number = 52,
+  minAcceptScore?: number,
 ): Promise<ReprocessResult> {
   const config: ReprocessConfig = {
     ...DEFAULT_REPROCESS_CONFIG,
     ...configOverrides,
   };
+
+  let effectiveMinAcceptScore = minAcceptScore;
+  if (effectiveMinAcceptScore == null) {
+    const scoringParams = await loadConfigSection(supabase, "scoring_params");
+    effectiveMinAcceptScore = scoringParams.minAcceptScore;
+  }
 
   const result: ReprocessResult = {
     processed: 0,
@@ -210,6 +228,7 @@ export async function runReprocessLoop(
     batchSize: config.batchSize,
     minAgeHours: config.minAgeHours,
     maxScoreForReprocess: config.maxScoreForReprocess,
+    minAcceptScore: effectiveMinAcceptScore,
   });
 
   // Fetch candidates
@@ -229,7 +248,7 @@ export async function runReprocessLoop(
     try {
       const { classification, scoring, oldScore, newScore, delta } = reprocessStudy(
         row,
-        minAcceptScore,
+        effectiveMinAcceptScore,
       );
 
       result.processed++;
