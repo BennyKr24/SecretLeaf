@@ -65,22 +65,21 @@ function timeAgo(isoDate: string, t: TFn): string {
 const INTEREST_ORDER = Object.keys(INTEREST_META) as Interest[];
 
 // ── Shared tile primitives ──────────────────────────────────────────────
-// Matches the tool-card language from tools/page.tsx exactly (same
-// tool-card-lift hover, rounded-2xl, gradient top bar, bright icon chip)
-// instead of the flat same-tone-as-background badges this page had before
-// — those had zero contrast against bg-card and read as inert.
+// Icon-chip treatment matches diagnose/page.tsx exactly (bg-emerald-50
+// dark:bg-emerald-950/40) — the tools/page.tsx categoryIconBg this used
+// to copy has no dark: variant at all, so it stays bright-light in dark
+// mode; that's an under-migrated file, not the pattern to follow. Kept
+// the palette restrained to 3 colors (most of the site — diagnose,
+// AuthBenefits — uses emerald for everything regardless of category;
+// only tools/page.tsx goes full rainbow per-category, which reads as the
+// outlier, not the convention).
 
-type AccentName = 'emerald' | 'amber' | 'sky' | 'violet' | 'fuchsia' | 'rose' | 'teal' | 'blue';
+type AccentName = 'emerald' | 'amber' | 'sky';
 
 const ACCENT: Record<AccentName, { bar: string; icon: string; iconText: string; badge: string }> = {
-  emerald: { bar: 'from-emerald-400 to-emerald-600', icon: 'bg-emerald-50', iconText: 'text-emerald-600', badge: 'border-emerald-500/30 bg-emerald-500/15 text-emerald-600' },
-  amber: { bar: 'from-amber-400 to-amber-600', icon: 'bg-amber-50', iconText: 'text-amber-600', badge: 'border-amber-500/30 bg-amber-500/15 text-amber-600' },
-  sky: { bar: 'from-sky-400 to-sky-600', icon: 'bg-sky-50', iconText: 'text-sky-600', badge: 'border-sky-500/30 bg-sky-500/15 text-sky-600' },
-  violet: { bar: 'from-violet-400 to-violet-600', icon: 'bg-violet-50', iconText: 'text-violet-600', badge: 'border-violet-500/30 bg-violet-500/15 text-violet-600' },
-  fuchsia: { bar: 'from-fuchsia-400 to-fuchsia-600', icon: 'bg-fuchsia-50', iconText: 'text-fuchsia-600', badge: 'border-fuchsia-500/30 bg-fuchsia-500/15 text-fuchsia-600' },
-  rose: { bar: 'from-rose-400 to-rose-600', icon: 'bg-rose-50', iconText: 'text-rose-600', badge: 'border-rose-500/30 bg-rose-500/15 text-rose-600' },
-  teal: { bar: 'from-teal-400 to-teal-600', icon: 'bg-teal-50', iconText: 'text-teal-600', badge: 'border-teal-500/30 bg-teal-500/15 text-teal-600' },
-  blue: { bar: 'from-blue-400 to-blue-600', icon: 'bg-blue-50', iconText: 'text-blue-600', badge: 'border-blue-500/30 bg-blue-500/15 text-blue-600' },
+  emerald: { bar: 'from-emerald-400 to-emerald-600', icon: 'bg-emerald-50 dark:bg-emerald-950/40', iconText: 'text-emerald-600 dark:text-emerald-400', badge: 'border-emerald-500/30 bg-emerald-500/15 text-emerald-600' },
+  amber: { bar: 'from-amber-400 to-amber-600', icon: 'bg-amber-50 dark:bg-amber-950/40', iconText: 'text-amber-600 dark:text-amber-400', badge: 'border-amber-500/30 bg-amber-500/15 text-amber-600' },
+  sky: { bar: 'from-sky-400 to-sky-600', icon: 'bg-sky-50 dark:bg-sky-950/40', iconText: 'text-sky-600 dark:text-sky-400', badge: 'border-sky-500/30 bg-sky-500/15 text-sky-600' },
 };
 
 function TileIcon({ icon: Icon, accent }: { icon: LucideIcon; accent: AccentName }) {
@@ -506,7 +505,7 @@ export default function UserDashboardPage() {
           ) : (
             <section className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-emerald-500/30 bg-card p-8 text-center md:col-span-2" data-reveal>
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08),transparent_70%)]" aria-hidden="true" />
-              <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 shadow-sm">
+              <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 shadow-sm dark:bg-emerald-950/40">
                 <Sprout className="h-7 w-7 text-emerald-600" strokeWidth={1.75} />
               </span>
               <h2 className="relative mt-3 text-base font-bold text-foreground">{t('noActiveGrowTitle')}</h2>
@@ -593,7 +592,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Continue reading */}
-          <Tile icon={History} accent="violet" title={t('continueReadingTitle')} subtitle={t('continueReadingSub')} badge={continueReading.length} revealDelay={120}>
+          <Tile icon={History} accent="emerald" title={t('continueReadingTitle')} subtitle={t('continueReadingSub')} badge={continueReading.length} revealDelay={120}>
             {continueReading.length === 0 ? (
               <TileEmpty
                 icon={History}
@@ -615,7 +614,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Saved studies */}
-          <Tile icon={Bookmark} accent="blue" title={t('savedStudiesTitle')} subtitle={t('savedStudiesSub')} badge={bookmarkedArticles.length} revealDelay={160}>
+          <Tile icon={Bookmark} accent="emerald" title={t('savedStudiesTitle')} subtitle={t('savedStudiesSub')} badge={bookmarkedArticles.length} revealDelay={160}>
             {bookmarkedArticles.length === 0 ? (
               <TileEmpty
                 icon={Bookmark}
@@ -631,7 +630,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Recommended */}
-          <Tile icon={Sparkles} accent="fuchsia" title={t('recommendedTitle')} subtitle={t('recommendedSub')} badge={recommendedArticles.length} revealDelay={200}>
+          <Tile icon={Sparkles} accent="emerald" title={t('recommendedTitle')} subtitle={t('recommendedSub')} badge={recommendedArticles.length} revealDelay={200}>
             {recommendedArticles.length === 0 && interests.length === 0 ? (
               <TileEmpty
                 icon={Sparkles}
@@ -647,7 +646,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Weekly digest — tabbed instead of 3 stacked columns */}
-          <Tile icon={Mail} accent="rose" title={t('weeklyDigestTitle')} subtitle={t('weeklyDigestSub')} revealDelay={240}>
+          <Tile icon={Mail} accent="emerald" title={t('weeklyDigestTitle')} subtitle={t('weeklyDigestSub')} revealDelay={240}>
             <div className="mb-2 flex gap-1 rounded-lg border border-border bg-background p-0.5">
               {([
                 ['new', t('newGrowStudies')],
@@ -686,7 +685,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Interests + quick access, combined into one small tile */}
-          <Tile icon={Target} accent="teal" title={t('myInterestsTitle')} subtitle={t('myInterestsSub')} revealDelay={280}>
+          <Tile icon={Target} accent="emerald" title={t('myInterestsTitle')} subtitle={t('myInterestsSub')} revealDelay={280}>
             <div className="flex flex-wrap gap-1.5">
               {INTEREST_ORDER.map((interest) => {
                 const meta = INTEREST_META[interest];
