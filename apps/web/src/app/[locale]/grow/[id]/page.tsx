@@ -16,8 +16,8 @@ import { useGrowLog } from '@/hooks/useGrowLog';
 import { useAuth } from '@/hooks/useAuth';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
 import { PHASE_ICONS, PHASE_ORDER } from '@/lib/grow/phases';
-import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
-import type { GrowTask, Grow, Plant, LogEntry, HarvestData, GrowPhaseId } from '@/lib/grow/types';
+import { TASK_CATEGORY_ICONS, GROW_STATUS_LABELS } from '@/lib/grow/types';
+import type { GrowTask, Grow, Plant, LogEntry, HarvestData, GrowPhaseId, GrowStatus } from '@/lib/grow/types';
 import SmartInsights from '@/components/SmartInsights';
 import GrowKnowledgePanel from '@/components/grow/GrowKnowledgePanel';
 import { Analytics } from '@/lib/analytics';
@@ -118,6 +118,95 @@ function PhaseTimeline({ grow }: { grow: Grow }) {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+// ── Grow settings panel ─────────────────────────────────────────────────────
+
+const GROW_STATUS_OPTIONS: GrowStatus[] = ['aktiv', 'pausiert', 'abgeschlossen', 'abgebrochen'];
+
+function GrowSettingsPanel({
+  grow,
+  onUpdate,
+}: {
+  grow: Grow;
+  onUpdate: (growId: string, updates: Partial<Grow>) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState(grow.name);
+  const [pflanzenAnzahl, setPflanzenAnzahl] = useState(String(grow.pflanzenAnzahl));
+  const [status, setStatus] = useState<GrowStatus>(grow.status);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => {
+    const parsedCount = Math.max(1, parseInt(pflanzenAnzahl, 10) || grow.pflanzenAnzahl);
+    onUpdate(grow.id, {
+      name: name.trim() || grow.name,
+      pflanzenAnzahl: parsedCount,
+      status,
+    });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="rounded-2xl border border-border bg-card shadow-sm">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between px-5 py-3.5 text-left"
+      >
+        <span className="text-sm font-bold text-foreground">⚙ Grow-Einstellungen</span>
+        <span className={`text-muted-fg transition-transform ${open ? 'rotate-180' : ''}`}>▾</span>
+      </button>
+      {open && (
+        <div className="space-y-4 border-t border-border px-5 py-4">
+          <div>
+            <label className="mb-1 block text-xs font-semibold text-muted-fg">Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/40"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="mb-1 block text-xs font-semibold text-muted-fg">Pflanzenanzahl</label>
+              <input
+                type="number"
+                min={1}
+                value={pflanzenAnzahl}
+                onChange={(e) => setPflanzenAnzahl(e.target.value)}
+                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/40"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-xs font-semibold text-muted-fg">Status</label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value as GrowStatus)}
+                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/40"
+              >
+                {GROW_STATUS_OPTIONS.map((s) => (
+                  <option key={s} value={s}>{GROW_STATUS_LABELS[s]}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handleSave}
+            className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white transition hover:bg-primary-dark"
+          >
+            {saved ? '✓ Gespeichert' : 'Speichern'}
+          </button>
+          <p className="text-[11px] text-muted-fg">
+            Umgebung, Medium und Lichttyp lassen sich nach dem Start nicht mehr ändern, da davon der generierte Aufgabenplan abhängt — dafür einen neuen Grow anlegen.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
@@ -1250,6 +1339,8 @@ export default function GrowPage({}: Props) {
 
           </div>
         </div>
+
+        <GrowSettingsPanel grow={grow} onUpdate={updateGrow} />
 
         {/* ── Phase Suggestion ─────────────────────────── */}
         {(() => {

@@ -419,7 +419,8 @@ export default function UserDashboardPage() {
             {/* Grow meta */}
             <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
               {(() => {
-                const phase = getPhaseForDay(activeGrow.plan, activeGrow.currentDay);
+                const phase = activeGrow.plan.phases.find((p) => p.id === activeGrow.currentPhaseId)
+                  ?? getPhaseForDay(activeGrow.plan, activeGrow.currentDay);
                 const { completed, total, percent } = getTaskProgress(activeGrow);
                 const phaseProgress = activeGrow.plan.totalDays > 0
                   ? Math.min(100, Math.round((activeGrow.currentDay / activeGrow.plan.totalDays) * 100))
