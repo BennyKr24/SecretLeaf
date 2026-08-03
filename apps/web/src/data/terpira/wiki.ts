@@ -1195,72 +1195,76 @@ const baseWikiArticles: TerpiraArticle[] = [
   },
   {
     slug: "pgr-und-kontaminanten",
-    title: "PGR und Kontaminanten erkennen",
-    summary: "Worauf Verbraucher achten sollten und welche Laborwerte für sichere Entscheidungen relevant sind.",
+    title: "Wachstumsregler (PGR) und andere Rückstände vermeiden",
+    summary: "Warum manche Dünger und Blütebooster Wachstumsregler enthalten können, wie du sie beim Kauf vermeidest und woran du bei deiner eigenen Ernte stutzig werden solltest.",
     category: "sicherheit",
     difficulty: "einsteiger",
     readMinutes: 6,
-    lastUpdated: "2026-03-26",
-    tags: ["PGR", "Rückstände", "COA", "Risiko"],
+    lastUpdated: "2026-08-03",
+    tags: ["Wachstumsregler", "Dünger", "Sicherheit", "Ernte"],
     keyTakeaways: [
-      "Sicherheit beginnt bei transparenter Lieferkette und nachvollziehbaren Laborberichten.",
-      "Auffällige Optik kann ein Hinweis sein, ersetzt aber keine Analytik.",
-      "Risikokommunikation muss konkret und messbar sein."
+      "Wachstumsregler (PGR) sind Stoffe, die Wuchs und Blüte künstlich steuern — manche sind gesundheitlich bedenklich und in der EU/Schweiz nicht für Lebens- oder Genussmittel zugelassen.",
+      "Das größte Risiko für Hobby-Grower sind nicht deklarierte 'Wunder-Booster' ohne echte Inhaltsstoffliste — nicht die eigene, mit bekannten Düngern gezogene Pflanze.",
+      "Auffällig dichte, schwere Buds oder ein untypischer Geruch können ein Warnsignal sein, sind aber kein Beweis — sie ersetzen keinen Labortest."
     ],
     quickFacts: [
-      { label: "Primare Prüfung", value: "COA + Chargenbezug" },
-      { label: "Häufige Lücke", value: "Keine aktuellen Rückstandsdaten" },
-      { label: "Best Practice", value: "Regelmäßige Lieferanten-Audits" }
+      { label: "Was", value: "Künstliche Wuchs-/Blütesteuerung" },
+      { label: "Größtes Risiko", value: "Undeklarierte 'Mega-Boost'-Produkte" },
+      { label: "Bester Schutz", value: "Bekannte Dünger mit vollständiger Inhaltsliste" }
     ],
     sections: [
       {
-        heading: "Von der Beobachtung zur Bewertung",
+        heading: "Was Wachstumsregler sind — und warum sie ein Thema sind",
         content: [
-          "Verlasse dich nicht nur auf Geruch oder Dichte der Blüten.",
-          "Sicherheitsurteile sollten auf Laborwerten, Historie und Prozessdaten beruhen."
+          "Wachstumsregler (englisch Plant Growth Regulator, kurz PGR) sind Substanzen, die Zellteilung, Wuchsform oder Blütenbildung einer Pflanze künstlich beeinflussen — z. B. um besonders dichte, schwere Blüten zu erzwingen.",
+          "Einige dieser Stoffe stehen im Verdacht, gesundheitlich bedenklich zu sein, und sind in der EU und der Schweiz für den Anbau von Konsumpflanzen nicht zugelassen. Das eigentliche Problem: Sie tauchen manchmal undeklariert in Düngeprodukten auf, die mit unrealistischen Ertragsversprechen beworben werden."
         ]
       },
       {
-        heading: "Risikomanagement im Alltag",
+        heading: "Wie du das Risiko beim Düngerkauf klein hältst",
         content: [
-          "Baue Sperrlogik für auffällige Chargen in den operativen Ablauf ein.",
-          "Kommuniziere transparent, warum Produkte zurückgehalten oder nachgetestet werden."
+          "Kaufe Dünger nur von etablierten Marken mit vollständiger Inhaltsstoffliste — wenn ein Produkt 'geheime Formel' oder 'garantiert doppelter Ertrag' verspricht, ohne die Inhaltsstoffe offenzulegen, ist Vorsicht angebracht.",
+          "Im Zweifel hilft ein Blick in unseren Dünger-Katalog: Dort sind Produkte mit bekannter, nachvollziehbarer Zusammensetzung erfasst.",
+          "Für alle üblichen Nährstoffe (Stickstoff, Phosphor, Kalium, Cal-Mag & Co.) brauchst du keine Spezialprodukte — der Nährstoff-Rechner in den Tools reicht für ein normales Düngeprogramm."
+        ]
+      },
+      {
+        heading: "Warnsignale bei der eigenen Ernte",
+        content: [
+          "Ungewöhnlich harte, schwere Buds, ein chemischer statt pflanzlicher Geruch, oder Blüten, die viel dichter sind als bei der beschriebenen Sorte üblich, können — müssen aber nicht — auf ein problematisches Produkt in der Düngekette hindeuten.",
+          "Diese Anzeichen sind nur ein grober Anhaltspunkt. Die einzige verlässliche Prüfung ist ein Labortest (siehe „COA richtig lesen“), den es für den Hobbybereich meist nicht braucht, wenn du von Anfang an bekannte Dünger verwendet hast."
         ]
       }
     ],
-    warnings: ["Keine Analyse, keine Freigabe: ohne belastbare Daten sollte keine Charge in Umlauf gehen."],
+    warnings: ["Bei Nährstoffprodukten ohne vollständige, nachvollziehbare Inhaltsstoffliste und mit unrealistischen Ertragsversprechen: nicht verwenden."],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: Was sind PGR?",
-        text: "Plant Growth Regulator - Stoffe, die Wachstum und Blüte künstlich manipulieren. Viele sind in der EU/CH nicht zugelassen."
+        title: "Kurz erklärt: Was ist ein Wachstumsregler (PGR)?",
+        text: "Ein Stoff, der Wuchs oder Blüte künstlich steuert, statt der Pflanze normal zu wachsen. Manche dieser Stoffe sind gesundheitlich bedenklich und in der EU/Schweiz nicht zugelassen."
       },
       {
-        title: "Kurz erklärt: Warum Sicherheit?",
-        text: "PGR und Pestizide sind akute Risiken. Produktsicherheit beginnt mit Lieferkette-Transparenz und Labor-Freigabe."
+        title: "Kurz erklärt: Bin ich als Hobby-Grower gefährdet?",
+        text: "Nur indirekt — über zweifelhafte Düngeprodukte. Wer bekannte, vollständig deklarierte Dünger nutzt, hat praktisch kein PGR-Risiko."
       }
     ],
     faq: [
       {
-        question: "Wie erkenne ich PGR-Belästigung ohne Labor?",
-        answer: "Normalerweise nicht sicher. Äusserlich können unrealistische Dichten, extreme Feuchte-Verhältnisse oder Geruchsverfremdungen Hinweise sein - ersetzen aber keine Analytik."
+        question: "Woran erkenne ich verdächtige Dünger im Handel?",
+        answer: "An fehlender oder unvollständiger Inhaltsstoffliste, an übertriebenen Werbeversprechen ('verdoppelt deinen Ertrag garantiert') und an fehlenden Angaben zum Hersteller. Seriöse Marken listen ihre Inhaltsstoffe vollständig."
       },
       {
-        question: "Welche Kontaminanten sind kritisch?",
-        answer: "Priorität: Pestizide, Pilzgifte und Schwer-Metalle. Dann: Lachgas, PGRs, Lösungsmittelreste. Labore sollten priorisiert nach lokalen Grenzwerten testen."
+        question: "Sind harte, dichte Buds automatisch ein Warnzeichen?",
+        answer: "Nein. Manche Sorten bilden von Natur aus sehr dichte Blüten. Auffällig wird es erst, wenn die Dichte deutlich von der Sortenbeschreibung abweicht oder mit chemischem Geruch einhergeht — auch dann ist es nur ein Hinweis, kein Beweis."
       }
     ],
     glossary: [
       {
-        term: "PGR",
-        definition: "Plant Growth Regulator - künstliche Stoffe zur Wachstum- und Ertrag-Manipulation."
+        term: "Wachstumsregler (PGR)",
+        definition: "Künstliche Stoffe, die Wuchs oder Blütenbildung einer Pflanze steuern, statt sie normal wachsen zu lassen."
       },
       {
-        term: "Pestizid-Klassen",
-        definition: "Insektizide, Fungizide, Herbizide und weitere - je Region unterschiedlich reguliert."
-      },
-      {
-        term: "Nachweisgrenzen",
-        definition: "Untere Erkennungsschwelle eines Labors; LOQ = Quantifizierungsgrenze, LOD = Nachweisgrenze."
+        term: "COA",
+        definition: "Certificate of Analysis — Laborbericht, der die tatsächlichen Inhaltsstoffe einer Probe belegt."
       }
     ],
     sourceIds: ["applied-microbiology-fungal-contamination", "food-control-water-activity-microbiology", "journal-food-protection-pgr-pesticides", "toxicology-heavy-metals-cannabis"],
