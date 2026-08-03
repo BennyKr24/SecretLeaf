@@ -799,79 +799,6 @@ const baseWikiArticles: TerpiraArticle[] = [
     relatedSlugs: ["coa-richtig-lesen", "hash-typen-vergleichen"]
   },
   {
-    slug: "cannabinoide-und-evidenz",
-    title: "Cannabinoide und Evidenzlagen",
-    summary: "Einordung von THC, CBD und Minor Cannabinoiden mit Fokus auf Studienqualität statt Buzzwords.",
-    category: "medizin",
-    difficulty: "fortgeschritten",
-    readMinutes: 9,
-    lastUpdated: "2026-03-26",
-    tags: ["THC", "CBD", "CBG", "Evidenz"],
-    keyTakeaways: [
-      "Nicht jede oft zitierte Aussage ist klinisch robust abgesichert.",
-      "Dosis, Kontext und individuelle Faktoren verändern Effekte deutlich.",
-      "Studienqualität ist wichtiger als virale Einzelclaims."
-    ],
-    quickFacts: [
-      { label: "Fokus", value: "Evidenzstufen statt Hype" },
-      { label: "Bewertung", value: "RCT, Meta-Analyse, Beobachtung" },
-      { label: "Praxis", value: "Aufklärung statt Heilversprechen" }
-    ],
-    sections: [
-      {
-        heading: "Evidenz lesen lernen",
-        content: [
-          "Unterscheide zwischen präklinischer Evidenz und klinischen Daten am Menschen.",
-          "Bewerte immer Endpunkte, Studiendauer, Population und Nebenwirkungen."
-        ]
-      },
-      {
-        heading: "Verantwortungsvolle Kommunikation",
-        content: [
-          "Nutze neutrale Sprache, kennzeichne Unsicherheiten und verweise auf fachliche Beratung.",
-          "Vermeide pauschale Heilversprechen bei komplexen Krankheitsbildern."
-        ]
-      }
-    ],
-    warnings: ["Dieser Artikel ist kein medizinischer Rat und ersetzt keine ärztliche Beratung."],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Was ist Evidenz?",
-        text: "Stufen von schwach (einzelne Fallberichte) bis stark (mehrere große RCT-Studien mit Replikation)."
-      },
-      {
-        title: "Kurz erklärt: Warum klinische Daten wichtiger sind",
-        text: "Laborversuche und Tiermodelle sind Hinweise, ersetzen aber nie klinische Studien beim Menschen."
-      }
-    ],
-    faq: [
-      {
-        question: "Ist CBD wirklich ein Hormon-Regulator?",
-        answer: "CBD zeigt in einigen in-vitro und Tiermodellen Effekte, aber Humanstudien sind begrenzt. Vorsicht vor Überklärungen von Labliteratur."
-      },
-      {
-        question: "Schädigt THC das Gehirn?",
-        answer: "Chronischer hoher THC-Konsum in der Adoleszenz hat Assoziationen mit kognitiven Effekten. Erwachsenenkonsum bleibt im Forschungsgrenzbereich."
-      }
-    ],
-    glossary: [
-      {
-        term: "Endocannabinoid-System",
-        definition: "Körper-interner Signalisierungsweg mit CB1/CB2-Rezeptoren; reguliert Stimmung, Schmerz, Immunfunktion."
-      },
-      {
-        term: "THC",
-        definition: "Tetrahydrocannabinol; primärer psychoaktiver Bestandteil; CB1-Rezeptor-Agonist."
-      },
-      {
-        term: "CBD",
-        definition: "Cannabidiol; nicht-psychoaktiv; moduliert CB1/CB2; Fokus vieler medizinischer Forschungen."
-      }
-    ],
-    sourceIds: ["jama-cannabinoid-evidence-2024", "lancet-cannabis-neurology", "nature-neuroscience-cbd-anxiety", "addiction-thc-dependence-2024", "cochrane-cannabis-review-2024"],
-    relatedSlugs: ["coa-richtig-lesen", "pgr-und-kontaminanten"]
-  },
-  {
     slug: "inhalation-vs-edibles",
     title: "Inhalation vs. Edibles: Wirkung und Timing",
     summary: "Vergleich von Aufnahmewegen, Onset-Zeit, Wirkdauer und Risiken für bessere Aufklärung.",
@@ -944,7 +871,8 @@ const baseWikiArticles: TerpiraArticle[] = [
         definition: "Zeit, die eine Substanz bis zur Hälfte ihres Ausgangsspiegels im Körper abgebaut wird."
       }
     ],
-    sourceIds: ["pharmaceutical-research-bioavailability", "clinical-pharmacology-thc-cbd-kinetics", "drug-alcohol-dependence-consumption-methods", "nutritional-bioavailability-edibles"],    relatedSlugs: ["pgr-und-kontaminanten", "cannabinoide-und-evidenz"]
+    sourceIds: ["pharmaceutical-research-bioavailability", "clinical-pharmacology-thc-cbd-kinetics", "drug-alcohol-dependence-consumption-methods", "nutritional-bioavailability-edibles"],
+    relatedSlugs: ["pgr-und-kontaminanten"]
   },
   {
     slug: "hash-typen-vergleichen",
@@ -1263,7 +1191,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       }
     ],
     sourceIds: ["journal-chromatography-cannabinoids", "analytical-chemistry-terpen-profiling", "aoac-lab-methods-2024", "iso17025-testing-labs"],
-    relatedSlugs: ["pgr-und-kontaminanten", "cannabinoide-und-evidenz"]
+    relatedSlugs: ["pgr-und-kontaminanten"]
   },
   {
     slug: "pgr-und-kontaminanten",
@@ -1337,155 +1265,6 @@ const baseWikiArticles: TerpiraArticle[] = [
     ],
     sourceIds: ["applied-microbiology-fungal-contamination", "food-control-water-activity-microbiology", "journal-food-protection-pgr-pesticides", "toxicology-heavy-metals-cannabis"],
     relatedSlugs: ["coa-richtig-lesen", "wasseraktivitaet-und-curing"]
-  },
-  {
-    slug: "rechtliche-grundlagen-dach",
-    title: "Rechtliche Grundlagen im DACH-Raum",
-    summary: "Überblick zu Regelungslogik, Nachweispflichten und typischen Compliance-Fehlern.",
-    category: "recht",
-    difficulty: "einsteiger",
-    readMinutes: 8,
-    lastUpdated: "2026-03-26",
-    tags: ["Recht", "DACH", "Compliance", "Dokumentation"],
-    keyTakeaways: [
-      "Rechtliche Anforderungen unterscheiden sich je Region und Nutzungsfall deutlich.",
-      "Dokumentationspflichten sind operativ genauso wichtig wie Produktqualität.",
-      "Frühe Compliance-Prüfungen senken spätere Kosten und Risiken."
-    ],
-    quickFacts: [
-      { label: "Kernprinzip", value: "Regional differenziert arbeiten" },
-      { label: "Risiko", value: "Fehlende Nachweise" },
-      { label: "Empfehlung", value: "Regelupdate-Routine etablieren" }
-    ],
-    sections: [
-      {
-        heading: "Compliance als Prozess",
-        content: [
-          "Rechtssicherheit ist kein einmaliges Projekt, sondern ein laufender Anpassungsprozess.",
-          "Halte Verantwortlichkeiten, Fristen und Eskalationswege schriftlich fest."
-        ]
-      },
-      {
-        heading: "Typische Fehler vermeiden",
-        content: [
-          "Viele Probleme entstehen durch uneinheitliche Dokumentation und unklare Rollen.",
-          "Nutze standardisierte Freigabe-Checklisten für Kommunikation und Produkte."
-        ],
-        checklist: [
-          "Monatliches Regelmonitoring",
-          "Freigabeprozess mit Vier-Augen-Prinzip",
-          "Archivierung relevanter Nachweise"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Regelungslogik",
-        text: "DE, AT, CH haben unterschiedliche Gesetze. Cannabis ist je Kontext (medizinisch, Beratung, Forschung) anders geregelt."
-      },
-      {
-        title: "Kurz erklärt: Dokumentation zählt",
-        text: "Rechtssicherheit entsteht nicht durch gutes Produkt allein, sondern durch sichere Nachweise: Herkunft, Labor, Freigaben."
-      }
-    ],
-    faq: [
-      {
-        question: "Was ist für Compliance essentiell?",
-        answer: "Je Land: Registrierung, COA-Anforderungen, Verpackungsrichtlinien, Werbeverbot und Lagerdokumentation. Das variiert stark - lokal prüfung ist Pflicht."
-      },
-      {
-        question: "Was ist der größte Fehler?",
-        answer: "Annahme, dass einmalige Compliance-Prüfung ausreicht. Gesetze ändern sich. Regelupdates müssen zyklisch sein."
-      }
-    ],
-    glossary: [
-      {
-        term: "BtMG (DE)",
-        definition: "Betäubungsmittelgesetz; regelt Anbau, Besitz, Handel von Cannabis in Deutschland."
-      },
-      {
-        term: "Nachweispflicht",
-        definition: "Verpflichtung, Compliance und Sicherheit durch Dokumentation zu belegen."
-      },
-      {
-        term: "Vier-Augen-Prinzip",
-        definition: "Dual-Approval für kritische Entscheidungen; erhöht Dokumentationsqualität und Rechtssicherheit."
-      }
-    ],
-    sourceIds: ["bfarm-german-cannabis-guidelines", "swissmedic-cannabis-requirements", "ages-austria-cannabis-standards", "ema-good-manufacturing-practice", "codex-food-hygiene-2022"],
-    relatedSlugs: ["markttransparenz-und-preise", "coa-richtig-lesen"]
-  },
-  {
-    slug: "markttransparenz-und-preise",
-    title: "Markttransparenz und Preislogik",
-    summary: "Wie sich Preis, Qualität, Risiko und Verfügbarkeit in realen Märkten gegenseitig beeinflussen.",
-    category: "markt",
-    difficulty: "fortgeschritten",
-    readMinutes: 8,
-    lastUpdated: "2026-03-26",
-    tags: ["Markt", "Preisbildung", "Qualität", "Angebot"],
-    keyTakeaways: [
-      "Niedrige Preise ohne Datenbasis korrelieren oft mit höheren Qualitätsrisiken.",
-      "Transparenz über Herkunft und Analyse reduziert Informationsasymmetrie.",
-      "Marktdaten sollten lokal segmentiert statt pauschal interpretiert werden."
-    ],
-    quickFacts: [
-      { label: "Treiber", value: "Angebot, Risiko, Compliance-Kosten" },
-      { label: "Signal", value: "Preis ohne Nachweis = Warnflag" },
-      { label: "Strategie", value: "Qualitätskorridor statt Billigstpreis" }
-    ],
-    sections: [
-      {
-        heading: "Preis ist ein Systemsignal",
-        content: [
-          "Preis alleine sagt wenig. Erst in Verbindung mit COA, Chargenhistorie und Lieferzuverlässigkeit entsteht ein valider Vergleich.",
-          "Für Nutzer ist eine klare Risiko-Nutzen-Kommunikation entscheidend."
-        ]
-      },
-      {
-        heading: "Operative Umsetzung für Plattformen",
-        content: [
-          "Lege Mindestkriterien für Datenqualität fest und stufe Anbieter nach Nachweisqualität.",
-          "Damit wird Wettbewerb über Transparenz statt nur über Preis gefördert."
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Informationsasymmetrie",
-        text: "Käufer kennt nicht die teuren Qualitäts- und Compliance-Prozesse. Niedriger Preis ohne Nachweis ist daher fast immer ein Warnsignal."
-      },
-      {
-        title: "Kurz erklärt: Angebot schlägt Nachfrage",
-        text: "Verknappung treibt Preise hoch. Transparente Lieferketten stabilisieren Preise und reduzieren Spekulation."
-      }
-    ],
-    faq: [
-      {
-        question: "Ist hoher Preis = bessere Qualität?",
-        answer: "Nicht automatisch. Hoher Preis kann auch Monopol oder Hype sein. Preis + Transparenz + Konsistenz = echte Qualitätsindikation."
-      },
-      {
-        question: "Wie erkenne ich unfaire Preise?",
-        answer: "Vergleiche den Preis mit verfügbaren Analysen (COA), Lieferzuverlässigkeit, Rückverfolgbarkeit und Reklamationsquote. Fehlende Transparenz ist ein klares Warnsignal."
-      }
-    ],
-    glossary: [
-      {
-        term: "Marktpreisbildung",
-        definition: "Preis entsteht durch Angebot, Nachfrage, Risiko und operative Kosten."
-      },
-      {
-        term: "Informationsasymmetrie",
-        definition: "Käufer und Verkäufer haben unterschiedliche Information über Qualität und Risiko."
-      },
-      {
-        term: "Qualitätskorridor",
-        definition: "Realistischer Preisbereich für definierte Qualitätsstandards, statt Fokus auf den billigsten Einzelpreis."
-      }
-    ],
-    sourceIds: ["emcdda-cannabis-profiles-2025", "unodc-world-drug-report-2025", "who-cannabis-2024"],
-    relatedSlugs: ["coa-richtig-lesen", "rechtliche-grundlagen-dach"]
   },
   {
     slug: "vpd-und-ec-kombi-rechner-guide",
@@ -4046,7 +3825,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Vorstufe", definition: "Chemische Ausgangssubstanz, aus der weitere Verbindungen entstehen." },
       { term: "Minor Cannabinoide", definition: "Cannabinoide, die nur in kleineren Mengen auftreten und oft methodisch schwerer zu bewerten sind." },
     ],
-    relatedSlugs: ["cannabinoide-und-evidenz", "analytik-hplc-vs-gc-bei-cannabinoiden", "coa-richtig-lesen"]
+    relatedSlugs: ["analytik-hplc-vs-gc-bei-cannabinoiden", "coa-richtig-lesen"]
   }),
   createArticle({
     slug: "thc-zu-cbn-abbau-und-oxidation",
@@ -4462,337 +4241,6 @@ const expansionWikiArticles: TerpiraArticle[] = [
     relatedSlugs: ["terpene-und-wirkprofil", "myrcen-limonen-caryophyllen-einordnung", "coa-richtig-lesen"]
   }),
   createArticle({
-    slug: "cannabis-bei-schmerz-evidenzcheck",
-    title: "Cannabis bei Schmerz: Evidenzcheck",
-    summary: "Welche Aussagen zur Schmerzreduktion belegt sind, wo die Forschung Grenzen hat und wie Aufklärung sauber bleibt.",
-    category: "medizin",
-    difficulty: "fortgeschritten",
-    readMinutes: 8,
-    tags: ["Schmerz", "Medizin", "Evidenz", "Meta-Analyse"],
-    keyTakeaways: [
-      "Schmerz ist kein einheitlicher Endpunkt; Evidenz unterscheidet sich je Indikation und Studiendesign.",
-      "Kommunikation muss Wirkung, Nebenwirkung und Unsicherheit gleichzeitig abbilden.",
-      "Seriöse Aufklärung vermeidet pauschale Heilsprache."
-    ],
-    quickFacts: [
-      { label: "Wichtig", value: "Indikation und Endpunkt trennen" },
-      { label: "Grenze", value: "Nicht jede Studie ist übertragbar" },
-      { label: "Praxis", value: "Aufklärung statt Versprechen" }
-    ],
-    sections: [
-      {
-        heading: "Warum Schmerzforschung so schwer zu lesen ist",
-        content: [
-          "Schmerz kann akut, chronisch, neuropathisch oder entzündlich sein. Studien lassen sich deshalb nicht beliebig zusammenwerfen.",
-          "Ohne saubere Trennung der Endpunkte entstehen schnell überzogene Schlussfolgerungen."
-        ]
-      },
-      {
-        heading: "Wie ein fairer Evidenzcheck aussieht",
-        content: [
-          "Bewerte Population, Dosis, Vergleichsgruppe, Studiendauer und Nebenwirkungen gemeinsam. Nur dann wird der Erkenntniswert sichtbar.",
-          "Für Content bedeutet das: Nutzen nennen, Unsicherheit markieren, Grenzen nicht verschweigen."
-        ],
-        checklist: [
-          "Indikation klar benennen",
-          "Studiendauer und Endpunkt offenlegen",
-          "Nebenwirkungen immer mitkommunizieren"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Endpunkt",
-        text: "Das konkrete Ergebnis, das in einer Studie gemessen wird, etwa Schmerzintensität oder Schlafqualität."
-      },
-      {
-        title: "Kurz erklärt: Meta-Analyse",
-        text: "Zusammenfassung mehrerer Studien, die einen breiteren Blick ermöglicht, aber nur so gut ist wie die eingeschlossenen Daten."
-      }
-    ],
-    faq: [
-      {
-        question: "Ist Cannabis ein generelles Schmerzmittel?",
-        answer: "So pauschal lässt sich das nicht sagen. Die Evidenz ist indikations- und populationsabhängig."
-      },
-      {
-        question: "Warum widersprechen sich Schlagzeilen so oft?",
-        answer: "Weil Studien unterschiedliche Endpunkte, Gruppen und Qualitätsniveaus haben und Medien das oft verkurzen."
-      }
-    ],
-    glossary: [
-      { term: "Indikation", definition: "Konkreter medizinischer Anwendungsbereich oder Beschwerdekomplex." },
-      { term: "Endpunkt", definition: "Vorab definierte Größe, die in einer Studie gemessen und bewertet wird." },
-      { term: "Placebo", definition: "Vergleichsbehandlung ohne den eigentlichen Wirkstoff, um Effekte sauberer einordnen zu können." },
-    ],
-    relatedSlugs: ["cannabinoide-und-evidenz", "cannabis-und-schlaf-was-ist-belegt", "cannabinoide-nebenwirkungen-und-interaktionen"]
-  }),
-  createArticle({
-    slug: "cannabis-und-schlaf-was-ist-belegt",
-    title: "Cannabis und Schlaf: Was ist belegt?",
-    summary: "Eine Einordnung zwischen subjektiver Beruhigung, Studienlage und den Grenzen einfacher Narrativen.",
-    category: "medizin",
-    difficulty: "fortgeschritten",
-    readMinutes: 8,
-    tags: ["Schlaf", "CBD", "THC", "Evidenz"],
-    keyTakeaways: [
-      "Subjektive Schlafverbesserung und belastbare Langzeitdaten sind nicht dasselbe.",
-      "Kurzfristige Effekte können anders ausfallen als die Entwicklung bei langfristiger Nutzung.",
-      "Saubere Kommunikation trennt Einschlafhilfe, Schlafqualität und Nebenwirkungen."
-    ],
-    quickFacts: [
-      { label: "Konflikt", value: "Subjektiver Nutzen vs. Langzeitdaten" },
-      { label: "Wichtig", value: "Schlafparameter differenziert lesen" },
-      { label: "Praxis", value: "Keine simplen Heilslogans" }
-    ],
-    sections: [
-      {
-        heading: "Warum Schlaf ein schwieriger Forschungsbereich ist",
-        content: [
-          "Schlaf hat viele Komponenten: Einschlafzeit, Durchschlafen, Tiefschlaf, Tagesmüdigkeit und subjektive Erholung.",
-          "Eine positive Selbsteinschätzung ersetzt daher keine differenzierte Bewertung."
-        ]
-      },
-      {
-        heading: "Wie Inhalte dazu fair bleiben",
-        content: [
-          "Gute Inhalte nennen sowohl mögliche kurzfristige Entlastung als auch Unsicherheiten bei Langzeitnutzung und individueller Variabilität.",
-          "Vor allem bei vulnerablen Gruppen sind Grenzen und Risiken klar zu markieren."
-        ],
-        checklist: [
-          "Schlafparameter getrennt beschreiben",
-          "Kurz- und Langzeiteffekte unterscheiden",
-          "Hinweis auf medizinische Abklärung geben"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Schlafqualität",
-        text: "Nicht nur die Dauer, sondern auch Erholung, Durchschlafverhalten und Tagesfunktion gehören dazu."
-      },
-      {
-        title: "Kurz erklärt: subjektiv vs. objektiv",
-        text: "Menschen können eine Nacht als besser empfinden, obwohl Messparameter gemischt ausfallen."
-      }
-    ],
-    faq: [
-      {
-        question: "Hilft Cannabis immer beim Einschlafen?",
-        answer: "Nein. Reaktion, Dosis, Produktprofil und Kontext unterscheiden sich stark zwischen Personen."
-      },
-      {
-        question: "Warum sind Langzeitdaten wichtig?",
-        answer: "Weil sich kurzfristige Entlastung und langfristige Schlafarchitektur nicht decken müssen."
-      }
-    ],
-    glossary: [
-      { term: "Schlafarchitektur", definition: "Aufbau einer Nacht aus verschiedenen Schlafphasen und deren Zusammenspiel." },
-      { term: "Subjektive Erholung", definition: "Persönliches Empfinden, wie erholt man sich nach dem Schlaf fühlt." },
-      { term: "Langzeitdaten", definition: "Studien oder Beobachtungen über längere Zeiträume mit wiederholter Erfassung." },
-    ],
-    relatedSlugs: ["cannabinoide-und-evidenz", "cbd-und-angststoerungen-einordnung", "thc-risiken-bei-jugendlichen"]
-  }),
-  createArticle({
-    slug: "cbd-und-angststoerungen-einordnung",
-    title: "CBD und Angststörungen einordnen",
-    summary: "Was aus Studien wirklich ableitbar ist und wo aus frühen Hinweisen zu schnell Gewissheiten gemacht werden.",
-    category: "medizin",
-    difficulty: "fortgeschritten",
-    readMinutes: 8,
-    tags: ["CBD", "Angst", "Studienlage", "Einordnung"],
-    keyTakeaways: [
-      "CBD wird häufig überverkauft, obwohl die Humanstudienlage je nach Kontext begrenzt bleibt.",
-      "Präklinische Hinweise dürfen nicht mit klinischer Sicherheit verwechselt werden.",
-      "Seriöse Inhalte benennen Unsicherheit explizit."
-    ],
-    quickFacts: [
-      { label: "Fehlerquelle", value: "Tierdaten als Humanbeweis lesen" },
-      { label: "Kernpunkt", value: "Kontext und Population zählen" },
-      { label: "Content-Regel", value: "Unsicherheit sichtbar machen" }
-    ],
-    sections: [
-      {
-        heading: "Warum das Thema schnell entgleist",
-        content: [
-          "CBD steht im Zentrum vieler Wellness- und Gesundheitsclaims. Genau deshalb ist eine strenge Trennung zwischen Daten und Vermutung wichtig.",
-          "Besonders oft werden Labor- oder Tierbefunde direkt in Alltagsempfehlungen übersetzt."
-        ]
-      },
-      {
-        heading: "Wie Aufklärung hier professionell bleibt",
-        content: [
-          "Ein guter Text zeigt, welche Daten es gibt, welche Populationen untersucht wurden und wo offene Fragen bleiben.",
-          "So entsteht Orientierung ohne falsche Sicherheit."
-        ],
-        checklist: [
-          "Studientyp offen nennen",
-          "Population und Dosis nicht verschweigen",
-          "Keine Heilaussagen aus frühen Hinweisen ableiten"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: präklinisch",
-        text: "Studien im Labor oder Tiermodell, die Hinweise liefern, aber keine sichere Aussage für Menschen erlauben."
-      },
-      {
-        title: "Kurz erklärt: klinisch",
-        text: "Untersuchungen am Menschen, meist mit deutlich höherem Anspruch an Übertragbarkeit."
-      }
-    ],
-    faq: [
-      {
-        question: "Ist CBD ein sicheres Mittel gegen Angst?",
-        answer: "So pauschal nicht. Es gibt Hinweise, aber die Qualität und Übertragbarkeit der Daten sind begrenzt und kontextabhängig."
-      },
-      {
-        question: "Warum sagen viele Seiten etwas anderes?",
-        answer: "Weil frühe Befunde und Marketing oft zu schnell zusammengezogen werden."
-      }
-    ],
-    glossary: [
-      { term: "Präklinisch", definition: "Vorstufe klinischer Forschung, meist im Labor oder Tiermodell." },
-      { term: "Humanstudie", definition: "Studie mit menschlichen Teilnehmenden zur prüfbaren Einordnung von Nutzen und Risiken." },
-      { term: "Übertragbarkeit", definition: "Grad, in dem sich Studienergebnisse auf andere Personen oder reale Situationen anwenden lassen." },
-    ],
-    relatedSlugs: ["cannabinoide-und-evidenz", "cannabis-und-schlaf-was-ist-belegt", "cannabinoide-nebenwirkungen-und-interaktionen"]
-  }),
-  createArticle({
-    slug: "thc-risiken-bei-jugendlichen",
-    title: "THC-Risiken bei Jugendlichen",
-    summary: "Warum Alter, Gehirnentwicklung und Konsummuster in der Risikokommunikation differenziert betrachtet werden müssen.",
-    category: "medizin",
-    difficulty: "einsteiger",
-    readMinutes: 7,
-    tags: ["THC", "Jugendliche", "Risikokommunikation", "Prävention"],
-    keyTakeaways: [
-      "Jugendliche sind keine kleine Version erwachsener Konsumenten; Risiko und Entwicklungskontext unterscheiden sich deutlich.",
-      "Prävention funktioniert besser über klare, glaubwürdige Aufklärung als über plakative Übertreibung.",
-      "Konsummuster, Frequenz und Potenz müssen gemeinsam betrachtet werden."
-    ],
-    quickFacts: [
-      { label: "Fokus", value: "Entwicklung plus Prävention" },
-      { label: "Wichtig", value: "Muster statt Einzelfall" },
-      { label: "Kommunikation", value: "Klar und nicht sensationalistisch" }
-    ],
-    sections: [
-      {
-        heading: "Warum Alter im Risiko so zentral ist",
-        content: [
-          "Jugendliche befinden sich in einer Entwicklungsphase, in der Verhalten, Umfeld und Hirnreifung zusammenspielen.",
-          "Deshalb müssen Risiken differenziert und glaubwürdig kommuniziert werden."
-        ]
-      },
-      {
-        heading: "Prävention ohne Panikmodus",
-        content: [
-          "Abschreckung allein reicht selten. Inhalte sollten nachvollziehbar sein, konkrete Risiken benennen und Raum für Fragen lassen.",
-          "So wird Aufklärung anschlussfähiger als reine Moralisierung."
-        ],
-        checklist: [
-          "Häufigkeit und Potenz getrennt erklären",
-          "Vulnerable Gruppen explizit benennen",
-          "Hilfs- und Beratungsangebote sichtbar machen"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Potenz",
-        text: "Wie stark ein Produkt in Bezug auf relevante Wirkstoffe ausfällt, meist vereinfacht über THC-Gehalte beschrieben."
-      },
-      {
-        title: "Kurz erklärt: Risikokommunikation",
-        text: "Art, wie Risiken vermittelt werden, damit sie verstanden und ernst genommen werden, ohne falschen Alarmismus."
-      }
-    ],
-    faq: [
-      {
-        question: "Ist jeder Konsum im Jugendalter gleich gefährlich?",
-        answer: "Nein. Häufigkeit, Potenz, Alter, psychische Belastung und Kontext beeinflussen das Risiko deutlich."
-      },
-      {
-        question: "Warum ist glaubwürdige Aufklärung so wichtig?",
-        answer: "Weil überzogene Botschaften oft abgelehnt werden und damit präventive Wirkung verlieren."
-      }
-    ],
-    glossary: [
-      { term: "Potenz", definition: "Stärke oder Konzentration relevanter Wirkstoffe in einem Produkt." },
-      { term: "Vulnerabel", definition: "Besonders empfindlich oder risikobelastet in einem bestimmten Kontext." },
-      { term: "Prävention", definition: "Massnahmen zur Vorbeugung unerwünschter gesundheitlicher oder sozialer Folgen." },
-    ],
-    relatedSlugs: ["cannabinoide-und-evidenz", "inhalation-set-setting-und-harm-reduction", "cannabinoide-nebenwirkungen-und-interaktionen"]
-  }),
-  createArticle({
-    slug: "cannabinoide-nebenwirkungen-und-interaktionen",
-    title: "Cannabinoide: Nebenwirkungen und Interaktionen",
-    summary: "Welche Belastungen realistisch sind und warum Kontext, Dosis und Begleitmedikation immer mitgedacht werden müssen.",
-    category: "medizin",
-    difficulty: "profi",
-    readMinutes: 9,
-    tags: ["Nebenwirkungen", "Interaktionen", "Dosis", "Sicherheit"],
-    keyTakeaways: [
-      "Nebenwirkungen sind kein Randthema, sondern zentral für jede seriöse Einordnung.",
-      "Interaktionen mit anderer Medikation können klinisch relevant sein und gehören in jede verantwortliche Aufklärung.",
-      "Dosis und Kontext entscheiden mit, wie belastend Nebenwirkungen ausfallen."
-    ],
-    quickFacts: [
-      { label: "Pflicht", value: "Risiken immer mitkommunizieren" },
-      { label: "Einfluss", value: "Dosis, Person, Begleitmedikation" },
-      { label: "Warnsignal", value: "Pauschale Sicherheitsbehauptungen" }
-    ],
-    sections: [
-      {
-        heading: "Warum Nebenwirkungen nicht ausgeblendet werden dürfen",
-        content: [
-          "Viele Inhalte fokussieren fast nur auf möglichen Nutzen. Das führt zu einem unausgewogenen Bild und schwächt die Glaubwürdigkeit.",
-          "Eine seriöse Seite benennt sowohl häufige als auch potenziell relevante seltenere Belastungen."
-        ]
-      },
-      {
-        heading: "Interaktionen richtig einordnen",
-        content: [
-          "Begleitmedikation, Vorerkrankungen und Dosismuster können das Risiko verändern. Deshalb sind einfache Allgemeinregeln oft unzureichend.",
-          "Für Content ist entscheidend, fachliche Abklärung aktiv zu empfehlen, statt Sicherheit zu suggerieren."
-        ],
-        checklist: [
-          "Häufige Nebenwirkungen offen nennen",
-          "Hinweis auf potenzielle Interaktionen geben",
-          "Bei medizinischen Fragen klar auf Fachpersonal verweisen"
-        ]
-      }
-    ],
-    warnings: ["Dieser Inhalt ersetzt keine medizinische Beratung und keine individuelle Arzneimittelprüfung."],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Interaktion",
-        text: "Wechselwirkung zwischen mehreren Stoffen oder Medikamenten, die Wirkung oder Nebenwirkung verändern kann."
-      },
-      {
-        title: "Kurz erklärt: Dosis-Wirkungs-Bezug",
-        text: "Nicht nur ob, sondern wie viel konsumiert oder eingenommen wird, beeinflusst Nutzen und Risiko stark."
-      }
-    ],
-    faq: [
-      {
-        question: "Sind Nebenwirkungen immer selten?",
-        answer: "Nein. Manche sind häufig, aber mild, andere seltener und potenziell relevanter. Beides muss sauber benannt werden."
-      },
-      {
-        question: "Kann ich Interaktionen selbst einschätzen?",
-        answer: "Nur sehr eingeschränkt. Gerade bei Medikation ist fachliche Rücksprache sinnvoll und oft notwendig."
-      }
-    ],
-    glossary: [
-      { term: "Interaktion", definition: "Wechselwirkung zwischen zwei oder mehr Substanzen mit verstärkter, abgeschwächter oder veränderter Wirkung." },
-      { term: "Begleitmedikation", definition: "Weitere Arzneimittel oder Stoffe, die parallel eingenommen werden." },
-      { term: "Nebenwirkung", definition: "Unerwünschter Effekt, der im Zusammenhang mit der Anwendung eines Stoffes auftritt." },
-    ],
-    relatedSlugs: ["cannabinoide-und-evidenz", "cbd-und-angststoerungen-einordnung", "cannabis-bei-schmerz-evidenzcheck"]
-  }),
-  createArticle({
     slug: "vaping-rauchen-und-verdampfen-vergleich",
     title: "Vaping, Rauchen und Verdampfen im Vergleich",
     summary: "Wie sich Aufnahme, Belastung und Nutzererfahrung zwischen verschiedenen Inhalationsformen unterscheiden.",
@@ -4922,7 +4370,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Resorption", definition: "Aufnahme eines Stoffes in den Körper nach Anwendung oder Einnahme." },
       { term: "Produktmatrix", definition: "Gesamte stoffliche Zusammensetzung eines Produkts, die Aufnahme und Verhalten beeinflusst." },
     ],
-    relatedSlugs: ["inhalation-vs-edibles", "cannabinoide-nebenwirkungen-und-interaktionen", "cannabinoide-und-evidenz"]
+    relatedSlugs: ["inhalation-vs-edibles"]
   }),
   createArticle({
     slug: "inhalation-set-setting-und-harm-reduction",
@@ -4988,7 +4436,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Setting", definition: "Äusserer Rahmen einer Erfahrung, etwa Ort, Menschen und Sicherheitslage." },
       { term: "Mischkonsum", definition: "Gleichzeitige oder nahe Kombination mehrerer psychoaktiver Stoffe." },
     ],
-    relatedSlugs: ["inhalation-vs-edibles", "vaping-rauchen-und-verdampfen-vergleich", "thc-risiken-bei-jugendlichen"]
+    relatedSlugs: ["inhalation-vs-edibles", "vaping-rauchen-und-verdampfen-vergleich"]
   }),
   createArticle({
     slug: "bubble-hash-qualitaetskriterien",
@@ -5187,204 +4635,6 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Qualitätsurteil", definition: "Bewertung eines Produkts anhand nachvollziehbarer und relevanter Kriterien." },
     ],
     relatedSlugs: ["hash-typen-vergleichen", "rosin-einordnung-ohne-hype", "bubble-hash-qualitaetskriterien"]
-  }),
-  createArticle({
-    slug: "werbeaussagen-und-health-claims-cannabis",
-    title: "Werbeaussagen und Health Claims bei Cannabis",
-    summary: "Wo Information aufhört und problematische Gesundheitsversprechen beginnen und wie Content-Teams sicher formulieren.",
-    category: "recht",
-    difficulty: "fortgeschritten",
-    readMinutes: 7,
-    tags: ["Health Claims", "Werbung", "Compliance", "Content"],
-    keyTakeaways: [
-      "Gesundheitsbezogene Aussagen sind regulatorisch sensibel und brauchen sehr hohe Sorgfalt.",
-      "Viele Verstosse entstehen nicht aus Bosheit, sondern aus unscharfer Sprache im Marketing.",
-      "Content-Teams brauchen Freigaberegeln für Formulierungen und Evidenzbezug."
-    ],
-    quickFacts: [
-      { label: "Risiko", value: "Unscharfe Heilsprache" },
-      { label: "Lösung", value: "Freigabeprozess plus Claim-Katalog" },
-      { label: "Wichtig", value: "Juristische Prüfung regional denken" }
-    ],
-    sections: [
-      {
-        heading: "Warum Claims schnell kritisch werden",
-        content: [
-          "Schon kleine sprachliche Verschiebungen können aus neutraler Information ein problematisches Nutzenversprechen machen.",
-          "Deshalb brauchen grosse Seiten klares Wording und interne Review-Regeln."
-        ]
-      },
-      {
-        heading: "Wie Teams sicherer formulieren",
-        content: [
-          "Arbeite mit freigegebenen Formulierungsbausteinen, markiere Evidenzstufen und vermeide absolute Wirkzusagen.",
-          "So bleibt Aufklärung informativ, ohne unnötiges regulatorisches Risiko aufzubauen."
-        ],
-        checklist: [
-          "Claim-Liste mit erlaubten Formulierungen pflegen",
-          "Gesundheitsaussagen juristisch gegenprüfen",
-          "Marketing und Redaktion auf dieselben Regeln verpflichten"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Health Claim",
-        text: "Aussage, die einem Produkt eine gesundheitsbezogene Wirkung oder einen Nutzen zuschreibt."
-      },
-      {
-        title: "Kurz erklärt: Freigabeprozess",
-        text: "Interner Ablauf, bei dem Inhalte vor Veröffentlichung inhaltlich und rechtlich geprüft werden."
-      }
-    ],
-    faq: [
-      {
-        question: "Darf ich Studien einfach zusammenfassen?",
-        answer: "Ja, aber ohne daraus unzulässige Heilaussagen oder pauschale Produktversprechen abzuleiten."
-      },
-      {
-        question: "Warum reichen gute Quellen allein nicht aus?",
-        answer: "Weil die rechtliche Zulässigkeit von Sprache und Kontext nicht automatisch aus der Existenz einer Studie folgt."
-      }
-    ],
-    glossary: [
-      { term: "Health Claim", definition: "Gesundheitsbezogene Aussage über Nutzen oder Wirkung eines Produkts." },
-      { term: "Freigabeprozess", definition: "Standardisierter Prüfprozess vor Veröffentlichung eines Inhalts oder Produkts." },
-      { term: "Evidenzstufe", definition: "Einordnung, wie belastbar eine Aussage durch Forschung abgestützt ist." },
-    ],
-    relatedSlugs: ["rechtliche-grundlagen-dach", "cannabinoide-und-evidenz", "cbd-und-angststoerungen-einordnung"]
-  }),
-  createArticle({
-    slug: "dokumentationspflichten-fuer-chargen",
-    title: "Dokumentationspflichten für Chargen",
-    summary: "Welche Nachweise für Freigabe, Rückverfolgung und Reklamationen unverzichtbar sind.",
-    category: "recht",
-    difficulty: "fortgeschritten",
-    readMinutes: 7,
-    tags: ["Chargen", "Dokumentation", "Rückverfolgung", "Compliance"],
-    keyTakeaways: [
-      "Gute Chargendokumentation schützt nicht nur rechtlich, sondern verbessert auch Qualitätsarbeit.",
-      "Ohne Rückverfolgung werden Reklamationen, Sperrungen und Audits schnell teuer und chaotisch.",
-      "Digitale und klare Datenstrukturen zahlen sich früh aus."
-    ],
-    quickFacts: [
-      { label: "Pflicht", value: "Eindeutige Chargen-ID" },
-      { label: "Nutzen", value: "Rückruf- und Auditfähigkeit" },
-      { label: "Fehlerquelle", value: "Unverbundene Einzeldokumente" }
-    ],
-    sections: [
-      {
-        heading: "Warum Chargendaten die Grundlage sind",
-        content: [
-          "Freigabe, Reklamation und Sperrung funktionieren nur sauber, wenn Herkunft, Analytik, Lagerung und Bewegung einer Charge nachvollziehbar bleiben.",
-          "Viele Systeme haben Daten, aber nicht in einer Struktur, die unter Druck wirklich hilft."
-        ]
-      },
-      {
-        heading: "Was dokumentiert werden sollte",
-        content: [
-          "Neben COA und Freigabestatus gehören auch Abweichungen, Transporte, Reklamationen und Nachtests in den Datensatz.",
-          "Je früher das standardisiert wird, desto skalierbarer wird der Betrieb."
-        ],
-        checklist: [
-          "Einheitliche Chargen-ID über alle Systeme ziehen",
-          "COA, Lagerung und Bewegungen verbinden",
-          "Abweichungen mit CAPA-Massnahmen verknüpfen"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Rückverfolgung",
-        text: "Fähigkeit, Ursprung, Weg und Status einer Charge vom Eingang bis zur Ausgabe nachzuvollziehen."
-      },
-      {
-        title: "Kurz erklärt: Auditfähigkeit",
-        text: "Wie schnell und sauber sich ein Prozess oder Datensatz gegenüber Prüfern belegen lässt."
-      }
-    ],
-    faq: [
-      {
-        question: "Reicht eine PDF-Ablage?",
-        answer: "Für kleine Mengen vielleicht, aber skalierbar und auswertbar wird es erst mit strukturierter Datenlogik."
-      },
-      {
-        question: "Warum brauchen Reklamationen dieselbe Charge-Logik?",
-        answer: "Weil nur so Ursachen, betroffene Mengen und Folgeaktionen sauber zugeordnet werden können."
-      }
-    ],
-    glossary: [
-      { term: "Chargen-ID", definition: "Eindeutige Kennung für eine definierte Produktmenge innerhalb eines Prozesses." },
-      { term: "Rückverfolgung", definition: "Systematische Nachverfolgbarkeit von Herkunft, Bewegung und Status eines Produkts." },
-      { term: "Audit", definition: "Formalisierte Prüfung von Prozessen, Daten oder Regeln auf Konformität und Wirksamkeit." },
-    ],
-    relatedSlugs: ["rechtliche-grundlagen-dach", "batch-release-und-freigabekriterien", "recall-und-sperrprozesse-fuer-chargen"]
-  }),
-  createArticle({
-    slug: "gmp-gdp-und-qualitaetssysteme",
-    title: "GMP, GDP und Qualitätssysteme",
-    summary: "Eine Einordnung der wichtigsten Systembegriffe, die auf grossen Plattformen und in Compliance-Diskussionen ständig auftauchen.",
-    category: "recht",
-    difficulty: "profi",
-    readMinutes: 9,
-    tags: ["GMP", "GDP", "Qualitätssystem", "Compliance"],
-    keyTakeaways: [
-      "GMP und GDP sind keine Buzzwords, sondern Prozesslogiken mit konkreten Auswirkungen auf Dokumentation und Verantwortung.",
-      "Qualitätssysteme werden erst wirksam, wenn Rollen, Daten und Freigaben zusammenpassen.",
-      "Für Aufklärungsseiten lohnt ein klares Glossar statt vager Abkürzungsnutzung."
-    ],
-    quickFacts: [
-      { label: "GMP", value: "Herstellungs- und Prozesskontrolle" },
-      { label: "GDP", value: "Gute Distributionspraxis" },
-      { label: "Wichtig", value: "Rollen plus Dokumentation" }
-    ],
-    sections: [
-      {
-        heading: "Warum diese Begriffe so oft falsch verwendet werden",
-        content: [
-          "In vielen Texten werden GMP oder GDP als bloß Qualitätslabel genutzt, ohne die dahinterliegenden Anforderungen zu erklären.",
-          "Das hilft weder Nutzern noch Teams, die reale Prozesse verstehen müssen."
-        ]
-      },
-      {
-        heading: "Wie du Systeme praktisch einordnest",
-        content: [
-          "Fokussiere auf Verantwortlichkeiten, Dokumentation, Freigaben, Abweichungen und Transportbedingungen. Daran zeigt sich, ob ein System wirklich gelebt wird.",
-          "Ein gutes Wiki erklärt diese Begriffe über Funktionen, nicht über leere Prestigeformeln."
-        ],
-        checklist: [
-          "Abkürzungen immer ausschreiben",
-          "Praxisbezug über Prozesse herstellen",
-          "Begriffe im Glossar konsistent verwenden"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: GMP",
-        text: "Good Manufacturing Practice, also Regeln für kontrollierte Herstellung und Qualitätssicherung."
-      },
-      {
-        title: "Kurz erklärt: GDP",
-        text: "Good Distribution Practice, also Regeln für Lagerung, Transport und Verteilung."
-      }
-    ],
-    faq: [
-      {
-        question: "Muss jedes Unternehmen GMP sein?",
-        answer: "Das hängt stark vom regulatorischen Kontext ab. Wichtig ist, die Anforderungen nicht pauschal zu vermischen."
-      },
-      {
-        question: "Warum hilft ein Qualitätssystem auch operativ?",
-        answer: "Weil klare Rollen, Freigaben und Datenspuren Fehler früher sichtbar machen und Skalierung erleichtern."
-      }
-    ],
-    glossary: [
-      { term: "GMP", definition: "Good Manufacturing Practice, Rahmen für kontrollierte Herstellung und Qualitätssicherung." },
-      { term: "GDP", definition: "Good Distribution Practice, Rahmen für sichere Lagerung und Distribution." },
-      { term: "Qualitätssystem", definition: "Gesamtheit aus Regeln, Rollen, Daten und Prozessen zur Sicherung definierter Standards." },
-    ],
-    relatedSlugs: ["rechtliche-grundlagen-dach", "dokumentationspflichten-fuer-chargen", "batch-release-und-freigabekriterien"]
   }),
   {
     slug: "schimmel-und-mykotoxine-bei-cannabis",
@@ -5697,7 +4947,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Sperrstatus", definition: "Markierung, dass eine Charge nicht weiter verteilt oder verwendet werden darf." },
       { term: "CAPA", definition: "Systematischer Ansatz für Korrektur- und Vorbeugemassnahmen nach Abweichungen." },
     ],
-    relatedSlugs: ["dokumentationspflichten-fuer-chargen", "batch-release-und-freigabekriterien", "schimmel-und-mykotoxine-bei-cannabis"]
+    relatedSlugs: ["batch-release-und-freigabekriterien", "schimmel-und-mykotoxine-bei-cannabis"]
   }),
   createArticle({
     slug: "batch-release-und-freigabekriterien",
@@ -5763,7 +5013,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Freigabekatalog", definition: "Sammlung aller Kriterien, die für eine Freigabe geprüft werden müssen." },
       { term: "Revisionssicher", definition: "So dokumentiert, dass Änderungen nachvollziehbar und belastbar bleiben." },
     ],
-    relatedSlugs: ["coa-richtig-lesen", "dokumentationspflichten-fuer-chargen", "recall-und-sperrprozesse-fuer-chargen"]
+    relatedSlugs: ["coa-richtig-lesen", "recall-und-sperrprozesse-fuer-chargen"]
   }),
   createArticle({
     slug: "lagerung-verpackung-und-lichtschutz",
@@ -5896,138 +5146,6 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Heterogenität", definition: "Unterschiedlichkeit innerhalb einer Charge oder eines Produkts." },
     ],
     relatedSlugs: ["coa-richtig-lesen", "analytik-hplc-vs-gc-bei-cannabinoiden", "pestizidklassen-und-rueckstandsrisiken"]
-  }),
-  createArticle({
-    slug: "lieferkette-und-rueckverfolgbarkeit",
-    title: "Lieferkette und Rückverfolgbarkeit",
-    summary: "Warum Transparenz über Stationen, Partner und Nachweise ein echter Marktvorteil ist und nicht nur ein Compliance-Pflichtprogramm.",
-    category: "markt",
-    difficulty: "fortgeschritten",
-    readMinutes: 7,
-    tags: ["Lieferkette", "Rückverfolgbarkeit", "Transparenz", "Markt"],
-    keyTakeaways: [
-      "Marktvertrauen entsteht aus nachvollziehbarer Herkunft und konsistenten Nachweisen.",
-      "Rückverfolgbarkeit reduziert nicht nur Risiko, sondern verbessert auch Kommunikation und Einkauf.",
-      "Transparenz ist auf grossen Plattformen ein Differenzierungsmerkmal."
-    ],
-    quickFacts: [
-      { label: "Mehrwert", value: "Vertrauen plus schnellere Reaktion" },
-      { label: "Pflicht", value: "Dokumentierte Kette" },
-      { label: "Signal", value: "Transparenz schlägt Behauptung" }
-    ],
-    sections: [
-      {
-        heading: "Warum Lieferkettenwissen Marktmacht ist",
-        content: [
-          "Wenn Herkunft und Nachweise sichtbar sind, sinken Informationsasymmetrien für Nutzer und Teams. Das stärkt die Plattformqualität direkt.",
-          "Fehlende Transparenz erzeugt dagegen Misstrauen, selbst wenn Produkte gut sein können."
-        ]
-      },
-      {
-        heading: "Was Rückverfolgbarkeit praktisch bringen muss",
-        content: [
-          "Nicht nur Namen von Partnern, sondern nachvollziehbare Chargenbewegungen, Analytik und Statushistorien.",
-          "Dann hilft das System auch bei Reklamation, Recall und Performancebewertung."
-        ],
-        checklist: [
-          "Stationen der Kette definieren",
-          "Dokumente und Chargenstatus verbinden",
-          "Lieferanten nach Nachweisqualität vergleichen"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: Lieferkette",
-        text: "Alle Stationen vom Ursprung über Verarbeitung und Transport bis zur finalen Ausgabe."
-      },
-      {
-        title: "Kurz erklärt: Transparenz",
-        text: "Grad, in dem Nutzer oder Teams belastbare Informationen wirklich einsehen und verstehen können."
-      }
-    ],
-    faq: [
-      {
-        question: "Muss ich jeden Partner offenlegen?",
-        answer: "Nicht immer öffentlich, aber intern muss die Kette für Qualität und Compliance nachvollziehbar sein."
-      },
-      {
-        question: "Warum hilft das auch im Marketing?",
-        answer: "Weil nachweisbare Transparenz glaubwürdiger ist als reine Herkunftsclaims."
-      }
-    ],
-    glossary: [
-      { term: "Lieferkette", definition: "Abfolge aller Beteiligten und Prozesse vom Ursprung bis zur Ausgabe eines Produkts." },
-      { term: "Transparenz", definition: "Nachvollziehbarkeit relevanter Informationen für Bewertung und Entscheidung." },
-      { term: "Statushistorie", definition: "Zeitliche Dokumentation, wie sich der Zustand einer Charge über den Prozess verändert hat." },
-    ],
-    relatedSlugs: ["markttransparenz-und-preise", "dokumentationspflichten-fuer-chargen", "white-label-und-qualitaetsrisiken"]
-  }),
-  createArticle({
-    slug: "white-label-und-qualitaetsrisiken",
-    title: "White Label und Qualitätsrisiken",
-    summary: "Wo Handelsmodelle ohne eigene Herstellung Chancen bieten und wo dabei Transparenz und Verantwortung leicht verloren gehen.",
-    category: "markt",
-    difficulty: "fortgeschritten",
-    readMinutes: 7,
-    tags: ["White Label", "Qualität", "Lieferanten", "Markt"],
-    keyTakeaways: [
-      "White-Label-Modelle sind nicht per se schlecht, brauchen aber besonders starke Daten- und Freigabelogik.",
-      "Je weiter Marke und Herstellung auseinanderliegen, desto wichtiger werden Nachweise und Kontrolle.",
-      "Für Nutzer zählt nicht Storytelling, sondern belastbare Transparenz."
-    ],
-    quickFacts: [
-      { label: "Chance", value: "Schnellere Markteintritte" },
-      { label: "Risiko", value: "Verantwortungsdiffusion" },
-      { label: "Pflicht", value: "Starke Lieferantensteuerung" }
-    ],
-    sections: [
-      {
-        heading: "Warum White Label attraktiv ist",
-        content: [
-          "Marken können schneller starten, ohne jede Infrastruktur selbst aufzubauen. Das ist wirtschaftlich oft sinnvoll.",
-          "Gleichzeitig steigt aber die Bedeutung von Nachweisen, Spezifikationen und Kontrollpunkten."
-        ]
-      },
-      {
-        heading: "Wo das Modell kippt",
-        content: [
-          "Wenn Marke, Produktverantwortung und Daten nicht sauber verbunden sind, entstehen Lücken bei Reklamation, Recall und Qualitätsaussagen.",
-          "Deshalb braucht White Label eher mehr Governance, nicht weniger."
-        ],
-        checklist: [
-          "Verantwortlichkeiten vertraglich und operativ klären",
-          "Freigabekriterien mit Lieferanten verbindlich machen",
-          "Rückverfolgbarkeit nicht an Partner delegieren"
-        ]
-      }
-    ],
-    simpleExplainers: [
-      {
-        title: "Kurz erklärt: White Label",
-        text: "Produktmodell, bei dem ein Hersteller für mehrere Marken produziert, die das Produkt unter eigenem Namen führen."
-      },
-      {
-        title: "Kurz erklärt: Governance",
-        text: "Regeln, Verantwortungen und Steuerungsmechanismen, die ein System kontrollierbar machen."
-      }
-    ],
-    faq: [
-      {
-        question: "Ist White Label automatisch weniger hochwertig?",
-        answer: "Nein. Entscheidend sind Kontrolle, Nachweise und konsequente Qualitätsführung."
-      },
-      {
-        question: "Warum ist Transparenz hier so wichtig?",
-        answer: "Weil Nutzer sonst nur eine Marke sehen, aber die eigentliche Produktverantwortung und Herkunft unklar bleibt."
-      }
-    ],
-    glossary: [
-      { term: "White Label", definition: "Herstellungsmodell, bei dem ein Produkt unter verschiedenen Marken vertrieben werden kann." },
-      { term: "Governance", definition: "Regelwerk aus Verantwortung, Kontrolle und Entscheidungsstruktur." },
-      { term: "Spezifikation", definition: "Verbindliche Beschreibung der erwarteten Produkt- und Prozessmerkmale." },
-    ],
-    relatedSlugs: ["markttransparenz-und-preise", "lieferkette-und-rueckverfolgbarkeit", "batch-release-und-freigabekriterien"]
   }),
   {
     slug: "grow-log-und-kpi-dashboard",
@@ -6557,7 +5675,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { title: "Profi Chargen-Checkliste", href: "/terpira/tutorials/how-to-grow-profi-checkliste.txt", kind: "TXT-Checkliste" },
       { title: "Profi SOP-Template für Cultivation und QA", href: "/terpira/tutorials/how-to-grow-profi-sop.txt", kind: "TXT-SOP-Vorlage" }
     ],
-    relatedSlugs: ["mutterpflanzen-und-clone-hygiene", "schimmel-und-mykotoxine-bei-cannabis", "grow-log-und-kpi-dashboard", "audit-readiness-fuer-content-und-produkt"]
+    relatedSlugs: ["mutterpflanzen-und-clone-hygiene", "schimmel-und-mykotoxine-bei-cannabis", "grow-log-und-kpi-dashboard"]
   })
 ];
 
@@ -6640,20 +5758,14 @@ const thirdWaveSeeds: LiteArticleSeed[] = [
   { slug: "matrixeffekte-in-der-cannabisanalytik", title: "Matrixeffekte in der Cannabis-Analytik", summary: "Warum dieselbe Methode je Produktmatrix unterschiedlich reagieren kann und was das für Vergleichbarkeit bedeutet.", category: "chemie", difficulty: "profi", readMinutes: 9, tags: ["Matrix", "Analytik", "Labor", "Methodik"], relatedSlugs: ["analytik-hplc-vs-gc-bei-cannabinoiden", "sampling-und-probenahme-fehler", "coa-richtig-lesen"] },
   { slug: "minor-terpene-und-profiltiefe", title: "Minor-Terpene und Profiltiefe", summary: "Warum kleine Terpenanteile für Profilcharakter und Vergleichbarkeit wichtig sein können.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Minor Terpene", "Profil", "Aroma", "Analytik"], relatedSlugs: ["terpene-und-wirkprofil", "myrcen-limonen-caryophyllen-einordnung", "sensorik-panels-fuer-cannabisprodukte"] },
   { slug: "terpen-panels-und-qualitaetslabels", title: "Terpen-Panels und Qualitätslabels", summary: "Wie Terpenpanels für Kataloge standardisiert werden können, ohne in Marketingkürzel abzurutschen.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Terpenpanel", "Label", "Katalog", "Qualität"], relatedSlugs: ["sensorik-panels-fuer-cannabisprodukte", "terpene-und-wirkprofil", "coa-richtig-lesen"] },
-  { slug: "indikationsgrenzen-und-patientenkommunikation", title: "Indikationsgrenzen und Patientenkommunikation", summary: "Wie medizinische Inhalte Nutzen, Grenzen und Unsicherheiten gleichzeitig transparent darstellen.", category: "medizin", difficulty: "profi", readMinutes: 9, tags: ["Indikation", "Medizin", "Kommunikation", "Evidenz"], relatedSlugs: ["cannabinoide-und-evidenz", "cannabis-bei-schmerz-evidenzcheck", "cannabinoide-nebenwirkungen-und-interaktionen"] },
-  { slug: "real-world-data-vs-rct-bei-cannabis", title: "Real-World-Data vs. RCT bei Cannabis", summary: "Wie Beobachtungsdaten und klinische Studien zusammen gelesen werden sollten.", category: "medizin", difficulty: "profi", readMinutes: 9, tags: ["RWD", "RCT", "Evidenz", "Studien"], relatedSlugs: ["cannabinoide-und-evidenz", "cannabis-und-schlaf-was-ist-belegt", "cbd-und-angststoerungen-einordnung"] },
   { slug: "orale-produkte-und-first-pass-risiken", title: "Orale Produkte und First-Pass-Risiken", summary: "Einordnung von Effektdauer, Verzogerung und Fehlsteuerung bei oraler Anwendung.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Oral", "First Pass", "Timing", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "sublingual-tinkturen-richtig-einordnen", "inhalation-set-setting-und-harm-reduction"] },
-  { slug: "dosisprotokolle-ohne-uebertreibung", title: "Dosisprotokolle ohne Übertreibung", summary: "Wie strukturierte Dosisprotokolle für Aufklärung funktionieren, ohne falsche Sicherheit zu erzeugen.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Dosis", "Protokoll", "Aufklärung", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "cannabinoide-nebenwirkungen-und-interaktionen", "inhalation-set-setting-und-harm-reduction"] },
+  { slug: "dosisprotokolle-ohne-uebertreibung", title: "Dosisprotokolle ohne Übertreibung", summary: "Wie strukturierte Dosisprotokolle für Aufklärung funktionieren, ohne falsche Sicherheit zu erzeugen.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Dosis", "Protokoll", "Aufklärung", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "inhalation-set-setting-und-harm-reduction"] },
   { slug: "concentrate-categorization-fuer-plattformen", title: "Concentrate-Categorization für Plattformen", summary: "Wie Konzentrate so kategorisiert werden, dass Nutzer vergleichen können und Daten konsistent bleiben.", category: "konzentrate", difficulty: "profi", readMinutes: 8, tags: ["Konzentrate", "Katalog", "Taxonomie", "Plattform"], relatedSlugs: ["hash-typen-vergleichen", "full-melt-und-marketingsprache", "rosin-einordnung-ohne-hype"] },
   { slug: "kontaminantenprofile-bei-extrakten", title: "Kontaminantenprofile bei Extrakten", summary: "Welche Kontaminantenklassen bei konzentrierten Produkten besondere Aufmerksamkeit brauchen.", category: "konzentrate", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Extrakte", "Kontaminanten", "Sicherheit", "Labor"], relatedSlugs: ["bubble-hash-qualitaetskriterien", "pgr-und-kontaminanten", "pestizidklassen-und-rueckstandsrisiken"] },
-  { slug: "internationale-regelwerke-vergleichen", title: "Internationale Regelwerke vergleichen", summary: "Wie sich Rahmenwerke zwischen Regionen unterscheiden und was das für Content und Compliance bedeutet.", category: "recht", difficulty: "profi", readMinutes: 9, tags: ["Regulierung", "International", "Compliance", "Recht"], relatedSlugs: ["rechtliche-grundlagen-dach", "gmp-gdp-und-qualitaetssysteme", "werbeaussagen-und-health-claims-cannabis"] },
-  { slug: "audit-readiness-fuer-content-und-produkt", title: "Audit-Readiness für Content und Produkt", summary: "Praktische Leitlinien, um Dokumente, Prozesse und Wissensinhalte auditfähig zu halten.", category: "recht", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Audit", "Readiness", "Dokumentation", "Compliance"], relatedSlugs: ["dokumentationspflichten-fuer-chargen", "batch-release-und-freigabekriterien", "gmp-gdp-und-qualitaetssysteme"] },
   { slug: "microbial-trending-und-fruehwarnung", title: "Microbial Trending und Frühwarnung", summary: "Wie mikrobielle Messreihen als Frühwarnsystem für Qualitäts- und Sicherheitsprobleme genutzt werden.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Mikrobiologie", "Trending", "Frühwarnung", "Sicherheit"], relatedSlugs: ["schimmel-und-mykotoxine-bei-cannabis", "recall-und-sperrprozesse-fuer-chargen", "wasseraktivitaet-und-curing"] },
-  { slug: "supplier-risk-scoring-fuer-cannabis", title: "Supplier-Risk-Scoring für Cannabis", summary: "Wie Lieferanten nach Datenqualität, Abweichungen und Zuverlässigkeit bewertet werden können.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Lieferanten", "Scoring", "Risiko", "Qualität"], relatedSlugs: ["lieferkette-und-rueckverfolgbarkeit", "white-label-und-qualitaetsrisiken", "dokumentationspflichten-fuer-chargen"] },
+  { slug: "supplier-risk-scoring-fuer-cannabis", title: "Supplier-Risk-Scoring für Cannabis", summary: "Wie Lieferanten nach Datenqualität, Abweichungen und Zuverlässigkeit bewertet werden können.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Lieferanten", "Scoring", "Risiko", "Qualität"], relatedSlugs: ["schwere-metalle-und-aufnahmewege", "microbial-trending-und-fruehwarnung"] },
   { slug: "interlaborvergleich-und-ringtests", title: "Interlaborvergleich und Ringtests", summary: "Warum Ringtests wichtig sind, um Laborqualität und Vergleichbarkeit langfristig abzusichern.", category: "qualitaet", difficulty: "profi", readMinutes: 8, tags: ["Ringtest", "Interlabor", "Qualität", "Analytik"], relatedSlugs: ["coa-richtig-lesen", "analytik-hplc-vs-gc-bei-cannabinoiden", "sampling-und-probenahme-fehler"] },
   { slug: "stabilitaetsprogramme-fuer-produktlinien", title: "Stabilitätsprogramme für Produktlinien", summary: "Wie strukturierte Stabilitätsprüfungen über Chargen und Zeit aufgebaut werden.", category: "qualitaet", difficulty: "profi", readMinutes: 9, tags: ["Stabilität", "Produktlinie", "Qualität", "Programm"], relatedSlugs: ["lagerung-verpackung-und-lichtschutz", "batch-release-und-freigabekriterien", "thc-zu-cbn-abbau-und-oxidation"] },
-  { slug: "preisindizes-und-marktzyklen", title: "Preisindizes und Marktzyklen", summary: "Wie Preiszyklen interpretiert werden und warum Indexe für Marktbeobachtung auf Plattformen sinnvoll sind.", category: "markt", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Preis", "Index", "Markt", "Zyklus"], relatedSlugs: ["markttransparenz-und-preise", "lieferkette-und-rueckverfolgbarkeit", "white-label-und-qualitaetsrisiken"] },
-  { slug: "nachfrageprognosen-fuer-produktkategorien", title: "Nachfrageprognosen für Produktkategorien", summary: "Welche Daten für belastbare Prognosen taugen und wo reine Trendbeobachtung zu kurz greift.", category: "markt", difficulty: "profi", readMinutes: 8, tags: ["Prognose", "Nachfrage", "Kategorie", "Markt"], relatedSlugs: ["markttransparenz-und-preise", "preisindizes-und-marktzyklen", "grow-log-und-kpi-dashboard"] },
   { slug: "content-taxonomie-und-tag-governance", title: "Content-Taxonomie und Tag-Governance", summary: "Wie grosse Wissensseiten Kategorien und Tags so steuern, dass Suche und Navigation stabil bleiben.", category: "werkzeuge", difficulty: "profi", readMinutes: 8, tags: ["Taxonomie", "Tags", "Governance", "Wiki"], relatedSlugs: ["grow-log-und-kpi-dashboard", "sensor-kalibrierung-und-messfehler", "concentrate-categorization-fuer-plattformen"] },
   { slug: "release-checklisten-fuer-wiki-drops", title: "Release-Checklisten für Wiki-Drops", summary: "Praxis-Checkliste für gross angelegte Content-Drops mit Qualitäts- und Konsistenzkontrolle.", category: "werkzeuge", difficulty: "einsteiger", readMinutes: 6, tags: ["Release", "Checkliste", "Wiki", "QA"], relatedSlugs: ["content-taxonomie-und-tag-governance", "batch-release-und-freigabekriterien", "grow-log-und-kpi-dashboard"] }
 ];
