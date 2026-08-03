@@ -82,3 +82,76 @@ export async function createRecommendation(
 
   if (error) throw error;
 }
+
+// ── getPendingRecommendations ────────────────────────────────────────────────
+
+export type PendingRecommendation = {
+  id: string;
+  diagnosisId: string | null;
+  steps: string[];
+  toolLinks: DiagnoseToolLink[];
+  priority: number;
+  createdAt: string;
+  /** Null for source='phase_insight' rows, which have no linked diagnosis. */
+  diagnosisTitle: string | null;
+  diagnosisCause: string | null;
+};
+
+type PendingRecommendationRow = {
+  id: string;
+  diagnosis_id: string | null;
+  steps: string[] | null;
+  tool_links: DiagnoseToolLink[] | null;
+  priority: number;
+  created_at: string;
+  diagnoses: { title: string; cause: string } | null;
+};
+
+/** Fetches this grow's still-open recommendations, newest/highest-priority first. */
+export async function getPendingRecommendations(
+  supabase: SupabaseClient,
+  growId: string,
+): Promise<PendingRecommendation[]> {
+  const { data, error } = await supabase
+    .from("recommendations")
+    .select("id, diagnosis_id, steps, tool_links, priority, created_at, diagnoses(title, cause)")
+    .eq("grow_id", growId)
+    .eq("status", "pending")
+    .order("priority", { ascending: false })
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+
+  return ((data ?? []) as unknown as PendingRecommendationRow[]).map((row) => ({
+    id: row.id,
+    diagnosisId: row.diagnosis_id,
+    steps: row.steps ?? [],
+    toolLinks: row.tool_links ?? [],
+    priority: row.priority,
+    createdAt: row.created_at,
+    diagnosisTitle: row.diagnoses?.title ?? null,
+    diagnosisCause: row.diagnoses?.cause ?? null,
+  }));
+}
+
+// ── recordRecommendationEvent ────────────────────────────────────────────────
+
+/**
+ * Records what the user did with a recommendation. Never update
+ * `recommendations.status` directly — `trg_recommendation_events_apply`
+ * owns that and derives it from this table.
+ */
+export async function recordRecommendationEvent(
+  supabase: SupabaseClient,
+  userId: string,
+  recommendationId: string,
+  eventType: "applied" | "dismissed",
+): Promise<void> {
+  const { error } = await supabase.from("recommendation_events").insert({
+    recommendation_id: recommendationId,
+    user_id: userId,
+    event_type: eventType,
+  });
+
+  if (error) throw error;
+}

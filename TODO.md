@@ -16,14 +16,8 @@ Datei soll immer nur den aktuellen Stand zeigen, kein Changelog werden.
 
 Das Schema (`diagnoses`, `recommendations`, `recommendation_events`,
 `plant_health_snapshots`, `diagnosis_outcomes`) ist live und für den
-Regelbaum-Diagnosepfad verdrahtet. Drei Teile der Kette fehlen noch:
+Regelbaum-Diagnosepfad verdrahtet. Zwei Teile der Kette fehlen noch:
 
-- [ ] **Recommendation Apply/Dismiss-UI.** `recommendation_events` +
-      `trg_recommendation_events_apply` existieren und funktionieren
-      nachweislich, aber kein Screen lässt eine Empfehlung als
-      angewendet/verworfen markieren — nichts in der UI schreibt in diese
-      Tabelle. Niemals `recommendations.status` direkt updaten, das macht der
-      Trigger.
 - [ ] **`lib/grow/insights.ts`-Phasen-Empfehlungen werden nicht persistiert.**
       Nur clientseitig/im Speicher aus `wikiArticles` berechnet.
       `source='phase_insight'` existiert im Check-Constraint des Schemas,

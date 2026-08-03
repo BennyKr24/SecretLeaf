@@ -22,6 +22,7 @@ import { TASK_CATEGORY_ICONS, GROW_STATUS_LABELS } from '@/lib/grow/types';
 import type { GrowTask, Grow, Plant, LogEntry, HarvestData, GrowPhaseId, GrowStatus } from '@/lib/grow/types';
 import SmartInsights from '@/components/SmartInsights';
 import GrowKnowledgePanel from '@/components/grow/GrowKnowledgePanel';
+import RecommendationsPanel from '@/components/grow/RecommendationsPanel';
 import { Analytics } from '@/lib/analytics';
 import {
   getGrowHealthScore,
@@ -1543,6 +1544,11 @@ export default function GrowPage({}: Props) {
             </Link>
           </div>
         </div>
+
+        {/* ── Offene Empfehlungen ───────────────────────── */}
+        {assistantEnabled && user && (
+          <RecommendationsPanel growId={grow.id} userId={user.id} />
+        )}
 
         {/* ── Smart Insights ───────────────────────────── */}
         {assistantEnabled && (
