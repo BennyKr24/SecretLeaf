@@ -14,6 +14,10 @@
       "schedule": "47 4 * * *"
     },
     {
+      "path": "/api/automation/health-snapshot",
+      "schedule": "50 4 * * *"
+    },
+    {
       "path": "/api/automation/engine-adapt",
       "schedule": "0 5 * * 1"
     },

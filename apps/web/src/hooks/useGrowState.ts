@@ -14,7 +14,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { Grow, CreateGrowInput, GrowPhaseId } from "@/lib/grow/types";
-import type { GrowUmgebung, GrowMedium, LichtTyp, Erfahrung, GrowStatus } from "@/lib/grow/types";
 import {
   getGrows,
   getActiveGrowId,
@@ -35,37 +34,11 @@ import {
   updateGrow as dbUpdateGrow,
   deleteGrow as dbDeleteGrow,
   getGrows as dbGetGrows,
-  type GrowRow,
 } from "@/lib/grow/db";
+import { rowToGrow } from "@/lib/grow/rowToGrow";
 import { Analytics } from "@/lib/analytics";
 import { storage, STORAGE_KEYS } from "@/lib/store";
 import { captureGrowError } from "@/lib/grow/telemetry";
-
-// ── Supabase row → Grow mapper ────────────────────────────────────────────────
-
-function rowToGrow(row: GrowRow): Grow {
-  return {
-    id: row.id,
-    name: row.name,
-    umgebung: row.umgebung as GrowUmgebung,
-    medium: row.medium as GrowMedium,
-    lichtTyp: row.licht_typ as LichtTyp,
-    ...(row.licht_leistung !== null && { lichtLeistung: row.licht_leistung }),
-    erfahrung: row.erfahrung as Erfahrung,
-    pflanzenAnzahl: row.pflanzen_anzahl,
-    plants: row.plants,
-    ...(row.flaeche !== null && { flaeche: row.flaeche }),
-    startDate: row.start_date,
-    currentPhaseId: row.current_phase_id as GrowPhaseId,
-    currentDay: computeCurrentDay(row.start_date),
-    status: row.status as GrowStatus,
-    plan: row.plan,
-    ...(row.notes !== null && { notes: row.notes }),
-    ...(row.harvest != null && { harvest: row.harvest }),
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-  };
-}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 

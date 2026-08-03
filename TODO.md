@@ -12,22 +12,6 @@ Datei soll immer nur den aktuellen Stand zeigen, kein Changelog werden.
 
 ---
 
-## Diagnosis → Recommendation → Outcome Chain
-
-Das Schema (`diagnoses`, `recommendations`, `recommendation_events`,
-`plant_health_snapshots`, `diagnosis_outcomes`) ist live und für den
-Regelbaum-Diagnosepfad verdrahtet. Ein Teil der Kette fehlt noch:
-
-- [ ] **`plant_health_snapshots` / `diagnosis_outcomes`-Cronjob existiert noch
-      nicht.** In Migrations-Kommentaren als zukünftiger Job referenziert
-      (`trigger_source in ('daily_cron','on_log_entry')`), nach demselben
-      Muster wie das bestehende `automation_job_runs`/Engine-Health-Telemetry.
-      Nötig, bevor "hat diese Empfehlung wirklich geholfen" überhaupt
-      beantwortbar wird.
-- [ ] **KI-Bild-Diagnose-Route ist ein 501-Stub.**
-      `apps/web/src/app/api/diagnose/route.ts` — blockiert auf einen
-      OpenAI-Key + Billing-Entscheidung, unabhängig vom Regelbaum-Pfad oben.
-
 ## Grow-Feature
 
 - [ ] **Grows laden nach Login nicht von Supabase zurück.** Der aktive Grow
@@ -89,6 +73,11 @@ Regelbaum-Diagnosepfad verdrahtet. Ein Teil der Kette fehlt noch:
 
 ## Blockiert auf eine Entscheidung, nicht auf Code
 
+- [ ] **KI-Bild-Diagnose-Route ist ein 501-Stub.**
+      `apps/web/src/app/api/diagnose/route.ts` — blockiert auf einen
+      OpenAI-Key + Billing-Entscheidung. Unabhängig vom Regelbaum-Diagnosepfad,
+      dessen komplette Diagnosis→Recommendation→Outcome-Kette (inkl.
+      Health-Snapshot-Cronjob) seit 2026-08-04 fertig und live ist.
 - [ ] **`ANTHROPIC_API_KEY` nicht gesetzt.** Das Admin-KI-Assistent-Feature
       (`dashboard/admin/assistant`, `/api/admin/dashboard`
       `ai-assist`-Action) ist fertig gebaut, schlägt aber mit einer klaren
