@@ -228,7 +228,6 @@ export default async function StatusPage() {
   const generatedAt = statusReport ? new Date(statusReport.generatedAt).toLocaleString("de-DE") : "Kein Report verfügbar";
   const historyDays = buildStatusHistory(statusReport?.windowDays ?? 30, overallStatus, statusReport?.events ?? []);
   const impactModel = getImpactModel(overallStatus);
-  const openCoverageGap = Math.max(fertilizerCoverageStats.trackedMarketEstimate - fertilizerCoverageStats.coveredProducts, 0);
   const coverageSnapshots = [...(fertilizerCoverageHistoryData.snapshots ?? [])].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
@@ -240,7 +239,7 @@ export default async function StatusPage() {
     : null;
   const statusFreshness = getFreshnessMeta(statusReport?.generatedAt ?? null);
   const liveStudyCoveragePercent = overview?.stats.studyCoveragePercent ?? fertilizerCoverageStats.coveragePercent;
-  const livePendingStudies = overview?.stats.pendingStudies ?? openCoverageGap;
+  const newStudiesLast24h = (statusReport?.events ?? []).find((event: StatusEvent) => event.key === "NEW_STUDIES_24H")?.count ?? 0;
   const coverageFreshness = getFreshnessMeta(overview?.stats.latestStudyAt ?? latestCoverageSnapshot?.date ?? null);
   const priorityCards = getPriorityCards();
 
@@ -345,8 +344,8 @@ export default async function StatusPage() {
                 <div className="mt-1 text-xs text-muted-fg">Studien-Coverage (good)</div>
               </div>
               <div className="rounded-2xl border border-border bg-background p-4">
-                <div className="text-2xl font-bold text-foreground">{livePendingStudies}</div>
-                <div className="mt-1 text-xs text-muted-fg">offene Studien-Reviews</div>
+                <div className="text-2xl font-bold text-foreground">{newStudiesLast24h}</div>
+                <div className="mt-1 text-xs text-muted-fg">neue Studien (24h)</div>
               </div>
             </div>
 
@@ -440,8 +439,8 @@ export default async function StatusPage() {
               </p>
             </div>
             <div className="rounded-xl border border-border bg-background p-4">
-              <p className="text-xs text-muted-fg">Offene Reviews</p>
-              <p className="mt-2 text-2xl font-bold text-foreground">{livePendingStudies}</p>
+              <p className="text-xs text-muted-fg">Neue Studien (24h)</p>
+              <p className="mt-2 text-2xl font-bold text-foreground">{newStudiesLast24h}</p>
             </div>
           </div>
 

@@ -11,12 +11,6 @@ type AutomationRunRow = {
   fetched: number;
 };
 
-function eventLevelByThresholds(value: number, yellowFrom: number, redFrom: number): RiskLevel {
-  if (value >= redFrom) return "red";
-  if (value >= yellowFrom) return "yellow";
-  return "green";
-}
-
 function freshnessLevel(hoursOld: number): RiskLevel {
   if (hoursOld > 72) return "red";
   if (hoursOld > 24) return "yellow";
@@ -39,16 +33,12 @@ export async function GET() {
     const [
       latestStudyResult,
       totalResult,
-      pendingResult,
-      badResult,
       last24hResult,
       latestSyncRunResult,
       syncRuns24hResult,
     ] = await Promise.all([
       supabase.from("studies").select("created_at").order("created_at", { ascending: false }).limit(1).maybeSingle(),
       supabase.from("studies").select("id", { count: "exact", head: true }),
-      supabase.from("studies").select("id", { count: "exact", head: true }).eq("quality_status", "pending"),
-      supabase.from("studies").select("id", { count: "exact", head: true }).eq("quality_status", "bad"),
       supabase.from("studies").select("id", { count: "exact", head: true }).gte("created_at", new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()),
       supabase
         .from("automation_job_runs")
@@ -70,8 +60,6 @@ export async function GET() {
     if (
       latestStudyResult.error ||
       totalResult.error ||
-      pendingResult.error ||
-      badResult.error ||
       last24hResult.error
     ) {
       return Response.json(
@@ -100,8 +88,6 @@ export async function GET() {
     }
 
     const total = totalResult.count ?? 0;
-    const pending = pendingResult.count ?? 0;
-    const bad = badResult.count ?? 0;
     const last24hCreated = last24hResult.count ?? 0;
     const latestStudyAt = latestStudyResult.data?.created_at ?? null;
     const latestSyncRun = latestSyncRunResult.error ? null : ((latestSyncRunResult.data ?? null) as AutomationRunRow | null);
@@ -119,10 +105,14 @@ export async function GET() {
       : 999;
 
     const freshness = freshnessLevel(freshnessHours);
-    const backlog = eventLevelByThresholds(pending, 40, 120);
-    const badQuality = eventLevelByThresholds(bad, 5, 20);
     const syncActivity = syncRuns24h.length === 0 && last24hCreated === 0 ? "yellow" : "green";
 
+    // Only genuine operational signals (is data fresh, is the sync running) feed
+    // overallStatus. Editorial curation counts (how many studies are pending
+    // review or were rejected as low-quality) are an internal moderation-queue
+    // metric, not a live-outage signal — a large rejected-count means the content
+    // filter is doing its job, not that anything is broken. Those numbers stay
+    // in the admin panel and are intentionally not exposed here.
     const events = [
       {
         key: "DATA_FRESHNESS",
@@ -135,20 +125,12 @@ export async function GET() {
         lastSeen: freshnessSourceIso,
       },
       {
-        key: "REVIEW_BACKLOG",
-        label: "Offene Studien-Reviews",
-        count: pending,
-        level: backlog,
-        description: "Anzahl Studien mit Qualitätsstatus pending.",
-        lastSeen: generatedAt,
-      },
-      {
-        key: "QUALITY_ALERT",
-        label: "Schwach bewertete Studien",
-        count: bad,
-        level: badQuality,
-        description: "Anzahl Studien mit Qualitätsstatus bad.",
-        lastSeen: generatedAt,
+        key: "NEW_STUDIES_24H",
+        label: "Neue Studien (24h)",
+        count: importedLast24h,
+        level: "green" as RiskLevel,
+        description: `${importedLast24h} neue oder aktualisierte Studien in den letzten 24 Stunden.`,
+        lastSeen: latestSyncRun?.finished_at ?? generatedAt,
       },
       {
         key: "SYNC_ACTIVITY_24H",

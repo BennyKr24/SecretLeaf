@@ -27,14 +27,12 @@ export async function GET() {
     const [
       totalStudiesResult,
       goodStudiesResult,
-      pendingStudiesResult,
       providerCountResult,
       latestStudiesResult,
       latestSyncRunResult,
     ] = await Promise.all([
       supabase.from("studies").select("id", { count: "exact", head: true }),
       supabase.from("studies").select("id", { count: "exact", head: true }).eq("quality_status", "good"),
-      supabase.from("studies").select("id", { count: "exact", head: true }).eq("quality_status", "pending"),
       supabase.from("user_roles").select("user_id", { count: "exact", head: true }).eq("role", "PROVIDER"),
       supabase
         .from("studies")
@@ -44,7 +42,7 @@ export async function GET() {
       supabase
         .from("automation_job_runs")
         .select("finished_at")
-        .eq("job_name", "studies-sync")
+        .eq("job_name", "engine-sync")
         .eq("success", true)
         .order("finished_at", { ascending: false })
         .limit(1)
@@ -54,7 +52,6 @@ export async function GET() {
     if (
       totalStudiesResult.error ||
       goodStudiesResult.error ||
-      pendingStudiesResult.error ||
       providerCountResult.error ||
       latestStudiesResult.error
     ) {
@@ -68,7 +65,6 @@ export async function GET() {
             privacyMode: "minimal-logging",
             totalStudies: 0,
             goodStudies: 0,
-            pendingStudies: 0,
             studyCoveragePercent: 0,
             latestStudyAt: null,
           },
@@ -80,7 +76,6 @@ export async function GET() {
 
     const totalStudies = totalStudiesResult.count ?? 0;
     const goodStudies = goodStudiesResult.count ?? 0;
-    const pendingStudies = pendingStudiesResult.count ?? 0;
     const providerCount = providerCountResult.count ?? 0;
     const studyCoveragePercent = totalStudies > 0 ? pct((goodStudies / totalStudies) * 100) : 0;
 
@@ -97,7 +92,6 @@ export async function GET() {
         privacyMode: "minimal-logging",
         totalStudies,
         goodStudies,
-        pendingStudies,
         studyCoveragePercent,
         latestStudyAt,
       },
@@ -124,7 +118,6 @@ export async function GET() {
           privacyMode: "minimal-logging",
           totalStudies: 0,
           goodStudies: 0,
-          pendingStudies: 0,
           studyCoveragePercent: 0,
           latestStudyAt: null,
         },

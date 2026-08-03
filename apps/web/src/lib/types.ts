@@ -62,7 +62,6 @@ export type PublicOverview = {
     privacyMode: string;
     totalStudies?: number;
     goodStudies?: number;
-    pendingStudies?: number;
     studyCoveragePercent?: number;
     latestStudyAt?: string | null;
   };
