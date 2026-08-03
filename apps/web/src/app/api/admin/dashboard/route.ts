@@ -98,7 +98,8 @@ type AdminAction =
   | "system-stats"
   | "algorithm-get"
   | "algorithm-update"
-  | "algorithm-reset";
+  | "algorithm-reset"
+  | "ai-assist";
 
 export async function POST(req: Request) {
   const adminOrResponse = await requireAdmin(req);
@@ -773,6 +774,33 @@ export async function POST(req: Request) {
 
         logInfo("admin.algorithm-reset", { section: "all", by: adminOrResponse.userId });
         return Response.json({ reset: true, section: "all" });
+      }
+
+      // ── AI ASSIST (Claude) ───────────────────────────────────────────
+      case "ai-assist": {
+        const prompt = (body.prompt as string | undefined)?.trim();
+        if (!prompt) {
+          return Response.json({ error: "prompt fehlt" }, { status: 400 });
+        }
+        if (prompt.length > 8000) {
+          return Response.json({ error: "prompt zu lang (max. 8000 Zeichen)" }, { status: 400 });
+        }
+
+        const { askClaude } = await import("@/lib/ai/anthropic");
+        try {
+          const reply = await askClaude(
+            prompt,
+            "Du hilfst dem Admin-Team von SecretLeaf (einer Cannabis-Grow-App) bei Notizen, " +
+              "Content-Entwürfen (z. B. Wissensartikel, Studien-Zusammenfassungen) und Ideen für die App. " +
+              "Antworte auf Deutsch, präzise und ohne Floskeln."
+          );
+          logInfo("admin.ai-assist", { by: adminOrResponse.userId, promptLength: prompt.length });
+          return Response.json({ reply });
+        } catch (err) {
+          const message = err instanceof Error ? err.message : "Claude-Anfrage fehlgeschlagen";
+          logError("admin.ai-assist.exception", { message });
+          return Response.json({ error: message }, { status: 502 });
+        }
       }
 
       default:

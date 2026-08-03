@@ -341,6 +341,13 @@ export default function AdminOverviewPage() {
                       sub: "Keywords & Filter konfigurieren",
                       color: "hover:border-purple-300",
                     },
+                    {
+                      href: "/dashboard/admin/assistant" as const,
+                      icon: "🤖",
+                      title: "KI-Assistent",
+                      sub: "Notizen & Content-Entwürfe (Claude)",
+                      color: "hover:border-cyan-300",
+                    },
                   ]).map((item) => (
                     <Link
                       key={item.href}
