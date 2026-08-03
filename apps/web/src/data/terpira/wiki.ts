@@ -3678,72 +3678,312 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     relatedSlugs: ["genetik-und-phaenotyp-selektion", "integrierte-schaedlingspraevention-grow", "feminisiert-vs-regular-vs-autoflower"]
   }),
-  createArticle({
+  {
     slug: "selektionsscorecards-fuer-pheno-hunts",
     title: "Selektionsscorecards für Pheno-Hunts",
     summary: "Wie du Auswahlprozesse mit Kriterien, Gewichtungen und Bestätigungsläufen objektiver machst.",
     category: "genetik",
     difficulty: "profi",
     readMinutes: 9,
+    lastUpdated: "2026-08-03",
     tags: ["Pheno-Hunt", "Scorecard", "Selektion", "Dokumentation"],
     keyTakeaways: [
-      "Ohne Scorecard kippt Selektion schnell in Bauchgefühl und späte Rechtfertigung.",
-      "Gewichtete Kriterien helfen, unterschiedliche Ziele wie Ertrag, Aroma und Stabilität ausbalanciert zu bewerten.",
-      "Top-Kandidaten brauchen immer einen Bestätigungslauf unter denselben Bedingungen."
+      "Ohne strukturierte Scorecard kippt Selektion schnell in Bauchgefühl, das sich erst nach der Entscheidung eine Begründung sucht — feste Kriterien vor dem Run verhindern das.",
+      "Gewichtete Kriterien machen unterschiedliche Zuchtziele (Ertrag, Aroma, Stabilität, Risiko) sichtbar vergleichbar, statt sie unbewusst gegeneinander aufzuwiegen.",
+      "Ein Kandidat gilt erst nach einem Bestätigungslauf unter denselben Bedingungen als verlässlich — Einzelbeobachtungen sind für eine Zuchtentscheidung zu unsicher."
     ],
     quickFacts: [
       { label: "Ziel", value: "Objektive Vergleichbarkeit" },
-      { label: "Pflicht", value: "Bestätigungslauf" },
-      { label: "Typische Achsen", value: "Wuchs, Risiko, Qualität, Konsistenz" }
+      { label: "Pflicht", value: "Bestätigungslauf unter gleichen Bedingungen" },
+      { label: "Typische Kernkriterien", value: "10–15, gewichtet" },
+      { label: "Bias-Reduktion", value: "Blind-Scoring wo möglich" }
     ],
     sections: [
       {
-        heading: "Was in eine gute Scorecard gehört",
+        heading: "Definition und Einordnung",
         content: [
-          "Bewerte nicht nur Ertrag oder Optik, sondern auch Stressverhalten, Nacherntequalität, Trimmaufwand und Batch-Konsistenz.",
-          "Lege Gewichtungen vorher fest, damit sie nicht erst nach dem Lieblingskandidaten angepasst werden."
+          "Eine Selektionsscorecard ist ein standardisiertes Bewertungsformular, das mehrere Phänotyp-Kandidaten einer Kreuzung nach denselben, vorab festgelegten Kriterien vergleichbar macht.",
+          "Ohne Scorecard fließen implizite Vorlieben (der 'schönste' Phänotyp, die stärkste Erinnerung) unkontrolliert in die Auswahl ein, was gerade bei mehreren ähnlich guten Kandidaten zu unbelastbaren Entscheidungen führt."
         ]
       },
       {
-        heading: "Wie Entscheidungen belastbar werden",
+        heading: "Kriterienachsen einer belastbaren Scorecard",
         content: [
-          "Vergleiche Kandidaten blind, soweit möglich, und verknüpfe subjektive Sensorik mit objektiven Labor- oder Prozessdaten.",
-          "Nur Linien, die im Wiederholungslauf erneut liefern, sollten in Produktion oder Weiterzucht gehen."
+          "Agronomische Achse: Wuchsform, Ertragspotenzial, Stressresistenz, Krankheitsanfälligkeit — Eigenschaften, die den Anbau selbst betreffen.",
+          "Qualitätsachse: Aroma-/Terpenprofil, Trichomdichte, Nacherntequalität, Trimmaufwand — Eigenschaften, die das Endprodukt betreffen.",
+          "Konsistenzachse: Batch-zu-Batch-Variation innerhalb desselben Phänotyps über mehrere Durchgänge — ein Kandidat mit hoher Einzelqualität, aber großer Schwankung ist für Produktion riskanter als ein etwas schwächerer, aber konstanter."
+        ]
+      },
+      {
+        heading: "Gewichtung vor dem Run festlegen",
+        content: [
+          "Gewichtungen sollten VOR Beginn der Bewertung fixiert werden, nicht nachträglich an den bevorzugten Kandidaten angepasst — sonst verliert die Scorecard ihre eigentliche Funktion als Bias-Korrektiv.",
+          "Zehn bis 15 Kernkriterien sind in der Praxis meist die Obergrenze, bei der noch konsistent und ohne Ermüdung bewertet werden kann; mehr Kriterien verwässern die Trennschärfe eher, als sie zu erhöhen."
         ],
         checklist: [
-          "Gewichtung vor dem Run definieren",
-          "Pro Kandidat Foto-, Labor- und Prozessdaten sammeln",
-          "Finalisten in separatem Best-run verifizieren"
+          "Gewichtung aller Kriterien vor dem ersten Bewertungsdurchgang schriftlich fixieren",
+          "Kriterienzahl auf 10–15 Kernpunkte begrenzen",
+          "Bewertungsbogen für alle Kandidaten identisch verwenden"
+        ]
+      },
+      {
+        heading: "Bias-Reduktion bei der Bewertung",
+        content: [
+          "Wo möglich Kandidaten blind bewerten (Codierung statt Namen/Herkunftsangabe), um Erwartungseffekte durch bekannte Linienreputation zu reduzieren.",
+          "Subjektive Sensorik (Aroma, Optik) explizit mit objektiven Labor- oder Prozessdaten (Cannabinoid-/Terpenwerte, Ertragsgewicht) kombinieren, statt sich allein auf einen der beiden Datentypen zu verlassen."
+        ]
+      },
+      {
+        heading: "Der Bestätigungslauf",
+        content: [
+          "Nur Kandidaten, die in einem zweiten, unabhängigen Durchgang unter denselben Bedingungen erneut vergleichbar gut abschneiden, sollten in Weiterzucht oder Produktion übernommen werden.",
+          "Ein einzelner herausragender Durchgang kann durch Zufallseffekte (leicht abweichendes Mikroklima, Position im Grow-Raum) verzerrt sein — der Bestätigungslauf ist der eigentliche Filter, nicht die Erstbeobachtung."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Gewichtung erst nach der Beobachtung an den Favoriten anpassen, statt sie vorab festzulegen.",
+          "Auf einen Bestätigungslauf verzichten, weil der Erstkandidat 'eindeutig' überzeugt hat.",
+          "Ausschließlich nach Optik oder Aroma selektieren, ohne agronomische Stabilität und Konsistenz einzubeziehen."
         ]
       }
+    ],
+    warnings: [
+      "Eine Zuchtentscheidung allein auf Basis eines einzelnen, nicht wiederholten Durchgangs zu treffen, verwechselt Zufallsstreuung mit echter genetischer Qualität."
     ],
     simpleExplainers: [
       {
         title: "Kurz erklärt: Scorecard",
-        text: "Ein Bewertungsbogen mit festen Kriterien und Punkten, um mehrere Kandidaten fair zu vergleichen."
+        text: "Ein Bewertungsbogen mit festen Kriterien und Punkten, um mehrere Kandidaten fair und nachvollziehbar zu vergleichen, statt sich auf einen Gesamteindruck zu verlassen."
       },
       {
-        title: "Kurz erklärt: Gewichtung",
-        text: "Nicht jedes Kriterium ist gleich wichtig. Gewichtung macht sichtbar, was für dein Zielsystem Priorität hat."
+        title: "Kurz erklärt: Warum ein Bestätigungslauf?",
+        text: "Ein einzelner starker Durchgang kann Zufall sein — vielleicht stand die Pflanze zufällig am besten belichteten Platz. Erst die Wiederholung unter gleichen Bedingungen zeigt, ob die Qualität wirklich in der Genetik liegt."
       }
     ],
     faq: [
       {
-        question: "Kann ich ohne Laborwerte jagen?",
-        answer: "Ja, aber dann sinkt die Trennschärfe. Besonders bei Qualitäts- und Sicherheitsprofilen helfen Laborwerte deutlich."
+        question: "Kann ich ohne Laborwerte selektieren?",
+        answer: "Ja, aber die Trennschärfe zwischen ähnlich guten Kandidaten sinkt. Besonders bei Qualitäts- und Sicherheitsprofilen helfen objektive Laborwerte deutlich, rein sensorische Eindrücke zu ergänzen."
       },
       {
         question: "Wie viele Kriterien sind sinnvoll?",
-        answer: "Genug für Tiefe, aber nicht so viele, dass niemand mehr konsistent bewertet. Zehn bis 15 Kernkriterien sind oft praktikabel."
+        answer: "Genug für Tiefe, aber nicht so viele, dass niemand mehr konsistent bewertet. Zehn bis 15 Kernkriterien sind in der Praxis meist der beste Kompromiss."
+      },
+      {
+        question: "Reicht ein herausragender Durchgang als Entscheidungsgrundlage?",
+        answer: "Nicht zuverlässig. Erst ein Bestätigungslauf unter denselben Bedingungen zeigt, ob die Qualität reproduzierbar in der Genetik liegt oder durch Zufallseffekte im Erstlauf entstanden ist."
       }
     ],
     glossary: [
-      { term: "Scorecard", definition: "Standardisiertes Formular zur Bewertung mehrerer Kandidaten nach denselben Kriterien." },
-      { term: "Bestätigungslauf", definition: "Wiederholung eines vielversprechenden Kandidaten unter kontrollierten Bedingungen." },
-      { term: "Gewichtung", definition: "Festgelegte Bedeutung einzelner Kriterien innerhalb einer Gesamtwertung." },
+      { term: "Scorecard", definition: "Standardisiertes Formular zur Bewertung mehrerer Kandidaten nach denselben, vorab festgelegten Kriterien." },
+      { term: "Bestätigungslauf", definition: "Wiederholung eines vielversprechenden Kandidaten unter kontrollierten, identischen Bedingungen zur Absicherung der Erstbeobachtung." },
+      { term: "Blind-Scoring", definition: "Bewertungsmethode, bei der Kandidaten ohne Kenntnis ihrer Herkunft oder Reputation beurteilt werden, um Erwartungseffekte zu reduzieren." }
     ],
-    relatedSlugs: ["genetik-und-phaenotyp-selektion", "mutterpflanzen-und-clone-hygiene", "terpene-und-wirkprofil"]
-  }),
+    sourceIds: ["genetics-heritable-traits-cannabis", "horticulture-research-cannabis-cultivation"],
+    relatedSlugs: ["genetik-und-phaenotyp-selektion", "mutterpflanzen-und-clone-hygiene", "genetische-stabilitaet-ueber-generationen"]
+  },
+  {
+    slug: "crossing-backcrossing-grundlagen",
+    title: "Crossing und Backcrossing: Grundbegriffe der Zuchtarbeit",
+    summary: "Warum eine F1-Kreuzung genetisch instabil ist und wie Backcrossing gezielt einzelne Eigenschaften in eine Elternlinie zurückführt.",
+    category: "genetik",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["Crossing", "Backcross", "Zucht", "Genetik", "F1"],
+    keyTakeaways: [
+      "Eine F1-Kreuzung zweier unterschiedlicher Elternlinien ist genetisch heterozygot und dadurch nicht 'stabil' — die nächste Generation (F2) spaltet sichtbar in verschiedene Phänotypen auf.",
+      "Backcrossing kreuzt einen Hybrid gezielt zurück auf eine seiner Elternlinien, um über mehrere Generationen (BX1, BX2, BX3 …) den Anteil des Elterngenoms schrittweise zu erhöhen.",
+      "Der typische Einsatzzweck von Backcrossing ist, ein einzelnes Merkmal (z. B. Autoflowering) in eine bewährte Elite-Linie einzukreuzen, ohne deren übrige Eigenschaften zu verwässern."
+    ],
+    quickFacts: [
+      { label: "F1", value: "Erste Generation aus zwei unterschiedlichen Eltern" },
+      { label: "F2", value: "Spaltet sichtbar in mehrere Phänotypen auf" },
+      { label: "BX (Backcross)", value: "Rückkreuzung auf eine Elternlinie" },
+      { label: "Typischer Zweck", value: "Einzelmerkmal gezielt einkreuzen" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Crossing (Kreuzung) bezeichnet die Bestäubung einer weiblichen Pflanze mit Pollen einer genetisch unterschiedlichen männlichen Pflanze, wodurch eine neue Kombination (F1-Generation) entsteht.",
+          "Backcrossing (Rückkreuzung) kreuzt einen bereits entstandenen Hybrid erneut mit einer seiner ursprünglichen Elternlinien, um deren Genom-Anteil in den Nachkommen gezielt zu erhöhen."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Eine F1-Kreuzung ist an vielen Genorten heterozygot (zwei unterschiedliche Allel-Varianten je Ort) — das erzeugt oft Hybridvigor (Heterosis: kräftigeres Wachstum als bei beiden Eltern), macht die Linie aber genetisch nicht einheitlich.",
+          "Wird eine F1-Pflanze mit sich selbst oder einer Schwesterpflanze weitervermehrt (F2), spalten sich die zugrunde liegenden Genkombinationen nach den Mendel'schen Vererbungsregeln neu auf — sichtbar als deutlich breitere Phänotyp-Streuung als in der F1-Generation."
+        ]
+      },
+      {
+        heading: "Wie Backcrossing funktioniert",
+        content: [
+          "Ein F1-Hybrid wird mit einem seiner Elternteile zurückgekreuzt — die entstehende Generation heißt BX1 (erste Rückkreuzung) und trägt bereits einen größeren Anteil des Elterngenoms als die F1.",
+          "Wiederholtes Backcrossen über mehrere Generationen (BX2, BX3 …) erhöht den Anteil des Elterngenoms schrittweise weiter, bis die Nachkommen dem gewählten Elternteil genetisch sehr nahekommen — mit Ausnahme des gezielt eingekreuzten Merkmals."
+        ]
+      },
+      {
+        heading: "Typischer Einsatzzweck",
+        content: [
+          "Ein häufiges Beispiel ist die Einkreuzung des Autoflowering-Merkmals aus einer Ruderalis-Introgression in eine bewährte, potente photoperiodische Elite-Linie: Der erste Cross bringt das Merkmal ein, wiederholtes Backcrossing auf die Elite-Elternlinie reduziert schrittweise unerwünschte Ruderalis-Eigenschaften wie geringere Wuchshöhe.",
+          "Backcrossing wird auch eingesetzt, um eine bereits stabile, bewährte Linie nach einer Außenkreuzung wieder auf ihren ursprünglichen Charakter zurückzuführen."
+        ]
+      },
+      {
+        heading: "Filialgenerationen im Überblick",
+        content: [
+          "P (Parentalgeneration): die ursprünglichen, genetisch unterschiedlichen Elternpflanzen.",
+          "F1: erste Generation aus einer P-Kreuzung, meist genetisch einheitlich in der Erscheinung trotz innerer Heterozygotie.",
+          "F2: durch Selbstung oder Geschwisterkreuzung der F1 entstanden, zeigt sichtbare phänotypische Aufspaltung.",
+          "Sn (S1, S2 …): Generationen aus wiederholter Selbstung derselben Linie, zunehmend homozygot und phänotypisch einheitlicher."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "F1-Samen als 'stabile' Linie verkaufen oder erwarten, obwohl F1-Hybride genetisch heterozygot sind und in der nächsten Generation aufspalten.",
+          "Nach nur einer Rückkreuzung (BX1) bereits von einer vollständig wiederhergestellten Elternlinie ausgehen — mehrere BX-Generationen sind für einen hohen Elternanteil nötig.",
+          "Backcrossing und einfaches Crossing begrifflich verwechseln, was zu falschen Erwartungen an Stabilität und Merkmalsausprägung führt."
+        ]
+      }
+    ],
+    warnings: [
+      "F1-Samen aus einer eigenen Kreuzung sollten nicht als 'stabile Linie' weitervermehrt werden, ohne die zu erwartende Aufspaltung in der F2-Generation einzuplanen."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum spaltet die F2 auf?",
+        text: "Die F1-Generation trägt zwei unterschiedliche Versionen vieler Gene, zeigt aber meist ein einheitliches Erscheinungsbild. Bei der Weitervermehrung werden diese Genversionen neu kombiniert, wodurch die Nachkommen sichtbar unterschiedlicher ausfallen."
+      },
+      {
+        title: "Kurz erklärt: Was BX1, BX2, BX3 bedeuten",
+        text: "Jede Zahl steht für eine weitere Rückkreuzungsrunde auf dieselbe Elternlinie. Mit jeder Runde nähert sich das Erbgut der Nachkommen weiter der Elternlinie an, während das gezielt eingekreuzte Merkmal erhalten bleibt."
+      }
+    ],
+    faq: [
+      {
+        question: "Warum reicht eine einzige Rückkreuzung meist nicht aus?",
+        answer: "Nach BX1 trägt die Nachkommenschaft im Schnitt erst einen Teil des Elterngenoms zusätzlich zum Hybrid-Anteil. Mehrere Backcross-Runden sind nötig, um sich dem ursprünglichen Elternphänotyp deutlich anzunähern."
+      },
+      {
+        question: "Ist eine F1-Kreuzung schlechter als eine stabile Linie?",
+        answer: "Nicht grundsätzlich — F1-Hybride profitieren oft von Hybridvigor und können gleichmäßiger und kräftiger wachsen als ihre Elternlinien. Sie sind nur genetisch nicht für die Weitervermehrung als 'stabile' Linie geeignet."
+      }
+    ],
+    glossary: [
+      { term: "Heterosis", definition: "Hybridvigor; oft beobachtete Wuchs- und Vitalitätssteigerung bei F1-Kreuzungen gegenüber ihren Elternlinien." },
+      { term: "Homozygot", definition: "Zustand, bei dem an einem Genort beide Allel-Kopien identisch sind — Grundlage genetischer Stabilität." },
+      { term: "Introgression", definition: "Einkreuzung eines Merkmals aus einer anderen Linie oder Unterart in eine Ziellinie über wiederholte Kreuzung." }
+    ],
+    sourceIds: ["genetics-heritable-traits-cannabis", "horticulture-research-cannabis-cultivation"],
+    relatedSlugs: ["feminisiert-vs-regular-vs-autoflower", "genetik-und-phaenotyp-selektion", "genetische-stabilitaet-ueber-generationen"]
+  },
+  {
+    slug: "genetische-stabilitaet-ueber-generationen",
+    title: "Genetische Stabilität über Generationen bewerten",
+    summary: "Wie sich echte Stabilität einer Cannabis-Linie von zufälliger Ähnlichkeit unterscheidet und mit welchen praktischen Methoden sie über mehrere Zyklen geprüft wird.",
+    category: "genetik",
+    difficulty: "profi",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["Genetik", "Stabilität", "Selektion", "Linien", "Homozygotie"],
+    keyTakeaways: [
+      "Genetische Stabilität bedeutet hohe Homozygotie an den relevanten Genorten — sie zeigt sich praktisch als geringe phänotypische Streuung zwischen Geschwisterpflanzen derselben Samencharge.",
+      "Eine scheinbar einheitliche F1-Generation ist NICHT automatisch stabil — Heterozygotie kann sich erst in der nächsten Generation (F2) als Aufspaltung zeigen.",
+      "Stabilität wird über wiederholte Selbstung oder Rückkreuzung mit konsequenter Entfernung abweichender Pflanzen (Roguing) über mehrere Generationen aufgebaut, nicht durch einen einzelnen guten Durchgang bewiesen."
+    ],
+    quickFacts: [
+      { label: "Kernindikator", value: "Geringe Streuung zwischen Geschwisterpflanzen" },
+      { label: "Prüfmethode", value: "Mehrere Samen derselben Charge parallel anbauen" },
+      { label: "Stabilisierungsweg", value: "Wiederholte Selbstung + Roguing" },
+      { label: "Falle", value: "F1-Einheitlichkeit ≠ Stabilität" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Genetische Stabilität beschreibt den Grad, zu dem eine Cannabis-Linie über Generationen hinweg konsistente, vorhersagbare Eigenschaften an ihre Nachkommen weitergibt.",
+          "Auf molekularer Ebene entspricht das einer hohen Homozygotie — an möglichst vielen relevanten Genorten liegen beide Allel-Kopien identisch vor, wodurch bei der Vermehrung weniger neue Kombinationen entstehen können."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Bei heterozygoten Genorten (zwei unterschiedliche Allel-Varianten) entstehen bei jeder Weitervermehrung neue Kombinationsmöglichkeiten nach den Mendel'schen Vererbungsregeln — je mehr heterozygote Orte, desto größer die potenzielle Streuung in der nächsten Generation.",
+          "Wiederholte Selbstung (Sn-Generationen) oder Rückkreuzung reduziert die Heterozygotie schrittweise, weil bei jeder Runde ein Teil der abweichenden Allel-Kombinationen statistisch aussortiert wird."
+        ]
+      },
+      {
+        heading: "Warum F1-Einheitlichkeit täuschen kann",
+        content: [
+          "Eine F1-Generation aus zwei stabilen, aber unterschiedlichen Elternlinien kann äußerlich sehr einheitlich wirken, weil alle Individuen dieselbe Kombination der beiden Elterngenome tragen — das ist aber keine genetische Stabilität im eigentlichen Sinn.",
+          "Erst die Weitervermehrung dieser F1 (in die F2) zeigt die tatsächlich zugrunde liegende Heterozygotie durch sichtbare phänotypische Aufspaltung."
+        ]
+      },
+      {
+        heading: "Praktische Prüfmethoden",
+        content: [
+          "Mehrere Samen (idealerweise 6–12) derselben Charge parallel unter identischen Bedingungen anbauen und systematisch auf Höhe, Wuchsform, Blütezeit und Aromaprofil vergleichen.",
+          "Geringe Streuung zwischen diesen Geschwisterpflanzen spricht für hohe Stabilität; große, unvorhersagbare Unterschiede sprechen für eine noch heterozygote, nicht ausreichend stabilisierte Linie.",
+          "Umweltbedingte Variation (unterschiedliche Position im Grow-Raum, leichte Klimaschwankungen) sollte nicht fälschlich als genetische Instabilität gewertet werden — daher immer unter möglichst identischen Bedingungen vergleichen."
+        ],
+        checklist: [
+          "Mindestens 6 Samen derselben Charge parallel unter identischen Bedingungen testen",
+          "Streuung bei Höhe, Blütezeit, Aroma und Ertrag systematisch dokumentieren",
+          "Umweltrauschen von echter genetischer Variation durch gleiche Anbaubedingungen trennen"
+        ]
+      },
+      {
+        heading: "Stabilisierungsprozess über Generationen",
+        content: [
+          "Roguing (konsequentes Entfernen abweichender Pflanzen vor der Weiterzucht) beschleunigt die Stabilisierung erheblich, weil unerwünschte Allel-Kombinationen aktiv aus dem Zuchtpool entfernt werden.",
+          "Mehrere Generationen wiederholter Selbstung oder Rückkreuzung mit konsequentem Roguing sind der Standardweg, um eine neue Kreuzung schrittweise in eine stabile, vorhersagbare Linie zu überführen."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Eine einheitlich wirkende F1-Generation fälschlich als 'stabile Linie' bezeichnen, ohne die F2-Aufspaltung geprüft zu haben.",
+          "Geschwisterpflanzen unter unterschiedlichen Bedingungen vergleichen und Umweltrauschen mit genetischer Instabilität verwechseln.",
+          "Stabilisierung nach nur einer Selbstungsrunde als abgeschlossen betrachten, obwohl mehrere Generationen nötig sind."
+        ]
+      }
+    ],
+    warnings: [
+      "Eine als 'stabil' beworbene Linie sollte anhand mehrerer parallel angebauter Samen derselben Charge geprüft werden — Herstellerangaben allein sind kein Beleg für tatsächliche genetische Stabilität."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Was Stabilität wirklich bedeutet",
+        text: "Eine stabile Linie liefert bei jeder Aussaat sehr ähnliche Pflanzen. Das ist nur der Fall, wenn die zugrunde liegenden Gene an den meisten relevanten Stellen bereits einheitlich (homozygot) vorliegen."
+      },
+      {
+        title: "Kurz erklärt: Warum F1 nicht automatisch stabil ist",
+        text: "F1-Pflanzen können sich äußerlich sehr ähnlich sehen, obwohl sie innerlich unterschiedliche Genkombinationen tragen. Die eigentliche Streuung wird erst sichtbar, wenn man diese F1-Pflanzen weitervermehrt."
+      }
+    ],
+    faq: [
+      {
+        question: "Wie viele Generationen braucht eine wirklich stabile Linie?",
+        answer: "Es gibt keine feste Zahl, aber mehrere Generationen wiederholter Selbstung oder Rückkreuzung mit konsequentem Roguing sind üblich. Je mehr heterozygote Ausgangsorte, desto mehr Generationen sind nötig."
+      },
+      {
+        question: "Reicht ein einziger guter Durchgang als Stabilitätsnachweis?",
+        answer: "Nein. Ein einzelner Durchgang zeigt nur die Qualität einer Einzelpflanze, nicht die Vorhersagbarkeit der ganzen Linie. Erst der Vergleich mehrerer Geschwisterpflanzen unter gleichen Bedingungen zeigt echte Stabilität."
+      }
+    ],
+    glossary: [
+      { term: "Homozygotie", definition: "Zustand, bei dem an einem Genort beide Allel-Kopien identisch sind — Grundlage genetischer Stabilität." },
+      { term: "Roguing", definition: "Konsequentes Entfernen von Pflanzen, die vom gewünschten Phänotyp abweichen, vor der Weiterzucht." },
+      { term: "Sn-Generation", definition: "Generation aus wiederholter Selbstung derselben Linie (S1, S2, S3 …), mit zunehmender Homozygotie." }
+    ],
+    sourceIds: ["genetics-heritable-traits-cannabis", "horticulture-research-cannabis-cultivation"],
+    relatedSlugs: ["genetik-und-phaenotyp-selektion", "selektionsscorecards-fuer-pheno-hunts", "mutterpflanzen-und-clone-hygiene"]
+  },
   createArticle({
     slug: "cannabinoid-biosynthese-verstehen",
     title: "Cannabinoid-Biosynthese verstehen",
@@ -5752,8 +5992,6 @@ const createLiteArticle = (seed: LiteArticleSeed): TerpiraArticle =>
   });
 
 const thirdWaveSeeds: LiteArticleSeed[] = [
-  { slug: "genetische-stabilitaet-ueber-generationen", title: "Genetische Stabilität über Generationen", summary: "Wie Linien über mehrere Zyklen bewertet werden und warum Stabilität ein eigenes Kriterienset braucht.", category: "genetik", difficulty: "profi", readMinutes: 9, tags: ["Genetik", "Stabilität", "Selektion", "Linien"], relatedSlugs: ["genetik-und-phaenotyp-selektion", "selektionsscorecards-fuer-pheno-hunts", "mutterpflanzen-und-clone-hygiene"] },
-  { slug: "crossing-backcrossing-grundlagen", title: "Crossing und Backcrossing Grundlagen", summary: "Grundbegriffe der Zuchtarbeit für bessere Einordnung von Linienbeschreibungen und Selektionszielen.", category: "genetik", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Crossing", "Backcross", "Zucht", "Linien"], relatedSlugs: ["feminisiert-vs-regular-vs-autoflower", "genetik-und-phaenotyp-selektion", "selektionsscorecards-fuer-pheno-hunts"] },
   { slug: "terpen-oxidationsprodukte-und-bedeutung", title: "Terpen-Oxidationsprodukte und Bedeutung", summary: "Wie oxidierte Terpenanteile Profile verändern und warum frische Analytik plus Lagerkontext zusammengehören.", category: "chemie", difficulty: "profi", readMinutes: 9, tags: ["Terpene", "Oxidation", "Analytik", "Chemie"], relatedSlugs: ["thc-zu-cbn-abbau-und-oxidation", "lagerung-und-terpenverlust-vermeiden", "analytik-hplc-vs-gc-bei-cannabinoiden"] },
   { slug: "matrixeffekte-in-der-cannabisanalytik", title: "Matrixeffekte in der Cannabis-Analytik", summary: "Warum dieselbe Methode je Produktmatrix unterschiedlich reagieren kann und was das für Vergleichbarkeit bedeutet.", category: "chemie", difficulty: "profi", readMinutes: 9, tags: ["Matrix", "Analytik", "Labor", "Methodik"], relatedSlugs: ["analytik-hplc-vs-gc-bei-cannabinoiden", "sampling-und-probenahme-fehler", "coa-richtig-lesen"] },
   { slug: "minor-terpene-und-profiltiefe", title: "Minor-Terpene und Profiltiefe", summary: "Warum kleine Terpenanteile für Profilcharakter und Vergleichbarkeit wichtig sein können.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Minor Terpene", "Profil", "Aroma", "Analytik"], relatedSlugs: ["terpene-und-wirkprofil", "myrcen-limonen-caryophyllen-einordnung", "sensorik-panels-fuer-cannabisprodukte"] },
