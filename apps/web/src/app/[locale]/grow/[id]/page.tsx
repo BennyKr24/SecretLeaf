@@ -14,6 +14,7 @@ import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
 import { useAuth } from '@/hooks/useAuth';
+import { useAssistantPreference } from '@/hooks/useAssistantPreference';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
 import { PHASE_ICONS, PHASE_ORDER } from '@/lib/grow/phases';
 import { TASK_CATEGORY_ICONS, GROW_STATUS_LABELS } from '@/lib/grow/types';
@@ -129,9 +130,13 @@ const GROW_STATUS_OPTIONS: GrowStatus[] = ['aktiv', 'pausiert', 'abgeschlossen',
 function GrowSettingsPanel({
   grow,
   onUpdate,
+  assistantEnabled,
+  onSetAssistantEnabled,
 }: {
   grow: Grow;
   onUpdate: (growId: string, updates: Partial<Grow>) => void;
+  assistantEnabled: boolean;
+  onSetAssistantEnabled: (value: boolean) => void;
 }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState(grow.name);
@@ -205,6 +210,30 @@ function GrowSettingsPanel({
           <p className="text-[11px] text-muted-fg">
             Umgebung, Medium und Lichttyp lassen sich nach dem Start nicht mehr ändern, da davon der generierte Aufgabenplan abhängt — dafür einen neuen Grow anlegen.
           </p>
+
+          <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-3 py-2.5">
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-foreground">🤖 Tipps &amp; Empfehlungen anzeigen</p>
+              <p className="mt-0.5 text-[11px] text-muted-fg">
+                Steuert Score-Karte, Statuszeile, Performance- und Wissens-Hinweise. Log, Aufgaben und Einstellungen bleiben immer nutzbar.
+              </p>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={assistantEnabled}
+              onClick={() => onSetAssistantEnabled(!assistantEnabled)}
+              className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors ${
+                assistantEnabled ? 'bg-primary' : 'bg-border'
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
+                  assistantEnabled ? 'translate-x-[22px]' : 'translate-x-0.5'
+                }`}
+              />
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -1140,6 +1169,7 @@ export default function GrowPage({}: Props) {
   const { entries, currentStreak } = useGrowLog(id);
   const { user } = useAuth();
   const isPro = user?.plan === 'pro' || user?.plan === 'team' || user?.role === 'TEAM';
+  const { enabled: assistantEnabled, setEnabled: setAssistantEnabled } = useAssistantPreference();
 
   const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null);
   const [editingPlantId, setEditingPlantId] = useState<string | null>(null);
@@ -1299,7 +1329,9 @@ export default function GrowPage({}: Props) {
       <div className="mx-auto max-w-2xl space-y-5">
 
         {/* ── Daily Action Card ────────────────────────── */}
-        <DailyActionCard action={dailyAction} scoreDelta={scoreDelta} isPro={isPro} />
+        {assistantEnabled && (
+          <DailyActionCard action={dailyAction} scoreDelta={scoreDelta} isPro={isPro} />
+        )}
 
         {/* ── Grow Overview ───────────────────────────── */}
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
@@ -1340,7 +1372,12 @@ export default function GrowPage({}: Props) {
           </div>
         </div>
 
-        <GrowSettingsPanel grow={grow} onUpdate={updateGrow} />
+        <GrowSettingsPanel
+          grow={grow}
+          onUpdate={updateGrow}
+          assistantEnabled={assistantEnabled}
+          onSetAssistantEnabled={setAssistantEnabled}
+        />
 
         {/* ── Phase Suggestion ─────────────────────────── */}
         {(() => {
@@ -1374,10 +1411,12 @@ export default function GrowPage({}: Props) {
           );
         })()}
         {/* ── Grow Status Header ───────────────────────── */}
-        <GrowStatusHeader score={healthScore} status={healthStatus} />
+        {assistantEnabled && (
+          <GrowStatusHeader score={healthScore} status={healthStatus} />
+        )}
 
         {/* ── Performance Panel ────────────────────────── */}
-        {showPerformancePanel && (
+        {assistantEnabled && showPerformancePanel && (
           <GrowPerformancePanel
             isPro={isPro}
             yieldImpact={yieldImpact}
@@ -1510,15 +1549,18 @@ export default function GrowPage({}: Props) {
         </div>
 
         {/* ── Smart Insights ───────────────────────────── */}
-        <GrowKnowledgePanel
-          grow={grow}
-          entries={entries}
-          healthScore={healthScore}
-          currentStreak={currentStreak}
-          overdueTasks={overdue.length}
-          growsCount={grows.length}
-        />
+        {assistantEnabled && (
+          <GrowKnowledgePanel
+            grow={grow}
+            entries={entries}
+            healthScore={healthScore}
+            currentStreak={currentStreak}
+            overdueTasks={overdue.length}
+            growsCount={grows.length}
+          />
+        )}
 
+        {/* SmartInsights manages its own collapsed state — do not gate it here */}
         <SmartInsights grow={grow} />
 
         {/* ── Harvest Data ─────────────────────────────── */}
@@ -1538,7 +1580,7 @@ export default function GrowPage({}: Props) {
             </p>
             <p className="mt-1 text-sm text-muted-fg leading-relaxed">{currentPhase.description}</p>
             <p className="mt-2 text-xs text-muted-fg">
-              Tag {currentPhase.startDay}–{currentPhase.endDay} · noch {Math.max(0, currentPhase.endDay - grow.currentDay + 1)} Tage
+              {currentPhase.label}-Tag {Math.max(1, grow.currentDay - currentPhase.startDay + 1)} · noch {Math.max(0, currentPhase.endDay - grow.currentDay + 1)} Tage in dieser Phase
             </p>
           </div>
         )}

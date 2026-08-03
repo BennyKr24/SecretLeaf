@@ -26,7 +26,7 @@ import {
   completeTask as storeCompleteTask,
   advancePhase as storeAdvancePhase,
 } from "@/lib/grow/store";
-import { generateGrowPlan } from "@/lib/grow/planGenerator";
+import { generateGrowPlan, computePhaseOverride } from "@/lib/grow/planGenerator";
 import { computeCurrentDay } from "@/lib/grow/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
@@ -365,8 +365,14 @@ export function useGrowState(): UseGrowStateReturn {
         Analytics.phaseAdvanced(prev.currentPhaseId, phaseId);
       }
 
+      // `prev.currentDay` is already live here — rowToGrow/withLiveDay both
+      // compute it at load time — so computePhaseOverride can anchor on it
+      // directly. See lib/grow/planGenerator.ts for the re-anchoring logic.
+      const result = computePhaseOverride(prev, phaseId);
+      if (!result) return;
+
       const now = new Date().toISOString();
-      const optimistic = withLiveDay({ ...prev, currentPhaseId: phaseId, updatedAt: now });
+      const optimistic = withLiveDay({ ...prev, ...result, updatedAt: now });
 
       // Optimistic state update
       setGrows((all) => all.map((g) => (g.id === growId ? optimistic : g)));
@@ -374,7 +380,7 @@ export function useGrowState(): UseGrowStateReturn {
       const supabase = getSupabaseBrowserClient();
       void (async () => {
         try {
-          await dbUpdateGrow(supabase, user.id, growId, { currentPhaseId: phaseId });
+          await dbUpdateGrow(supabase, user.id, growId, result);
           // Success: sync localStorage cache from current state
           setGrows((current) => {
             storage.set(STORAGE_KEYS.GROWS, current);

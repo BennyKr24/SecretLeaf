@@ -15,7 +15,8 @@ import type {
   GrowPlan,
   GrowPhaseId,
 } from "./types";
-import { generateId } from "./utils";
+import { generateId, computeCurrentDay } from "./utils";
+import { computePhaseOverride } from "./planGenerator";
 
 /**
  * Notifies same-tab listeners (e.g. useActiveGrow) that the active grow
@@ -181,11 +182,27 @@ export function completeTask(growId: string, taskId: string): Grow | null {
 }
 
 /**
- * Advances the grow to the given phase.
- * Also updates `updatedAt` automatically via `updateGrow`.
+ * Switches the grow to the given phase — used both for the "Bereit für
+ * nächste Phase" button and manual overrides (e.g. an autoflower or
+ * feminized plant that already flowered ahead of the generated schedule).
+ * See `computePhaseOverride` in planGenerator.ts for the re-anchoring logic
+ * (shared with the Supabase-backed path in useGrowState.ts).
+ *
+ * `getGrowById` returns the raw stored `currentDay` (only set at creation,
+ * never persisted live) — recompute it here before anchoring, otherwise
+ * every override would anchor to day 1 regardless of the grow's real age.
  */
-export function advancePhase(growId: string, phaseId: GrowPhaseId): Grow | null {
-  return updateGrow(growId, { currentPhaseId: phaseId });
+export function advancePhase(growId: string, targetPhaseId: GrowPhaseId): Grow | null {
+  const grow = getGrowById(growId);
+  if (!grow) return null;
+
+  const result = computePhaseOverride(
+    { ...grow, currentDay: computeCurrentDay(grow.startDate) },
+    targetPhaseId
+  );
+  if (!result) return null;
+
+  return updateGrow(growId, result);
 }
 
 /**

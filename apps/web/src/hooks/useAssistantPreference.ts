@@ -11,30 +11,27 @@
 // the real stored value is synced in after mount.
 // ────────────────────────────────────────────────────────────────────────────
 
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "secretleaf.assistantPanelEnabled";
 const EVENT_NAME = "secretleaf:assistantPreferenceChanged";
 
 function readPreference(): boolean {
-  if (typeof window === "undefined") return true;
   const raw = localStorage.getItem(STORAGE_KEY);
   if (raw === null) return true;
   return raw === "true";
+}
+
+function subscribe(onChange: () => void): () => void {
+  window.addEventListener(EVENT_NAME, onChange);
+  return () => window.removeEventListener(EVENT_NAME, onChange);
 }
 
 export function useAssistantPreference(): {
   enabled: boolean;
   setEnabled: (value: boolean) => void;
 } {
-  const [enabled, setEnabledState] = useState(true);
-
-  useEffect(() => {
-    setEnabledState(readPreference());
-    const onChange = () => setEnabledState(readPreference());
-    window.addEventListener(EVENT_NAME, onChange);
-    return () => window.removeEventListener(EVENT_NAME, onChange);
-  }, []);
+  const enabled = useSyncExternalStore(subscribe, readPreference, () => true);
 
   const setEnabled = useCallback((value: boolean) => {
     localStorage.setItem(STORAGE_KEY, String(value));
