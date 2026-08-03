@@ -78,12 +78,12 @@ Datei soll immer nur den aktuellen Stand zeigen, kein Changelog werden.
       OpenAI-Key + Billing-Entscheidung. Unabhängig vom Regelbaum-Diagnosepfad,
       dessen komplette Diagnosis→Recommendation→Outcome-Kette (inkl.
       Health-Snapshot-Cronjob) seit 2026-08-04 fertig und live ist.
-- [ ] **`ANTHROPIC_API_KEY` nicht gesetzt.** Das Admin-KI-Assistent-Feature
-      (`dashboard/admin/assistant`, `/api/admin/dashboard`
-      `ai-assist`-Action) ist fertig gebaut, schlägt aber mit einer klaren
-      deutschen Fehlermeldung fehl, bis diese Env-Var in Vercel + `.env.local`
-      gesetzt ist. Echte API-Kosten — Entscheidung liegt beim Nutzer, nicht
-      eigenmächtig setzen.
+- [ ] **`ANTHROPIC_API_KEY` — lokal gesetzt (`.env.local`), Vercel unbestätigt.**
+      Admin-KI-Assistent (`dashboard/admin/assistant`) ist live getestet und
+      funktioniert lokal (echter API-Call bestätigt, 2026-08-04). Fehlender
+      Sidebar-Link dabei gefunden und gefixt (`540586c`). Noch zu prüfen: ob
+      der Key auch in den Vercel-Projekteinstellungen gesetzt ist, sonst
+      bleibt die Produktions-Version inert.
 - [ ] **Vercel-Deploy-Status unbestätigt.** Nutzer meldete, ein Deploy wirkte
       hängengeblieben im "Production"-Status (2026-08-03), obwohl im
       Vercel-Dashboard ein aktueller Build zu sehen war; wurde nicht bis zum
