@@ -228,10 +228,17 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
     inputRef.current?.focus();
   }, []);
 
-  // Backdrop-Click
-  const handleBackdropClick = useCallback((e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) handleClose();
-  }, [handleClose]);
+  // Global Escape-Handler: the input's own onKeyDown only fires while it has
+  // focus, which isn't guaranteed (e.g. after clicking a trending chip that
+  // re-focuses it, or before the 80ms auto-focus timeout above has run).
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleClose();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [open, handleClose]);
 
   if (!open) return null;
 
@@ -243,10 +250,12 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
       aria-modal="true"
       role="dialog"
       aria-label="Suche"
-      onClick={handleBackdropClick}
     >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" />
+      {/* Backdrop — onClick lives here directly (not on the outer flex
+          container) since a click on this element bubbles with
+          e.target === this div; a click on the modal itself never reaches
+          this element at all, so no target-comparison is needed. */}
+      <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={handleClose} />
 
       {/* Modal */}
       <div className="relative w-full max-w-2xl bg-card rounded-2xl shadow-2xl ring-1 ring-border overflow-hidden flex flex-col max-h-[80vh]">
