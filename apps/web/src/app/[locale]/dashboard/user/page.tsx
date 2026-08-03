@@ -20,6 +20,7 @@ import {
   getReadingStreak,
 } from '@/lib/retention';
 import BookmarkButton from '@/components/BookmarkButton';
+import { PremiumScrollFx } from '@/components/scroll/PremiumScrollFx';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
@@ -64,34 +65,51 @@ function timeAgo(isoDate: string, t: TFn): string {
 const INTEREST_ORDER = Object.keys(INTEREST_META) as Interest[];
 
 // ── Shared tile primitives ──────────────────────────────────────────────
-// Every tile on this dashboard uses the same restrained card language as
-// the rest of the product (StudyListItem, AuthBenefits): bg-card/border-border
-// tokens, a small icon badge, rounded-xl — not the ad-hoc pastel gradients
-// this page used to have.
+// Matches the tool-card language from tools/page.tsx exactly (same
+// tool-card-lift hover, rounded-2xl, gradient top bar, bright icon chip)
+// instead of the flat same-tone-as-background badges this page had before
+// — those had zero contrast against bg-card and read as inert.
 
-function TileIcon({ icon: Icon, accent }: { icon: LucideIcon; accent: string }) {
+type AccentName = 'emerald' | 'amber' | 'sky' | 'violet' | 'fuchsia' | 'rose' | 'teal' | 'blue';
+
+const ACCENT: Record<AccentName, { bar: string; icon: string; iconText: string; badge: string }> = {
+  emerald: { bar: 'from-emerald-400 to-emerald-600', icon: 'bg-emerald-50', iconText: 'text-emerald-600', badge: 'border-emerald-500/30 bg-emerald-500/15 text-emerald-600' },
+  amber: { bar: 'from-amber-400 to-amber-600', icon: 'bg-amber-50', iconText: 'text-amber-600', badge: 'border-amber-500/30 bg-amber-500/15 text-amber-600' },
+  sky: { bar: 'from-sky-400 to-sky-600', icon: 'bg-sky-50', iconText: 'text-sky-600', badge: 'border-sky-500/30 bg-sky-500/15 text-sky-600' },
+  violet: { bar: 'from-violet-400 to-violet-600', icon: 'bg-violet-50', iconText: 'text-violet-600', badge: 'border-violet-500/30 bg-violet-500/15 text-violet-600' },
+  fuchsia: { bar: 'from-fuchsia-400 to-fuchsia-600', icon: 'bg-fuchsia-50', iconText: 'text-fuchsia-600', badge: 'border-fuchsia-500/30 bg-fuchsia-500/15 text-fuchsia-600' },
+  rose: { bar: 'from-rose-400 to-rose-600', icon: 'bg-rose-50', iconText: 'text-rose-600', badge: 'border-rose-500/30 bg-rose-500/15 text-rose-600' },
+  teal: { bar: 'from-teal-400 to-teal-600', icon: 'bg-teal-50', iconText: 'text-teal-600', badge: 'border-teal-500/30 bg-teal-500/15 text-teal-600' },
+  blue: { bar: 'from-blue-400 to-blue-600', icon: 'bg-blue-50', iconText: 'text-blue-600', badge: 'border-blue-500/30 bg-blue-500/15 text-blue-600' },
+};
+
+function TileIcon({ icon: Icon, accent }: { icon: LucideIcon; accent: AccentName }) {
+  const a = ACCENT[accent];
   return (
-    <span className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-border bg-background ${accent}`}>
-      <Icon className="h-4 w-4" strokeWidth={2} />
+    <span className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl shadow-sm ${a.icon} ${a.iconText}`}>
+      <Icon className="h-[18px] w-[18px]" strokeWidth={2} />
     </span>
   );
 }
 
 function Tile({
-  icon, accent = 'text-emerald-600', title, subtitle, badge, className = '', bodyClassName = '', children,
+  icon, accent = 'emerald', title, subtitle, badge, className = '', bodyClassName = '', children, revealDelay = 0,
 }: {
   icon: LucideIcon;
-  accent?: string;
+  accent?: AccentName;
   title: string;
   subtitle?: string;
   badge?: number | string;
   className?: string;
   bodyClassName?: string;
   children: React.ReactNode;
+  revealDelay?: number;
 }) {
+  const a = ACCENT[accent];
   return (
-    <section className={`flex flex-col rounded-xl border border-border bg-card p-4 sm:p-5 ${className}`}>
-      <div className="mb-3 flex items-start justify-between gap-3">
+    <section className={`tool-card-lift relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5 ${className}`} data-reveal data-reveal-delay={revealDelay}>
+      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${a.bar}`} />
+      <div className="relative mb-3 flex items-start justify-between gap-3 pt-1">
         <div className="flex items-start gap-3">
           <TileIcon icon={icon} accent={accent} />
           <div className="min-w-0">
@@ -100,12 +118,12 @@ function Tile({
           </div>
         </div>
         {badge !== undefined && badge !== 0 && badge !== '0' && (
-          <span className="flex-shrink-0 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2 py-0.5 text-[11px] font-bold text-emerald-600">
+          <span className={`flex-shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-bold ${a.badge}`}>
             {badge}
           </span>
         )}
       </div>
-      <div className={`flex-1 ${bodyClassName}`}>{children}</div>
+      <div className={`relative flex-1 ${bodyClassName}`}>{children}</div>
     </section>
   );
 }
@@ -307,13 +325,21 @@ export default function UserDashboardPage() {
 
   return (
     <main className="min-h-screen bg-background">
+      <PremiumScrollFx />
       {/* ── Header ──────────────────────────────────────────────────── */}
-      <div className="border-b border-border bg-card">
-        <div className="mx-auto max-w-6xl px-4 py-5 sm:px-5">
+      <div className="relative overflow-hidden border-b border-border bg-card">
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute -left-20 -top-24 h-64 w-64 rounded-full bg-emerald-500/10 blur-[100px]" />
+          <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-teal-500/8 blur-[90px]" />
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 py-5 sm:px-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-                {greeting()}{session ? `, ${session.user.username}` : ''}
+                {greeting()}
+                {session && (
+                  <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">, {session.user.username}</span>
+                )}
               </h1>
               <div className="mt-2 flex flex-wrap items-center gap-1.5">
                 <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-semibold text-foreground/80">
@@ -374,10 +400,12 @@ export default function UserDashboardPage() {
 
           {/* Grow status — the primary daily-use tile, spans 2 columns */}
           {activeGrow ? (
-            <section className="flex flex-col rounded-xl border border-emerald-500/25 bg-card p-4 sm:p-5 md:col-span-2">
-              <div className="mb-3 flex items-center justify-between gap-3">
+            <section className="tool-card-lift relative flex flex-col overflow-hidden rounded-2xl border border-emerald-500/25 bg-card p-4 shadow-[0_20px_50px_-24px_rgba(16,185,129,0.35)] sm:p-5 md:col-span-2" data-reveal>
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-400 to-teal-500" />
+              <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-emerald-500/10 blur-2xl" aria-hidden="true" />
+              <div className="relative mb-3 flex items-center justify-between gap-3 pt-1">
                 <div className="flex items-center gap-3">
-                  <TileIcon icon={Sprout} accent="text-emerald-600" />
+                  <TileIcon icon={Sprout} accent="emerald" />
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-600">{t('activeGrowEyebrow')}</p>
                     <h2 className="text-sm font-bold text-foreground">{activeGrow.name}</h2>
@@ -476,26 +504,29 @@ export default function UserDashboardPage() {
               </div>
             </section>
           ) : (
-            <section className="flex flex-col items-center justify-center rounded-xl border border-dashed border-emerald-500/30 bg-card p-5 text-center md:col-span-2">
-              <Sprout className="h-6 w-6 text-emerald-600" strokeWidth={1.75} />
-              <h2 className="mt-2 text-sm font-bold text-foreground">{t('noActiveGrowTitle')}</h2>
-              <p className="mt-1 text-xs text-muted-fg">{t('noActiveGrowSub')}</p>
-              <Link href={'/start' as Route} className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-500">
+            <section className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-dashed border-emerald-500/30 bg-card p-8 text-center md:col-span-2" data-reveal>
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08),transparent_70%)]" aria-hidden="true" />
+              <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 shadow-sm">
+                <Sprout className="h-7 w-7 text-emerald-600" strokeWidth={1.75} />
+              </span>
+              <h2 className="relative mt-3 text-base font-bold text-foreground">{t('noActiveGrowTitle')}</h2>
+              <p className="relative mt-1 text-xs text-muted-fg">{t('noActiveGrowSub')}</p>
+              <Link href={'/start' as Route} className="relative mt-4 inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-500">
                 <Sprout className="h-3.5 w-3.5" strokeWidth={2} /> {t('startGrowCTA')}
               </Link>
             </section>
           )}
 
           {/* Reading stats — streak, activity, recently viewed */}
-          <Tile icon={TrendingUp} accent="text-amber-500" title={t('streakActivityTitle')} subtitle={t('streakActivitySub')}>
+          <Tile icon={TrendingUp} accent="amber" title={t('streakActivityTitle')} subtitle={t('streakActivitySub')} revealDelay={40}>
             <div className="grid grid-cols-2 gap-2">
               <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-3">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-amber-600">{t('readingStreakLabel')}</p>
-                <p className="mt-1 text-xl font-bold text-foreground">{readingStreak}</p>
+                <p className="mt-1 text-3xl font-bold tabular-nums text-foreground">{readingStreak}</p>
               </div>
               <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-emerald-600">{t('activityScoreLabel')}</p>
-                <p className="mt-1 text-xl font-bold text-foreground">{activityScore}</p>
+                <p className="mt-1 text-3xl font-bold tabular-nums text-foreground">{activityScore}</p>
               </div>
             </div>
             <div className="mt-3">
@@ -528,7 +559,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Notifications — new since last visit + interest matches */}
-          <Tile icon={Bell} accent="text-sky-500" title={t('smartNotificationsTitle')} subtitle={t('smartNotificationsSub')} badge={newSinceLastVisit.length + interestMatches.length}>
+          <Tile icon={Bell} accent="sky" title={t('smartNotificationsTitle')} subtitle={t('smartNotificationsSub')} badge={newSinceLastVisit.length + interestMatches.length} revealDelay={80}>
             <div className="space-y-3">
               <div>
                 <div className="mb-1 flex items-center justify-between">
@@ -562,7 +593,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Continue reading */}
-          <Tile icon={History} accent="text-violet-500" title={t('continueReadingTitle')} subtitle={t('continueReadingSub')} badge={continueReading.length}>
+          <Tile icon={History} accent="violet" title={t('continueReadingTitle')} subtitle={t('continueReadingSub')} badge={continueReading.length} revealDelay={120}>
             {continueReading.length === 0 ? (
               <TileEmpty
                 icon={History}
@@ -584,7 +615,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Saved studies */}
-          <Tile icon={Bookmark} accent="text-sky-500" title={t('savedStudiesTitle')} subtitle={t('savedStudiesSub')} badge={bookmarkedArticles.length}>
+          <Tile icon={Bookmark} accent="blue" title={t('savedStudiesTitle')} subtitle={t('savedStudiesSub')} badge={bookmarkedArticles.length} revealDelay={160}>
             {bookmarkedArticles.length === 0 ? (
               <TileEmpty
                 icon={Bookmark}
@@ -600,7 +631,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Recommended */}
-          <Tile icon={Sparkles} accent="text-fuchsia-500" title={t('recommendedTitle')} subtitle={t('recommendedSub')} badge={recommendedArticles.length}>
+          <Tile icon={Sparkles} accent="fuchsia" title={t('recommendedTitle')} subtitle={t('recommendedSub')} badge={recommendedArticles.length} revealDelay={200}>
             {recommendedArticles.length === 0 && interests.length === 0 ? (
               <TileEmpty
                 icon={Sparkles}
@@ -616,7 +647,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Weekly digest — tabbed instead of 3 stacked columns */}
-          <Tile icon={Mail} accent="text-rose-500" title={t('weeklyDigestTitle')} subtitle={t('weeklyDigestSub')}>
+          <Tile icon={Mail} accent="rose" title={t('weeklyDigestTitle')} subtitle={t('weeklyDigestSub')} revealDelay={240}>
             <div className="mb-2 flex gap-1 rounded-lg border border-border bg-background p-0.5">
               {([
                 ['new', t('newGrowStudies')],
@@ -655,7 +686,7 @@ export default function UserDashboardPage() {
           </Tile>
 
           {/* Interests + quick access, combined into one small tile */}
-          <Tile icon={Target} accent="text-teal-500" title={t('myInterestsTitle')} subtitle={t('myInterestsSub')}>
+          <Tile icon={Target} accent="teal" title={t('myInterestsTitle')} subtitle={t('myInterestsSub')} revealDelay={280}>
             <div className="flex flex-wrap gap-1.5">
               {INTEREST_ORDER.map((interest) => {
                 const meta = INTEREST_META[interest];
