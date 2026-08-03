@@ -1247,7 +1247,7 @@ function buildMarketExpansionCatalog(): FertilizerProfile[] {
         },
         dilutionRatio: plan.format === "powder" ? `${round1(0.6 + (seed % 6) * 0.2)}g/L` : `${1 + (seed % 4)}ml/L`,
         cost: plan.cost,
-        description: `Marktlinie ${line} von ${plan.brand} fuer ${plan.application === "water" ? "Wasser" : plan.application === "soil" ? "Erde" : "Wasser und Erde"}.`,
+        description: `Marktlinie ${line} von ${plan.brand} für ${plan.application === "water" ? "Wasser" : plan.application === "soil" ? "Erde" : "Wasser und Erde"}.`,
         tags: ["Marktabdeckung", "Top-Marke", plan.application === "water" ? "Wasser" : plan.application === "soil" ? "Erde" : "Wasser+Erde"],
         yeild_potential: plan.cost === "premium" ? "very_high" : "high"
       } satisfies FertilizerProfile;
@@ -1406,7 +1406,7 @@ function buildExtendedCatalog(base: FertilizerProfile[]): FertilizerProfile[] {
           max: round1(clamp(item.ec_range.max * variant.ecFactor, 0.6, 5.0))
         },
         cost: item.cost === "premium" ? "premium" : variant.cost,
-        description: `${item.description} Serienvariante ${variant.nameSuffix.trim()} fuer ${isBoosted ? "hoehere Leistungsdichte" : "milde Startprogramme"}.`,
+        description: `${item.description} Serienvariante ${variant.nameSuffix.trim()} für ${isBoosted ? "höhere Leistungsdichte" : "milde Startprogramme"}.`,
         tags: [...new Set([...item.tags, "Serie", variant.extraTag])],
         yeild_potential:
           variant.suffix === "lite"

@@ -6,7 +6,7 @@ export type CoverageSnapshot = {
   note: string;
 };
 
-// Modellbasierte Verlaufspunkte fuer transparente Produktkommunikation.
+// Modellbasierte Verlaufspunkte für transparente Produktkommunikation.
 export const fertilizerCoverageHistory: CoverageSnapshot[] = [
   {
     date: "2026-03-22",
@@ -34,13 +34,13 @@ export const fertilizerCoverageHistory: CoverageSnapshot[] = [
     coverage: 71,
     coveredProducts: 298,
     marketEstimate: 420,
-    note: "Groesseres Marktmodell integriert"
+    note: "Größeres Marktmodell integriert"
   },
   {
     date: "2026-03-26T22:45:00.000Z",
     coverage: 82.4,
     coveredProducts: 346,
     marketEstimate: 420,
-    note: "80%-Ziel ueberschritten"
+    note: "80%-Ziel überschritten"
   }
 ];

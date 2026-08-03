@@ -117,7 +117,7 @@ const SYNONYM_MAP: Record<string, string[]> = {
   phosphor: ["phosphor", "naehrstoffe", "npk"],
   ec: ["ec", "leitfaehigkeit", "naehrstoffe", "duengen"],
   ph: ["ph", "wasser", "naehrstoffe"],
-  // Duenger
+  // Dünger
   duengen: ["duengen", "duenger", "npk", "ec"],
   duenger: ["fertilizer", "duengen", "npk"],
   daengen: ["duengen", "duenger"],

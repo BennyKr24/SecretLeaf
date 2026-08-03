@@ -855,10 +855,10 @@
       "hash": "f01dfec6832b39cd86c90ececac8f97892ed2221",
       "version": null,
       "date": "2026-03-28",
-      "title": "lokaler Admin-Bypass fuer Benny ohne Backend",
+      "title": "lokaler Admin-Bypass für Benny ohne Backend",
       "type": "feature",
       "changes": [
-        "lokaler Admin-Bypass fuer Benny ohne Backend"
+        "lokaler Admin-Bypass für Benny ohne Backend"
       ]
     },
     {
@@ -1017,11 +1017,11 @@
       "title": "Automatisierung massiv erweitert, Datenbank & API produktionsnah konfiguriert",
       "type": "release",
       "changes": [
-        "Automations-Endpunkte erweitert: Health, Cleanup, Study-Sync und manuelles Refresh fuer stabile Betriebsablaeufe",
-        "Status- und Public-API weiter ausgebaut fuer verlaessliche Live-Uebersichten und Monitoring",
-        "Supabase/DB-Grundlage deutlich gehaertet: Rollen, RLS-Hardening, Fingerprint-Indexing und Automation-Run-Tracking",
-        "Datenfluss zwischen Web, API und Storage konsolidiert fuer robustere Sync- und Review-Prozesse",
-        "Klarer IA-Relaunch in v1.4 (Studies, Database, Tools, Dashboard) fuer bessere operative Steuerung"
+        "Automations-Endpunkte erweitert: Health, Cleanup, Study-Sync und manuelles Refresh für stabile Betriebsabläufe",
+        "Status- und Public-API weiter ausgebaut für verlässliche Live-Übersichten und Monitoring",
+        "Supabase/DB-Grundlage deutlich gehärtet: Rollen, RLS-Hardening, Fingerprint-Indexing und Automation-Run-Tracking",
+        "Datenfluss zwischen Web, API und Storage konsolidiert für robustere Sync- und Review-Prozesse",
+        "Klarer IA-Relaunch in v1.4 (Studies, Database, Tools, Dashboard) für bessere operative Steuerung"
       ]
     },
     {

@@ -1269,7 +1269,7 @@ const baseWikiArticles: TerpiraArticle[] = [
   {
     slug: "vpd-und-ec-kombi-rechner-guide",
     title: "VPD- und EC-Leitfaden",
-    summary: "Wie Klima- und Naehrstoffsteuerung gemeinsam optimiert werden, statt isolierte Einzelwerte zu verfolgen.",
+    summary: "Wie Klima- und Nährstoffsteuerung gemeinsam optimiert werden, statt isolierte Einzelwerte zu verfolgen.",
     category: "werkzeuge",
     difficulty: "profi",
     readMinutes: 10,
@@ -1289,7 +1289,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "Regelstrategie aufbauen",
         content: [
-          "Definiere Prioritäten: zuerst Klimastabilität, dann Naehrstofffeinsteuerung.",
+          "Definiere Prioritäten: zuerst Klimastabilität, dann Nährstofffeinsteuerung.",
           "Nutze Trenddaten statt Einzelmesspunkte für Entscheidungen."
         ]
       },

@@ -26,7 +26,7 @@ export type TopicCluster = {
 };
 
 // Only clusters that match SecretLeaf's documented Wissenssystem philosophy
-// (Growing, Krankheiten, Naehrstoffe, Sorten, Cannabinoide, Terpene, Extrakte,
+// (Growing, Krankheiten, Nährstoffe, Sorten, Cannabinoide, Terpene, Extrakte,
 // Ernte, Trocknung, Curing — see Obsidian/04_Wissen/01_Cannabis_Wissenssystem.md).
 // medizin-evidenz / pharmakologie / markt-regulierung were dropped: a home-grow
 // knowledge base has no editorial use for clinical, pharmacology, or market/
