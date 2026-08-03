@@ -4210,7 +4210,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "Methodenvergleich ist keine Nebensache: HPLC und GC beantworten teils unterschiedliche Fragen.",
       "Ohne Methodenhinweis sind Profilvergleiche zwischen COAs oft nur eingeschränkt belastbar.",
-      "Saure Vorstufen, Aufarbeitung und Temperaturbelastung spielen bei der Einordnung eine grosse Rolle."
+      "Saure Vorstufen, Aufarbeitung und Temperaturbelastung spielen bei der Einordnung eine große Rolle."
     ],
     quickFacts: [
       { label: "HPLC", value: "Schonend für saure Formen" },
@@ -4469,7 +4469,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         answer: "Es hilft stark, ersetzt Analytik aber nicht. Sensorik und Labordaten ergänzen sich."
       },
       {
-        question: "Wie gross sollte ein Panel sein?",
+        question: "Wie groß sollte ein Panel sein?",
         answer: "Gross genug für unterschiedliche Wahrnehmungen, aber klein genug, um konsistent trainiert zu bleiben."
       }
     ],
@@ -4865,7 +4865,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         answer: "Nein, aber immer erklären und nicht als alleinige Qualitätsaussage stehen lassen."
       },
       {
-        question: "Warum ist das für grosse Seiten wichtig?",
+        question: "Warum ist das für große Seiten wichtig?",
         answer: "Weil unerklärte Begriffe für Einsteiger irreführend sind und Kataloge uneinheitlich machen."
       }
     ],
@@ -5508,7 +5508,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "Messdaten sind nur so gut wie Sensorzustand, Platzierung und Kalibrierung.",
       "Viele Grow- und Labordiskussionen basieren auf Datenfehlern statt auf echten Prozessproblemen.",
-      "Ein kleiner QA-Prozess für Sensoren verhindert grosse Fehlentscheidungen."
+      "Ein kleiner QA-Prozess für Sensoren verhindert große Fehlentscheidungen."
     ],
     quickFacts: [
       { label: "Häufiger Fehler", value: "Vertrauen in unkorrigierte Sensoren" },
@@ -5936,7 +5936,7 @@ const createLiteArticle = (seed: LiteArticleSeed): TerpiraArticle =>
     keyTakeaways: [
       `${seed.title} fokussiert auf reproduzierbare Standards statt Einzeltricks.`,
       "Klare Datenspuren und definierte Kriterien machen Vergleiche belastbar.",
-      "Für grosse Wissensseiten ist strukturierte Einordnung wichtiger als Hype-Sprache."
+      "Für große Wissensseiten ist strukturierte Einordnung wichtiger als Hype-Sprache."
     ],
     quickFacts: [
       { label: "Kategorie", value: categoryLabels[seed.category] },
@@ -5996,7 +5996,7 @@ const thirdWaveSeeds: LiteArticleSeed[] = [
   { slug: "matrixeffekte-in-der-cannabisanalytik", title: "Matrixeffekte in der Cannabis-Analytik", summary: "Warum dieselbe Methode je Produktmatrix unterschiedlich reagieren kann und was das für Vergleichbarkeit bedeutet.", category: "chemie", difficulty: "profi", readMinutes: 9, tags: ["Matrix", "Analytik", "Labor", "Methodik"], relatedSlugs: ["analytik-hplc-vs-gc-bei-cannabinoiden", "sampling-und-probenahme-fehler", "coa-richtig-lesen"] },
   { slug: "minor-terpene-und-profiltiefe", title: "Minor-Terpene und Profiltiefe", summary: "Warum kleine Terpenanteile für Profilcharakter und Vergleichbarkeit wichtig sein können.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Minor Terpene", "Profil", "Aroma", "Analytik"], relatedSlugs: ["terpene-und-wirkprofil", "myrcen-limonen-caryophyllen-einordnung", "sensorik-panels-fuer-cannabisprodukte"] },
   { slug: "terpen-panels-und-qualitaetslabels", title: "Terpen-Panels und Qualitätslabels", summary: "Wie Terpenpanels für Kataloge standardisiert werden können, ohne in Marketingkürzel abzurutschen.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Terpenpanel", "Label", "Katalog", "Qualität"], relatedSlugs: ["sensorik-panels-fuer-cannabisprodukte", "terpene-und-wirkprofil", "coa-richtig-lesen"] },
-  { slug: "orale-produkte-und-first-pass-risiken", title: "Orale Produkte und First-Pass-Risiken", summary: "Einordnung von Effektdauer, Verzogerung und Fehlsteuerung bei oraler Anwendung.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Oral", "First Pass", "Timing", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "sublingual-tinkturen-richtig-einordnen", "inhalation-set-setting-und-harm-reduction"] },
+  { slug: "orale-produkte-und-first-pass-risiken", title: "Orale Produkte und First-Pass-Risiken", summary: "Einordnung von Effektdauer, Verzögerung und Fehlsteuerung bei oraler Anwendung.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Oral", "First Pass", "Timing", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "sublingual-tinkturen-richtig-einordnen", "inhalation-set-setting-und-harm-reduction"] },
   { slug: "dosisprotokolle-ohne-uebertreibung", title: "Dosisprotokolle ohne Übertreibung", summary: "Wie strukturierte Dosisprotokolle für Aufklärung funktionieren, ohne falsche Sicherheit zu erzeugen.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Dosis", "Protokoll", "Aufklärung", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "inhalation-set-setting-und-harm-reduction"] },
   { slug: "concentrate-categorization-fuer-plattformen", title: "Concentrate-Categorization für Plattformen", summary: "Wie Konzentrate so kategorisiert werden, dass Nutzer vergleichen können und Daten konsistent bleiben.", category: "konzentrate", difficulty: "profi", readMinutes: 8, tags: ["Konzentrate", "Katalog", "Taxonomie", "Plattform"], relatedSlugs: ["hash-typen-vergleichen", "full-melt-und-marketingsprache", "rosin-einordnung-ohne-hype"] },
   { slug: "kontaminantenprofile-bei-extrakten", title: "Kontaminantenprofile bei Extrakten", summary: "Welche Kontaminantenklassen bei konzentrierten Produkten besondere Aufmerksamkeit brauchen.", category: "konzentrate", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Extrakte", "Kontaminanten", "Sicherheit", "Labor"], relatedSlugs: ["bubble-hash-qualitaetskriterien", "pgr-und-kontaminanten", "pestizidklassen-und-rueckstandsrisiken"] },
@@ -6004,8 +6004,8 @@ const thirdWaveSeeds: LiteArticleSeed[] = [
   { slug: "supplier-risk-scoring-fuer-cannabis", title: "Supplier-Risk-Scoring für Cannabis", summary: "Wie Lieferanten nach Datenqualität, Abweichungen und Zuverlässigkeit bewertet werden können.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Lieferanten", "Scoring", "Risiko", "Qualität"], relatedSlugs: ["schwere-metalle-und-aufnahmewege", "microbial-trending-und-fruehwarnung"] },
   { slug: "interlaborvergleich-und-ringtests", title: "Interlaborvergleich und Ringtests", summary: "Warum Ringtests wichtig sind, um Laborqualität und Vergleichbarkeit langfristig abzusichern.", category: "qualitaet", difficulty: "profi", readMinutes: 8, tags: ["Ringtest", "Interlabor", "Qualität", "Analytik"], relatedSlugs: ["coa-richtig-lesen", "analytik-hplc-vs-gc-bei-cannabinoiden", "sampling-und-probenahme-fehler"] },
   { slug: "stabilitaetsprogramme-fuer-produktlinien", title: "Stabilitätsprogramme für Produktlinien", summary: "Wie strukturierte Stabilitätsprüfungen über Chargen und Zeit aufgebaut werden.", category: "qualitaet", difficulty: "profi", readMinutes: 9, tags: ["Stabilität", "Produktlinie", "Qualität", "Programm"], relatedSlugs: ["lagerung-verpackung-und-lichtschutz", "batch-release-und-freigabekriterien", "thc-zu-cbn-abbau-und-oxidation"] },
-  { slug: "content-taxonomie-und-tag-governance", title: "Content-Taxonomie und Tag-Governance", summary: "Wie grosse Wissensseiten Kategorien und Tags so steuern, dass Suche und Navigation stabil bleiben.", category: "werkzeuge", difficulty: "profi", readMinutes: 8, tags: ["Taxonomie", "Tags", "Governance", "Wiki"], relatedSlugs: ["grow-log-und-kpi-dashboard", "sensor-kalibrierung-und-messfehler", "concentrate-categorization-fuer-plattformen"] },
-  { slug: "release-checklisten-fuer-wiki-drops", title: "Release-Checklisten für Wiki-Drops", summary: "Praxis-Checkliste für gross angelegte Content-Drops mit Qualitäts- und Konsistenzkontrolle.", category: "werkzeuge", difficulty: "einsteiger", readMinutes: 6, tags: ["Release", "Checkliste", "Wiki", "QA"], relatedSlugs: ["content-taxonomie-und-tag-governance", "batch-release-und-freigabekriterien", "grow-log-und-kpi-dashboard"] }
+  { slug: "content-taxonomie-und-tag-governance", title: "Content-Taxonomie und Tag-Governance", summary: "Wie große Wissensseiten Kategorien und Tags so steuern, dass Suche und Navigation stabil bleiben.", category: "werkzeuge", difficulty: "profi", readMinutes: 8, tags: ["Taxonomie", "Tags", "Governance", "Wiki"], relatedSlugs: ["grow-log-und-kpi-dashboard", "sensor-kalibrierung-und-messfehler", "concentrate-categorization-fuer-plattformen"] },
+  { slug: "release-checklisten-fuer-wiki-drops", title: "Release-Checklisten für Wiki-Drops", summary: "Praxis-Checkliste für groß angelegte Content-Drops mit Qualitäts- und Konsistenzkontrolle.", category: "werkzeuge", difficulty: "einsteiger", readMinutes: 6, tags: ["Release", "Checkliste", "Wiki", "QA"], relatedSlugs: ["content-taxonomie-und-tag-governance", "batch-release-und-freigabekriterien", "grow-log-und-kpi-dashboard"] }
 ];
 
 const thirdWaveWikiArticles: TerpiraArticle[] = thirdWaveSeeds.map(createLiteArticle);
