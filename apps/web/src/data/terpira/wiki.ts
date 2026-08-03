@@ -158,7 +158,7 @@ const sourceRegisterCore: TerpiraSource[] = [
     url: "https://onlinelibrary.wiley.com/journal/1099498x"
   },
   
-  // === ANBAU, GENETIK & QUALITAET ===
+  // === ANBAU, GENETIK & QUALITÄT ===
   {
     id: "horticulture-research-cannabis-cultivation",
     title: "Modern Cultivation Techniques and Environmental Control for Cannabis",
@@ -391,6 +391,13 @@ const sourceRegisterCore: TerpiraSource[] = [
     publisher: "British Journal of Pharmacology",
     year: "2024",
     url: "https://bpspubs.onlinelibrary.wiley.com/journal/14765381"
+  },
+  {
+    id: "warren-hop-latent-viroid-cannabis",
+    title: "Sequence Composition and Genetic Diversity of Hop Latent Viroid: from Herbal Extracts to Cannabis",
+    publisher: "Phytobiomes Journal",
+    year: "2019",
+    url: "https://apsjournals.apsnet.org/doi/10.1094/PBIOMES-02-19-0010-R"
   }
 ].map((s) => ({ ...s, sourceType: "manual" as const }));
 
@@ -462,14 +469,14 @@ const baseWikiArticles: TerpiraArticle[] = [
     quickFacts: [
       { label: "Schwerpunkt", value: "Klima, Licht, Nährstoffe" },
       { label: "Fehlerquelle #1", value: "Zu viele Variablen gleichzeitig" },
-      { label: "Empfohlenes Tracking", value: "Taegliches Grow-Log" }
+      { label: "Empfohlenes Tracking", value: "Tägliches Grow-Log" }
     ],
     sections: [
       {
         heading: "Systemdenken statt Einzeltricks",
         content: [
           "Ertrag und Qualität entstehen aus stabilen Prozessen — nicht aus isolierten Tricks.",
-          "Licht, Klima und Nährstoffe greifen ineinander: eine Aenderung beeinflusst immer das Gesamtsystem."
+          "Licht, Klima und Nährstoffe greifen ineinander: eine Änderung beeinflusst immer das Gesamtsystem."
         ],
         checklist: [
           "VPD-Zielbereich pro Wachstumsphase definieren",
@@ -487,7 +494,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "Datensaubere Routinen",
         content: [
-          "Notiere Futterstaerke, pH-Korrekturen und Giesstermine in einer einheitlichen Struktur.",
+          "Notiere Futterstärke, pH-Korrekturen und Giesstermine in einer einheitlichen Struktur.",
           "Nur so lassen sich Ursache-Wirkung-Beziehungen später sicher bewerten."
         ]
       },
@@ -504,8 +511,8 @@ const baseWikiArticles: TerpiraArticle[] = [
         content: [],
         checklist: [
           "Lege heute fixe Messpunkte fest: Temperatur, RH, pH, EC — tägliche zur gleichen Zeit",
-          "Schreibe jede Aenderung mit Datum ins Grow-Log, bevor du sie machst",
-          "Aendere nur eine Variable pro Woche — sonst kannst du Ursachen nicht isolieren"
+          "Schreibe jede Änderung mit Datum ins Grow-Log, bevor du sie machst",
+          "Ändere nur eine Variable pro Woche — sonst kannst du Ursachen nicht isolieren"
         ]
       }
     ],
@@ -513,7 +520,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Was ist Systemdenken?",
-        text: "Jede Aenderung bei Licht, Klima oder Naehrstoffen beeinflusst die anderen Parameter. Stabilität statt Einzeltricks ist der Schluessel."
+        text: "Jede Änderung bei Licht, Klima oder Nährstoffen beeinflusst die anderen Parameter. Stabilität statt Einzeltricks ist der Schlüssel."
       },
       {
         title: "Kurz erklärt: Warum Dokumentation?",
@@ -523,10 +530,10 @@ const baseWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Muss ich teure Geräte kaufen, um gut anzubauen?",
-        answer: "Nein. Entscheidend ist die SOP-Konsistenz, nicht die Ausruestung. Guenstige Sensoren mit zuverlaussigem Logging schlagen teure Einzelgeraete."
+        answer: "Nein. Entscheidend ist die SOP-Konsistenz, nicht die Ausrüstung. Günstige Sensoren mit zuverlaussigem Logging schlagen teure Einzelgeräte."
       },
       {
-        question: "Wie oft sollte ich mich um die Pflanzen kuemmern?",
+        question: "Wie oft sollte ich mich um die Pflanzen kümmern?",
         answer: "Das hängt vom Setup ab. Wichtig ist die Frequenz und Konsistenz: tägliche Beobachtung + wöchentliche Messung + monatliche Analyse nach SOP."
       }
     ],
@@ -541,11 +548,11 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         term: "EC",
-        definition: "Electrical Conductivity - Salzgehalt der Naehrlosung, Indikator für verfuegbare Nährstoffe."
+        definition: "Electrical Conductivity - Salzgehalt der Nährlosung, Indikator für verfügbare Nährstoffe."
       }
     ],
     sourceIds: ["horticulture-research-cannabis-cultivation", "plant-physiology-vpd-transpiration", "astm-d37-cannabis", "postharvest-biology-technology-curing"],
-    relatedSlugs: ["vpd-einfach-erklärt", "wasseraktivität-und-curing", "coa-richtig-lesen"]
+    relatedSlugs: ["vpd-einfach-erklaert", "wasseraktivitaet-und-curing", "coa-richtig-lesen"]
   },
   {
     slug: "vpd-einfach-erklaert",
@@ -559,7 +566,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "VPD ist die Trocknungskraft der Luft und sollte in Phase-zentrierten Bereichen gesteuert werden.",
       "Blatttemperatur verschiebt den effektiven VPD stark und darf nicht ignoriert werden.",
-      "Zu niedriger VPD kann pathogene Fenster oeffnen, zu hoher VPD stresst Pflanzen schnell."
+      "Zu niedriger VPD kann pathogene Fenster öffnen, zu hoher VPD stresst Pflanzen schnell."
     ],
     quickFacts: [
       { label: "Messbasis", value: "Raumtemp + RH + Blatttemp" },
@@ -577,7 +584,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "Praxisleitfaden",
         content: [
-          "Arbeite mit Phase-Profilen (Jungpflanze, Wachstum, Blüte) und teste nur kleine Aenderungen.",
+          "Arbeite mit Phase-Profilen (Jungpflanze, Wachstum, Blüte) und teste nur kleine Änderungen.",
           "Nach jeder Korrektur mindestens 24 Stunden beobachten, bevor erneut eingegriffen wird."
         ],
         checklist: [
@@ -622,12 +629,12 @@ const baseWikiArticles: TerpiraArticle[] = [
       }
     ],
     sourceIds: ["plant-physiology-vpd-transpiration", "astm-d37-cannabis", "horticulture-research-cannabis-cultivation"],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "wasseraktivität-und-curing"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "wasseraktivitaet-und-curing"]
   },
   {
     slug: "genetik-und-phaenotyp-selektion",
-    title: "Genetik und Phaenotyp-Selektion",
-    summary: "Wie du genetische Linien vergleichst, stabile Kandidaten auswaehlst und Drift über Generationen vermeidest.",
+    title: "Genetik und Phänotyp-Selektion",
+    summary: "Wie du genetische Linien vergleichst, stabile Kandidaten auswählst und Drift über Generationen vermeidest.",
     category: "genetik",
     difficulty: "fortgeschritten",
     readMinutes: 8,
@@ -654,7 +661,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "Auswahl und Verifizierung",
         content: [
-          "Top-Kandidaten sollten in mindestens einem Bestaetigungsdurchlauf erneut performen.",
+          "Top-Kandidaten sollten in mindestens einem Bestätigungsdurchlauf erneut performen.",
           "Nur reproduzierbare Linien sind für den operativen Betrieb sinnvoll."
         ],
         checklist: [
@@ -671,7 +678,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: Warum nicht nur 1 Pflanze?",
-        text: "Gene verändern sich über Generationen. Mehrere Durchläufe und Backup-Clones sind noetig, um wirklich stabile Kandidaten zu finden."
+        text: "Gene verändern sich über Generationen. Mehrere Durchläufe und Backup-Clones sind nötig, um wirklich stabile Kandidaten zu finden."
       }
     ],
     faq: [
@@ -681,7 +688,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         question: "Was ist das größte Fehlerrisiko?",
-        answer: "Unterschiedliche Kulturbedingungen pro Pflanze. Das verfaelscht den Vergleich massiv. Identische Bedingungen sind absolute Pflicht."
+        answer: "Unterschiedliche Kulturbedingungen pro Pflanze. Das verfälscht den Vergleich massiv. Identische Bedingungen sind absolute Pflicht."
       }
     ],
     glossary: [
@@ -749,7 +756,7 @@ const baseWikiArticles: TerpiraArticle[] = [
         content: [],
         checklist: [
           "Ernte bei < 22\u00b0C trocknen und lagern — jeder Grad mehr beschleunigt Terpenverlust messbar",
-          "Glasbehaelter luftdicht verschliessen — Sauerstoffkontakt ist der größte Einzelfaktor für Profilveraenderung",
+          "Glasbehälter luftdicht verschliessen — Sauerstoffkontakt ist der größte Einzelfaktor für Profilveränderung",
           "COA-Terpenangabe nur vergleichen, wenn gleiche Methode und Probenahmezeit dokumentiert sind"
         ]
       }
@@ -757,17 +764,17 @@ const baseWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Terpene sind nicht Wirkung",
-        text: "Terpene beeinflussen das sensorische Profil und koennten Effekte unterstützen, ersetzen aber niemals Laborwerte für Cannabinoide oder Kontaminanten."
+        text: "Terpene beeinflussen das sensorische Profil und könnten Effekte unterstützen, ersetzen aber niemals Laborwerte für Cannabinoide oder Kontaminanten."
       },
       {
         title: "Kurz erklärt: Wie werden Terpene gemessen?",
-        text: "Hauptsaechlich via GC-MS (Gaschromatographie-Massenspektrometrie). Die genaue Messmethode und Probenbehandlung beeinflussen die Ergebnisse deutlich."
+        text: "Hauptsächlich via GC-MS (Gaschromatographie-Massenspektrometrie). Die genaue Messmethode und Probenbehandlung beeinflussen die Ergebnisse deutlich."
       }
     ],
     faq: [
       {
         question: "Verliere ich Terpene beim Trocknen und Lagern?",
-        answer: "Ja, stark. Hitze, Licht und Luftexposition bauen Terpene ab. Kuehle, dunkle, luftdichte Lagerung ist essentiell."
+        answer: "Ja, stark. Hitze, Licht und Luftexposition bauen Terpene ab. Kühle, dunkle, luftdichte Lagerung ist essentiell."
       },
       {
         question: "Kann ich Terpenprofile zwischen Chargen vergleichen?",
@@ -814,7 +821,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "Evidenz lesen lernen",
         content: [
-          "Unterscheide zwischen praeklinischer Evidenz und klinischen Daten am Menschen.",
+          "Unterscheide zwischen präklinischer Evidenz und klinischen Daten am Menschen.",
           "Bewerte immer Endpunkte, Studiendauer, Population und Nebenwirkungen."
         ]
       },
@@ -826,7 +833,7 @@ const baseWikiArticles: TerpiraArticle[] = [
         ]
       }
     ],
-    warnings: ["Dieser Artikel ist kein medizinischer Rat und ersetzt keine aerztliche Beratung."],
+    warnings: ["Dieser Artikel ist kein medizinischer Rat und ersetzt keine ärztliche Beratung."],
     simpleExplainers: [
       {
         title: "Kurz erklärt: Was ist Evidenz?",
@@ -840,10 +847,10 @@ const baseWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Ist CBD wirklich ein Hormon-Regulator?",
-        answer: "CBD zeigt in einigen in-vitro und Tiermodellen Effekte, aber Humanstudien sind begrenzt. Vorsicht vor Ueberklaerungen von Labliteratur."
+        answer: "CBD zeigt in einigen in-vitro und Tiermodellen Effekte, aber Humanstudien sind begrenzt. Vorsicht vor Überklärungen von Labliteratur."
       },
       {
-        question: "Schaedigt THC das Gehirn?",
+        question: "Schädigt THC das Gehirn?",
         answer: "Chronischer hoher THC-Konsum in der Adoleszenz hat Assoziationen mit kognitiven Effekten. Erwachsenenkonsum bleibt im Forschungsgrenzbereich."
       }
     ],
@@ -854,7 +861,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         term: "THC",
-        definition: "Tetrahydrocannabinol; primaerer psychoaktiver Bestandteil; CB1-Rezeptor-Agonist."
+        definition: "Tetrahydrocannabinol; primärer psychoaktiver Bestandteil; CB1-Rezeptor-Agonist."
       },
       {
         term: "CBD",
@@ -881,7 +888,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     quickFacts: [
       { label: "Schneller Onset", value: "Inhalation" },
       { label: "Längere Wirkdauer", value: "Orale Aufnahme" },
-      { label: "Hauptfehler", value: "Zu fruehes Nachdosieren" }
+      { label: "Hauptfehler", value: "Zu frühes Nachdosieren" }
     ],
     sections: [
       {
@@ -930,11 +937,11 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         term: "Peak-Level",
-        definition: "Hoechste Konzentration eines Wirkstoffs im Blut; tritt schneller bei Inhalation auf als bei oraler Aufnahme."
+        definition: "Höchste Konzentration eines Wirkstoffs im Blut; tritt schneller bei Inhalation auf als bei oraler Aufnahme."
       },
       {
         term: "Half-Life",
-        definition: "Zeit, die eine Substanz bis zur Haelfte ihres Ausgangsspiegels im Körper abgebaut wird."
+        definition: "Zeit, die eine Substanz bis zur Hälfte ihres Ausgangsspiegels im Körper abgebaut wird."
       }
     ],
     sourceIds: ["pharmaceutical-research-bioavailability", "clinical-pharmacology-thc-cbd-kinetics", "drug-alcohol-dependence-consumption-methods", "nutritional-bioavailability-edibles"],    relatedSlugs: ["pgr-und-kontaminanten", "cannabinoide-und-evidenz"]
@@ -949,22 +956,22 @@ const baseWikiArticles: TerpiraArticle[] = [
     lastUpdated: "2026-03-26",
     tags: ["Klassifikation", "Dry Sift", "Bubble Hash", "Rosin", "Charas", "Kif", "Qualität"],
     keyTakeaways: [
-      "Hash sollte zuerst nach Verfahrensfamilien klassifiziert werden: mechanisch, eiswasserbasiert, pressbasiert und loesungsmittelgestuetzt.",
+      "Hash sollte zuerst nach Verfahrensfamilien klassifiziert werden: mechanisch, eiswasserbasiert, pressbasiert und lösungsmittelgestützt.",
       "Historische Begriffe (z. B. Charas, Kif, Afghan, Lebanese) beschreiben oft Herkunft und Stil, nicht automatisch objektive Qualität.",
       "Produktfamilien gehören zusammen, wenn sie dieselbe Trennlogik nutzen und im selben Post-Processing weiterverarbeitet werden.",
       "Professionelle Bewertung kombiniert Sensorik, physikalische Parameter, Kontaminantenstatus und Chargenkonsistenz."
     ],
     quickFacts: [
-      { label: "Ursprungsregionen", value: "Nordafrika, Levante, Zentral-/Suedasien" },
+      { label: "Ursprungsregionen", value: "Nordafrika, Levante, Zentral-/Südasien" },
       { label: "Kernfrage", value: "Verfahrensfamilie vor Marketingname" },
-      { label: "Qualitaetsbasis", value: "SOP, Labor, Batch-Konsistenz" }
+      { label: "Qualitätsbasis", value: "SOP, Labor, Batch-Konsistenz" }
     ],
     sections: [
       {
         heading: "1) Taxonomie: Welche Hash-Arten gibt es wirklich?",
         content: [
           "Professionell wird Hash zuerst nach Trennprinzip geordnet und erst danach nach Handelsnamen. Das verhindert Verwechslungen zwischen Stilbegriffen und Technik.",
-          "Verfahrensfamilien: (A) mechanisch trocken getrennt (Dry Sift/Kief), (B) eiswasserbasiert getrennt (Ice Water/Bubble), (C) hand- oder pressbasiert verdichtet (z. B. Charas, klassischer Presshash), (D) loesungsmittelbasierte Extrakte mit optionaler Weiterverarbeitung zu hash-aehnlichen Endformen.",
+          "Verfahrensfamilien: (A) mechanisch trocken getrennt (Dry Sift/Kief), (B) eiswasserbasiert getrennt (Ice Water/Bubble), (C) hand- oder pressbasiert verdichtet (z. B. Charas, klassischer Presshash), (D) lösungsmittelbasierte Extrakte mit optionaler Weiterverarbeitung zu hash-ähnlichen Endformen.",
           "Was gehört zusammen: Dry Sift und traditionelle Kief-Linien sind eine Familie; Bubble und daraus gepresste Rosin-Linien sind eine zweite Familie; historische Presshash-Stile bilden eine kultur- und prozesshistorische Gruppe."
         ]
       },
@@ -972,7 +979,7 @@ const baseWikiArticles: TerpiraArticle[] = [
         heading: "2) Historischer Ursprung und regionale Stilbegriffe",
         content: [
           "Historisch entstanden verschiedene Hash-Kulturen in unterschiedlichen Regionen mit eigenen Rohwaren, Klimabedingungen und Presstechniken.",
-          "Nordafrika ist eng mit Kief-/Siebtraditionen verbunden; in Teilen Zentral- und Suedasiens sind handgeriebene und gepresste Formen historisch praegend; in der Levante entwickelten sich eigene Presshash-Stile mit spezifischer Reifung und Marktlogik.",
+          "Nordafrika ist eng mit Kief-/Siebtraditionen verbunden; in Teilen Zentral- und Südasiens sind handgeriebene und gepresste Formen historisch prägend; in der Levante entwickelten sich eigene Presshash-Stile mit spezifischer Reifung und Marktlogik.",
           "Wichtig: Regionenamen sind Stilmarker, aber keine automatische Garantie für Reinheit, Potenz oder Sicherheitsprofil."
         ]
       },
@@ -982,8 +989,8 @@ const baseWikiArticles: TerpiraArticle[] = [
           "Dry Sift/Kief: trocken-mechanische Trennung. Stärken liegen in klarer Prozesslogik und guter Skalierbarkeit, Risiken liegen in Verunreinigung durch Pflanzenreste bei ungenauer Fraktionierung.",
           "Ice Water/Bubble: nasskalte Trennung. Stärken sind hohe Reinheitsfenster bei sauberer Prozessführung; kritische Punkte sind Trocknungsmanagement, Wasseraktivität und mikrobiologische Stabilität.",
           "Presshash/Traditionsstile: Verdichtung und Reifung sind zentrale Faktoren. Ergebnisqualität hängt stark von Ausgangsfraktion, Druck-/Wärmeprofil und Lagerregime ab.",
-          "Rosin-Linien: loesungsmittelfreie Press-Weiterverarbeitung von geeigneten Vorprodukten. Qualität wird von Input-Material und thermischer Belastung begrenzt.",
-          "Loesungsmittelgestuetzte Extrakte: eigene Produktklasse; für Vergleich mit klassischem Hash müssen Restlösungsmittel- und Reinheitsdaten zwingend betrachtet werden."
+          "Rosin-Linien: lösungsmittelfreie Press-Weiterverarbeitung von geeigneten Vorprodukten. Qualität wird von Input-Material und thermischer Belastung begrenzt.",
+          "Lösungsmittelgestützte Extrakte: eigene Produktklasse; für Vergleich mit klassischem Hash müssen Restlösungsmittel- und Reinheitsdaten zwingend betrachtet werden."
         ]
       },
       {
@@ -993,7 +1000,7 @@ const baseWikiArticles: TerpiraArticle[] = [
           "" +
             "'Full melt', '6 star', 'premium'" +
             " sind Marktbegriffe und sollten stets gegen objektive Messwerte (z. B. Kontaminantenstatus, Wasseraktivität, Chargenvergleich) gespiegelt werden.",
-          "'Old school' vs. 'modern' beschreibt oft Verarbeitungskultur und Zielprofil, nicht zwingend Sicherheits- oder Qualitaetsniveau."
+          "'Old school' vs. 'modern' beschreibt oft Verarbeitungskultur und Zielprofil, nicht zwingend Sicherheits- oder Qualitätsniveau."
         ]
       },
       {
@@ -1026,7 +1033,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       }
     ],
     warnings: [
-      "Detaillierte Herstellungsanleitungen werden hier bewusst nicht bereitgestellt; Fokus liegt auf Einordnung, Qualitaetsmanagement und Risikoaufklaerung.",
+      "Detaillierte Herstellungsanleitungen werden hier bewusst nicht bereitgestellt; Fokus liegt auf Einordnung, Qualitätsmanagement und Risikoaufklärung.",
       "Regionale Rechtslage und regulatorische Anforderungen sind vor jeder operativen Umsetzung separat zu prüfen."
     ],
     simpleExplainers: [
@@ -1040,7 +1047,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: Wo passieren Fehlbewertungen?",
-        text: "Wenn Stilbegriffe oder Herkunft als Qualitaetsbeweis genutzt werden und Labor- sowie Prozessdaten fehlen."
+        text: "Wenn Stilbegriffe oder Herkunft als Qualitätsbeweis genutzt werden und Labor- sowie Prozessdaten fehlen."
       }
     ],
     faq: [
@@ -1078,7 +1085,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       "iso17025",
       "nature-postharvest-cannabis"
     ],
-    relatedSlugs: ["wasseraktivität-und-curing", "coa-richtig-lesen", "terpene-und-wirkprofil"]
+    relatedSlugs: ["wasseraktivitaet-und-curing", "coa-richtig-lesen", "terpene-und-wirkprofil"]
   },
   {
     slug: "wasseraktivitaet-und-curing",
@@ -1092,7 +1099,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "Wasseraktivität ist ein zentraler Sicherheitsparameter nach der Ernte.",
       "Falsche Curing-Routinen zerstören Aromaprofile und erhöhen Kontaminationsrisiken.",
-      "Messbare SOPs schlagen subjektives Fuehlen im Glas deutlich."
+      "Messbare SOPs schlagen subjektives Fühlen im Glas deutlich."
     ],
     quickFacts: [
       { label: "Kernmetrik", value: "aw statt nur RH" },
@@ -1103,7 +1110,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "Nachernte als Qualitätshebel",
         content: [
-          "Curing ist kein kosmetischer Schritt, sondern ein kritischer Teil des Qualitaetsmanagements.",
+          "Curing ist kein kosmetischer Schritt, sondern ein kritischer Teil des Qualitätsmanagements.",
           "Ein fehlerhafter Ablauf kann zuvor gute Ernten stark entwerten."
         ]
       },
@@ -1143,7 +1150,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     glossary: [
       {
         term: "Wassaktivität (aw)",
-        definition: "Relative Feuchte, die im Koerner mit der Umgebungsfeuchte im Gleichgewicht steht; kritisch für Haltbarkeit und Mikrob-Wachstum."
+        definition: "Relative Feuchte, die im Körner mit der Umgebungsfeuchte im Gleichgewicht steht; kritisch für Haltbarkeit und Mikrob-Wachstum."
       },
       {
         term: "Curing",
@@ -1151,7 +1158,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         term: "Chlorophyll",
-        definition: "Gruener Farbstoff; wird beim Curing abgebaut, was zu besserem Geschmack und hellerer Farbe führt."
+        definition: "Grüner Farbstoff; wird beim Curing abgebaut, was zu besserem Geschmack und hellerer Farbe führt."
       }
     ],
     sourceIds: ["food-control-water-activity-microbiology", "postharvest-biology-technology-curing", "applied-microbiology-fungal-contamination"],
@@ -1174,14 +1181,14 @@ const baseWikiArticles: TerpiraArticle[] = [
     quickFacts: [
       { label: "Pflichtfelder", value: "Charge, Datum, Methode" },
       { label: "Achte auf", value: "LOQ/LOD und Einheiten" },
-      { label: "Warnsignal", value: "Unvollstaendige Kontaminantenliste" }
+      { label: "Warnsignal", value: "Unvollständige Kontaminantenliste" }
     ],
     sections: [
       {
-        heading: "Was du zuerst pruefst",
+        heading: "Was du zuerst prüfst",
         content: [
           "Schau zuerst: Ist die Chargennummer identisch mit deiner Ware? Ist das Analysedatum aktuell?",
-          "Ohne diesen Match ist das COA wertlos — es koennte jedes andere Produkt beschreiben."
+          "Ohne diesen Match ist das COA wertlos — es könnte jedes andere Produkt beschreiben."
         ],
         checklist: [
           "Chargennummer identisch zur Ware",
@@ -1274,7 +1281,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     ],
     quickFacts: [
       { label: "Primare Prüfung", value: "COA + Chargenbezug" },
-      { label: "Haeufige Luecke", value: "Keine aktuellen Rueckstandsdaten" },
+      { label: "Häufige Lücke", value: "Keine aktuellen Rückstandsdaten" },
       { label: "Best Practice", value: "Regelmäßige Lieferanten-Audits" }
     ],
     sections: [
@@ -1288,7 +1295,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "Risikomanagement im Alltag",
         content: [
-          "Baue Sperrlogik für auffaellige Chargen in den operativen Ablauf ein.",
+          "Baue Sperrlogik für auffällige Chargen in den operativen Ablauf ein.",
           "Kommuniziere transparent, warum Produkte zurückgehalten oder nachgetestet werden."
         ]
       }
@@ -1297,7 +1304,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Was sind PGR?",
-        text: "Plant Growth Regulator - Stoffe, die Wachstum und Bloete kuenstlich manipulieren. Viele sind in der EU/CH nicht zugelassen."
+        text: "Plant Growth Regulator - Stoffe, die Wachstum und Blüte künstlich manipulieren. Viele sind in der EU/CH nicht zugelassen."
       },
       {
         title: "Kurz erklärt: Warum Sicherheit?",
@@ -1306,18 +1313,18 @@ const baseWikiArticles: TerpiraArticle[] = [
     ],
     faq: [
       {
-        question: "Wie erkenne ich PGR-Belaestigung ohne Labor?",
-        answer: "Normalerweise nicht sicher. Aeusserlich können unrealistische Dichten, extreme Feuchte-Verhältnisse oder Geruchsverfremdungen Hinweise sein - ersetzen aber keine Analytik."
+        question: "Wie erkenne ich PGR-Belästigung ohne Labor?",
+        answer: "Normalerweise nicht sicher. Äusserlich können unrealistische Dichten, extreme Feuchte-Verhältnisse oder Geruchsverfremdungen Hinweise sein - ersetzen aber keine Analytik."
       },
       {
         question: "Welche Kontaminanten sind kritisch?",
-        answer: "Priorität: Pestizide, Pilzgifte und Schwer-Metalle. Dann: Lachgas, PGRs, Loesungsmittelreste. Labore sollten priorisiert nach lokalen Grenzwerten testen."
+        answer: "Priorität: Pestizide, Pilzgifte und Schwer-Metalle. Dann: Lachgas, PGRs, Lösungsmittelreste. Labore sollten priorisiert nach lokalen Grenzwerten testen."
       }
     ],
     glossary: [
       {
         term: "PGR",
-        definition: "Plant Growth Regulator - kuenstliche Stoffe zur Wachstum- und Ertrag-Manipulation."
+        definition: "Plant Growth Regulator - künstliche Stoffe zur Wachstum- und Ertrag-Manipulation."
       },
       {
         term: "Pestizid-Klassen",
@@ -1329,12 +1336,12 @@ const baseWikiArticles: TerpiraArticle[] = [
       }
     ],
     sourceIds: ["applied-microbiology-fungal-contamination", "food-control-water-activity-microbiology", "journal-food-protection-pgr-pesticides", "toxicology-heavy-metals-cannabis"],
-    relatedSlugs: ["coa-richtig-lesen", "wasseraktivität-und-curing"]
+    relatedSlugs: ["coa-richtig-lesen", "wasseraktivitaet-und-curing"]
   },
   {
     slug: "rechtliche-grundlagen-dach",
     title: "Rechtliche Grundlagen im DACH-Raum",
-    summary: "Ueberblick zu Regelungslogik, Nachweispflichten und typischen Compliance-Fehlern.",
+    summary: "Überblick zu Regelungslogik, Nachweispflichten und typischen Compliance-Fehlern.",
     category: "recht",
     difficulty: "einsteiger",
     readMinutes: 8,
@@ -1343,7 +1350,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "Rechtliche Anforderungen unterscheiden sich je Region und Nutzungsfall deutlich.",
       "Dokumentationspflichten sind operativ genauso wichtig wie Produktqualität.",
-      "Frühe Compliance-Pruefungen senken spätere Kosten und Risiken."
+      "Frühe Compliance-Prüfungen senken spätere Kosten und Risiken."
     ],
     quickFacts: [
       { label: "Kernprinzip", value: "Regional differenziert arbeiten" },
@@ -1384,17 +1391,17 @@ const baseWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Was ist für Compliance essentiell?",
-        answer: "Je Land: Registrierung, COA-Anforderungen, Verpackungsrichtlinien, Werbeverbot und Lagerdokumentation. Das variiert stark - lokal pruefung ist Pflicht."
+        answer: "Je Land: Registrierung, COA-Anforderungen, Verpackungsrichtlinien, Werbeverbot und Lagerdokumentation. Das variiert stark - lokal prüfung ist Pflicht."
       },
       {
         question: "Was ist der größte Fehler?",
-        answer: "Annahme, dass einmalige Compliance-Prüfung ausreicht. Gesetze aendern sich. Regelupdates müssen zyklisch sein."
+        answer: "Annahme, dass einmalige Compliance-Prüfung ausreicht. Gesetze ändern sich. Regelupdates müssen zyklisch sein."
       }
     ],
     glossary: [
       {
         term: "BtMG (DE)",
-        definition: "Bestaetubungsmittelgesetz; regelt Anbau, Besitz, Handel von Cannabis in Deutschland."
+        definition: "Betäubungsmittelgesetz; regelt Anbau, Besitz, Handel von Cannabis in Deutschland."
       },
       {
         term: "Nachweispflicht",
@@ -1402,7 +1409,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         term: "Vier-Augen-Prinzip",
-        definition: "Dual-Approval für kritische Entscheidungen; erhoert Dokumentationsqualität und Rechtssicherheit."
+        definition: "Dual-Approval für kritische Entscheidungen; erhöht Dokumentationsqualität und Rechtssicherheit."
       }
     ],
     sourceIds: ["bfarm-german-cannabis-guidelines", "swissmedic-cannabis-requirements", "ages-austria-cannabis-standards", "ema-good-manufacturing-practice", "codex-food-hygiene-2022"],
@@ -1411,14 +1418,14 @@ const baseWikiArticles: TerpiraArticle[] = [
   {
     slug: "markttransparenz-und-preise",
     title: "Markttransparenz und Preislogik",
-    summary: "Wie sich Preis, Qualität, Risiko und Verfuegbarkeit in realen Maerkten gegenseitig beeinflussen.",
+    summary: "Wie sich Preis, Qualität, Risiko und Verfügbarkeit in realen Märkten gegenseitig beeinflussen.",
     category: "markt",
     difficulty: "fortgeschritten",
     readMinutes: 8,
     lastUpdated: "2026-03-26",
     tags: ["Markt", "Preisbildung", "Qualität", "Angebot"],
     keyTakeaways: [
-      "Niedrige Preise ohne Datenbasis korrelieren oft mit hoeheren Qualitätsrisiken.",
+      "Niedrige Preise ohne Datenbasis korrelieren oft mit höheren Qualitätsrisiken.",
       "Transparenz über Herkunft und Analyse reduziert Informationsasymmetrie.",
       "Marktdaten sollten lokal segmentiert statt pauschal interpretiert werden."
     ],
@@ -1439,7 +1446,7 @@ const baseWikiArticles: TerpiraArticle[] = [
         heading: "Operative Umsetzung für Plattformen",
         content: [
           "Lege Mindestkriterien für Datenqualität fest und stufe Anbieter nach Nachweisqualität.",
-          "Damit wird Wettbewerb über Transparenz statt nur über Preis gefoerdert."
+          "Damit wird Wettbewerb über Transparenz statt nur über Preis gefördert."
         ]
       }
     ],
@@ -1456,11 +1463,11 @@ const baseWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Ist hoher Preis = bessere Qualität?",
-        answer: "Nicht automatisch. Hoher Preis kann auch Monopol oder Hype sein. Preis + Transparenz + Konsistenz = echte Qualitaetsindikation."
+        answer: "Nicht automatisch. Hoher Preis kann auch Monopol oder Hype sein. Preis + Transparenz + Konsistenz = echte Qualitätsindikation."
       },
       {
         question: "Wie erkenne ich unfaire Preise?",
-        answer: "Vergleiche den Preis mit verfuegbaren Analysen (COA), Lieferzuverlässigkeit, Rückverfolgbarkeit und Reklamationsquote. Fehlende Transparenz ist ein klares Warnsignal."
+        answer: "Vergleiche den Preis mit verfügbaren Analysen (COA), Lieferzuverlässigkeit, Rückverfolgbarkeit und Reklamationsquote. Fehlende Transparenz ist ein klares Warnsignal."
       }
     ],
     glossary: [
@@ -1470,11 +1477,11 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         term: "Informationsasymmetrie",
-        definition: "Käufer und Verkaeufer haben unterschiedliche Information über Qualität und Risiko."
+        definition: "Käufer und Verkäufer haben unterschiedliche Information über Qualität und Risiko."
       },
       {
         term: "Qualitätskorridor",
-        definition: "Realistischer Preisbereich für definierte Qualitaetsstandards, statt Fokus auf den billigsten Einzelpreis."
+        definition: "Realistischer Preisbereich für definierte Qualitätsstandards, statt Fokus auf den billigsten Einzelpreis."
       }
     ],
     sourceIds: ["emcdda-cannabis-profiles-2025", "unodc-world-drug-report-2025", "who-cannabis-2024"],
@@ -1490,33 +1497,33 @@ const baseWikiArticles: TerpiraArticle[] = [
     lastUpdated: "2026-03-26",
     tags: ["VPD", "EC", "Steuerung", "Regelkreis"],
     keyTakeaways: [
-      "Klima- und Naehrstoffparameter sollten in einem gemeinsamen Regelkreis geführt werden.",
+      "Klima- und Nährstoffparameter sollten in einem gemeinsamen Regelkreis geführt werden.",
       "EC-Anpassungen ohne Blick auf Transpiration führen oft zu Fehlsteuerungen.",
       "Eine Steuerungsansicht mit Alarmgrenzen reduziert die manuelle Reaktionszeit deutlich."
     ],
     quickFacts: [
       { label: "Niveau", value: "Prozessoptimierung" },
-      { label: "Noetig", value: "Konsistente Sensordaten" },
+      { label: "Nötig", value: "Konsistente Sensordaten" },
       { label: "Ergebnis", value: "Stabilere Qualität pro Charge" }
     ],
     sections: [
       {
         heading: "Regelstrategie aufbauen",
         content: [
-          "Definiere Prioritaeten: zuerst Klimastabilitaet, dann Naehrstofffeinsteuerung.",
+          "Definiere Prioritäten: zuerst Klimastabilität, dann Naehrstofffeinsteuerung.",
           "Nutze Trenddaten statt Einzelmesspunkte für Entscheidungen."
         ]
       },
       {
         heading: "Monitoring und Alarmierung",
         content: [
-          "Lege harte Alert-Level für VPD-Drift, EC-Ausreisser und Temperaturspruenge fest.",
-          "Verknuepfe jeden Alarm mit klarer Reaktionsanweisung für das Team."
+          "Lege harte Alert-Level für VPD-Drift, EC-Ausreisser und Temperatursprünge fest.",
+          "Verknüpfe jeden Alarm mit klarer Reaktionsanweisung für das Team."
         ],
         checklist: [
           "Alarmmatrix dokumentiert",
           "Eskalationsverantwortliche benannt",
-          "Monatliche Ueberpruefung der Schwellenwerte"
+          "Monatliche Überprüfung der Schwellenwerte"
         ]
       }
     ],
@@ -1527,7 +1534,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: Warum nicht nur manuell?",
-        text: "Pflanzen aendern Ansprueche ständig (Wachstum, Stress, Reife). Automatisierte Regeln mit menschlichem Eingreifen reduzieren Fehler und Reaktionszeit."
+        text: "Pflanzen ändern Ansprüche ständig (Wachstum, Stress, Reife). Automatisierte Regeln mit menschlichem Eingreifen reduzieren Fehler und Reaktionszeit."
       }
     ],
     faq: [
@@ -1555,7 +1562,1728 @@ const baseWikiArticles: TerpiraArticle[] = [
       }
     ],
     sourceIds: ["plant-physiology-vpd-transpiration", "horticulture-research-cannabis-cultivation", "astm-d37-cannabis"],
-    relatedSlugs: ["vpd-einfach-erklärt", "cannabis-anbau-grundlagen"]
+    relatedSlugs: ["vpd-einfach-erklaert", "cannabis-anbau-grundlagen"]
+  },
+  {
+    slug: "naehrstoffbedarf-cannabis-lebenszyklus",
+    title: "Nährstoffbedarf im Cannabis-Lebenszyklus",
+    summary: "Phasenweise Übersicht des NPK-, Ca- und Mg-Bedarfs bei Photoperiodisch- und Autoflower-Pflanzen in Erde und Coco – basierend auf peer-reviewten Studien.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 10,
+    lastUpdated: "2026-08-03",
+    tags: ["Nährstoffe", "Nährstoffmangel", "Düngung", "Lebenszyklus", "NPK", "Autoflower", "Photoperiodisch", "Erde", "Coco", "Studien"],
+    keyTakeaways: [
+      "Das N:P:K-Verhältnis verschiebt sich mit der Wachstumsphase: vegetativ stickstoffbetont (≈ 3:1:2), ab Blütewoche 3 phosphor- und kaliumbetont (≈ 1:3:3) — ein starres Düngeprogramm über den ganzen Zyklus überdüngt in der einen und unterdüngt in der anderen Phase.",
+      "Autoflower-Linien vertragen wegen der kurzen, nicht klar abgrenzbaren Vegetationsphase deutlich niedrigere EC-Spitzenwerte als Photoperiodische — aggressive Düngeprogramme sind die häufigste Ertragsbremse bei Autos.",
+      "Coco-Substrat bindet Ca²⁺ und Mg²⁺ an seiner Kationenaustauschoberfläche stärker als K⁺ — ohne routinemäßigen Cal-Mag-Zusatz entsteht auch bei rechnerisch ausreichender Düngung ein Mangel."
+    ],
+    quickFacts: [
+      { label: "Vegetativ (NPK)", value: "≈ 3:1:2, EC 1.0–1.6 mS/cm" },
+      { label: "Blüte ab Woche 3 (NPK)", value: "≈ 1:3:3, EC 1.4–2.0 mS/cm" },
+      { label: "Spätblüte/Reife", value: "EC schrittweise auf 0.6–1.0 mS/cm senken" },
+      { label: "Autoflower-EC-Obergrenze", value: "≈ 20–30 % unter Photoperiodisch-Werten" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Der Nährstoffbedarf von Cannabis ist nicht konstant, sondern folgt dem physiologischen Wechsel von vegetativem Wachstum zu generativer Blütenbildung. Jede Phase verlangt ein anderes Verhältnis von Stickstoff (N), Phosphor (P) und Kalium (K).",
+          "Ein über den gesamten Zyklus unverändertes Düngeprogramm ignoriert diesen Wechsel und ist eine häufige Ursache für Stickstoffüberschuss in der Spätblüte und für Kalium- bzw. Phosphormangel während der aktiven Knospenbildung."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Stickstoff ist Baustein von Chlorophyll, Aminosäuren und Strukturproteinen — der Bedarf korreliert direkt mit der Zunahme an Blattmasse und ist daher in der vegetativen Phase am höchsten.",
+          "Phosphor treibt als Bestandteil von ATP und Nukleinsäuren Zellteilung und Energietransfer an; Kalium reguliert Stomataöffnung, osmotischen Druck und den Zuckertransport ins Blütengewebe. Beide Prozesse dominieren ab dem Blütenansatz, was das Verhältnis zugunsten von P und K verschiebt."
+        ]
+      },
+      {
+        heading: "Phasenmodell mit Zielwerten",
+        content: [
+          "Keimling/Sämling (Tag 0–14): EC 0.4–0.8 mS/cm — die Samenreserven decken den Initialbedarf weitgehend, Überdüngung ist hier das größere Risiko als Mangel.",
+          "Vegetativ (bis zur Lichtumstellung): NPK ≈ 3:1:2, EC 1.0–1.6 mS/cm — stickstoffbetont für Blattmassezuwachs.",
+          "Reck- und Frühblüte (erste 1–3 Wochen nach Umstellung): Übergangsphase — N schrittweise senken, P und K schrittweise anheben.",
+          "Mittelblüte (Hauptknospenbildung): NPK ≈ 1:3:3, EC 1.4–2.0 mS/cm — K-Spitzenbedarf für den Zuckertransport in die Blüten.",
+          "Spätblüte/Reife (letzte 1–2 Wochen): EC schrittweise Richtung 0.6–1.0 mS/cm senken, N nahezu auf null."
+        ],
+        checklist: [
+          "EC/pH der Drainage wöchentlich gegen den Zulauf protokollieren",
+          "NPK-Verhältnis am Phasenwechsel aktiv umstellen, nicht nur die Menge erhöhen",
+          "In den letzten 1–2 Wochen EC schrittweise senken statt abrupt zu stoppen"
+        ]
+      },
+      {
+        heading: "Substratspezifische Unterschiede",
+        content: [
+          "Erde: mikrobielle Stickstoff-Mineralisierung puffert Schwankungen ab, die Fehlertoleranz ist hoch, die Reaktion auf Düngeranpassungen dafür langsamer.",
+          "Coco: hohe Kationenaustauschkapazität bindet Ca²⁺ und Mg²⁺ bevorzugt gegenüber K⁺ — ein routinemäßiger Cal-Mag-Zusatz ist praktisch Pflicht, die Reaktion auf Korrekturen erfolgt aber deutlich schneller als in Erde.",
+          "Hydro: keine Pufferung — die Nährlösung IST der Wurzelraum. EC- und pH-Drift muss täglich kontrolliert werden, Nachschub erfolgt über Volumenwechsel statt über den Gießzyklus."
+        ]
+      },
+      {
+        heading: "Photoperiodisch vs. Autoflower",
+        content: [
+          "Autoflower-Linien haben eine fixe, kurze Lebensspanne von rund 10 Wochen ohne klar trennbare Veg-/Blühphase-Schaltung durch den Züchter. Nährstoffübergänge müssen dadurch sanfter verlaufen, und die EC-Obergrenzen sollten rund 20–30 % unter den Werten für Photoperiodische liegen.",
+          "Überdüngte Autoflower können den Stress nicht wie photoperiodische Pflanzen durch eine verlängerte vegetative Erholungsphase kompensieren — der Ertragsverlust ist endgültig."
+        ]
+      },
+      {
+        heading: "Korrekturmaßnahmen und Protokoll",
+        content: [
+          "Wöchentliches Log von EC/pH bei Zulauf und Drainage führen, nicht nur den Zulauf kontrollieren.",
+          "NPK-Verhältnis am Kalendertag der Phasenumstellung ändern, nicht erst reaktiv nach dem Auftreten von Symptomen.",
+          "Vor jedem größeren Phasenwechsel einen Spülgang mit pH-korrigiertem Wasser einplanen, um Altsalze aus vorheriger Düngung zu entfernen."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Dasselbe Düngeprogramm für Photoperiodisch und Autoflower verwenden, ohne die EC-Obergrenze anzupassen.",
+          "Stickstoff bis in die Spätblüte hoch halten — 'mehr Grün = mehr Ertrag' stimmt nicht und kostet Blütenqualität sowie Geschmack.",
+          "EC beim Flush ruckartig statt schrittweise senken, was wie zusätzlicher Salzstress wirkt."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Sortenunterschiede in der Nährstoffaufnahmegeschwindigkeit sind real — die genannten Zielwerte sind Korridore, keine Fixwerte, und sollten nach Pflanzenreaktion feinjustiert werden.",
+          "In Living-Soil-Systemen übernimmt die mikrobielle Gemeinschaft einen Teil der phasenweisen Umstellung selbst; das EC-Phasenmodell gilt primär für Flüssigdüngung in Coco, Hydro und klassischer Blumenerde."
+        ]
+      }
+    ],
+    warnings: [
+      "Stickstoff bis in die Spätblüte hoch zu halten, verzögert die Reife und kann Geschmack und Trichomqualität messbar verschlechtern.",
+      "Abrupte EC-Sprünge beim Phasenwechsel wirken wie Salzstress — Übergänge über mehrere Gießgänge strecken."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum ändert sich das NPK-Verhältnis?",
+        text: "In der Wachstumsphase baut die Pflanze vor allem Blattmasse auf und braucht dafür viel Stickstoff. In der Blüte verschiebt sich der Bedarf zu Phosphor und Kalium, weil Energie und Zucker in die Knospen transportiert werden müssen."
+      },
+      {
+        title: "Kurz erklärt: Warum sind Autos empfindlicher?",
+        text: "Autoflower haben keine trennbare Erholungsphase — was in der Vegetation überdosiert wird, kann später nicht mehr durch verlängertes Wachstum ausgeglichen werden."
+      }
+    ],
+    faq: [
+      {
+        question: "Muss ich für jede Sorte ein anderes Düngeprogramm fahren?",
+        answer: "Die Phasenlogik (N-betont vegetativ, P/K-betont in der Blüte) gilt sortenübergreifend. Die genauen EC-Zielwerte sollten aber pro Sorte anhand der Pflanzenreaktion leicht angepasst werden — sie sind Korridore, keine Fixwerte."
+      },
+      {
+        question: "Was passiert, wenn ich zu spät von N- auf P/K-betonte Düngung umstelle?",
+        answer: "Die Pflanze investiert weiter in Blattmasse statt in Knospenaufbau, der Zuckertransport in die Blüten ist schwächer, und in der Spätblüte bleibt überschüssiger Stickstoff im Gewebe, was Geschmack und Abbrand beeinträchtigen kann."
+      },
+      {
+        question: "Brauche ich in Erde überhaupt ein striktes EC-Phasenmodell?",
+        answer: "Weniger strikt als in Coco oder Hydro, weil die mikrobielle Mineralisierung puffert. Die grundsätzliche Verschiebung von N- zu P/K-betont in der Blüte gilt aber auch in Erde."
+      }
+    ],
+    glossary: [
+      { term: "NPK-Verhältnis", definition: "Das Massenverhältnis von Stickstoff (N), Phosphor (P) und Kalium (K) in einem Dünger oder einer Nährlösung." },
+      { term: "Kationenaustauschkapazität (CEC)", definition: "Die Fähigkeit eines Substrats, positiv geladene Nährstoffionen an seiner Oberfläche zu binden und pflanzenverfügbar bereitzuhalten." },
+      { term: "Flush", definition: "Ein Spülgang mit pH-korrigiertem Wasser ohne Dünger, um akkumulierte Salze aus dem Substrat auszuwaschen." }
+    ],
+    sourceIds: ["bernal-cannabis-nutrient-requirements", "marschner-mineral-nutrition", "caplan-cannabis-fertility-rate", "bugbee-electrical-conductivity"],
+    relatedSlugs: ["cannabis-anbau-grundlagen", "naehrstoffblockaden-und-antagonismen", "cannabis-substrat-und-wurzelzone", "feminisiert-vs-regular-vs-autoflower", "substrat-vergleich-coco-erde-hydro"]
+  },
+  {
+    slug: "stressmarker-frueh-erkennen",
+    title: "Stressmarker früh erkennen",
+    summary: "Frühe Hinweise auf Klima-, Licht- und Wurzelstress erkennen, bevor Ertrag und Qualität kippen.",
+    category: "anbau",
+    difficulty: "einsteiger",
+    readMinutes: 6,
+    lastUpdated: "2026-08-03",
+    tags: ["Stress", "Monitoring", "Früherkennung", "Grow"],
+    keyTakeaways: [
+      "Strukturelle Signale (Blattwinkel, Turgor) treten innerhalb von Stunden auf, Farbsignale (Chlorose) erst nach Tagen — wer nur auf Verfärbung wartet, reagiert immer zu spät.",
+      "Hängende Blätter direkt unter der Lampe am Morgen deuten auf Hitzestress hin, hängende Blätter am Abend nach vollem Gießzyklus eher auf Wasser- oder Wurzelproblem — die Tageszeit ist ein wichtiges Diagnosemerkmal.",
+      "Die Korrekturreihenfolge sollte immer Klima/VPD vor Substratfeuchte vor EC/pH vor Nährstoffgabe sein — Nährstoffkorrekturen zuerst zu versuchen, verschleiert oft die eigentliche Ursache."
+    ],
+    quickFacts: [
+      { label: "Schnellstes Signal", value: "Blattwinkel/Turgor (Minuten bis Stunden)" },
+      { label: "Langsamstes Signal", value: "Blattfarbe/Chlorose (Tage)" },
+      { label: "Morgens hängend unter Licht", value: "Hinweis auf Hitzestress" },
+      { label: "Abends hängend trotz feuchtem Substrat", value: "Hinweis auf Wurzelproblem" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Stressmarker sind beobachtbare Frühindikatoren, die auftreten, bevor sich sichtbarer Schaden wie Chlorose, Nekrose oder Wachstumsstillstand manifestiert.",
+          "Ziel der Früherkennung ist es, strukturelle und physiologische Signale zu lesen, die Stunden bis Tage vor den klassischen 'Mangel'- oder 'Krankheits'-Symptomen auftreten."
+        ]
+      },
+      {
+        heading: "Warum strukturelle Signale vor Farbsignalen kommen",
+        content: [
+          "Turgordruck — der Wasserdruck in den Zellen, der Blätter aufrecht hält — reagiert innerhalb von Minuten auf Wassermangel, Hitze oder Wurzelprobleme, weil er direkt vom Zellwasserhaushalt abhängt.",
+          "Farbveränderungen wie Chlorose erfordern dagegen den Abbau oder die fehlende Neubildung von Chlorophyll — ein Stoffwechselprozess, der Tage dauert. Wer nur auf Verfärbung achtet, verpasst das frühere und aussagekräftigere Signal."
+        ]
+      },
+      {
+        heading: "Die vier Frühwarnsignale",
+        content: [
+          "Blattwinkel und Turgor: schlaffe, hängende Blätter (Wilting) vs. nach oben gerollte, versteifte Blattränder (Tacoing bei Hitze) — Richtung des Signals zeigt die Stressart an.",
+          "Wuchsgeschwindigkeit und Internodienabstand: plötzlich verkürzte Internodien oder ein Wachstumsstopp über 2–3 Tage sind oft das erste messbare Zeichen von Klimastress.",
+          "Blattfarbe: die langsamste, aber am häufigsten beachtete Kategorie — sollte als Bestätigung, nicht als Erstsignal genutzt werden.",
+          "Trichom- und Blütenverhalten in der Blüte: vorzeitige, ungleichmäßige Trichomreife oder Foxtailing können auf chronischen, unbemerkten Hitze- oder Lichtstress hindeuten."
+        ],
+        checklist: [
+          "Blattwinkel morgens direkt nach Lichtstart und mittags im Lichtmaximum vergleichen",
+          "Internodienabstand alle 3–4 Tage grob messen und dokumentieren",
+          "Canopy-Foto zur gleichen Tageszeit als Verlaufsvergleich anlegen"
+        ]
+      },
+      {
+        heading: "Differenzialdiagnose nach Tageszeit",
+        content: [
+          "Morgens, kurz nach Lichtstart, hängende Blätter direkt unter der Lampe: meist Hitzestress durch zu geringen Lampenabstand oder zu hohe Lufttemperatur, nicht Wassermangel.",
+          "Mittags im Lichtmaximum leicht hängende Blätter, die sich abends erholen: physiologisch normal bei hoher Transpiration, kein Alarmsignal.",
+          "Abends hängende Blätter trotz erkennbar feuchtem Substrat: Hinweis auf ein Wurzelproblem (Sauerstoffmangel, beginnende Wurzelfäule) statt auf Wassermangel — hier hilft mehr Gießen nicht.",
+          "Durchgängig schlaffe Blätter unabhängig von der Tageszeit: klassischer Wassermangel oder stark gesunkener Substrat-EC durch Auswaschung."
+        ]
+      },
+      {
+        heading: "Monitoring-Protokoll",
+        content: [
+          "Tägliche Kurzkontrolle zur gleichen Uhrzeit: Blattwinkel, Canopy-Gleichmäßigkeit, Substratfeuchte per Fingertest oder Sensor.",
+          "Wöchentliche Vollkontrolle: EC/pH von Zulauf und Drainage, Internodienmessung, Fotodokumentation der Canopy von oben."
+        ]
+      },
+      {
+        heading: "Korrekturpriorität",
+        content: [
+          "1. Klima und VPD prüfen (Lufttemperatur, Blatttemperatur, relative Luftfeuchte) — die häufigste, am schnellsten korrigierbare Ursache.",
+          "2. Substratfeuchte und Wurzelzone prüfen — Über- oder Unterwässerung, Substrattemperatur.",
+          "3. EC und pH von Zulauf und Drainage messen — erst hier werden Dünger- oder pH-Anpassungen relevant.",
+          "4. Erst wenn 1–3 im Zielbereich liegen, eine echte Nährstoffkorrektur in Betracht ziehen."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Sofort mit Dünger oder Cal-Mag reagieren, ohne vorher Klima und Substratfeuchte auszuschließen.",
+          "Nur mittags kontrollieren, wenn physiologisches Hängen durch hohe Transpiration normal ist, und daraus fälschlich Wassermangel ableiten.",
+          "Einzelne Blätter statt der gesamten Canopy als Referenz nehmen — punktuelle Abweichungen sind oft mechanisch (Verletzung, Lichtkontakt), nicht systemisch."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Ein Infrarot-Thermometer zur Messung der Blatttemperatur (statt nur der Lufttemperatur) deckt lokalen Hitzestress unter Nahlicht auf, der bei reiner Lufttemperaturmessung unsichtbar bleibt.",
+          "Canopy-Gleichmäßigkeit als KPI (z. B. Streuung der Internodienlänge über die Fläche) ist ein früherer und stabilerer Indikator für systemischen Stress als Einzelblatt-Beobachtung."
+        ]
+      }
+    ],
+    warnings: [
+      "Bei abendlichem Hängen trotz feuchtem Substrat nicht zusätzlich gießen — das verschärft ein mögliches Wurzelproblem statt es zu lösen."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum zuerst Klima checken?",
+        text: "Die meisten frühen Stresssignale — hängende Blätter, gestoppter Wuchs — kommen von falscher Temperatur oder Luftfeuchte, nicht von fehlenden Nährstoffen. Klima zu korrigieren ist schneller und häufig die eigentliche Lösung."
+      },
+      {
+        title: "Kurz erklärt: Turgor vs. Chlorose",
+        text: "Turgor ist der Wasserdruck, der Blätter straff hält. Er reagiert in Minuten. Chlorose (Vergilben) braucht Tage, weil dafür Chlorophyll ab- oder nicht neu aufgebaut werden muss."
+      }
+    ],
+    faq: [
+      {
+        question: "Was ist das zuverlässigste Frühwarnsignal?",
+        answer: "Blattwinkel und Turgor, weil sie als Erste reagieren — oft Stunden bevor Farbveränderungen sichtbar werden. Sie zeigen an, dass etwas nicht stimmt, aber nicht automatisch was."
+      },
+      {
+        question: "Wie unterscheide ich normales Mittagshängen von echtem Stress?",
+        answer: "Normales Mittagshängen betrifft die ganze Canopy gleichmäßig und erholt sich zum Lichtende. Echter Stress zeigt sich als anhaltendes, ungleichmäßiges oder tageszeitunabhängiges Hängen."
+      },
+      {
+        question: "Sollte ich bei ersten Anzeichen sofort düngen oder Cal-Mag geben?",
+        answer: "Nein. Erst Klima und Substratfeuchte ausschließen, dann EC/pH prüfen. Nährstoffkorrekturen als erste Reaktion verschleiern oft die eigentliche Ursache und können bestehenden Stress verstärken."
+      }
+    ],
+    glossary: [
+      { term: "Turgor", definition: "Der Innendruck der Pflanzenzelle durch Wasseraufnahme, der Blätter und Stängel straff hält." },
+      { term: "Tacoing", definition: "Nach oben gerolltes Blatt als typisches Hitzestress-Signal, benannt nach der taco-ähnlichen Form." },
+      { term: "VPD", definition: "Vapor Pressure Deficit — die Trocknungskraft der Luft, zentrale Klimagröße für Transpiration und Stressvermeidung." }
+    ],
+    sourceIds: ["horticulture-research-cannabis-cultivation", "plant-physiology-vpd-transpiration", "wahid-heat-tolerance-overview"],
+    relatedSlugs: ["lichtstress-und-canopy-management", "cannabis-substrat-und-wurzelzone", "grow-log-und-kpi-dashboard"]
+  },
+  {
+    slug: "substrat-vergleich-coco-erde-hydro",
+    title: "Substratvergleich: Coco, Erde und Hydro",
+    summary: "Was peer-reviewte Studien über Ertrag, EC-Toleranz und Pflegeaufwand bei den drei Hauptsubstraten sagen – inklusive praktischer Empfehlungen für Hobby-Grower.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["Substrat", "Nährstoffe", "Schädlinge", "Coco", "Hydro", "Erde", "EC", "pH", "Ertrag", "Studien"],
+    keyTakeaways: [
+      "Die Kationenaustauschkapazität (CEC) ist der zentrale Unterschied: Erde puffert Fehler ab, Coco reagiert schnell, hat aber praktisch keine Ca/Mg-Reserve, Hydro puffert gar nicht — die Nährlösung IST der Wurzelraum.",
+      "Wachstumsgeschwindigkeit steigt tendenziell mit der Sauerstoffverfügbarkeit an der Wurzel: Hydro und Coco liegen vor gut aufgelockerter Erde, kompaktierte Erde bremst am stärksten.",
+      "Das größte Risiko in Hydro ist nicht Nährstoffmangel, sondern Wurzelfäule durch zu warme, sauerstoffarme Nährlösung — Systemhygiene und Kühlung sind hier wichtiger als in Coco oder Erde."
+    ],
+    quickFacts: [
+      { label: "pH-Zielfenster Erde", value: "6.2–6.8" },
+      { label: "pH-Zielfenster Coco", value: "5.8–6.2" },
+      { label: "pH-Zielfenster Hydro", value: "5.5–6.2" },
+      { label: "Fehlertoleranz", value: "Erde > Coco > Hydro" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Erde, Coco (Kokosfasersubstrat) und Hydro (rezirkulierende Nährlösungssysteme wie DWC oder NFT) unterscheiden sich vor allem in ihrer Fähigkeit, Nährstoffe zu puffern und Wasser zu speichern.",
+          "Die Wahl des Substrats verschiebt nicht die maximal erreichbare Qualität, sondern den nötigen Kontrollaufwand und die Fehlertoleranz während des Anbaus."
+        ]
+      },
+      {
+        heading: "Kationenaustauschkapazität als Kernunterschied",
+        content: [
+          "Erde besitzt eine hohe Kationenaustauschkapazität (CEC) — organisches Material und Tonminerale binden Nährstoffionen und geben sie kontrolliert ab. Das puffert pH- und EC-Schwankungen effektiv ab.",
+          "Coco hat ebenfalls eine relevante CEC, bindet dabei aber Ca²⁺ und Mg²⁺ bevorzugt gegenüber K⁺ an seinen Fasern. Ohne routinemäßigen Cal-Mag-Zusatz entsteht dadurch auch bei rechnerisch ausreichender Düngung ein Mangel.",
+          "Hydro hat keinerlei Pufferkapazität — die Nährlösung selbst ist der gesamte Wurzelraum. Fehler in EC oder pH wirken hier ungefiltert und sofort auf die Pflanze."
+        ]
+      },
+      {
+        heading: "Wachstumsgeschwindigkeit und Sauerstoffverfügbarkeit",
+        content: [
+          "Wurzelwachstum und Nährstoffaufnahme sind direkt von der Sauerstoffverfügbarkeit im Wurzelraum abhängig. Locker strukturiertes Coco und gut belüftete Hydro-Systeme (Luftsteine, Fluss) bieten mehr gelösten Sauerstoff als kompaktierte Erde.",
+          "Das erklärt, warum Coco- und Hydro-Systeme unter guten Bedingungen tendenziell schneller wachsen als Erde — der begrenzende Faktor ist dort seltener Sauerstoff, sondern eher die Kontrollqualität des Betreibers."
+        ]
+      },
+      {
+        heading: "Pflegeaufwand und Fehlertoleranz",
+        content: [
+          "Erde: gießt sich seltener, verzeiht EC-/pH-Ausreißer über Tage, reagiert aber auch langsamer auf gezielte Korrekturen.",
+          "Coco: häufigere Gießzyklen (oft mehrfach täglich in kleinen Töpfen), präzisere Zielwerte nötig, aber Korrekturen wirken innerhalb von 1–2 Tagen.",
+          "Hydro: kontinuierliche Kontrolle nötig (täglich EC/pH, Wasser- und Lufttemperatur), Fehler wirken innerhalb von Stunden, dafür ist die maximale Wachstumsgeschwindigkeit am höchsten."
+        ],
+        checklist: [
+          "Erde: EC/pH wöchentlich, Substratfeuchte per Fingertest oder Sensor",
+          "Coco: EC/pH bei jedem Gießgang, Cal-Mag routinemäßig einplanen",
+          "Hydro: EC/pH/Temperatur täglich, Reservoir-Reset alle 7–10 Tage"
+        ]
+      },
+      {
+        heading: "Krankheits- und Wurzelrisiko",
+        content: [
+          "Das größte substratspezifische Risiko in Hydro ist Pythium-Wurzelfäule: warme (> 22 °C), sauerstoffarme Nährlösung begünstigt den Pathogenbefall massiv.",
+          "In Erde und Coco ist das Risiko geringer, aber Überwässerung reduziert auch dort die Sauerstoffverfügbarkeit an der Wurzel und öffnet ein ähnliches Fenster für Wurzelfäule."
+        ]
+      },
+      {
+        heading: "EC- und pH-Management je Substrat",
+        content: [
+          "Erde: pH-Zielfenster 6.2–6.8 — höher als Coco/Hydro, weil ein Teil der Nährstoffverfügbarkeit über mikrobielle Prozesse statt reiner Löslichkeit läuft.",
+          "Coco: pH-Zielfenster 5.8–6.2 — niedriger, weil die CEC des Substrats die effektive Löslichkeit beeinflusst.",
+          "Hydro: pH-Zielfenster 5.5–6.2 — am niedrigsten und am kritischsten einzuhalten, da keine Pufferung vorhanden ist."
+        ]
+      },
+      {
+        heading: "Entscheidungsleitfaden",
+        content: [
+          "Erde eignet sich für Einsteiger und alle, die Fehlertoleranz gegenüber maximaler Kontrolle bevorzugen.",
+          "Coco eignet sich für Grower, die schnelles Wachstum und präzise Steuerung wollen, aber ohne die tägliche Kontrollintensität von Hydro.",
+          "Hydro eignet sich nur mit etablierter, verlässlicher Routine — der Zeitgewinn beim Wachstum wird durch höheres Ausfallrisiko bei Kontrollfehlern erkauft."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Coco wie Erde gießen (seltener, größere Mengen) statt mit häufigen, kleineren Gaben — führt zu Trockenstress zwischen den Gaben.",
+          "In Hydro die Lösungstemperatur ignorieren und sich nur auf EC/pH konzentrieren — warme Lösung ist der Hauptrisikofaktor für Wurzelfäule.",
+          "Beim Substratwechsel (z. B. Erde auf Coco) das alte EC-Zielfenster beibehalten, statt es an die geringere Pufferung anzupassen."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Living-Soil- und No-Till-Systeme verschieben das Erde-Modell weiter in Richtung Selbstregulation durch mikrobielle Aktivität und reduzieren den Bedarf an aktiver EC-Steuerung zusätzlich.",
+          "Rezirkulierende Deep-Water-Culture-Systeme (RDWC) mit mehreren verbundenen Behältern verbessern die Temperatur- und Sauerstoffstabilität gegenüber Einzeleimer-DWC deutlich."
+        ]
+      }
+    ],
+    warnings: [
+      "In Hydro-Systemen ist eine Nährlösungstemperatur über 22 °C das größte einzelne Risiko für Pythium-Wurzelfäule — Kühlung hat Priorität vor Nährstoffoptimierung."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Was ist Kationenaustauschkapazität?",
+        text: "Ein Maß dafür, wie gut ein Substrat Nährstoffionen an seiner Oberfläche festhalten und der Pflanze bei Bedarf zur Verfügung stellen kann. Hohe CEC bedeutet mehr Pufferung gegen Fehler."
+      },
+      {
+        title: "Kurz erklärt: Warum wächst Hydro oft schneller?",
+        text: "Die Wurzeln haben direkten Zugang zu gelöstem Sauerstoff in der Nährlösung, ohne durch verdichtetes Substrat zu müssen. Mehr Sauerstoff an der Wurzel bedeutet mehr Energie für Wachstum."
+      }
+    ],
+    faq: [
+      {
+        question: "Welches Substrat verzeiht die meisten Anfängerfehler?",
+        answer: "Erde, wegen der hohen Kationenaustauschkapazität und mikrobiellen Pufferung. EC- und pH-Ausreißer wirken sich dort langsamer und milder aus als in Coco oder Hydro."
+      },
+      {
+        question: "Muss ich in Coco immer Cal-Mag zusetzen?",
+        answer: "In den meisten Fällen ja, besonders bei Umkehrosmose- oder weichem Leitungswasser. Coco bindet Ca²⁺ und Mg²⁺ bevorzugt an seiner Faseroberfläche, was ohne Zusatz zu Mangel führen kann."
+      },
+      {
+        question: "Ist Hydro tatsächlich am ertragreichsten?",
+        answer: "Unter guten, kontrollierten Bedingungen erlaubt Hydro die schnellste Wachstumsgeschwindigkeit durch maximale Sauerstoffverfügbarkeit an der Wurzel. Der Vorteil kehrt sich aber bei Kontrollfehlern (Temperatur, EC-Drift) schnell in einen Nachteil um."
+      }
+    ],
+    glossary: [
+      { term: "Kationenaustauschkapazität (CEC)", definition: "Die Fähigkeit eines Substrats, positiv geladene Nährstoffionen zu binden und pflanzenverfügbar zu halten." },
+      { term: "DWC", definition: "Deep Water Culture — Hydroponik-Methode, bei der die Wurzeln direkt in belüfteter, nährstoffhaltiger Lösung hängen." },
+      { term: "RDWC", definition: "Recirculating Deep Water Culture — mehrere DWC-Behälter, verbunden über ein gemeinsames, umgewälztes Reservoir." }
+    ],
+    sourceIds: ["horticulture-research-cannabis-cultivation", "pythium-root-rot-hydroponics", "bugbee-electrical-conductivity", "marschner-mineral-nutrition"],
+    relatedSlugs: ["cannabis-substrat-und-wurzelzone", "bewaesserung-ohne-uebergiessen", "vpd-und-ec-kombi-rechner-guide", "naehrstoffbedarf-cannabis-lebenszyklus"]
+  },
+  {
+    slug: "indoor-outdoor-anbau-vergleich",
+    title: "Indoor vs. Outdoor: Anbauvergleich Cannabis",
+    summary: "Licht, Ertrag, Terpenprofil und Risikofaktoren im direkten Vergleich – was Forschung und Praxis über beide Anbausysteme sagen.",
+    category: "anbau",
+    difficulty: "einsteiger",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["Indoor", "Outdoor", "Licht", "Ertrag", "Terpene", "Umwelt", "Schädlinge", "Nährstoffe", "Studien"],
+    keyTakeaways: [
+      "Indoor bietet volle Kontrolle über Photoperiode, PPFD und Klima und damit reproduzierbare Qualität von Durchgang zu Durchgang — Outdoor bietet dafür pro Pflanze das höhere absolute Ertragspotenzial durch ungebremstes Wurzel- und Kronenwachstum.",
+      "UV-B-Strahlung im Sonnenlicht löst eine stärkere Trichom- und Sekundärmetabolit-Reaktion aus als die meisten Indoor-Lichtspektren — ein Faktor für wahrgenommene Outdoor-Potenz bei guten Anbaubedingungen.",
+      "Regen in der Spätblüte ist das größte Outdoor-spezifische Risiko: hohe Blütenfeuchte begünstigt Botrytis-Knospenfäule, ein Risiko, das Indoor durch Klimakontrolle praktisch ausgeschlossen werden kann."
+    ],
+    quickFacts: [
+      { label: "Typischer Indoor-Ertrag", value: "≈ 400–600 g/m²" },
+      { label: "Outdoor-Ertragspotenzial", value: "stark variabel, pro Pflanze deutlich höher" },
+      { label: "Hauptrisiko Outdoor", value: "Regen/Botrytis in der Spätblüte" },
+      { label: "Hauptvorteil Indoor", value: "Reproduzierbarkeit über Durchgänge" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Indoor-Anbau erfolgt unter künstlichem Licht mit vollständig steuerbarer Photoperiode, Temperatur und Luftfeuchte. Outdoor-Anbau nutzt natürliches Sonnenlicht mit saisonal wechselnder Intensität, Spektrum und Tageslänge.",
+          "Beide Systeme können hochwertige Ergebnisse liefern — der Unterschied liegt primär in Kontrollierbarkeit, Risikoprofil und Kostenstruktur, nicht im erreichbaren Qualitätsmaximum."
+        ]
+      },
+      {
+        heading: "Lichtregime als Haupttreiber",
+        content: [
+          "Indoor lässt sich PPFD (photosynthetisch aktive Photonenflussdichte) und DLI (Tageslichtsumme) gezielt auf die Wachstumsphase abstimmen und über den gesamten Zyklus konstant halten.",
+          "Outdoor liefert im Hochsommer eine PPFD, die künstliches Licht kaum erreicht, dafür mit saisonaler Schwankung in Intensität und Spektrum — die Photoperiode steuert zudem automatisch den Blühbeginn ab der Sommersonnenwende."
+        ]
+      },
+      {
+        heading: "Ertragsvergleich",
+        content: [
+          "Indoor-Systeme erreichen unter guter Steuerung typischerweise 400–600 g/m² Anbaufläche bei dichter Bepflanzung — die Fläche ist der begrenzende Faktor.",
+          "Outdoor-Pflanzen sind pro Einzelpflanze durch ungebremstes Wurzel- und Kronenwachstum potenziell deutlich ertragreicher, die Gesamtausbeute schwankt aber stark mit Wetter, Standort und Anbausaison."
+        ]
+      },
+      {
+        heading: "Terpen- und Cannabinoidprofil",
+        content: [
+          "UV-B-Strahlung im natürlichen Sonnenlicht löst eine Stressreaktion aus, die Trichomdichte und die Produktion bestimmter Sekundärmetabolite als Schutzmechanismus erhöhen kann — die meisten Indoor-Leuchtmittel liefern deutlich weniger UV-B.",
+          "Indoor bietet dafür Reproduzierbarkeit: Terpen- und Cannabinoidprofile schwanken zwischen Durchgängen deutlich weniger als bei Outdoor-Pflanzen, die jede Saison unterschiedlichem Wetter ausgesetzt sind."
+        ]
+      },
+      {
+        heading: "Risikofaktoren",
+        content: [
+          "Outdoor: Regen und hohe Luftfeuchte in der Spätblüte begünstigen Botrytis-Knospenfäule, besonders bei dichten, großkalibrigen Blüten. Zusätzlich höherer Schädlingsdruck durch offene Umgebung und weniger Kontrolle über Windbrand oder Hagel.",
+          "Indoor: Risiken verschieben sich zu Systemausfällen (Klimaanlage, Beleuchtung, Belüftung) und höherer Anfälligkeit für sich schnell ausbreitende Schädlinge in geschlossenen Räumen ohne natürliche Gegenspieler."
+        ]
+      },
+      {
+        heading: "Kostenstruktur",
+        content: [
+          "Indoor: höhere laufende Kosten durch Energieverbrauch für Beleuchtung, Klimatisierung und Belüftung, dafür planbare, ganzjährige Ernten unabhängig von der Saison.",
+          "Outdoor: geringere Energiekosten, dafür höherer Flächen- und Zeitbedarf pro Pflanze sowie saisonale Abhängigkeit — nur eine Ernte pro Jahr bei photoperiodischen Sorten im Freiland."
+        ]
+      },
+      {
+        heading: "Entscheidungsleitfaden",
+        content: [
+          "Indoor eignet sich, wenn Reproduzierbarkeit, ganzjährige Verfügbarkeit und Diskretion im Vordergrund stehen und die höheren Energiekosten tragbar sind.",
+          "Outdoor eignet sich bei geeignetem Klima, ausreichend Fläche und Toleranz gegenüber saisonaler und wetterbedingter Schwankung im Ertrag."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Outdoor-Sorten ohne Rücksicht auf lokale Erntereife-Fenster wählen — späte Sorten riskieren in gemäßigten Klimazonen Herbstregen während der Blütereife.",
+          "Indoor-PPFD-Werte 1:1 von Outdoor-Erwartungen ableiten, ohne die tatsächliche Lichtleistung des eigenen Setups zu messen.",
+          "Bei Outdoor-Anbau die Notwendigkeit von Windschutz und Drainage unterschätzen — beides beeinflusst Stressresistenz und Fäulnisrisiko direkt."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Gewächshaus-Systeme mit Lichtdeprivation (kontrollierte Verdunkelung) kombinieren natürliches Sonnenlicht mit steuerbarer Photoperiode und liegen im Kontroll-Risiko-Profil zwischen reinem Indoor und Freiland-Outdoor.",
+          "Ein Vergleich zwischen Durchgängen ist nur bei dokumentierten, vergleichbaren Bedingungen aussagekräftig — Outdoor-Ergebnisse eines Jahres lassen sich wegen der Wetterabhängigkeit nicht direkt auf das nächste übertragen."
+        ]
+      }
+    ],
+    warnings: [
+      "Outdoor-Sorten mit später Blütezeit sind in gemäßigten Klimazonen einem erhöhten Botrytis-Risiko durch Herbstregen ausgesetzt — Erntereife-Fenster vor der Sortenwahl prüfen."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum riecht Outdoor-Cannabis oft anders?",
+        text: "UV-B-Licht in der Sonne ist ein Stresssignal für die Pflanze, das die Produktion bestimmter Schutzstoffe in den Trichomen anregen kann. Künstliches Licht liefert davon meist deutlich weniger."
+      },
+      {
+        title: "Kurz erklärt: Warum ist Regen in der Blüte gefährlich?",
+        text: "Feuchtigkeit, die sich in dichten Blüten hält, ist ein idealer Nährboden für den Botrytis-Pilz. Je dichter und größer die Blüte, desto höher das Risiko bei Regen kurz vor der Ernte."
+      }
+    ],
+    faq: [
+      {
+        question: "Ist Indoor-Cannabis grundsätzlich hochwertiger als Outdoor?",
+        answer: "Nein. Indoor bietet mehr Reproduzierbarkeit und Kontrolle, Outdoor kann unter guten Bedingungen ebenbürtige oder in manchen Terpen-Aspekten sogar stärkere Profile liefern. Das erreichbare Qualitätsmaximum ist bei beiden Systemen vergleichbar."
+      },
+      {
+        question: "Was ist das größte Einzelrisiko bei Outdoor-Anbau?",
+        answer: "Regen und hohe Luftfeuchte in der Spätblüte, weil sie Botrytis-Knospenfäule in dichten Blüten begünstigen — ein Risiko, das sich bei Indoor-Anbau durch Klimakontrolle praktisch ausschließen lässt."
+      },
+      {
+        question: "Lohnt sich ein Gewächshaus mit Lichtdeprivation als Kompromiss?",
+        answer: "Für viele Grower ja: Es nutzt kostenloses Sonnenlicht, erlaubt aber über Verdunkelung eine steuerbare Photoperiode und reduziert damit einen Teil der Outdoor-typischen Unvorhersehbarkeit."
+      }
+    ],
+    glossary: [
+      { term: "PPFD", definition: "Photosynthetic Photon Flux Density — die Menge photosynthetisch nutzbaren Lichts, die pro Fläche und Sekunde auf die Pflanze trifft." },
+      { term: "DLI", definition: "Daily Light Integral — die über einen Tag aufsummierte photosynthetisch nutzbare Lichtmenge." },
+      { term: "Lichtdeprivation", definition: "Kontrollierte Verdunkelung eines Gewächshauses, um bei natürlichem Tageslicht eine kürzere Photoperiode zu simulieren und die Blüte gezielt auszulösen." }
+    ],
+    sourceIds: ["horticulture-research-cannabis-cultivation", "chandra-cannabis-photosynthesis-temperature-co2", "botrytis-grey-mold-review"],
+    relatedSlugs: ["cannabis-anbau-grundlagen", "lichtstress-und-canopy-management", "schimmel-und-mykotoxine-bei-cannabis", "vpd-und-ec-kombi-rechner-guide"]
+  },
+  {
+    slug: "naehrstoffblockaden-und-antagonismen",
+    title: "Nährstoffblockaden und Antagonismen",
+    summary: "Warum trotz ausreichender Düngewerte Mangelbilder auftreten können und wie Blockaden sauber eingeordnet werden.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["Nährstoffe", "Antagonismus", "pH", "Diagnostik"],
+    keyTakeaways: [
+      "Rund 80 % der sichtbaren Mangelbilder sind keine echten Nährstoffdefizite, sondern pH-bedingte Aufnahmeblockaden — den pH zu korrigieren löst sie oft ohne zusätzliche Düngung.",
+      "Kationen wie K⁺, Ca²⁺, Mg²⁺ und NH4⁺ konkurrieren an denselben Wurzeltransportern um Aufnahme — zu viel eines Kations verdrängt ein anderes, auch wenn beide rechnerisch ausreichend vorhanden sind.",
+      "Die Diagnosereihenfolge ist entscheidend: erst pH und EC der Drainage prüfen, dann das Verhältnis der Kationen zueinander, erst zuletzt einen echten Mangel annehmen."
+    ],
+    quickFacts: [
+      { label: "pH-Fenster Coco/Hydro", value: "5.8–6.2" },
+      { label: "pH-Fenster Erde", value: "6.0–6.8" },
+      { label: "Ziel Ca:Mg-Verhältnis", value: "≈ 3:1 bis 4:1" },
+      { label: "Anteil pH-Blockaden an Mangelbildern", value: "≈ 80 %" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Eine Nährstoffblockade liegt vor, wenn ein Nährstoff im Substrat oder in der Lösung ausreichend vorhanden, aber für die Pflanze nicht aufnehmbar ist — im Unterschied zum echten Mangel, bei dem der Nährstoff tatsächlich fehlt.",
+          "Blockaden entstehen vor allem durch ungünstigen pH (Löslichkeits- und Aufnahmeblockade) und durch Antagonismus zwischen konkurrierenden Ionen an der Wurzeloberfläche."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Kationen wie K⁺, Ca²⁺, Mg²⁺ und NH4⁺ werden über gemeinsame oder verwandte Transportproteine in der Wurzelmembran aufgenommen. Ein Überschuss eines Kations besetzt bevorzugt diese Transporter und verdrängt andere — dieses Konkurrenzprinzip wird häufig nach dem niederländischen Agrarchemiker Mulder als 'Mulder'sches Antagonismus-Schema' bezeichnet.",
+          "Zusätzlich ist die Löslichkeit vieler Mikro- und Sekundärnährstoffe stark pH-abhängig: außerhalb des jeweiligen Zielfensters fallen sie chemisch aus oder werden an Substratpartikel gebunden, unabhängig von der gegebenen Menge."
+        ]
+      },
+      {
+        heading: "pH als Hauptursache für Blockaden",
+        content: [
+          "Coco/Hydro: Zielfenster 5.8–6.2 — außerhalb dieses Bereichs sinkt vor allem die Verfügbarkeit von Eisen, Mangan, Zink und Magnesium deutlich.",
+          "Erde: Zielfenster 6.0–6.8 — höher als in Coco/Hydro, da ein Teil der Verfügbarkeit über mikrobielle Umsetzung statt reiner Löslichkeit läuft.",
+          "Bereits eine Abweichung von 0.5 pH-Einheiten außerhalb des Zielfensters kann die Aufnahme einzelner Nährstoffe um mehr als die Hälfte reduzieren, obwohl EC und Düngemenge unverändert bleiben."
+        ]
+      },
+      {
+        heading: "Die wichtigsten Antagonismus-Paare",
+        content: [
+          "Kalium–Magnesium: hohe K-Dosierung (typisch in aggressiven Blüte-Boostern) unterdrückt die Mg-Aufnahme — zeigt sich als Mg-Mangelbild trotz ausreichender Mg-Zufuhr.",
+          "Kalzium–Magnesium: Ziel-Verhältnis liegt bei etwa 3:1 bis 4:1 (Ca:Mg) — verschiebt es sich stark zugunsten von Ca, wird die Mg-Aufnahme gebremst.",
+          "Stickstoff–Kalium: hohe Ammonium- (NH4⁺) Anteile im Dünger konkurrieren direkt mit K⁺ um dieselben Transporter.",
+          "Phosphor–Eisen/Zink: hohe P-Dosierung kann die Verfügbarkeit von Eisen und Zink im Substrat chemisch reduzieren, unabhängig vom pH."
+        ]
+      },
+      {
+        heading: "Diagnose — Blockade vs. echter Mangel",
+        content: [
+          "Schritt 1: pH der Drainage bzw. des Substrats messen, nicht nur den Zulauf. Liegt er außerhalb des Zielfensters, ist eine Blockade wahrscheinlicher als ein echter Mangel.",
+          "Schritt 2: EC der Drainage gegen den Zulauf vergleichen. Deutlich erhöhte Drainage-EC deutet auf Salzanreicherung und mögliche Antagonismen durch Überdüngung hin.",
+          "Schritt 3: Rezeptur auf Kationenverhältnisse prüfen (insbesondere K:Mg und Ca:Mg) — auffällige Schieflagen erklären viele 'unerklärliche' Mangelbilder.",
+          "Schritt 4: Erst wenn pH, EC und Verhältnisse alle im Zielbereich liegen, einen echten Mangel als Ursache annehmen und gezielt nachdüngen."
+        ],
+        checklist: [
+          "pH der Wurzelzone messen, nicht nur den der Stammlösung",
+          "Drainage-EC gegen Zulauf-EC vergleichen",
+          "Ca:Mg- und K:Mg-Verhältnis der Rezeptur prüfen, bevor nachgedüngt wird"
+        ]
+      },
+      {
+        heading: "Korrekturprotokoll",
+        content: [
+          "Zuerst den pH in das substratspezifische Zielfenster bringen — das behebt einen großen Teil der scheinbaren Mangelbilder ohne zusätzliche Düngung.",
+          "Bei Verdacht auf Salzanreicherung einen Spülgang mit pH-korrigiertem Wasser ohne Dünger durchführen, um überschüssige Kationen auszuwaschen.",
+          "Erst danach, falls Symptome bestehen bleiben, gezielt den vermuteten Mangelnährstoff nachdosieren und die Wirkung am Neuaustrieb beobachten."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Bei einem Mangelbild sofort die Dosierung des vermuteten fehlenden Nährstoffs erhöhen, ohne vorher pH zu prüfen — verschärft bei einer pH-Blockade nur den Salzstress.",
+          "Blüte-Booster mit hohem K-Anteil unreflektiert dazudosieren, ohne das resultierende K:Mg-Verhältnis zu kontrollieren.",
+          "Nur den Zulauf-pH messen und die Drainage ignorieren — Substrat und Wurzelzone können deutlich vom Zulaufwert abweichen."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "In rezirkulierenden Hydro-Systemen reichern sich nicht aufgenommene Antagonisten über Zyklen hinweg im Reservoir an — ein regelmäßiger Komplett-Reset der Nährlösung ist hier wichtiger als in Coco oder Erde.",
+          "Living-Soil-Systeme mit aktiver mikrobieller Gemeinschaft puffern Antagonismen teilweise ab, weil ein Teil der Nährstoffverfügbarkeit über biologische statt rein chemische Prozesse läuft."
+        ]
+      }
+    ],
+    warnings: [
+      "Die Dosis eines vermeintlich fehlenden Nährstoffs zu erhöhen, bevor pH und Kationenverhältnisse geprüft sind, verschärft bei einer Blockade häufig nur den Salzstress, ohne das eigentliche Problem zu lösen."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Blockade vs. Mangel",
+        text: "Bei einem echten Mangel fehlt der Nährstoff im Substrat. Bei einer Blockade ist er vorhanden, aber pH oder konkurrierende Ionen verhindern, dass die Wurzel ihn aufnehmen kann."
+      },
+      {
+        title: "Kurz erklärt: Warum konkurrieren Nährstoffe?",
+        text: "Positiv geladene Nährstoffionen wie Kalium, Kalzium und Magnesium nutzen ähnliche Aufnahmewege an der Wurzel. Ist von einem zu viel vorhanden, blockiert das teilweise die Aufnahme der anderen."
+      }
+    ],
+    faq: [
+      {
+        question: "Wie erkenne ich, ob ein Mangelbild eine pH-Blockade ist?",
+        answer: "Miss den pH der Drainage oder des Substrats direkt. Liegt er außerhalb des substratspezifischen Zielfensters, ist eine Blockade wahrscheinlicher als ein echter Mangel — korrigiere zuerst den pH, bevor du mehr düngst."
+      },
+      {
+        question: "Warum zeigt meine Pflanze Mg-Mangel, obwohl ich Cal-Mag gebe?",
+        answer: "Häufigste Ursache ist ein zu hoher Kalium-Anteil, etwa durch aggressive Blüte-Booster, der die Mg-Aufnahme antagonistisch unterdrückt. Prüfe das K:Mg-Verhältnis der Rezeptur, nicht nur die absolute Mg-Menge."
+      },
+      {
+        question: "Reicht es, nur den Zulauf-pH zu kontrollieren?",
+        answer: "Nein. Der pH in Substrat und Drainage kann deutlich vom Zulaufwert abweichen, besonders in Coco und Erde. Für eine verlässliche Diagnose ist die Drainage- bzw. Substratmessung entscheidend."
+      }
+    ],
+    glossary: [
+      { term: "Antagonismus", definition: "Gegenseitige Aufnahmehemmung zweier oder mehrerer Nährstoffionen, meist durch Konkurrenz um dieselben Transportwege an der Wurzel." },
+      { term: "Kationenverhältnis", definition: "Das relative Mengenverhältnis positiv geladener Nährstoffionen (z. B. Ca:Mg, K:Mg) zueinander in Substrat oder Nährlösung." },
+      { term: "Blockade", definition: "Situation, in der ein Nährstoff im Substrat vorhanden, aber für die Pflanze aufgrund von pH oder Antagonismus nicht aufnehmbar ist." }
+    ],
+    sourceIds: ["marschner-mineral-nutrition", "bryson-plant-nutrition-manual", "bernal-cannabis-nutrient-requirements", "bugbee-electrical-conductivity"],
+    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-und-ec-kombi-rechner-guide", "naehrstoffbedarf-cannabis-lebenszyklus"]
+  },
+  {
+    slug: "blattsymptom-troubleshooter",
+    title: "Blattsymptom-Troubleshooter: Vom Symptom zur Diagnose",
+    summary: "Ausgangspunkt für jede Fehlersuche: ordne ein beobachtetes Blatt- oder Pflanzensymptom systematisch einer möglichen Ursache zu und springe direkt zur passenden Diagnose.",
+    category: "anbau",
+    difficulty: "einsteiger",
+    readMinutes: 11,
+    lastUpdated: "2026-08-03",
+    tags: ["Diagnose", "Troubleshooting", "Symptome", "Übersicht", "Fehlersuche"],
+    keyTakeaways: [
+      "Symptomort und -muster (welche Blätter, welche Richtung der Verfärbung/Rollung) grenzen die Ursache oft stärker ein als die Farbe allein.",
+      "Mehrere gleichzeitig auftretende Symptome sprechen eher für eine pH-Blockade oder ein Klimaproblem als für einen einzelnen Nährstoffmangel.",
+      "Diese Übersicht ersetzt nicht die Detaildiagnose — sie verkürzt nur den Weg zum richtigen Artikel, mit dem die eigentliche Bestätigung und Korrektur erfolgt."
+    ],
+    quickFacts: [
+      { label: "Abgedeckte Diagnosen", value: "29 Mängel, Toxizitäten, Schädlinge, Krankheiten, Stressoren" },
+      { label: "Erster Schritt immer", value: "Symptomort (alt/jung, Rand/Mitte) bestimmen" },
+      { label: "Zweiter Schritt", value: "Einzelursache oder Kombination (Blockade/Klima)?" }
+    ],
+    sections: [
+      {
+        heading: "Wie dieser Troubleshooter funktioniert",
+        content: [
+          "Beobachte zuerst WO das Symptom auftritt (alte vs. junge Blätter, Blattrand vs. Blattmitte, ganze Pflanze vs. einzelner Trieb) und WIE es sich verhält (Richtung der Blattrollung, Erholung nach Gießen, Ausbreitungsgeschwindigkeit) — diese Metadaten grenzen die Ursache oft stärker ein als die reine Farbe.",
+          "Finde dann unten die passende Symptomkategorie und folge dem Verweis zum jeweiligen Diagnoseartikel für Bestätigung, Mechanismus und Korrekturmaßnahmen."
+        ]
+      },
+      {
+        heading: "Gelbe/chlorotische Verfärbung",
+        content: [
+          "Interveinale Chlorose an ÄLTEREN, unteren Blättern, Adern bleiben grün → Magnesiummangel oder Kaliummangel — Kaliummangel zeigt zusätzlich nekrotische Blattränder.",
+          "Gleichmäßiges Vergilben ganzer ÄLTERER Blätter (nicht nur zwischen den Adern) → Stickstoffmangel.",
+          "Interveinale Chlorose an JUNGEN, oberen Blättern → Eisenmangel.",
+          "Mehrere dieser Muster GLEICHZEITIG auf derselben Pflanze → eher pH-Lockout oder Nährstoffblockade als ein einzelner Mangel."
+        ]
+      },
+      {
+        heading: "Dunkle, violette oder verbrannte Verfärbung",
+        content: [
+          "Dunkelgrüne, klauenförmig nach unten gekrümmte Blätter an jungen Trieben → Stickstoffüberschuss.",
+          "Dunkelgrün-bläuliche Blätter mit rötlich-violetten Blattstielen → Phosphormangel — bei niedriger Wurzeltemperatur (< 18 °C) stattdessen Kältestress prüfen.",
+          "Purpurne Stängel/Blattunterseiten bei normaler Wurzeltemperatur → Kältestress.",
+          "Braune, verbrannte Blattspitzen an den kräftigsten Blättern → Nährstoffverbrennung/Tipburn.",
+          "Mg-Mangelbild trotz Düngung, dazu steigender pH bei hartem Wasser → Calciumüberschuss."
+        ]
+      },
+      {
+        heading: "Blattform, -bewegung und -rollung",
+        content: [
+          "Blattränder nach OBEN gerollt (Tacoing), aufrechte Haltung lampennah → Hitzestress.",
+          "Blätter nach UNTEN gerollt, mattes/staubiges Erscheinungsbild ohne Gespinst → Verdacht auf Hanf-Rostmilben.",
+          "Verkrümmte, klauenförmige Blätter NUR im direkten Ventilatorstrahl → Windbrand.",
+          "Hängende Blätter TROTZ nassem Substrat, keine Erholung nach dem Gießen → Überwässerung/Staunässe, bei bereits brauner, schleimiger Wurzel → Wurzelfäule."
+        ]
+      },
+      {
+        heading: "Sichtbare Schädlinge und ihre Spuren",
+        content: [
+          "Feine helle Sprenkel oben, Gespinst auf der Blattunterseite → Spinnmilben.",
+          "Silbrige Schlieren mit schwarzen Kotpünktchen, KEIN Gespinst → Thripse.",
+          "Klebriger Honigtau, Ameisenbesuch, sesshafte Kolonien an Triebspitzen → Blattläuse.",
+          "Wolkenartiges Auffliegen kleiner weißer Insekten beim Berühren → Weiße Fliege.",
+          "Kleine schwarze Flieger über dem Substrat → Trauermücken."
+        ]
+      },
+      {
+        heading: "Pilz-, Fäule- und Leitgewebesymptome",
+        content: [
+          "Einzelnes welkes, verfärbtes Blättchen tief im Inneren einer dichten Knospe → Verdacht auf Bud-Rot-Botrytis.",
+          "Weißer, abwischbarer Belag auf Blattoberseiten → Echter Mehltau.",
+          "Braune, schleimige Wurzeln, Welke trotz nassem Substrat → Wurzelfäule (Pythium).",
+          "Einseitiges/sektorales Welken, bräunlicher Ring im Stängelquerschnitt → Verdacht auf Fusarium."
+        ]
+      },
+      {
+        heading: "Klima- und EC-bezogene Muster",
+        content: [
+          "Welke trotz feuchtem Substrat, verbrannte Blattränder → Salzanreicherung/hohe EC.",
+          "Leistungsplateau trotz optimalem Licht, VPD und Düngung → möglicherweise CO2-Limit.",
+          "Symptome verschieben sich mit der relativen Luftfeuchte, nicht mit Düngung oder Gießrhythmus → Luftfeuchte-Management prüfen."
+        ]
+      },
+      {
+        heading: "Diagnoseprotokoll — Schritt für Schritt",
+        content: [
+          "1. Symptomort bestimmen: alte vs. junge Blätter, ganze Pflanze vs. einzelner Trieb/Sektor.",
+          "2. Bewegungsrichtung/Reaktion prüfen: Blattrollung (oben/unten), Erholung nach Gießen, Ausbreitungstempo.",
+          "3. Auf Kombination mehrerer Muster achten — das spricht für pH-Lockout, Klimaproblem oder Wurzelzonenstress statt für einen Einzelmangel.",
+          "4. Passende Kategorie oben finden und zum verlinkten Diagnoseartikel wechseln, dort Bestätigung und Korrektur nachlesen."
+        ],
+        checklist: [
+          "Symptomort (alt/jung, Rand/Mitte, ganze Pflanze/Sektor) notieren",
+          "Prüfen, ob mehrere Symptommuster gleichzeitig auftreten",
+          "Erst nach Bestätigung im verlinkten Artikel korrigieren, nicht vorab spekulativ nachdüngen"
+        ]
+      }
+    ],
+    warnings: [
+      "Diese Übersicht ist ein Einstiegspunkt, keine abschließende Diagnose — bei Unsicherheit immer den verlinkten Detailartikel für Bestätigungsmerkmale und Korrekturmaßnahmen konsultieren, bevor eingegriffen wird."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum Symptomort wichtiger ist als Farbe",
+        text: "Viele Mängel und Probleme erzeugen ähnliche Farbveränderungen. Ob das Symptom an alten oder jungen Blättern, an der ganzen Pflanze oder nur einem Trieb auftritt, grenzt die Ursache oft viel eindeutiger ein als die Farbe allein."
+      },
+      {
+        title: "Kurz erklärt: Warum mehrere Symptome gleichzeitig wichtig sind",
+        text: "Ein einzelnes, klar abgegrenztes Symptom spricht meist für einen Einzelmangel oder -schädling. Mehrere Muster gleichzeitig deuten eher auf eine übergeordnete Ursache wie pH-Blockade oder Klimastress hin."
+      }
+    ],
+    faq: [
+      {
+        question: "Ich sehe zwei verschiedene Symptome gleichzeitig — was zuerst prüfen?",
+        answer: "Zuerst pH der Wurzelzone und Klimawerte (Temperatur, VPD) kontrollieren. Kombinierte Symptome sprechen häufiger für eine Blockade oder ein Klimaproblem als für zwei unabhängige Einzelursachen."
+      },
+      {
+        question: "Was, wenn mein Symptom in keiner Kategorie hier passt?",
+        answer: "Prüfe zusätzlich Wurzelzonentemperatur und Substratfeuchte — viele untypische Symptome lassen sich auf diese beiden Basisfaktoren zurückführen, auch wenn sie in keiner Symptomliste explizit auftauchen."
+      },
+      {
+        question: "Muss ich immer zuerst hierher, bevor ich einen Diagnoseartikel lese?",
+        answer: "Nicht zwingend, aber sinnvoll bei Unsicherheit: Diese Übersicht spart Zeit, wenn nicht klar ist, welcher von mehreren möglichen Artikeln zum beobachteten Symptom passt."
+      }
+    ],
+    glossary: [
+      { term: "Symptomort", definition: "Die Position eines Symptoms an der Pflanze (z. B. alte vs. junge Blätter), zentrales Unterscheidungsmerkmal bei der Diagnose." },
+      { term: "Kombinationssymptom", definition: "Gleichzeitiges Auftreten mehrerer Einzelsymptome, häufig Hinweis auf eine übergeordnete Ursache wie pH oder Klima statt auf mehrere unabhängige Probleme." },
+      { term: "Bestätigungsmerkmal", definition: "Ein spezifisches, eindeutiges Zeichen, das eine vermutete Diagnose absichert, bevor korrigiert wird." }
+    ],
+    sourceIds: ["marschner-mineral-nutrition", "horticulture-research-cannabis-cultivation", "punja-cannabis-pathogens"],
+    relatedSlugs: ["magnesiummangel", "stickstoffmangel", "eisenmangel", "kaliummangel", "calciummangel", "phosphormangel", "ph-lockout", "naehrstoffblockaden-und-antagonismen", "stickstoffueberschuss", "kalium-ueberschuss", "calciumueberschuss", "naehrstoffverbrennung-tipburn", "salzanreicherung-hohe-ec", "hitzestress", "kaeltestress", "windbrand", "ueberwaesserung-staunaesse", "wurzelfaeule", "fusarium", "spinnmilben", "thripse", "trauermuecken", "blattlaeuse", "weisse-fliege", "hanf-rostmilben", "bud-rot-botrytis", "echter-mehltau-powdery-mildew", "luftfeuchte-management", "co2-management", "calmag-supplementierung"]
+  },
+  {
+    slug: "dli-und-photoperiode",
+    title: "DLI und Photoperiode richtig steuern",
+    summary: "Warum die tägliche Lichtsumme (DLI) und die Länge der ununterbrochenen Dunkelphase zwei getrennte, gleich wichtige Steuergrößen sind.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["DLI", "Photoperiode", "Licht", "Blüteauslösung"],
+    keyTakeaways: [
+      "DLI (Daily Light Integral) ist die über den Tag aufsummierte Lichtmenge — zwei Setups mit unterschiedlicher PPFD und Beleuchtungsdauer können dieselbe DLI erreichen.",
+      "Die Blüteauslösung hängt nicht von der Lichtdauer, sondern von der Länge der UNUNTERBROCHENEN Dunkelphase ab — bereits ein kurzer Lichteinbruch in der Nacht kann die Blüte stören.",
+      "Autoflower-Genetik ist photoperiodenunabhängig und reagiert primär auf die DLI-Summe, nicht auf die Länge der Dunkelphase."
+    ],
+    quickFacts: [
+      { label: "DLI vegetativ (18/6)", value: "≈ 25–35 mol·m⁻²·Tag⁻¹" },
+      { label: "DLI Blüte (12/12)", value: "≈ 35–45 mol·m⁻²·Tag⁻¹" },
+      { label: "Kritische Dunkelphase", value: "≥ 12 Std. ununterbrochen" },
+      { label: "Formel", value: "DLI = PPFD × Sekunden Licht / 1.000.000" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "DLI (Daily Light Integral) ist die über 24 Stunden aufsummierte photosynthetisch nutzbare Lichtmenge, gemessen in mol·m⁻²·Tag⁻¹. Sie berechnet sich aus PPFD multipliziert mit der Beleuchtungsdauer in Sekunden, geteilt durch eine Million.",
+          "Photoperiode bezeichnet dagegen die Aufteilung von Licht- und Dunkelphase innerhalb eines 24-Stunden-Zyklus und steuert bei photoperiodischen Pflanzen die Blüteauslösung."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Da DLI ein reines Produkt aus Intensität und Dauer ist, liefern unterschiedliche PPFD/Stunden-Kombinationen dieselbe DLI — 600 µmol·m⁻²·s⁻¹ über 18 Stunden ergibt rechnerisch dieselbe Tagessumme wie 900 µmol·m⁻²·s⁻¹ über 12 Stunden.",
+          "Die Blüteauslösung bei photoperiodischem Cannabis wird über ein Phytochrom-gesteuertes System erkannt, das die Länge der UNUNTERBROCHENEN Dunkelphase misst, nicht die Lichtdauer selbst — daher der Begriff 'kritische Dunkelperiode'."
+        ]
+      },
+      {
+        heading: "DLI-Zielwerte nach Phase",
+        content: [
+          "Sämling/frühe Vegetation: niedrigere DLI (~15–25 mol·m⁻²·Tag⁻¹) reicht, um Überforderung des jungen Photosyntheseapparats zu vermeiden.",
+          "Vegetative Hauptphase (18/6): DLI von 25–35 mol·m⁻²·Tag⁻¹ bei moderater PPFD über eine lange Lichtdauer.",
+          "Blütephase (12/12): DLI von 35–45 mol·m⁻²·Tag⁻¹ erfordert bei nur 12 Stunden Licht eine deutlich höhere PPFD als in der Vegetation, um dieselbe oder höhere Tagessumme zu erreichen."
+        ],
+        checklist: [
+          "DLI aus gemessener PPFD und tatsächlicher Beleuchtungsdauer berechnen, nicht schätzen",
+          "Bei Phasenwechsel PPFD anheben, um die kürzere Lichtdauer in der Blüte auszugleichen",
+          "Photoperiode-Timer auf Zuverlässigkeit und Redundanz prüfen"
+        ]
+      },
+      {
+        heading: "Die kritische Dunkelperiode",
+        content: [
+          "Für eine stabile Blüteinduktion braucht photoperiodisches Cannabis mindestens etwa 12 Stunden ununterbrochene Dunkelheit pro Zyklus — bereits ein kurzer Lichteinbruch während dieser Phase kann als 'zweiter Tag' interpretiert werden.",
+          "Wiederholte Lichteinbrüche können zur Reversion in vegetatives Wachstum oder zu Stress-induzierter Zwittrigkeit (Hermaphroditismus) führen, da die Pflanze die Signalkette zur Blüteerhaltung unterbricht."
+        ]
+      },
+      {
+        heading: "Diagnose bei Blühproblemen",
+        content: [
+          "Verzögerter oder ausbleibender Blühbeginn trotz korrektem 12/12-Zyklus: zuerst auf Lichtlecks im Anbauraum während der Dunkelphase prüfen (Türspalten, LED-Standby-Leuchten, externe Lichtquellen).",
+          "Vereinzelte männliche Blüten an sonst weiblichen Pflanzen (Stress-Zwittrigkeit): Lichtleck-Historie und Timer-Zuverlässigkeit der letzten Wochen rückwirkend prüfen."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "PPFD isoliert erhöhen, ohne die tatsächliche DLI unter Berücksichtigung der Beleuchtungsdauer zu berechnen.",
+          "Timer ohne Redundanz oder Batteriepufferung verwenden — ein einzelner Stromausfall kann die Dunkelphase verkürzen und die Blüteinduktion stören.",
+          "Autoflower-Genetik mit denselben strikten Photoperiode-Regeln wie photoperiodische Pflanzen behandeln, obwohl sie primär auf DLI statt auf Dunkelphasenlänge reagiert."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Manche Grower nutzen eine kurze Unterbrechung der Dunkelphase mit fernrotem Licht gezielt, um bestimmte physiologische Reaktionen auszulösen — dieser Eingriff erfordert aber präzise Kontrolle und ist fehleranfällig ohne Erfahrung.",
+          "Autoflower-Linien lassen sich wegen ihrer Photoperiodenunabhängigkeit auch unter Dauerlicht (20/4 bis 24/0) kultivieren, wobei die optimale DLI-Obergrenze sortenabhängig variiert."
+        ]
+      }
+    ],
+    warnings: [
+      "Ein Lichtleck während der Dunkelphase in der Blüte kann bereits nach wenigen Vorfällen zu Stress-Zwittrigkeit führen — der Anbauraum muss während der Dunkelphase vollständig lichtdicht sein."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: DLI vs. PPFD",
+        text: "PPFD ist eine Momentaufnahme der Lichtintensität, DLI die Summe über den ganzen Tag. Zwei sehr unterschiedliche PPFD-Werte können bei unterschiedlicher Beleuchtungsdauer dieselbe DLI ergeben."
+      },
+      {
+        title: "Kurz erklärt: Warum Dunkelheit die Blüte steuert",
+        text: "Cannabis misst nicht, wie viel Licht es bekommt, sondern wie lange es ununterbrochen dunkel ist. Eine ausreichend lange, ungestörte Dunkelphase ist das eigentliche Signal für die Blüteauslösung."
+      }
+    ],
+    faq: [
+      {
+        question: "Kann ich dieselbe DLI mit weniger Stunden, aber mehr PPFD erreichen?",
+        answer: "Rechnerisch ja, DLI ist das Produkt aus beiden Werten. In der Praxis limitieren aber Photoinhibitionsrisiko und Hitzeentwicklung, wie stark sich PPFD gegenüber der Stundenzahl erhöhen lässt."
+      },
+      {
+        question: "Wie kurz darf ein Lichteinbruch in der Dunkelphase sein, um noch unbedenklich zu sein?",
+        answer: "Es gibt keinen sicheren Schwellenwert — bereits kurze Einbrüche wurden in der Praxis mit Reversion oder Zwittrigkeit in Verbindung gebracht. Die sicherste Regel ist vollständige Lichtdichtheit während der gesamten Dunkelphase."
+      }
+    ],
+    glossary: [
+      { term: "DLI", definition: "Daily Light Integral — die über einen Tag aufsummierte photosynthetisch nutzbare Lichtmenge in mol·m⁻²·Tag⁻¹." },
+      { term: "Kritische Dunkelperiode", definition: "Die minimale Länge ununterbrochener Dunkelheit, die photoperiodisches Cannabis für eine stabile Blüteinduktion benötigt." },
+      { term: "Reversion", definition: "Rückkehr einer bereits blühenden Pflanze in vegetatives Wachstum, meist durch gestörte Photoperiode ausgelöst." }
+    ],
+    sourceIds: ["plant-physiology-vpd-transpiration", "chandra-cannabis-photosynthesis-temperature-co2", "horticulture-research-cannabis-cultivation"],
+    relatedSlugs: ["lichtstress-und-canopy-management", "vpd-nach-wachstumsphase", "feminisiert-vs-regular-vs-autoflower"]
+  },
+  {
+    slug: "vpd-nach-wachstumsphase",
+    title: "VPD nach Wachstumsphase steuern",
+    summary: "Warum das VPD-Zielfenster nicht über den ganzen Zyklus konstant bleiben sollte, sondern sich mit Blattreife und Wachstumsphase verschiebt.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["VPD", "Klima", "Wachstumsphase", "Transpiration"],
+    keyTakeaways: [
+      "Junge Sämlinge haben eine noch unterentwickelte Spaltöffnungs- und Wachsschichtkontrolle und brauchen ein niedrigeres VPD als reife Pflanzen, um Austrocknung zu vermeiden.",
+      "Das VPD-Zielfenster sollte über den Zyklus schrittweise ansteigen: von ≈ 0.4–0.8 kPa beim Sämling bis ≈ 1.2–1.6 kPa in der Blüte.",
+      "In der Spätblüte ist ein Kompromiss nötig: VPD hoch genug für Transpiration und Zuckertransport, aber nicht so hoch, dass zusätzlicher Stress entsteht — die genaue Obergrenze hängt auch vom Schimmelrisiko ab."
+    ],
+    quickFacts: [
+      { label: "VPD Sämling", value: "0.4–0.8 kPa" },
+      { label: "VPD Vegetativ", value: "0.8–1.2 kPa" },
+      { label: "VPD Blüte", value: "1.2–1.6 kPa" },
+      { label: "Grundlage", value: "Blatttemperatur, nicht nur Lufttemperatur" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "VPD (Vapor Pressure Deficit) beschreibt die Trocknungskraft der Luft und damit den Antrieb für die Transpiration der Pflanze. Dieser Artikel behandelt, wie sich das sinnvolle VPD-Zielfenster mit der Wachstumsphase verschiebt.",
+          "Ein einziges, über den ganzen Zyklus konstantes VPD-Ziel ignoriert, dass sich die Fähigkeit der Pflanze, Transpiration zu regulieren, mit zunehmender Blattreife verändert."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Junge Blätter haben eine noch dünnere Kutikula (Wachsschicht) und eine weniger präzise Spaltöffnungsregulation als reife Blätter — bei hohem VPD verlieren sie dadurch überproportional viel Wasser.",
+          "Mit zunehmender Blattreife verbessert sich die Kontrolle über die Spaltöffnungen, wodurch reife Pflanzen ein höheres VPD tolerieren und für den Transport von Zuckern und Nährstoffen sogar benötigen."
+        ]
+      },
+      {
+        heading: "VPD-Zielwerte nach Phase",
+        content: [
+          "Sämling/Steckling: 0.4–0.8 kPa — niedrig halten, um Austrocknung bei noch unterentwickelter Spaltöffnungskontrolle zu vermeiden.",
+          "Vegetative Hauptphase: 0.8–1.2 kPa — moderater Transpirationsantrieb für kräftiges Blattmassewachstum.",
+          "Blütephase: 1.2–1.6 kPa — höherer Antrieb unterstützt Nährstoff- und Zuckertransport in die Knospen.",
+          "Spätblüte: am oberen Rand des Zielfensters bleiben, aber gleichzeitig die relative Luftfeuchte nicht zu weit senken, um das Schimmelrisiko in dichten Knospen nicht zusätzlich durch zu trockene, dann wieder feuchte Schwankungen zu erhöhen."
+        ],
+        checklist: [
+          "VPD-Zielwert bei jedem Phasenwechsel schrittweise anpassen, nicht abrupt springen",
+          "Blatttemperatur statt nur Lufttemperatur für die VPD-Berechnung verwenden",
+          "In der Spätblüte VPD-Obergrenze gegen Schimmelrisiko abwägen, nicht isoliert maximieren"
+        ]
+      },
+      {
+        heading: "Diagnose bei VPD-Fehlsteuerung",
+        content: [
+          "VPD zu niedrig: schwache, weiche Stängel, verlangsamtes Wachstum, erhöhtes Schimmelrisiko durch stehende Feuchtigkeit in der Canopy.",
+          "VPD zu hoch: hängende Blätter trotz feuchtem Substrat, nach oben gerollte Blattränder, verbrannte Blattspitzen — ähnlich Nährstoffverbrennung, aber ohne begleitende EC-Auffälligkeit."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Ein einzelnes VPD-Ziel für den gesamten Zyklus verwenden, unabhängig von Sämling-, Vegetations- oder Blütephase.",
+          "VPD nur aus der Lufttemperatur berechnen, ohne die oft kühlere Blatttemperatur zu berücksichtigen — das führt zu einer systematischen Unterschätzung des tatsächlichen VPD an der Blattoberfläche.",
+          "In der Spätblüte VPD einseitig maximieren, ohne das gleichzeitig steigende Schimmelrisiko bei zu großen Feuchteschwankungen zu bedenken."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Eine Infrarot-Blatttemperaturmessung statt reiner Lufttemperatur liefert ein präziseres, 'echtes' VPD und deckt lokale Abweichungen unter Nahlicht auf.",
+          "Manche erfahrene Grower fahren in den letzten 1–2 Tagen vor der Ernte bewusst ein leicht erhöhtes VPD, um die Trocknung anzustoßen — dieser Eingriff sollte nur mit guter Klimakontrolle erfolgen."
+        ]
+      }
+    ],
+    warnings: [
+      "Ein zu niedriges VPD in Kombination mit dichter Canopy in der Spätblüte erhöht das Botrytis-Risiko messbar — Klimaführung sollte nie isoliert von der Canopy-Dichte betrachtet werden."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum ändert sich das VPD-Ziel?",
+        text: "Junge Blätter können ihren Wasserverlust noch nicht so gut regulieren wie reife Blätter. Ein niedrigeres VPD am Anfang schützt sie, während reife Pflanzen in der Blüte von einem höheren VPD profitieren."
+      },
+      {
+        title: "Kurz erklärt: Blatttemperatur vs. Lufttemperatur",
+        text: "Blätter sind oft kühler als die umgebende Luft, besonders unter starkem Licht. Ein VPD-Wert, der nur die Lufttemperatur nutzt, unterschätzt daher oft die tatsächliche Trocknungskraft an der Blattoberfläche."
+      }
+    ],
+    faq: [
+      {
+        question: "Muss ich das VPD-Ziel jede Woche neu anpassen?",
+        answer: "Nicht wöchentlich, aber bei jedem größeren Phasenwechsel (Sämling zu Vegetation, Vegetation zu Blüte, Beginn der Spätblüte) sollte das Zielfenster bewusst angepasst werden."
+      },
+      {
+        question: "Was ist wichtiger: absolutes VPD-Ziel oder Stabilität?",
+        answer: "Beides zählt, aber starke, häufige Schwankungen sind oft schädlicher als ein leicht suboptimaler, aber stabiler Wert — abrupte VPD-Sprünge wirken selbst als Stressor."
+      }
+    ],
+    glossary: [
+      { term: "VPD", definition: "Vapor Pressure Deficit — die Trocknungskraft der Luft, zentrale Steuergröße für Transpiration." },
+      { term: "Kutikula", definition: "Wachsartige Schutzschicht auf der Blattoberfläche, die unkontrollierten Wasserverlust begrenzt." },
+      { term: "Spaltöffnung", definition: "Stoma; reguliert Gasaustausch und Wasserabgabe des Blatts." }
+    ],
+    sourceIds: ["plant-physiology-vpd-transpiration", "prenger-ling-vpd-greenhouse", "chandra-cannabis-photosynthesis-temperature-co2"],
+    relatedSlugs: ["vpd-einfach-erklaert", "vpd-und-ec-kombi-rechner-guide", "dli-und-photoperiode"]
+  },
+  {
+    slug: "ec-und-runoff-interpretation",
+    title: "EC und Runoff richtig interpretieren",
+    summary: "Warum die Drainage-EC im Verhältnis zur Zulauf-EC aussagekräftiger ist als jeder Einzelwert für sich und wie du daraus die richtige Korrektur ableitest.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["EC", "Runoff", "Drainage", "Diagnose", "Messwerte"],
+    keyTakeaways: [
+      "Nicht der absolute EC-Wert der Drainage, sondern das VERHÄLTNIS zur Zulauf-EC zeigt an, ob sich Salze anreichern oder die Pflanze schneller Nährstoffe aufnimmt, als nachgeliefert wird.",
+      "Runoff-EC deutlich über der Zulauf-EC (Faktor > 1.3–1.5) signalisiert Salzanreicherung und einen anstehenden Spülgang.",
+      "Runoff-EC unter der Zulauf-EC kann sowohl auf hohen Nährstoffhunger der Pflanze als auch auf Über-Auswaschung hindeuten — beides erfordert unterschiedliche Reaktionen."
+    ],
+    quickFacts: [
+      { label: "Ausgeglichen", value: "Runoff-EC ≈ Zulauf-EC" },
+      { label: "Salzanreicherung", value: "Runoff-EC > 1.3–1.5× Zulauf" },
+      { label: "Warnsignal", value: "Runoff-EC deutlich unter Zulauf" },
+      { label: "Messfrequenz", value: "Wöchentliche Kontrollgießung" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Runoff (Drainage) ist die Flüssigkeit, die nach einer Gießung unten aus dem Topf abläuft. Ihre EC gibt Auskunft über den Salzzustand der Wurzelzone, den der Zulauf-EC-Wert allein nicht zeigen kann.",
+          "Erst der Vergleich zwischen Zulauf- und Runoff-EC macht den Wert diagnostisch nutzbar — ein isolierter Runoff-Wert ohne Referenz ist wenig aussagekräftig."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "EC misst die Summe aller gelösten Salze in der Lösung, unabhängig von deren Zusammensetzung — ein hoher Wert sagt nichts darüber aus, WELCHE Nährstoffe im Überschuss oder Mangel vorliegen.",
+          "Nimmt die Pflanze Wasser schneller auf als gelöste Salze, konzentriert sich die verbleibende Lösung in der Wurzelzone auf — die Runoff-EC steigt über die Zulauf-EC. Das Umgekehrte gilt bei besonders hohem Nährstoffhunger relativ zur Wasseraufnahme."
+        ]
+      },
+      {
+        heading: "Interpretationsregeln",
+        content: [
+          "Runoff-EC ≈ Zulauf-EC: System im Gleichgewicht, keine akute Korrektur nötig.",
+          "Runoff-EC deutlich höher (Faktor > 1.3–1.5) als Zulauf-EC: Salzanreicherung in der Wurzelzone — ein Spülgang mit pH-korrigiertem Wasser ist angezeigt.",
+          "Runoff-EC niedriger als Zulauf-EC: entweder hoher, gesunder Nährstoffhunger in einer starken Wachstumsphase oder Über-Auswaschung durch zu große Gießmenge — Pflanzenzustand und Gießmenge zur Unterscheidung heranziehen."
+        ]
+      },
+      {
+        heading: "pH-Drift im Runoff",
+        content: [
+          "Runoff-pH, der deutlich vom Zulauf-pH abweicht, zeigt Substratdrift an, die reine Zulaufmessung verbirgt — besonders relevant in Erde mit mikrobieller Pufferung, die über Wochen driften kann.",
+          "Eine Kombination aus Runoff-EC- und Runoff-pH-Trend über mehrere Wochen ist aussagekräftiger als eine einzelne Momentaufnahme."
+        ]
+      },
+      {
+        heading: "Messprotokoll",
+        content: [
+          "Zulauf-EC/pH unmittelbar vor der Gießung messen, Runoff-EC/pH einige Minuten nach vollständigem Ablaufen der Drainage.",
+          "Immer zur gleichen relativen Position im Gießzyklus messen (z. B. definierte wöchentliche Kontrollgießung), um Werte über Zeit vergleichbar zu halten.",
+          "Ausreichenden Drain-Anteil (10–20 % der Gießmenge) sicherstellen — bei zu wenig Runoff ist die Messung nicht repräsentativ für die gesamte Wurzelzone."
+        ],
+        checklist: [
+          "Zulauf- und Runoff-Werte immer als Paar dokumentieren, nie isoliert",
+          "Kontrollgießung an fester Wochentagsroutine durchführen",
+          "Runoff-Trend über mehrere Wochen verfolgen, nicht nur Einzelwerte bewerten"
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Nur den Zulauf messen und den Runoff komplett ignorieren — die aussagekräftigere Hälfte der Information fehlt dann.",
+          "Aus einem einzelnen Runoff-Wert ohne Zulauf-Referenz eine Düngerkorrektur ableiten.",
+          "Runoff-Messung unregelmäßig und zu unterschiedlichen Zeitpunkten im Gießzyklus durchführen, wodurch Werte nicht vergleichbar werden."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "In rezirkulierenden Hydro-Systemen ersetzt die kontinuierliche Reservoir-EC-Messung die klassische Runoff-Logik, da es keine klassische Drainage gibt — hier ist der Vergleich zur letzten Nachfüllung relevant.",
+          "Langfristige Runoff-EC-Trends lassen sich wie ein einfaches Kontrolldiagramm führen, um schleichende Drift von akuten Ausreißern zu unterscheiden."
+        ]
+      }
+    ],
+    warnings: [
+      "Ein wiederholt stark erhöhter Runoff-EC-Wert ohne Spülgang kann zu chronischem Salzstress führen, der sich erst mit Verzögerung als Wachstumsstillstand oder Blattrandverbrennung zeigt."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum das Verhältnis zählt, nicht der Einzelwert",
+        text: "Ein hoher Runoff-EC-Wert ist nur dann ein Problem, wenn er deutlich über dem Zulaufwert liegt. Ohne diesen Vergleich lässt sich aus einer einzelnen Zahl keine verlässliche Entscheidung ableiten."
+      },
+      {
+        title: "Kurz erklärt: Was niedriger Runoff-EC bedeutet",
+        text: "Wenn die Drainage weniger Salz enthält als der Zulauf, hat die Pflanze aktiv Nährstoffe aufgenommen. Das ist in einer starken Wachstumsphase meist positiv zu werten, kann bei sehr niedrigen Werten aber auch Über-Auswaschung bedeuten."
+      }
+    ],
+    faq: [
+      {
+        question: "Wie oft sollte ich Runoff messen?",
+        answer: "Eine wöchentliche, klar definierte Kontrollgießung reicht für die meisten Setups. Häufigere Messung ist in Coco/Hydro mit geringer Pufferung sinnvoller als in Erde."
+      },
+      {
+        question: "Was mache ich bei dauerhaft niedrigem Runoff-EC trotz gesunder Pflanze?",
+        answer: "Das ist meist unproblematisch und zeigt hohen, aktiven Nährstoffverbrauch. Kritisch wird es nur, wenn gleichzeitig Mangelsymptome auftreten — dann kann die Zulauf-EC leicht angehoben werden."
+      }
+    ],
+    glossary: [
+      { term: "Runoff", definition: "Die nach einer Gießung unten aus dem Topf ablaufende Flüssigkeit; Referenzpunkt für den Salzzustand der Wurzelzone." },
+      { term: "EC", definition: "Electrical Conductivity — Maß für die Summe aller gelösten Salze in einer Lösung." },
+      { term: "Kontrolldiagramm", definition: "Statistisches Werkzeug zur Unterscheidung normaler Schwankung von echten Trendabweichungen über Zeit." }
+    ],
+    sourceIds: ["bugbee-electrical-conductivity", "marschner-mineral-nutrition", "munns-salinity-tolerance"],
+    relatedSlugs: ["salzanreicherung-hohe-ec", "ph-lockout", "bewaesserung-ohne-uebergiessen", "grow-log-und-kpi-dashboard"]
+  },
+  {
+    slug: "wurzelgesundheit-diagnose",
+    title: "Wurzelgesundheit beurteilen und diagnostizieren",
+    summary: "Farbe, Konsistenz und Geruch der Wurzel verraten mehr über den Zustand einer Pflanze als jedes oberirdische Symptom. So beurteilst du Wurzeln systematisch bei Umtopfen und Ernte.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["Wurzelzone", "Diagnose", "Wurzelfäule", "Substrat"],
+    keyTakeaways: [
+      "Gesunde Wurzeln sind weiß bis cremefarben, fest und riechen erdig-neutral — jede Abweichung in Farbe, Konsistenz oder Geruch ist ein Frühwarnsignal, lange bevor oberirdische Symptome sichtbar werden.",
+      "Feine, dichte weiße Wurzelhaare zeigen aktive Nährstoffaufnahme an — ihr Fehlen ist oft aussagekräftiger als die Farbe der Hauptwurzeln allein.",
+      "Ein fauliger, süßlich-fauler Geruch ist ein zuverlässigeres Frühsignal für Wurzelfäule als die Braunfärbung selbst, die oft erst später sichtbar wird."
+    ],
+    quickFacts: [
+      { label: "Gesunde Farbe", value: "Weiß bis cremefarben" },
+      { label: "Gesunder Geruch", value: "Neutral bis erdig" },
+      { label: "Warnsignal Farbe", value: "Braun bis schwarz, schleimig" },
+      { label: "Warnsignal Geruch", value: "Faulig, süßlich-sauer" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Wurzelgesundheitsdiagnose ist die systematische Beurteilung von Farbe, Konsistenz, Geruch und Wurzelhaardichte, um den Zustand der Wurzelzone unabhängig von oberirdischen Symptomen einzuschätzen.",
+          "Da viele oberirdische Stresssignale erst Tage nach dem eigentlichen Wurzelproblem auftreten, ist die direkte Wurzelinspektion beim Umtopfen oder Ernten eine wertvolle, oft ungenutzte Diagnosequelle."
+        ]
+      },
+      {
+        heading: "Beurteilungskriterien",
+        content: [
+          "Farbe: weiß bis cremefarben ist gesund; gelblich kann auf beginnenden Stress hindeuten; braun bis schwarz signalisiert fortgeschrittene Schädigung oder Fäule.",
+          "Konsistenz: feste, leicht elastische Wurzeln sind gesund; schleimige, leicht zerfallende Wurzeln sind ein starkes Fäule-Signal.",
+          "Geruch: neutral bis leicht erdig ist normal; fauliger, süßlich-saurer Geruch ist ein zuverlässiges Frühsignal, oft bevor die Verfärbung eindeutig sichtbar wird.",
+          "Wurzelhaardichte: feine, dichte weiße Härchen zeigen aktive Nährstoffaufnahme; ihr weitgehendes Fehlen deutet auf gestörte Aufnahmefunktion hin, selbst bei unauffälliger Hauptwurzelfarbe."
+        ],
+        checklist: [
+          "Beim Umtopfen systematisch Farbe, Konsistenz und Geruch der Wurzelballen-Außenseite UND des Kerns prüfen",
+          "Wurzelhaardichte an mehreren Stellen des Ballens vergleichen",
+          "Auffällige Befunde fotografisch dokumentieren, um Verlauf über mehrere Umtopfungen zu vergleichen"
+        ]
+      },
+      {
+        heading: "Diagnose — Zuordnung zu Ursachen",
+        content: [
+          "Braune, schleimige Wurzeln mit fauligem Geruch, oberirdisch Welke trotz nassem Substrat → Wurzelfäule (Pythium).",
+          "Wurzeln äußerlich meist unauffällig, aber einseitiges/sektorales oberirdisches Welken → Verdacht auf Fusarium, Bestätigung über Stängelquerschnitt, nicht über die Wurzel selbst.",
+          "Reduzierte Wurzelhaardichte bei sonst normaler Farbe, oberirdisch Wachstumsstillstand → Hinweis auf chronische Staunässe oder Sauerstoffmangel, noch vor manifester Fäule.",
+          "Wurzeln, die dicht am Topfrand kreisförmig verlaufen (Girdling) → Übertopfungsfolge oder zu später Umtopfzeitpunkt, kein Krankheitszeichen."
+        ]
+      },
+      {
+        heading: "Korrekturmaßnahmen nach Befund",
+        content: [
+          "Bei beginnender Fäule: befallene Wurzelteile vorsichtig entfernen, in frisches, gut drainierendes Substrat umtopfen, Wurzelzonentemperatur auf 18–22 °C bringen.",
+          "Bei reduzierter Wurzelhaardichte ohne Fäule: Gießrhythmus und Sauerstoffversorgung der Wurzelzone überprüfen, bevor am Düngeprogramm etwas geändert wird.",
+          "Bei Girdling: beim nächsten Umtopfen die äußeren, kreisenden Wurzeln vorsichtig auflockern oder anschneiden, um neues, radiales Wurzelwachstum anzuregen."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Wurzeln nur bei sichtbaren oberirdischen Problemen kontrollieren, statt routinemäßig bei jedem Umtopfen.",
+          "Nur die äußere Wurzelballenoberfläche prüfen und den Kern des Ballens unbeachtet lassen, wo sich Fäule oft zuerst entwickelt.",
+          "Farbliche Verfärbung allein als Diagnosekriterium nehmen, ohne Geruch und Konsistenz einzubeziehen."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Mykorrhiza-Inokulation kann an der Wurzeloberfläche einen feinen, weißlichen Pilzbelag erzeugen, der von schädlichem Befall unterschieden werden muss — echte Mykorrhiza riecht neutral bis leicht pilzig-erdig, nicht faulig.",
+          "Regelmäßige Wurzelzonentemperatur- und Sauerstoffmessung ergänzt die visuelle Beurteilung um objektive, kontinuierliche Daten statt punktueller Momentaufnahmen."
+        ]
+      }
+    ],
+    warnings: [
+      "Ein fauliger Geruch an der Wurzelzone sollte immer ernst genommen werden, auch wenn die Wurzelfarbe noch weitgehend normal wirkt — der Geruch ist häufig das frühere Signal."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum Geruch wichtig ist",
+        text: "Fäuleerreger produzieren Stoffwechselprodukte, die schon riechbar sind, bevor die Wurzel sichtbar braun wird. Der Geruchstest ist deshalb oft das frühere Warnsignal als die reine Optik."
+      },
+      {
+        title: "Kurz erklärt: Girdling",
+        text: "Wenn Wurzeln zu lange im selben Topf bleiben, wachsen sie oft ringförmig am Topfrand entlang, statt sich radial auszubreiten. Das schränkt die spätere Wasser- und Nährstoffaufnahme ein."
+      },
+    ],
+    faq: [
+      {
+        question: "Wie oft sollte ich die Wurzeln aktiv kontrollieren?",
+        answer: "Bei jedem geplanten Umtopfen sowie am Ende jedes Anbauzyklus. Bei unerklärlichen oberirdischen Symptomen lohnt sich zusätzlich eine gezielte Wurzelkontrolle, auch außerhalb des geplanten Umtopfens."
+      },
+      {
+        question: "Kann ich eine Pflanze mit teilweise fauligen Wurzeln retten?",
+        answer: "Bei frühem, lokal begrenztem Befall oft ja: befallene Wurzelteile entfernen, in frisches Substrat umtopfen und die Ursache (meist Staunässe oder zu warme Wurzelzone) beheben."
+      },
+    ],
+    glossary: [
+      { term: "Girdling", definition: "Ringförmiges Wurzelwachstum am Topfrand entlang, meist Folge von zu später Umtopfung oder Übertopfung." },
+      { term: "Wurzelhaar", definition: "Feine, haarähnliche Ausstülpung der Wurzelepidermis, Hauptort der Wasser- und Nährstoffaufnahme." },
+      { term: "Mykorrhiza", definition: "Symbiotische Pilzgemeinschaft an der Wurzel, die die Nähr- und Wasseraufnahme der Pflanze unterstützt." },
+    ],
+    sourceIds: ["pythium-root-rot-hydroponics", "marschner-mineral-nutrition", "fusarium-wilt-review"],
+    relatedSlugs: ["wurzelfaeule", "fusarium", "cannabis-substrat-und-wurzelzone", "ueberwaesserung-staunaesse"]
+  },
+  {
+    slug: "trocknung-protokoll",
+    title: "Trocknungsprotokoll für Cannabis nach der Ernte",
+    summary: "Wie Temperatur, Luftfeuchte und Luftbewegung während der Trocknung zusammenspielen, um Terpene zu erhalten und mikrobiologisches Risiko gleichzeitig zu senken.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["Trocknung", "Curing", "Nachernte", "Terpene", "Sicherheit"],
+    keyTakeaways: [
+      "Langsame, kontrollierte Trocknung bei 18–21 °C und 55–65 % relativer Luftfeuchte über 7–14 Tage erhält Terpene deutlich besser als schnelle, heiße Trocknung.",
+      "Der 'Snap Test' (Stängel bricht statt sich zu biegen) ist ein zuverlässigeres Trocknungskriterium als die reine Trocknungsdauer nach Kalender.",
+      "Direkter Luftstrom auf die Knospen beschleunigt zwar die Trocknung, treibt aber ungleichmäßig und übermäßig Terpene aus — indirekte, sanfte Luftbewegung im Raum ist vorzuziehen."
+    ],
+    quickFacts: [
+      { label: "Ziel-Temperatur", value: "18–21 °C" },
+      { label: "Ziel-Luftfeuchte", value: "55–65 % RH" },
+      { label: "Typische Dauer", value: "7–14 Tage" },
+      { label: "Abschlusskriterium", value: "Snap Test: Stängel bricht" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Trocknung ist der kontrollierte Prozess, bei dem geernteten Blüten Wasser entzogen wird, bis eine für Lagerung und Curing sichere Wasseraktivität erreicht ist.",
+          "Ziel ist ein Gleichgewicht: langsam genug für Terpenerhalt und gleichmäßige Feuchteverteilung, schnell genug, um mikrobielles Risiko in der kritischen Anfangsphase gering zu halten."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Zu schnelle, heiße Trocknung führt zum vorzeitigen Verschluss der äußeren Gewebeschicht ('Case Hardening'), wodurch die Oberfläche trocken wirkt, während der Kern der Blüte noch deutlich feuchter und damit mikrobiologisch risikoreicher bleibt.",
+          "Terpene sind flüchtige, hitze- und lichtempfindliche Verbindungen — hohe Trocknungstemperaturen beschleunigen ihren Verlust deutlich stärker als eine langsame, kühle Trocknung."
+        ]
+      },
+      {
+        heading: "Zielwerte und Protokoll",
+        content: [
+          "Temperatur: 18–21 °C, Luftfeuchte: 55–65 % relative Feuchte, Dauer: typischerweise 7–14 Tage, abhängig von Knospendichte und Ausgangsklima.",
+          "Raum vollständig verdunkeln — Licht beschleunigt den Terpenabbau zusätzlich zur reinen Verdunstung.",
+          "Luftbewegung sanft und indirekt im Raum halten (z. B. über einen Wandventilator, nicht direkt auf die Knospen gerichtet)."
+        ],
+        checklist: [
+          "Temperatur und Luftfeuchte täglich protokollieren, nicht nur bei Auffälligkeiten",
+          "Stängeldicke der Sorte bei der Trocknungsdauer-Einschätzung berücksichtigen",
+          "Snap Test täglich ab Tag 5–6 durchführen, um den Abschlusszeitpunkt nicht zu verpassen"
+        ]
+      },
+      {
+        heading: "Diagnose: Über- vs. Untertrocknung",
+        content: [
+          "Übertrocknet: Blüten wirken krümelig, Stängel brechen sofort und splittern, spürbarer Terpenverlust im Geruch.",
+          "Untertrocknet: Stängel biegen sich statt zu brechen, Blüten fühlen sich noch spürbar feucht/weich an — Curing darf hier noch nicht beginnen, sonst steigt das Schimmelrisiko in den Gläsern."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Zu hohe Temperatur oder zu niedrige Luftfeuchte einsetzen, um die Trocknung zu beschleunigen — das erhöht das Case-Hardening-Risiko und den Terpenverlust.",
+          "Ventilatoren direkt auf die Knospen richten statt für indirekte Raumluftbewegung zu sorgen.",
+          "Nach starrem Kalenderplan statt nach dem Snap Test ins Curing übergehen."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Zweistufige Trocknung (erste Tage bei etwas höherer Luftfeuchte für langsameren Start, danach leicht absenken) kann bei sehr dichten Knospen die Gleichmäßigkeit zwischen Außen- und Kernfeuchte verbessern.",
+          "Der Übergang zum Curing (kontrolliertes Nachreifen in verschlossenen Behältern mit periodischem Lüften) sollte nahtlos an den erfolgreichen Snap Test anschließen, um die gerade erreichte, günstige Feuchteverteilung nicht wieder zu verlieren."
+        ]
+      }
+    ],
+    warnings: [
+      "Zu schnelle Trocknung durch hohe Temperatur oder niedrige Luftfeuchte kann die Oberfläche vorzeitig verschließen, während der Kern der Knospe noch mikrobiologisch riskant feucht bleibt."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Der Snap Test",
+        text: "Ein kleiner Zweig wird gebogen: Bricht er mit einem hörbaren Knack, ist die Trocknung abgeschlossen. Biegt er sich nur, ist noch zu viel Feuchtigkeit im Gewebe."
+      },
+      {
+        title: "Kurz erklärt: Case Hardening",
+        text: "Bei zu schneller Trocknung verschließt sich die äußere Schicht der Knospe vorzeitig, während innen noch Feuchtigkeit gefangen bleibt — ein unterschätztes Schimmelrisiko trotz trocken wirkender Oberfläche."
+      },
+    ],
+    faq: [
+      {
+        question: "Wie lange sollte die Trocknung genau dauern?",
+        answer: "Typischerweise 7–14 Tage, aber die Dauer ist sortenabhängig. Der Snap Test ist das zuverlässigere Abschlusskriterium als eine feste Tageszahl."
+      },
+      {
+        question: "Darf ich einen Ventilator direkt auf die Knospen richten, um schneller zu trocknen?",
+        answer: "Nicht empfohlen. Direkter Luftstrom trocknet ungleichmäßig und treibt überproportional viele Terpene aus. Indirekte Raumluftbewegung ist vorzuziehen."
+      },
+    ],
+    glossary: [
+      { term: "Snap Test", definition: "Prüfmethode, bei der ein kleiner Zweig gebogen wird; bricht er, gilt die Trocknung als abgeschlossen." },
+      { term: "Case Hardening", definition: "Vorzeitiger Verschluss der äußeren Gewebeschicht bei zu schneller Trocknung, während der Kern noch feucht bleibt." },
+      { term: "Curing", definition: "Kontrolliertes Nachreifen getrockneter Blüten in verschlossenen Behältern zur weiteren Feuchte- und Terpenstabilisierung." },
+    ],
+    sourceIds: ["postharvest-biology-technology-curing", "nature-postharvest-terpenes", "food-control-water-activity-microbiology"],
+    relatedSlugs: ["wasseraktivitaet-und-curing", "schimmel-und-mykotoxine-bei-cannabis", "lagerung-und-terpenverlust-vermeiden"]
+  },
+  {
+    slug: "trichom-reifegrad-bilddiagnose",
+    title: "Trichom-Reifegrad per Bilddiagnose bestimmen",
+    summary: "Wie du mit Lupe oder USB-Mikroskop den Reifegrad der Trichome zuverlässig abliest und daraus den passenden Erntezeitpunkt für dein gewünschtes Wirkprofil ableitest.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["Trichome", "Erntezeitpunkt", "Reifegrad", "Bilddiagnose"],
+    keyTakeaways: [
+      "Trichomfarbe durchläuft eine klare Abfolge: klar (unreif) → milchig (THC-Höchststand) → bernsteinfarben (beginnender Abbau zu CBN) — diese Abfolge ist die zuverlässigste Erntezeitpunkt-Kennzahl.",
+      "Pistillenfarbe allein ist als alleiniges Kriterium unzuverlässig, weil sie stärker sorten- und umweltabhängig variiert als die Trichomentwicklung.",
+      "Obere und untere Canopy-Zonen reifen unterschiedlich schnell — eine Einzelmessung an nur einer Stelle der Pflanze kann in die Irre führen."
+    ],
+    quickFacts: [
+      { label: "Werkzeug", value: "Lupe 30–60× oder USB-Mikroskop" },
+      { label: "Klar", value: "Unreif, THC steigt noch" },
+      { label: "Milchig", value: "THC-Höchststand" },
+      { label: "Bernstein", value: "Beginnender Abbau zu CBN" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Trichom-Bilddiagnose ist die Beurteilung des Reifegrads der Harzdrüsenköpfe (Trichome) mittels Vergrößerung, um den optimalen Erntezeitpunkt für ein gewünschtes Wirkprofil zu bestimmen.",
+          "Im Unterschied zur reinen Pistillenbeobachtung liefert die Trichomfarbe ein direktes, chemisch begründetes Signal für den Cannabinoidstatus der Blüte."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Trichomköpfe produzieren und speichern Cannabinoide und Terpene. Mit fortschreitender Reife steigt der THC-Gehalt bis zu einem Höchststand und beginnt danach durch Oxidation zu CBN abzubauen — ein Prozess, der sich in der Trichomfarbe widerspiegelt.",
+          "Klare Trichome enthalten noch wenig fertig ausgebildetes Cannabinoidprofil, milchige (undurchsichtig-weiße) Trichome markieren den THC-Höchststand, bernsteinfarbene zeigen fortschreitende Oxidation und einen tendenziell sedierenderen Wirkprofilanteil an."
+        ]
+      },
+      {
+        heading: "Methodik der Bilddiagnose",
+        content: [
+          "Eine 30–60-fach vergrößernde Lupe oder ein USB-Mikroskop ist ausreichend; bloßes Auge kann Trichomfarbe nicht zuverlässig unterscheiden.",
+          "Immer die Trichome direkt AUF dem Blütenkelch (Calyx) beurteilen, nicht die auf den umgebenden Zuckerblättern — Calyx-Trichome reifen repräsentativer für die Knospe selbst.",
+          "Mehrere Knospen an unterschiedlichen Positionen der Canopy (oben, Mitte, unten) prüfen, da diese Zonen unterschiedlich schnell reifen."
+        ],
+        checklist: [
+          "Immer Calyx-Trichome prüfen, nicht nur Zuckerblatt-Trichome",
+          "Mindestens 3–5 Knospen an unterschiedlichen Canopy-Positionen untersuchen",
+          "Ergebnis in klar/milchig/bernstein-Anteilen prozentual schätzen, nicht nur binär bewerten"
+        ]
+      },
+      {
+        heading: "Zielverhältnisse nach gewünschtem Profil",
+        content: [
+          "Eher aktivierendes, klares Wirkprofil: Ernte bei überwiegend milchigen Trichomen mit geringem Bernsteinanteil (grob 10–20 % Bernstein).",
+          "Ausgewogenes Profil: mittlerer Bernsteinanteil, meist die am häufigsten gewählte Zielspanne.",
+          "Eher entspannend-sedierendes Profil: höherer Bernsteinanteil, auf Kosten eines Teils des THC-Höchststands durch fortgeschrittene CBN-Bildung."
+        ]
+      },
+      {
+        heading: "Diagnose — Verwechslungen vermeiden",
+        content: [
+          "Pistillenfarbe (braun/orange werdende Blütenhaare) allein ist kein verlässliches alleiniges Kriterium — sie kann sortenabhängig schon früh bräunen, ohne dass die Trichome reif sind.",
+          "Unterschiedliche Reifegrade zwischen oberer und unterer Canopy sind normal, nicht fehlerhaft — sie spiegeln die unterschiedliche Lichtexposition wider."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Erntezeitpunkt allein anhand der Pistillenfarbe festlegen, ohne die Trichome überhaupt zu prüfen.",
+          "Nur eine einzelne Knospe an einer Stelle der Pflanze als repräsentativ für die gesamte Ernte nehmen.",
+          "Ohne Vergrößerungshilfsmittel mit bloßem Auge 'schätzen' — Trichomfarbunterschiede sind für das unbewaffnete Auge kaum zuverlässig erkennbar."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Bei stark unterschiedlicher Reife zwischen Canopy-Zonen kann eine gestaffelte, selektive Ernte (obere Zone zuerst, untere Zone später) die Gesamtqualität gegenüber einer Einmalernte verbessern.",
+          "USB-Mikroskope mit digitaler Bildspeicherung erlauben einen Vergleich des Reifeverlaufs über mehrere Kontrolltage, statt nur eine Momentaufnahme zu bewerten."
+        ]
+      }
+    ],
+    warnings: [
+      "Trichomfarbe entwickelt sich nach der Ernte nicht mehr weiter — eine zu früh geerntete Pflanze reift nicht im Trocknungsprozess nach."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum Calyx statt Zuckerblatt?",
+        text: "Die Trichome direkt auf dem Blütenkelch spiegeln den Reifegrad der Knospe selbst wider. Trichome auf den umliegenden kleinen Blättern können abweichen und führen leicht in die Irre."
+      },
+      {
+        title: "Kurz erklärt: Klar, milchig, bernstein",
+        text: "Klare Trichome sind noch unreif, milchige markieren den THC-Höchststand, bernsteinfarbene zeigen beginnenden Abbau zu CBN an. Die Mischung dieser drei Anteile bestimmt das spätere Wirkprofil."
+      },
+    ],
+    faq: [
+      {
+        question: "Reicht die Pistillenfarbe nicht als Erntesignal?",
+        answer: "Als alleiniges Kriterium nicht zuverlässig genug — sie variiert sortenabhängig stärker als die Trichomentwicklung. Trichome sind das direktere, chemisch begründete Signal."
+      },
+      {
+        question: "Muss ich bei jeder Knospe der Pflanze den Reifegrad prüfen?",
+        answer: "Nicht bei jeder einzelnen, aber an mehreren repräsentativen Positionen (oben, Mitte, unten), da die Canopy-Zonen unterschiedlich schnell reifen."
+      },
+    ],
+    glossary: [
+      { term: "Trichom", definition: "Harzdrüse auf der Blütenoberfläche, Hauptproduktionsort von Cannabinoiden und Terpenen." },
+      { term: "Calyx", definition: "Blütenkelch; die Basisstruktur der Cannabisblüte, auf der die dichteste Trichombesetzung sitzt." },
+      { term: "CBN", definition: "Cannabinol; entsteht durch oxidativen Abbau von THC und ist mit einem eher sedierenderen Wirkprofilanteil assoziiert." },
+    ],
+    sourceIds: ["postharvest-biology-technology-curing", "phytochemistry-cannabinoid-terpen-profile", "horticulture-research-cannabis-cultivation"],
+    relatedSlugs: ["erntefenster-trichomreife", "thc-zu-cbn-abbau-und-oxidation", "trocknung-protokoll"]
+  },
+  {
+    slug: "ph-management-coco-erde-hydro",
+    title: "pH-Management je nach Substrat organisieren",
+    summary: "Warum die Messfrequenz und die Korrekturroutine für den pH-Wert sich zwischen Erde, Coco und Hydro unterscheiden sollten — nicht nur die Zielwerte selbst.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["pH", "Substrat", "Routine", "Kalibrierung"],
+    keyTakeaways: [
+      "Die pH-Zielfenster unterscheiden sich zwischen Substraten nur leicht — die nötige MESSFREQUENZ unterscheidet sich dagegen stark, weil die Pufferkapazität sehr unterschiedlich ist.",
+      "Nährstoffe zuerst vollständig auflösen, dann erst den pH einstellen — in umgekehrter Reihenfolge verschiebt sich der pH beim Zugeben der Nährstoffe erneut.",
+      "pH-Down- und pH-Up-Produkte unterscheiden sich chemisch (meist Phosphor-/Zitronensäure vs. Kaliumhydroxid/-silikat) — die Wahl beeinflusst indirekt auch die Nährstoffbilanz."
+    ],
+    quickFacts: [
+      { label: "Messfrequenz Erde", value: "Wöchentliche Kontrolle" },
+      { label: "Messfrequenz Coco", value: "Bei jeder Gießung" },
+      { label: "Messfrequenz Hydro", value: "Täglich" },
+      { label: "Reihenfolge", value: "Erst Nährstoffe lösen, dann pH einstellen" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "pH-Management umfasst nicht nur das Zielfenster, sondern die gesamte Routine aus Messfrequenz, Kalibrierung und Korrekturreihenfolge, die den pH-Wert über die Zeit stabil hält.",
+          "Weil sich Substrate stark in ihrer Pufferkapazität unterscheiden, muss sich auch die Kontrollroutine unterscheiden — dasselbe Zielfenster erfordert in Hydro eine deutlich engmaschigere Kontrolle als in Erde."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "pH-Drift entsteht substratabhängig aus unterschiedlichen Mechanismen: in Erde durch mikrobielle Umsetzung organischen Materials, in Coco durch fortschreitenden Abbau der Fasern, in Hydro durch Wurzelausscheidungen und mikrobielle Aktivität direkt in der Nährlösung.",
+          "Da Hydro keinerlei Substratpufferung besitzt, wirkt sich jede Drift-Ursache dort sofort und ungefiltert auf den gemessenen pH aus — daher die deutlich höhere nötige Kontrollfrequenz."
+        ]
+      },
+      {
+        heading: "Substratspezifische Routinen",
+        content: [
+          "Erde: wöchentliche Kontrolle über eine definierte Runoff-Messung reicht meist aus, da die mikrobielle Pufferung kurzfristige Schwankungen abfedert.",
+          "Coco: pH bei jeder Gießung prüfen, da die geringe Pufferkapazität schnellere Drift zulässt als Erde, aber noch nicht so unmittelbar wie Hydro.",
+          "Hydro: tägliche Kontrolle, idealerweise inklusive Nährlösungstemperatur, da Temperaturschwankungen die pH-Stabilität zusätzlich beeinflussen."
+        ],
+        checklist: [
+          "Kontrollfrequenz an das jeweilige Substrat anpassen, nicht pauschal einheitlich handhaben",
+          "pH-Messgerät wöchentlich unabhängig vom Substrat kalibrieren",
+          "Runoff- bzw. Reservoir-pH und nicht nur den Zulauf-pH als Referenz nutzen"
+        ]
+      },
+      {
+        heading: "Korrekturreihenfolge und Produktchemie",
+        content: [
+          "Immer zuerst alle Nährstoffe vollständig in der Lösung auflösen, danach erst den pH einstellen — Dünger selbst verändert den pH beim Zugeben, ein vorheriger pH-Wert wird sonst durch die Düngerzugabe wieder verschoben.",
+          "pH-Down-Produkte basieren meist auf Phosphor- oder Zitronensäure und liefern dabei zusätzlichen Phosphor bzw. organische Säure — bei bereits hoher P-Zufuhr relevant für die Gesamtbilanz.",
+          "pH-Up-Produkte basieren meist auf Kaliumhydroxid oder Kaliumsilikat — Silikat-basierte Varianten liefern zusätzlich bioverfügbares Silizium, das die Zellwandstabilität unterstützen kann."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "pH einstellen, bevor alle Düngerkomponenten vollständig gelöst sind — der Wert verschiebt sich danach erneut.",
+          "Dieselbe wöchentliche Kontrollfrequenz für Hydro wie für Erde verwenden, obwohl die Pufferkapazität komplett unterschiedlich ist.",
+          "pH-Down/-Up-Produkte ohne Rücksicht auf deren Nebeneffekte (P-Zufuhr, K-Zufuhr) in die Gesamtdüngerbilanz einplanen."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "In Hydro-Systemen mit automatischer pH-Regelung ist eine Totzone (kleiner Toleranzbereich statt exaktem Zielwert) sinnvoll, um ein ständiges Nachregeln bei jeder minimalen Schwankung zu vermeiden.",
+          "Puffernde Zusätze auf Huminsäure-Basis können in Coco und Hydro die pH-Stabilität zwischen den Messintervallen verbessern, ohne die grundsätzliche Kontrollnotwendigkeit zu ersetzen."
+        ]
+      }
+    ],
+    warnings: [
+      "pH-Korrektur vor vollständiger Auflösung aller Düngerkomponenten führt zu einer erneuten, unkontrollierten Verschiebung — die Reihenfolge ist kein optionaler Schritt."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum unterschiedliche Messfrequenz?",
+        text: "Erde puffert pH-Schwankungen über Tage ab, Hydro gar nicht. Deshalb reicht in Erde eine wöchentliche Kontrolle, während Hydro tägliche Messung braucht, um Drift rechtzeitig zu erkennen."
+      },
+      {
+        title: "Kurz erklärt: Erst Dünger, dann pH",
+        text: "Düngerzugabe verändert selbst den pH-Wert der Lösung. Wird der pH vorher eingestellt, verschiebt er sich beim Düngen erneut — deshalb immer erst vollständig düngen, dann den pH korrigieren."
+      },
+    ],
+    faq: [
+      {
+        question: "Warum reicht in Erde weniger häufiges Messen?",
+        answer: "Weil die mikrobielle Pufferung und die Kationenaustauschkapazität der Erde kurzfristige pH-Schwankungen abfedern. In Coco und besonders Hydro fehlt diese Pufferung weitgehend."
+      },
+      {
+        question: "Beeinflusst mein pH-Down-Produkt auch die Nährstoffbilanz?",
+        answer: "Ja, meist. Phosphor- oder zitronensäurebasierte Produkte liefern zusätzlichen Phosphor bzw. organische Säure — bei ohnehin hoher P-Zufuhr sollte das in der Gesamtrezeptur mitgedacht werden."
+      },
+    ],
+    glossary: [
+      { term: "Pufferkapazität", definition: "Fähigkeit eines Substrats oder einer Lösung, pH-Änderungen abzufedern." },
+      { term: "Totzone", definition: "Kleiner Toleranzbereich um einen Zielwert, innerhalb dessen ein automatisches Regelsystem nicht eingreift." },
+      { term: "Reservoir-pH", definition: "Der pH-Wert der Nährlösung im Vorratsbehälter eines rezirkulierenden Systems." },
+    ],
+    sourceIds: ["marschner-nutrient-availability-ph", "bugbee-electrical-conductivity", "horticulture-research-cannabis-cultivation"],
+    relatedSlugs: ["ph-lockout", "substrat-vergleich-coco-erde-hydro", "ec-und-runoff-interpretation", "naehrstoffblockaden-und-antagonismen"]
+  },
+  {
+    slug: "erntefenster-trichomreife",
+    title: "Das Erntefenster bestimmen: Mehrere Signale kombinieren",
+    summary: "Warum der ideale Erntezeitpunkt nicht an einem einzelnen Signal, sondern an der Kombination aus Trichomen, Pistillen und Blattseneszenz festgemacht werden sollte.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["Erntezeitpunkt", "Trichome", "Reife", "Entscheidung"],
+    keyTakeaways: [
+      "Der Erntezeitpunkt sollte aus mehreren Signalen kombiniert werden — Trichomfarbe als Hauptkriterium, Pistillenrückzug und Blattseneszenz als unterstützende Signale.",
+      "Die vom Breeder angegebene Blütezeit ist nur ein grober Ausgangspunkt, kein exaktes Erntedatum — reale Bedingungen verschieben den tatsächlichen Reifezeitpunkt um mehrere Tage bis Wochen.",
+      "Unterschiedliche Canopy-Zonen reifen unterschiedlich schnell — eine gestaffelte statt einmalige Ernte kann bei stark inhomogener Reife die Gesamtqualität verbessern."
+    ],
+    quickFacts: [
+      { label: "Hauptkriterium", value: "Trichomfarbe (Calyx)" },
+      { label: "Unterstützend", value: "Pistillenrückzug, Blattseneszenz" },
+      { label: "Ausgangspunkt", value: "Breeder-Blütezeit als Schätzung" },
+      { label: "Alternative", value: "Gestaffelte Ernte nach Canopy-Zone" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Das Erntefenster ist der Zeitraum, in dem der Reifezustand der Pflanze am besten zum gewünschten Cannabinoid- und Terpenprofil passt — kein exakter, fixer Tag, sondern eine mehrtägige bis mehrwöchige Spanne.",
+          "Ein verlässliches Erntefenster ergibt sich aus der Kombination mehrerer Signale, nicht aus einem Einzelkriterium."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Cannabinoid- und Terpensynthese folgen in der Spätblüte einer Kurve, die zu einem Höchststand ansteigt und danach durch Oxidation und Abbau wieder absinkt bzw. sich in ihrer Zusammensetzung verschiebt (z. B. THC zu CBN).",
+          "Die vom Breeder angegebene Blütezeit basiert auf Referenzbedingungen — reale Abweichungen in Licht, Temperatur und Nährstoffversorgung verschieben den tatsächlichen Reifezeitpunkt der eigenen Pflanze um mehrere Tage bis Wochen."
+        ]
+      },
+      {
+        heading: "Die drei Hauptsignale kombiniert",
+        content: [
+          "Trichomfarbe (Calyx-Trichome unter Vergrößerung): das direkteste, chemisch begründete Signal für den Cannabinoidstatus — Hauptkriterium für die Erntetimingentscheidung.",
+          "Pistillenrückzug: der Anteil brauner/eingerollter Blütenhaare gegenüber weißen, aktiven Pistillen gibt einen unterstützenden, aber sorten- und umweltabhängig variierenden Hinweis.",
+          "Blattseneszenz: zunehmende Vergilbung unterer Fächerblätter in der Spätblüte zeigt Stickstoffremobilisierung an und ist ein grobes, spätes Reifesignal für die gesamte Pflanze."
+        ],
+        checklist: [
+          "Trichomfarbe als primäres Entscheidungskriterium verwenden",
+          "Pistillenrückzug und Blattseneszenz als Bestätigung, nicht als alleiniges Kriterium heranziehen",
+          "Breeder-Blütezeit nur als grobe Orientierung, nicht als festes Erntedatum nutzen"
+        ]
+      },
+      {
+        heading: "Entscheidungsmatrix nach gewünschtem Profil",
+        content: [
+          "Eher aktivierendes Profil: Ernte tendenziell früher, bei überwiegend milchigen Trichomen mit geringem Bernsteinanteil.",
+          "Ausgewogenes Profil: Ernte im mittleren Fenster, wenn Pistillenrückzug und Trichomreife übereinstimmend fortgeschritten sind.",
+          "Eher entspannendes Profil: Ernte etwas später, bei höherem Bernsteinanteil und weitgehend zurückgezogenen Pistillen."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Ausschließlich nach Kalendertag der Breeder-Angabe ernten, ohne die tatsächlichen Reifesignale der eigenen Pflanze zu prüfen.",
+          "Sich allein auf Pistillenfarbe verlassen, obwohl sie sortenabhängig stärker streut als die Trichomentwicklung.",
+          "Die gesamte Pflanze auf einmal ernten, obwohl obere und untere Canopy-Zonen erkennbar unterschiedlich weit gereift sind."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Bei deutlich inhomogener Reife zwischen Canopy-Zonen kann eine gestaffelte Ernte (zuerst die am weitesten entwickelten oberen Bereiche, später die unteren) die durchschnittliche Blütenqualität gegenüber einer Einmalernte spürbar verbessern.",
+          "Eine konsequente Dokumentation von Trichom- und Pistillenentwicklung über mehrere Durchgänge derselben Sorte verbessert die Vorhersagegenauigkeit für künftige Ernten erheblich."
+        ]
+      }
+    ],
+    warnings: [
+      "Die Breeder-Blütezeit ist eine Referenz unter Idealbedingungen — sie unter realen, abweichenden Anbaubedingungen als exaktes Erntedatum zu verwenden, führt regelmäßig zu suboptimalem Timing."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum mehrere Signale kombinieren?",
+        text: "Jedes einzelne Reifesignal hat Schwächen — Pistillenfarbe variiert je nach Sorte, die Breeder-Angabe ist nur ein Durchschnittswert. Erst die Kombination mehrerer Signale ergibt ein verlässliches Gesamtbild."
+      },
+      {
+        title: "Kurz erklärt: Gestaffelte Ernte",
+        text: "Statt die ganze Pflanze an einem Tag zu ernten, werden zuerst die am weitesten gereiften Bereiche geerntet und die weniger reifen Zonen bekommen noch einige Tage mehr Zeit."
+      },
+    ],
+    faq: [
+      {
+        question: "Reicht die Breeder-Blütezeit als Erntetermin?",
+        answer: "Nur als grobe Orientierung. Reale Licht-, Temperatur- und Nährstoffbedingungen verschieben den tatsächlichen Reifezeitpunkt oft um mehrere Tage bis Wochen gegenüber der Herstellerangabe."
+      },
+      {
+        question: "Muss ich immer gestaffelt ernten?",
+        answer: "Nein, nur wenn die Reife zwischen den Canopy-Zonen deutlich auseinanderklafft. Bei gleichmäßiger Canopy ist eine Einmalernte genauso gut geeignet."
+      },
+    ],
+    glossary: [
+      { term: "Pistillenrückzug", definition: "Zunehmende Braunfärbung und Einrollung der Blütenhaare als grobes, unterstützendes Reifesignal." },
+      { term: "Blattseneszenz", definition: "Alterungsbedingte Vergilbung von Blättern, in der Spätblüte auch Zeichen von Stickstoffremobilisierung." },
+      { term: "Erntefenster", definition: "Der mehrtägige bis mehrwöchige Zeitraum, in dem der Reifezustand am besten zum gewünschten Profil passt." },
+    ],
+    sourceIds: ["postharvest-biology-technology-curing", "phytochemistry-cannabinoid-terpen-profile", "bernal-cannabis-nutrient-requirements"],
+    relatedSlugs: ["trichom-reifegrad-bilddiagnose", "trocknung-protokoll", "thc-zu-cbn-abbau-und-oxidation"]
+  },
+  {
+    slug: "hop-latent-viroid-hlvd",
+    title: "Hop Latent Viroid (HLVd) bei Cannabis erkennen und vorbeugen",
+    summary: "Gestauchtes, kraftloses Wachstum ohne eindeutige Einzelursache kann auf HLVd hindeuten — ein Viroid ohne Heilung, das nur durch Hygiene und Labortests kontrollierbar ist.",
+    category: "anbau",
+    difficulty: "profi",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["HLVd", "Viroid", "Dudding", "Krankheiten", "Diagnose"],
+    keyTakeaways: [
+      "HLVd ist ein Viroid — ein unbehülltes RNA-Molekül ohne Proteinhülle, kein Virus, Pilz oder Bakterium — und dadurch besonders schwer über normale Hygienemaßnahmen zu inaktivieren.",
+      "Die Symptomatik ('Dudding': gestauchtes Wachstum, brüchige Stängel, reduzierte Trichomproduktion) ist oft subtil, und viele infizierte Mutterpflanzen bleiben lange symptomlose Träger.",
+      "Es gibt keine Heilung — infizierte Pflanzen müssen entfernt werden; einzig eine verlässliche PCR-Labordiagnose bestätigt den Befall, visuelle Einschätzung allein reicht nicht."
+    ],
+    quickFacts: [
+      { label: "Erreger", value: "Hop Latent Viroid (RNA-Viroid)" },
+      { label: "Leitsymptom", value: "'Dudding': gestauchtes, kraftloses Wachstum" },
+      { label: "Bestätigung", value: "Nur PCR-Labortest zuverlässig" },
+      { label: "Übertragung", value: "Mechanisch über Werkzeuge/Kontakt" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Hop Latent Viroid (HLVd) ist ein subvirales Pathogen — ein kleines, zirkuläres RNA-Molekül ohne eigene Proteinhülle, das die Zellmaschinerie der Wirtspflanze zur Vermehrung nutzt.",
+          "Bei Cannabis wird die Erkrankung häufig als 'Dudding' bezeichnet, benannt nach den auffällig schwachen, unterentwickelten Pflanzen ('Duds'), die daraus resultieren."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Als Viroid besitzt HLVd keine Proteinhülle und ist dadurch chemisch stabiler und schwerer zu inaktivieren als viele Viren — Standard-Desinfektionsmittel wirken oft weniger zuverlässig als bei behüllten Erregern.",
+          "Nach systemischer Infektion verbreitet sich das Viroid über das Leitgewebe in der gesamten Pflanze, wodurch auch aus infizierten Mutterpflanzen gewonnene Stecklinge automatisch infiziert sind."
+        ]
+      },
+      {
+        heading: "Symptome und Latenz",
+        content: [
+          "Gestauchtes, kraftloses Wachstum mit reduzierter Gesamtvitalität — daher der Name 'Dudding'.",
+          "Brüchige, schwache Stängel und ein unterentwickeltes Wurzelsystem im Vergleich zu gesunden Schwesterpflanzen derselben Genetik.",
+          "Reduzierte Trichomdichte und -produktion, was sich in spürbar geringerer Potenz äußert.",
+          "Viele infizierte Pflanzen — besonders etablierte Mutterpflanzen — zeigen über lange Zeit KEINE eindeutigen Symptome und bleiben unbemerkte Überträger."
+        ],
+        checklist: [
+          "Wachstum und Vitalität systematisch gegen genetisch identische Vergleichspflanzen (Klone derselben Linie) bewerten",
+          "Bei unerklärlich schwacher Performance einer sonst bewährten Genetik HLVd als Möglichkeit einbeziehen",
+          "Neue Mutterpflanzen vor Aufnahme in den Bestand testen lassen, nicht nur visuell beurteilen"
+        ]
+      },
+      {
+        heading: "Übertragungswege",
+        content: [
+          "Hauptsächlich mechanisch über kontaminierte Werkzeuge, Hände oder direkten Pflanze-zu-Pflanze-Kontakt (Saft-zu-Saft-Übertragung beim Schneiden oder Beschädigen von Gewebe).",
+          "Über Samen ist eine Übertragung möglich, aber seltener als die mechanische Übertragung in vegetativ vermehrten Mutterpflanzenbeständen.",
+          "Im Unterschied zu vielen echten Pflanzenviren spielt eine Insektenübertragung bei HLVd keine zentrale Rolle."
+        ]
+      },
+      {
+        heading: "Diagnose",
+        content: [
+          "Visuelle Symptome allein sind wegen der häufigen Latenz NICHT ausreichend zur sicheren Diagnose — eine unauffällige Pflanze kann dennoch Träger sein.",
+          "Eine zuverlässige Bestätigung ist nur über PCR-basierte Labortests möglich, die spezialisierte Anbieter für Cannabis-Pathogene anbieten.",
+          "Bei unerklärlich schwacher Performance einer bekannten, sonst zuverlässigen Genetik ist ein Labortest der nächste sinnvolle Schritt vor weiteren Maßnahmen."
+        ]
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "Es gibt keine Heilung für eine bereits infizierte Pflanze — bestätigt infizierte Mutterpflanzen und ihre direkten Klone sollten aus dem Bestand entfernt werden, um weitere Ausbreitung zu verhindern.",
+          "Spezialisierte Meristem-Gewebekultur kann in manchen Fällen virusfreie Klone aus infiziertem Ausgangsmaterial erzeugen — dies ist eine Speziallabortechnik, keine Standardmaßnahme im eigenen Grow.",
+          "Werkzeuge nach Kontakt mit einer verdächtigen oder bestätigt infizierten Pflanze mit wirksamen Protokollen (z. B. verdünnte Bleichlösung) desinfizieren, bevor sie an anderen Pflanzen verwendet werden."
+        ]
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Neue Genetik (Stecklinge, Mutterpflanzen) vor der Integration in den Hauptbestand testen lassen, nicht nur nach Optik beurteilen.",
+          "Werkzeuge konsequent zwischen einzelnen Pflanzen desinfizieren, besonders bei Schnittarbeiten an Mutterpflanzen.",
+          "Verdächtige, unterdurchschnittlich performende Pflanzen frühzeitig isolieren und testen lassen, statt zu hoffen, dass sie sich 'erholen'."
+        ]
+      },
+    ],
+    warnings: [
+      "Eine symptomlose Mutterpflanze ist keine Garantie für Viroidfreiheit — bei wiederholt unerklärlich schwacher Nachkommenschaft ist ein Labortest der einzige zuverlässige nächste Schritt."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Was ist ein Viroid?",
+        text: "Ein Viroid ist noch kleiner und einfacher als ein Virus — nur ein nacktes RNA-Molekül ohne schützende Proteinhülle. Es nutzt komplett die Zellmaschinerie der Wirtspflanze, um sich zu vermehren."
+      },
+      {
+        title: "Kurz erklärt: Warum 'latent'?",
+        text: "Latent bedeutet verborgen. Viele infizierte Pflanzen, besonders etablierte Mutterpflanzen, zeigen lange keine eindeutigen Symptome, obwohl sie das Viroid bereits in sich tragen und weitergeben."
+      },
+    ],
+    faq: [
+      {
+        question: "Kann ich eine HLVd-infizierte Pflanze heilen?",
+        answer: "Nein, es gibt keine Heilung im normalen Anbau. Nur spezialisierte Meristem-Gewebekultur in Speziallabors kann teils virusfreie Klone aus infiziertem Material erzeugen."
+      },
+      {
+        question: "Wie erkenne ich HLVd sicher?",
+        answer: "Visuelle Symptome allein reichen wegen der häufigen Latenz nicht aus. Eine sichere Diagnose erfordert einen PCR-basierten Labortest."
+      },
+      {
+        question: "Reicht normales Desinfektionsmittel gegen HLVd-Übertragung?",
+        answer: "Viroide sind ohne Proteinhülle chemisch stabiler als viele Viren — Standardmittel wirken oft schwächer. Verdünnte Bleichlösung und konsequente Werkzeughygiene sind wirksamer als übliche Oberflächendesinfektion allein."
+      },
+    ],
+    glossary: [
+      { term: "Viroid", definition: "Kleinstes bekanntes Pflanzenpathogen; ein zirkuläres RNA-Molekül ohne Proteinhülle." },
+      { term: "Dudding", definition: "Umgangssprachliche Bezeichnung für die durch HLVd verursachte Wachstumsschwäche bei Cannabis." },
+      { term: "Meristem-Gewebekultur", definition: "Speziallabortechnik zur Gewinnung potenziell erregerfreier Klone aus dem aktiven Wachstumsgewebe einer Pflanze." },
+    ],
+    sourceIds: ["warren-hop-latent-viroid-cannabis", "punja-cannabis-pathogens"],
+    relatedSlugs: ["mutterpflanzen-und-clone-hygiene", "integrierte-schaedlingspraevention-grow", "fusarium"]
   },
 ];
 
@@ -1568,214 +3296,371 @@ const createArticle = (seed: ArticleSeed): TerpiraArticle => ({
 });
 
 const expansionWikiArticles: TerpiraArticle[] = [
-  createArticle({
+  {
     slug: "cannabis-substrat-und-wurzelzone",
     title: "Substrat und Wurzelzone verstehen",
     summary: "Wie Luftporen, Wasserhaltekapazität und Wurzelgesundheit die Stabilität eines Grows bestimmen.",
     category: "anbau",
     difficulty: "einsteiger",
-    readMinutes: 7,
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
     tags: ["Substrat", "Wurzelzone", "Drain", "Sauerstoff"],
     keyTakeaways: [
-      "Substratwahl ist immer ein Kompromiss aus Sauerstoff, Wasserhaltekapazität und Arbeitsaufwand.",
-      "Die Wurzelzone entscheidet früh über Wachstumstempo, Stressresistenz und Erholung nach Fehlern.",
-      "Messbare Routinen für Topfgewicht, Drain und Temperatur verhindern viele späte Probleme."
+      "Wurzeln atmen: sie brauchen gelösten Sauerstoff im Wasserfilm um jede Wurzelhaar herum. Ein Substrat mit zu wenig luftgefülltem Porenvolumen erstickt die Wurzel, auch wenn Wasser und Nährstoffe reichlich vorhanden sind.",
+      "Substratwahl ist ein Kompromiss aus Sauerstoffverfügbarkeit, Wasserhaltekapazität und Fehlertoleranz — kein Medium maximiert alle drei Eigenschaften gleichzeitig.",
+      "Topfgewicht und Drain-Messung sind aussagekräftiger als Blattbild oder Substratoptik, weil Wurzelstress oft Tage vor sichtbaren oberirdischen Symptomen beginnt."
     ],
     quickFacts: [
-      { label: "Kernfrage", value: "Wie schnell trocknet der Topf wirklich?" },
-      { label: "Risikofaktor", value: "Verdichtetes oder dauerhaft nasses Medium" },
-      { label: "Kontrollpunkt", value: "Drain, Topfgewicht, Wurzeltemperatur" }
+      { label: "Ziel-Luftporenvolumen bei Feldkapazität", value: "≈ 20–30 % (Coco/Perlitmix)" },
+      { label: "Ziel-Luftporenvolumen Erde", value: "≈ 10–15 %" },
+      { label: "Ideale Wurzeltemperatur", value: "18–22 °C" },
+      { label: "Kontrollpunkt", value: "Drain-EC/pH, Topfgewicht nass/trocken" }
     ],
     sections: [
       {
-        heading: "Warum die Wurzelzone wichtiger ist als der letzte Booster",
+        heading: "Definition und Einordnung",
         content: [
-          "Pflanzen reagieren zuerst auf Bedingungen im Wurzelraum. Wenn Sauerstoff, Feuchte und Temperatur instabil sind, hilft auch perfekte Blattduengung nur begrenzt.",
-          "Ein reproduzierbares System beginnt deshalb unten: Medium, Topfvolumen, Drain und Giessrhythmus müssen zusammenpassen."
+          "Die Wurzelzone ist der Bereich im Substrat, in dem Wurzeln Wasser, gelösten Sauerstoff und Nährstoffionen aufnehmen. Substrateigenschaften bestimmen, wie diese drei Ressourcen gleichzeitig verfügbar sind.",
+          "Pflanzen reagieren zuerst auf Bedingungen im Wurzelraum — instabiler Sauerstoff-, Wasser- oder Temperaturhaushalt limitiert das Wachstum, bevor oberirdisch etwas sichtbar wird."
         ]
       },
       {
-        heading: "Welche Checks im Alltag wirklich helfen",
+        heading: "Wissenschaftlicher Hintergrund",
         content: [
-          "Arbeite mit Topfgewicht, Substratbeobachtung und Drain-Messung statt nur nach Gefuehl. So erkennst du Staunäße und Unterversorgung früh.",
-          "Halte Temperatur und Trocknungsdauer pro Charge oder Zone fest, damit spätere Probleme klar zugeordnet werden können."
+          "Wurzeln betreiben aerobe Zellatmung und benötigen dafür gelösten Sauerstoff im Wasserfilm, der die Wurzelhaare umgibt. Ist dieser Wasserfilm zu dick oder zu lange stehend (Staunässe), diffundiert Sauerstoff zu langsam nach — die Wurzel wechselt auf anaerobe Atmung.",
+          "Anaerobe Atmung produziert Ethanol und Milchsäure, die im Wurzelgewebe toxisch wirken und die Nährstoffaufnahme aktiv hemmen, nicht nur passiv verlangsamen."
+        ]
+      },
+      {
+        heading: "Substratkennwerte im Vergleich",
+        content: [
+          "Luftgefülltes Porenvolumen bei Feldkapazität (nach dem Abtropfen): grobe Coco-/Perlitmischungen erreichen 20–30 %, klassische Blumenerde meist nur 10–15 %.",
+          "Wasserhaltekapazität verhält sich invers zum Luftporenvolumen: feinere, dichtere Substrate halten mehr Wasser, bieten aber weniger Sauerstoffreserve zwischen zwei Gießgängen.",
+          "Kein Substrat maximiert beide Werte gleichzeitig — die Wahl ist immer eine bewusste Priorisierung zwischen Gießintervall und Sauerstoffsicherheit."
+        ]
+      },
+      {
+        heading: "Diagnose: Über- vs. Unterversorgung",
+        content: [
+          "Überwässerung: Topf bleibt über Tage ungewöhnlich schwer, Substratoberfläche riecht dumpf bis faulig, Wachstum stagniert trotz sichtbar feuchtem Medium, Blätter hängen auch bei vollem Wasserangebot.",
+          "Unterversorgung: schnelle, gleichmäßige Gewichtsabnahme, Blätter hängen vor allem gegen Ende des Gießintervalls und erholen sich zügig nach der Wassergabe.",
+          "Das entscheidende Unterscheidungsmerkmal ist die Erholungsgeschwindigkeit nach Wassergabe: schnelle Erholung spricht für Wassermangel, ausbleibende Erholung trotz Wasser spricht für ein Sauerstoffproblem in der Wurzelzone."
         ],
         checklist: [
-          "Topfgewicht nass und trocken dokumentieren",
-          "Drain-EC und Drain-pH wöchentlich messen",
-          "Wurzelraum vor Hitze und Kaltespitzen schuetzen"
+          "Topfgewicht nass und trocken pro Medium einmal kalibrieren, danach als Referenz nutzen",
+          "Bei Verdacht auf Staunässe: Substratgeruch direkt an der Wurzelzone prüfen, nicht nur an der Oberfläche",
+          "Erholungszeit nach Wassergabe protokollieren, nicht nur den Blattzustand vorher"
+        ]
+      },
+      {
+        heading: "Korrekturmaßnahmen und Monitoring",
+        content: [
+          "Bei chronischer Staunässe: Gießintervall verlängern, betroffene Töpfe wenn möglich anheben/besser drainieren lassen, luftporenreiches Amendment (Perlit, Bims) für den nächsten Umtopfzyklus einplanen.",
+          "Drain-EC und Drain-pH wöchentlich in einer definierten Kontrollgießung messen — das zeigt Salzanreicherung und pH-Drift in der Wurzelzone, die reiner Substratoptik verborgen bleiben.",
+          "Wurzelzonentemperatur zwischen 18 und 22 °C halten: kälteres Wasser löst zwar mehr Sauerstoff, verlangsamt aber die mikrobielle Aktivität und die Nährstoffaufnahme; wärmeres Wasser beschleunigt beides, senkt aber die Sauerstofflöslichkeit und erhöht das Pythium-Risiko."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Auf hängende Blätter reflexartig mit mehr Wasser reagieren, obwohl dieselben Symptome von Sauerstoffmangel durch bestehende Staunässe stammen können.",
+          "Substratwahl allein nach Ertragserwartung treffen, ohne die eigene Gießroutine und Kontrollfrequenz ehrlich einzuschätzen.",
+          "Nach dem Umtopfen dieselbe Gießmenge wie im kleineren Topf beibehalten — größeres Substratvolumen trocknet langsamer und braucht ein angepasstes Intervall."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Living-Soil-Systeme mit aktiver mikrobieller Gemeinschaft verbessern die Aggregatstruktur des Substrats über Zeit selbst und erhöhen dadurch das effektive Luftporenvolumen, ohne dass mechanisch nachgebessert werden muss.",
+          "Biochar und andere poröse Amendments erhöhen sowohl die Wasserhalte- als auch die Luftporenkapazität gleichzeitig, weil sie selbst eine offene, mehrskalige Porenstruktur mitbringen."
         ]
       }
     ],
+    warnings: [
+      "Zusätzliches Gießen bei bereits nassem, schwer bleibendem Substrat verschärft eine bestehende Staunässe und erhöht das Wurzelfäule-Risiko messbar."
+    ],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: Luftporen",
-        text: "Luftporen sorgen dafür, dass Wurzeln Sauerstoff bekommen. Zu dichte Medien bremsen Wachstum und erhöhen Faulnisrisiken."
+        title: "Kurz erklärt: Warum Wurzeln atmen müssen",
+        text: "Wurzeln gewinnen Energie über Sauerstoffatmung, genau wie Blätter — nur dass sie den Sauerstoff aus dem Wasserfilm im Substrat statt aus der Luft beziehen. Ohne diesen gelösten Sauerstoff schaltet die Wurzel auf einen ineffizienten Notmodus um."
       },
       {
-        title: "Kurz erklärt: Wasserhaltekapazität",
-        text: "Sie beschreibt, wie viel Wasser ein Medium nach dem Abfliessen noch speichert. Mehr ist nicht automatisch besser."
+        title: "Kurz erklärt: Warum mehr Wasserhaltung nicht automatisch besser ist",
+        text: "Ein Substrat, das sehr viel Wasser hält, verdrängt gleichzeitig Luft aus seinen Poren. Für die Wurzel bedeutet das oft weniger verfügbaren Sauerstoff, auch wenn die Wasserversorgung auf den ersten Blick üppig aussieht."
       }
     ],
     faq: [
       {
         question: "Ist Erde oder Coco besser?",
-        answer: "Nicht pauschal. Erde puffert mehr und verzeiht Einsteigerfehler, Coco reagiert schneller und verlangt saubere Steuerung."
+        answer: "Nicht pauschal. Erde puffert mehr und verzeiht Einsteigerfehler, weil sie Nährstoffe und teils auch Sauerstoffschwankungen abfedert. Coco reagiert schneller auf Korrekturen, hat aber ein geringeres Fehlerpolster bei Staunässe."
       },
       {
-        question: "Woran erkenne ich ein ueberwaessertes Medium?",
-        answer: "Topf bleibt lange schwer, Blattbild wirkt traege und die Wurzelzone riecht dumpf oder kippt im Drain."
+        question: "Woran erkenne ich ein überwässertes Medium sicher?",
+        answer: "Am zuverlässigsten an der ausbleibenden Erholung nach einer Wassergabe: Bleibt die Pflanze trotz sichtbar feuchtem Substrat schlaff, ist das ein stärkeres Signal als Topfgewicht oder Geruch allein."
+      },
+      {
+        question: "Muss ich für jedes Substrat ein anderes Topfgewicht-Ziel kalibrieren?",
+        answer: "Ja. Nass- und Trockengewicht unterscheiden sich je nach Substratdichte und Topfgröße stark — eine einmalige Kalibrierung pro Kombination aus Medium und Topfgröße reicht aber für die gesamte Anbausaison."
       }
     ],
     glossary: [
-      { term: "Drain", definition: "Abflusswasser nach einer Bewässerung; wichtig für EC- und pH-Kontrolle." },
-      { term: "Porenvolumen", definition: "Anteil des Substrats, der mit Luft oder Wasser gefuellt werden kann." },
-      { term: "Wurzelzone", definition: "Bereich im Medium, in dem Wurzeln Wasser, Sauerstoff und Nährstoffe aufnehmen." },
+      { term: "Drain", definition: "Abflusswasser nach einer Bewässerung; wichtig für EC- und pH-Kontrolle der Wurzelzone." },
+      { term: "Luftporenvolumen", definition: "Anteil des Substratvolumens, der bei Feldkapazität mit Luft statt Wasser gefüllt ist." },
+      { term: "Feldkapazität", definition: "Wassergehalt eines Substrats, nachdem überschüssiges Wasser frei abgetropft ist." }
     ],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "bewässerung-ohne-uebergiessen", "sensor-kalibrierung-und-messfehler"]
-  }),
-  createArticle({
+    sourceIds: ["horticulture-research-cannabis-cultivation", "marschner-mineral-nutrition", "pythium-root-rot-hydroponics"],
+    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "sensor-kalibrierung-und-messfehler"]
+  },
+  {
     slug: "bewaesserung-ohne-uebergiessen",
-    title: "Bewässerung ohne Uebergiessen",
+    title: "Bewässerung ohne Übergiessen",
     summary: "Wie Giessmenge, Intervall und Drain so abgestimmt werden, dass Pflanzen weder austrocknen noch ersticken.",
     category: "anbau",
     difficulty: "einsteiger",
-    readMinutes: 6,
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
     tags: ["Bewässerung", "Drain", "Rhythmus", "Substrat"],
     keyTakeaways: [
-      "Zu häufiges Giessen schadet oft mehr als leichtes Austrocknen zwischen zwei Zyklen.",
-      "Intervall und Menge müssen zum Medium, Topf und Klima passen, nicht zu pauschalen Kalenderregeln.",
-      "Drain und Topfgewicht sind bessere Steuerwerkzeuge als die reine Oberflaechenoptik."
+      "Zu häufiges Gießen schadet meist mehr als leichtes Austrocknen zwischen zwei Zyklen, weil es der Wurzel keine Zeit lässt, Sauerstoff aus dem Substrat nachzuziehen.",
+      "Ein Trocken-Nass-Wechsel regt gezielt Wurzelwachstum an: Wurzeln wachsen bevorzugt in Richtung noch sauerstoffreicher, leicht abgetrockneter Zonen.",
+      "10–20 % Drain-Anteil pro Gießgang ist die belastbarste Zielgröße, um Salzanreicherung zu vermeiden, ohne das Substrat zu fluten."
     ],
     quickFacts: [
-      { label: "Hauptfehler", value: "Zu früh erneut giessen" },
-      { label: "Messhilfe", value: "Topfgewicht plus Drainkontrolle" },
-      { label: "Ziel", value: "Rhythmus statt hektische Einzelkorrektur" }
+      { label: "Ziel-Drain-Anteil", value: "10–20 % der Gießmenge" },
+      { label: "Hauptfehler", value: "Zu früh erneut gießen" },
+      { label: "Messhilfe", value: "Topfgewicht plus Drainkontrolle" }
     ],
     sections: [
       {
-        heading: "Warum Uebergiessen so häufig passiert",
+        heading: "Definition und Einordnung",
         content: [
-          "Viele Teams reagieren auf haengende Blätter reflexartig mit mehr Wasser. Dabei können dieselben Symptome auch von Saürstoffmangel im Medium kommen.",
-          "Ein sauberer Bewaesserungsplan basiert daher auf Messpunkten und nicht auf spontaner Interpretation einzelner Pflanzen."
+          "Bewässerung ohne Übergießen bedeutet, Gießmenge und -intervall so zu takten, dass die Wurzelzone zwischen zwei Gaben ausreichend Sauerstoff nachziehen kann, ohne dass die Pflanze in Wassermangel gerät.",
+          "Die Herausforderung ist nicht die einzelne Wassermenge, sondern der Rhythmus: dieselbe Menge kann je nach Intervall zu Staunässe oder zu Trockenstress führen."
         ]
       },
       {
-        heading: "Ein belastbarer Giessprozess",
+        heading: "Wissenschaftlicher Hintergrund",
         content: [
-          "Lege je Medium ein Zielgewicht, typische Trocknungsdauer und Minimal-Drain fest. So lassen sich Abweichungen früh erkennen.",
-          "Wenn Klima und VPD schwanken, muss auch die Wassergabe angepasst werden. Der Rhythmus ist kein statischer Wochenplan."
+          "Zwischen zwei Gießgängen sinkt der Wassergehalt im Substrat, wodurch luftgefüllte Poren freiwerden und gelöster Sauerstoff wieder an die Wurzelhaare nachdiffundieren kann.",
+          "Bleibt das Substrat dauerhaft nahe der Sättigung, bleibt dieser Sauerstoffnachschub aus — die Wurzel wechselt auf anaerobe Atmung, was die Nährstoffaufnahme aktiv hemmt, nicht nur passiv verlangsamt."
+        ]
+      },
+      {
+        heading: "Warum der Trocken-Nass-Wechsel Wurzelwachstum fördert",
+        content: [
+          "Wurzeln wachsen bevorzugt in Richtung Zonen mit höherer Sauerstoffverfügbarkeit — ein moderater Trocken-Nass-Wechsel regt dadurch aktiv neue Wurzelverzweigung an, ein dauerhaft gesättigtes Substrat dagegen nicht.",
+          "Zu aggressive Trockenphasen kehren den Effekt aber um: bei sichtbarem Welken vor der nächsten Gabe überwiegt der Trockenstress den Wachstumsvorteil."
+        ]
+      },
+      {
+        heading: "Giessmenge und -intervall nach Phase",
+        content: [
+          "Sämling/Steckling: kleine, häufige Gaben, da das Wurzelvolumen klein und die Fehlertoleranz gegenüber Trockenstress gering ist.",
+          "Vegetativ: moderate Gaben mit klarem Trockenintervall, an Topfgröße und Pflanzenmasse angepasst.",
+          "Blüte: größere Einzelgaben bei tendenziell selteneren Intervallen, da der Wasserbedarf pro Gießgang mit der Blattmasse steigt, aber häufige kleine Gaben in dichten Töpfen das Risiko für Staunässe erhöhen."
         ],
         checklist: [
-          "Vor jedem Giessen Topfgewicht vergleichen",
-          "Drain nur in definierten Kontrollgiessungen messen",
-          "Abweichungen im Grow-Log mit Klimaereignissen koppeln"
+          "Vor jedem Gießen Topfgewicht gegen die kalibrierte Referenz vergleichen",
+          "Drain nur in definierten Kontrollgießungen messen, nicht bei jeder Gabe",
+          "Ziel-Drain-Anteil von 10–20 % der Gießmenge anstreben"
+        ]
+      },
+      {
+        heading: "Substratspezifische Unterschiede",
+        content: [
+          "Coco hat wenig Wasserpuffer und braucht dadurch häufigere, kleinere Gaben als Erde — teils mehrfach täglich in kleinen Töpfen.",
+          "Erde puffert Feuchte länger und verzeiht ein größeres Gießfenster, reagiert dafür langsamer auf Korrekturen."
+        ]
+      },
+      {
+        heading: "Diagnose: Übergiessen vs. Trockenstress",
+        content: [
+          "Übergießen: Topf bleibt über Tage schwer, Substrat riecht dumpf, Pflanze erholt sich trotz feuchtem Substrat nicht.",
+          "Trockenstress: schnelle, gleichmäßige Gewichtsabnahme, zügige Erholung nach der nächsten Wassergabe — das entscheidende Unterscheidungsmerkmal."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Auf hängende Blätter reflexartig mit zusätzlichem Wasser reagieren, statt zuerst Topfgewicht und Substratzustand zu prüfen.",
+          "Ein starres Kalenderintervall statt eines an Klima, VPD und Pflanzenmasse angepassten Rhythmus fahren.",
+          "Nie oder bei jeder Gabe Drain laufen lassen — beide Extreme verhindern eine aussagekräftige Kontrolle."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Automatisierte Tropfbewässerung mit mehreren kurzen Impulsen pro Tag kann in Coco/Hydro Staunässe und Trockenstress gleichzeitig reduzieren, verlangt aber eine sauber kalibrierte Impulslänge je Substrat.",
+          "Run-to-Waste-Systeme (kein Recycling der Drainage) vereinfachen die Salzkontrolle gegenüber rezirkulierenden Systemen, erhöhen aber den Wasser- und Düngerverbrauch."
         ]
       }
     ],
+    warnings: [
+      "Zusätzliches Gießen bei bereits schwerem, feuchtem Substrat verschärft eine bestehende Staunässe und erhöht das Risiko für Wurzelfäule."
+    ],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: Uebergiessen",
-        text: "Nicht zu viel Wasser auf einmal ist das Hauptproblem, sondern zu wenig Sauerstoff im Medium über zu lange Zeit."
+        title: "Kurz erklärt: Übergiessen",
+        text: "Nicht die einzelne Wassermenge ist das Hauptproblem, sondern zu wenig Sauerstoff im Substrat über zu lange Zeit, weil zu selten eine Trockenphase zugelassen wird."
       },
       {
-        title: "Kurz erklärt: Giessintervall",
-        text: "Das ist die Zeit zwischen zwei Wassergaben. Es aendert sich mit Pflanzenmasse, Klima, Topfgroesse und Medium."
+        title: "Kurz erklärt: Warum Drain wichtig ist",
+        text: "Ein kleiner Abflussanteil bei der Gießung spült angereicherte Salze aus dem Substrat, bevor sie die EC in der Wurzelzone unkontrolliert ansteigen lassen."
       }
     ],
     faq: [
       {
-        question: "Soll immer Drain entstehen?",
-        answer: "Nicht bei jeder Wassergabe. Regelmäßige Kontrollgaenge mit Drain sind sinnvoll, staendiges Durchspuelen aber nicht in jedem Setup."
+        question: "Soll bei jeder Gießung Drain entstehen?",
+        answer: "Nein. Regelmäßige Kontrollgießungen mit 10–20 % Drain-Anteil reichen, um Salzanreicherung zu erkennen — ständiges Durchspülen bei jeder Gabe ist in den meisten Setups nicht nötig."
       },
       {
         question: "Wie schnell darf ein Topf trocknen?",
-        answer: "Das hängt von Medium und Phase ab. Kritisch wird es, wenn Trocknung ungleichmaessig oder extrem schnell wird und dadurch Salzspitzen entstehen."
+        answer: "Das hängt von Medium und Phase ab. Kritisch wird es erst, wenn die Trocknung so schnell oder ungleichmäßig verläuft, dass dadurch spürbare Salzspitzen oder Welken vor der nächsten Gabe entstehen."
+      },
+      {
+        question: "Warum wächst die Wurzel bei leichtem Austrocknen besser?",
+        answer: "Wurzeln folgen dem Sauerstoffgradienten und verzweigen bevorzugt in Richtung frisch abgetrockneter, luftreicherer Zonen. Ein moderater Trocken-Nass-Wechsel nutzt diesen Effekt gezielt aus."
       }
     ],
     glossary: [
-      { term: "Giessfenster", definition: "Zeitpunkt, in dem ein Medium erneut Wasser braucht, ohne bereits stressig trocken zu sein." },
-      { term: "Kapillarwasser", definition: "Wasser, das in feinen Poren gehalten wird und Pflanzen zur Verfuegung steht." },
-      { term: "Staunäße", definition: "Dauerhaft zu nasses Medium mit Saürstoffmangel im Wurzelbereich." },
+      { term: "Drain-Anteil", definition: "Der Teil der Gießmenge, der unten aus dem Topf abläuft; zeigt Sättigung und Salzhaushalt der Wurzelzone an." },
+      { term: "Trocken-Nass-Wechsel", definition: "Regelmäßiger Wechsel zwischen abgetrocknetem und frisch gewässertem Substratzustand, der Wurzelwachstum anregt." },
+      { term: "Staunässe", definition: "Dauerhaft zu nasses Medium mit Sauerstoffmangel im Wurzelbereich." }
     ],
-    relatedSlugs: ["cannabis-substrat-und-wurzelzone", "cannabis-anbau-grundlagen", "vpd-einfach-erklärt"]
-  }),
-  createArticle({
+    sourceIds: ["horticulture-research-cannabis-cultivation", "marschner-mineral-nutrition", "bugbee-electrical-conductivity"],
+    relatedSlugs: ["cannabis-substrat-und-wurzelzone", "cannabis-anbau-grundlagen", "vpd-einfach-erklaert"]
+  },
+  {
     slug: "lichtstress-und-canopy-management",
     title: "Lichtstress und Canopy-Management",
     summary: "Wie Lichtverteilung, Abstand und Blattfläche zusammenwirken und wann hohe Intensität mehr schadet als hilft.",
     category: "anbau",
     difficulty: "fortgeschritten",
-    readMinutes: 8,
+    readMinutes: 10,
+    lastUpdated: "2026-08-03",
     tags: ["PPFD", "Canopy", "Lichtstress", "Uniformität"],
     keyTakeaways: [
-      "Mehr PPFD ist nur dann sinnvoll, wenn Klima, CO2 und Naehrstoffversorgung mithalten können.",
-      "Eine homogene Canopy ist meist wertvoller als lokale Spitzenwerte in einzelnen Zonen.",
-      "Lichtstress zeigt sich oft zuerst in Blattstellung, Spitzenaufhellung und ungleichmaessiger Reife."
+      "Lichtstress ist Photoinhibition: trifft mehr Lichtenergie auf ein Blatt, als der Photosyntheseapparat verarbeiten kann, werden die Reaktionszentren im Photosystem II geschädigt — mehr PPFD ohne passendes Klima und CO2 senkt dann die Leistung statt sie zu steigern.",
+      "Eine gleichmäßige Canopy mit moderater PPFD über der ganzen Fläche liefert meist mehr Gesamtertrag als eine ungleichmäßige Canopy mit lokalen Spitzenwerten direkt unter der Lampe.",
+      "PPFD-Zielwerte sind an CO2-Konzentration und Temperatur gekoppelt — höhere Lichtintensität ist nur mit angehobenem CO2 und stabilem Klima sinnvoll nutzbar."
     ],
     quickFacts: [
-      { label: "Messgroesse", value: "PPFD plus Verteilung" },
-      { label: "Fehlerquelle", value: "Zu nahes Licht bei instabilem Klima" },
-      { label: "Ziel", value: "Uniforme Lichtkarte" }
+      { label: "PPFD vegetativ", value: "400–600 µmol·m⁻²·s⁻¹" },
+      { label: "PPFD Blüte (Umgebungsluft)", value: "600–900 µmol·m⁻²·s⁻¹" },
+      { label: "PPFD Blüte (mit CO2-Anreicherung)", value: "bis 1000–1200 µmol·m⁻²·s⁻¹" },
+      { label: "Fehlerquelle", value: "Zu nahes Licht bei instabilem Klima/CO2" }
     ],
     sections: [
       {
-        heading: "Warum Licht immer ein Systemparameter ist",
+        heading: "Definition und Einordnung",
         content: [
-          "Hohe Lichtleistung steigert nur dann Leistung, wenn Transpiration, Wasserhaushalt und Temperatur sauber geführt werden.",
-          "Wird Licht isoliert hochgezogen, entstehen oft Stresssymptome statt echter Mehrleistung."
+          "Lichtstress entsteht, wenn die auftreffende Lichtmenge die photosynthetische Verarbeitungskapazität des Blatts übersteigt — nicht Licht an sich, sondern das Missverhältnis zwischen Lichtangebot und Verarbeitungskapazität ist die Ursache.",
+          "Canopy-Management bezeichnet die gezielte Steuerung der Blattflächenverteilung, damit möglichst viel Blattfläche im nutzbaren PPFD-Fenster liegt statt in Über- oder Unterversorgung."
+        ]
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Photosynthese folgt einer Sättigungskurve: mit steigender PPFD nimmt die Photosyntheserate zunächst annähernd linear zu, flacht dann ab und erreicht ein Plateau, sobald CO2-Verfügbarkeit oder Enzymkapazität limitierend werden.",
+          "Wird die Lichtmenge über dieses Plateau hinaus weiter erhöht, kann überschüssige Energie die Reaktionszentren von Photosystem II photochemisch schädigen — dieser Prozess heißt Photoinhibition und zeigt sich makroskopisch als Bleaching."
+        ]
+      },
+      {
+        heading: "PPFD-Zielwerte nach Phase und CO2-Niveau",
+        content: [
+          "Vegetative Phase: 400–600 µmol·m⁻²·s⁻¹ bei Umgebungsluft (≈ 400 ppm CO2) reichen für stabiles Wachstum ohne unnötiges Photoinhibitionsrisiko.",
+          "Blütephase ohne CO2-Anreicherung: 600–900 µmol·m⁻²·s⁻¹ ist der praktikable Zielkorridor — darüber steigt die Photosyntheserate kaum noch, während Hitzestress-Risiko und Energiekosten weiter zunehmen.",
+          "Mit CO2-Anreicherung auf 1000–1500 ppm verschiebt sich das nutzbare PPFD-Fenster nach oben (bis etwa 1000–1200 µmol·m⁻²·s⁻¹), weil CO2 nicht mehr der limitierende Faktor der Kohlenstofffixierung ist."
         ]
       },
       {
         heading: "Canopy sauber führen",
         content: [
-          "Trainiere Pflanzen so, dass die obere Blattfläche möglichst gleichmaessig bleibt. Dadurch werden Hotspots und Schatteninseln reduziert.",
-          "Mappe die Lichtverteilung im Raum und passe Lampenhoehe oder Pflanzenerziehung datenbasiert an."
+          "Pflanzentraining (Topping, Low-Stress-Training, gezielte Defoliation) verteilt die Blattfläche horizontal, statt sie in einem hohen, schmalen Hauptrieb zu konzentrieren, und reduziert dadurch Hotspots direkt unter der Lampe.",
+          "Eine PPFD-Karte über mehrere Rasterpunkte der Anbaufläche zeigt Über- und Unterversorgungszonen objektiv auf, die von Auge oft nicht erkennbar sind."
         ],
         checklist: [
-          "PPFD an mehreren Rasterpunkten messen",
-          "Blatttemperatur an Hotspots prüfen",
-          "Canopy-Höhe pro Zone dokumentieren"
+          "PPFD an mehreren Rasterpunkten auf Canopy-Höhe messen, nicht nur zentral unter der Lampe",
+          "Blatttemperatur an vermuteten Hotspots mit Infrarot-Thermometer prüfen, nicht nur die Lufttemperatur",
+          "Canopy-Höhe und -Gleichmäßigkeit pro Zone dokumentieren, um Trainingsentscheidungen datenbasiert zu treffen"
+        ]
+      },
+      {
+        heading: "Diagnose: Lichtstress vs. verwandte Symptome",
+        content: [
+          "Lichtstress/Bleaching zeigt sich als Aufhellung bis Weißfärbung der obersten, lampennächsten Blätter — betrifft primär die Blattfläche in direkter Lampennähe, nicht die ganze Pflanze gleichmäßig.",
+          "Hitzestress (Tacoing, nach oben gerollte Blattränder) tritt oft gemeinsam mit Lichtstress auf, weil beide durch zu geringen Lampenabstand oder zu schwache Klimatisierung verursacht werden — Blatttemperatur-Messung trennt beide Ursachen.",
+          "Calciummangel kann oberflächlich ähnliche Aufhellung an jungen Blättern zeigen, betrifft aber unabhängig von der Lampenposition die gesamte Canopy gleichmäßig, nicht nur die lampennächste Zone."
+        ]
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "Bei bestätigtem Lichtstress zuerst den Lampenabstand erhöhen oder die Leistung dimmen, statt sofort das Klima anzupassen — das behebt die Ursache direkter.",
+          "Wenn Klima und CO2 bereits stabil im Zielbereich liegen und trotzdem Bleaching auftritt, ist das PPFD-Niveau schlicht zu hoch für die aktuelle CO2-Konzentration und muss gesenkt werden."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "PPFD isoliert erhöhen, ohne CO2-Konzentration und Klimastabilität mitzudenken — das verschiebt das Sättigungsplateau nicht nach oben, sondern erhöht nur das Photoinhibitionsrisiko.",
+          "Nur die zentrale PPFD unter der Lampe als Referenz nehmen und Randzonen der Canopy ignorieren.",
+          "Bleaching automatisch als reines Lichtproblem werten, ohne Blatttemperatur und Nährstoffstatus zur Absicherung der Diagnose heranzuziehen."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "CO2-Anreicherung verändert nicht nur die maximal nutzbare PPFD, sondern auch den optimalen Temperaturbereich — bei höherem CO2 verträgt die Pflanze tendenziell etwas höhere Temperaturen ohne Effizienzverlust.",
+          "Lichtspektrum-Anteile (insbesondere fernes Rot) beeinflussen Blattwinkel und Internodienstreckung zusätzlich zur reinen PPFD und sollten bei der Canopy-Planung mitgedacht werden."
         ]
       }
+    ],
+    warnings: [
+      "PPFD über 900 µmol·m⁻²·s⁻¹ ohne CO2-Anreicherung bringt in der Regel keinen zusätzlichen Ertrag, erhöht aber das Risiko für Photoinhibition und Hitzestress messbar."
     ],
     simpleExplainers: [
       {
         title: "Kurz erklärt: PPFD",
-        text: "PPFD beschreibt, wie viele photosynthetisch nutzbare Lichtteilchen pro Sekunde auf eine Fläche treffen."
+        text: "PPFD beschreibt, wie viele photosynthetisch nutzbare Lichtteilchen pro Sekunde auf eine Fläche treffen. Mehr ist nur bis zu einem Sättigungspunkt hilfreich, danach steigt nur noch das Stressrisiko."
       },
       {
-        title: "Kurz erklärt: Canopy",
-        text: "Damit ist die obere Blatt- und Bluetenschicht gemeint. Je gleichmaessiger sie ist, desto leichter lässt sich Licht steuern."
+        title: "Kurz erklärt: Photoinhibition",
+        text: "Wenn ein Blatt mehr Lichtenergie bekommt, als es photosynthetisch verarbeiten kann, wird der Photosyntheseapparat selbst geschädigt. Das ist die eigentliche Ursache von Bleaching."
       }
     ],
     faq: [
       {
         question: "Brauche ich sofort ein PAR-Meter?",
-        answer: "Für ernsthafte Prozesssteuerung ja, zumindest zeitweise. Schaetzwerte oder App-Messungen reichen nur für grobe Orientierung."
+        answer: "Für ernsthafte Prozesssteuerung ja, zumindest zeitweise. Schätzwerte oder App-Messungen reichen nur für grobe Orientierung und können den tatsächlichen PPFD-Wert deutlich verfehlen."
       },
       {
         question: "Ist Bleaching immer zu viel Licht?",
-        answer: "Oft ja, aber nicht nur. Auch Hitze, Naehrstoffungleichgewicht und genetische Empfindlichkeit können mit hineinspielen."
+        answer: "Meist ja, aber nicht ausschließlich. Hitzestress durch zu geringen Lampenabstand und in selteneren Fällen Calciummangel können ähnliche Aufhellungen erzeugen — die Position der betroffenen Blätter relativ zur Lampe hilft bei der Unterscheidung."
+      },
+      {
+        question: "Lohnt sich mehr PPFD ohne CO2-Anreicherung?",
+        answer: "Meist nicht über etwa 900 µmol·m⁻²·s⁻¹. Ohne zusätzliches CO2 wird die Kohlenstofffixierung zum limitierenden Faktor, und zusätzliches Licht erhöht vor allem das Photoinhibitions- und Hitzestressrisiko."
       }
     ],
     glossary: [
-      { term: "Bleaching", definition: "Aufhellung von Pflanzenteilen durch uebermaessige Licht- oder Hitzebelastung." },
-      { term: "Canopy", definition: "Oberste Ebene aus Blatt- und Blütenmasse, die den Grossteil des Lichts abfaengt." },
-      { term: "Uniformität", definition: "Gleichmaessigkeit von Wuchs, Höhe und Exposition innerhalb einer Kulturflaeche." },
+      { term: "PPFD", definition: "Photosynthetic Photon Flux Density — die Menge photosynthetisch nutzbaren Lichts, die pro Fläche und Sekunde auf die Pflanze trifft." },
+      { term: "Photoinhibition", definition: "Schädigung der Reaktionszentren von Photosystem II durch überschüssige, nicht verarbeitbare Lichtenergie." },
+      { term: "Canopy", definition: "Oberste Ebene aus Blatt- und Blütenmasse, die den Großteil des Lichts abfängt." }
     ],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "vpd-einfach-erklärt", "vpd-und-ec-kombi-rechner-guide"]
-  }),
+    sourceIds: ["chandra-cannabis-photosynthesis-temperature-co2", "mortensen-co2-enrichment-review", "plant-physiology-vpd-transpiration"],
+    relatedSlugs: ["cannabis-anbau-grundlagen", "vpd-einfach-erklaert", "vpd-und-ec-kombi-rechner-guide"]
+  },
   createArticle({
     slug: "integrierte-schaedlingspraevention-grow",
-    title: "Integrierte Schaedlingspraevention im Grow",
+    title: "Integrierte Schädlingsprävention im Grow",
     summary: "Wie Monitoring, Hygiene und Früherkennung Ausfälle verhindern, ohne blind in Chemie oder Panik zu verfallen.",
     category: "anbau",
     difficulty: "fortgeschritten",
     readMinutes: 8,
     tags: ["IPM", "Hygiene", "Monitoring", "Prävention"],
     keyTakeaways: [
-      "Ein IPM-System lebt von Früherkennung, Quarantäne und stabilen Routinen statt von Spaetreaktionen.",
+      "Ein IPM-System lebt von Früherkennung, Quarantäne und stabilen Routinen statt von Spätreaktionen.",
       "Sauberkeit im Raum und an Werkzeugen verhindert mehr Probleme als hektische Rettungssprays.",
       "Schädlingsdruck ist oft ein Prozesssignal für Klima-, Hygiene- oder Materialprobleme."
     ],
@@ -1796,12 +3681,12 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Was in einen belastbaren IPM-Plan gehört",
         content: [
           "Lege fest, welche Zonen kontrolliert werden, wie Funde dokumentiert werden und wer über Massnahmen entscheidet.",
-          "Nur so bleiben Eingriffe verhaeltnismaessig und auditierbar."
+          "Nur so bleiben Eingriffe verhältnismässig und auditierbar."
         ],
         checklist: [
           "Quarantäne für neue Pflanzen oder Material",
           "Wöchentliche Monitoring-Route mit Foto-Dokumentation",
-          "Reinigungsplan für Werkzeuge, Schuhe und Flaechen"
+          "Reinigungsplan für Werkzeuge, Schuhe und Flächen"
         ]
       }
     ],
@@ -1821,87 +3706,137 @@ const expansionWikiArticles: TerpiraArticle[] = [
         answer: "Meist nicht. Fallen zeigen Trends früher und helfen, Hotspots vor sichtbaren Schäden zu finden."
       },
       {
-        question: "Ist jedes Blattproblem gleich ein Schaedling?",
-        answer: "Nein. Nahrstoffprobleme, Lichtstress oder Umweltstress können aehnlich aussehen und müssen sauber abgegrenzt werden."
+        question: "Ist jedes Blattproblem gleich ein Schädling?",
+        answer: "Nein. Nahrstoffprobleme, Lichtstress oder Umweltstress können ähnlich aussehen und müssen sauber abgegrenzt werden."
       }
     ],
     glossary: [
       { term: "IPM", definition: "Integrierter Ansatz zur Prävention und Kontrolle von Schädlingen über mehrere Massnahmenebenen." },
-      { term: "Quarantäne", definition: "Zeitlich und raeumlich getrennte Beobachtung neuer Pflanzen oder Materialien." },
+      { term: "Quarantäne", definition: "Zeitlich und räumlich getrennte Beobachtung neuer Pflanzen oder Materialien." },
       { term: "Sticky Trap", definition: "Klebefalle zur Früherkennung fliegender Schädlinge und zur Trendbeobachtung." },
     ],
     relatedSlugs: ["pgr-und-kontaminanten", "schimmel-und-mykotoxine-bei-cannabis", "cannabis-anbau-grundlagen"]
   }),
-  createArticle({
+  {
     slug: "feminisiert-vs-regular-vs-autoflower",
     title: "Feminisiert vs. Regular vs. Autoflower",
     summary: "Welche genetischen Formate es gibt, wo ihre jeweiligen Stärken liegen und welche Missverständnisse häufig sind.",
     category: "genetik",
     difficulty: "einsteiger",
-    readMinutes: 7,
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
     tags: ["Samen", "Regular", "Autoflower", "Genetik"],
     keyTakeaways: [
-      "Die drei Formate loesen unterschiedliche Ziele in Selektion, Produktionsplanung und Einfachheit.",
-      "Autoflower ist kein Qualitätsurteil, sondern ein anderer Entwicklungsmodus mit eigenen Grenzen.",
-      "Für reproduzierbare Programme zählen Stabilität und Zielprofil mehr als Marketingbegriffe."
+      "Feminisierte Samen entstehen aus einer selbstbestäubten weiblichen Pflanze (meist über Silberthiosulfat-Stress) — genetisch ist das eine Selbstung, keine echte Kreuzung, was die genetische Vielfalt der Nachkommen gegenüber Regular-Samen einschränkt.",
+      "Autoflower tragen eine Ruderalis-Introgression, die die Blüte an Alter/Nodienzahl statt an die Tageslänge koppelt — das ist ein anderer Entwicklungsmodus, kein Qualitätsurteil.",
+      "Regular-Samen bieten die größte genetische Diversität für Selektion und Zuchtprogramme, weil beide Elternteile ihr volles genetisches Spektrum unverzerrt weitergeben."
     ],
     quickFacts: [
-      { label: "Einsteigerfreundlich", value: "Haengt vom Zielsystem ab" },
+      { label: "Zyklus Photoperiodisch (Feminisiert/Regular)", value: "≈ 10–16 Wochen, steuerbar" },
+      { label: "Zyklus Autoflower", value: "≈ 8–11 Wochen, fix" },
       { label: "Selektionsfreiheit", value: "Am größten bei Regular" },
-      { label: "Planbarkeit", value: "Stark von Genetikqualität abhängig" }
+      { label: "Weiblichkeitsrate Feminisiert", value: "Hoch, aber nicht 100 %" }
     ],
     sections: [
       {
-        heading: "Drei Formate, drei Einsatzgebiete",
+        heading: "Definition und Einordnung",
         content: [
-          "Regular-Samen sind wichtig für Zucht und tiefe Selektion, feminisierte Linien vereinfachen viele Produktionsablaeufe und Autoflower verkuerzen bestimmte Zyklen.",
-          "Keines der Systeme ist pauschal ueberlegen. Die Entscheidung hängt von Raum, Erfahrung und Prozesszielen ab."
+          "Regular-Samen entstehen aus klassischer Bestäubung zwischen einer männlichen und einer weiblichen Pflanze und ergeben eine natürliche Geschlechterverteilung von etwa 50:50.",
+          "Feminisierte Samen entstehen, wenn eine weibliche Pflanze durch gezielten Stress (meist Silberthiosulfat- oder Kolloidalsilber-Behandlung) dazu gebracht wird, männliche Blüten mit ausschließlich X-Chromosomen zu bilden, und sich damit selbst bestäubt.",
+          "Autoflower-Linien tragen eine Cannabis-ruderalis-Introgression, die die Blüteninduktion von der Tageslänge entkoppelt und stattdessen an Pflanzenalter bzw. Nodienzahl bindet."
         ]
       },
       {
-        heading: "Worauf du in der Praxis achten solltest",
+        heading: "Wissenschaftlicher Hintergrund",
         content: [
-          "Prüfe, wie stabil eine Linie tatsächlich ist und ob die Beschreibung des Breeders mit deiner Zielumgebung zusammenpasst.",
-          "Für spätere Vergleichbarkeit sind Dokumentation und Testlaeufe wichtiger als Produktversprechen."
-        ],
-        checklist: [
-          "Zuchtziel vor der Sortenwahl definieren",
-          "Breeder-Angaben gegen echte Grow-Daten prüfen",
-          "Leistung über mehrere Runs vergleichen"
+          "Cannabis ist überwiegend diözisch mit einem XY-ähnlichen Geschlechtsbestimmungssystem. Unter Stress (Lichteinbruch während der Dunkelphase, Silberionen-Behandlung) können weibliche Pflanzen dennoch männliche Blüten bilden, die ausschließlich X-Pollen tragen.",
+          "Da diese Pollen kein Y-Chromosom enthalten, ergeben sich aus der Bestäubung fast ausschließlich weibliche (XX) Nachkommen — daher der hohe, aber nicht absolute Weiblichkeitsanteil feminisierter Samen.",
+          "Cannabis ruderalis blüht photoperiodenunabhängig, weil bei ihr die Blühauslösung entwicklungsbiologisch statt lichtbasiert gesteuert ist — ein Anpassungsmerkmal an kurze, unvorhersehbare Vegetationsperioden in nördlichen Breiten."
+        ]
+      },
+      {
+        heading: "Genetische Vielfalt und Zuchtwert",
+        content: [
+          "Regular-Samen aus einer echten Kreuzung zweier unterschiedlicher Elternpflanzen liefern die größte Bandbreite an Phänotypen und sind damit die Basis jeder ernsthaften Selektions- oder Zuchtarbeit.",
+          "Feminisierte Samen aus Selbstung (S1) reduzieren die genetische Variation gegenüber einer echten Kreuzung, weil beide 'Eltern' genetisch identisch mit der Ausgangspflanze sind — die Nachkommen ähneln sich untereinander stärker.",
+          "Autoflower-Linien vererben die Ruderalis-Introgression zusammen mit dem restlichen genetischen Hintergrund; moderne, mehrfach zurückgekreuzte Linien (BX) minimieren unerwünschte Ruderalis-Eigenschaften wie geringere Wuchshöhe bei erhaltenem Auto-Merkmal."
+        ]
+      },
+      {
+        heading: "Praktische Unterschiede im Anbau",
+        content: [
+          "Photoperiodische Pflanzen (Regular wie Feminisiert) erlauben eine steuerbare, beliebig verlängerbare vegetative Phase — die Blüte wird erst durch Umstellung des Lichtzyklus ausgelöst.",
+          "Autoflower haben eine fixe, kurze Gesamtlebensdauer von etwa 8–11 Wochen ab Keimung, unabhängig vom Lichtzyklus — das vereinfacht die Zeitplanung, lässt aber wenig Spielraum für nachträgliche Größenkorrektur."
+        ]
+      },
+      {
+        heading: "Vor- und Nachteile je Zielsetzung",
+        content: [
+          "Für Zuchtprogramme und Phänotyp-Selektion: Regular-Samen, wegen der vollen genetischen Bandbreite beider Elternteile.",
+          "Für einfache, planbare Produktion ohne Geschlechtsbestimmung: Feminisierte Samen, wegen des hohen Weiblichkeitsanteils bei gleichzeitig steuerbarer Photoperiode.",
+          "Für kurze Zyklen, mehrere Runs pro Saison oder platzsparenden Anbau: Autoflower, auf Kosten von Größen- und teils Ertragsobergrenze im Vergleich zu ausgewachsenen photoperiodischen Pflanzen."
+        ]
+      },
+      {
+        heading: "Häufige Missverständnisse",
+        content: [
+          "'Feminisiert bedeutet 100 % weiblich': falsch — der Anteil ist hoch, aber unter Stress können auch feminisierte Pflanzen Zwittrigkeit zeigen oder in seltenen Fällen männlich ausfallen.",
+          "'Autoflower sind grundsätzlich schwächer oder minderwertiger': falsch — moderne, mehrfach zurückgekreuzte Autoflower-Linien erreichen bei guter Führung konkurrenzfähige Potenz- und Terpenwerte, unterscheiden sich aber im Entwicklungsmodus.",
+          "'Regular-Samen sind für Einsteiger ungeeignet': nicht grundsätzlich, aber sie erfordern Geschlechtsbestimmung und damit einen zusätzlichen Kontrollschritt, den feminisierte Samen überflüssig machen."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Autoflower wie photoperiodische Pflanzen mit aggressivem Training (starkes Topping, Umtopfen spät im Zyklus) behandeln — die kurze, fixe Lebensspanne lässt weniger Erholungszeit.",
+          "Bei Regular-Samen die Geschlechtsbestimmung vernachlässigen und männliche Pflanzen zu spät entfernen, wodurch benachbarte weibliche Pflanzen unerwünscht bestäubt werden.",
+          "Breeder-Herkunftsangaben zur Stabilität einer Linie ungeprüft übernehmen, statt sie über einen eigenen Testlauf zu verifizieren."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Rückkreuzung (Backcrossing) von Autoflower-Linien auf potente photoperiodische Elternlinien stabilisiert über mehrere Generationen das Auto-Merkmal, während unerwünschte Ruderalis-Eigenschaften schrittweise herausgezüchtet werden.",
+          "Die Silberthiosulfat-Methode zur Feminisierung ist reproduzierbarer und stressärmer für die Mutterpflanze als ältere Kolloidalsilber-Sprühverfahren, was die Stabilität moderner feminisierter Linien gegenüber älteren Chargen verbessert hat."
         ]
       }
     ],
     simpleExplainers: [
       {
         title: "Kurz erklärt: Regular",
-        text: "Samen mit natürlicher Geschlechterverteilung; wichtig für Selektion, Kreuzungen und Zuchtarbeit."
+        text: "Samen mit natürlicher Geschlechterverteilung aus einer echten Kreuzung — wichtig für Selektion und Zuchtarbeit, weil die volle genetische Bandbreite erhalten bleibt."
       },
       {
         title: "Kurz erklärt: Autoflower",
-        text: "Pflanzen, die nach Alter statt nach Photoperiode in die Blüte gehen. Das vereinfacht manche Ablaeufe, begrenzt aber andere."
+        text: "Pflanzen, die nach Alter statt nach Lichtzyklus in die Blüte gehen. Das vereinfacht die Zeitplanung, begrenzt aber die Möglichkeit, die vegetative Phase gezielt zu verlängern."
       }
     ],
     faq: [
       {
         question: "Sind feminisierte Samen instabil?",
-        answer: "Nicht automatisch. Gute Linien können sehr stabil sein, schlechte Linien zeigen auch als feminisierte Saat Probleme."
+        answer: "Nicht automatisch. Gute Linien mit sauberer Feminisierungsmethode können sehr stabil sein, schlechte Ausgangsgenetik zeigt Probleme unabhängig vom Feminisierungsverfahren."
       },
       {
-        question: "Sind Autoflower immer schneller?",
-        answer: "Oft im Gesamtablauf, aber nicht in jedem Setup effizienter. Planbarkeit und Zielprofil müssen mitgedacht werden."
+        question: "Sind Autoflower immer schneller im Gesamtablauf?",
+        answer: "Meist ja, weil die Lebensspanne fix und kurz ist. Effizienter ist das aber nicht automatisch — die begrenzte Größe kann den Ertrag pro Zyklus gegenüber einer gut geführten photoperiodischen Pflanze senken."
+      },
+      {
+        question: "Kann ich aus feminisierten Samen weiterzüchten?",
+        answer: "Technisch ja, genetisch limitiert. Da feminisierte Samen aus einer Selbstung stammen, ist die genetische Variation der nächsten Generation geringer als bei einer echten Kreuzung aus Regular-Samen."
       }
     ],
     glossary: [
-      { term: "Photoperiode", definition: "Abhängigkeit der Blüte von der Tageslaenge beziehungsweise dem Lichtzyklus." },
-      { term: "Regular", definition: "Samen mit maennlichen und weiblichen Pflanzen in natürlicher Verteilung." },
-      { term: "Feminisiert", definition: "Samen, die mit hoher Wahrscheinlichkeit weibliche Pflanzen hervorbringen." },
+      { term: "Photoperiode", definition: "Abhängigkeit der Blüte von der Tageslänge beziehungsweise dem Lichtzyklus." },
+      { term: "Selbstung (S1)", definition: "Bestäubung einer Pflanze mit ihrem eigenen Pollen; reduziert die genetische Variation der Nachkommen gegenüber einer Kreuzung." },
+      { term: "Introgression", definition: "Einkreuzung genetischen Materials einer anderen Linie oder Unterart, hier: der Ruderalis-Autoflower-Eigenschaft." }
     ],
-    relatedSlugs: ["genetik-und-phänotyp-selektion", "mutterpflanzen-und-clone-hygiene", "selektionsscorecards-für-pheno-hunts"]
-  }),
+    sourceIds: ["genetics-heritable-traits-cannabis", "horticulture-research-cannabis-cultivation"],
+    relatedSlugs: ["genetik-und-phaenotyp-selektion", "mutterpflanzen-und-clone-hygiene", "selektionsscorecards-fuer-pheno-hunts"]
+  },
   createArticle({
     slug: "mutterpflanzen-und-clone-hygiene",
     title: "Mutterpflanzen und Clone-Hygiene",
-    summary: "Wie du gesunde Mutterlinien fuehrst, Kreuzkontamination vermeidest und Clone-Programme reproduzierbar machst.",
+    summary: "Wie du gesunde Mutterlinien führst, Kreuzkontamination vermeidest und Clone-Programme reproduzierbar machst.",
     category: "genetik",
     difficulty: "fortgeschritten",
     readMinutes: 8,
@@ -1918,10 +3853,10 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     sections: [
       {
-        heading: "Warum Mutterlinien oft unterschuetzt werden",
+        heading: "Warum Mutterlinien oft unterschätzt werden",
         content: [
           "Viele Systeme fokussieren nur auf den Run, nicht auf die Quelle des Pflanzenmaterials. Genau dort entstehen aber oft die späteren Probleme.",
-          "Eine muede, kontaminierte oder falsch geführte Mutterlinie zieht Fehler durch den gesamten Prozess."
+          "Eine müde, kontaminierte oder falsch geführte Mutterlinie zieht Fehler durch den gesamten Prozess."
         ]
       },
       {
@@ -1932,7 +3867,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         ],
         checklist: [
           "Werkzeug vor jedem Schnitt desinfizieren",
-          "Mutterpflanzen regelmäßig verjuengen",
+          "Mutterpflanzen regelmäßig verjüngen",
           "Clone-Raten und Ausfälle pro Linie dokumentieren"
         ]
       }
@@ -1954,20 +3889,20 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         question: "Brauche ich Backups derselben Linie?",
-        answer: "Ja. Ein einzelner Ausfall sollte nie die gesamte Genetikstrategie gefaehrden."
+        answer: "Ja. Ein einzelner Ausfall sollte nie die gesamte Genetikstrategie gefährden."
       }
     ],
     glossary: [
       { term: "Mutterlinie", definition: "Langfristig erhaltene Pflanze oder Linie zur Produktion genetisch gleicher Stecklinge." },
       { term: "Bewurzelungsquote", definition: "Anteil der Stecklinge, die erfolgreich Wurzeln bilden." },
-      { term: "Verjuengung", definition: "Geplante Erneuerung einer Mutterpflanze durch frisches Material derselben Linie." },
+      { term: "Verjüngung", definition: "Geplante Erneuerung einer Mutterpflanze durch frisches Material derselben Linie." },
     ],
-    relatedSlugs: ["genetik-und-phänotyp-selektion", "integrierte-schädlingsprävention-grow", "feminisiert-vs-regular-vs-autoflower"]
+    relatedSlugs: ["genetik-und-phaenotyp-selektion", "integrierte-schaedlingspraevention-grow", "feminisiert-vs-regular-vs-autoflower"]
   }),
   createArticle({
     slug: "selektionsscorecards-fuer-pheno-hunts",
     title: "Selektionsscorecards für Pheno-Hunts",
-    summary: "Wie du Auswahlprozesse mit Kriterien, Gewichtungen und Bestaetigungslaeufen objektiver machst.",
+    summary: "Wie du Auswahlprozesse mit Kriterien, Gewichtungen und Bestätigungsläufen objektiver machst.",
     category: "genetik",
     difficulty: "profi",
     readMinutes: 9,
@@ -1993,7 +3928,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Wie Entscheidungen belastbar werden",
         content: [
-          "Vergleiche Kandidaten blind, soweit moeglich, und verknuepfe subjektive Sensorik mit objektiven Labor- oder Prozessdaten.",
+          "Vergleiche Kandidaten blind, soweit möglich, und verknüpfe subjektive Sensorik mit objektiven Labor- oder Prozessdaten.",
           "Nur Linien, die im Wiederholungslauf erneut liefern, sollten in Produktion oder Weiterzucht gehen."
         ],
         checklist: [
@@ -2016,7 +3951,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Kann ich ohne Laborwerte jagen?",
-        answer: "Ja, aber dann sinkt die Trennschaerfe. Besonders bei Qualitäts- und Sicherheitsprofilen helfen Laborwerte deutlich."
+        answer: "Ja, aber dann sinkt die Trennschärfe. Besonders bei Qualitäts- und Sicherheitsprofilen helfen Laborwerte deutlich."
       },
       {
         question: "Wie viele Kriterien sind sinnvoll?",
@@ -2028,7 +3963,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Bestätigungslauf", definition: "Wiederholung eines vielversprechenden Kandidaten unter kontrollierten Bedingungen." },
       { term: "Gewichtung", definition: "Festgelegte Bedeutung einzelner Kriterien innerhalb einer Gesamtwertung." },
     ],
-    relatedSlugs: ["genetik-und-phänotyp-selektion", "mutterpflanzen-und-clone-hygiene", "terpene-und-wirkprofil"]
+    relatedSlugs: ["genetik-und-phaenotyp-selektion", "mutterpflanzen-und-clone-hygiene", "terpene-und-wirkprofil"]
   }),
   createArticle({
     slug: "cannabinoid-biosynthese-verstehen",
@@ -2060,12 +3995,12 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Warum das Qualität und Profil direkt beeinflusst",
         content: [
           "Zu früh geerntet: THC-Vorstufen dominieren, Wirkprofil ist unfertig.",
-          "Zu spaet geerntet oder schlecht gelagert: THC baut ab, CBN steigt — das Profil kippt unwiderruflich."
+          "Zu spät geerntet oder schlecht gelagert: THC baut ab, CBN steigt — das Profil kippt unwiderruflich."
         ],
         checklist: [
           "Analysedaten immer mit Ernte- und Prozessdaten lesen",
           "Minor-Werte nur mit Methodenhinweis vergleichen",
-          "COA-Datum prüfen: aeltere Proben spiegeln nicht das aktuelle Profil"
+          "COA-Datum prüfen: ältere Proben spiegeln nicht das aktuelle Profil"
         ]
       },
       {
@@ -2107,7 +4042,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       }
     ],
     glossary: [
-      { term: "Biosynthese", definition: "Biochemischer Aufbau von Molekuelen innerhalb eines lebenden Organismus." },
+      { term: "Biosynthese", definition: "Biochemischer Aufbau von Molekülen innerhalb eines lebenden Organismus." },
       { term: "Vorstufe", definition: "Chemische Ausgangssubstanz, aus der weitere Verbindungen entstehen." },
       { term: "Minor Cannabinoide", definition: "Cannabinoide, die nur in kleineren Mengen auftreten und oft methodisch schwerer zu bewerten sind." },
     ],
@@ -2116,7 +4051,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
   createArticle({
     slug: "thc-zu-cbn-abbau-und-oxidation",
     title: "THC zu CBN: Abbau und Oxidation",
-    summary: "Warum Wirkstoffprofile bei Licht, Hitze und Zeit kippen und wie diese Veraenderungen sauber eingeordnet werden.",
+    summary: "Warum Wirkstoffprofile bei Licht, Hitze und Zeit kippen und wie diese Veränderungen sauber eingeordnet werden.",
     category: "chemie",
     difficulty: "fortgeschritten",
     readMinutes: 7,
@@ -2174,10 +4109,10 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     glossary: [
       { term: "Oxidation", definition: "Chemischer Prozess, bei dem Moleküle durch Reaktion mit Sauerstoff verändert werden." },
-      { term: "Abbauprodukt", definition: "Substanz, die aus der Veränderung oder Zersetzung eines anderen Molekuels entsteht." },
+      { term: "Abbauprodukt", definition: "Substanz, die aus der Veränderung oder Zersetzung eines anderen Moleküls entsteht." },
       { term: "Stabilität", definition: "Wie gut ein chemisches Profil über Zeit und Lagerbedingungen erhalten bleibt." },
     ],
-    relatedSlugs: ["lagerung-verpackung-und-lichtschutz", "wasseraktivität-und-curing", "coa-richtig-lesen"]
+    relatedSlugs: ["lagerung-verpackung-und-lichtschutz", "wasseraktivitaet-und-curing", "coa-richtig-lesen"]
   }),
   createArticle({
     slug: "decarboxylierung-grundlagen-und-fehler",
@@ -2287,7 +4222,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: HPLC",
-        text: "Fluessigchromatographie, die sich besonders für hitzeempfindliche Verbindungen eignet."
+        text: "Flüssigchromatographie, die sich besonders für hitzeempfindliche Verbindungen eignet."
       },
       {
         title: "Kurz erklärt: GC",
@@ -2301,13 +4236,13 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         question: "Warum weichen COAs verschiedener Labore ab?",
-        answer: "Methoden, Kalibration, Probenahme und Aufarbeitung können Unterschiede erzeugen, selbst bei aehnlichem Ausgangsmaterial."
+        answer: "Methoden, Kalibration, Probenahme und Aufarbeitung können Unterschiede erzeugen, selbst bei ähnlichem Ausgangsmaterial."
       }
     ],
     glossary: [
-      { term: "HPLC", definition: "High-Performance Liquid Chromatography, ein Standardverfahren für viele nichtfluechtige oder hitzeempfindliche Analyten." },
+      { term: "HPLC", definition: "High-Performance Liquid Chromatography, ein Standardverfahren für viele nichtflüchtige oder hitzeempfindliche Analyten." },
       { term: "GC", definition: "Gaschromatographie, genutzt für flüchtige oder thermisch analysierbare Verbindungen." },
-      { term: "Kalibration", definition: "Abgleich eines Messsystems mit bekannten Standards, um korrekte Quantifizierung zu ermoeglichen." },
+      { term: "Kalibration", definition: "Abgleich eines Messsystems mit bekannten Standards, um korrekte Quantifizierung zu ermöglichen." },
     ],
     relatedSlugs: ["coa-richtig-lesen", "decarboxylierung-grundlagen-und-fehler", "terpene-und-wirkprofil"]
   }),
@@ -2333,18 +4268,18 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Was diese Terpene dir über dein Produkt sagen",
         content: [
-          "Myrcen, Limonen und Caryophyllen sind die drei am haeufigsten gemessenen Terpene — sie beschreiben einen Teil des Aromas, aber nicht die Wirkung.",
+          "Myrcen, Limonen und Caryophyllen sind die drei am häufigsten gemessenen Terpene — sie beschreiben einen Teil des Aromas, aber nicht die Wirkung.",
           "Ein Produkt mit viel Myrcen kann trotzdem ein anderes Profil haben als ein anderes mit gleichen Werten, weil andere Bestandteile mitspielen."
         ]
       },
       {
-        heading: "Warum das für Qualitaetsbewertung wichtig ist",
+        heading: "Warum das für Qualitätsbewertung wichtig ist",
         content: [
           "Wer nur auf das Top-Terpen schaut, bewertet ein Produkt unvollständig.",
           "Qualität entsteht aus dem Gesamtprofil — kein einzelnes Terpen erklärt, warum eine Ernte besonders gut ist."
         ],
         checklist: [
-          "Gesamtprofil lesen, nicht nur das staerkste Terpen",
+          "Gesamtprofil lesen, nicht nur das stärkste Terpen",
           "Sensorischen Eindruck (Geruch, Aroma) und Laborwerte getrennt notieren",
           "Terpenvergleiche nur bei gleicher Messmethode machen"
         ]
@@ -2384,7 +4319,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         question: "Warum nutzen Shops diese Begriffe so stark?",
-        answer: "Weil sie merkfaehig sind. Das macht sie aber nicht automatisch zu belastbaren Wirklabels."
+        answer: "Weil sie merkfähig sind. Das macht sie aber nicht automatisch zu belastbaren Wirklabels."
       }
     ],
     glossary: [
@@ -2392,19 +4327,19 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Sensorik", definition: "Eindruck von Geruch, Geschmack und Wahrnehmung eines Produkts." },
       { term: "Korrelation", definition: "Statistischer Zusammenhang, der noch keine sichere Ursache beweist." },
     ],
-    relatedSlugs: ["terpene-und-wirkprofil", "sensorik-panels-für-cannabisprodukte", "coa-richtig-lesen"]
+    relatedSlugs: ["terpene-und-wirkprofil", "sensorik-panels-fuer-cannabisprodukte", "coa-richtig-lesen"]
   }),
   createArticle({
     slug: "lagerung-und-terpenverlust-vermeiden",
     title: "Lagerung und Terpenverlust vermeiden",
-    summary: "Warum Verpackung, Temperatur und Sauerstoffkontakt das Aromaprofil staerker formen, als viele Content-Seiten zugeben.",
+    summary: "Warum Verpackung, Temperatur und Sauerstoffkontakt das Aromaprofil stärker formen, als viele Content-Seiten zugeben.",
     category: "terpene",
     difficulty: "fortgeschritten",
     readMinutes: 7,
     tags: ["Terpenverlust", "Lagerung", "Sauerstoff", "Aroma"],
     keyTakeaways: [
       "Terpene sind volatil und reagieren stark auf Licht, Wärme und Luftkontakt.",
-      "Gute Verpackung ist ein Qualitaetsthema, nicht nur Branding.",
+      "Gute Verpackung ist ein Qualitätsthema, nicht nur Branding.",
       "Produktbewertungen ohne Lagerkontext sind oft unvollständig."
     ],
     quickFacts: [
@@ -2416,8 +4351,8 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Warum Aroma so schnell kippt",
         content: [
-          "Terpene verdampfen oder verändern sich leichter als viele andere Stoffklassen. Schon die Kombination aus Lagerzeit und unguenstiger Verpackung kann viel kosten.",
-          "Deshalb ist das urspruengliche Profil nicht automatisch identisch mit dem, was später beim Nutzer ankommt."
+          "Terpene verdampfen oder verändern sich leichter als viele andere Stoffklassen. Schon die Kombination aus Lagerzeit und ungünstiger Verpackung kann viel kosten.",
+          "Deshalb ist das ursprüngliche Profil nicht automatisch identisch mit dem, was später beim Nutzer ankommt."
         ]
       },
       {
@@ -2436,7 +4371,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: volatil",
-        text: "Leicht flüchtig oder leicht in die Gasphase uebergehend. Gerade das macht Terpene empfindlich gegen Lagerfehler."
+        text: "Leicht flüchtig oder leicht in die Gasphase übergehend. Gerade das macht Terpene empfindlich gegen Lagerfehler."
       },
       {
         title: "Kurz erklärt: Sauerstoffschutz",
@@ -2445,7 +4380,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     faq: [
       {
-        question: "Hilft Kuehlung immer?",
+        question: "Hilft Kühlung immer?",
         answer: "Oft ja, aber nur mit kontrollierter Feuchte und passender Verpackung. Sonst entstehen neue Probleme."
       },
       {
@@ -2454,11 +4389,11 @@ const expansionWikiArticles: TerpiraArticle[] = [
       }
     ],
     glossary: [
-      { term: "Volatil", definition: "Leicht verdampfend oder leicht in die Luft uebergehend." },
+      { term: "Volatil", definition: "Leicht verdampfend oder leicht in die Luft übergehend." },
       { term: "Headspace", definition: "Luftraum in einer Verpackung, der den Sauerstoffkontakt mit beeinflusst." },
-      { term: "Aromastabilitaet", definition: "Wie gut ein Produkt sein Geruchs- und Geschmacksprofil über Zeit behält." },
+      { term: "Aromastabilität", definition: "Wie gut ein Produkt sein Geruchs- und Geschmacksprofil über Zeit behält." },
     ],
-    relatedSlugs: ["wasseraktivität-und-curing", "lagerung-verpackung-und-lichtschutz", "terpene-und-wirkprofil"]
+    relatedSlugs: ["wasseraktivitaet-und-curing", "lagerung-verpackung-und-lichtschutz", "terpene-und-wirkprofil"]
   }),
   createArticle({
     slug: "sensorik-panels-fuer-cannabisprodukte",
@@ -2482,15 +4417,15 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Warum Panels besser sind als laute Einzelstimmen",
         content: [
-          "Aromabewertung ist anfaellig für Erwartung, Branding und Gruppeneffekte. Standardisierte Panels machen diese Verzerrungen sichtbar kleiner.",
+          "Aromabewertung ist anfällig für Erwartung, Branding und Gruppeneffekte. Standardisierte Panels machen diese Verzerrungen sichtbar kleiner.",
           "Das ist besonders wichtig, wenn Produktbeschreibungen später in Kataloge oder Content einfliessen."
         ]
       },
       {
         heading: "Wie Panels aufgebaut werden",
         content: [
-          "Arbeite mit festen Deskriptoren, Blindmustern und klaren Bewertungsboegen. Wiederhole Bewertungen in definierten Intervallen.",
-          "Wird Sensorik mit Laborwerten verknüpft, verbessert sich die Plausibilitaet für Profilbeschreibungen deutlich."
+          "Arbeite mit festen Deskriptoren, Blindmustern und klaren Bewertungsbögen. Wiederhole Bewertungen in definierten Intervallen.",
+          "Wird Sensorik mit Laborwerten verknüpft, verbessert sich die Plausibilität für Profilbeschreibungen deutlich."
         ],
         checklist: [
           "Deskriptorenliste vorab festlegen",
@@ -2502,11 +4437,11 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Deskriptor",
-        text: "Ein standardisiertes Wort oder Attribut, mit dem Geruchs- oder Geschmackseindruecke beschrieben werden."
+        text: "Ein standardisiertes Wort oder Attribut, mit dem Geruchs- oder Geschmackseindrücke beschrieben werden."
       },
       {
         title: "Kurz erklärt: Blindprobe",
-        text: "Eine Probe ohne sichtbare Produktidentitaet, damit Erwartung die Bewertung weniger beeinflusst."
+        text: "Eine Probe ohne sichtbare Produktidentität, damit Erwartung die Bewertung weniger beeinflusst."
       }
     ],
     faq: [
@@ -2522,7 +4457,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     glossary: [
       { term: "Sensorik-Panel", definition: "Gruppe geschulter Personen, die Produkte nach festen Kriterien bewertet." },
       { term: "Bias", definition: "Verzerrung einer Bewertung durch Erwartung, Kontext oder Vorwissen." },
-      { term: "Deskriptor", definition: "Standardisiertes Merkmal zur Beschreibung sensorischer Eindruecke." },
+      { term: "Deskriptor", definition: "Standardisiertes Merkmal zur Beschreibung sensorischer Eindrücke." },
     ],
     relatedSlugs: ["terpene-und-wirkprofil", "myrcen-limonen-caryophyllen-einordnung", "coa-richtig-lesen"]
   }),
@@ -2541,15 +4476,15 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     quickFacts: [
       { label: "Wichtig", value: "Indikation und Endpunkt trennen" },
-      { label: "Grenze", value: "Nicht jede Studie ist uebertragbar" },
+      { label: "Grenze", value: "Nicht jede Studie ist übertragbar" },
       { label: "Praxis", value: "Aufklärung statt Versprechen" }
     ],
     sections: [
       {
         heading: "Warum Schmerzforschung so schwer zu lesen ist",
         content: [
-          "Schmerz kann akut, chronisch, neuropathisch oder entzuedlich sein. Studien lassen sich deshalb nicht beliebig zusammenwerfen.",
-          "Ohne saubere Trennung der Endpunkte entstehen schnell ueberzogene Schlussfolgerungen."
+          "Schmerz kann akut, chronisch, neuropathisch oder entzündlich sein. Studien lassen sich deshalb nicht beliebig zusammenwerfen.",
+          "Ohne saubere Trennung der Endpunkte entstehen schnell überzogene Schlussfolgerungen."
         ]
       },
       {
@@ -2568,7 +4503,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Endpunkt",
-        text: "Das konkrete Ergebnis, das in einer Studie gemessen wird, etwa Schmerzintensitaet oder Schlafqualität."
+        text: "Das konkrete Ergebnis, das in einer Studie gemessen wird, etwa Schmerzintensität oder Schlafqualität."
       },
       {
         title: "Kurz erklärt: Meta-Analyse",
@@ -2578,7 +4513,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Ist Cannabis ein generelles Schmerzmittel?",
-        answer: "So pauschal lässt sich das nicht sagen. Die Evidenz ist indikations- und populationsabhaengig."
+        answer: "So pauschal lässt sich das nicht sagen. Die Evidenz ist indikations- und populationsabhängig."
       },
       {
         question: "Warum widersprechen sich Schlagzeilen so oft?",
@@ -2614,14 +4549,14 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Warum Schlaf ein schwieriger Forschungsbereich ist",
         content: [
-          "Schlaf hat viele Komponenten: Einschlafzeit, Durchschlafen, Tiefschlaf, Tagesmuedigkeit und subjektive Erholung.",
-          "Eine positive Selbsteinschaetzung ersetzt daher keine differenzierte Bewertung."
+          "Schlaf hat viele Komponenten: Einschlafzeit, Durchschlafen, Tiefschlaf, Tagesmüdigkeit und subjektive Erholung.",
+          "Eine positive Selbsteinschätzung ersetzt daher keine differenzierte Bewertung."
         ]
       },
       {
         heading: "Wie Inhalte dazu fair bleiben",
         content: [
-          "Gute Inhalte nennen sowohl moegliche kurzfristige Entlastung als auch Unsicherheiten bei Langzeitnutzung und individueller Variabilitaet.",
+          "Gute Inhalte nennen sowohl mögliche kurzfristige Entlastung als auch Unsicherheiten bei Langzeitnutzung und individueller Variabilität.",
           "Vor allem bei vulnerablen Gruppen sind Grenzen und Risiken klar zu markieren."
         ],
         checklist: [
@@ -2653,22 +4588,22 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     glossary: [
       { term: "Schlafarchitektur", definition: "Aufbau einer Nacht aus verschiedenen Schlafphasen und deren Zusammenspiel." },
-      { term: "Subjektive Erholung", definition: "Persoenliches Empfinden, wie erholt man sich nach dem Schlaf fuehlt." },
-      { term: "Langzeitdaten", definition: "Studien oder Beobachtungen über laengere Zeiträume mit wiederholter Erfassung." },
+      { term: "Subjektive Erholung", definition: "Persönliches Empfinden, wie erholt man sich nach dem Schlaf fühlt." },
+      { term: "Langzeitdaten", definition: "Studien oder Beobachtungen über längere Zeiträume mit wiederholter Erfassung." },
     ],
-    relatedSlugs: ["cannabinoide-und-evidenz", "cbd-und-angststörungen-einordnung", "thc-risiken-bei-jugendlichen"]
+    relatedSlugs: ["cannabinoide-und-evidenz", "cbd-und-angststoerungen-einordnung", "thc-risiken-bei-jugendlichen"]
   }),
   createArticle({
     slug: "cbd-und-angststoerungen-einordnung",
-    title: "CBD und Angststoerungen einordnen",
+    title: "CBD und Angststörungen einordnen",
     summary: "Was aus Studien wirklich ableitbar ist und wo aus frühen Hinweisen zu schnell Gewissheiten gemacht werden.",
     category: "medizin",
     difficulty: "fortgeschritten",
     readMinutes: 8,
     tags: ["CBD", "Angst", "Studienlage", "Einordnung"],
     keyTakeaways: [
-      "CBD wird häufig ueberverkauft, obwohl die Humanstudienlage je nach Kontext begrenzt bleibt.",
-      "Praeklinische Hinweise dürfen nicht mit klinischer Sicherheit verwechselt werden.",
+      "CBD wird häufig überverkauft, obwohl die Humanstudienlage je nach Kontext begrenzt bleibt.",
+      "Präklinische Hinweise dürfen nicht mit klinischer Sicherheit verwechselt werden.",
       "Seriöse Inhalte benennen Unsicherheit explizit."
     ],
     quickFacts: [
@@ -2681,7 +4616,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Warum das Thema schnell entgleist",
         content: [
           "CBD steht im Zentrum vieler Wellness- und Gesundheitsclaims. Genau deshalb ist eine strenge Trennung zwischen Daten und Vermutung wichtig.",
-          "Besonders oft werden Labor- oder Tierbefunde direkt in Alltagsempfehlungen uebersetzt."
+          "Besonders oft werden Labor- oder Tierbefunde direkt in Alltagsempfehlungen übersetzt."
         ]
       },
       {
@@ -2699,18 +4634,18 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: praeklinisch",
+        title: "Kurz erklärt: präklinisch",
         text: "Studien im Labor oder Tiermodell, die Hinweise liefern, aber keine sichere Aussage für Menschen erlauben."
       },
       {
         title: "Kurz erklärt: klinisch",
-        text: "Untersuchungen am Menschen, meist mit deutlich höherem Anspruch an Uebertragbarkeit."
+        text: "Untersuchungen am Menschen, meist mit deutlich höherem Anspruch an Übertragbarkeit."
       }
     ],
     faq: [
       {
         question: "Ist CBD ein sicheres Mittel gegen Angst?",
-        answer: "So pauschal nicht. Es gibt Hinweise, aber die Qualität und Uebertragbarkeit der Daten sind begrenzt und kontextabhaengig."
+        answer: "So pauschal nicht. Es gibt Hinweise, aber die Qualität und Übertragbarkeit der Daten sind begrenzt und kontextabhängig."
       },
       {
         question: "Warum sagen viele Seiten etwas anderes?",
@@ -2718,9 +4653,9 @@ const expansionWikiArticles: TerpiraArticle[] = [
       }
     ],
     glossary: [
-      { term: "Praeklinisch", definition: "Vorstufe klinischer Forschung, meist im Labor oder Tiermodell." },
-      { term: "Humanstudie", definition: "Studie mit menschlichen Teilnehmenden zur pruefbaren Einordnung von Nutzen und Risiken." },
-      { term: "Uebertragbarkeit", definition: "Grad, in dem sich Studienergebnisse auf andere Personen oder reale Situationen anwenden lassen." },
+      { term: "Präklinisch", definition: "Vorstufe klinischer Forschung, meist im Labor oder Tiermodell." },
+      { term: "Humanstudie", definition: "Studie mit menschlichen Teilnehmenden zur prüfbaren Einordnung von Nutzen und Risiken." },
+      { term: "Übertragbarkeit", definition: "Grad, in dem sich Studienergebnisse auf andere Personen oder reale Situationen anwenden lassen." },
     ],
     relatedSlugs: ["cannabinoide-und-evidenz", "cannabis-und-schlaf-was-ist-belegt", "cannabinoide-nebenwirkungen-und-interaktionen"]
   }),
@@ -2734,7 +4669,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     tags: ["THC", "Jugendliche", "Risikokommunikation", "Prävention"],
     keyTakeaways: [
       "Jugendliche sind keine kleine Version erwachsener Konsumenten; Risiko und Entwicklungskontext unterscheiden sich deutlich.",
-      "Prävention funktioniert besser über klare, glaubwürdige Aufklärung als über plakative Uebertreibung.",
+      "Prävention funktioniert besser über klare, glaubwürdige Aufklärung als über plakative Übertreibung.",
       "Konsummuster, Frequenz und Potenz müssen gemeinsam betrachtet werden."
     ],
     quickFacts: [
@@ -2747,17 +4682,17 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Warum Alter im Risiko so zentral ist",
         content: [
           "Jugendliche befinden sich in einer Entwicklungsphase, in der Verhalten, Umfeld und Hirnreifung zusammenspielen.",
-          "Deshalb müssen Risiken differenziert und glaubwuerdig kommuniziert werden."
+          "Deshalb müssen Risiken differenziert und glaubwürdig kommuniziert werden."
         ]
       },
       {
         heading: "Prävention ohne Panikmodus",
         content: [
           "Abschreckung allein reicht selten. Inhalte sollten nachvollziehbar sein, konkrete Risiken benennen und Raum für Fragen lassen.",
-          "So wird Aufklärung anschlussfaehiger als reine Moralisierung."
+          "So wird Aufklärung anschlussfähiger als reine Moralisierung."
         ],
         checklist: [
-          "Hauefigkeit und Potenz getrennt erklären",
+          "Häufigkeit und Potenz getrennt erklären",
           "Vulnerable Gruppen explizit benennen",
           "Hilfs- und Beratungsangebote sichtbar machen"
         ]
@@ -2766,7 +4701,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Potenz",
-        text: "Wie stark ein Produkt in Bezug auf relevante Wirkstoffe ausfaellt, meist vereinfacht über THC-Gehalte beschrieben."
+        text: "Wie stark ein Produkt in Bezug auf relevante Wirkstoffe ausfällt, meist vereinfacht über THC-Gehalte beschrieben."
       },
       {
         title: "Kurz erklärt: Risikokommunikation",
@@ -2776,17 +4711,17 @@ const expansionWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Ist jeder Konsum im Jugendalter gleich gefährlich?",
-        answer: "Nein. Haeufigkeit, Potenz, Alter, psychische Belastung und Kontext beeinflussen das Risiko deutlich."
+        answer: "Nein. Häufigkeit, Potenz, Alter, psychische Belastung und Kontext beeinflussen das Risiko deutlich."
       },
       {
         question: "Warum ist glaubwürdige Aufklärung so wichtig?",
-        answer: "Weil ueberzogene Botschaften oft abgelehnt werden und damit praeventive Wirkung verlieren."
+        answer: "Weil überzogene Botschaften oft abgelehnt werden und damit präventive Wirkung verlieren."
       }
     ],
     glossary: [
       { term: "Potenz", definition: "Stärke oder Konzentration relevanter Wirkstoffe in einem Produkt." },
       { term: "Vulnerabel", definition: "Besonders empfindlich oder risikobelastet in einem bestimmten Kontext." },
-      { term: "Prävention", definition: "Massnahmen zur Vorbeugung unerwuenschter gesundheitlicher oder sozialer Folgen." },
+      { term: "Prävention", definition: "Massnahmen zur Vorbeugung unerwünschter gesundheitlicher oder sozialer Folgen." },
     ],
     relatedSlugs: ["cannabinoide-und-evidenz", "inhalation-set-setting-und-harm-reduction", "cannabinoide-nebenwirkungen-und-interaktionen"]
   }),
@@ -2812,8 +4747,8 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Warum Nebenwirkungen nicht ausgeblendet werden dürfen",
         content: [
-          "Viele Inhalte fokussieren fast nur auf moeglichen Nutzen. Das führt zu einem unausgewogenen Bild und schwaecht die Glaubwuerdigkeit.",
-          "Eine seriöse Seite benennt sowohl haeufige als auch potenziell relevante seltenere Belastungen."
+          "Viele Inhalte fokussieren fast nur auf möglichen Nutzen. Das führt zu einem unausgewogenen Bild und schwächt die Glaubwürdigkeit.",
+          "Eine seriöse Seite benennt sowohl häufige als auch potenziell relevante seltenere Belastungen."
         ]
       },
       {
@@ -2823,13 +4758,13 @@ const expansionWikiArticles: TerpiraArticle[] = [
           "Für Content ist entscheidend, fachliche Abklärung aktiv zu empfehlen, statt Sicherheit zu suggerieren."
         ],
         checklist: [
-          "Hauefige Nebenwirkungen offen nennen",
+          "Häufige Nebenwirkungen offen nennen",
           "Hinweis auf potenzielle Interaktionen geben",
           "Bei medizinischen Fragen klar auf Fachpersonal verweisen"
         ]
       }
     ],
-    warnings: ["Dieser Inhalt ersetzt keine medizinische Beratung und keine individuelle Arzneimittelpruefung."],
+    warnings: ["Dieser Inhalt ersetzt keine medizinische Beratung und keine individuelle Arzneimittelprüfung."],
     simpleExplainers: [
       {
         title: "Kurz erklärt: Interaktion",
@@ -2846,16 +4781,16 @@ const expansionWikiArticles: TerpiraArticle[] = [
         answer: "Nein. Manche sind häufig, aber mild, andere seltener und potenziell relevanter. Beides muss sauber benannt werden."
       },
       {
-        question: "Kann ich Interaktionen selbst einschaetzen?",
-        answer: "Nur sehr eingeschränkt. Gerade bei Medikation ist fachliche Ruecksprache sinnvoll und oft notwendig."
+        question: "Kann ich Interaktionen selbst einschätzen?",
+        answer: "Nur sehr eingeschränkt. Gerade bei Medikation ist fachliche Rücksprache sinnvoll und oft notwendig."
       }
     ],
     glossary: [
       { term: "Interaktion", definition: "Wechselwirkung zwischen zwei oder mehr Substanzen mit verstärkter, abgeschwächter oder veränderter Wirkung." },
       { term: "Begleitmedikation", definition: "Weitere Arzneimittel oder Stoffe, die parallel eingenommen werden." },
-      { term: "Nebenwirkung", definition: "Unerwuenschter Effekt, der im Zusammenhang mit der Anwendung eines Stoffes auftritt." },
+      { term: "Nebenwirkung", definition: "Unerwünschter Effekt, der im Zusammenhang mit der Anwendung eines Stoffes auftritt." },
     ],
-    relatedSlugs: ["cannabinoide-und-evidenz", "cbd-und-angststörungen-einordnung", "cannabis-bei-schmerz-evidenzcheck"]
+    relatedSlugs: ["cannabinoide-und-evidenz", "cbd-und-angststoerungen-einordnung", "cannabis-bei-schmerz-evidenzcheck"]
   }),
   createArticle({
     slug: "vaping-rauchen-und-verdampfen-vergleich",
@@ -2892,7 +4827,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         checklist: [
           "Konsumform klar benennen",
           "Belastungs- und Timingunterschiede trennen",
-          "Material- und Geraetequalität mitberuecksichtigen"
+          "Material- und Gerätequalität mitberücksichtigen"
         ]
       }
     ],
@@ -2917,7 +4852,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       }
     ],
     glossary: [
-      { term: "Aerosol", definition: "Fein verteilte Partikel oder Troepfchen in einem Gasgemisch, etwa in inhalierbaren Dampfphaenomene." },
+      { term: "Aerosol", definition: "Fein verteilte Partikel oder Tröpfchen in einem Gasgemisch, etwa in inhalierbaren Dampfphänomene." },
       { term: "Verbrennung", definition: "Oxidativer Prozess mit Flamme oder hoher Hitze, der viele neue Nebenprodukte erzeugen kann." },
       { term: "Harm Reduction", definition: "Praxisorientierter Ansatz zur Verringerung von Risiken statt reiner Verbotslogik." },
     ],
@@ -2933,7 +4868,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     tags: ["Sublingual", "Tinktur", "Aufnahmewege", "Timing"],
     keyTakeaways: [
       "Sublinguale Anwendung ist nicht dasselbe wie Schlucken und hat eigene Timing- und Aufnahmecharakteristik.",
-      "Wirkung und Verlaesslichkeit haengen stark von Produktform und Anwendungspraxis ab.",
+      "Wirkung und Verlässlichkeit hängen stark von Produktform und Anwendungspraxis ab.",
       "Content sollte Unterschiede zwischen Erwartung und realer Aufnahme sauber benennen."
     ],
     quickFacts: [
@@ -2956,7 +4891,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
           "So sinkt das Risiko für Fehlentscheidungen und falsche Vergleiche mit anderen Konsumformen."
         ],
         checklist: [
-          "Onset-Fenster nicht ueberversprechen",
+          "Onset-Fenster nicht überversprechen",
           "Produktfamilien getrennt erklären",
           "Redose-Hinweise klar formulieren"
         ]
@@ -2969,13 +4904,13 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: Tinktur",
-        text: "Fluessige Produktform, oft mit Tropfenanwendung und variabler Resorptionslogik."
+        text: "Flüssige Produktform, oft mit Tropfenanwendung und variabler Resorptionslogik."
       }
     ],
     faq: [
       {
         question: "Ist sublingual immer schneller als oral?",
-        answer: "Haeufig, aber nicht in jedem Fall gleich stark. Produkt und Anwendung machen einen Unterschied."
+        answer: "Häufig, aber nicht in jedem Fall gleich stark. Produkt und Anwendung machen einen Unterschied."
       },
       {
         question: "Warum reagieren Menschen so unterschiedlich?",
@@ -2998,13 +4933,13 @@ const expansionWikiArticles: TerpiraArticle[] = [
     readMinutes: 6,
     tags: ["Set", "Setting", "Harm Reduction", "Aufklärung"],
     keyTakeaways: [
-      "Produktprofil allein erklärt nicht, wie eine Erfahrung verlaeuft; Kontext und Erwartung spielen stark mit hinein.",
-      "Harm Reduction bedeutet auch, Situation, Timing und Begleitumstaende sauber zu planen.",
-      "Viele negative Erfahrungen entstehen durch Kontextfehler und nicht nur durch Produktstaerke."
+      "Produktprofil allein erklärt nicht, wie eine Erfahrung verläuft; Kontext und Erwartung spielen stark mit hinein.",
+      "Harm Reduction bedeutet auch, Situation, Timing und Begleitumstände sauber zu planen.",
+      "Viele negative Erfahrungen entstehen durch Kontextfehler und nicht nur durch Produktstärke."
     ],
     quickFacts: [
       { label: "Set", value: "Innere Verfassung" },
-      { label: "Setting", value: "Aeusserer Rahmen" },
+      { label: "Setting", value: "Äusserer Rahmen" },
       { label: "Praxis", value: "Kontext bewusst wählen" }
     ],
     sections: [
@@ -3012,7 +4947,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Warum Kontext so unterschätzt wird",
         content: [
           "Menschen bewerten Konsumerfahrungen oft nur über Potenz oder Sorte. Dabei können Stress, unbekannte Umgebung oder sozialer Druck entscheidend sein.",
-          "Eine gute Aufklaerungsseite muss diese Ebene sichtbar machen."
+          "Eine gute Aufklärungsseite muss diese Ebene sichtbar machen."
         ]
       },
       {
@@ -3035,7 +4970,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: Setting",
-        text: "Die aeussere Umgebung, also Ort, Menschen, Sicherheit und Umstaende rund um die Anwendung."
+        text: "Die äussere Umgebung, also Ort, Menschen, Sicherheit und Umstände rund um die Anwendung."
       }
     ],
     faq: [
@@ -3050,7 +4985,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     glossary: [
       { term: "Set", definition: "Innere psychische und emotionale Ausgangslage einer Person." },
-      { term: "Setting", definition: "Aeusserer Rahmen einer Erfahrung, etwa Ort, Menschen und Sicherheitslage." },
+      { term: "Setting", definition: "Äusserer Rahmen einer Erfahrung, etwa Ort, Menschen und Sicherheitslage." },
       { term: "Mischkonsum", definition: "Gleichzeitige oder nahe Kombination mehrerer psychoaktiver Stoffe." },
     ],
     relatedSlugs: ["inhalation-vs-edibles", "vaping-rauchen-und-verdampfen-vergleich", "thc-risiken-bei-jugendlichen"]
@@ -3065,7 +5000,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     tags: ["Bubble Hash", "Qualität", "Stabilität", "Bewertung"],
     keyTakeaways: [
       "Bubble Hash sollte über Reinheit, Stabilität und Chargenkontext bewertet werden, nicht nur über Szenevokabular.",
-      "Trocknung und Lagerung sind für die Produktintegritaet fast so wichtig wie die Trennung selbst.",
+      "Trocknung und Lagerung sind für die Produktintegrität fast so wichtig wie die Trennung selbst.",
       "Objektive Daten schlagen Rangbegriffe ohne Kontext."
     ],
     quickFacts: [
@@ -3077,19 +5012,19 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Was Bubble Hash professionell auszeichnet",
         content: [
-          "Fachlich relevant sind Reinheit, sensorische Klarheit, Lagerstabilitaet und Kontaminantenstatus. Szeneetiketten allein reichen nicht.",
+          "Fachlich relevant sind Reinheit, sensorische Klarheit, Lagerstabilität und Kontaminantenstatus. Szeneetiketten allein reichen nicht.",
           "Gerade bei hochwertigen Produkten entscheiden Nachbehandlung und Dokumentation über echte Vergleichbarkeit."
         ]
       },
       {
         heading: "Wo die typischen Fehlbewertungen liegen",
         content: [
-          "Begriffe aus Communities oder Shops klingen praezise, sind aber oft nicht standardisiert. Ohne Mess- und Chargenkontext bleiben sie begrenzt aussagekräftig.",
+          "Begriffe aus Communities oder Shops klingen präzise, sind aber oft nicht standardisiert. Ohne Mess- und Chargenkontext bleiben sie begrenzt aussagekräftig.",
           "Plattformen sollten daher eigene Bewertungskriterien definieren."
         ],
         checklist: [
           "Chargen-ID und Lagerbedingungen erfassen",
-          "Kontaminanten- und Stabilitaetsdaten einbeziehen",
+          "Kontaminanten- und Stabilitätsdaten einbeziehen",
           "Szenegrad nie ohne Kriterienliste verwenden"
         ]
       }
@@ -3111,15 +5046,15 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         question: "Warum ist Trocknung so wichtig?",
-        answer: "Weil sie Einfluss auf Haltbarkeit, Mikrobiologie und Profilintegritaet hat."
+        answer: "Weil sie Einfluss auf Haltbarkeit, Mikrobiologie und Profilintegrität hat."
       }
     ],
     glossary: [
       { term: "Reinheit", definition: "Grad, in dem ein Produkt frei von störenden oder unerwünschten Bestandteilen ist." },
       { term: "Chargenkontext", definition: "Alle Informationen rund um Herkunft, Prozess und Lagerung einer Charge." },
-      { term: "Integritaet", definition: "Erhalt der ursprünglichen und gewünschten Produkteigenschaften." },
+      { term: "Integrität", definition: "Erhalt der ursprünglichen und gewünschten Produkteigenschaften." },
     ],
-    relatedSlugs: ["hash-typen-vergleichen", "wasseraktivität-und-curing", "full-melt-und-marketingsprache"]
+    relatedSlugs: ["hash-typen-vergleichen", "wasseraktivitaet-und-curing", "full-melt-und-marketingsprache"]
   }),
   createArticle({
     slug: "rosin-einordnung-ohne-hype",
@@ -3130,7 +5065,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     readMinutes: 8,
     tags: ["Rosin", "Qualität", "Input", "Einordnung"],
     keyTakeaways: [
-      "Rosin ist keine automatische Qualitaetsgarantie; Endqualität hängt zuerst am Input-Material.",
+      "Rosin ist keine automatische Qualitätsgarantie; Endqualität hängt zuerst am Input-Material.",
       "Trendbegriffe verdecken oft, dass Stabilität, Reinheit und Chargenkonsistenz wichtiger sind.",
       "Für Aufklärung lohnt sich eine klare Trennung zwischen Technikbegriff und Produktqualität."
     ],
@@ -3141,10 +5076,10 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     sections: [
       {
-        heading: "Warum Rosin so oft ueberhoeht wird",
+        heading: "Warum Rosin so oft überhöht wird",
         content: [
-          "Der Begriff steht in vielen Communities für Hochwertigkeit. Das ist verstaendlich, aber fachlich zu kurz.",
-          "Ohne Blick auf Ausgangsmaterial, Prozesssauberkeit und Stabilität bleibt die Einordnung oberflaechlich."
+          "Der Begriff steht in vielen Communities für Hochwertigkeit. Das ist verständlich, aber fachlich zu kurz.",
+          "Ohne Blick auf Ausgangsmaterial, Prozesssauberkeit und Stabilität bleibt die Einordnung oberflächlich."
         ]
       },
       {
@@ -3167,12 +5102,12 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: Hype",
-        text: "Uebersteigerte Wahrnehmung eines Begriffs oder Produkts, die oft mehr Marketing als Einordnung ist."
+        text: "Übersteigerte Wahrnehmung eines Begriffs oder Produkts, die oft mehr Marketing als Einordnung ist."
       }
     ],
     faq: [
       {
-        question: "Ist Rosin immer loesungsmittelfrei?",
+        question: "Ist Rosin immer lösungsmittelfrei?",
         answer: "Der Begriff wird so verwendet, aber für die Gesamtbewertung bleiben Vorstufe und Prozesskontext trotzdem relevant."
       },
       {
@@ -3183,9 +5118,9 @@ const expansionWikiArticles: TerpiraArticle[] = [
     glossary: [
       { term: "Input-Material", definition: "Ausgangsprodukt, das die spätere Qualität eines Endprodukts mitbestimmt." },
       { term: "Nachbehandlung", definition: "Alle Schritte nach der eigentlichen Gewinnung oder Pressung, etwa Stabilisierung und Lagerung." },
-      { term: "Chargenkonsistenz", definition: "Wie aehnlich mehrere Chargen in relevanten Eigenschaften ausfallen." },
+      { term: "Chargenkonsistenz", definition: "Wie ähnlich mehrere Chargen in relevanten Eigenschaften ausfallen." },
     ],
-    relatedSlugs: ["hash-typen-vergleichen", "bubble-hash-qualitätskriterien", "full-melt-und-marketingsprache"]
+    relatedSlugs: ["hash-typen-vergleichen", "bubble-hash-qualitaetskriterien", "full-melt-und-marketingsprache"]
   }),
   createArticle({
     slug: "full-melt-und-marketingsprache",
@@ -3197,12 +5132,12 @@ const expansionWikiArticles: TerpiraArticle[] = [
     tags: ["Full Melt", "Marketing", "Klassifikation", "Content"],
     keyTakeaways: [
       "Viele Begriffe in Konzentratkategorien sind sprachlich stark, aber fachlich unscharf.",
-      "Gute Wissensseiten erklären Herkunft und Nutzung eines Begriffs, uebernehmen ihn aber nicht unkritisch als Qualitätsurteil.",
+      "Gute Wissensseiten erklären Herkunft und Nutzung eines Begriffs, übernehmen ihn aber nicht unkritisch als Qualitätsurteil.",
       "Ein Glossar mit Kriterienlogik verhindert Missverständnisse im Katalog."
     ],
     quickFacts: [
-      { label: "Thema", value: "Begriffsklaerung" },
-      { label: "Risiko", value: "Marketing als Qualitaetsersatz" },
+      { label: "Thema", value: "Begriffsklärung" },
+      { label: "Risiko", value: "Marketing als Qualitätsersatz" },
       { label: "Lösung", value: "Glossar plus Kriterienlogik" }
     ],
     sections: [
@@ -3216,8 +5151,8 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Wie Plattformen damit umgehen sollten",
         content: [
-          "Erkläre Begriffe, aber knuepfe Produktbewertung an nachvollziehbare Kriterien und nicht an Szeneetiketten.",
-          "Das reduziert Fehlkaeufe und macht Kataloge professioneller."
+          "Erkläre Begriffe, aber knüpfe Produktbewertung an nachvollziehbare Kriterien und nicht an Szeneetiketten.",
+          "Das reduziert Fehlkäufe und macht Kataloge professioneller."
         ],
         checklist: [
           "Jeden Szenebegriff im Glossar definieren",
@@ -3229,7 +5164,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Szenebegriff",
-        text: "Ein Ausdruck aus Community oder Handel, der oft mehr kulturelle als standardisierte technische Bedeutung traegt."
+        text: "Ein Ausdruck aus Community oder Handel, der oft mehr kulturelle als standardisierte technische Bedeutung trägt."
       },
       {
         title: "Kurz erklärt: Kriterienlogik",
@@ -3243,7 +5178,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         question: "Warum ist das für grosse Seiten wichtig?",
-        answer: "Weil unerklaerte Begriffe für Einsteiger irreführend sind und Kataloge uneinheitlich machen."
+        answer: "Weil unerklärte Begriffe für Einsteiger irreführend sind und Kataloge uneinheitlich machen."
       }
     ],
     glossary: [
@@ -3251,12 +5186,12 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Glossar", definition: "Sammlung definierter Begriffe zur einheitlichen Sprachverwendung." },
       { term: "Qualitätsurteil", definition: "Bewertung eines Produkts anhand nachvollziehbarer und relevanter Kriterien." },
     ],
-    relatedSlugs: ["hash-typen-vergleichen", "rosin-einordnung-ohne-hype", "bubble-hash-qualitätskriterien"]
+    relatedSlugs: ["hash-typen-vergleichen", "rosin-einordnung-ohne-hype", "bubble-hash-qualitaetskriterien"]
   }),
   createArticle({
     slug: "werbeaussagen-und-health-claims-cannabis",
     title: "Werbeaussagen und Health Claims bei Cannabis",
-    summary: "Wo Information aufhoert und problematische Gesundheitsversprechen beginnen und wie Content-Teams sicher formulieren.",
+    summary: "Wo Information aufhört und problematische Gesundheitsversprechen beginnen und wie Content-Teams sicher formulieren.",
     category: "recht",
     difficulty: "fortgeschritten",
     readMinutes: 7,
@@ -3283,11 +5218,11 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Wie Teams sicherer formulieren",
         content: [
           "Arbeite mit freigegebenen Formulierungsbausteinen, markiere Evidenzstufen und vermeide absolute Wirkzusagen.",
-          "So bleibt Aufklärung informativ, ohne unnoetiges regulatorisches Risiko aufzubauen."
+          "So bleibt Aufklärung informativ, ohne unnötiges regulatorisches Risiko aufzubauen."
         ],
         checklist: [
           "Claim-Liste mit erlaubten Formulierungen pflegen",
-          "Gesundheitsaussagen juristisch gegenpruefen",
+          "Gesundheitsaussagen juristisch gegenprüfen",
           "Marketing und Redaktion auf dieselben Regeln verpflichten"
         ]
       }
@@ -3305,7 +5240,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Darf ich Studien einfach zusammenfassen?",
-        answer: "Ja, aber ohne daraus unzulaessige Heilaussagen oder pauschale Produktversprechen abzuleiten."
+        answer: "Ja, aber ohne daraus unzulässige Heilaussagen oder pauschale Produktversprechen abzuleiten."
       },
       {
         question: "Warum reichen gute Quellen allein nicht aus?",
@@ -3314,10 +5249,10 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     glossary: [
       { term: "Health Claim", definition: "Gesundheitsbezogene Aussage über Nutzen oder Wirkung eines Produkts." },
-      { term: "Freigabeprozess", definition: "Standardisierter Pruefprozess vor Veröffentlichung eines Inhalts oder Produkts." },
-      { term: "Evidenzstufe", definition: "Einordnung, wie belastbar eine Aussage durch Forschung abgestuetzt ist." },
+      { term: "Freigabeprozess", definition: "Standardisierter Prüfprozess vor Veröffentlichung eines Inhalts oder Produkts." },
+      { term: "Evidenzstufe", definition: "Einordnung, wie belastbar eine Aussage durch Forschung abgestützt ist." },
     ],
-    relatedSlugs: ["rechtliche-grundlagen-dach", "cannabinoide-und-evidenz", "cbd-und-angststörungen-einordnung"]
+    relatedSlugs: ["rechtliche-grundlagen-dach", "cannabinoide-und-evidenz", "cbd-und-angststoerungen-einordnung"]
   }),
   createArticle({
     slug: "dokumentationspflichten-fuer-chargen",
@@ -3328,13 +5263,13 @@ const expansionWikiArticles: TerpiraArticle[] = [
     readMinutes: 7,
     tags: ["Chargen", "Dokumentation", "Rückverfolgung", "Compliance"],
     keyTakeaways: [
-      "Gute Chargendokumentation schuetzt nicht nur rechtlich, sondern verbessert auch Qualitaetsarbeit.",
+      "Gute Chargendokumentation schützt nicht nur rechtlich, sondern verbessert auch Qualitätsarbeit.",
       "Ohne Rückverfolgung werden Reklamationen, Sperrungen und Audits schnell teuer und chaotisch.",
       "Digitale und klare Datenstrukturen zahlen sich früh aus."
     ],
     quickFacts: [
       { label: "Pflicht", value: "Eindeutige Chargen-ID" },
-      { label: "Nutzen", value: "Rueckruf- und Auditfähigkeit" },
+      { label: "Nutzen", value: "Rückruf- und Auditfähigkeit" },
       { label: "Fehlerquelle", value: "Unverbundene Einzeldokumente" }
     ],
     sections: [
@@ -3361,11 +5296,11 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Rückverfolgung",
-        text: "Faehigkeit, Ursprung, Weg und Status einer Charge vom Eingang bis zur Ausgabe nachzuvollziehen."
+        text: "Fähigkeit, Ursprung, Weg und Status einer Charge vom Eingang bis zur Ausgabe nachzuvollziehen."
       },
       {
         title: "Kurz erklärt: Auditfähigkeit",
-        text: "Wie schnell und sauber sich ein Prozess oder Datensatz gegenüber Pruefern belegen lässt."
+        text: "Wie schnell und sauber sich ein Prozess oder Datensatz gegenüber Prüfern belegen lässt."
       }
     ],
     faq: [
@@ -3381,9 +5316,9 @@ const expansionWikiArticles: TerpiraArticle[] = [
     glossary: [
       { term: "Chargen-ID", definition: "Eindeutige Kennung für eine definierte Produktmenge innerhalb eines Prozesses." },
       { term: "Rückverfolgung", definition: "Systematische Nachverfolgbarkeit von Herkunft, Bewegung und Status eines Produkts." },
-      { term: "Audit", definition: "Formalisierte Prüfung von Prozessen, Daten oder Regeln auf Konformitaet und Wirksamkeit." },
+      { term: "Audit", definition: "Formalisierte Prüfung von Prozessen, Daten oder Regeln auf Konformität und Wirksamkeit." },
     ],
-    relatedSlugs: ["rechtliche-grundlagen-dach", "batch-release-und-freigabekriterien", "recall-und-sperrprozesse-für-chargen"]
+    relatedSlugs: ["rechtliche-grundlagen-dach", "batch-release-und-freigabekriterien", "recall-und-sperrprozesse-fuer-chargen"]
   }),
   createArticle({
     slug: "gmp-gdp-und-qualitaetssysteme",
@@ -3396,7 +5331,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "GMP und GDP sind keine Buzzwords, sondern Prozesslogiken mit konkreten Auswirkungen auf Dokumentation und Verantwortung.",
       "Qualitätssysteme werden erst wirksam, wenn Rollen, Daten und Freigaben zusammenpassen.",
-      "Für Aufklaerungsseiten lohnt ein klares Glossar statt vager Abkuerzungsnutzung."
+      "Für Aufklärungsseiten lohnt ein klares Glossar statt vager Abkürzungsnutzung."
     ],
     quickFacts: [
       { label: "GMP", value: "Herstellungs- und Prozesskontrolle" },
@@ -3407,7 +5342,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Warum diese Begriffe so oft falsch verwendet werden",
         content: [
-          "In vielen Texten werden GMP oder GDP als bloes Qualitätslabel genutzt, ohne die dahinterliegenden Anforderungen zu erklären.",
+          "In vielen Texten werden GMP oder GDP als bloß Qualitätslabel genutzt, ohne die dahinterliegenden Anforderungen zu erklären.",
           "Das hilft weder Nutzern noch Teams, die reale Prozesse verstehen müssen."
         ]
       },
@@ -3418,7 +5353,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
           "Ein gutes Wiki erklärt diese Begriffe über Funktionen, nicht über leere Prestigeformeln."
         ],
         checklist: [
-          "Abkuerzungen immer ausschreiben",
+          "Abkürzungen immer ausschreiben",
           "Praxisbezug über Prozesse herstellen",
           "Begriffe im Glossar konsistent verwenden"
         ]
@@ -3449,75 +5384,123 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "GDP", definition: "Good Distribution Practice, Rahmen für sichere Lagerung und Distribution." },
       { term: "Qualitätssystem", definition: "Gesamtheit aus Regeln, Rollen, Daten und Prozessen zur Sicherung definierter Standards." },
     ],
-    relatedSlugs: ["rechtliche-grundlagen-dach", "dokumentationspflichten-für-chargen", "batch-release-und-freigabekriterien"]
+    relatedSlugs: ["rechtliche-grundlagen-dach", "dokumentationspflichten-fuer-chargen", "batch-release-und-freigabekriterien"]
   }),
-  createArticle({
+  {
     slug: "schimmel-und-mykotoxine-bei-cannabis",
     title: "Schimmel und Mykotoxine bei Cannabis",
-    summary: "Warum mikrobiologische Sicherheit nicht an der sichtbaren Blüte endet und welche Informationsluecken besonders riskant sind.",
+    summary: "Warum mikrobiologische Sicherheit nicht an der sichtbaren Blüte endet und welche Informationslücken besonders riskant sind.",
     category: "sicherheit",
     difficulty: "fortgeschritten",
-    readMinutes: 8,
+    readMinutes: 10,
+    lastUpdated: "2026-08-03",
     tags: ["Schimmel", "Mykotoxine", "Mikrobiologie", "Sicherheit"],
     keyTakeaways: [
-      "Nicht jeder mikrobielle Risikofall ist mit blossem Auge sichtbar.",
-      "Feuchtefuehrung, Trocknung und Lagerung entscheiden mit über mikrobiologische Stabilität.",
-      "Sicherheitskommunikation muss klarer sein als reine Sichtpruefung."
+      "Wasseraktivität (aw), nicht der reine Feuchtigkeitsgehalt, ist der entscheidende Treiber für mikrobielles Wachstum — Trockengut kann optisch trocken wirken und trotzdem eine für Schimmel kritische aw aufweisen.",
+      "Ein einzelnes welkes Blättchen tief im Inneren einer dichten Knospe ist oft das früheste sichtbare Zeichen von Botrytis-Knospenfäule — deutlich vor äußerlich erkennbarem Schimmelbefall.",
+      "Mykotoxine sind Stoffwechselprodukte bestimmter Schimmelpilze und bleiben auch nach dem Absterben oder Entfernen des sichtbaren Pilzmyzels im Produkt — Sichtkontrolle allein kann sie nicht ausschließen."
     ],
     quickFacts: [
-      { label: "Gefahr", value: "Unsichtbare mikrobiologische Belastung" },
-      { label: "Hebel", value: "aw, Trocknung, Lagerung" },
-      { label: "Pflicht", value: "Labor plus Prozessdaten" }
+      { label: "Sichere Lager-aw", value: "< 0.65" },
+      { label: "Kritischer aw-Bereich Aspergillus", value: "≈ 0.75–0.80" },
+      { label: "Ziel-RH Trocknung", value: "55–65 %, 18–21 °C" },
+      { label: "Frühsignal Botrytis", value: "Einzelnes welkes Blättchen im Knospeninneren" }
     ],
     sections: [
       {
-        heading: "Warum Sichtkontrolle nicht reicht",
+        heading: "Definition und Einordnung",
         content: [
-          "Schimmel oder toxinbezogene Risiken können bereits relevant sein, ohne dass ein Produkt für Laien eindeutig auffaellig aussieht.",
-          "Deshalb sind Laborwerte und Prozesshistorie für seriöse Bewertung unverzichtbar."
+          "Mikrobiologische Sicherheit bei Cannabis umfasst zwei getrennte Risikoebenen: sichtbaren Schimmelbefall (Myzel, Sporen) und unsichtbare Mykotoxine — von Schimmelpilzen gebildete Sekundärmetabolite, die auch nach Entfernen des Pilzes im Produkt verbleiben.",
+          "Beide Risiken sind eng mit der Wasseraktivität (aw) verknüpft, einem Maß für den Anteil des Wassers im Produkt, der tatsächlich für mikrobielles Wachstum verfügbar ist — unabhängig vom reinen Feuchtigkeitsgehalt."
         ]
       },
       {
-        heading: "Wo Prävention ansetzt",
+        heading: "Wissenschaftlicher Hintergrund",
         content: [
-          "Kontrollierte Trocknung, stabile Lagerung und klare Sperrlogik reduzieren das Risiko deutlich. Gleichzeitig müssen Hinweise für Teams praktisch umsetzbar bleiben.",
-          "Gerade nach der Ernte ist saubere Prozessführung entscheidend."
+          "Botrytis cinerea (Grauschimmel/Knospenfäule) befällt bevorzugt dichte, schlecht durchlüftete Blütenstrukturen von innen nach außen — sichtbarer Oberflächenbefall ist meist ein spätes Stadium, nicht der Beginn der Infektion.",
+          "Aspergillus- und Penicillium-Arten sind die relevantesten Mykotoxin-Bildner bei Cannabis; ihr Wachstumsrisiko steigt deutlich, sobald die Wasseraktivität über etwa 0.70–0.75 liegt, unabhängig davon, wie trocken das Material äußerlich wirkt."
+        ]
+      },
+      {
+        heading: "Wasseraktivität als zentraler Kontrollparameter",
+        content: [
+          "Wasseraktivität (aw) misst den Dampfdruck des Wassers im Produkt relativ zu reinem Wasser (Skala 0–1) — sie unterscheidet sich vom Feuchtigkeitsgehalt in Prozent, weil sie nur das für Mikroorganismen tatsächlich nutzbare Wasser erfasst.",
+          "Unterhalb von aw 0.65 ist das Wachstum der meisten für Cannabis relevanten Schimmelpilze stark gehemmt — dieser Wert gilt als praktische Zielobergrenze für sichere Lagerung.",
+          "Cannabis kann bei falscher Trocknung außen bereits knusprig trocken wirken, während der Kern der Blüte noch eine deutlich höhere, mikrobiologisch kritische aw aufweist."
+        ]
+      },
+      {
+        heading: "Diagnose: sichtbarer Befall vs. unsichtbares Risiko",
+        content: [
+          "Sichtbare Botrytis-Frühsignale: ein einzelnes, welkes, verfärbtes Blättchen tief im Inneren einer dichten Knospe, während die Außenseite noch unauffällig wirkt — bei Verdacht die Knospe vorsichtig öffnen und das Zentrum prüfen.",
+          "Mykotoxin-Risiko ist visuell NICHT zuverlässig einschätzbar: Geruch und Optik geben Hinweise, ersetzen aber keine Labormessung, da Toxine auch nach dem Absterben des sichtbaren Pilzmyzels im Gewebe verbleiben können.",
+          "Eine belastbare Risikobewertung kombiniert deshalb immer Sichtkontrolle, aw-Messung und — bei Auffälligkeiten oder für den professionellen Kontext — Labordaten."
         ],
         checklist: [
-          "aw und Temperatur im Nachernteprozess dokumentieren",
-          "Auffällige Chargen sofort sperren",
-          "Mikrobiologische Daten nicht isoliert lesen"
+          "Stichprobenartig Knospen aus dem dichtesten Bereich der Pflanze öffnen und das Zentrum auf welke Blättchen prüfen",
+          "aw und Temperatur im Nachernteprozess laufend dokumentieren, nicht nur einmalig am Ende",
+          "Auffällige Chargen sofort isolieren, statt sie mit unauffälligem Material zu vermischen"
+        ]
+      },
+      {
+        heading: "Prävention über Trocknung und Lagerung",
+        content: [
+          "Kontrollierte Trocknung bei 55–65 % relativer Luftfeuchte und 18–21 °C über 7–14 Tage senkt die aw gleichmäßig, ohne durch zu schnelle Trocknung Terpene übermäßig zu verlieren.",
+          "Curing (kontrolliertes Nachreifen in verschlossenen Behältern mit periodischem 'Burping') stabilisiert die aw im gesamten Blütenvolumen, nicht nur an der Oberfläche.",
+          "Lagerung deutlich unter aw 0.65 in dicht schließenden, lichtgeschützten Behältern hält das mikrobielle Risiko über Wochen bis Monate niedrig."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Sich allein auf Geruch oder Optik verlassen und die aw-Messung als überflüssig betrachten.",
+          "Zu schnell bei zu niedriger Luftfeuchte trocknen — das senkt zwar die aw rasch, verschließt aber oft die äußere Schicht, bevor der Kern nachgezogen ist, und verschleiert so ein inneres Feuchtigkeitsproblem.",
+          "Auffällige Einzelknospen entfernen, aber die restliche Charge ohne aw-Kontrolle als 'sicher' einstufen."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "In professionellen Kontexten ergänzen Interlaborvergleiche und Ringtests die eigene aw-/Sichtkontrolle, um systematische Messfehler einzelner Labore aufzudecken.",
+          "Batch-Release-Kriterien, die aw-Grenzwerte mit mikrobiologischen Laborwerten kombinieren, sind belastbarer als jedes Einzelkriterium allein."
         ]
       }
+    ],
+    warnings: [
+      "Mykotoxine bleiben auch nach Entfernen des sichtbaren Schimmelbefalls im Produkt — eine betroffene Charge durch Wegschneiden auffälliger Stellen 'retten' zu wollen, ist mikrobiologisch nicht sicher."
     ],
     simpleExplainers: [
       {
         title: "Kurz erklärt: Mykotoxine",
-        text: "Stoffwechselprodukte bestimmter Pilze, die gesundheitlich relevant sein können."
+        text: "Stoffwechselprodukte bestimmter Schimmelpilze, die gesundheitlich relevant sein können und auch nach dem Absterben des sichtbaren Pilzes im Produkt verbleiben."
       },
       {
-        title: "Kurz erklärt: mikrobiologische Stabilität",
-        text: "Wie gut ein Produkt gegen unerwuenschtes Wachstum von Mikroorganismen abgesichert ist."
+        title: "Kurz erklärt: Wasseraktivität (aw)",
+        text: "Ein Maß dafür, wie viel Wasser in einem Produkt tatsächlich für mikrobielles Wachstum verfügbar ist — nicht dasselbe wie der Feuchtigkeitsgehalt in Prozent."
       }
     ],
     faq: [
       {
         question: "Riecht Schimmel immer muffig?",
-        answer: "Nicht immer eindeutig. Geruch kann Hinweise liefern, ersetzt aber keine Bewertung über Daten und Prozesskontext."
+        answer: "Nicht zuverlässig. Geruch kann Hinweise liefern, ersetzt aber keine Bewertung über aw-Messung und Prozesskontext — frühe Botrytis-Infektionen im Knospeninneren riechen oft noch unauffällig."
       },
       {
-        question: "Warum ist aw hier so wichtig?",
-        answer: "Weil freies Wasser ein zentraler Treiber für mikrobielles Wachstum und Produktinstabilitaet ist."
+        question: "Warum ist aw wichtiger als der Feuchtigkeitsgehalt in Prozent?",
+        answer: "Weil nicht die absolute Wassermenge, sondern nur das mikrobiologisch verfügbare Wasser das Pilzwachstum antreibt. Zwei Proben mit gleichem Feuchtigkeitsgehalt können deutlich unterschiedliche aw-Werte und damit unterschiedliches Risiko haben."
+      },
+      {
+        question: "Kann ich eine betroffene Knospe retten, indem ich den auffälligen Teil wegschneide?",
+        answer: "Nicht sicher. Mykotoxine können sich bereits im umliegenden, optisch unauffälligen Gewebe befinden — bei Verdacht auf Botrytis-Befall sollte die gesamte betroffene Einheit als Risiko behandelt werden."
       }
     ],
     glossary: [
-      { term: "Mykotoxin", definition: "Von bestimmten Pilzen gebildeter Stoff mit potenziell gesundheitsschaedlicher Wirkung." },
-      { term: "Mikrobiologie", definition: "Bereich der Wissenschaft, der Mikroorganismen und ihre Eigenschaften untersucht." },
-      { term: "Sperrlogik", definition: "Regelwerk, wann Produkte wegen Risiken gestoppt oder isoliert werden."
-      },
+      { term: "Mykotoxin", definition: "Von bestimmten Pilzen gebildeter Stoff mit potenziell gesundheitsschädlicher Wirkung, der auch nach Absterben des Pilzes im Produkt verbleiben kann." },
+      { term: "Wasseraktivität (aw)", definition: "Maß für den Anteil des Wassers in einem Produkt, der für mikrobielles Wachstum tatsächlich verfügbar ist, skaliert von 0 bis 1." },
+      { term: "Curing", definition: "Kontrolliertes Nachreifen getrockneter Blüten in verschlossenen Behältern zur Stabilisierung von Feuchtigkeit und Terpenprofil." }
     ],
-    relatedSlugs: ["wasseraktivität-und-curing", "pgr-und-kontaminanten", "recall-und-sperrprozesse-für-chargen"]
-  }),
+    sourceIds: ["punja-cannabis-pathogens", "botrytis-grey-mold-review", "food-control-water-activity-microbiology"],
+    relatedSlugs: ["wasseraktivitaet-und-curing", "pgr-und-kontaminanten", "recall-und-sperrprozesse-fuer-chargen"]
+  },
   createArticle({
     slug: "schwere-metalle-und-aufnahmewege",
     title: "Schwere Metalle und Aufnahmewege",
@@ -3547,8 +5530,8 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Wie man Risiko realistisch einordnet",
         content: [
-          "Für faire Kommunikation müssen Konsumweg, Matrix und Nutzungshaeufigkeit mitgedacht werden.",
-          "Nur so entsteht eine Einordnung, die weder bagatellisiert noch unnnoetig dramatisiert."
+          "Für faire Kommunikation müssen Konsumweg, Matrix und Nutzungshäufigkeit mitgedacht werden.",
+          "Nur so entsteht eine Einordnung, die weder bagatellisiert noch unnötig dramatisiert."
         ],
         checklist: [
           "Rohstoff- und Endproduktdaten verbinden",
@@ -3587,7 +5570,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
   createArticle({
     slug: "pestizidklassen-und-rueckstandsrisiken",
     title: "Pestizidklassen und Rückstandsrisiken",
-    summary: "Eine Einordnung der wichtigsten Stoffgruppen, warum Listen allein nicht genuegen und wie Rueckstandsberichte gelesen werden sollten.",
+    summary: "Eine Einordnung der wichtigsten Stoffgruppen, warum Listen allein nicht genügen und wie Rückstandsberichte gelesen werden sollten.",
     category: "sicherheit",
     difficulty: "fortgeschritten",
     readMinutes: 8,
@@ -3604,14 +5587,14 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     sections: [
       {
-        heading: "Warum Rueckstandslisten oft zu simpel gelesen werden",
+        heading: "Warum Rückstandslisten oft zu simpel gelesen werden",
         content: [
           "Eine Liste mit vielen Namen wirkt eindrucksvoll, sagt aber wenig, wenn Nachweisgrenzen, Methoden und relevante Stoffe unklar bleiben.",
-          "Für seriöse Bewertung braucht es mehr als ein gruenes Haekchen."
+          "Für seriöse Bewertung braucht es mehr als ein grünes Häkchen."
         ]
       },
       {
-        heading: "Wie ein sauberer Rueckstandscheck aussieht",
+        heading: "Wie ein sauberer Rückstandscheck aussieht",
         content: [
           "Prüfe Stoffabdeckung, Grenzwerte, Methode, Chargenbezug und Testfrequenz. Erst dann wird aus Daten ein Sicherheitsurteil.",
           "Das gilt für Plattformen genauso wie für Einkaufsteams."
@@ -3626,11 +5609,11 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Panelabdeckung",
-        text: "Welche Stoffe oder Stoffgruppen ein Laborbericht tatsächlich ueberhaupt testet."
+        text: "Welche Stoffe oder Stoffgruppen ein Laborbericht tatsächlich überhaupt testet."
       },
       {
         title: "Kurz erklärt: Nachweisgrenze",
-        text: "Kleinste Menge, die ein Labor mit der gewaehlten Methode noch sicher erkennen kann."
+        text: "Kleinste Menge, die ein Labor mit der gewählten Methode noch sicher erkennen kann."
       }
     ],
     faq: [
@@ -3644,7 +5627,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       }
     ],
     glossary: [
-      { term: "Rueckstand", definition: "Im Produkt verbliebene Menge eines unerwünschten oder regulierten Stoffes." },
+      { term: "Rückstand", definition: "Im Produkt verbliebene Menge eines unerwünschten oder regulierten Stoffes." },
       { term: "Panelabdeckung", definition: "Umfang der im Labor untersuchten Stoffe oder Stoffgruppen." },
       { term: "Nachweisgrenze", definition: "Kleinste noch detektierbare Stoffmenge einer Methode." },
     ],
@@ -3653,7 +5636,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
   createArticle({
     slug: "recall-und-sperrprozesse-fuer-chargen",
     title: "Recall- und Sperrprozesse für Chargen",
-    summary: "Wie Produkte bei Verdachtsfaellen kontrolliert gestoppt, bewertet und kommuniziert werden sollten.",
+    summary: "Wie Produkte bei Verdachtsfällen kontrolliert gestoppt, bewertet und kommuniziert werden sollten.",
     category: "sicherheit",
     difficulty: "profi",
     readMinutes: 8,
@@ -3680,7 +5663,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Was ein belastbarer Ablauf braucht",
         content: [
           "Sperrstatus, Entscheidungswege, Kommunikationsvorlagen und CAPA-Folgen müssen verbunden sein. Nur dann lässt sich professionell reagieren.",
-          "Auch auf einer Wissensseite ist das ein zentraler Drop-Artikel für B2B- und Qualitaetskontext."
+          "Auch auf einer Wissensseite ist das ein zentraler Drop-Artikel für B2B- und Qualitätskontext."
         ],
         checklist: [
           "Sperrstatus systemisch abbilden",
@@ -3696,7 +5679,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: CAPA",
-        text: "Corrective and Preventive Actions, also Massnahmen zur Fehlerbehebung und Vorbeugung kuenftiger Wiederholungen."
+        text: "Corrective and Preventive Actions, also Massnahmen zur Fehlerbehebung und Vorbeugung künftiger Wiederholungen."
       }
     ],
     faq: [
@@ -3714,12 +5697,12 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Sperrstatus", definition: "Markierung, dass eine Charge nicht weiter verteilt oder verwendet werden darf." },
       { term: "CAPA", definition: "Systematischer Ansatz für Korrektur- und Vorbeugemassnahmen nach Abweichungen." },
     ],
-    relatedSlugs: ["dokumentationspflichten-für-chargen", "batch-release-und-freigabekriterien", "schimmel-und-mykotoxine-bei-cannabis"]
+    relatedSlugs: ["dokumentationspflichten-fuer-chargen", "batch-release-und-freigabekriterien", "schimmel-und-mykotoxine-bei-cannabis"]
   }),
   createArticle({
     slug: "batch-release-und-freigabekriterien",
     title: "Batch Release und Freigabekriterien",
-    summary: "Welche Pruefpunkte vor einer Freigabe sinnvoll sind und warum Freigaben mehr als nur ein COA brauchen.",
+    summary: "Welche Prüfpunkte vor einer Freigabe sinnvoll sind und warum Freigaben mehr als nur ein COA brauchen.",
     category: "qualitaet",
     difficulty: "fortgeschritten",
     readMinutes: 8,
@@ -3732,7 +5715,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     quickFacts: [
       { label: "Pflicht", value: "Freigabekatalog" },
       { label: "Mehr als COA", value: "Auch Historie und Zustand" },
-      { label: "Nutzen", value: "Skalierbare Qualitaetsentscheidungen" }
+      { label: "Nutzen", value: "Skalierbare Qualitätsentscheidungen" }
     ],
     sections: [
       {
@@ -3762,7 +5745,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: Grenzfall",
-        text: "Charge oder Befund, der nicht klar im Gruenbereich liegt und deshalb besondere Prüfung braucht."
+        text: "Charge oder Befund, der nicht klar im Grünbereich liegt und deshalb besondere Prüfung braucht."
       }
     ],
     faq: [
@@ -3778,9 +5761,9 @@ const expansionWikiArticles: TerpiraArticle[] = [
     glossary: [
       { term: "Batch Release", definition: "Freigabe einer Charge nach Prüfung definierter Kriterien." },
       { term: "Freigabekatalog", definition: "Sammlung aller Kriterien, die für eine Freigabe geprüft werden müssen." },
-      { term: "Revisionssicher", definition: "So dokumentiert, dass Aenderungen nachvollziehbar und belastbar bleiben." },
+      { term: "Revisionssicher", definition: "So dokumentiert, dass Änderungen nachvollziehbar und belastbar bleiben." },
     ],
-    relatedSlugs: ["coa-richtig-lesen", "dokumentationspflichten-für-chargen", "recall-und-sperrprozesse-für-chargen"]
+    relatedSlugs: ["coa-richtig-lesen", "dokumentationspflichten-fuer-chargen", "recall-und-sperrprozesse-fuer-chargen"]
   }),
   createArticle({
     slug: "lagerung-verpackung-und-lichtschutz",
@@ -3793,7 +5776,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "Produktqualität endet nicht beim COA, sondern hängt stark an Lagerung und Packmittelwahl.",
       "Licht, Sauerstoff und Temperatur beeinflussen Profil und Haltbarkeit deutlich.",
-      "Gute Verpackung ist Teil des Qualitaetssystems, nicht nur Marketing."
+      "Gute Verpackung ist Teil des Qualitätssystems, nicht nur Marketing."
     ],
     quickFacts: [
       { label: "Feinde", value: "Licht, Sauerstoff, Wärme" },
@@ -3802,7 +5785,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     sections: [
       {
-        heading: "Warum Verpackung mehr ist als Huelle",
+        heading: "Warum Verpackung mehr ist als Hülle",
         content: [
           "Packmittel bestimmen mit, wie stabil Aroma, Wirkstoffprofil und mikrobiologische Sicherheit über Zeit bleiben.",
           "Gerade bei hochwertigen Produkten ist das ein direkter Qualitätshebel."
@@ -3812,10 +5795,10 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Welche Fragen gute Lagerung beantwortet",
         content: [
           "Wie alt ist die Charge, wie wurde sie transportiert und war sie Licht oder Hitze ausgesetzt? Diese Punkte sollten nie unsichtbar bleiben.",
-          "Erst zusammen mit Reklamationen und Analytik entsteht ein lernfaehiges System."
+          "Erst zusammen mit Reklamationen und Analytik entsteht ein lernfähiges System."
         ],
         checklist: [
-          "Packmittel nach Produktklasse auswaehlen",
+          "Packmittel nach Produktklasse auswählen",
           "Lager- und Transportbedingungen dokumentieren",
           "Profilverlust mit Packmitteltests vergleichen"
         ]
@@ -3846,7 +5829,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Lichtschutz", definition: "Eigenschaft eines Materials oder Systems, die Lichteinwirkung reduziert." },
       { term: "Haltbarkeit", definition: "Zeitspanne, in der definierte Produkteigenschaften erhalten bleiben sollen." },
     ],
-    relatedSlugs: ["wasseraktivität-und-curing", "lagerung-und-terpenverlust-vermeiden", "thc-zu-cbn-abbau-und-oxidation"]
+    relatedSlugs: ["wasseraktivitaet-und-curing", "lagerung-und-terpenverlust-vermeiden", "thc-zu-cbn-abbau-und-oxidation"]
   }),
   createArticle({
     slug: "sampling-und-probenahme-fehler",
@@ -3858,8 +5841,8 @@ const expansionWikiArticles: TerpiraArticle[] = [
     tags: ["Sampling", "Probenahme", "Labor", "Bias"],
     keyTakeaways: [
       "Ein schlechtes Sampling kann gute Analytik unbrauchbar machen.",
-      "Probenmuessen Charge, Heterogenität und Ziel der Fragestellung realistisch abbilden.",
-      "Vergleichbarkeit beginnt vor dem Messgeraet."
+      "Proben müssen Charge, Heterogenität und Ziel der Fragestellung realistisch abbilden.",
+      "Vergleichbarkeit beginnt vor dem Messgerät."
     ],
     quickFacts: [
       { label: "Kernpunkt", value: "Repräsentative Probe" },
@@ -3871,7 +5854,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Warum Probenahme so oft unterschätzt wird",
         content: [
           "Viele Diskussionen über Analytik drehen sich um Methoden, obwohl der Fehler bereits bei der Entnahme beginnen kann.",
-          "Wenn eine Probe die Charge schlecht repraesentiert, helfen selbst exzellente Labore nur begrenzt."
+          "Wenn eine Probe die Charge schlecht repräsentiert, helfen selbst exzellente Labore nur begrenzt."
         ]
       },
       {
@@ -3909,10 +5892,10 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     glossary: [
       { term: "Sampling", definition: "Systematische Entnahme von Proben zur späteren Analyse." },
-      { term: "Repraesentativ", definition: "Die reale Zusammensetzung einer Charge angemessen widerspiegelnd." },
+      { term: "Repräsentativ", definition: "Die reale Zusammensetzung einer Charge angemessen widerspiegelnd." },
       { term: "Heterogenität", definition: "Unterschiedlichkeit innerhalb einer Charge oder eines Produkts." },
     ],
-    relatedSlugs: ["coa-richtig-lesen", "analytik-hplc-vs-gc-bei-cannabinoiden", "pestizidklassen-und-rückstandsrisiken"]
+    relatedSlugs: ["coa-richtig-lesen", "analytik-hplc-vs-gc-bei-cannabinoiden", "pestizidklassen-und-rueckstandsrisiken"]
   }),
   createArticle({
     slug: "lieferkette-und-rueckverfolgbarkeit",
@@ -3936,7 +5919,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Warum Lieferkettenwissen Marktmacht ist",
         content: [
-          "Wenn Herkunft und Nachweise sichtbar sind, sinken Informationsasymmetrien für Nutzer und Teams. Das staerkt die Plattformqualität direkt.",
+          "Wenn Herkunft und Nachweise sichtbar sind, sinken Informationsasymmetrien für Nutzer und Teams. Das stärkt die Plattformqualität direkt.",
           "Fehlende Transparenz erzeugt dagegen Misstrauen, selbst wenn Produkte gut sein können."
         ]
       },
@@ -3966,11 +5949,11 @@ const expansionWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Muss ich jeden Partner offenlegen?",
-        answer: "Nicht immer oeffentlich, aber intern muss die Kette für Qualität und Compliance nachvollziehbar sein."
+        answer: "Nicht immer öffentlich, aber intern muss die Kette für Qualität und Compliance nachvollziehbar sein."
       },
       {
         question: "Warum hilft das auch im Marketing?",
-        answer: "Weil nachweisbare Transparenz glaubwuerdiger ist als reine Herkunftsclaims."
+        answer: "Weil nachweisbare Transparenz glaubwürdiger ist als reine Herkunftsclaims."
       }
     ],
     glossary: [
@@ -3978,7 +5961,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Transparenz", definition: "Nachvollziehbarkeit relevanter Informationen für Bewertung und Entscheidung." },
       { term: "Statushistorie", definition: "Zeitliche Dokumentation, wie sich der Zustand einer Charge über den Prozess verändert hat." },
     ],
-    relatedSlugs: ["markttransparenz-und-preise", "dokumentationspflichten-für-chargen", "white-label-und-qualitätsrisiken"]
+    relatedSlugs: ["markttransparenz-und-preise", "dokumentationspflichten-fuer-chargen", "white-label-und-qualitaetsrisiken"]
   }),
   createArticle({
     slug: "white-label-und-qualitaetsrisiken",
@@ -4013,7 +5996,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
           "Deshalb braucht White Label eher mehr Governance, nicht weniger."
         ],
         checklist: [
-          "Verantwortlichkeiten vertraglich und operativ klaeren",
+          "Verantwortlichkeiten vertraglich und operativ klären",
           "Freigabekriterien mit Lieferanten verbindlich machen",
           "Rückverfolgbarkeit nicht an Partner delegieren"
         ]
@@ -4032,7 +6015,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Ist White Label automatisch weniger hochwertig?",
-        answer: "Nein. Entscheidend sind Kontrolle, Nachweise und konsequente Qualitaetsfuehrung."
+        answer: "Nein. Entscheidend sind Kontrolle, Nachweise und konsequente Qualitätsführung."
       },
       {
         question: "Warum ist Transparenz hier so wichtig?",
@@ -4044,74 +6027,118 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Governance", definition: "Regelwerk aus Verantwortung, Kontrolle und Entscheidungsstruktur." },
       { term: "Spezifikation", definition: "Verbindliche Beschreibung der erwarteten Produkt- und Prozessmerkmale." },
     ],
-    relatedSlugs: ["markttransparenz-und-preise", "lieferkette-und-rückverfolgbarkeit", "batch-release-und-freigabekriterien"]
+    relatedSlugs: ["markttransparenz-und-preise", "lieferkette-und-rueckverfolgbarkeit", "batch-release-und-freigabekriterien"]
   }),
-  createArticle({
+  {
     slug: "grow-log-und-kpi-dashboard",
     title: "Grow-Log und KPI-Dashboard aufbauen",
     summary: "Welche Kennzahlen für Wiederholbarkeit wirklich helfen und wie aus Beobachtung ein steuerbares System wird.",
     category: "werkzeuge",
     difficulty: "fortgeschritten",
-    readMinutes: 8,
+    readMinutes: 10,
+    lastUpdated: "2026-08-03",
     tags: ["Grow Log", "KPI", "Dashboard", "Daten"],
     keyTakeaways: [
-      "Ohne strukturierte Daten bleibt jeder Run nur Erfahrung, nicht Systemwissen.",
-      "Ein gutes Dashboard zeigt wenige, aber entscheidende Kennzahlen mit Trendbezug.",
-      "KPIs müssen an Entscheidungen gekoppelt sein, sonst werden sie nur Deko."
+      "Ohne strukturierte, zeitlich verknüpfte Daten bleibt jeder Run isolierte Erfahrung — Ursache (z. B. EC-Spitze) und Wirkung (z. B. Symptom drei Tage später) lassen sich nachträglich nur bei durchgängigem Log korrekt zuordnen.",
+      "Eine einzelne auffällige Korrelation in einem Run beweist keine Kausalität — erst über mehrere Runs mit konstant gehaltenen Variablen wird ein Muster belastbar.",
+      "Wenige, konsequent verfolgte Kern-KPIs mit klarer Reaktionslogik liefern mehr Steuerungswert als ein überladenes Dashboard ohne definierte Schwellenwerte."
     ],
     quickFacts: [
-      { label: "Ziel", value: "Wiederholbarkeit" },
-      { label: "Wichtig", value: "Trends statt Einzelzahlen" },
-      { label: "Pflicht", value: "Klare Owner je KPI" }
+      { label: "Ziel", value: "Wiederholbarkeit über Runs" },
+      { label: "Kernkategorien", value: "Klima, Bewässerung, Wachstum, Outcome" },
+      { label: "Pflicht", value: "Zeitstempel + Owner je KPI" }
     ],
     sections: [
       {
-        heading: "Welche Daten wirklich helfen",
+        heading: "Definition und Einordnung",
         content: [
-          "Nicht alles muss gemessen werden. Entscheidend sind Klima, Bewässerung, Naehrstoffdaten, Auffälligkeiten und Outcome-Kennzahlen.",
-          "Aus diesen Daten entsteht ein lernendes System, wenn sie über Runs vergleichbar bleiben."
+          "Ein Grow-Log ist die durchgängige, zeitlich verortete Erfassung von Eingangsgrößen (Klima, Bewässerung, Düngung) und Ergebnisgrößen (Wachstum, Ausfälle, Ernteertrag) über einen Anbauzyklus.",
+          "Ein KPI-Dashboard ist die verdichtete, auf Entscheidungsrelevanz reduzierte Sicht auf dieses Log — nicht jede geloggte Größe verdient einen Platz im Dashboard."
+        ]
+      },
+      {
+        heading: "Warum strukturierte Logs Kausalanalyse erst möglich machen",
+        content: [
+          "Ohne Zeitstempel lässt sich ein später auftretendes Symptom nicht zuverlässig auf ein vorausgegangenes Ereignis (z. B. eine EC-Spitze oder einen Klimaausreißer) zurückführen — die zeitliche Verknüpfung ist die Grundvoraussetzung für Ursachenanalyse.",
+          "Eine auffällige Korrelation innerhalb eines einzelnen Runs ist statistisch schwach, weil mehrere Variablen gleichzeitig schwanken. Erst der Vergleich über mehrere Runs mit gezielt konstant gehaltenen Variablen erlaubt belastbare Schlüsse."
+        ]
+      },
+      {
+        heading: "Kern-KPIs nach Kategorie",
+        content: [
+          "Klima: Lufttemperatur, relative Luftfeuchte, VPD — als Tagesmittel und Tagesspanne, nicht nur als Momentaufnahme.",
+          "Bewässerung/Nährstoffe: EC und pH von Zulauf und Drainage, Gießmenge und -intervall.",
+          "Wachstum: Höhe, Internodienabstand, Canopy-Gleichmäßigkeit — als wöchentliche Messpunkte.",
+          "Outcome: Trockengewicht pro Fläche, Ausfallrate, bei verfügbarer Laboranbindung Cannabinoid-/Terpengehalt."
+        ],
+        checklist: [
+          "Kern-KPIs pro Wachstumsphase vorab festlegen, nicht nachträglich aus vorhandenen Daten auswählen",
+          "Jede KPI mit einem Schwellenwert verknüpfen, der eine konkrete Reaktion auslöst",
+          "Erfassungsfrequenz (täglich vs. wöchentlich) pro KPI klar definieren und einhalten"
         ]
       },
       {
         heading: "Vom Log zur Steuerung",
         content: [
-          "Kennzahlen müssen sichtbar machen, wann eingegriffen wird und wer entscheidet. Erst dann wird ein Dashboard operativ wertvoll.",
-          "Gerade für Teams verhindert das Datenblindheit und Einzelheldentum."
-        ],
-        checklist: [
-          "Kern-KPIs pro Phase definieren",
-          "Trendansicht statt reiner Tabellen pflegen",
-          "Jede KPI mit Reaktionslogik verknüpfen"
+          "Ein Dashboard wird erst operativ wertvoll, wenn jede angezeigte Kennzahl sichtbar macht, wann eingegriffen werden muss und wer dafür verantwortlich ist.",
+          "Trendansichten (Verlauf über Zeit) sind aussagekräftiger als reine Tabellen mit Momentanwerten, weil sie Drift erkennbar machen, bevor ein Schwellenwert überschritten wird."
+        ]
+      },
+      {
+        heading: "Diagnose mithilfe des Logs",
+        content: [
+          "Bei einem retrospektiv auftretenden Problem zuerst den Log-Verlauf der letzten 5–7 Tage vor dem ersten sichtbaren Symptom prüfen — die auslösende Abweichung liegt fast immer vor dem sichtbaren Effekt, nicht gleichzeitig mit ihm.",
+          "Mehrere gleichzeitig schwankende Variablen (z. B. Klimaausfall UND Düngerwechsel in derselben Woche) erschweren eindeutige Zuordnung — sauberes Logging trennt Ereignisse zeitlich, wo immer möglich."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Zu viele KPIs ohne Priorisierung erfassen — das Dashboard wird unübersichtlich, und keine einzelne Kennzahl bekommt die nötige Aufmerksamkeit.",
+          "Erfassungsmethodik zwischen Runs ändern (andere Messzeitpunkte, andere Sensorplatzierung), wodurch Runs nicht mehr vergleichbar sind.",
+          "Eine einzelne auffällige Korrelation aus einem Run als bewiesenen Zusammenhang behandeln, ohne sie in einem weiteren Run zu prüfen."
+        ]
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "Statistische Regelkarten (Control Charts) aus der Prozesssteuerung lassen sich auf Grow-KPIs übertragen, um normale Schwankung von echten Abweichungen systematisch zu trennen.",
+          "Automatisierte Sensorprotokollierung reduziert menschliche Erfassungsfehler gegenüber manuellem Logging, ersetzt aber nicht die Notwendigkeit, Ereignisse (Eingriffe, Beobachtungen) weiterhin manuell und zeitgestempelt zu dokumentieren."
         ]
       }
     ],
     simpleExplainers: [
       {
         title: "Kurz erklärt: KPI",
-        text: "Key Performance Indicator, also eine Kennzahl, die für Steuerung und Erfolgsmessung wichtig ist."
+        text: "Key Performance Indicator, also eine Kennzahl, die für Steuerung und Erfolgsmessung wichtig ist und mit einer klaren Reaktion verknüpft sein sollte."
       },
       {
-        title: "Kurz erklärt: Trendbezug",
-        text: "Einzelwerte werden erst aussagekräftig, wenn ihre Entwicklung über Zeit sichtbar ist."
+        title: "Kurz erklärt: Warum Korrelation nicht Kausalität ist",
+        text: "Wenn zwei Werte gemeinsam auftreten, heißt das nicht automatisch, dass der eine den anderen verursacht. Erst mehrere Runs mit kontrollierten Variablen zeigen, ob ein Zusammenhang wirklich stabil ist."
       }
     ],
     faq: [
       {
         question: "Wie viele KPIs brauche ich?",
-        answer: "Wenige Kernkennzahlen sind besser als ein ueberladenes Dashboard ohne Entscheidungen."
+        answer: "Wenige Kernkennzahlen mit klarer Reaktionslogik sind wertvoller als ein überladenes Dashboard ohne definierte Schwellenwerte — Qualität und Konsequenz schlagen Vollständigkeit."
       },
       {
-        question: "Reicht ein Spreadsheet?",
-        answer: "Für den Start ja, solange Struktur, Konsistenz und Review-Prozess sauber sind."
+        question: "Reicht ein einfaches Spreadsheet?",
+        answer: "Für den Start ja, solange Erfassungsstruktur, Zeitstempel und Konsistenz zwischen Runs sauber eingehalten werden. Die Struktur ist wichtiger als das Werkzeug."
+      },
+      {
+        question: "Warum reicht eine auffällige Korrelation aus einem Run nicht als Beweis?",
+        answer: "Weil in einem einzelnen Run meist mehrere Variablen gleichzeitig schwanken. Ohne kontrollierten Vergleich über mehrere Runs lässt sich nicht sicher sagen, welche Variable die eigentliche Ursache war."
       }
     ],
     glossary: [
-      { term: "KPI", definition: "Wesentliche Kennzahl zur Beurteilung eines Prozesses oder Ergebnisses." },
-      { term: "Dashboard", definition: "Visualisierte Uebersicht relevanter Kennzahlen und Trends." },
-      { term: "Review", definition: "Geplante Besprechung und Bewertung von Daten, Ergebnissen und Abweichungen." },
+      { term: "KPI", definition: "Wesentliche Kennzahl zur Beurteilung eines Prozesses oder Ergebnisses, verknüpft mit einer klaren Reaktionsschwelle." },
+      { term: "Control Chart", definition: "Statistisches Werkzeug zur Unterscheidung normaler Prozessschwankung von echten Abweichungen über Zeit." },
+      { term: "Trenddrift", definition: "Allmähliche, oft unbemerkte Verschiebung eines Messwerts über mehrere Zeitpunkte hinweg, bevor ein Schwellenwert überschritten wird." }
     ],
+    sourceIds: ["plant-physiology-vpd-transpiration", "bugbee-electrical-conductivity", "horticulture-research-cannabis-cultivation"],
     relatedSlugs: ["cannabis-anbau-grundlagen", "vpd-und-ec-kombi-rechner-guide", "sensor-kalibrierung-und-messfehler"]
-  }),
+  },
   createArticle({
     slug: "sensor-kalibrierung-und-messfehler",
     title: "Sensor-Kalibrierung und Messfehler",
@@ -4126,7 +6153,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       "Ein kleiner QA-Prozess für Sensoren verhindert grosse Fehlentscheidungen."
     ],
     quickFacts: [
-      { label: "Hauefiger Fehler", value: "Vertrauen in unkorrigierte Sensoren" },
+      { label: "Häufiger Fehler", value: "Vertrauen in unkorrigierte Sensoren" },
       { label: "Wichtig", value: "Ort plus Kalibrierintervall" },
       { label: "Nutzen", value: "Bessere Entscheidungen" }
     ],
@@ -4134,7 +6161,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Warum gute Sensoren alleine nicht reichen",
         content: [
-          "Auch hochwertige Geräte können falsch messen, wenn sie schlecht platziert, lange ungeprueft oder falsch gelesen werden.",
+          "Auch hochwertige Geräte können falsch messen, wenn sie schlecht platziert, lange ungeprüft oder falsch gelesen werden.",
           "Gerade in Grow- und Lagerumgebungen summieren sich kleine Messfehler schnell."
         ]
       },
@@ -4158,17 +6185,17 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: Messfehler",
-        text: "Abweichung zwischen gemessenem und tatsaechlichem Wert durch Gerät, Platzierung oder Anwendung."
+        text: "Abweichung zwischen gemessenem und tatsächlichem Wert durch Gerät, Platzierung oder Anwendung."
       }
     ],
     faq: [
       {
         question: "Wie oft sollte ich kalibrieren?",
-        answer: "Abhaengig vom Sensortyp und Einsatzumfeld, aber nie erst dann, wenn Werte offensichtlich unplausibel wirken."
+        answer: "Abhängig vom Sensortyp und Einsatzumfeld, aber nie erst dann, wenn Werte offensichtlich unplausibel wirken."
       },
       {
         question: "Sind billige Sensoren nutzlos?",
-        answer: "Nein. Gut geführte und gepruefte einfache Sensoren sind oft wertvoller als teure, ungepflegte Systeme."
+        answer: "Nein. Gut geführte und geprüfte einfache Sensoren sind oft wertvoller als teure, ungepflegte Systeme."
       }
     ],
     glossary: [
@@ -4176,12 +6203,12 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Referenzwert", definition: "Bekannter Sollwert, der zur Kontrolle einer Messung dient." },
       { term: "Drift", definition: "Langsame Veränderung eines Messgeräts weg vom korrekten Wert über Zeit." },
     ],
-    relatedSlugs: ["vpd-einfach-erklärt", "grow-log-und-kpi-dashboard", "cannabis-substrat-und-wurzelzone"]
+    relatedSlugs: ["vpd-einfach-erklaert", "grow-log-und-kpi-dashboard", "cannabis-substrat-und-wurzelzone"]
   }),
   createArticle({
     slug: "how-to-grow-cannabis-anfaenger-tutorial",
     title: "How to Grow Cannabis: Schritt-für-Schritt für Anfänger",
-    summary: "Ein klarer Einstieg in Setup, Klima, Bewässerung und Erntefenster - aufgebaut auf belastbaren Grundlagen aus Forschung und bewaehrten Profi-Routinen.",
+    summary: "Ein klarer Einstieg in Setup, Klima, Bewässerung und Erntefenster - aufgebaut auf belastbaren Grundlagen aus Forschung und bewährten Profi-Routinen.",
     category: "anbau",
     difficulty: "einsteiger",
     readMinutes: 14,
@@ -4194,7 +6221,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     quickFacts: [
       { label: "Zielgruppe", value: "Erster bis dritter Run" },
       { label: "Fokus", value: "Stabilität vor Performance" },
-      { label: "Routine", value: "Taeglicher 10-Minuten-Check" }
+      { label: "Routine", value: "Täglicher 10-Minuten-Check" }
     ],
     sections: [
       {
@@ -4212,21 +6239,21 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Schritt 2: Klima und Bewässerung zuerst stabilisieren",
         content: [
-          "Halte in der Vegetationsphase keine extremen Werte, sondern stabile Korridore. VPD-orientiertes Arbeiten und regelmaessige Topfgewicht-Kontrolle sind für Anfänger deutlich wertvoller als hektische EC-Optimierung.",
+          "Halte in der Vegetationsphase keine extremen Werte, sondern stabile Korridore. VPD-orientiertes Arbeiten und regelmässige Topfgewicht-Kontrolle sind für Anfänger deutlich wertvoller als hektische EC-Optimierung.",
           "Viele Probleme im ersten Run entstehen durch zu häufiges Giessen und zu viele Korrekturen gleichzeitig. Arbeite mit einem festen Beobachtungsfenster: Blätter, Topfgewicht, Drain, Temperatur und Luftfeuchte."
         ],
         checklist: [
           "Vor jedem Giessen Topfgewicht oder Trocknungsgrad prüfen",
-          "Nur einen Parameter pro Tag aendern",
+          "Nur einen Parameter pro Tag ändern",
           "Klimaabweichungen mit Datum und Uhrzeit ins Grow-Log schreiben"
         ]
       },
       {
         heading: "Schritt 2b: Wochenplan für einen einfachen ersten Run",
         content: [
-          "Woche 1-2: Keimung und Jungpflanze. Licht moderat halten, RH hoeher fahren, Medium nur leicht feucht und keine harten Duengeimpulse setzen. Fokus: stabile Entwicklung statt Tempo.",
-          "Woche 3-4: Frühe Vegetation. Gleichmaessigen Rhythmus aus Giessen, Klima-Check und leichter Naehrstoffzufuhr etablieren. Jetzt zeigt sich, ob Topf, Medium und Trocknungsdauer zusammenpassen.",
-          "Woche 5-6: Spaete Vegetation bis Stretch. Pflanzenhöhe, Lichtabstand und Blattgesundheit eng beobachten. Nur dann auf Blüte umstellen, wenn Pflanzen vital und der Raum klimatisch stabil ist.",
+          "Woche 1-2: Keimung und Jungpflanze. Licht moderat halten, RH höher fahren, Medium nur leicht feucht und keine harten Düngeimpulse setzen. Fokus: stabile Entwicklung statt Tempo.",
+          "Woche 3-4: Frühe Vegetation. Gleichmässigen Rhythmus aus Giessen, Klima-Check und leichter Nährstoffzufuhr etablieren. Jetzt zeigt sich, ob Topf, Medium und Trocknungsdauer zusammenpassen.",
+          "Woche 5-6: Späte Vegetation bis Stretch. Pflanzenhöhe, Lichtabstand und Blattgesundheit eng beobachten. Nur dann auf Blüte umstellen, wenn Pflanzen vital und der Raum klimatisch stabil ist.",
           "Woche 7-9: Hauptblüte. Stickstoff nicht aggressiv pushen, Giessrhythmus eng führen und Klima trocken genug halten, damit keine dichten, feuchten Problemzonen entstehen.",
           "Woche 10+: Reife, Ernte und Trocknung. Trichome beobachten, letzte grobe Korrekturen vermeiden und Trocknungsraum vor dem Schnitt komplett vorbereiten."
         ],
@@ -4239,13 +6266,13 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Schritt 3: Düngung defensiv und phasenbezogen steuern",
         content: [
-          "Studien zu NPK-Fertigation bei Cannabis zeigen, dass Ueberversorgung - besonders mit Stickstoff in späteren Phasen - Ertrag und Qualität eher verschlechtern kann. Beginne deshalb unterhalb der Hersteller-Maximalangaben und steigere nur bei klarer Pflanzenreaktion.",
-          "Achte darauf, dass Lichtintensität, Klima und Wurzelzone zur Naehrstoffstaerke passen. Ohne diese Basis bringt mehr EC kaum Nutzen und erhöht das Risiko für Blockaden oder Stressmarker."
+          "Studien zu NPK-Fertigation bei Cannabis zeigen, dass Überversorgung - besonders mit Stickstoff in späteren Phasen - Ertrag und Qualität eher verschlechtern kann. Beginne deshalb unterhalb der Hersteller-Maximalangaben und steigere nur bei klarer Pflanzenreaktion.",
+          "Achte darauf, dass Lichtintensität, Klima und Wurzelzone zur Nährstoffstärke passen. Ohne diese Basis bringt mehr EC kaum Nutzen und erhöht das Risiko für Blockaden oder Stressmarker."
         ],
         checklist: [
           "pH und EC der Lösung in fixer Reihenfolge messen",
           "Keine Booster einsetzen, solange Basisprozesse noch schwanken",
-          "Ab Blueteeinleitung Stickstoff nicht weiter aggressiv steigern"
+          "Ab Blüteeinleitung Stickstoff nicht weiter aggressiv steigern"
         ]
       },
       {
@@ -4256,19 +6283,19 @@ const expansionWikiArticles: TerpiraArticle[] = [
         ],
         checklist: [
           "Vor der Ernte Trocknungsraum auf Temperatur und RH vorbereiten",
-          "Trichomkontrolle mit Lupe oder Mikroskop durchfuehren",
+          "Trichomkontrolle mit Lupe oder Mikroskop durchführen",
           "Nach dem Run drei Dinge notieren: Fehler, Korrektur, Ergebnis"
         ]
       }
     ],
     warnings: [
       "Mehr Dünger, mehr Licht und mehr Wasser gleichzeitig zu erhöhen ist der schnellste Weg in unklare Fehlerbilder.",
-      "Ohne funktionierende Klimakontrolle wird selbst ein guter Naehrstoffplan instabil."
+      "Ohne funktionierende Klimakontrolle wird selbst ein guter Nährstoffplan instabil."
     ],
     simpleExplainers: [
       {
         title: "Kurz erklärt: Warum klein starten?",
-        text: "Ein kleines Setup reduziert Streuung. Du erkennst schneller, welche Aenderung wirklich Wirkung hatte."
+        text: "Ein kleines Setup reduziert Streuung. Du erkennst schneller, welche Änderung wirklich Wirkung hatte."
       },
       {
         title: "Kurz erklärt: Was ist ein reproduzierbarer Run?",
@@ -4294,19 +6321,19 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { title: "Anfänger Grow-Checkliste", href: "/terpira/tutorials/how-to-grow-anfänger-checkliste.txt", kind: "TXT-Checkliste" },
       { title: "Anfänger SOP-Vorlage", href: "/terpira/tutorials/how-to-grow-anfänger-sop.txt", kind: "TXT-SOP-Vorlage" }
     ],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "bewässerung-ohne-uebergiessen", "vpd-einfach-erklärt", "cannabis-substrat-und-wurzelzone"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-einfach-erklaert", "cannabis-substrat-und-wurzelzone"]
   }),
   createArticle({
     slug: "how-to-grow-cannabis-fortgeschritten-tutorial",
     title: "How to Grow Cannabis: Schritt-für-Schritt für Fortgeschrittene",
-    summary: "Wie du ein stabiles Setup in ein datengestuetztes Produktionssystem verwandelst - mit sauberer Klima-, Feed- und Canopy-Steuerung.",
+    summary: "Wie du ein stabiles Setup in ein datengestütztes Produktionssystem verwandelst - mit sauberer Klima-, Feed- und Canopy-Steuerung.",
     category: "anbau",
     difficulty: "fortgeschritten",
     readMinutes: 16,
     tags: ["How to Grow", "Anbau", "Fortgeschritten", "Step by Step", "Canopy", "Nährstoffe", "VPD"],
     keyTakeaways: [
-      "Ab dem mittleren Niveau zählt nicht mehr nur Pflanzenvitalität, sondern Prozessstabilitaet über den gesamten Zyklus.",
-      "Licht, Klima, Wurzelzone und Naehrstoffprofil müssen phasenweise gemeinsam gesteuert werden.",
+      "Ab dem mittleren Niveau zählt nicht mehr nur Pflanzenvitalität, sondern Prozessstabilität über den gesamten Zyklus.",
+      "Licht, Klima, Wurzelzone und Nährstoffprofil müssen phasenweise gemeinsam gesteuert werden.",
       "Canopy-Management und Review nach Woche liefern mehr Performance als spontane Produktwechsel."
     ],
     quickFacts: [
@@ -4324,26 +6351,26 @@ const expansionWikiArticles: TerpiraArticle[] = [
         checklist: [
           "Wochenplan für Veg, Stretch und Hauptblüte schreiben",
           "Blatttemperatur oder plausiblen Offset in die VPD-Berechnung integrieren",
-          "Entscheidungsregeln für Hoeher- oder Runterfahren von EC festlegen"
+          "Entscheidungsregeln für Höher- oder Runterfahren von EC festlegen"
         ]
       },
       {
         heading: "Schritt 2: Canopy aktiv führen statt nur reagieren",
         content: [
-          "Gleichmaessige Lichtverteilung ist ein Prozess, kein Zufall. Arbeite mit Entlaubung, Training und Hoehenmanagement so, dass Licht, Luftstrom und Reife möglichst homogen bleiben.",
-          "Professionelle Grower behandeln die Canopy als produktive Fläche. Jede dunkle, feuchte oder chaotische Zone wird später zum Risiko für Minderertrag, Schimmel oder ungleichmaessige Reife."
+          "Gleichmässige Lichtverteilung ist ein Prozess, kein Zufall. Arbeite mit Entlaubung, Training und Höhenmanagement so, dass Licht, Luftstrom und Reife möglichst homogen bleiben.",
+          "Professionelle Grower behandeln die Canopy als produktive Fläche. Jede dunkle, feuchte oder chaotische Zone wird später zum Risiko für Minderertrag, Schimmel oder ungleichmässige Reife."
         ],
         checklist: [
           "Canopy-Fotos jede Woche aus gleichem Winkel machen",
-          "Ungueltige Schattenzonen konsequent reduzieren",
+          "Ungültige Schattenzonen konsequent reduzieren",
           "Lichtabstand und Hotspots nach jedem Training neu kontrollieren"
         ]
       },
       {
         heading: "Schritt 2b: Wochenplan für Performance ohne Kontrollverlust",
         content: [
-          "Woche 1-2 Veg: Basiswerte bestaetigen. Sensorik, Giessfrequenz und Start-Feed nur so hoch fahren, dass Pflanzen sichtbar sauber reagieren. Abweichungen sofort notieren statt später deuten.",
-          "Woche 3-4 Veg: Kronendach angleichen, erste Trainingsentscheidungen sauber dokumentieren und Wurzelraum-Daten mit dem Blattbild zusammen lesen. Ziel ist Homogenität, nicht spektakulaeres Einzelwachstum.",
+          "Woche 1-2 Veg: Basiswerte bestätigen. Sensorik, Giessfrequenz und Start-Feed nur so hoch fahren, dass Pflanzen sichtbar sauber reagieren. Abweichungen sofort notieren statt später deuten.",
+          "Woche 3-4 Veg: Kronendach angleichen, erste Trainingsentscheidungen sauber dokumentieren und Wurzelraum-Daten mit dem Blattbild zusammen lesen. Ziel ist Homogenität, nicht spektakuläres Einzelwachstum.",
           "Woche 5 Stretch: Licht und Klima jetzt täglich mit dem Wuchs koppeln. Stretch ist die Phase, in der schlechte Zielkorridore später am teuersten werden.",
           "Woche 6-8 Hauptblüte: Drain-Trends, K/Ca-Balance und Luftbewegung eng prüfen. Je dichter die Blüten werden, desto weniger Fehlertoleranz hat das System.",
           "Woche 9+ Finish und Review: Reifehomogenität, Problemzonen und Ertragsverteilung dokumentieren. Das ist die Datenbasis für den nächsten Optimierungsschritt."
@@ -4351,14 +6378,14 @@ const expansionWikiArticles: TerpiraArticle[] = [
         checklist: [
           "Stretch-Woche nicht ohne tägliche Licht- und Klima-Kontrolle laufen lassen",
           "Hauptblüte als Risiko- und nicht nur als Ertragsphase behandeln",
-          "Am Zyklusende immer Review vor der nächsten Aenderung machen"
+          "Am Zyklusende immer Review vor der nächsten Änderung machen"
         ]
       },
       {
         heading: "Schritt 3: Nährstoffgabe und Wurzelraum datenbasiert steuern",
         content: [
           "Jetzt reicht Bauchgefühl nicht mehr. Vergleiche Soll-EC, Ist-Drain, Pflanzenreaktion und Trocknungsdauer gemeinsam. Gerade in Coco oder anderen schnell reagierenden Medien sind kleine Trends wichtiger als Einmalmessungen.",
-          "Peer-reviewte Cannabis-Studien zu Substraten und Fertigation belegen, dass Kalium-, Stickstoff- und pH-Management phasenabhaengig optimiert werden müssen. Zu späte Reaktionen kosten Blütenmasse und Qualität."
+          "Peer-reviewte Cannabis-Studien zu Substraten und Fertigation belegen, dass Kalium-, Stickstoff- und pH-Management phasenabhängig optimiert werden müssen. Zu späte Reaktionen kosten Blütenmasse und Qualität."
         ],
         checklist: [
           "Drain-EC und pH an festen Wochentagen messen",
@@ -4375,7 +6402,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         checklist: [
           "Run-Review in Klima, Bewässerung, Feed, Canopy und Postharvest gliedern",
           "Nur zwei bis drei Verbesserungen für den Folgezyklus definieren",
-          "Qualitaetsverlust nicht nur auf Genetik schieben, sondern Prozessdaten prüfen"
+          "Qualitätsverlust nicht nur auf Genetik schieben, sondern Prozessdaten prüfen"
         ]
       }
     ],
@@ -4396,7 +6423,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Wann lohnt sich Coco oder Hydro gegenüber Erde?",
-        answer: "Wenn dein Mess- und Bewaesserungssystem stabil genug ist, schnellere Reaktionen zu kontrollieren. Ohne Datendisziplin steigt nur die Fehlergeschwindigkeit."
+        answer: "Wenn dein Mess- und Bewässerungssystem stabil genug ist, schnellere Reaktionen zu kontrollieren. Ohne Datendisziplin steigt nur die Fehlergeschwindigkeit."
       },
       {
         question: "Was bringt mehr: mehr PPFD oder besseres Canopy?",
@@ -4412,7 +6439,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { title: "Fortgeschrittene Wochenreview-Checkliste", href: "/terpira/tutorials/how-to-grow-fortgeschritten-checkliste.txt", kind: "TXT-Checkliste" },
       { title: "Fortgeschrittene SOP-Vorlage für Run-Review", href: "/terpira/tutorials/how-to-grow-fortgeschritten-sop.txt", kind: "TXT-SOP-Vorlage" }
     ],
-    relatedSlugs: ["lichtstress-und-canopy-management", "nährstoffblockaden-und-antagonismen", "vpd-und-ec-kombi-rechner-guide", "substrat-vergleich-coco-erde-hydro"]
+    relatedSlugs: ["lichtstress-und-canopy-management", "naehrstoffblockaden-und-antagonismen", "vpd-und-ec-kombi-rechner-guide", "substrat-vergleich-coco-erde-hydro"]
   }),
   createArticle({
     slug: "how-to-grow-cannabis-profi-tutorial",
@@ -4425,7 +6452,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "Auf Profi-Niveau wird nicht mehr die einzelne Pflanze optimiert, sondern die Wiederholbarkeit eines ganzen Systems.",
       "SOPs, Kalibrierung, Freigabekriterien und Ursachenanalyse sind genauso wichtig wie Klima oder Feed.",
-      "Die staerksten Teams koppeln wissenschaftliche Evidenz an operative Routinen und Chargen-Review."
+      "Die stärksten Teams koppeln wissenschaftliche Evidenz an operative Routinen und Chargen-Review."
     ],
     quickFacts: [
       { label: "Zielgruppe", value: "Teams mit SOP-Anspruch" },
@@ -4436,7 +6463,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Schritt 1: Betrieb über SOPs und Freigabekriterien führen",
         content: [
-          "Professionelle Grows werden über Standards, nicht über Tagesstimmung gesteuert. Definiere SOPs für Raumvorbereitung, Stecklingsannahme, Bewässerung, Sensor-Checks, Hygiene und Postharvest-Uebergaben.",
+          "Professionelle Grows werden über Standards, nicht über Tagesstimmung gesteuert. Definiere SOPs für Raumvorbereitung, Stecklingsannahme, Bewässerung, Sensor-Checks, Hygiene und Postharvest-Übergaben.",
           "Freigabekriterien je Phase helfen, dass Teams nur dann skalieren oder umstellen, wenn die Basis stabil ist. Ohne diese Gates wird jedes Problem zu teuer und schwer reproduzierbar."
         ],
         checklist: [
@@ -4446,14 +6473,14 @@ const expansionWikiArticles: TerpiraArticle[] = [
         ]
       },
       {
-        heading: "Schritt 2: Klima, Licht und Feed als verknuepfte Datenspuren lesen",
+        heading: "Schritt 2: Klima, Licht und Feed als verknüpfte Datenspuren lesen",
         content: [
-          "Auf Profi-Niveau werden keine Einzelwerte diskutiert, sondern Trends: Sensor-Drift, Zonenunterschiede, Bewaesserungsfenster, PPFD-Verteilung, Blattmasse und Drain-Verhalten. Erst daraus entstehen belastbare Entscheidungen.",
+          "Auf Profi-Niveau werden keine Einzelwerte diskutiert, sondern Trends: Sensor-Drift, Zonenunterschiede, Bewässerungsfenster, PPFD-Verteilung, Blattmasse und Drain-Verhalten. Erst daraus entstehen belastbare Entscheidungen.",
           "Studien zu Cannabis-Produktionssystemen und Erfahrungen aus professionellen Indoor-Setups zeigen, dass die größten Gewinne aus konsistenter Standardisierung und früher Abweichungserkennung kommen."
         ],
         checklist: [
           "Zone gegen Zone vergleichen statt nur Mittelwerte lesen",
-          "Messgeraete nach Kalibrierintervall sperren oder freigeben",
+          "Messgeräte nach Kalibrierintervall sperren oder freigeben",
           "Klima- und Feed-Daten mit Ereignislog verknüpfen"
         ]
       },
@@ -4462,32 +6489,32 @@ const expansionWikiArticles: TerpiraArticle[] = [
         content: [
           "Woche 0 Pre-Flight: Raumfreigabe, Sensorstatus, Hygiene, Wasser und Material müssen vor Pflanzenannahme validiert sein. Ohne saubere Startfreigabe beginnt jede Charge mit Blindflug.",
           "Woche 1-3 Etablierung: Clone-Qualität, Anwuchsquote und Zonenunterschiede eng monitoren. Jetzt werden SOP-Lücken sichtbar, bevor sie später als Ertragsproblem auftreten.",
-          "Woche 4-6 Produktionsdruck: Stretch, Canopy-Dichte und Klima-Kopplung erzeugen die hoechste operative Last. Schichtuebergaben und Event-Logging müssen hier besonders sauber sein.",
+          "Woche 4-6 Produktionsdruck: Stretch, Canopy-Dichte und Klima-Kopplung erzeugen die höchste operative Last. Schichtübergaben und Event-Logging müssen hier besonders sauber sein.",
           "Woche 7-9 Reife und Risikoabwehr: Botrytis-, Hygiene- und Trockenmasse-Risiken steigen. Freigabekriterien für Erntefenster sollten nicht nur auf Optik, sondern auf Charge, Zone und Laborlogik beruhen.",
           "Woche 10+ Postharvest und CAPA: Trocknung, Curing, Labor, Sperrentscheidungen und Review müssen in einer geschlossenen Prozessschleife enden. Erst dann ist die Charge wirklich abgeschlossen."
         ],
         checklist: [
           "Jede Charge mit Pre-Flight und Exit-Review starten und beenden",
-          "Schichtwechsel nur mit dokumentiertem Ereignisstand uebergeben",
-          "CAPA-Massnahmen spaetestens im Folgezyklus verifizieren"
+          "Schichtwechsel nur mit dokumentiertem Ereignisstand übergeben",
+          "CAPA-Massnahmen spätestens im Folgezyklus verifizieren"
         ]
       },
       {
         heading: "Schritt 3: Risiko aktiv managen - Hygiene, Pathogene, Lieferkette",
         content: [
-          "Premium-Qualität scheitert oft nicht an Wuchs, sondern an Hygiene, Probenahme und Nachverfolgbarkeit. Integriere Clone-Hygiene, Schimmelpraevention, Wasserqualität und Lieferantenkontrolle in denselben Managementrahmen wie Licht und Ertrag.",
+          "Premium-Qualität scheitert oft nicht an Wuchs, sondern an Hygiene, Probenahme und Nachverfolgbarkeit. Integriere Clone-Hygiene, Schimmelprävention, Wasserqualität und Lieferantenkontrolle in denselben Managementrahmen wie Licht und Ertrag.",
           "Gerade bei hoher Pflanzendichte oder engen Takten werden kleine Hygienefehler schnell zum Chargenproblem. Profi-Grower planen deshalb Risikoabwehr als Kernprozess ein."
         ],
         checklist: [
           "Hygiene-SOP mit Verantwortlichkeiten pro Schicht festlegen",
           "Wasser, Werkzeuge und Clone-Zugänge als Risikopunkte auditieren",
-          "Fruehwarnsignale für Pathogene und Schädlinge in Reviews aufnehmen"
+          "Frühwarnsignale für Pathogene und Schädlinge in Reviews aufnehmen"
         ]
       },
       {
         heading: "Schritt 4: Nach der Ernte beginnt die nächste Prozessschleife",
         content: [
-          "Postharvest, Curing und Laborlogik gehören in denselben Performance-Zyklus wie die Kulturphase. Nur so lassen sich Qualitaetsverluste, Chargenunterschiede und Vermarktungsprobleme systematisch beheben.",
+          "Postharvest, Curing und Laborlogik gehören in denselben Performance-Zyklus wie die Kulturphase. Nur so lassen sich Qualitätsverluste, Chargenunterschiede und Vermarktungsprobleme systematisch beheben.",
           "Ein Profi-Tutorial endet deshalb nicht mit dem Chop. Es endet mit Freigabe, Review, Datenarchiv und klarer Hypothese für den nächsten Durchlauf."
         ],
         checklist: [
@@ -4504,7 +6531,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: SOP",
-        text: "Standard Operating Procedure - eine feste Arbeitsanweisung, damit dieselbe Aufgabe immer gleich ausgefuehrt wird."
+        text: "Standard Operating Procedure - eine feste Arbeitsanweisung, damit dieselbe Aufgabe immer gleich ausgeführt wird."
       },
       {
         title: "Kurz erklärt: CAPA-System",
@@ -4524,13 +6551,13 @@ const expansionWikiArticles: TerpiraArticle[] = [
     glossary: [
       { term: "SOP", definition: "Standardisierte Arbeitsanweisung für wiederholbare Prozesse im Betrieb." },
       { term: "CAPA", definition: "System für Korrektur und Vorbeugung nach erkannter Abweichung." },
-      { term: "Freigabekriterium", definition: "Definierter Schwellenwert oder Check, der vor dem Uebergang in die nächste Phase erfüllt sein muss." }
+      { term: "Freigabekriterium", definition: "Definierter Schwellenwert oder Check, der vor dem Übergang in die nächste Phase erfüllt sein muss." }
     ],
     downloads: [
       { title: "Profi Chargen-Checkliste", href: "/terpira/tutorials/how-to-grow-profi-checkliste.txt", kind: "TXT-Checkliste" },
       { title: "Profi SOP-Template für Cultivation und QA", href: "/terpira/tutorials/how-to-grow-profi-sop.txt", kind: "TXT-SOP-Vorlage" }
     ],
-    relatedSlugs: ["mutterpflanzen-und-clone-hygiene", "schimmel-und-mykotoxine-bei-cannabis", "grow-log-und-kpi-dashboard", "audit-readiness-für-content-und-produkt"]
+    relatedSlugs: ["mutterpflanzen-und-clone-hygiene", "schimmel-und-mykotoxine-bei-cannabis", "grow-log-und-kpi-dashboard", "audit-readiness-fuer-content-und-produkt"]
   })
 ];
 
@@ -4586,7 +6613,7 @@ const createLiteArticle = (seed: LiteArticleSeed): TerpiraArticle =>
       },
       {
         title: "Kurz erklärt: Warum ist das wichtig?",
-        text: "Saubere Einordnung reduziert Fehlentscheidungen und verbessert die Qualität von Content, Prozessen und Nutzerverstaendnis."
+        text: "Saubere Einordnung reduziert Fehlentscheidungen und verbessert die Qualität von Content, Prozessen und Nutzerverständnis."
       }
     ],
     faq: [
@@ -4601,39 +6628,34 @@ const createLiteArticle = (seed: LiteArticleSeed): TerpiraArticle =>
     ],
     glossary: [
       { term: "Kriterium", definition: "Vorab definierter Massstab zur Bewertung eines Sachverhalts oder Prozesses." },
-      { term: "Datenspur", definition: "Nachvollziehbare Dokumentation von Messwerten, Entscheidungen und Aenderungen." },
+      { term: "Datenspur", definition: "Nachvollziehbare Dokumentation von Messwerten, Entscheidungen und Änderungen." },
       { term: "Kontext", definition: "Rahmenbedingungen, die bestimmen, wie ein Ergebnis richtig eingeordnet wird." },
     ]
   });
 
 const thirdWaveSeeds: LiteArticleSeed[] = [
-  { slug: "naehrstoffblockaden-und-antagonismen", title: "Naehrstoffblockaden und Antagonismen", summary: "Warum trotz ausreichender Duengewerte Mangelbilder auftreten können und wie Blockaden sauber eingeordnet werden.", category: "anbau", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Nährstoffe", "Antagonismus", "pH", "Diagnostik"], relatedSlugs: ["cannabis-anbau-grundlagen", "bewässerung-ohne-uebergiessen", "vpd-und-ec-kombi-rechner-guide"] },
-  { slug: "stressmarker-frueh-erkennen", title: "Stressmarker früh erkennen", summary: "Frühe Hinweise auf Klima-, Licht- und Wurzelstress erkennen, bevor Ertrag und Qualität kippen.", category: "anbau", difficulty: "einsteiger", readMinutes: 6, tags: ["Stress", "Monitoring", "Früherkennung", "Grow"], relatedSlugs: ["lichtstress-und-canopy-management", "cannabis-substrat-und-wurzelzone", "grow-log-und-kpi-dashboard"] },
-  { slug: "genetische-stabilitaet-ueber-generationen", title: "Genetische Stabilität über Generationen", summary: "Wie Linien über mehrere Zyklen bewertet werden und warum Stabilität ein eigenes Kriterienset braucht.", category: "genetik", difficulty: "profi", readMinutes: 9, tags: ["Genetik", "Stabilität", "Selektion", "Linien"], relatedSlugs: ["genetik-und-phänotyp-selektion", "selektionsscorecards-für-pheno-hunts", "mutterpflanzen-und-clone-hygiene"] },
-  { slug: "crossing-backcrossing-grundlagen", title: "Crossing und Backcrossing Grundlagen", summary: "Grundbegriffe der Zuchtarbeit für bessere Einordnung von Linienbeschreibungen und Selektionszielen.", category: "genetik", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Crossing", "Backcross", "Zucht", "Linien"], relatedSlugs: ["feminisiert-vs-regular-vs-autoflower", "genetik-und-phänotyp-selektion", "selektionsscorecards-für-pheno-hunts"] },
+  { slug: "genetische-stabilitaet-ueber-generationen", title: "Genetische Stabilität über Generationen", summary: "Wie Linien über mehrere Zyklen bewertet werden und warum Stabilität ein eigenes Kriterienset braucht.", category: "genetik", difficulty: "profi", readMinutes: 9, tags: ["Genetik", "Stabilität", "Selektion", "Linien"], relatedSlugs: ["genetik-und-phaenotyp-selektion", "selektionsscorecards-fuer-pheno-hunts", "mutterpflanzen-und-clone-hygiene"] },
+  { slug: "crossing-backcrossing-grundlagen", title: "Crossing und Backcrossing Grundlagen", summary: "Grundbegriffe der Zuchtarbeit für bessere Einordnung von Linienbeschreibungen und Selektionszielen.", category: "genetik", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Crossing", "Backcross", "Zucht", "Linien"], relatedSlugs: ["feminisiert-vs-regular-vs-autoflower", "genetik-und-phaenotyp-selektion", "selektionsscorecards-fuer-pheno-hunts"] },
   { slug: "terpen-oxidationsprodukte-und-bedeutung", title: "Terpen-Oxidationsprodukte und Bedeutung", summary: "Wie oxidierte Terpenanteile Profile verändern und warum frische Analytik plus Lagerkontext zusammengehören.", category: "chemie", difficulty: "profi", readMinutes: 9, tags: ["Terpene", "Oxidation", "Analytik", "Chemie"], relatedSlugs: ["thc-zu-cbn-abbau-und-oxidation", "lagerung-und-terpenverlust-vermeiden", "analytik-hplc-vs-gc-bei-cannabinoiden"] },
   { slug: "matrixeffekte-in-der-cannabisanalytik", title: "Matrixeffekte in der Cannabis-Analytik", summary: "Warum dieselbe Methode je Produktmatrix unterschiedlich reagieren kann und was das für Vergleichbarkeit bedeutet.", category: "chemie", difficulty: "profi", readMinutes: 9, tags: ["Matrix", "Analytik", "Labor", "Methodik"], relatedSlugs: ["analytik-hplc-vs-gc-bei-cannabinoiden", "sampling-und-probenahme-fehler", "coa-richtig-lesen"] },
-  { slug: "minor-terpene-und-profiltiefe", title: "Minor-Terpene und Profiltiefe", summary: "Warum kleine Terpenanteile für Profilcharakter und Vergleichbarkeit wichtig sein können.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Minor Terpene", "Profil", "Aroma", "Analytik"], relatedSlugs: ["terpene-und-wirkprofil", "myrcen-limonen-caryophyllen-einordnung", "sensorik-panels-für-cannabisprodukte"] },
-  { slug: "terpen-panels-und-qualitaetslabels", title: "Terpen-Panels und Qualitaetslabels", summary: "Wie Terpenpanels für Kataloge standardisiert werden können, ohne in Marketingkuerzel abzurutschen.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Terpenpanel", "Label", "Katalog", "Qualität"], relatedSlugs: ["sensorik-panels-für-cannabisprodukte", "terpene-und-wirkprofil", "coa-richtig-lesen"] },
+  { slug: "minor-terpene-und-profiltiefe", title: "Minor-Terpene und Profiltiefe", summary: "Warum kleine Terpenanteile für Profilcharakter und Vergleichbarkeit wichtig sein können.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Minor Terpene", "Profil", "Aroma", "Analytik"], relatedSlugs: ["terpene-und-wirkprofil", "myrcen-limonen-caryophyllen-einordnung", "sensorik-panels-fuer-cannabisprodukte"] },
+  { slug: "terpen-panels-und-qualitaetslabels", title: "Terpen-Panels und Qualitätslabels", summary: "Wie Terpenpanels für Kataloge standardisiert werden können, ohne in Marketingkürzel abzurutschen.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Terpenpanel", "Label", "Katalog", "Qualität"], relatedSlugs: ["sensorik-panels-fuer-cannabisprodukte", "terpene-und-wirkprofil", "coa-richtig-lesen"] },
   { slug: "indikationsgrenzen-und-patientenkommunikation", title: "Indikationsgrenzen und Patientenkommunikation", summary: "Wie medizinische Inhalte Nutzen, Grenzen und Unsicherheiten gleichzeitig transparent darstellen.", category: "medizin", difficulty: "profi", readMinutes: 9, tags: ["Indikation", "Medizin", "Kommunikation", "Evidenz"], relatedSlugs: ["cannabinoide-und-evidenz", "cannabis-bei-schmerz-evidenzcheck", "cannabinoide-nebenwirkungen-und-interaktionen"] },
-  { slug: "real-world-data-vs-rct-bei-cannabis", title: "Real-World-Data vs. RCT bei Cannabis", summary: "Wie Beobachtungsdaten und klinische Studien zusammen gelesen werden sollten.", category: "medizin", difficulty: "profi", readMinutes: 9, tags: ["RWD", "RCT", "Evidenz", "Studien"], relatedSlugs: ["cannabinoide-und-evidenz", "cannabis-und-schlaf-was-ist-belegt", "cbd-und-angststörungen-einordnung"] },
+  { slug: "real-world-data-vs-rct-bei-cannabis", title: "Real-World-Data vs. RCT bei Cannabis", summary: "Wie Beobachtungsdaten und klinische Studien zusammen gelesen werden sollten.", category: "medizin", difficulty: "profi", readMinutes: 9, tags: ["RWD", "RCT", "Evidenz", "Studien"], relatedSlugs: ["cannabinoide-und-evidenz", "cannabis-und-schlaf-was-ist-belegt", "cbd-und-angststoerungen-einordnung"] },
   { slug: "orale-produkte-und-first-pass-risiken", title: "Orale Produkte und First-Pass-Risiken", summary: "Einordnung von Effektdauer, Verzogerung und Fehlsteuerung bei oraler Anwendung.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Oral", "First Pass", "Timing", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "sublingual-tinkturen-richtig-einordnen", "inhalation-set-setting-und-harm-reduction"] },
-  { slug: "dosisprotokolle-ohne-uebertreibung", title: "Dosisprotokolle ohne Uebertreibung", summary: "Wie strukturierte Dosisprotokolle für Aufklärung funktionieren, ohne falsche Sicherheit zu erzeugen.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Dosis", "Protokoll", "Aufklärung", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "cannabinoide-nebenwirkungen-und-interaktionen", "inhalation-set-setting-und-harm-reduction"] },
+  { slug: "dosisprotokolle-ohne-uebertreibung", title: "Dosisprotokolle ohne Übertreibung", summary: "Wie strukturierte Dosisprotokolle für Aufklärung funktionieren, ohne falsche Sicherheit zu erzeugen.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Dosis", "Protokoll", "Aufklärung", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "cannabinoide-nebenwirkungen-und-interaktionen", "inhalation-set-setting-und-harm-reduction"] },
   { slug: "concentrate-categorization-fuer-plattformen", title: "Concentrate-Categorization für Plattformen", summary: "Wie Konzentrate so kategorisiert werden, dass Nutzer vergleichen können und Daten konsistent bleiben.", category: "konzentrate", difficulty: "profi", readMinutes: 8, tags: ["Konzentrate", "Katalog", "Taxonomie", "Plattform"], relatedSlugs: ["hash-typen-vergleichen", "full-melt-und-marketingsprache", "rosin-einordnung-ohne-hype"] },
-  { slug: "kontaminantenprofile-bei-extrakten", title: "Kontaminantenprofile bei Extrakten", summary: "Welche Kontaminantenklassen bei konzentrierten Produkten besondere Aufmerksamkeit brauchen.", category: "konzentrate", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Extrakte", "Kontaminanten", "Sicherheit", "Labor"], relatedSlugs: ["bubble-hash-qualitätskriterien", "pgr-und-kontaminanten", "pestizidklassen-und-rückstandsrisiken"] },
-  { slug: "internationale-regelwerke-vergleichen", title: "Internationale Regelwerke vergleichen", summary: "Wie sich Rahmenwerke zwischen Regionen unterscheiden und was das für Content und Compliance bedeutet.", category: "recht", difficulty: "profi", readMinutes: 9, tags: ["Regulierung", "International", "Compliance", "Recht"], relatedSlugs: ["rechtliche-grundlagen-dach", "gmp-gdp-und-qualitätssysteme", "werbeaussagen-und-health-claims-cannabis"] },
-  { slug: "audit-readiness-fuer-content-und-produkt", title: "Audit-Readiness für Content und Produkt", summary: "Praktische Leitlinien, um Dokumente, Prozesse und Wissensinhalte auditfaehig zu halten.", category: "recht", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Audit", "Readiness", "Dokumentation", "Compliance"], relatedSlugs: ["dokumentationspflichten-für-chargen", "batch-release-und-freigabekriterien", "gmp-gdp-und-qualitätssysteme"] },
-  { slug: "microbial-trending-und-fruehwarnung", title: "Microbial Trending und Frühwarnung", summary: "Wie mikrobielle Messreihen als Fruehwarnsystem für Qualitäts- und Sicherheitsprobleme genutzt werden.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Mikrobiologie", "Trending", "Frühwarnung", "Sicherheit"], relatedSlugs: ["schimmel-und-mykotoxine-bei-cannabis", "recall-und-sperrprozesse-für-chargen", "wasseraktivität-und-curing"] },
-  { slug: "supplier-risk-scoring-fuer-cannabis", title: "Supplier-Risk-Scoring für Cannabis", summary: "Wie Lieferanten nach Datenqualität, Abweichungen und Zuverlässigkeit bewertet werden können.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Lieferanten", "Scoring", "Risiko", "Qualität"], relatedSlugs: ["lieferkette-und-rückverfolgbarkeit", "white-label-und-qualitätsrisiken", "dokumentationspflichten-für-chargen"] },
+  { slug: "kontaminantenprofile-bei-extrakten", title: "Kontaminantenprofile bei Extrakten", summary: "Welche Kontaminantenklassen bei konzentrierten Produkten besondere Aufmerksamkeit brauchen.", category: "konzentrate", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Extrakte", "Kontaminanten", "Sicherheit", "Labor"], relatedSlugs: ["bubble-hash-qualitaetskriterien", "pgr-und-kontaminanten", "pestizidklassen-und-rueckstandsrisiken"] },
+  { slug: "internationale-regelwerke-vergleichen", title: "Internationale Regelwerke vergleichen", summary: "Wie sich Rahmenwerke zwischen Regionen unterscheiden und was das für Content und Compliance bedeutet.", category: "recht", difficulty: "profi", readMinutes: 9, tags: ["Regulierung", "International", "Compliance", "Recht"], relatedSlugs: ["rechtliche-grundlagen-dach", "gmp-gdp-und-qualitaetssysteme", "werbeaussagen-und-health-claims-cannabis"] },
+  { slug: "audit-readiness-fuer-content-und-produkt", title: "Audit-Readiness für Content und Produkt", summary: "Praktische Leitlinien, um Dokumente, Prozesse und Wissensinhalte auditfähig zu halten.", category: "recht", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Audit", "Readiness", "Dokumentation", "Compliance"], relatedSlugs: ["dokumentationspflichten-fuer-chargen", "batch-release-und-freigabekriterien", "gmp-gdp-und-qualitaetssysteme"] },
+  { slug: "microbial-trending-und-fruehwarnung", title: "Microbial Trending und Frühwarnung", summary: "Wie mikrobielle Messreihen als Frühwarnsystem für Qualitäts- und Sicherheitsprobleme genutzt werden.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Mikrobiologie", "Trending", "Frühwarnung", "Sicherheit"], relatedSlugs: ["schimmel-und-mykotoxine-bei-cannabis", "recall-und-sperrprozesse-fuer-chargen", "wasseraktivitaet-und-curing"] },
+  { slug: "supplier-risk-scoring-fuer-cannabis", title: "Supplier-Risk-Scoring für Cannabis", summary: "Wie Lieferanten nach Datenqualität, Abweichungen und Zuverlässigkeit bewertet werden können.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Lieferanten", "Scoring", "Risiko", "Qualität"], relatedSlugs: ["lieferkette-und-rueckverfolgbarkeit", "white-label-und-qualitaetsrisiken", "dokumentationspflichten-fuer-chargen"] },
   { slug: "interlaborvergleich-und-ringtests", title: "Interlaborvergleich und Ringtests", summary: "Warum Ringtests wichtig sind, um Laborqualität und Vergleichbarkeit langfristig abzusichern.", category: "qualitaet", difficulty: "profi", readMinutes: 8, tags: ["Ringtest", "Interlabor", "Qualität", "Analytik"], relatedSlugs: ["coa-richtig-lesen", "analytik-hplc-vs-gc-bei-cannabinoiden", "sampling-und-probenahme-fehler"] },
-  { slug: "stabilitaetsprogramme-fuer-produktlinien", title: "Stabilitaetsprogramme für Produktlinien", summary: "Wie strukturierte Stabilitaetspruefungen über Chargen und Zeit aufgebaut werden.", category: "qualitaet", difficulty: "profi", readMinutes: 9, tags: ["Stabilität", "Produktlinie", "Qualität", "Programm"], relatedSlugs: ["lagerung-verpackung-und-lichtschutz", "batch-release-und-freigabekriterien", "thc-zu-cbn-abbau-und-oxidation"] },
-  { slug: "preisindizes-und-marktzyklen", title: "Preisindizes und Marktzyklen", summary: "Wie Preiszyklen interpretiert werden und warum Indexe für Marktbeobachtung auf Plattformen sinnvoll sind.", category: "markt", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Preis", "Index", "Markt", "Zyklus"], relatedSlugs: ["markttransparenz-und-preise", "lieferkette-und-rückverfolgbarkeit", "white-label-und-qualitätsrisiken"] },
+  { slug: "stabilitaetsprogramme-fuer-produktlinien", title: "Stabilitätsprogramme für Produktlinien", summary: "Wie strukturierte Stabilitätsprüfungen über Chargen und Zeit aufgebaut werden.", category: "qualitaet", difficulty: "profi", readMinutes: 9, tags: ["Stabilität", "Produktlinie", "Qualität", "Programm"], relatedSlugs: ["lagerung-verpackung-und-lichtschutz", "batch-release-und-freigabekriterien", "thc-zu-cbn-abbau-und-oxidation"] },
+  { slug: "preisindizes-und-marktzyklen", title: "Preisindizes und Marktzyklen", summary: "Wie Preiszyklen interpretiert werden und warum Indexe für Marktbeobachtung auf Plattformen sinnvoll sind.", category: "markt", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Preis", "Index", "Markt", "Zyklus"], relatedSlugs: ["markttransparenz-und-preise", "lieferkette-und-rueckverfolgbarkeit", "white-label-und-qualitaetsrisiken"] },
   { slug: "nachfrageprognosen-fuer-produktkategorien", title: "Nachfrageprognosen für Produktkategorien", summary: "Welche Daten für belastbare Prognosen taugen und wo reine Trendbeobachtung zu kurz greift.", category: "markt", difficulty: "profi", readMinutes: 8, tags: ["Prognose", "Nachfrage", "Kategorie", "Markt"], relatedSlugs: ["markttransparenz-und-preise", "preisindizes-und-marktzyklen", "grow-log-und-kpi-dashboard"] },
-  { slug: "content-taxonomie-und-tag-governance", title: "Content-Taxonomie und Tag-Governance", summary: "Wie grosse Wissensseiten Kategorien und Tags so steuern, dass Suche und Navigation stabil bleiben.", category: "werkzeuge", difficulty: "profi", readMinutes: 8, tags: ["Taxonomie", "Tags", "Governance", "Wiki"], relatedSlugs: ["grow-log-und-kpi-dashboard", "sensor-kalibrierung-und-messfehler", "concentrate-categorization-für-plattformen"] },
-  { slug: "release-checklisten-fuer-wiki-drops", title: "Release-Checklisten für Wiki-Drops", summary: "Praxis-Checkliste für gross angelegte Content-Drops mit Qualitäts- und Konsistenzkontrolle.", category: "werkzeuge", difficulty: "einsteiger", readMinutes: 6, tags: ["Release", "Checkliste", "Wiki", "QA"], relatedSlugs: ["content-taxonomie-und-tag-governance", "batch-release-und-freigabekriterien", "grow-log-und-kpi-dashboard"] },
-  { slug: "naehrstoffbedarf-cannabis-lebenszyklus", title: "Naehrstoffbedarf im Cannabis-Lebenszyklus", summary: "Phasenweise Uebersicht des NPK-, Ca- und Mg-Bedarfs bei Photoperiodisch- und Autoflower-Pflanzen in Erde und Coco – basierend auf peer-reviewten Studien.", category: "anbau", difficulty: "fortgeschritten", readMinutes: 10, tags: ["Nährstoffe", "Naehrstoffmangel", "Düngung", "Lebenszyklus", "NPK", "Autoflower", "Photoperiodisch", "Erde", "Coco", "Studien"], relatedSlugs: ["cannabis-anbau-grundlagen", "nährstoffblockaden-und-antagonismen", "cannabis-substrat-und-wurzelzone", "feminisiert-vs-regular-vs-autoflower", "substrat-vergleich-coco-erde-hydro"] },
-  { slug: "substrat-vergleich-coco-erde-hydro", title: "Substratvergleich: Coco, Erde und Hydro", summary: "Was peer-reviewte Studien über Ertrag, EC-Toleranz und Pflegeaufwand bei den drei Hauptsubstraten sagen – inklusive praktischer Empfehlungen für Hobby-Grower.", category: "anbau", difficulty: "fortgeschritten", readMinutes: 9, tags: ["Substrat", "Nährstoffe", "Schädlinge", "Coco", "Hydro", "Erde", "EC", "pH", "Ertrag", "Studien"], relatedSlugs: ["cannabis-substrat-und-wurzelzone", "bewässerung-ohne-uebergiessen", "vpd-und-ec-kombi-rechner-guide", "nährstoffbedarf-cannabis-lebenszyklus"] },
-  { slug: "indoor-outdoor-anbau-vergleich", title: "Indoor vs. Outdoor: Anbauvergleich Cannabis", summary: "Licht, Ertrag, Terpenprofil und Risikofaktoren im direkten Vergleich – was Forschung und Praxis über beide Anbausysteme sagen.", category: "anbau", difficulty: "einsteiger", readMinutes: 8, tags: ["Indoor", "Outdoor", "Licht", "Ertrag", "Terpene", "Umwelt", "Schädlinge", "Nährstoffe", "Studien"], relatedSlugs: ["cannabis-anbau-grundlagen", "lichtstress-und-canopy-management", "schimmel-und-mykotoxine-bei-cannabis", "vpd-und-ec-kombi-rechner-guide"] }
+  { slug: "content-taxonomie-und-tag-governance", title: "Content-Taxonomie und Tag-Governance", summary: "Wie grosse Wissensseiten Kategorien und Tags so steuern, dass Suche und Navigation stabil bleiben.", category: "werkzeuge", difficulty: "profi", readMinutes: 8, tags: ["Taxonomie", "Tags", "Governance", "Wiki"], relatedSlugs: ["grow-log-und-kpi-dashboard", "sensor-kalibrierung-und-messfehler", "concentrate-categorization-fuer-plattformen"] },
+  { slug: "release-checklisten-fuer-wiki-drops", title: "Release-Checklisten für Wiki-Drops", summary: "Praxis-Checkliste für gross angelegte Content-Drops mit Qualitäts- und Konsistenzkontrolle.", category: "werkzeuge", difficulty: "einsteiger", readMinutes: 6, tags: ["Release", "Checkliste", "Wiki", "QA"], relatedSlugs: ["content-taxonomie-und-tag-governance", "batch-release-und-freigabekriterien", "grow-log-und-kpi-dashboard"] }
 ];
 
 const thirdWaveWikiArticles: TerpiraArticle[] = thirdWaveSeeds.map(createLiteArticle);
@@ -4652,12 +6674,62 @@ const thirdWaveWikiArticles: TerpiraArticle[] = thirdWaveSeeds.map(createLiteArt
 const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; growCategory: GrowCategory }> = {
   ...DIAGNOSTIC_GROW_KNOWLEDGE,
   // ── Core Grow System ──────────────────────────────────────────────────────
+  "blattsymptom-troubleshooter": {
+    growValue: "Bestimme zuerst WO das Symptom sitzt (alt/jung, ganze Pflanze/Trieb) und ob mehrere Muster gleichzeitig auftreten – das grenzt die Ursache schneller ein als Farbe allein.",
+    qualityScore: 5,
+    growCategory: "stress",
+  },
+  "dli-und-photoperiode": {
+    growValue: "Halte die Dunkelphase in der Blüte absolut lichtdicht – schon ein kurzer Lichteinbruch kann Zwittrigkeit oder Reversion auslösen, unabhängig von der Gesamt-DLI.",
+    qualityScore: 4,
+    growCategory: "lighting",
+  },
+  "vpd-nach-wachstumsphase": {
+    growValue: "Fahre VPD schrittweise hoch: 0.4–0.8 kPa beim Sämling, 0.8–1.2 vegetativ, 1.2–1.6 in der Blüte – ein fixes Ziel über den ganzen Zyklus unter- oder überfordert eine der Phasen.",
+    qualityScore: 4,
+    growCategory: "climate",
+  },
+  "ec-und-runoff-interpretation": {
+    growValue: "Vergleiche Runoff-EC immer mit der Zulauf-EC, nie isoliert – Runoff > 1.3–1.5× Zulauf heißt Salzanreicherung und Spülgang, ein Einzelwert ohne Referenz sagt wenig aus.",
+    qualityScore: 4,
+    growCategory: "nutrients",
+  },
+  "wurzelgesundheit-diagnose": {
+    growValue: "Prüfe bei jedem Umtopfen Farbe, Konsistenz UND Geruch der Wurzel – fauliger Geruch ist oft das frühere Warnsignal als sichtbare Braunfärbung.",
+    qualityScore: 4,
+    growCategory: "watering",
+  },
+  "trocknung-protokoll": {
+    growValue: "Trockne bei 18–21 °C und 55–65 % RH bis zum Snap Test (Stängel bricht statt biegt) – schnellere, heißere Trocknung kostet Terpene und erhöht das Case-Hardening-Risiko.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "trichom-reifegrad-bilddiagnose": {
+    growValue: "Beurteile Calyx-Trichome mit 30–60×-Lupe an mehreren Canopy-Positionen – milchig = THC-Höchststand, Bernstein = beginnender CBN-Abbau; Pistillenfarbe allein reicht nicht.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "ph-management-coco-erde-hydro": {
+    growValue: "Passe die Messfrequenz ans Substrat an: Erde wöchentlich, Coco bei jeder Gießung, Hydro täglich – und stelle den pH immer erst NACH vollständigem Düngerauflösen ein.",
+    qualityScore: 4,
+    growCategory: "nutrients",
+  },
+  "erntefenster-trichomreife": {
+    growValue: "Kombiniere Trichomfarbe (Hauptkriterium) mit Pistillenrückzug und Blattseneszenz – die Breeder-Blütezeit ist nur ein grober Ausgangspunkt, kein festes Erntedatum.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "hop-latent-viroid-hlvd": {
+    growValue: "Bei unerklärlich schwacher Performance einer sonst bewährten Genetik ('Dudding') HLVd per PCR-Test abklären lassen – visuelle Einschätzung allein reicht wegen der häufigen Latenz nicht.",
+    qualityScore: 3,
+    growCategory: "stress",
+  },
   "cannabis-anbau-grundlagen": {
     growValue: "Führ täglich ein Grow-Log mit VPD, EC und pH – drei dokumentierte Runs machen dich besser als beliebig viele undokumentierte.",
     qualityScore: 5,
     growCategory: "yield",
   },
-  "vpd-einfach-erklärt": {
+  "vpd-einfach-erklaert": {
     growValue: "Halte VPD in der Blüte bei 1.2–1.6 kPa – jeder Ausreißer über mehrere Stunden öffnet Schimmelfenster und kostet Ertrag.",
     qualityScore: 5,
     growCategory: "climate",
@@ -4672,7 +6744,7 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     qualityScore: 5,
     growCategory: "watering",
   },
-  "bewässerung-ohne-uebergiessen": {
+  "bewaesserung-ohne-uebergiessen": {
     growValue: "Gieß erst wenn der Topf spürbar leichter ist – Saürstoffmangel durch Staunässe schadet mehr als kurze Trockenheit.",
     qualityScore: 5,
     growCategory: "watering",
@@ -4693,12 +6765,12 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     growCategory: "climate",
   },
   // ── Nutrients & Deficiencies ──────────────────────────────────────────────
-  "nährstoffblockaden-und-antagonismen": {
+  "naehrstoffblockaden-und-antagonismen": {
     growValue: "Prüfe pH (5.8–6.2 Coco, 6.0–6.8 Erde) bevor du neue Dünger gibst – 80% der Mangelbilder sind pH-Blockaden, keine echten Mängel.",
     qualityScore: 5,
     growCategory: "nutrients",
   },
-  "nährstoffbedarf-cannabis-lebenszyklus": {
+  "naehrstoffbedarf-cannabis-lebenszyklus": {
     growValue: "Wechsle ab Blütewoche 3 von NPK 2:1:2 auf 1:3:3 – phasengerechte Ernährung verhindert Stickstoffüberschuss in der Spätblüte.",
     qualityScore: 4,
     growCategory: "nutrients",
@@ -4709,12 +6781,12 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     growCategory: "watering",
   },
   // ── Stress & Prevention ───────────────────────────────────────────────────
-  "stressmarker-früh-erkennen": {
+  "stressmarker-frueh-erkennen": {
     growValue: "Hängende Blätter morgens = Hitzestress, hängende Blätter abends = Wasserverlust – beide Signale richtig lesen spart Ertragseinbußen.",
     qualityScore: 4,
     growCategory: "stress",
   },
-  "integrierte-schädlingsprävention-grow": {
+  "integrierte-schaedlingspraevention-grow": {
     growValue: "Stelle Klebefallen auf und mache wöchentliche Sichtkontrollen – früh erkannter Schädlingsdruck halbiert den Behandlungsaufwand.",
     qualityScore: 4,
     growCategory: "stress",
@@ -4725,7 +6797,7 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     growCategory: "yield",
   },
   // ── Genetics ─────────────────────────────────────────────────────────────
-  "genetik-und-phänotyp-selektion": {
+  "genetik-und-phaenotyp-selektion": {
     growValue: "Definiere Selektionsziele vor dem Pheno-Hunt schriftlich – wer erst danach priorisiert, wählt nach Bauchgefühl.",
     qualityScore: 4,
     growCategory: "yield",
@@ -4741,7 +6813,7 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     growCategory: "stress",
   },
   // ── Post-Harvest & Quality ────────────────────────────────────────────────
-  "wasseraktivität-und-curing": {
+  "wasseraktivitaet-und-curing": {
     growValue: "Cure 3–4 Wochen in verschlossenen Gläsern bei 62% RH und prüfe aw wöchentlich – Ziel ist aw < 0.65 für stabile Qualität.",
     qualityScore: 5,
     growCategory: "yield",
@@ -4788,7 +6860,7 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     qualityScore: 4,
     growCategory: "yield",
   },
-  "pestizidklassen-und-rückstandsrisiken": {
+  "pestizidklassen-und-rueckstandsrisiken": {
     growValue: "Setze nur zugelassene Mittel ein und halte mind. 14 Tage Auswaschphase vor der Ernte – dokumentiere jeden Einsatz mit Datum und Menge.",
     qualityScore: 4,
     growCategory: "stress",
@@ -4815,7 +6887,7 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     qualityScore: 3,
     growCategory: "yield",
   },
-  "bubble-hash-qualitätskriterien": {
+  "bubble-hash-qualitaetskriterien": {
     growValue: "Bubble Hash über 90µm-Sieben enthält mehr Kopfdrüsen und weniger Pflanzenreste – Siebgröße ist das wichtigste dokumentierbare Qualitätsmerkmal.",
     qualityScore: 4,
     growCategory: "yield",
@@ -4831,7 +6903,7 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     growCategory: "yield",
   },
   // ── Tutorials ────────────────────────────────────────────────────────────
-  "how-to-grow-cannabis-anfänger-tutorial": {
+  "how-to-grow-cannabis-anfaenger-tutorial": {
     growValue: "Starte mit einer Pflanze, stabilem Setup und täglichem Log – drei dokumentierte Runs machen dich besser als beliebig viele undokumentierte.",
     qualityScore: 5,
     growCategory: "yield",

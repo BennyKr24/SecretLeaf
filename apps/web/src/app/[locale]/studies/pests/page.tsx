@@ -1168,7 +1168,7 @@ export default function PestLexiconPage() {
           <div className="mt-3 flex flex-wrap gap-2">
             <a href="#filter" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Filter</a>
             <a href="#lexikon" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Lexikon</a>
-            <a href="#nuetzlinge" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Nützlings-Matrix</a>
+            <a href="#Nützlinge" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Nützlings-Matrix</a>
             <a href="#ampel" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">24h-Ampel</a>
             <a href="#downloads" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Downloads</a>
             <a href="#quellen" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Quellen</a>
@@ -1195,7 +1195,7 @@ export default function PestLexiconPage() {
               <p className="text-sm font-bold text-amber-900">Modus 3: Prävention</p>
               <p className="mt-1 text-xs text-amber-800 dark:text-amber-400">Nützlingsstrategie und Referenzen für belastbare Standardabläufe nutzen.</p>
               <div className="mt-2 flex gap-2 text-xs">
-                <a href="#nuetzlinge" className="rounded-full border border-amber-300 bg-card px-2.5 py-1 font-semibold text-amber-700 dark:text-amber-400">Zur Matrix</a>
+                <a href="#Nützlinge" className="rounded-full border border-amber-300 bg-card px-2.5 py-1 font-semibold text-amber-700 dark:text-amber-400">Zur Matrix</a>
                 <a href="#quellen" className="rounded-full border border-amber-300 bg-card px-2.5 py-1 font-semibold text-amber-700 dark:text-amber-400">Zu Quellen</a>
               </div>
             </article>
@@ -1426,7 +1426,7 @@ export default function PestLexiconPage() {
         </section>
 
         <section className="mt-6 grid gap-5 lg:grid-cols-2">
-          <article id="nuetzlinge" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
+          <article id="Nützlinge" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
             <h2 className="text-xl font-bold text-foreground">Nützlinge pro Schädling</h2>
             <p className="mt-1 text-sm text-foreground/80">Schnellmatrix für Auswahl und Ausbringungszeitpunkt.</p>
             <div className="mt-3 overflow-x-auto">

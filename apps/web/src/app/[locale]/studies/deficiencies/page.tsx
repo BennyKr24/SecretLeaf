@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { areaLabel, riskClass, riskLabel, stageLabel, type GrowArea, type PlantStage, type RiskLevel } from "@/lib/terpira/lexicon";
 
-type DefCategory = "makro" | "sekundaer" | "mikro" | "stress";
+type DefCategory = "makro" | "sekundär" | "mikro" | "stress";
 type Mobility = "mobil" | "immobil" | "gemischt";
 
 type DeficiencyEntry = {
@@ -121,7 +121,7 @@ const lifecycleHubCards = [
 
 const categoryLabel: Record<DefCategory, string> = {
   makro: "Makronährstoffe",
-  sekundaer: "Sekundäre Nährstoffe",
+  sekundär: "Sekundäre Nährstoffe",
   mikro: "Mikronährstoffe",
   stress: "Stress- und Blockadebilder"
 };
@@ -242,7 +242,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     id: "ca-mangel",
     name: "Calciummangel (Ca)",
     short: "Neuwuchs zeigt Deformationen und nekrotische Flecken, da Calcium nur begrenzt verlagert wird.",
-    category: "sekundaer",
+    category: "sekundär",
     risk: "hoch",
     mobility: "immobil",
     growArea: "beides",
@@ -277,7 +277,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     id: "mg-mangel",
     name: "Magnesiummangel (Mg)",
     short: "Interkostale Chlorosen an älteren Blättern bei zunächst grünen Blattadern.",
-    category: "sekundaer",
+    category: "sekundär",
     risk: "mittel",
     mobility: "mobil",
     growArea: "beides",
@@ -312,7 +312,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     id: "s-mangel",
     name: "Schwefelmangel (S)",
     short: "Heller, gleichmäßiger Neuwuchs ähnlich N-Mangel, jedoch eher an jungen Blättern sichtbar.",
-    category: "sekundaer",
+    category: "sekundär",
     risk: "mittel",
     mobility: "immobil",
     growArea: "beides",
@@ -653,7 +653,7 @@ export default function DeficiencyLexiconPage() {
   const countsByCategory = useMemo(() => {
     const map: Record<DefCategory, number> = {
       makro: 0,
-      sekundaer: 0,
+      sekundär: 0,
       mikro: 0,
       stress: 0
     };
@@ -738,7 +738,7 @@ export default function DeficiencyLexiconPage() {
             <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value as DefCategory | "alle")} className="rounded-xl border border-border px-3 py-2 text-sm">
               <option value="alle">Alle Kategorien</option>
               <option value="makro">Makro</option>
-              <option value="sekundaer">Sekundär</option>
+              <option value="sekundär">Sekundär</option>
               <option value="mikro">Mikro</option>
               <option value="stress">Stress und Blockaden</option>
             </select>

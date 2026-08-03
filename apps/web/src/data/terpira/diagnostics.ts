@@ -219,6 +219,67 @@ export const diagnosticSources: TerpiraSource[] = [
     evidenceLevel: 4,
     tags: ["CO2", "Photosynthese", "Klima"],
   },
+  // ── Wave 6 – Blockaden, Wurzelstress & erweiterte Schädlinge (Phase 21) ────
+  {
+    id: "marschner-nutrient-availability-ph",
+    title: "Mineral Nutrition of Higher Plants — Availability of Nutrients in Soils (pH-Dependence)",
+    publisher: "Academic Press",
+    year: "2012",
+    url: "https://www.sciencedirect.com/book/9780123849052/marschners-mineral-nutrition-of-higher-plants",
+    sourceType: "manual",
+    evidenceLevel: 5,
+    tags: ["pH", "Löslichkeit", "Nährstoffe", "Lockout"],
+  },
+  {
+    id: "drew-root-response-waterlogging",
+    title: "Oxygen Deficiency and Root Metabolism: Injury and Acclimation Under Hypoxia and Anoxia",
+    publisher: "Annual Review of Plant Physiology and Plant Molecular Biology",
+    year: "1997",
+    url: "https://www.annualreviews.org/doi/10.1146/annurev.arplant.48.1.223",
+    sourceType: "manual",
+    evidenceLevel: 5,
+    tags: ["Staunässe", "Wurzelatmung", "Sauerstoffmangel"],
+  },
+  {
+    id: "blackman-eastop-aphids",
+    title: "Aphids on the World's Herbaceous Plants and Shrubs",
+    publisher: "Wiley",
+    year: "2006",
+    url: "https://onlinelibrary.wiley.com/doi/book/10.1002/9780470754091",
+    sourceType: "manual",
+    evidenceLevel: 4,
+    tags: ["Blattläuse", "Schädlinge", "Biologie"],
+  },
+  {
+    id: "byrne-bellows-whitefly-biology",
+    title: "Whitefly Biology",
+    publisher: "Annual Review of Entomology",
+    year: "1991",
+    url: "https://www.annualreviews.org/doi/10.1146/annurev.en.36.010191.001255",
+    sourceType: "manual",
+    evidenceLevel: 5,
+    tags: ["Weiße Fliege", "Schädlinge", "Biologie"],
+  },
+  {
+    id: "lindquist-eriophyoid-mites",
+    title: "Eriophyoid Mites: Their Biology, Natural Enemies and Control",
+    publisher: "Elsevier",
+    year: "1996",
+    url: "https://www.sciencedirect.com/bookseries/world-crop-pests/vol/6",
+    sourceType: "manual",
+    evidenceLevel: 4,
+    tags: ["Rostmilben", "Eriophyidae", "Schädlinge"],
+  },
+  {
+    id: "fusarium-wilt-review",
+    title: "Fusarium Wilt Diseases: Biology, Diagnosis and Management",
+    publisher: "Annual Review of Phytopathology",
+    year: "2003",
+    url: "https://www.annualreviews.org/doi/10.1146/annurev.phyto.41.052002.095919",
+    sourceType: "manual",
+    evidenceLevel: 5,
+    tags: ["Fusarium", "Krankheiten", "Wurzelfäule"],
+  },
 ];
 
 // ─── Elite-Diagnoseartikel ───────────────────────────────────────────────────
@@ -3511,6 +3572,1001 @@ export const diagnosticArticles: TerpiraArticle[] = [
     sourceIds: ["chandra-cannabis-photosynthesis-temperature-co2", "mortensen-co2-enrichment-review", "prenger-ling-vpd-greenhouse"],
     relatedSlugs: ["hitzestress", "vpd-einfach-erklaert", "lichtstress-und-canopy-management", "vpd-und-ec-kombi-rechner-guide"],
   },
+  // ===========================================================================
+  // WAVE 6 – BLOCKADEN, WURZELSTRESS & ERWEITERTE SCHÄDLINGE (PHASE 21)
+  // ===========================================================================
+  {
+    slug: "ph-lockout",
+    title: "pH-Lockout bei Cannabis erkennen und beheben",
+    summary:
+      "Mehrere scheinbar unabhängige Mangelsymptome gleichzeitig sind das Leitsignal für pH-Lockout, nicht für einen echten Nährstoffmangel. So erkennst du die Blockade und korrigierst sie, ohne blind nachzudüngen.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["pH", "Lockout", "Blockade", "Diagnose", "Nährstoffe"],
+    keyTakeaways: [
+      "pH-Lockout zeigt sich fast immer als KOMBINATION mehrerer Mangelbilder gleichzeitig (z. B. Fe-, Mn- und Mg-Symptome parallel) — ein einzelnes, isoliertes Mangelbild spricht eher für echten Einzelmangel.",
+      "Die häufigste Ursache für 'unerklärlichen' Lockout ist nicht das Substrat, sondern ein unkalibriertes oder verschmutztes pH-Messgerät — das zuerst prüfen, bevor am Dünger geschraubt wird.",
+      "pH-Korrekturen schrittweise über mehrere Gießgänge vornehmen (max. 0.3–0.5 Einheiten pro Tag) — ein abrupter Sprung wirkt selbst wie ein Stressor auf die Wurzel."
+    ],
+    quickFacts: [
+      { label: "pH-Fenster Coco/Hydro", value: "5.8–6.2" },
+      { label: "pH-Fenster Erde", value: "6.0–6.8" },
+      { label: "Leitsymptom", value: "Mehrere Mangelbilder gleichzeitig" },
+      { label: "Häufigste Fehlerquelle", value: "Unkalibriertes pH-Messgerät" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "pH-Lockout ist ein Zustand, in dem Nährstoffe im Substrat oder in der Nährlösung chemisch vorhanden, aber aufgrund eines ungünstigen pH-Werts nicht in pflanzenverfügbarer Form gelöst oder aufnehmbar sind.",
+          "Im Unterschied zu einem einzelnen Nährstoffmangel betrifft Lockout meist mehrere Nährstoffe gleichzeitig, weil die Löslichkeit verschiedenster Ionen im selben pH-Bereich einbricht.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Die Löslichkeit von Mikronährstoffen wie Eisen, Mangan, Zink und Kupfer sinkt bei steigendem pH drastisch, weil sie oberhalb von etwa pH 6.5–7 zu unlöslichen Hydroxiden ausfallen.",
+          "Phosphor bildet bei hohem pH unlösliche Calciumphosphate und bei niedrigem pH unlösliche Eisen-/Aluminiumphosphate — sein nutzbares Fenster ist dadurch besonders schmal und mittig.",
+          "Weil mehrere dieser Löslichkeitskurven im selben pH-Bereich kippen, äußert sich ein pH-Fehler fast nie als isolierter Einzelmangel, sondern als Kombination mehrerer Symptome.",
+        ],
+      },
+      {
+        heading: "Symptome nach Muster",
+        content: [
+          "Kombiniertes Mangelbild: interveinale Chlorose an jungen UND alten Blättern gleichzeitig, teils mit unterschiedlichen Mustern auf derselben Pflanze.",
+          "Wachstumsstillstand trotz augenscheinlich korrekter Düngerkonzentration und regelmäßiger Fütterung.",
+          "Symptome, die trotz erhöhter Nährstoffgabe nicht besser, sondern durch die zusätzliche Salzlast eher schlechter werden.",
+        ],
+        checklist: [
+          "Prüfen, ob mehr als ein Mangelmuster gleichzeitig sichtbar ist",
+          "pH-Messgerät vor jeder weiteren Maßnahme kalibrieren",
+          "Substrat-/Drainage-pH direkt messen, nicht nur den Zulauf",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Unkalibriertes oder verschmutztes pH-Messgerät: die mit Abstand häufigste Ursache für vermeintlich 'unerklärlichen' Lockout — die angezeigten Werte stimmen schlicht nicht.",
+          "2. Hartes Leitungswasser ohne Anpassung: hoher Karbonatgehalt puffert den pH nach oben und treibt ihn über Zeit aus dem Zielfenster.",
+          "3. Kalkablagerungen in Bewässerungsleitungen und -düsen, die lokal den pH der abgegebenen Lösung verändern.",
+          "4. Organisches Substratmaterial, das über Wochen mikrobiell abgebaut wird und den pH schrittweise driften lässt.",
+        ],
+      },
+      {
+        heading: "Diagnose — Vorgehen",
+        content: [
+          "Schritt 1: pH-Messgerät mit frischer Kalibrierlösung prüfen — ein driftendes Gerät ist die wahrscheinlichste Fehlerquelle, bevor überhaupt am Substrat gemessen wird.",
+          "Schritt 2: Substrat- bzw. Drainage-pH direkt messen, nicht nur den Zulauf-pH der Nährlösung.",
+          "Schritt 3: Prüfen, ob mehrere Mangelsymptome gleichzeitig auftreten — das unterscheidet Lockout von einem echten Einzelmangel.",
+          "Schritt 4: Erst wenn der pH nachweislich im Zielfenster liegt und die Symptome bestehen bleiben, einen echten Nährstoffmangel in Betracht ziehen.",
+        ],
+        checklist: [
+          "Kalibrierlösung frisch und nicht abgelaufen verwenden",
+          "Substrat-pH an mehreren Stellen im Topf messen",
+          "Symptommuster auf Mehrfachbefall statt Einzelmangel prüfen",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "pH schrittweise in das substratspezifische Zielfenster bringen: Coco/Hydro 5.8–6.2, Erde 6.0–6.8, maximal 0.3–0.5 Einheiten Änderung pro Gießgang.",
+          "Nach der pH-Korrektur einen Spülgang mit pH-korrigiertem Wasser einplanen, um bereits ausgefallene, jetzt wieder gelöste Salze auszuwaschen.",
+          "Erst nach bestätigter pH-Stabilität über mehrere Tage gezielt nachdüngen, falls einzelne Symptome bestehen bleiben.",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "pH-Messgerät wöchentlich kalibrieren, unabhängig davon, ob Probleme sichtbar sind.",
+          "Bei hartem Leitungswasser eine Wasseraufbereitung (Umkehrosmose oder gezielte Säurezugabe) fest in die Routine einplanen.",
+          "Drainage-pH regelmäßig gegen den Zulauf-pH gegenprüfen, um Substratdrift früh zu erkennen.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Bei Symptomen sofort mehr oder anderen Dünger geben, ohne vorher das Messgerät zu kalibrieren.",
+          "pH in einem einzigen großen Schritt korrigieren, statt ihn über mehrere Gießgänge zu strecken.",
+          "Nur den Zulauf-pH kontrollieren und die Drainage ignorieren, obwohl sich beide deutlich unterscheiden können.",
+        ],
+      },
+    ],
+    warnings: [
+      "Eine abrupte pH-Korrektur um mehr als eine Einheit auf einmal wirkt selbst wie ein Stressereignis auf die Wurzel und kann bestehende Symptome kurzfristig verschlimmern.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum mehrere Mängel gleichzeitig?",
+        text: "Viele Nährstoffe werden im selben pH-Bereich schwerer löslich. Kippt der pH aus dem Fenster, sind meist mehrere Nährstoffe gleichzeitig betroffen — nicht nur einer.",
+      },
+      {
+        title: "Kurz erklärt: Warum zuerst das Messgerät prüfen?",
+        text: "Ein leicht verschmutzter oder unkalibrierter pH-Sensor zeigt oft plausible, aber falsche Werte an. Bevor am Dünger geschraubt wird, lohnt sich der Griff zur Kalibrierlösung.",
+      },
+    ],
+    faq: [
+      {
+        question: "Wie unterscheide ich pH-Lockout von einem echten Mangel?",
+        answer:
+          "Lockout zeigt meist mehrere Mangelmuster gleichzeitig und bessert sich nicht durch zusätzliche Düngung. Ein echter Einzelmangel zeigt ein isoliertes, klar zuordenbares Symptommuster.",
+      },
+      {
+        question: "Wie schnell darf ich den pH ändern?",
+        answer:
+          "Maximal 0.3–0.5 Einheiten pro Gießgang. Größere Sprünge wirken selbst als Stressor und können die Symptome kurzfristig verschlimmern, statt sie zu lösen.",
+      },
+    ],
+    glossary: [
+      { term: "Lockout", definition: "Zustand, in dem ein Nährstoff im Substrat vorhanden, aber aufgrund von pH oder Antagonismus nicht pflanzenverfügbar ist." },
+      { term: "Kalibrierlösung", definition: "Referenzlösung mit bekanntem pH-Wert zur Überprüfung und Justierung eines pH-Messgeräts." },
+      { term: "Löslichkeitskurve", definition: "Grafische Darstellung, wie die Verfügbarkeit eines Nährstoffs vom pH-Wert abhängt." },
+    ],
+    sourceIds: ["marschner-nutrient-availability-ph", "bryson-plant-nutrition-manual", "bugbee-electrical-conductivity"],
+    relatedSlugs: ["naehrstoffblockaden-und-antagonismen", "magnesiummangel", "eisenmangel", "sensor-kalibrierung-und-messfehler"],
+  },
+  {
+    slug: "ueberwaesserung-staunaesse",
+    title: "Überwässerung und Staunässe bei Cannabis erkennen und beheben",
+    summary:
+      "Hängende Blätter trotz nassem Substrat und ausbleibende Erholung nach dem Gießen sind die Leitsymptome. So trennst du Staunässe von Trockenstress und rettest die Wurzelzone rechtzeitig.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["Staunässe", "Überwässerung", "Wurzelzone", "Diagnose", "Sauerstoff"],
+    keyTakeaways: [
+      "Das zuverlässigste Unterscheidungsmerkmal zu Trockenstress ist die Erholungszeit nach dem Gießen: bei Staunässe bleibt die Pflanze trotz feuchtem Substrat schlaff, bei Trockenstress erholt sie sich zügig.",
+      "Anaerobe Wurzelatmung produziert Ethanol und Milchsäure, die die Wurzel direkt schädigen — nicht nur der fehlende Sauerstoff selbst ist das Problem.",
+      "Übertopfung (zu großer Topf für die vorhandene Wurzelmasse) ist eine unterschätzte Ursache: das überschüssige Substratvolumen bleibt lokal um die kleine Wurzel herum zu lange nass.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Hängende Blätter trotz nassem Substrat" },
+      { label: "Unterscheidungsmerkmal", value: "Keine Erholung nach Wassergabe" },
+      { label: "Ideale Wurzeltemperatur", value: "18–22 °C" },
+      { label: "Risikofaktor", value: "Übertopfung, schlechte Drainage" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Staunässe ist ein Zustand, in dem das Substrat über einen längeren Zeitraum nahe der vollständigen Wassersättigung bleibt und dadurch zu wenig Sauerstoff für die Wurzelatmung verfügbar ist.",
+          "Im Gegensatz zu einer einzelnen Überwässerung ist Staunässe ein anhaltender Zustand, der sich meist über wiederholtes, zu häufiges Gießen oder schlechte Drainage aufbaut.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Wurzeln benötigen gelösten Sauerstoff für die aerobe Zellatmung. Ist der Wasserfilm um die Wurzelhaare zu dick oder zu lange stehend, sinkt die Sauerstoffdiffusion drastisch.",
+          "Unter Sauerstoffmangel wechselt die Wurzel auf anaerobe Gärung und produziert Ethanol und Milchsäure — beide Stoffe wirken im Wurzelgewebe toxisch und schädigen die Zellmembranen aktiv, nicht nur passiv durch fehlende Energie.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1: Wachstum verlangsamt sich sichtbar, obwohl Substrat konstant feucht wirkt; Blätter zeigen leichtes, tageszeitunabhängiges Hängen.",
+          "Stadium 2: Untere Blätter vergilben (N-Mangel-ähnlich, weil die geschädigte Wurzel Stickstoff nicht mehr effizient aufnimmt), Substratoberfläche riecht dumpf.",
+          "Stadium 3: Wurzeln werden braun und schleimig (Übergang zu Wurzelfäule), Pflanze erholt sich auch nach Gießstopp nicht mehr von selbst.",
+        ],
+        checklist: [
+          "Topfgewicht über mehrere Tage beobachten, nicht nur einmalig",
+          "Substratgeruch direkt an der Wurzelzone prüfen",
+          "Erholung der Blätter 2–4 Stunden nach der letzten Wassergabe kontrollieren",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. Zu häufiges Gießen ohne Rücksicht auf die tatsächliche Trocknungsdauer des Substrats.",
+          "2. Schlechte Drainage: verdichtetes Substrat, fehlende oder zu kleine Abzugslöcher, Untersetzer mit stehendem Wasser.",
+          "3. Übertopfung: ein für die aktuelle Wurzelmasse zu großer Topf hält in den wurzelfernen Zonen über Tage Feuchtigkeit, die lokal in die Wurzelzone zurückdiffundiert.",
+          "4. Zu warme, stehende Nährlösung in Hydro-Systemen — warmes Wasser löst weniger Sauerstoff als kühles.",
+        ],
+      },
+      {
+        heading: "Diagnose — Staunässe vs. Trockenstress",
+        content: [
+          "Schritt 1: Topfgewicht prüfen — ungewöhnlich schwer über mehrere Tage spricht für Staunässe, schnelle Gewichtsabnahme für Trockenstress.",
+          "Schritt 2: 2–4 Stunden nach der letzten Wassergabe die Blätter erneut prüfen. Erholung spricht für Trockenstress, ausbleibende Erholung für ein Sauerstoffproblem.",
+          "Schritt 3: Substratgeruch direkt an der Wurzelzone prüfen — dumpfer, fauliger Geruch bestätigt Staunässe.",
+        ],
+        checklist: [
+          "Topfgewicht als objektives Kriterium nutzen, nicht nur die Blattoptik",
+          "Erholungszeit nach Wassergabe systematisch dokumentieren",
+          "Bei Verdacht die obersten 2–3 cm Substrat vorsichtig anheben und Geruch/Farbe direkt an der Wurzel prüfen",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "Gießen sofort stoppen und dem Substrat Zeit zum Abtrocknen geben, bevor erneut gewässert wird.",
+          "Bei starker, anhaltender Staunässe: vorsichtig umtopfen in trockeneres Substrat, dabei die Wurzelzone auf braune, schleimige Stellen prüfen (Übergang zu Wurzelfäule).",
+          "Wurzelzonentemperatur auf 18–22 °C bringen — kühlere, aber nicht kalte Temperaturen erhöhen die Sauerstofflöslichkeit, ohne die mikrobielle Aktivität zu stark zu bremsen.",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Topfgröße an die tatsächliche Wurzelmasse anpassen, nicht an die erwartete Endgröße der Pflanze — schrittweises Umtopfen vermeidet Übertopfung.",
+          "Ausreichende Drainagelöcher und ein luftporenreiches Substrat von Anfang an sicherstellen.",
+          "Gießrhythmus an die gemessene Trocknungsdauer koppeln, nicht an einen starren Kalenderplan.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Auf hängende Blätter reflexartig mit zusätzlichem Gießen reagieren, obwohl das Substrat bereits gesättigt ist.",
+          "Junge Pflanzen direkt in sehr große Endtöpfe setzen, ohne die Übertopfungsgefahr zu bedenken.",
+          "Nur die Substratoberfläche auf Trockenheit prüfen, während die tiefere Wurzelzone noch gesättigt ist.",
+        ],
+      },
+    ],
+    warnings: [
+      "Anhaltende Staunässe öffnet ein direktes Zeitfenster für Pythium-Wurzelfäule — je länger der Sauerstoffmangel besteht, desto höher das Infektionsrisiko.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum hängen die Blätter trotz nassem Substrat?",
+        text: "Die Wurzel braucht Sauerstoff, nicht nur Wasser. Ist das Substrat zu lange gesättigt, erstickt die Wurzel funktionell und kann kein Wasser mehr in die Blätter transportieren, obwohl davon genug vorhanden wäre."
+      },
+      {
+        title: "Kurz erklärt: Übertopfung",
+        text: "Ein zu großer Topf für eine kleine Wurzel bedeutet, dass viel Substrat weit von der Wurzel entfernt lange feucht bleibt. Diese Feuchtigkeit wandert langsam zurück zur Wurzelzone und verlängert die Sättigungsphase unnötig."
+      },
+    ],
+    faq: [
+      {
+        question: "Wie unterscheide ich Staunässe sicher von Trockenstress?",
+        answer:
+          "Am zuverlässigsten über die Erholung nach einer Wassergabe: Bleibt die Pflanze trotz feuchtem Substrat schlaff, ist es Staunässe. Erholt sie sich zügig, war es Trockenstress.",
+      },
+      {
+        question: "Hilft es, den Topf anzuheben oder zu schütteln, um Staunässe zu lösen?",
+        answer:
+          "Kurzfristig kaum. Wirksamer ist es, das Gießen zu pausieren, für bessere Drainage zu sorgen und bei starkem Befall die Wurzelzone auf beginnende Fäule zu kontrollieren.",
+      },
+    ],
+    glossary: [
+      { term: "Anaerobe Atmung", definition: "Energiegewinnung ohne Sauerstoff, bei Pflanzenwurzeln mit toxischen Nebenprodukten wie Ethanol und Milchsäure verbunden." },
+      { term: "Übertopfung", definition: "Ein für die vorhandene Wurzelmasse zu großer Topf, der lokal übermäßig lange feucht bleibt." },
+      { term: "Drainage", definition: "Fähigkeit eines Systems, überschüssiges Wasser abzuleiten und Staunässe zu vermeiden." },
+    ],
+    sourceIds: ["drew-root-response-waterlogging", "pythium-root-rot-hydroponics", "marschner-mineral-nutrition"],
+    relatedSlugs: ["wurzelfaeule", "cannabis-substrat-und-wurzelzone", "bewaesserung-ohne-uebergiessen"],
+  },
+  {
+    slug: "blattlaeuse",
+    title: "Blattläuse bei Cannabis erkennen und bekämpfen",
+    summary:
+      "Weiche, oft grüne Insekten in Kolonien an Triebspitzen sowie klebriger Honigtau verraten Blattlausbefall. So erkennst du die Symbiose mit Ameisen und stoppst die Vermehrung frühzeitig.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["Blattläuse", "Schädlinge", "IPM", "Aphididae", "Diagnose"],
+    keyTakeaways: [
+      "Blattläuse vermehren sich parthenogenetisch — Weibchen gebären lebende Junge ohne Befruchtung, was die Population unter guten Bedingungen explosionsartig wachsen lässt.",
+      "Klebriger, glänzender Honigtau auf Blättern ist ein Leitsymptom und Nährboden für Rußtaupilz — er ist oft auffälliger als die Läuse selbst.",
+      "Ameisen 'melken' Blattläuse aktiv nach Honigtau und verteidigen sie gegen Nützlinge — ein Ameisenproblem ohne Blattlausbekämpfung zu lösen, ist meist wirkungslos.",
+    ],
+    quickFacts: [
+      { label: "Erreger", value: "Aphididae (versch. Arten)" },
+      { label: "Leitsymptom", value: "Kolonien an Triebspitzen, Honigtau" },
+      { label: "Vermehrung", value: "Parthenogenetisch, sehr schnell" },
+      { label: "Symbiose", value: "Oft mit Ameisen" },
+      { label: "Nützling", value: "Marienkäfer, Florfliegen, Aphidius spp." },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Blattläuse sind kleine, weichkörperige Insekten, die mit ihrem Saugrüssel Phloemsaft aus jungen Trieben und Blattunterseiten entziehen.",
+          "Sie treten meist zuerst an den zartesten, nährstoffreichsten Pflanzenteilen auf — Triebspitzen und junge Blätter.",
+        ],
+      },
+      {
+        heading: "Biologie und Lebenszyklus",
+        content: [
+          "Blattlaus-Weibchen können sich parthenogenetisch fortpflanzen, also ohne Befruchtung lebende Junge gebären — das ermöglicht eine sehr schnelle Populationszunahme unter günstigen Bedingungen.",
+          "Bei Überbevölkerung oder Stress bilden sich geflügelte Formen, die neue Pflanzen oder Räume besiedeln und den Befall räumlich ausbreiten.",
+        ],
+      },
+      {
+        heading: "Schadbild und Symptome nach Schweregrad",
+        content: [
+          "Stadium 1: Vereinzelte Kolonien an Triebspitzen und jungen Blattunterseiten, mit bloßem Auge sichtbar.",
+          "Stadium 2: Klebriger Honigtau auf Blattoberflächen, oft begleitet von auffälligem Ameisenbesuch.",
+          "Stadium 3: Rußtaupilz siedelt sich auf dem Honigtau an (schwarzer Belag), Blätter und Triebspitzen verkrüppeln durch den Saugschaden.",
+        ],
+        checklist: [
+          "Triebspitzen und Blattunterseiten auf Kolonien absuchen",
+          "Klebrige, glänzende Stellen auf Blättern prüfen",
+          "Ameisenaktivität am Pflanzenstamm als Frühwarnsignal werten",
+        ],
+      },
+      {
+        heading: "Diagnose — Abgrenzung",
+        content: [
+          "Blattläuse sind mit bloßem Auge als kleine, oft grüne bis schwarze Insekten sichtbar — im Unterschied zu Spinnmilben, die eine Lupe erfordern.",
+          "Klebriger Honigtau plus Ameisenbesuch ist ein starkes Unterscheidungsmerkmal gegenüber anderen Saugschädlingen ohne diese Symbiose.",
+          "Rußtaupilz auf den Blättern ist ein Sekundärsymptom des Honigtaus, kein eigenständiger Pilzbefall — die Ursache ist der Blattlausbefall selbst.",
+        ],
+      },
+      {
+        heading: "Bekämpfung — gestaffeltes IPM",
+        content: [
+          "1. Mechanisch reduzieren: Kolonien mit einem kräftigen Wasserstrahl abspülen oder befallene Triebspitzen entfernen.",
+          "2. Ameisenwege unterbrechen, da Ameisen Blattläuse aktiv vor Fressfeinden schützen und ihre Bekämpfung sonst behindern.",
+          "3. Biologisch: Marienkäfer, Florfliegenlarven oder die Schlupfwespe Aphidius spp. gezielt einsetzen, solange die Population noch überschaubar ist.",
+          "4. Neemöl in der vegetativen Phase als Kontaktmittel, niemals auf Knospen in der Blüte.",
+        ],
+        checklist: [
+          "Ameisenstraßen am Stamm identifizieren und unterbrechen",
+          "Nützlinge einsetzen, bevor die Population explodiert",
+          "Kontrolle nach 5–7 Tagen wiederholen, um Wiederbefall zu erkennen",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Neue Pflanzen konsequent in Quarantäne auf Blattläuse und Ameisenbesuch prüfen, bevor sie in den Hauptbestand kommen.",
+          "Gelbe Klebefallen erfassen geflügelte Formen frühzeitig, bevor sich neue Kolonien etablieren.",
+          "Übermäßige Stickstoffdüngung vermeiden — stickstoffreiches, weiches Gewebe ist für Blattläuse besonders attraktiv.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Nur die sichtbaren Ameisen bekämpfen, ohne die eigentliche Blattlauskolonie zu behandeln — das Problem kehrt zurück.",
+          "Erst bei sichtbarem Rußtaupilz reagieren, wenn die Kolonie bereits groß ist.",
+          "Neemöl oder andere Kontaktmittel in der Blüte auf die Knospen sprühen.",
+        ],
+      },
+    ],
+    warnings: [
+      "Manche Blattlausarten übertragen Pflanzenviren beim Saugvorgang — ein früher, konsequenter Eingriff reduziert nicht nur den Saugschaden, sondern auch dieses Risiko.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum vermehren sich Blattläuse so schnell?",
+        text: "Weibchen können sich ohne Befruchtung fortpflanzen und bringen direkt lebende Junge zur Welt. Das überspringt den Zeitaufwand für Eiablage und Schlupf und beschleunigt die Vermehrung erheblich.",
+      },
+      {
+        title: "Kurz erklärt: Die Ameisen-Blattlaus-Symbiose",
+        text: "Blattläuse scheiden zuckerhaltigen Honigtau aus. Ameisen sammeln diesen und beschützen die Läuse im Gegenzug vor Fressfeinden wie Marienkäfern — ein Ameisenproblem zeigt daher oft einen versteckten Blattlausbefall an.",
+      },
+    ],
+    faq: [
+      {
+        question: "Sind viele Ameisen an der Pflanze ein sicheres Zeichen für Blattläuse?",
+        answer:
+          "Ein starkes Indiz, ja. Ameisen suchen gezielt Honigtau-Quellen auf — auffällige Ameisenaktivität am Stamm oder an Trieben lohnt eine gezielte Kontrolle auf Blattlauskolonien.",
+      },
+      {
+        question: "Reicht Abspülen mit Wasser als alleinige Maßnahme?",
+        answer:
+          "Bei leichtem Befall oft ja, kurativ. Bei stärkerem Befall oder wiederkehrenden Kolonien sollte zusätzlich biologisch (Nützlinge) oder mit Neemöl außerhalb der Blüte nachgearbeitet werden.",
+      },
+    ],
+    glossary: [
+      { term: "Honigtau", definition: "Zuckerhaltige, klebrige Ausscheidung von Blattläusen, Nährboden für Rußtaupilz." },
+      { term: "Parthenogenese", definition: "Fortpflanzung ohne Befruchtung; ermöglicht Blattläusen sehr schnelle Populationszunahme." },
+      { term: "Rußtaupilz", definition: "Schwarzer Pilzbelag, der sich sekundär auf Honigtau ansiedelt, ohne die Pflanze direkt zu infizieren." },
+    ],
+    sourceIds: ["blackman-eastop-aphids", "ipm-cannabis-arthropods", "punja-cannabis-pathogens"],
+    relatedSlugs: ["integrierte-schaedlingspraevention-grow", "weisse-fliege", "spinnmilben", "trauermuecken"],
+  },
+  {
+    slug: "weisse-fliege",
+    title: "Weiße Fliege bei Cannabis erkennen und bekämpfen",
+    summary:
+      "Kleine weiße Insekten, die beim Berühren der Pflanze wolkenartig auffliegen, sind das Leitsymptom. So erkennst du den Befall früh und verhinderst die Ausbreitung über Honigtau und Rußtaupilz.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["Weiße Fliege", "Schädlinge", "IPM", "Diagnose"],
+    keyTakeaways: [
+      "Das eindeutigste Diagnosemerkmal ist das wolkenartige Auffliegen kleiner weißer Insekten beim Berühren oder Schütteln der Pflanze.",
+      "Wie Blattläuse scheiden Weiße Fliegen Honigtau aus, der Rußtaupilz begünstigt — beide Schädlinge werden dadurch leicht verwechselt, unterscheiden sich aber im Flugverhalten deutlich.",
+      "Gelbe Klebefallen sind für Weiße Fliegen besonders wirksam zur Früherkennung, weil adulte Tiere aktiv fliegen und sich davon anziehen lassen.",
+    ],
+    quickFacts: [
+      { label: "Erreger", value: "Trialeurodes vaporariorum u. a." },
+      { label: "Leitsymptom", value: "Wolkenartiges Auffliegen beim Berühren" },
+      { label: "Fundort", value: "Blattunterseiten" },
+      { label: "Nützling", value: "Encarsia formosa (Schlupfwespe)" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Weiße Fliegen sind kleine, mottenähnliche Insekten mit weiß bestäubten Flügeln, die sich bevorzugt an Blattunterseiten aufhalten und dort Phloemsaft saugen.",
+          "Sie treten oft in wärmeren, geschützten Indoor-Umgebungen mit stabilem Klima auf, in denen sich Populationen ungestört aufbauen können.",
+        ],
+      },
+      {
+        heading: "Biologie und Lebenszyklus",
+        content: [
+          "Adulte Weiße Fliegen legen Eier auf Blattunterseiten ab; daraus schlüpfen Nymphen, die sich unbeweglich festsetzen und dort mehrere Larvenstadien durchlaufen, bevor sie zu geflügelten Adulten werden.",
+          "Bei warmen Temperaturen verkürzt sich der Zyklus deutlich, wodurch sich mehrere überlappende Generationen gleichzeitig auf einer Pflanze befinden können.",
+        ],
+      },
+      {
+        heading: "Schadbild und Symptome nach Schweregrad",
+        content: [
+          "Stadium 1: Vereinzelte Tiere fliegen beim Berühren der Pflanze kurz auf und setzen sich wieder auf die Blattunterseite.",
+          "Stadium 2: Deutliches, wolkenartiges Auffliegen mehrerer Dutzend Tiere, klebriger Honigtau auf den unteren Blattlagen.",
+          "Stadium 3: Flächiger Rußtaupilzbelag, sichtbare Vergilbung und vorzeitiger Blattfall durch anhaltenden Saugschaden.",
+        ],
+        checklist: [
+          "Pflanze sanft schütteln und auf auffliegende weiße Insekten achten",
+          "Blattunterseiten auf sesshafte Nymphen (kleine, ovale, halbtransparente Punkte) prüfen",
+          "Gelbe Klebefallen in Canopy-Höhe positionieren",
+        ],
+      },
+      {
+        heading: "Diagnose — Abgrenzung",
+        content: [
+          "Das wolkenartige Auffliegen beim Berühren unterscheidet Weiße Fliegen eindeutig von Blattläusen, die sesshaft bleiben.",
+          "Sesshafte Nymphenstadien auf der Blattunterseite ähneln oberflächlich Schildläusen, sind aber deutlich kleiner und halbtransparent statt hart-schildförmig.",
+          "Honigtau und Rußtaupilz treten bei beiden Schädlingen auf und sind daher kein Unterscheidungsmerkmal — das Flugverhalten ist der zuverlässigere Indikator.",
+        ],
+      },
+      {
+        heading: "Bekämpfung — gestaffeltes IPM",
+        content: [
+          "1. Gelbe Klebefallen in Canopy-Nähe aufhängen, um adulte Tiere kontinuierlich abzufangen und die Population zu überwachen.",
+          "2. Stark befallene untere Blätter entfernen, um den Ausgangspunkt für Neubefall zu reduzieren.",
+          "3. Biologisch: die parasitoide Schlupfwespe Encarsia formosa früh einsetzen, solange die Population noch moderat ist.",
+          "4. Insektizidseife oder Neemöl gezielt auf Blattunterseiten in der Vegetation, nie in der Spätblüte auf Knospen.",
+        ],
+        checklist: [
+          "Gelbe Klebefallen wöchentlich auswerten und Trend dokumentieren",
+          "Encarsia formosa vor Erreichen einer starken Population einsetzen",
+          "Behandlungen konsequent auf die Blattunterseiten richten",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Neue Pflanzen vor der Integration in den Hauptbestand auf Nymphen und adulte Tiere kontrollieren.",
+          "Stabile, nicht zu warme Klimaführung erschwert die schnelle Generationsfolge der Weißen Fliege.",
+          "Gelbe Klebefallen dauerhaft als Frühwarnsystem im Raum belassen, nicht nur bei akutem Verdacht.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Nur die adulten, fliegenden Tiere bekämpfen und die sesshaften Nymphenstadien auf der Blattunterseite übersehen.",
+          "Erst bei sichtbarem Rußtaupilz reagieren, statt schon beim ersten Auffliegen einzugreifen.",
+          "Klebefallen zu weit von der Canopy entfernt platzieren, wodurch sie kaum Tiere fangen.",
+        ],
+      },
+    ],
+    warnings: [
+      "Weiße Fliegen können in geschützten Indoor-Klimazonen ganzjährig überdauern — eine einmalige Behandlung ohne Nachkontrolle reicht bei etablierter Population meist nicht aus.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum fliegen sie wolkenartig auf?",
+        text: "Weiße Fliegen sitzen bevorzugt dicht gedrängt auf der Blattunterseite. Bei Erschütterung fliegen viele Tiere gleichzeitig kurz auf, bevor sie sich wieder niederlassen — ein sehr charakteristisches Erkennungsmerkmal."
+      },
+      {
+        title: "Kurz erklärt: Warum gelbe Klebefallen?",
+        text: "Adulte Weiße Fliegen werden von der Farbe Gelb angezogen. Klebefallen in dieser Farbe fangen sie zuverlässig ab und zeigen frühzeitig, wie stark der Befall bereits ist."
+      },
+    ],
+    faq: [
+      {
+        question: "Wie unterscheide ich Weiße Fliegen sicher von Blattläusen?",
+        answer:
+          "Am zuverlässigsten über das Flugverhalten: Weiße Fliegen fliegen beim Berühren der Pflanze wolkenartig auf, Blattläuse bleiben sesshaft sitzen.",
+      },
+      {
+        question: "Reichen gelbe Klebefallen als alleinige Bekämpfung?",
+        answer:
+          "Nein, sie sind primär ein Monitoring- und Reduktionswerkzeug für adulte Tiere. Sesshafte Nymphenstadien auf der Blattunterseite müssen zusätzlich mechanisch oder biologisch bekämpft werden.",
+      },
+    ],
+    glossary: [
+      { term: "Nymphe", definition: "Unbewegliches Larvenstadium der Weißen Fliege, das an der Blattunterseite festsitzt." },
+      { term: "Klebefalle", definition: "Farbige, klebrige Tafel zur Überwachung und Reduktion fliegender Schädlinge." },
+      { term: "Parasitoid", definition: "Organismus (hier: Schlupfwespe), der seine Eier in oder an einen Wirt legt und diesen dabei tötet." },
+    ],
+    sourceIds: ["byrne-bellows-whitefly-biology", "ipm-cannabis-arthropods", "punja-cannabis-pathogens"],
+    relatedSlugs: ["integrierte-schaedlingspraevention-grow", "blattlaeuse", "spinnmilben", "bud-rot-botrytis"],
+  },
+  {
+    slug: "phosphormangel",
+    title: "Phosphormangel bei Cannabis erkennen und beheben",
+    summary:
+      "Dunkelgrüne bis bläuliche Blätter mit rötlich-violetten Blattstielen und verlangsamtem Wachstum sind die Leitsymptome. So unterscheidest du echten P-Mangel von Kältestress und korrigierst gezielt über pH und Phosphorzufuhr.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["Phosphor", "Nährstoffmangel", "pH", "Diagnose"],
+    keyTakeaways: [
+      "Phosphor ist mobil: Mangel zeigt sich zuerst an älteren, unteren Blättern, die sich dunkelgrün bis bläulich verfärben und teils rötlich-violette Blattstiele zeigen.",
+      "Die häufigste Ursache ist wie bei Magnesium eine pH-bedingte Blockade — Phosphor hat ein besonders schmales Löslichkeitsfenster und fällt sowohl bei zu hohem als auch bei zu niedrigem pH aus.",
+      "P-Mangel und Kältestress sehen sich symptomatisch sehr ähnlich (violette Verfärbung) — die Wurzelzonentemperatur ist das entscheidende Unterscheidungsmerkmal.",
+    ],
+    quickFacts: [
+      { label: "Leitsymptom", value: "Dunkelgrün-bläuliche Blätter, violette Stiele" },
+      { label: "Mobilität", value: "Mobil (Verlagerung in junge Blätter)" },
+      { label: "pH-Fenster P (Coco/Hydro)", value: "5.8–6.2" },
+      { label: "pH-Fenster P (Erde)", value: "6.0–6.5" },
+      { label: "Verwechslungsgefahr", value: "Kältestress" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Phosphormangel ist eine Unterversorgung mit pflanzenverfügbarem Phosphat. Phosphor ist zentraler Bestandteil von ATP, Nukleinsäuren und Zellmembranen und damit für Energietransfer und Zellteilung essenziell.",
+          "Cannabis zeigt P-Mangel besonders in der frühen Wurzelentwicklung und in der Blüte, wenn der Bedarf für Zellteilung und Energietransfer in die Knospen steigt.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Phosphat ist Bestandteil von ATP (Adenosintriphosphat), dem zentralen Energieträger jeder Zelle, sowie von DNA und RNA — ohne ausreichend P bricht die Energieversorgung für Wachstum und Zellteilung ein.",
+          "Phosphor ist phloemmobil und wird bei Mangel aus älteren Blättern in aktive Wachstumszonen verlagert, weshalb die Symptome zuerst unten auftreten.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1: Blätter wirken ungewöhnlich dunkelgrün bis leicht bläulich, Wachstum verlangsamt sich merklich.",
+          "Stadium 2: Blattstiele und teils Stängel verfärben sich rötlich-violett, ältere Blätter beginnen sich einzurollen.",
+          "Stadium 3: Braune bis violette nekrotische Flecken auf älteren Blättern, deutlich reduzierte Blüten-/Wurzelentwicklung.",
+        ],
+        checklist: [
+          "Blattfarbe auf ungewöhnliches Dunkelgrün/Blau prüfen",
+          "Blattstiele auf violette Verfärbung untersuchen",
+          "Wurzelzonentemperatur parallel messen, um Kältestress auszuschließen",
+        ],
+      },
+      {
+        heading: "Ursachen — nach Häufigkeit geordnet",
+        content: [
+          "1. pH-Blockade: Phosphor hat ein besonders schmales Löslichkeitsfenster und fällt sowohl bei hohem pH (Calciumphosphate) als auch bei niedrigem pH (Eisen-/Aluminiumphosphate) aus.",
+          "2. Niedrige Wurzelzonentemperatur: unter etwa 18 °C sinkt die P-Aufnahme drastisch, auch wenn genug P im Substrat vorhanden ist.",
+          "3. Echte Unterversorgung: einseitige Dünger ohne ausreichenden P-Anteil, besonders in frühen Wachstumsphasen.",
+          "4. Antagonismus durch übermäßige Zink- oder Eisendüngung, die die P-Aufnahme zusätzlich hemmen kann.",
+        ],
+      },
+      {
+        heading: "Diagnose — Abgrenzung von Kältestress",
+        content: [
+          "Schritt 1: Wurzelzonentemperatur messen. Liegt sie unter 18 °C, ist Kältestress wahrscheinlicher als echter P-Mangel, auch bei ähnlicher violetter Verfärbung.",
+          "Schritt 2: pH der Wurzelzone prüfen. Liegt er außerhalb des P-Zielfensters, primär den pH korrigieren, bevor mehr gedüngt wird.",
+          "Schritt 3: Wachstumsgeschwindigkeit beobachten — reine Kälte verlangsamt das Wachstum reversibel, echter P-Mangel zeigt zusätzlich die charakteristische Dunkelgrün-/Blaufärbung.",
+        ],
+        checklist: [
+          "Wurzelzonentemperatur mit Substratsonde messen, nicht nur die Lufttemperatur",
+          "pH der Wurzelzone im Zielfenster 5.8–6.5 sicherstellen",
+          "Symptomverlauf nach Temperaturkorrektur beobachten, bevor zusätzlich gedüngt wird",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "1. pH zuerst in den Zielkorridor bringen: Coco/Hydro 5.8–6.2, Erde 6.0–6.5.",
+          "2. Wurzelzonentemperatur auf mindestens 18–20 °C anheben, bevor die P-Dosierung erhöht wird.",
+          "3. Bei bestätigtem echtem Mangel gezielt phosphorbetonten Dünger nachgeben und die Wirkung am Neuaustrieb beobachten.",
+        ],
+        checklist: [
+          "pH korrigieren, bevor die P-Dosis erhöht wird",
+          "Wurzelzonentemperatur auf mindestens 18 °C anheben",
+          "Neuaustrieb statt bestehender Blätter zur Erfolgskontrolle nutzen",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "In der frühen Wachstums- und Wurzelphase auf ausreichenden P-Anteil im Düngeprogramm achten.",
+          "Wurzelzonentemperatur konstant im Zielbereich halten, besonders bei kühlen Umgebungsbedingungen.",
+          "pH regelmäßig kontrollieren, da das P-Löslichkeitsfenster enger ist als bei den meisten anderen Makronährstoffen.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Violette Verfärbung automatisch als P-Mangel werten, ohne die Wurzelzonentemperatur zu prüfen.",
+          "P-Dosis erhöhen, ohne vorher den pH zu kontrollieren, obwohl Phosphor ein besonders pH-empfindliches Löslichkeitsfenster hat.",
+          "Erwarten, dass bereits verfärbte alte Blätter sich zurückbilden — Erfolg zeigt sich nur am Neuaustrieb.",
+        ],
+      },
+    ],
+    warnings: [
+      "Zu hohe Phosphordosierung als 'Sicherheitsmaßnahme' kann die Aufnahme von Zink und Eisen antagonistisch hemmen und neue Mangelbilder auslösen.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum violette Blattstiele?",
+        text: "Bei Phosphormangel reichern sich bestimmte Pigmente (Anthocyane) in den Blattstielen an. Dasselbe passiert bei Kälte — deshalb ist die Wurzelzonentemperatur so wichtig für die richtige Diagnose."
+      },
+      {
+        title: "Kurz erklärt: Enges Löslichkeitsfenster",
+        text: "Phosphor fällt sowohl bei zu hohem als auch bei zu niedrigem pH chemisch aus und wird unlöslich. Sein nutzbares pH-Fenster ist dadurch enger als das der meisten anderen Nährstoffe."
+      },
+    ],
+    faq: [
+      {
+        question: "Wie unterscheide ich P-Mangel sicher von Kältestress?",
+        answer:
+          "Über die Wurzelzonentemperatur: Liegt sie unter 18 °C, ist Kältestress wahrscheinlicher. Bei normaler Wurzeltemperatur und trotzdem bestehender Verfärbung ist echter P-Mangel oder eine pH-Blockade wahrscheinlicher.",
+      },
+      {
+        question: "Wie schnell wirkt eine P-Korrektur?",
+        answer:
+          "Neue Triebe zeigen innerhalb von 7–10 Tagen Besserung. Bereits verfärbte alte Blätter bilden sich nicht zurück — bewerte den Erfolg am Neuaustrieb.",
+      },
+    ],
+    glossary: [
+      { term: "ATP", definition: "Adenosintriphosphat, der zentrale Energieträger jeder Zelle, mit Phosphat als Kernbestandteil." },
+      { term: "Anthocyane", definition: "Pflanzenpigmente, die violette bis rötliche Färbung verursachen, u. a. bei Nährstoffmangel oder Kältestress." },
+      { term: "Löslichkeitsfenster", definition: "Der pH-Bereich, in dem ein Nährstoff in pflanzenverfügbarer, gelöster Form vorliegt." },
+    ],
+    sourceIds: ["marschner-nutrient-availability-ph", "bryson-plant-nutrition-manual", "bernal-cannabis-nutrient-requirements"],
+    relatedSlugs: ["naehrstoffblockaden-und-antagonismen", "kaeltestress", "magnesiummangel", "naehrstoffbedarf-cannabis-lebenszyklus"],
+  },
+  {
+    slug: "hanf-rostmilben",
+    title: "Hanf-Rostmilben bei Cannabis erkennen und bekämpfen",
+    summary:
+      "Vergilbte, nach unten gerollte Blätter und ein mattes, staubiges Erscheinungsbild der oberen Canopy verraten Rostmilbenbefall. So erkennst du die winzigen Schädlinge, bevor der Befall irreversibel wird.",
+    category: "anbau",
+    difficulty: "profi",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["Rostmilben", "Eriophyidae", "Schädlinge", "Diagnose"],
+    keyTakeaways: [
+      "Hanf-Rostmilben sind mit bloßem Auge praktisch unsichtbar (< 0.2 mm) — der Befall wird meist erst am Schadbild (nach unten gerollte, vergilbte Blätter) erkannt, wenn er bereits fortgeschritten ist.",
+      "Im Gegensatz zu Spinnmilben hinterlassen Rostmilben kein Gespinst — das mattierte, 'rostige' Blattbild ist das wichtigste Unterscheidungsmerkmal.",
+      "Wegen der extremen Kleinheit und schnellen Vermehrung ist konsequente Quarantäne neuer Pflanzen die wirksamste Einzelmaßnahme gegen Rostmilbenbefall.",
+    ],
+    quickFacts: [
+      { label: "Erreger", value: "Aculops cannabicola" },
+      { label: "Größe", value: "< 0.2 mm, mit Lupe kaum sichtbar" },
+      { label: "Leitsymptom", value: "Nach unten gerollte, matte Blätter" },
+      { label: "Kein Gespinst", value: "Unterscheidung zu Spinnmilben" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Hanf-Rostmilben (Aculops cannabicola) sind hochspezialisierte, wurmförmige Milben aus der Familie der Eriophyidae, die ausschließlich an Cannabis vorkommen und deutlich kleiner als Spinnmilben sind.",
+          "Wegen ihrer extremen Kleinheit bleibt ein Befall oft lange unentdeckt, bis das charakteristische Schadbild an der oberen Canopy sichtbar wird.",
+        ],
+      },
+      {
+        heading: "Biologie und Lebenszyklus",
+        content: [
+          "Rostmilben besiedeln bevorzugt junge, sich entwickelnde Blätter und Blütenstrukturen in der oberen Canopy, wo sie durch Saugschäden Zellstruktur und Wachstum stören.",
+          "Der Lebenszyklus ist bei warmen Temperaturen sehr kurz, wodurch sich Populationen unbemerkt schnell aufbauen können, bevor Symptome eindeutig sichtbar werden.",
+        ],
+      },
+      {
+        heading: "Schadbild und Symptome nach Schweregrad",
+        content: [
+          "Stadium 1: Leicht mattes, staubig wirkendes Erscheinungsbild der obersten, jüngsten Blätter, ohne eindeutige Einzelsymptome.",
+          "Stadium 2: Blätter rollen sich nach unten (umgekehrt zu Hitzestress-Tacoing), vergilben und wirken brüchig-trocken.",
+          "Stadium 3: Wachstumsstillstand der Triebspitzen, verkrüppelte Neubildung, in der Blüte reduzierte und unregelmäßige Knospenentwicklung.",
+        ],
+        checklist: [
+          "Obere Canopy auf mattes, staubiges Erscheinungsbild prüfen, bevor klare Einzelsymptome sichtbar sind",
+          "Blätter auf Abwärtsrollung statt Aufwärtsrollung (Tacoing) kontrollieren",
+          "Bei Verdacht mit starker Lupe (≥ 30×) die Blattunterseite der jüngsten Blätter prüfen",
+        ],
+      },
+      {
+        heading: "Diagnose — Abgrenzung",
+        content: [
+          "Fehlendes Gespinst unterscheidet Rostmilbenbefall von Spinnmilben, bei denen feine Fäden an Trieben und Blattachseln sichtbar sind.",
+          "Die Abwärtsrollung der Blätter unterscheidet sich von der Aufwärtsrollung (Tacoing) bei Hitzestress — die Richtung der Blattrollung ist ein wichtiges Diagnosemerkmal.",
+          "Wegen der extremen Kleinheit ist eine sichere Bestätigung oft nur über professionelle Vergrößerung oder Laboranalyse möglich — bei begründetem Verdacht vorsorglich behandeln, statt auf visuelle Bestätigung zu warten.",
+        ],
+      },
+      {
+        heading: "Bekämpfung — gestaffeltes IPM",
+        content: [
+          "1. Sofortige Isolierung befallener Pflanzen, da Rostmilben sich über Kontakt und Luftbewegung leicht ausbreiten.",
+          "2. Stark befallene obere Triebe und Blätter konsequent entfernen und sicher entsorgen.",
+          "3. Biologisch: Raubmilben mit Erfahrung im Eriophyidae-Befall einsetzen, sobald verfügbar.",
+          "4. Wirkstoffe nur in Vegetation/Frühblüte im Rotationsprinzip, nie auf Knospen in der Spätblüte.",
+        ],
+        checklist: [
+          "Befallene Pflanzen sofort räumlich isolieren",
+          "Stark betroffene Triebspitzen konsequent entfernen",
+          "Wirkstoffe rotieren, um Resistenzbildung zu vermeiden",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Neue Pflanzen und Stecklinge mindestens eine Woche in strikter Quarantäne mit Lupenkontrolle halten — die wirksamste Einzelmaßnahme angesichts der schweren Erkennbarkeit.",
+          "Werkzeuge und Hände zwischen Pflanzen konsequent desinfizieren, da Rostmilben leicht mechanisch übertragen werden.",
+          "Regelmäßiges, systematisches Scouting der jüngsten Blätter zur Routine machen, auch ohne akuten Verdacht.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Auf ein Gespinst als Bestätigungskriterium warten — Rostmilben produzieren keines, wodurch die Diagnose sonst zu spät kommt.",
+          "Symptome vorschnell als Nährstoffproblem oder Hitzestress abtun, ohne die Blattrollrichtung zu prüfen.",
+          "Neue Pflanzen ohne Quarantäne direkt in den Hauptbestand integrieren.",
+        ],
+      },
+    ],
+    warnings: [
+      "Wegen der extremen Kleinheit von Hanf-Rostmilben ist der sichtbare Schaden oft schon fortgeschritten, wenn er eindeutig erkennbar wird — bei begründetem Verdacht lieber vorsorglich isolieren als abzuwarten.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum so schwer zu erkennen?",
+        text: "Hanf-Rostmilben sind kleiner als ein Fünftel Millimeter — selbst mit einer normalen Lupe kaum sichtbar. Meist wird der Befall erst am charakteristischen Schadbild an den Blättern erkannt."
+      },
+      {
+        title: "Kurz erklärt: Blattrollrichtung als Hinweis",
+        text: "Nach unten gerollte Blätter deuten eher auf Rostmilben hin, nach oben gerollte eher auf Hitzestress. Diese Richtung ist ein einfacher, aber wichtiger erster Diagnosehinweis."
+      },
+    ],
+    faq: [
+      {
+        question: "Kann ich Hanf-Rostmilben mit bloßem Auge sehen?",
+        answer:
+          "Praktisch nicht. Sie sind kleiner als 0.2 mm und selbst mit normaler Lupe kaum zu erkennen — die Diagnose stützt sich meist auf das charakteristische Schadbild statt auf direkte Sichtung.",
+      },
+      {
+        question: "Reicht Quarantäne wirklich als Hauptmaßnahme?",
+        answer:
+          "Sie ist die wirksamste Einzelmaßnahme, weil Neubefall meist über zugekaufte Pflanzen oder Stecklinge eingeschleppt wird. Konsequente Quarantäne mit Lupenkontrolle verhindert die meisten Fälle von vornherein.",
+      },
+    ],
+    glossary: [
+      { term: "Eriophyidae", definition: "Familie extrem kleiner, wurmförmiger Milben, zu denen die Hanf-Rostmilbe gehört." },
+      { term: "Quarantäne", definition: "Zeitlich und räumlich getrennte Beobachtung neuer Pflanzen, bevor sie in den Hauptbestand integriert werden." },
+      { term: "Scouting", definition: "Systematische, routinemäßige Kontrolle von Pflanzen auf frühe Schädlings- oder Krankheitszeichen." },
+    ],
+    sourceIds: ["lindquist-eriophyoid-mites", "ipm-cannabis-arthropods", "tetranychus-twospotted-mite"],
+    relatedSlugs: ["integrierte-schaedlingspraevention-grow", "spinnmilben", "hitzestress", "kaeltestress"],
+  },
+  {
+    slug: "fusarium",
+    title: "Fusarium bei Cannabis erkennen und beheben",
+    summary:
+      "Plötzliches, einseitiges Welken trotz feuchtem Substrat und bräunlich verfärbtes Leitgewebe im Stängelquerschnitt sind die Leitsymptome. So unterscheidest du Fusarium von Wurzelfäule und begrenzt den Schaden.",
+    category: "anbau",
+    difficulty: "profi",
+    readMinutes: 9,
+    lastUpdated: "2026-08-03",
+    tags: ["Fusarium", "Krankheiten", "Wurzelfäule", "Diagnose"],
+    keyTakeaways: [
+      "Fusarium befällt das Leitgewebe (Xylem) und verursacht dadurch oft ein einseitiges oder sektorales Welken einzelner Triebe, während der Rest der Pflanze zunächst unauffällig bleibt.",
+      "Ein bräunlich-rötlich verfärbter Ring im Stängelquerschnitt (Leitgewebeverfärbung) ist das zuverlässigste Bestätigungsmerkmal gegenüber Pythium-Wurzelfäule.",
+      "Fusarium-Sporen können jahrelang im Substrat oder in Anbauflächen überdauern — befallenes Substrat sollte nicht wiederverwendet werden.",
+    ],
+    quickFacts: [
+      { label: "Erreger", value: "Fusarium spp." },
+      { label: "Leitsymptom", value: "Einseitiges Welken, Leitgewebeverfärbung" },
+      { label: "Bestätigung", value: "Bräunlicher Ring im Stängelquerschnitt" },
+      { label: "Überdauerung", value: "Jahrelang im Substrat möglich" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Fusarium ist eine bodenbürtige Pilzgattung, die über die Wurzel in das Leitgewebe (Xylem) der Pflanze eindringt und dessen Wassertransportfunktion blockiert.",
+          "Im Unterschied zu Pythium-Wurzelfäule, die primär die Wurzel selbst zersetzt, greift Fusarium gezielt das Leitgewebe an und verursacht dadurch charakteristisches, oft asymmetrisches Welken.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Fusarium-Pilze besiedeln das Xylemgewebe und lösen sowohl eine mechanische Verstopfung der Wasserleitbahnen als auch eine Abwehrreaktion der Pflanze aus, die die Leitbahnen zusätzlich verengt.",
+          "Da einzelne Xylemstränge oft nur Teile der Pflanze versorgen, kann der Befall zunächst sektoral oder einseitig auftreten, bevor er sich systemisch ausbreitet.",
+        ],
+      },
+      {
+        heading: "Symptome nach Schweregrad",
+        content: [
+          "Stadium 1: Einzelne untere Blätter oder ein Seitentrieb welken trotz erkennbar feuchtem Substrat, während der Rest der Pflanze unauffällig bleibt.",
+          "Stadium 2: Welken breitet sich auf weitere Triebe aus, betroffene Blätter vergilben und fallen ab, teils einseitig stärker als auf der anderen Pflanzenseite.",
+          "Stadium 3: Systemischer Befall mit Welken der gesamten Pflanze, im Stängelquerschnitt zeigt sich ein deutlicher bräunlich-rötlicher Ring im Leitgewebe.",
+        ],
+        checklist: [
+          "Welkemuster auf Einseitigkeit/Sektoralität prüfen, nicht nur Gesamtzustand bewerten",
+          "Substratfeuchte parallel kontrollieren, um Wassermangel als Ursache auszuschließen",
+          "Bei Verdacht einen kleinen Stängelquerschnitt auf Leitgewebeverfärbung prüfen",
+        ],
+      },
+      {
+        heading: "Diagnose — Abgrenzung von Pythium-Wurzelfäule",
+        content: [
+          "Fusarium: oft einseitiges/sektorales Welken, Wurzeln bleiben äußerlich meist intakt, Bestätigung über bräunlichen Ring im Stängelquerschnitt.",
+          "Pythium-Wurzelfäule: gleichmäßigeres Welken der ganzen Pflanze, Wurzeln werden braun und schleimig, kein charakteristischer Leitgewebering im Stängel.",
+          "Bei Unsicherheit einen Stängel knapp über dem Substrat durchschneiden und auf Verfärbung im Querschnitt prüfen — das ist das zuverlässigste Feldmerkmal.",
+        ],
+      },
+      {
+        heading: "Korrekturmaßnahmen",
+        content: [
+          "Es gibt keine wirksame Heilung eines systemisch befallenen Xylems — stark betroffene Pflanzen isolieren und in fortgeschrittenen Fällen entfernen, um Ausbreitung zu verhindern.",
+          "Bei frühem, lokalem Befall betroffene Triebe konsequent entfernen und die Pflanze unter reduziertem Stress (stabiles Klima, moderate Düngung) weiterführen.",
+          "Substrat und Anbaugefäße einer befallenen Pflanze nicht wiederverwenden — Fusarium-Sporen überdauern lange im Material.",
+        ],
+      },
+      {
+        heading: "Vorbeugung",
+        content: [
+          "Neues, unbelastetes Substrat für jeden Durchgang verwenden, besonders nach einem bestätigten Fusarium-Fall.",
+          "Werkzeuge zwischen Pflanzen konsequent desinfizieren, da Fusarium mechanisch übertragen werden kann.",
+          "Wurzelstress durch Staunässe oder extreme Temperaturschwankungen vermeiden — geschwächte Wurzeln sind anfälliger für den Erstbefall.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Einseitiges Welken vorschnell als Gießfehler oder Nährstoffproblem interpretieren, ohne den Stängelquerschnitt zu prüfen.",
+          "Substrat einer befallenen Pflanze für den nächsten Durchgang wiederverwenden.",
+          "Bei ersten Anzeichen abwarten, statt frühzeitig betroffene Triebe zu entfernen und zu isolieren.",
+        ],
+      },
+    ],
+    warnings: [
+      "Substrat und Anbaugefäße aus einem bestätigten Fusarium-Fall sollten nicht für neue Pflanzen wiederverwendet werden — die Sporen können über Jahre im Material überdauern.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum einseitiges Welken?",
+        text: "Fusarium verstopft einzelne Wasserleitbahnen im Stängel. Da nicht alle Leitbahnen gleichzeitig betroffen sind, kann zunächst nur eine Seite oder ein Trieb der Pflanze welken, während der Rest normal aussieht."
+      },
+      {
+        title: "Kurz erklärt: Der Stängeltest",
+        text: "Ein Schnitt durch den unteren Stängel zeigt bei Fusarium-Befall oft einen bräunlich-rötlichen Ring im Leitgewebe. Das ist das zuverlässigste einfache Merkmal zur Bestätigung."
+      },
+    ],
+    faq: [
+      {
+        question: "Kann ich eine Fusarium-befallene Pflanze retten?",
+        answer:
+          "Bei frühem, lokalem Befall kann das Entfernen betroffener Triebe helfen. Bei systemischem Befall des gesamten Leitgewebes gibt es keine wirksame Heilung — die Pflanze sollte isoliert und in fortgeschrittenen Fällen entfernt werden."
+      },
+      {
+        question: "Wie unterscheide ich Fusarium sicher von Pythium-Wurzelfäule?",
+        answer:
+          "Über einen Stängelquerschnitt: ein bräunlicher Ring im Leitgewebe spricht für Fusarium. Bei Pythium sind stattdessen die Wurzeln selbst braun und schleimig, das Leitgewebe im Stängel bleibt meist unauffällig."
+      },
+    ],
+    glossary: [
+      { term: "Xylem", definition: "Leitgewebe der Pflanze, das Wasser und gelöste Mineralien von der Wurzel in die oberirdischen Teile transportiert." },
+      { term: "Sektorales Welken", definition: "Welken, das nur einen Teil oder eine Seite der Pflanze betrifft, weil nicht alle Leitbahnen gleichzeitig blockiert sind." },
+      { term: "Bodenbürtig", definition: "Ein Krankheitserreger, der im Substrat überdauert und über die Wurzel in die Pflanze eindringt." },
+    ],
+    sourceIds: ["fusarium-wilt-review", "punja-cannabis-pathogens", "pythium-root-rot-hydroponics"],
+    relatedSlugs: ["wurzelfaeule", "cannabis-substrat-und-wurzelzone", "bud-rot-botrytis"],
+  },
+  {
+    slug: "calmag-supplementierung",
+    title: "Cal-Mag-Supplementierung bei Cannabis richtig einsetzen",
+    summary:
+      "Nicht jedes Setup braucht Cal-Mag — aber bei Umkehrosmose- oder Coco-Substrat ist ein Zusatz fast immer nötig. So erkennst du den echten Bedarf und dosierst korrekt, statt pauschal zu supplementieren.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 8,
+    lastUpdated: "2026-08-03",
+    tags: ["Cal-Mag", "Calcium", "Magnesium", "Wasserqualität", "Diagnose"],
+    keyTakeaways: [
+      "Der Bedarf an Cal-Mag hängt primär von der Wasserquelle ab: Umkehrosmose- und Weichwasser enthalten praktisch kein Ca/Mg, hartes Leitungswasser oft schon ausreichend.",
+      "Coco-Substrat bindet Ca²⁺ und Mg²⁺ bevorzugt an seiner Kationenaustauschoberfläche gegenüber K⁺ — ein routinemäßiger Cal-Mag-Zusatz ist dort auch bei ausreichender Wasserquelle oft sinnvoll.",
+      "Pauschale, unnötige Cal-Mag-Gabe bei bereits hartem Wasser kann das Ca:Mg-Verhältnis verschieben und selbst einen Antagonismus auslösen."
+    ],
+    quickFacts: [
+      { label: "Ziel-Mg in Lösung", value: "50–70 mg/L" },
+      { label: "Ziel Ca:Mg-Verhältnis", value: "≈ 3:1 bis 4:1" },
+      { label: "Braucht meist Cal-Mag", value: "RO-Wasser, Coco-Substrat" },
+      { label: "Braucht meist kein Cal-Mag", value: "Hartes Leitungswasser" },
+    ],
+    sections: [
+      {
+        heading: "Definition und Einordnung",
+        content: [
+          "Cal-Mag-Supplementierung bezeichnet die gezielte Ergänzung von Calcium und Magnesium zur Nährlösung, meist als Reaktion auf eine Wasserquelle oder ein Substrat, das diese Ionen nicht ausreichend bereitstellt.",
+          "Der tatsächliche Bedarf ist stark wasserquellen- und substratabhängig — pauschale Cal-Mag-Gabe ohne diese Einordnung führt teils zu unnötiger Überdosierung.",
+        ],
+      },
+      {
+        heading: "Wissenschaftlicher Hintergrund",
+        content: [
+          "Umkehrosmose-Wasser entfernt praktisch alle gelösten Mineralien, einschließlich Ca²⁺ und Mg²⁺ — ohne Zusatz fehlt der Pflanze eine zentrale Ionenquelle für Zellwandstabilität (Ca) und Chlorophyllsynthese (Mg).",
+          "Coco-Substrat besitzt eine relevante Kationenaustauschkapazität, bindet dabei aber Ca²⁺ und Mg²⁺ bevorzugt gegenüber K⁺ an seinen Fasern — das reduziert die effektiv pflanzenverfügbare Menge, selbst wenn genug Ca/Mg zugeführt wurde.",
+        ],
+      },
+      {
+        heading: "Wann Cal-Mag wirklich nötig ist",
+        content: [
+          "Umkehrosmose- oder destilliertes Wasser: Cal-Mag-Zusatz ist praktisch Pflicht, da diese Wasserquellen kein nennenswertes Ca/Mg enthalten.",
+          "Coco-Substrat: routinemäßiger Zusatz ist auch bei mittelhartem Wasser meist sinnvoll, wegen der bevorzugten Bindung von Ca/Mg an der Substratoberfläche.",
+          "Hartes Leitungswasser in Erde: Cal-Mag ist meist NICHT nötig, da das Wasser bereits ausreichend Ca/Mg mitbringt — zusätzliche Gabe kann das Verhältnis unnötig verschieben.",
+        ],
+        checklist: [
+          "Wasserquelle (RO, Leitungswasser, Brunnenwasser) und deren Härte kennen, bevor supplementiert wird",
+          "Substrat (Coco vs. Erde) bei der Bedarfsentscheidung mitdenken",
+          "Ca:Mg-Verhältnis der Gesamtrezeptur prüfen, nicht nur die absolute Menge",
+        ],
+      },
+      {
+        heading: "Diagnose: Cal-Mag-Bedarf erkennen",
+        content: [
+          "Frühzeichen für unzureichende Ca/Mg-Versorgung: interveinale Chlorose an älteren Blättern (Mg) oder Wachstumsdeformationen an jungen Trieben (Ca) trotz augenscheinlich vollständigem Düngeprogramm.",
+          "Bei RO-Wasser oder Coco-Substrat ohne bisherigen Cal-Mag-Zusatz sind diese Symptome ein starker Hinweis auf echten strukturellen Mangel, nicht auf eine Blockade.",
+        ],
+      },
+      {
+        heading: "Dosierung und Korrektur",
+        content: [
+          "Zielwert für Magnesium in der fertigen Nährlösung: etwa 50–70 mg/L, abgestimmt auf die übrige Düngerrezeptur.",
+          "Ca:Mg-Verhältnis auf etwa 3:1 bis 4:1 einstellen — ein starkes Ungleichgewicht in beide Richtungen kann die Aufnahme des jeweils anderen Ions hemmen.",
+          "Nach dem Zusatz die Gesamt-EC neu kontrollieren, da Cal-Mag-Produkte die Leitfähigkeit der Lösung mit erhöhen.",
+        ],
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "Cal-Mag pauschal bei jedem Setup zusetzen, auch bei bereits hartem Leitungswasser mit ausreichend Ca/Mg.",
+          "Cal-Mag als Reaktion auf jedes Mangelbild geben, ohne vorher pH und Kationenverhältnisse zu prüfen — viele scheinbare Mg-Mängel sind pH-Blockaden, keine echten Defizite.",
+          "Bei Coco-Substrat gar keinen Cal-Mag-Zusatz einplanen, weil das Wasser 'eigentlich hart genug' erscheint, ohne die substratbedingte Bindung zu berücksichtigen.",
+        ],
+      },
+      {
+        heading: "Fortgeschrittene Überlegungen",
+        content: [
+          "In rezirkulierenden Hydro-Systemen kann sich das Ca:Mg-Verhältnis über mehrere Zyklen verschieben, wenn ein Ion schneller aufgenommen wird als das andere — periodische Kontrolle und Reservoir-Reset gleichen das aus.",
+          "Manche Cal-Mag-Produkte enthalten zusätzlich Eisen oder andere Mikronährstoffe — die Gesamtrezeptur sollte darauf abgestimmt werden, um Doppeldosierungen zu vermeiden.",
+        ],
+      },
+    ],
+    warnings: [
+      "Cal-Mag-Zusatz bei bereits hartem Leitungswasser ohne vorherige Wasseranalyse kann das Ca:Mg-Verhältnis unnötig verschieben und einen neuen Antagonismus auslösen.",
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum RO-Wasser Cal-Mag braucht",
+        text: "Umkehrosmose entfernt fast alle gelösten Mineralien aus dem Wasser, auch Calcium und Magnesium. Ohne Zusatz fehlen der Pflanze diese Bausteine komplett, unabhängig vom übrigen Dünger."
+      },
+      {
+        title: "Kurz erklärt: Warum Coco anders reagiert",
+        text: "Coco-Fasern binden Calcium und Magnesium an ihrer Oberfläche besonders stark. Auch wenn genug davon zugeführt wird, kommt weniger bei der Wurzel an als in anderen Substraten."
+      },
+    ],
+    faq: [
+      {
+        question: "Brauche ich bei Leitungswasser überhaupt Cal-Mag?",
+        answer:
+          "Meist nicht, wenn das Wasser mittelhart bis hart ist — es enthält dann bereits ausreichend Ca/Mg. Eine einfache Wasserhärte-Prüfung schafft hier Klarheit, bevor pauschal zugesetzt wird.",
+      },
+      {
+        question: "Kann zu viel Cal-Mag schaden?",
+        answer:
+          "Ja. Ein zu stark verschobenes Ca:Mg-Verhältnis kann die Aufnahme des jeweils anderen Ions hemmen und zusätzlich die Gesamt-EC unnötig erhöhen.",
+      },
+      {
+        question: "Warum brauche ich in Coco Cal-Mag, obwohl mein Wasser hart ist?",
+        answer:
+          "Weil Coco-Substrat Calcium und Magnesium an seiner Faseroberfläche bindet und dadurch weniger davon tatsächlich an der Wurzel ankommt, selbst wenn das Ausgangswasser ausreichend Ca/Mg enthält.",
+      },
+    ],
+    glossary: [
+      { term: "Cal-Mag", definition: "Handelsübliches Zusatzprodukt zur gezielten Ergänzung von Calcium und Magnesium in der Nährlösung." },
+      { term: "Umkehrosmose (RO)", definition: "Wasseraufbereitungsverfahren, das nahezu alle gelösten Mineralien aus dem Wasser entfernt." },
+      { term: "Wasserhärte", definition: "Maß für den Gehalt an gelösten Calcium- und Magnesiumionen im Wasser." },
+    ],
+    sourceIds: ["marschner-mineral-nutrition", "bryson-plant-nutrition-manual", "bugbee-electrical-conductivity"],
+    relatedSlugs: ["magnesiummangel", "calciummangel", "naehrstoffblockaden-und-antagonismen", "substrat-vergleich-coco-erde-hydro"],
+  },
 ];
 
 // ─── Allowlist-Anreicherung (Publikation via GROW_KNOWLEDGE in wiki.ts) ──────
@@ -3645,5 +4701,53 @@ export const DIAGNOSTIC_GROW_KNOWLEDGE: Record<
       "Leistungsplateau TROTZ optimalem Licht/VPD/Dünger = CO₂-Limit; zuerst Luftwechsel erhöhen, Anreicherung (800–1200 ppm) nur bei hohem PPFD + 28–30 °C und mit Sensor/Sicherheit.",
     qualityScore: 5,
     growCategory: "climate",
+  },
+  "ph-lockout": {
+    growValue:
+      "Mehrere Mangelbilder gleichzeitig = meist pH-Lockout, kein Einzelmangel; zuerst das pH-Messgerät kalibrieren, dann pH schrittweise (max. 0.3–0.5/Tag) ins Zielfenster bringen, bevor mehr gedüngt wird.",
+    qualityScore: 5,
+    growCategory: "nutrients",
+  },
+  "ueberwaesserung-staunaesse": {
+    growValue:
+      "Hängende Blätter OHNE Erholung nach dem Gießen = Staunässe, nicht Wassermangel; Gießen stoppen, Substrat abtrocknen lassen und Topfgröße auf die tatsächliche Wurzelmasse prüfen.",
+    qualityScore: 5,
+    growCategory: "watering",
+  },
+  blattlaeuse: {
+    growValue:
+      "Honigtau + Ameisenbesuch = Blattlaus-Symbiose; Ameisenwege unterbrechen UND die Kolonie direkt bekämpfen (abspülen, Nützlinge), sonst kehrt der Befall trotz Ameisenbekämpfung zurück.",
+    qualityScore: 4,
+    growCategory: "stress",
+  },
+  "weisse-fliege": {
+    growValue:
+      "Wolkenartiges Auffliegen beim Berühren = Weiße Fliege, nicht Blattlaus; gelbe Klebefallen in Canopy-Höhe früh aufhängen und Encarsia formosa einsetzen, bevor die Population groß wird.",
+    qualityScore: 4,
+    growCategory: "stress",
+  },
+  phosphormangel: {
+    growValue:
+      "Dunkelgrün-bläuliche Blätter + violette Stiele: erst Wurzelzonentemperatur prüfen (< 18 °C = eher Kälte), dann pH (5.8–6.5) korrigieren, bevor mehr Phosphor gegeben wird.",
+    qualityScore: 5,
+    growCategory: "nutrients",
+  },
+  "hanf-rostmilben": {
+    growValue:
+      "Nach UNTEN gerollte, matte Blätter ohne Gespinst = Verdacht auf Rostmilben; da sie kaum sichtbar sind, neue Pflanzen konsequent 1 Woche in Quarantäne mit Lupenkontrolle halten.",
+    qualityScore: 4,
+    growCategory: "stress",
+  },
+  fusarium: {
+    growValue:
+      "Einseitiges Welken trotz feuchtem Substrat = Verdacht auf Fusarium; Stängelquerschnitt auf bräunlichen Leitgewebering prüfen und befallenes Substrat danach nicht wiederverwenden.",
+    qualityScore: 4,
+    growCategory: "stress",
+  },
+  "calmag-supplementierung": {
+    growValue:
+      "Cal-Mag ist bei RO-Wasser und in Coco meist Pflicht, bei hartem Leitungswasser in Erde meist unnötig; Ziel-Mg 50–70 mg/L und Ca:Mg ~3:1 bis 4:1 einstellen, nicht pauschal zusetzen.",
+    qualityScore: 4,
+    growCategory: "nutrients",
   },
 };

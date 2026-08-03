@@ -18,7 +18,7 @@ export const areaLabel: Record<GrowArea, string> = {
 export const stageLabel: Record<PlantStage, string> = {
   keimling: "Keimling",
   veg: "Veg",
-  bluete: "Bluete",
+  bluete: "Blüte",
   alle: "Alle Stadien"
 };
 
