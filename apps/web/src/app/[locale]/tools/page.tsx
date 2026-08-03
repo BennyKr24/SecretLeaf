@@ -109,7 +109,7 @@ export default async function ToolsHubPage() {
                       className={`absolute left-0 right-0 top-0 h-1 bg-gradient-to-r ${categoryTopBar[tool.category]}`}
                     />
                     <div className="relative pt-1">
-                      <div className={`mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl ${categoryIconBg[tool.category]}`}>
+                      <div className={`mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl ${categoryIconBg[tool.category]} ${toolCategoryAccent[tool.category]}`}>
                         <tool.icon className="h-6 w-6" strokeWidth={2} />
                       </div>
                       <span className={`block text-xs font-semibold ${toolCategoryAccent[tool.category]}`}>
@@ -153,7 +153,7 @@ export default async function ToolsHubPage() {
                       className="tool-card-lift group rounded-2xl border border-border bg-card p-5 shadow-sm"
                     >
                       <div className="flex items-start justify-between gap-3">
-                        <div className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg ${categoryIconBg[cat]}`}>
+                        <div className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg ${categoryIconBg[cat]} ${toolCategoryAccent[cat]}`}>
                           <tool.icon className="h-4 w-4" strokeWidth={2} />
                         </div>
                         <span className="rounded-full border border-border bg-background px-2 py-0.5 text-[11px] font-medium text-muted-fg">

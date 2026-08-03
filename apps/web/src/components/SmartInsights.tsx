@@ -14,6 +14,7 @@ import type { Route } from 'next';
 import type { Grow } from '@/lib/grow/types';
 import { getRecommendationsForGrow } from '@/lib/grow/insights';
 import type { GrowInsight, InsightPriority } from '@/lib/grow/insights';
+import { useAssistantPreference } from '@/hooks/useAssistantPreference';
 
 // ── Priority config ───────────────────────────────────────────────────────────
 
@@ -167,6 +168,8 @@ type Props = {
 };
 
 export default function SmartInsights({ grow }: Props) {
+  const { enabled, setEnabled } = useAssistantPreference();
+
   // Resolved pool — sorted by priority+score
   const pool = useMemo(() => getRecommendationsForGrow(grow, 6), [grow]);
 
@@ -180,6 +183,21 @@ export default function SmartInsights({ grow }: Props) {
   // Active insights: first 3 not yet handled
   const visible = pool.filter((i) => !handledSlugs.has(i.article.slug)).slice(0, 3);
 
+  if (!enabled) {
+    // Fully collapsed per user preference — analysis itself (getRecommendationsForGrow)
+    // keeps running elsewhere, only the proactive panel is hidden. A single
+    // unobtrusive line stays so the panel is discoverable again.
+    return (
+      <button
+        type="button"
+        onClick={() => setEnabled(true)}
+        className="w-full rounded-xl border border-dashed border-border bg-card px-4 py-2.5 text-left text-xs text-muted-fg transition-colors hover:text-foreground"
+      >
+        Empfehlungen sind ausgeblendet · wieder einblenden
+      </button>
+    );
+  }
+
   if (visible.length === 0) return null;
 
   return (
@@ -190,6 +208,15 @@ export default function SmartInsights({ grow }: Props) {
         <span className="ml-auto rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
           {visible.length} offen
         </span>
+        <button
+          type="button"
+          onClick={() => setEnabled(false)}
+          title="Empfehlungen dauerhaft ausblenden"
+          aria-label="Empfehlungen dauerhaft ausblenden"
+          className="text-muted-fg hover:text-foreground"
+        >
+          ✕
+        </button>
       </div>
 
       <div className="space-y-3">

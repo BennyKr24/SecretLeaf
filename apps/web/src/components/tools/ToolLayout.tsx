@@ -5,7 +5,7 @@ import type { Route } from 'next';
 import { useEffect } from 'react';
 import { Analytics } from '@/lib/analytics';
 import type { ToolMeta, ToolCategory } from '@/lib/tools/types';
-import { toolCategoryLabel, toolCategoryIcon, toolCategoryColor } from '@/lib/tools/types';
+import { toolCategoryLabel, toolCategoryIcon, toolCategoryColor, toolCategoryAccent } from '@/lib/tools/types';
 import { getToolBySlug } from '@/lib/tools/registry';
 import type { ReactNode } from 'react';
 
@@ -59,7 +59,7 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
           <div className={`h-1.5 w-full ${categoryTopBar[meta.category]}`} />
           <div className="p-6">
             <div className="flex items-start gap-4">
-              <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl ring-1 ${categoryIconBg[meta.category]}`}>
+              <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl ring-1 ${categoryIconBg[meta.category]} ${toolCategoryAccent[meta.category]}`}>
                 <meta.icon className="h-6 w-6" strokeWidth={2} />
               </div>
               <div className="min-w-0">

@@ -53,7 +53,7 @@ export async function GET() {
       supabase
         .from("automation_job_runs")
         .select("finished_at, inserted, updated, fetched")
-        .eq("job_name", "studies-sync")
+        .eq("job_name", "engine-sync")
         .eq("success", true)
         .order("finished_at", { ascending: false })
         .limit(1)
@@ -61,7 +61,7 @@ export async function GET() {
       supabase
         .from("automation_job_runs")
         .select("finished_at, inserted, updated, fetched")
-        .eq("job_name", "studies-sync")
+        .eq("job_name", "engine-sync")
         .eq("success", true)
         .gte("finished_at", new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
         .order("finished_at", { ascending: false }),

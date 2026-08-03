@@ -5,7 +5,15 @@ import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { getSetupCoverage, getToolHistory } from '@/hooks/useToolState';
 import { toolRegistry } from '@/lib/tools/registry';
-import { toolCategoryColor, toolCategoryIcon, toolCategoryLabel } from '@/lib/tools/types';
+import { toolCategoryColor, toolCategoryIcon, toolCategoryLabel, toolCategoryAccent } from '@/lib/tools/types';
+import type { ToolCategory } from '@/lib/tools/types';
+
+const categoryIconBg: Record<ToolCategory, string> = {
+  klima: 'bg-cyan-50 ring-cyan-200',
+  licht: 'bg-amber-50 ring-amber-200',
+  naehrstoffe: 'bg-emerald-50 ring-emerald-200',
+  planung: 'bg-violet-50 ring-violet-200',
+};
 
 const COVERAGE_KEYS = [
   { key: 'klima', label: 'Klima', slug: 'abluft-rechner' },
@@ -50,7 +58,7 @@ export default function ToolsHubClient() {
             href={`/tools/${recentTool.slug}` as Route}
             className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md"
           >
-            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ring-1 ring-border">
+            <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ring-1 ${categoryIconBg[recentTool.category]} ${toolCategoryAccent[recentTool.category]}`}>
               <recentTool.icon className="h-5 w-5" strokeWidth={2} />
             </div>
             <div className="min-w-0">

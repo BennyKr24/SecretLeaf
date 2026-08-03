@@ -17,7 +17,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
 import { PHASE_ICONS, PHASE_ORDER } from '@/lib/grow/phases';
 import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
-import type { GrowTask, Grow, Plant, LogEntry, HarvestData } from '@/lib/grow/types';
+import type { GrowTask, Grow, Plant, LogEntry, HarvestData, GrowPhaseId } from '@/lib/grow/types';
 import SmartInsights from '@/components/SmartInsights';
 import GrowKnowledgePanel from '@/components/grow/GrowKnowledgePanel';
 import { Analytics } from '@/lib/analytics';
@@ -87,7 +87,10 @@ function GrowProgressBar({ grow }: { grow: Grow }) {
 // ── Phase timeline ────────────────────────────────────────────────────────────
 
 function PhaseTimeline({ grow }: { grow: Grow }) {
-  const currentPhase = getPhaseForDay(grow.plan, grow.currentDay);
+  // currentPhaseId is the manually-settable source of truth (see advancePhase);
+  // date-derived getPhaseForDay is only a fallback for legacy/missing data.
+  const currentPhase = grow.plan.phases.find((p) => p.id === grow.currentPhaseId)
+    ?? getPhaseForDay(grow.plan, grow.currentDay);
   return (
     <div className="flex items-center gap-1 overflow-x-auto pb-1">
       {grow.plan.phases.map((phase, idx) => {
@@ -1186,7 +1189,8 @@ export default function GrowPage({}: Props) {
     );
   }
 
-  const currentPhase = getPhaseForDay(grow.plan, grow.currentDay);
+  const currentPhase = grow.plan.phases.find((p) => p.id === grow.currentPhaseId)
+    ?? getPhaseForDay(grow.plan, grow.currentDay);
   const upcoming     = getUpcomingTasks(grow, 5);
   const overdue      = getOverdueTasks(grow);
   const { percent }  = getTaskProgress(grow);
@@ -1217,9 +1221,18 @@ export default function GrowPage({}: Props) {
                 <p className="text-[11px] font-bold uppercase tracking-widest text-primary">Aktiver Grow</p>
                 <h1 className="mt-1 text-2xl font-bold text-foreground">{grow.name}</h1>
                 <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-fg">
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1.5">
                     <span>{currentPhase ? PHASE_ICONS[currentPhase.id] : '🌿'}</span>
-                    <span className="font-medium text-foreground">{currentPhase?.label ?? '—'}</span>
+                    <select
+                      value={currentPhase?.id ?? grow.currentPhaseId}
+                      onChange={(e) => advancePhase(grow.id, e.target.value as GrowPhaseId)}
+                      title="Wachstumsphase manuell umstellen"
+                      className="cursor-pointer appearance-none rounded-md border-0 bg-transparent font-medium text-foreground hover:text-primary focus:outline-none focus:ring-1 focus:ring-primary/40"
+                    >
+                      {grow.plan.phases.map((phase) => (
+                        <option key={phase.id} value={phase.id}>{phase.label}</option>
+                      ))}
+                    </select>
                   </span>
                   <span className="text-border">·</span>
                   <span>Tag {grow.currentDay}</span>

@@ -24,11 +24,15 @@ const levelRank: Record<string, number> = {
   red: 2
 };
 
+// A missing/unrecognized value means "we couldn't determine this," not
+// "this is down" — defaulting to red here previously made the whole page
+// look like an outage whenever a single upstream field was absent, even
+// though the underlying feature worked fine. Unknown maps to yellow.
 const toRiskLevel = (value: string | null | undefined): "green" | "yellow" | "red" => {
   if (value === "red" || value === "yellow" || value === "green") {
     return value;
   }
-  return "red";
+  return "yellow";
 };
 
 const mergeWorstLevel = (...levels: Array<string | null | undefined>): "green" | "yellow" | "red" => {
@@ -71,68 +75,67 @@ const buildStatusHistory = (windowDays: number, overallStatus: string, events: A
   return days;
 };
 
-const getImpactModel = (overallStatus: string, apiLevel: string, dbLevel: string) => {
+const getImpactModel = (overallStatus: string) => {
   if (overallStatus === "red") {
     return {
-      headline: "Zentrale Plattformfunktionen sind derzeit nicht verfügbar",
-      summaryTitle: "Erhebliche Einschränkung",
-      summaryText: "Die Statusseite bleibt erreichbar. Produktive Funktionen sind aktuell offline.",
-      impactTitle: "Betroffene Bereiche",
-      impactText: "Interaktive und backend-gestützte Funktionen sind derzeit nicht zuverlässig nutzbar.",
+      headline: "Gerade läuft nicht alles rund",
+      summaryTitle: "Störung",
+      summaryText: "Einige Funktionen sind aktuell nicht nutzbar. Wir arbeiten daran.",
+      impactTitle: "Was das für dich bedeutet",
+      impactText: "Grow-Tracking, Rechner und Studien können gerade eingeschränkt oder nicht erreichbar sein.",
       impactItems: [
-        apiLevel === "red" ? "API-gestützte Inhalte, Login und dynamische Bereiche sind nicht verfügbar." : "API ist nur eingeschränkt verfügbar.",
-        dbLevel === "red" ? "Datenbankabfragen und gespeicherte Daten sind derzeit nicht erreichbar." : "Datenbasis ist nur teilweise erreichbar.",
-        "Die Statusseite bleibt der zentrale Anlaufpunkt für Updates."
+        "Login und gespeicherte Grow-Daten können vorübergehend nicht abrufbar sein.",
+        "Aktuelle Zahlen (z. B. Studien-Coverage) können veraltet sein.",
+        "Diese Seite bleibt erreichbar und zeigt dir, sobald es wieder normal läuft."
       ],
-      actionTitle: "Empfohlene Schritte",
-      actionText: "Im roten Zustand steht Orientierung vor Interaktion.",
+      actionTitle: "Was du tun kannst",
+      actionText: "Am einfachsten: kurz warten und später neu laden.",
       actionItems: [
-        "Keine sensiblen Daten eingeben oder Aktionen mehrfach absenden.",
-        "Nur Status- und Informationsseiten als zuverlässig ansehen.",
-        "Später erneut prüfen, ob Dienste wieder auf Gelb oder Grün wechseln."
+        "Wichtige Eingaben nicht mehrfach absenden.",
+        "In ein paar Minuten diese Seite neu laden.",
+        "Bestehende Grow-Daten bleiben gespeichert, auch wenn sie kurz nicht sichtbar sind."
       ]
     };
   }
 
   if (overallStatus === "yellow") {
     return {
-      headline: "Teile der Plattform laufen im Fallback- oder Wartungsmodus",
+      headline: "Grundfunktionen laufen, einiges ist gerade langsamer",
       summaryTitle: "Eingeschränkter Betrieb",
-      summaryText: "Einzelne Dienste oder Live-Daten können eingeschränkt oder unvollständig sein.",
-      impactTitle: "Mögliche Auswirkungen",
-      impactText: "Grundfunktionen sind sichtbar, aber Ergebnisse sind eventuell nicht vollständig.",
+      summaryText: "Die App funktioniert, aber manche Inhalte sind nicht ganz aktuell oder etwas langsamer als sonst.",
+      impactTitle: "Was das für dich bedeutet",
+      impactText: "Rechner, Grow-Tracking und Studien sind nutzbar — einzelne Daten können leicht veraltet sein.",
       impactItems: [
-        "Live-Daten können aus eingeschränkten Quellen stammen.",
-        "Antwortzeiten und Datentiefe können reduziert sein.",
-        "Die Statusseite ist der zuverlässigste Kanal für Updates."
+        "Neue Studien oder Aktualisierungen können etwas verzögert erscheinen.",
+        "Alle Kernfunktionen (Tools, Grow, Login) funktionieren normal.",
+        "Kein Grund, etwas doppelt einzutragen oder erneut zu versuchen."
       ],
-      actionTitle: "Empfohlene Schritte",
-      actionText: "Im gelben Zustand ist Vorsicht sinnvoll, aber nicht jede Funktion automatisch unbenutzbar.",
+      actionTitle: "Was du tun kannst",
+      actionText: "Normal weiter nutzen — es ist keine besondere Vorsicht nötig.",
       actionItems: [
-        "Vor wichtigen Aktionen kurz Status und Zeitstempel prüfen.",
-        "Keine sensiblen Vorgänge mehrfach absenden.",
-        "Bei Unklarheiten später erneut laden."
+        "App wie gewohnt verwenden.",
+        "Bei einzelnen Ladefehlern die Seite neu laden.",
+        "Falls etwas seltsam aussieht, später nochmal reinschauen."
       ]
     };
   }
 
   return {
-    headline: "Alle zentralen Statussignale sind aktuell stabil",
+    headline: "Alles läuft normal",
     summaryTitle: "Normalbetrieb",
-    summaryText: "Statusseite, API und Datenbasis melden keinen kritischen Ausfall.",
-    impactTitle: "Aktuelle Auswirkung",
-    impactText: "Es gibt derzeit keine größeren Einschränkungen für Nutzer.",
+    summaryText: "Keine bekannten Störungen — alle Funktionen sind wie gewohnt nutzbar.",
+    impactTitle: "Was das für dich bedeutet",
+    impactText: "Es gibt aktuell keine Einschränkungen.",
     impactItems: [
-      "Live-Daten sind verfügbar.",
-      "Keine bekannten Plattformausfälle im aktuellen Snapshot.",
-      "Die Statusseite dient als Referenz und Historie."
+      "Grow-Tracking, Rechner und Studien sind normal erreichbar.",
+      "Daten sind aktuell.",
+      "Kein Handlungsbedarf."
     ],
-    actionTitle: "Empfohlene Schritte",
-    actionText: "Im Normalbetrieb sind keine besonderen Maßnahmen nötig.",
+    actionTitle: "Was du tun kannst",
+    actionText: "Nichts Besonderes — einfach normal weiter nutzen.",
     actionItems: [
-      "Plattform normal nutzen.",
-      "Bei seltenen Einzelproblemen später neu laden.",
-      "Historie nur bei Rückfragen oder Störungen konsultieren."
+      "App normal nutzen.",
+      "Diese Seite bei Bedarf jederzeit als Referenz nutzen."
     ]
   };
 };
@@ -186,71 +189,25 @@ const getFreshnessMeta = (iso: string | null) => {
   };
 };
 
-const getPriorityCards = (overallStatus: string) => {
-  if (overallStatus === "red") {
-    return [
-      {
-        title: "1) Betrieb absichern",
-        text: "Zuerst Status und Incident-Lage prüfen, bevor weitere Ansichten bewertet werden.",
-        href: "/status",
-        cta: "Statusfokus"
-      },
-      {
-        title: "2) Kritische Datenwege",
-        text: "API/DB-Lage klären, damit Zahlen in Coverage- oder Marktansichten korrekt eingeordnet werden.",
-        href: "/tools/plans",
-        cta: "Coverage mit Vorsicht"
-      },
-      {
-        title: "3) Kommunikation",
-        text: "Nur belastbare Hinweise nach außen geben und auf Fallback-Status verweisen.",
-        href: "/studies/sources",
-        cta: "Quellenkontext"
-      }
-    ];
-  }
-
-  if (overallStatus === "yellow") {
-    return [
-      {
-        title: "1) Engpässe priorisieren",
-        text: "Eingeschränkte Teilbereiche zuerst stabilisieren, dann Inhaltstiefe und neue Features hochfahren.",
-        href: "/status",
-        cta: "Service-Checks"
-      },
-      {
-        title: "2) Datenfrische prüfen",
-        text: "Coverage- und Status-Timestamps gegenchecken, bevor Entscheidungen auf Trends basieren.",
-        href: "/tools/plans",
-        cta: "Coverage ansehen"
-      },
-      {
-        title: "3) Evidenz priorisieren",
-        text: "Bei reduzierter Live-Lage bleiben Quellenregister und Basiskennzahlen wichtig.",
-        href: "/studies/sources",
-        cta: "Quellenregister"
-      }
-    ];
-  }
-
+const getPriorityCards = () => {
   return [
     {
-      title: "1) Normalbetrieb halten",
-      text: "Status ist stabil. Fokus kann auf Produktpflege, Content-Qualität und Sichtbarkeit liegen.",
-      href: "/status",
-      cta: "Statusmonitoring"
+      title: "Rechner nutzen",
+      text: "VPD, Licht, Nährstoffe und Ertrag berechnen — funktioniert unabhängig vom aktuellen Status.",
+      href: "/tools",
+      cta: "Zu den Tools"
     },
     {
-      title: "2) Marktbreite erweitern",
-      text: "Coverage-Lücken pro Marke priorisieren und Daten-Updates in festen Intervallen planen.",
+      title: "Düngerpläne",
+      text: "Fertige Düngerpläne für dein Setup, Budget und Ziel.",
       href: "/tools/plans",
-      cta: "Abdeckung prüfen"
+      cta: "Pläne ansehen"
     },
     {
-      title: "3) Wissensqualität sichern",
-      text: "Quellen und Fachbereiche aktuell halten, damit Priorisierungen fachlich belastbar bleiben.",
+      title: "Studien & Quellen",
+      text: "Fachartikel und das komplette Quellenregister durchsuchen.",
       href: "/studies/sources",
-      cta: "Quellen & Studien"
+      cta: "Quellenregister"
     }
   ];
 };
@@ -262,14 +219,15 @@ export default async function StatusPage() {
     getPublicStatusReport()
   ]);
 
-  const overallStatus = statusReport?.overallStatus ?? "yellow";
+  // health === null means the self-fetch to /api/health didn't resolve
+  // (e.g. transient SSR fetch hiccup), not that the API is confirmed down —
+  // only an explicit non-"ok" status justifies red. Folded into the overall
+  // status as a safety net, without exposing raw API/DB jargon in the UI.
+  const healthLevel = health === null ? "yellow" : health.status === "ok" ? "green" : "red";
+  const overallStatus = mergeWorstLevel(statusReport?.overallStatus ?? "yellow", healthLevel);
   const generatedAt = statusReport ? new Date(statusReport.generatedAt).toLocaleString("de-DE") : "Kein Report verfügbar";
-  const healthLevel = health?.status === "ok" ? "green" : "red";
-  const apiLevel = mergeWorstLevel(statusReport?.services.api, healthLevel);
-  const dbLevel = toRiskLevel(statusReport?.services.db ?? "red");
-  const sourceLabel = health && overview && statusReport ? "Live API" : "Fallback / kein Vollzugriff";
   const historyDays = buildStatusHistory(statusReport?.windowDays ?? 30, overallStatus, statusReport?.events ?? []);
-  const impactModel = getImpactModel(overallStatus, apiLevel, dbLevel);
+  const impactModel = getImpactModel(overallStatus);
   const openCoverageGap = Math.max(fertilizerCoverageStats.trackedMarketEstimate - fertilizerCoverageStats.coveredProducts, 0);
   const coverageSnapshots = [...(fertilizerCoverageHistoryData.snapshots ?? [])].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -283,14 +241,8 @@ export default async function StatusPage() {
   const statusFreshness = getFreshnessMeta(statusReport?.generatedAt ?? null);
   const liveStudyCoveragePercent = overview?.stats.studyCoveragePercent ?? fertilizerCoverageStats.coveragePercent;
   const livePendingStudies = overview?.stats.pendingStudies ?? openCoverageGap;
-  const totalStudies = overview?.stats.totalStudies ?? 0;
-  const pipelineEvent = (statusReport?.events ?? []).find((event: StatusEvent) => event.key === "SYNC_ACTIVITY_24H") ?? null;
-  const pipelineLastRunIso = pipelineEvent?.lastSeen ?? null;
-  const pipelineLastRun = pipelineLastRunIso ? new Date(pipelineLastRunIso).toLocaleString("de-DE") : "Keine Daten";
-  const pipelineHealthLabel =
-    overallStatus === "green" ? "healthy" : overallStatus === "yellow" ? "degraded" : "failing";
   const coverageFreshness = getFreshnessMeta(overview?.stats.latestStudyAt ?? latestCoverageSnapshot?.date ?? null);
-  const priorityCards = getPriorityCards(overallStatus);
+  const priorityCards = getPriorityCards();
 
   const operationalChangelog = (statusReport?.events ?? [])
     .filter((event: StatusEvent) => event.count > 0 || event.lastSeen)
@@ -322,8 +274,8 @@ export default async function StatusPage() {
           <div className="flex items-center gap-3">
             <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#145c3b] to-[#1f7a4f] text-sm font-bold text-white shadow-sm">S</div>
             <div>
-              <div className="text-xl font-bold tracking-tight text-foreground">SecretLeaf Status Cockpit</div>
-              <div className="text-xs text-muted-fg">Live-Lage, Datenfrische, Prioritätensteuerung</div>
+              <div className="text-xl font-bold tracking-tight text-foreground">SecretLeaf Status</div>
+              <div className="text-xs text-muted-fg">Ist gerade alles verfügbar?</div>
             </div>
           </div>
 
@@ -337,60 +289,33 @@ export default async function StatusPage() {
         <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
           <section className="rounded-[28px] border border-border bg-card p-7 shadow-sm">
             <p className="inline-flex rounded-full border border-emerald-200 dark:border-emerald-900/40 bg-emerald-100 dark:bg-emerald-950/40 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
-              Status Cockpit 2026
+              Systemstatus
             </p>
             <h1 className="mt-4 text-5xl font-bold leading-tight text-foreground">{impactModel.headline}</h1>
             <p className="mt-3 max-w-3xl text-lg leading-relaxed text-muted-fg">
-              Diese Seite priorisiert zuerst den Betriebszustand und die Datenfrische. Danach folgen Wirkung, Verlauf und die nächsten sinnvollen Arbeitsansichten.
+              {impactModel.summaryText}
             </p>
-
-            <div className="mt-4 rounded-2xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 px-4 py-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Neu auf dieser Seite</p>
-              <p className="mt-1 text-sm text-emerald-800 dark:text-emerald-300">
-                Priorisierungs-Block, Freshness-Badges und direkte Arbeitsnavigation wurden als erste Ebene integriert.
-              </p>
-            </div>
 
             <div className="mt-5 flex flex-wrap gap-2">
               <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[overallStatus]}`}>
                 <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[overallStatus]}`} />
-                Gesamtstatus {overallStatus.toUpperCase()}
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-700">
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-                Statusseite erreichbar
-              </span>
-              <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[apiLevel]}`}>
-                <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[apiLevel]}`} />
-                API {apiLevel.toUpperCase()}
-              </span>
-              <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[dbLevel]}`}>
-                <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[dbLevel]}`} />
-                DB {dbLevel.toUpperCase()}
+                {overallStatus === "green" ? "Alles läuft" : overallStatus === "yellow" ? "Eingeschränkt" : "Störung"}
               </span>
             </div>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <div className="rounded-2xl border border-border bg-background p-4">
                 <div className="text-sm font-semibold text-foreground">{generatedAt}</div>
-                <div className="mt-1 text-xs text-muted-fg">letztes Update</div>
+                <div className="mt-1 text-xs text-muted-fg">Letzte Prüfung</div>
                 <span className={`mt-2 inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold ${statusFreshness.className}`}>
                   {statusFreshness.label}
                 </span>
               </div>
               <div className="rounded-2xl border border-border bg-background p-4">
-                <div className="text-sm font-semibold text-foreground">{sourceLabel}</div>
-                <div className="mt-1 text-xs text-muted-fg">Datenquelle</div>
-              </div>
-              <div className="rounded-2xl border border-border bg-background p-4">
-                <div className="text-sm font-semibold text-foreground">{statusReport?.windowDays ?? 30} Tage</div>
-                <div className="mt-1 text-xs text-muted-fg">Rückblick</div>
-              </div>
-              <div className="rounded-2xl border border-border bg-background p-4">
                 <div className="text-sm font-semibold text-foreground">
                   {latestCoverageSnapshot ? new Date(latestCoverageSnapshot.date).toLocaleString("de-DE") : "n/a"}
                 </div>
-                <div className="mt-1 text-xs text-muted-fg">Coverage Snapshot</div>
+                <div className="mt-1 text-xs text-muted-fg">Daten zuletzt aktualisiert</div>
                 <span className={`mt-2 inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold ${coverageFreshness.className}`}>
                   {coverageFreshness.label}
                 </span>
@@ -432,85 +357,6 @@ export default async function StatusPage() {
           </aside>
         </div>
 
-        <section className="mt-8 rounded-[28px] border border-border bg-card p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Systemstatus</p>
-          <h2 className="mt-2 text-2xl font-bold text-foreground">Systemzustand auf einen Blick</h2>
-          <p className="mt-2 text-sm text-muted-fg">
-            API- und Datenbankstatus, letzte Pipeline-Ausführung sowie Datenaktualität in einer kompakten Übersicht.
-          </p>
-
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <article className="rounded-2xl border border-border bg-background p-4">
-              <p className="text-xs text-muted-fg">API-Status</p>
-              <p className="mt-1 text-2xl font-bold text-foreground">{apiLevel.toUpperCase()}</p>
-            </article>
-            <article className="rounded-2xl border border-border bg-background p-4">
-              <p className="text-xs text-muted-fg">Datenbank-Verbindung</p>
-              <p className="mt-1 text-2xl font-bold text-foreground">{dbLevel.toUpperCase()}</p>
-            </article>
-            <article className="rounded-2xl border border-border bg-background p-4">
-              <p className="text-xs text-muted-fg">Pipeline-Health</p>
-              <p className="mt-1 text-2xl font-bold text-foreground">{pipelineHealthLabel}</p>
-            </article>
-            <article className="rounded-2xl border border-border bg-background p-4">
-              <p className="text-xs text-muted-fg">Letzter Pipeline-Run</p>
-              <p className="mt-1 text-sm font-semibold text-foreground">{pipelineLastRun}</p>
-            </article>
-            <article className="rounded-2xl border border-border bg-background p-4">
-              <p className="text-xs text-muted-fg">Letztes Update</p>
-              <p className="mt-1 text-sm font-semibold text-foreground">{generatedAt}</p>
-            </article>
-            <article className="rounded-2xl border border-border bg-background p-4">
-              <p className="text-xs text-muted-fg">Anzahl Studien</p>
-              <p className="mt-1 text-2xl font-bold text-foreground">{totalStudies}</p>
-            </article>
-          </div>
-        </section>
-
-        <section className="mt-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Betrieb</p>
-          <h2 className="mt-2 text-2xl font-bold text-foreground">Aktueller Systemzustand</h2>
-          <p className="mt-2 text-sm text-muted-fg">Erst die Live-Fähigkeit prüfen, dann Fachzahlen interpretieren.</p>
-
-          <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <div className="text-xs text-muted-fg">Statische Website</div>
-              <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-700">
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-                ERREICHBAR
-              </div>
-              <p className="mt-3 text-sm text-muted-fg">Die Statusseite bleibt als Referenzpunkt online, auch wenn Live-Dienste fehlen.</p>
-            </div>
-
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <div className="text-xs text-muted-fg">API / Backend</div>
-              <div className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[apiLevel]}`}>
-                <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[apiLevel]}`} />
-                {apiLevel.toUpperCase()}
-              </div>
-              <p className="mt-3 text-sm text-muted-fg">{health?.status === "ok" ? "API antwortet auf Health-Checks und Statusdaten." : "API ist nicht stabil als Live-Dienst erreichbar."}</p>
-            </div>
-
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <div className="text-xs text-muted-fg">Datenbank</div>
-              <div className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[dbLevel]}`}>
-                <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[dbLevel]}`} />
-                {dbLevel.toUpperCase()}
-              </div>
-              <p className="mt-3 text-sm text-muted-fg">{dbLevel === "green" ? "Datenbasis meldet verfügbare Live-Daten." : "Datenbankabfragen sind eingeschränkt oder nicht produktiv erreichbar."}</p>
-            </div>
-
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <div className="text-xs text-muted-fg">Statusquelle</div>
-              <div className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold ${levelClasses[sourceLabel === "Live API" ? "green" : "yellow"]}`}>
-                <span className={`h-2.5 w-2.5 rounded-full ${levelDotClasses[sourceLabel === "Live API" ? "green" : "yellow"]}`} />
-                {sourceLabel}
-              </div>
-              <p className="mt-3 text-sm text-muted-fg">{sourceLabel === "Live API" ? "Werte kommen direkt aus den Status-Endpoints." : "Mindestens ein Live-Endpoint fehlt, die Seite bleibt aber als Statuskanal verfügbar."}</p>
-            </div>
-          </div>
-        </section>
-
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Nutzerwirkung</p>
@@ -536,10 +382,10 @@ export default async function StatusPage() {
         </div>
 
         <section className="mt-8 rounded-[28px] border border-border bg-card p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Priorisierung</p>
-          <h2 className="mt-2 text-2xl font-bold text-foreground">Was jetzt zuerst wichtig ist</h2>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Weiter geht's</p>
+          <h2 className="mt-2 text-2xl font-bold text-foreground">Direkt weitermachen</h2>
           <p className="mt-2 text-sm text-muted-fg">
-            Diese Reihenfolge ist die operative Arbeitsreihenfolge nach Statuslage.
+            Diese Bereiche funktionieren unabhängig vom aktuellen Status.
           </p>
 
           <div className="mt-5 grid gap-4 lg:grid-cols-3">
@@ -639,8 +485,8 @@ export default async function StatusPage() {
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Historie</p>
-            <h2 className="mt-2 text-2xl font-bold text-foreground">Risikoreport letzte 30 Tage</h2>
-            <p className="mt-2 text-sm text-muted-fg">Fokus auf potenziell problematische Ereignisse für Nutzer und Betriebsstabilität.</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">Was in den letzten 30 Tagen war</h2>
+            <p className="mt-2 text-sm text-muted-fg">Ein kurzer Überblick über Datenaktualität und Auffälligkeiten.</p>
 
             <div className="mt-5 space-y-3">
               {(statusReport?.events ?? []).map((event: StatusEvent) => (
@@ -665,8 +511,8 @@ export default async function StatusPage() {
 
           <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Chronik</p>
-            <h2 className="mt-2 text-2xl font-bold text-foreground">Letzte Patches, Releases und Prioritätswechsel</h2>
-            <p className="mt-2 text-sm text-muted-fg">Automatisch aus Git-Commits generiert und als Kontext für Betriebs- und Produktentscheidungen nutzbar.</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">Was sich zuletzt getan hat</h2>
+            <p className="mt-2 text-sm text-muted-fg">Neue Features, Fixes und Updates in SecretLeaf.</p>
 
             <div className="mt-5 space-y-3">
               {changelog.map((entry) => {
