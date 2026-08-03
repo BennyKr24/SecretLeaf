@@ -3,6 +3,7 @@ import { categoryLabels, wikiArticles, sourceRegister } from "@/data/terpira/wik
 import StudiesListView from "@/components/StudiesListView";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+import { Microscope, Bug, FlaskConical } from "lucide-react";
 
 export const metadata = {
   title: "Studien – SecretLeaf",
@@ -62,17 +63,17 @@ export default function StudiesPage() {
             <Link href={"/studies/sources" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
                 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-all">
-              🔬 Quellenregister
+              <Microscope className="h-3.5 w-3.5" strokeWidth={2} /> Quellenregister
             </Link>
             <Link href={"/studies/pests" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
                 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-all">
-              🐛 Schädlings-Lexikon
+              <Bug className="h-3.5 w-3.5" strokeWidth={2} /> Schädlings-Lexikon
             </Link>
             <Link href={"/studies/deficiencies" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
                 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-all">
-              🧪 Nährstoffmängel
+              <FlaskConical className="h-3.5 w-3.5" strokeWidth={2} /> Nährstoffmängel
             </Link>
           </div>
         </div>

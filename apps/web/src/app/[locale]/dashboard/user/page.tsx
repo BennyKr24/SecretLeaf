@@ -380,7 +380,8 @@ export default function UserDashboardPage() {
 
       <div className="mx-auto max-w-6xl px-4 py-6 sm:px-5 sm:py-8">
 
-        {/* ═══════════════════ PRIMARY — Grow ═══════════════════ */}
+        {/* ═══════════════════ PRIMARY — Grow + Benachrichtigungen nebeneinander ═══════════════════ */}
+        <div className="grid gap-5 lg:grid-cols-[1.3fr_1fr] lg:items-start">
         <div className="space-y-5">
         {/* ── Grow Alert Banner ── */}
         {activeGrow && alertCount > 0 && (
@@ -548,14 +549,7 @@ export default function UserDashboardPage() {
             </Link>
           </section>
         )}
-        </div>{/* /primary */}
-
-        {/* ═══════════════════ SECONDARY — Wissensbasis ═══════════════════ */}
-        <div className="mt-12 space-y-8 border-t border-border pt-10">
-          <div className="flex items-center gap-3">
-            <p className="flex-shrink-0 text-[11px] font-bold uppercase tracking-widest text-muted-fg">📚 {t('knowledgeBaseEyebrow')}</p>
-            <div className="h-px flex-1 bg-border" />
-          </div>
+        </div>{/* /grow column */}
 
         <section className="rounded-[28px] border border-border bg-card/85 p-4 shadow-[0_20px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur sm:p-6">
           <SectionHeader
@@ -563,7 +557,7 @@ export default function UserDashboardPage() {
             subtitle={t('smartNotificationsSub')}
             badge={newSinceLastVisit.length + interestMatches.length}
           />
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid gap-4">
             <div className="rounded-3xl border border-emerald-100 dark:border-emerald-900/40 bg-[linear-gradient(180deg,rgba(236,253,245,0.9),rgba(255,255,255,0.95))] dark:bg-[linear-gradient(180deg,rgba(6,78,59,0.35),rgba(15,17,23,0.6))] p-4">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div>
@@ -611,6 +605,14 @@ export default function UserDashboardPage() {
             </div>
           </div>
         </section>
+        </div>{/* /primary grid */}
+
+        {/* ═══════════════════ SECONDARY — Wissensbasis ═══════════════════ */}
+        <div className="mt-12 space-y-8 border-t border-border pt-10">
+          <div className="flex items-center gap-3">
+            <p className="flex-shrink-0 text-[11px] font-bold uppercase tracking-widest text-muted-fg">📚 {t('knowledgeBaseEyebrow')}</p>
+            <div className="h-px flex-1 bg-border" />
+          </div>
 
         <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
           <SectionHeader

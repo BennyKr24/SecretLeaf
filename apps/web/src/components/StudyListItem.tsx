@@ -3,11 +3,25 @@
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import type { TerpiraArticle, TerpiraDifficulty } from '@/lib/terpira/types';
+import {
+  Sprout, Dna, FlaskConical, Citrus, Stethoscope, Wind, Gem, Scale,
+  Shield, Microscope, BarChart3, Wrench, FileText, type LucideIcon,
+} from 'lucide-react';
 
-const CATEGORY_ICONS: Record<string, string> = {
-  anbau: '🌱', genetik: '🧬', chemie: '⚗️', terpene: '🌺',
-  medizin: '🩺', konsumformen: '💨', konzentrate: '💎', recht: '⚖️',
-  sicherheit: '🛡️', qualitaet: '🔬', markt: '📊', werkzeuge: '🛠️',
+// One consistent icon + accent color per content category, used everywhere
+// a category badge appears (list items, filters) so the same category
+// always reads the same way instead of relying on generic plant emoji.
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  anbau: Sprout, genetik: Dna, chemie: FlaskConical, terpene: Citrus,
+  medizin: Stethoscope, konsumformen: Wind, konzentrate: Gem, recht: Scale,
+  sicherheit: Shield, qualitaet: Microscope, markt: BarChart3, werkzeuge: Wrench,
+};
+
+const CATEGORY_ACCENT: Record<string, string> = {
+  anbau: 'text-emerald-600', genetik: 'text-violet-600', chemie: 'text-cyan-600',
+  terpene: 'text-pink-600', medizin: 'text-rose-600', konsumformen: 'text-slate-600',
+  konzentrate: 'text-fuchsia-600', recht: 'text-blue-600', sicherheit: 'text-amber-600',
+  qualitaet: 'text-teal-600', markt: 'text-orange-600', werkzeuge: 'text-indigo-600',
 };
 
 const DIFFICULTY_STYLE: Record<TerpiraDifficulty, { pill: string; dot: string }> = {
@@ -47,6 +61,8 @@ type Props = {
 export default function StudyListItem({ article, snippet }: Props) {
   const diff = DIFFICULTY_STYLE[article.difficulty];
   const qualityScore = article.qualityScore ?? 0;
+  const CategoryIcon = CATEGORY_ICONS[article.category] ?? FileText;
+  const categoryAccent = CATEGORY_ACCENT[article.category] ?? 'text-muted-fg';
   // Show growValue if available, otherwise fall back to search snippet or summary
   const insight = article.growValue ?? snippet ?? article.summary;
   // Show at most 4 tags
@@ -59,10 +75,10 @@ export default function StudyListItem({ article, snippet }: Props) {
         hover:border-emerald-200 hover:bg-emerald-50/10 hover:shadow-sm transition-all duration-150"
     >
       {/* Icon */}
-      <span className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg
+      <span className={`mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg
         border border-border bg-background group-hover:bg-emerald-50 group-hover:border-emerald-200
-        transition-colors duration-150 text-base">
-        {CATEGORY_ICONS[article.category] ?? '📄'}
+        transition-colors duration-150 ${categoryAccent}`}>
+        <CategoryIcon className="h-4 w-4" strokeWidth={2} />
       </span>
 
       {/* Content */}
