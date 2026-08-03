@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
+import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { sourceRegister } from "@/data/terpira/wiki";
 
 export default function WikiSourcesPage() {
@@ -132,15 +133,11 @@ export default function WikiSourcesPage() {
             placeholder="Titel, Publisher, ID oder DOI durchsuchen..."
             className="rounded-xl border border-border bg-card px-4 py-2.5 text-sm text-foreground outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
           />
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as "relevance" | "yearDesc" | "yearAsc")}
-            className="rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground/80 outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
-          >
-            <option value="relevance">Sortierung: Relevanz</option>
-            <option value="yearDesc">Sortierung: Jahr (neu nach alt)</option>
-            <option value="yearAsc">Sortierung: Jahr (alt nach neu)</option>
-          </select>
+          <Dropdown value={sortBy} onChange={(v) => setSortBy(v as "relevance" | "yearDesc" | "yearAsc")}>
+            <DropdownOption value="relevance">Sortierung: Relevanz</DropdownOption>
+            <DropdownOption value="yearDesc">Sortierung: Jahr (neu nach alt)</DropdownOption>
+            <DropdownOption value="yearAsc">Sortierung: Jahr (alt nach neu)</DropdownOption>
+          </Dropdown>
           <div className="flex items-center gap-2">
             {([
               ["alle", "Alle"],

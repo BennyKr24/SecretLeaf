@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import type { TerpiraArticle, TerpiraCategory, TerpiraDifficulty } from '@/lib/terpira/types';
+import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 import StudyListItem from './StudyListItem';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -194,46 +195,31 @@ export default function StudiesListView({
 
         {/* Category */}
         {!hideCategoryFilter && (
-          <select
-            value={category}
-            onChange={e => setCategory(e.target.value as TerpiraCategory | 'alle')}
-            className="rounded-lg border border-border bg-card px-3 py-2.5 text-[13.5px] text-foreground
-              outline-none shadow-sm focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 cursor-pointer transition-all"
-          >
-            <option value="alle">Alle Kategorien</option>
+          <Dropdown value={category} onChange={(v) => setCategory(v as TerpiraCategory | 'alle')}>
+            <DropdownOption value="alle">Alle Kategorien</DropdownOption>
             {ORDERED_CATEGORIES.filter(c => categoryCounts[c]).map(cat => (
-              <option key={cat} value={cat}>{categoryLabels[cat] ?? cat} ({categoryCounts[cat]})</option>
+              <DropdownOption key={cat} value={cat}>{categoryLabels[cat] ?? cat} ({categoryCounts[cat]})</DropdownOption>
             ))}
-          </select>
+          </Dropdown>
         )}
 
         {/* Difficulty */}
-        <select
-          value={difficulty}
-          onChange={e => setDifficulty(e.target.value as TerpiraDifficulty | 'alle')}
-          className="rounded-lg border border-border bg-card px-3 py-2.5 text-[13.5px] text-foreground
-            outline-none shadow-sm focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 cursor-pointer transition-all"
-        >
-          <option value="alle">Alle Schwierigkeitsstufen</option>
-          <option value="einsteiger">Einsteiger</option>
-          <option value="fortgeschritten">Fortgeschritten</option>
-          <option value="profi">Profi</option>
-        </select>
+        <Dropdown value={difficulty} onChange={(v) => setDifficulty(v as TerpiraDifficulty | 'alle')}>
+          <DropdownOption value="alle">Alle Schwierigkeitsstufen</DropdownOption>
+          <DropdownOption value="einsteiger">Einsteiger</DropdownOption>
+          <DropdownOption value="fortgeschritten">Fortgeschritten</DropdownOption>
+          <DropdownOption value="profi">Profi</DropdownOption>
+        </Dropdown>
 
         {/* Sort */}
         {!search.trim() && (
-          <select
-            value={sort}
-            onChange={e => setSort(e.target.value as SortMode)}
-            className="rounded-lg border border-border bg-card px-3 py-2.5 text-[13.5px] text-foreground
-              outline-none shadow-sm focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 cursor-pointer transition-all"
-          >
-            <option value="relevanz">Relevanz</option>
-            <option value="neueste">Neueste zuerst</option>
-            <option value="kurz">Kürzeste zuerst</option>
-            <option value="lang">Längste zuerst</option>
-            <option value="qualitaet">Nach Qualität</option>
-          </select>
+          <Dropdown value={sort} onChange={(v) => setSort(v as SortMode)}>
+            <DropdownOption value="relevanz">Relevanz</DropdownOption>
+            <DropdownOption value="neueste">Neueste zuerst</DropdownOption>
+            <DropdownOption value="kurz">Kürzeste zuerst</DropdownOption>
+            <DropdownOption value="lang">Längste zuerst</DropdownOption>
+            <DropdownOption value="qualitaet">Nach Qualität</DropdownOption>
+          </Dropdown>
         )}
 
         {hasFilters && (

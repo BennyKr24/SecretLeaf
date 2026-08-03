@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
 
@@ -193,16 +194,12 @@ export default function AdminUsersPage() {
             className="w-full max-w-sm rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
           />
         </div>
-        <select
-          value={roleFilter}
-          onChange={(e) => { setRoleFilter(e.target.value); setPage(1); }}
-          className="rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
-        >
-          <option value="all">Alle Rollen</option>
-          <option value="CONSUMER">Consumer</option>
-          <option value="PROVIDER">Provider</option>
-          <option value="ADMIN">Admin</option>
-        </select>
+        <Dropdown value={roleFilter} onChange={(v) => { setRoleFilter(v); setPage(1); }}>
+          <DropdownOption value="all">Alle Rollen</DropdownOption>
+          <DropdownOption value="CONSUMER">Consumer</DropdownOption>
+          <DropdownOption value="PROVIDER">Provider</DropdownOption>
+          <DropdownOption value="ADMIN">Admin</DropdownOption>
+        </Dropdown>
         <button
           onClick={() => void fetchUsers()}
           className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-muted-fg transition hover:bg-background"

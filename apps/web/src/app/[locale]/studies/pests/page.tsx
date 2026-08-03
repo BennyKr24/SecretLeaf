@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
+import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { areaLabel, riskClass, riskLabel, stageLabel, type GrowArea, type PlantStage, type RiskLevel } from "@/lib/terpira/lexicon";
 
 type PestCategory = "saugend" | "blattfresser" | "substrat" | "wurzel";
@@ -1210,32 +1211,32 @@ export default function PestLexiconPage() {
               placeholder="Schädlingsname, Symptom oder Lateinname suchen..."
               className="w-full rounded-xl border border-border px-3 py-2 text-sm text-foreground/80 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
             />
-            <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value as PestCategory | "alle")} className="rounded-xl border border-border px-3 py-2 text-sm">
-              <option value="alle">Alle Arten</option>
-              <option value="saugend">Saugende</option>
-              <option value="blattfresser">Blatt-/Blütenfresser</option>
-              <option value="substrat">Substrat</option>
-              <option value="wurzel">Wurzel</option>
-            </select>
-            <select value={activeRisk} onChange={(e) => setActiveRisk(e.target.value as RiskLevel | "alle")} className="rounded-xl border border-border px-3 py-2 text-sm">
-              <option value="alle">Alle Risiken</option>
-              <option value="niedrig">Niedrig</option>
-              <option value="mittel">Mittel</option>
-              <option value="hoch">Hoch</option>
-              <option value="kritisch">Kritisch</option>
-            </select>
-            <select value={activeArea} onChange={(e) => setActiveArea(e.target.value as GrowArea | "alle")} className="rounded-xl border border-border px-3 py-2 text-sm">
-              <option value="alle">Alle Umgebungen</option>
-              <option value="indoor">Indoor</option>
-              <option value="outdoor">Outdoor</option>
-              <option value="beides">Indoor + Outdoor</option>
-            </select>
-            <select value={activeStage} onChange={(e) => setActiveStage(e.target.value as PlantStage | "alle")} className="rounded-xl border border-border px-3 py-2 text-sm">
-              <option value="alle">Alle Phasen</option>
-              <option value="keimling">Keimling</option>
-              <option value="veg">Veg</option>
-              <option value="bluete">Blüte</option>
-            </select>
+            <Dropdown value={activeCategory} onChange={(v) => setActiveCategory(v as PestCategory | "alle")}>
+              <DropdownOption value="alle">Alle Arten</DropdownOption>
+              <DropdownOption value="saugend">Saugende</DropdownOption>
+              <DropdownOption value="blattfresser">Blatt-/Blütenfresser</DropdownOption>
+              <DropdownOption value="substrat">Substrat</DropdownOption>
+              <DropdownOption value="wurzel">Wurzel</DropdownOption>
+            </Dropdown>
+            <Dropdown value={activeRisk} onChange={(v) => setActiveRisk(v as RiskLevel | "alle")}>
+              <DropdownOption value="alle">Alle Risiken</DropdownOption>
+              <DropdownOption value="niedrig">Niedrig</DropdownOption>
+              <DropdownOption value="mittel">Mittel</DropdownOption>
+              <DropdownOption value="hoch">Hoch</DropdownOption>
+              <DropdownOption value="kritisch">Kritisch</DropdownOption>
+            </Dropdown>
+            <Dropdown value={activeArea} onChange={(v) => setActiveArea(v as GrowArea | "alle")}>
+              <DropdownOption value="alle">Alle Umgebungen</DropdownOption>
+              <DropdownOption value="indoor">Indoor</DropdownOption>
+              <DropdownOption value="outdoor">Outdoor</DropdownOption>
+              <DropdownOption value="beides">Indoor + Outdoor</DropdownOption>
+            </Dropdown>
+            <Dropdown value={activeStage} onChange={(v) => setActiveStage(v as PlantStage | "alle")}>
+              <DropdownOption value="alle">Alle Phasen</DropdownOption>
+              <DropdownOption value="keimling">Keimling</DropdownOption>
+              <DropdownOption value="veg">Veg</DropdownOption>
+              <DropdownOption value="bluete">Blüte</DropdownOption>
+            </Dropdown>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2">

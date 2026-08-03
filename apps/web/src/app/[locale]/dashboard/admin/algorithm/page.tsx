@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
@@ -623,14 +624,10 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
             placeholder="Publisher-Name..."
             className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
           />
-          <select
-            value={newQuality}
-            onChange={(e) => setNewQuality(e.target.value as "high" | "mid")}
-            className="rounded-lg border border-border bg-card px-2 py-2 text-sm"
-          >
-            <option value="high">High</option>
-            <option value="mid">Mid</option>
-          </select>
+          <Dropdown value={newQuality} onChange={(v) => setNewQuality(v as "high" | "mid")}>
+            <DropdownOption value="high">High</DropdownOption>
+            <DropdownOption value="mid">Mid</DropdownOption>
+          </Dropdown>
           <button
             onClick={addSource}
             className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
 
@@ -242,12 +243,12 @@ export default function AdminStudiesPage() {
             placeholder="Titel suchen..."
             className="rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
           />
-          <select value={quality} onChange={(e) => { setQuality(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm">
-            {QUALITY_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-          </select>
-          <select value={priority} onChange={(e) => { setPriority(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm">
-            {PRIORITY_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-          </select>
+          <Dropdown value={quality} onChange={(v) => { setQuality(v); setPage(1); }}>
+            {QUALITY_OPTIONS.map((o) => <DropdownOption key={o.value} value={o.value}>{o.label}</DropdownOption>)}
+          </Dropdown>
+          <Dropdown value={priority} onChange={(v) => { setPriority(v); setPage(1); }}>
+            {PRIORITY_OPTIONS.map((o) => <DropdownOption key={o.value} value={o.value}>{o.label}</DropdownOption>)}
+          </Dropdown>
           <input
             type="text"
             value={source}
@@ -261,9 +262,9 @@ export default function AdminStudiesPage() {
           <input type="number" value={maxScore} onChange={(e) => { setMaxScore(e.target.value); setPage(1); }} placeholder="Max Score" className="rounded-xl border border-border px-3 py-2 text-sm" />
           <input type="date" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm" />
           <input type="date" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm" />
-          <select value={sortBy} onChange={(e) => { setSortBy(e.target.value); setPage(1); }} className="rounded-xl border border-border px-3 py-2 text-sm">
-            {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-          </select>
+          <Dropdown value={sortBy} onChange={(v) => { setSortBy(v); setPage(1); }}>
+            {SORT_OPTIONS.map((o) => <DropdownOption key={o.value} value={o.value}>{o.label}</DropdownOption>)}
+          </Dropdown>
           <button
             onClick={() => setSortDir((d) => (d === "desc" ? "asc" : "desc"))}
             className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-muted-fg hover:bg-background"
@@ -389,19 +390,19 @@ export default function AdminStudiesPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="mb-1 block text-xs font-medium text-muted-fg">Qualitätsstatus</label>
-                  <select value={editing.qualityStatus} onChange={(e) => setEditing({ ...editing, qualityStatus: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm">
-                    <option value="pending">Offen</option>
-                    <option value="good">Gut</option>
-                    <option value="bad">Schlecht</option>
-                  </select>
+                  <Dropdown value={editing.qualityStatus} onChange={(v) => setEditing({ ...editing, qualityStatus: v })}>
+                    <DropdownOption value="pending">Offen</DropdownOption>
+                    <DropdownOption value="good">Gut</DropdownOption>
+                    <DropdownOption value="bad">Schlecht</DropdownOption>
+                  </Dropdown>
                 </div>
                 <div>
                   <label className="mb-1 block text-xs font-medium text-muted-fg">Priorität</label>
-                  <select value={editing.editorialPriority} onChange={(e) => setEditing({ ...editing, editorialPriority: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm">
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
-                  </select>
+                  <Dropdown value={editing.editorialPriority} onChange={(v) => setEditing({ ...editing, editorialPriority: v })}>
+                    <DropdownOption value="high">High</DropdownOption>
+                    <DropdownOption value="medium">Medium</DropdownOption>
+                    <DropdownOption value="low">Low</DropdownOption>
+                  </Dropdown>
                 </div>
               </div>
               <div>

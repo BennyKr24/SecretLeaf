@@ -11,6 +11,7 @@ import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useParams } from 'next/navigation';
 import type { Route } from 'next';
+import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
 import { useAuth } from '@/hooks/useAuth';
@@ -189,15 +190,11 @@ function GrowSettingsPanel({
             </div>
             <div>
               <label className="mb-1 block text-xs font-semibold text-muted-fg">Status</label>
-              <select
-                value={status}
-                onChange={(e) => setStatus(e.target.value as GrowStatus)}
-                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/40"
-              >
+              <Dropdown value={status} onChange={(v) => setStatus(v as GrowStatus)}>
                 {GROW_STATUS_OPTIONS.map((s) => (
-                  <option key={s} value={s}>{GROW_STATUS_LABELS[s]}</option>
+                  <DropdownOption key={s} value={s}>{GROW_STATUS_LABELS[s]}</DropdownOption>
                 ))}
-              </select>
+              </Dropdown>
             </div>
           </div>
           <button
@@ -1342,18 +1339,17 @@ export default function GrowPage({}: Props) {
                 <p className="text-[11px] font-bold uppercase tracking-widest text-primary">Aktiver Grow</p>
                 <h1 className="mt-1 text-2xl font-bold text-foreground">{grow.name}</h1>
                 <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-fg">
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5" title="Wachstumsphase manuell umstellen">
                     <span>{currentPhase ? PHASE_ICONS[currentPhase.id] : '🌿'}</span>
-                    <select
+                    <Dropdown
+                      variant="ghost"
                       value={currentPhase?.id ?? grow.currentPhaseId}
-                      onChange={(e) => advancePhase(grow.id, e.target.value as GrowPhaseId)}
-                      title="Wachstumsphase manuell umstellen"
-                      className="cursor-pointer appearance-none rounded-md border-0 bg-transparent font-medium text-foreground hover:text-primary focus:outline-none focus:ring-1 focus:ring-primary/40"
+                      onChange={(v) => advancePhase(grow.id, v as GrowPhaseId)}
                     >
                       {grow.plan.phases.map((phase) => (
-                        <option key={phase.id} value={phase.id}>{phase.label}</option>
+                        <DropdownOption key={phase.id} value={phase.id}>{phase.label}</DropdownOption>
                       ))}
-                    </select>
+                    </Dropdown>
                   </span>
                   <span className="text-border">·</span>
                   <span>Tag {grow.currentDay}</span>

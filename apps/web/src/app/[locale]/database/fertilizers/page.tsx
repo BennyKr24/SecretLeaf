@@ -20,6 +20,7 @@ import {
 } from '@/data/terpira/fertilizerPrices';
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
+import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 
 type SortField = 'best-match' | 'name' | 'npk-total' | 'cost' | 'ec-min' | 'ppfd-min';
 type ViewMode = 'grid' | 'list';
@@ -728,92 +729,60 @@ function FertilizersPageInner() {
                   Filter löschen ×
                 </button>
               )}
-              <select
-                value={viewMode}
-                onChange={(e) => setViewMode(e.target.value as ViewMode)}
-                className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
-              >
-                <option value="grid">⊞ Kacheln</option>
-                <option value="list">☰ Liste</option>
-              </select>
+              <Dropdown value={viewMode} onChange={(v) => setViewMode(v as ViewMode)}>
+                <DropdownOption value="grid">⊞ Kacheln</DropdownOption>
+                <DropdownOption value="list">☰ Liste</DropdownOption>
+              </Dropdown>
             </div>
           </div>
 
           {/* Row 2: More filters (collapsible via checkbox trick / always visible compact row) */}
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <select
-              value={selectedBase}
-              onChange={(e) => setSelectedBase(e.target.value as FertilizerBase | 'all')}
-              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
-            >
-              <option value="all">Alle Typen</option>
-              <option value="mineral">Mineral</option>
-              <option value="organic">Organisch</option>
-              <option value="bio-organic">Bio-Organisch</option>
-              <option value="hybrid">Hybrid</option>
-            </select>
-            <select
-              value={selectedFormat}
-              onChange={(e) => setSelectedFormat(e.target.value as FertilizerFormat | 'all')}
-              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
-            >
-              <option value="all">Alle Formate</option>
-              <option value="liquid">Flüssig</option>
-              <option value="powder">Pulver</option>
-              <option value="pellets">Pellets</option>
-              <option value="granules">Granulat</option>
-            </select>
-            <select
-              value={selectedApplication}
-              onChange={(e) => setSelectedApplication(e.target.value as FertilizerApplication | 'all')}
-              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
-            >
-              <option value="all">Wasser / Erde</option>
-              <option value="water">Nur Wasser</option>
-              <option value="soil">Nur Erde</option>
-              <option value="both">Wasser + Erde</option>
-            </select>
-            <select
-              value={selectedBrand}
-              onChange={(e) => setSelectedBrand(e.target.value)}
-              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
-            >
-              <option value="all">Alle Marken</option>
-              {brands.map((b) => <option key={b} value={b}>{b}</option>)}
-            </select>
-            <select
-              value={useCase}
-              onChange={(e) => setUseCase(e.target.value as UseCase)}
-              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
-            >
-              <option value="balanced">Verwendung: Alle</option>
-              <option value="hydro-performance">Hydro / Coco</option>
-              <option value="soil-organic">Erde & Bio</option>
-              <option value="budget-smart">Budget Klar</option>
-              <option value="max-yield">Max. Ertrag</option>
-            </select>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as SortField)}
-              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
-            >
-              <option value="best-match">Sortierung: Beste Treffer</option>
-              <option value="name">A – Z</option>
-              <option value="cost">Preis aufst.</option>
-              <option value="npk-total">NPK-Gesamt</option>
-              <option value="ec-min">EC-Min</option>
-            </select>
-            <select
-              value={priceRegion}
-              onChange={(e) => setPriceRegion(e.target.value as 'all' | 'DE' | 'AT' | 'CH' | 'EU' | 'OTHER')}
-              className="rounded-lg border border-border bg-card px-2.5 py-1.5 text-xs text-foreground/80"
-            >
-              <option value="all">Preise: Alle Länder</option>
-              <option value="DE">Deutschland</option>
-              <option value="AT">Österreich</option>
-              <option value="CH">Schweiz</option>
-              <option value="EU">EU</option>
-            </select>
+            <Dropdown value={selectedBase} onChange={(v) => setSelectedBase(v as FertilizerBase | 'all')}>
+              <DropdownOption value="all">Alle Typen</DropdownOption>
+              <DropdownOption value="mineral">Mineral</DropdownOption>
+              <DropdownOption value="organic">Organisch</DropdownOption>
+              <DropdownOption value="bio-organic">Bio-Organisch</DropdownOption>
+              <DropdownOption value="hybrid">Hybrid</DropdownOption>
+            </Dropdown>
+            <Dropdown value={selectedFormat} onChange={(v) => setSelectedFormat(v as FertilizerFormat | 'all')}>
+              <DropdownOption value="all">Alle Formate</DropdownOption>
+              <DropdownOption value="liquid">Flüssig</DropdownOption>
+              <DropdownOption value="powder">Pulver</DropdownOption>
+              <DropdownOption value="pellets">Pellets</DropdownOption>
+              <DropdownOption value="granules">Granulat</DropdownOption>
+            </Dropdown>
+            <Dropdown value={selectedApplication} onChange={(v) => setSelectedApplication(v as FertilizerApplication | 'all')}>
+              <DropdownOption value="all">Wasser / Erde</DropdownOption>
+              <DropdownOption value="water">Nur Wasser</DropdownOption>
+              <DropdownOption value="soil">Nur Erde</DropdownOption>
+              <DropdownOption value="both">Wasser + Erde</DropdownOption>
+            </Dropdown>
+            <Dropdown value={selectedBrand} onChange={setSelectedBrand}>
+              <DropdownOption value="all">Alle Marken</DropdownOption>
+              {brands.map((b) => <DropdownOption key={b} value={b}>{b}</DropdownOption>)}
+            </Dropdown>
+            <Dropdown value={useCase} onChange={(v) => setUseCase(v as UseCase)}>
+              <DropdownOption value="balanced">Verwendung: Alle</DropdownOption>
+              <DropdownOption value="hydro-performance">Hydro / Coco</DropdownOption>
+              <DropdownOption value="soil-organic">Erde & Bio</DropdownOption>
+              <DropdownOption value="budget-smart">Budget Klar</DropdownOption>
+              <DropdownOption value="max-yield">Max. Ertrag</DropdownOption>
+            </Dropdown>
+            <Dropdown value={sortBy} onChange={(v) => setSortBy(v as SortField)}>
+              <DropdownOption value="best-match">Sortierung: Beste Treffer</DropdownOption>
+              <DropdownOption value="name">A – Z</DropdownOption>
+              <DropdownOption value="cost">Preis aufst.</DropdownOption>
+              <DropdownOption value="npk-total">NPK-Gesamt</DropdownOption>
+              <DropdownOption value="ec-min">EC-Min</DropdownOption>
+            </Dropdown>
+            <Dropdown value={priceRegion} onChange={(v) => setPriceRegion(v as 'all' | 'DE' | 'AT' | 'CH' | 'EU' | 'OTHER')}>
+              <DropdownOption value="all">Preise: Alle Länder</DropdownOption>
+              <DropdownOption value="DE">Deutschland</DropdownOption>
+              <DropdownOption value="AT">Österreich</DropdownOption>
+              <DropdownOption value="CH">Schweiz</DropdownOption>
+              <DropdownOption value="EU">EU</DropdownOption>
+            </Dropdown>
             <label className="inline-flex items-center gap-1.5 text-xs text-muted-fg cursor-pointer">
               <input
                 type="checkbox"
@@ -1101,15 +1070,11 @@ function FertilizersPageInner() {
                     Weiter →
                   </button>
                 </div>
-                <select
-                  value={pageSize}
-                  onChange={(e) => setPageSize(Number(e.target.value))}
-                  className="rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground/80"
-                >
-                  <option value={12}>12 / Seite</option>
-                  <option value={24}>24 / Seite</option>
-                  <option value={48}>48 / Seite</option>
-                </select>
+                <Dropdown value={String(pageSize)} onChange={(v) => setPageSize(Number(v))}>
+                  <DropdownOption value="12">12 / Seite</DropdownOption>
+                  <DropdownOption value="24">24 / Seite</DropdownOption>
+                  <DropdownOption value="48">48 / Seite</DropdownOption>
+                </Dropdown>
               </div>
             )}
           </>

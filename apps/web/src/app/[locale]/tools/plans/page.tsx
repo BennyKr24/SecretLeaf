@@ -3,6 +3,7 @@
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { useMemo, useState } from "react";
+import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { fertilizerCatalog, type FertilizerProfile } from "@/data/terpira/fertilizers";
 
 type PlanCategory = "starter" | "stabilitaet" | "budget" | "qualitaet" | "leistung";
@@ -387,44 +388,44 @@ export default function FertilizerPlansPage() {
               placeholder="Plan suchen, z. B. Hydro, Budget oder Qualität..."
               className="w-full rounded-lg border border-border px-3 py-2 text-sm"
             />
-            <select value={activeSetup} onChange={(e) => setActiveSetup(e.target.value as PlanSetup | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
-              <option value="all">Alle Setups</option>
-              <option value="soil">Erde</option>
-              <option value="hydro">Hydro/Coco</option>
-              <option value="hybrid">Hybrid</option>
-            </select>
-            <select value={activeBudget} onChange={(e) => setActiveBudget(e.target.value as FertilizerPlan["budget"] | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
-              <option value="all">Alle Budgets</option>
-              <option value="budget">Budget</option>
-              <option value="mid">Mittel</option>
-              <option value="premium">Premium</option>
-            </select>
-            <select value={activeLevel} onChange={(e) => setActiveLevel(e.target.value as PlanLevel | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
-              <option value="all">Alle Stufen</option>
-              <option value="einsteiger">Einsteiger</option>
-              <option value="fortgeschritten">Fortgeschritten</option>
-              <option value="profi">Profi</option>
-            </select>
-            <select value={activeGoal} onChange={(e) => setActiveGoal(e.target.value as PlanGoal | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
-              <option value="all">Alle Ziele</option>
-              <option value="stabil">Stabilität</option>
-              <option value="einfach">Einfachheit</option>
-              <option value="ertrag">Ertrag</option>
-              <option value="qualitaet">Qualität</option>
-            </select>
-            <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value as PlanCategory | "all")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
-              <option value="all">Alle Kategorien</option>
-              <option value="starter">Starter</option>
-              <option value="stabilitaet">Stabilität</option>
-              <option value="budget">Budget</option>
-              <option value="qualitaet">Qualität</option>
-              <option value="leistung">Leistung</option>
-            </select>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as "recommended" | "durationAsc" | "durationDesc")} className="w-full rounded-lg border border-border px-3 py-2 text-sm">
-              <option value="recommended">Sortierung: Empfohlen</option>
-              <option value="durationAsc">Sortierung: Kurze Laufzeit</option>
-              <option value="durationDesc">Sortierung: Lange Laufzeit</option>
-            </select>
+            <Dropdown value={activeSetup} onChange={(v) => setActiveSetup(v as PlanSetup | "all")}>
+              <DropdownOption value="all">Alle Setups</DropdownOption>
+              <DropdownOption value="soil">Erde</DropdownOption>
+              <DropdownOption value="hydro">Hydro/Coco</DropdownOption>
+              <DropdownOption value="hybrid">Hybrid</DropdownOption>
+            </Dropdown>
+            <Dropdown value={activeBudget} onChange={(v) => setActiveBudget(v as FertilizerPlan["budget"] | "all")}>
+              <DropdownOption value="all">Alle Budgets</DropdownOption>
+              <DropdownOption value="budget">Budget</DropdownOption>
+              <DropdownOption value="mid">Mittel</DropdownOption>
+              <DropdownOption value="premium">Premium</DropdownOption>
+            </Dropdown>
+            <Dropdown value={activeLevel} onChange={(v) => setActiveLevel(v as PlanLevel | "all")}>
+              <DropdownOption value="all">Alle Stufen</DropdownOption>
+              <DropdownOption value="einsteiger">Einsteiger</DropdownOption>
+              <DropdownOption value="fortgeschritten">Fortgeschritten</DropdownOption>
+              <DropdownOption value="profi">Profi</DropdownOption>
+            </Dropdown>
+            <Dropdown value={activeGoal} onChange={(v) => setActiveGoal(v as PlanGoal | "all")}>
+              <DropdownOption value="all">Alle Ziele</DropdownOption>
+              <DropdownOption value="stabil">Stabilität</DropdownOption>
+              <DropdownOption value="einfach">Einfachheit</DropdownOption>
+              <DropdownOption value="ertrag">Ertrag</DropdownOption>
+              <DropdownOption value="qualitaet">Qualität</DropdownOption>
+            </Dropdown>
+            <Dropdown value={activeCategory} onChange={(v) => setActiveCategory(v as PlanCategory | "all")}>
+              <DropdownOption value="all">Alle Kategorien</DropdownOption>
+              <DropdownOption value="starter">Starter</DropdownOption>
+              <DropdownOption value="stabilitaet">Stabilität</DropdownOption>
+              <DropdownOption value="budget">Budget</DropdownOption>
+              <DropdownOption value="qualitaet">Qualität</DropdownOption>
+              <DropdownOption value="leistung">Leistung</DropdownOption>
+            </Dropdown>
+            <Dropdown value={sortBy} onChange={(v) => setSortBy(v as "recommended" | "durationAsc" | "durationDesc")}>
+              <DropdownOption value="recommended">Sortierung: Empfohlen</DropdownOption>
+              <DropdownOption value="durationAsc">Sortierung: Kurze Laufzeit</DropdownOption>
+              <DropdownOption value="durationDesc">Sortierung: Lange Laufzeit</DropdownOption>
+            </Dropdown>
             {hasFilters && (
               <button
                 type="button"

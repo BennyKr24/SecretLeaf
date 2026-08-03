@@ -14,6 +14,7 @@ import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { Link } from '@/i18n/navigation';
 import { useParams, useSearchParams } from 'next/navigation';
 import type { Route } from 'next';
+import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
 import {
@@ -406,18 +407,14 @@ function QuickAddBar({
         <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
           Gültigkeit
         </label>
-        <select
-          value={selectedPlantId}
-          onChange={(e) => onSelectPlant(e.target.value)}
-          className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-        >
-          <option value="">Gesamter Grow</option>
+        <Dropdown value={selectedPlantId} onChange={onSelectPlant}>
+          <DropdownOption value="">Gesamter Grow</DropdownOption>
           {plants.map((plant) => (
-            <option key={plant.id} value={plant.id}>
+            <DropdownOption key={plant.id} value={plant.id}>
               {plant.name}
-            </option>
+            </DropdownOption>
           ))}
-        </select>
+        </Dropdown>
       </div>
 
       {/* Type selector row — locked in edit mode */}
@@ -534,20 +531,16 @@ function QuickAddBar({
               <label className="mb-1 block text-[11px] font-bold uppercase tracking-wider text-muted-fg">
                 Methode
               </label>
-              <select
-                value={fields['methode'] ?? ''}
-                onChange={(e) => set('methode', e.target.value)}
-                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-              >
-                <option value="">Methode wählen …</option>
+              <Dropdown value={fields['methode'] ?? ''} onChange={(v) => set('methode', v)}>
+                <DropdownOption value="">Methode wählen …</DropdownOption>
                 {(Object.entries(TRAINING_METHOD_LABELS) as [TrainingMethod, string][]).map(
                   ([key, label]) => (
-                    <option key={key} value={key}>
+                    <DropdownOption key={key} value={key}>
                       {label}
-                    </option>
+                    </DropdownOption>
                   )
                 )}
-              </select>
+              </Dropdown>
             </div>
           )}
 

@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
+import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 import type { TerpiraArticle, TerpiraCategory, TerpiraDifficulty } from '@/lib/terpira/types';
 
 // ─── Typen & Konfiguration ───────────────────────────────────────────────────
@@ -490,17 +491,12 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
 
         {/* Sort Dropdown */}
         {!localSearch.trim() && (
-          <select
-            value={sort}
-            onChange={e => setSort(e.target.value as SortMode)}
-            className="rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground
-              outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 shadow-sm cursor-pointer"
-          >
-            <option value="relevanz">Standard</option>
-            <option value="neueste">Neueste zuerst</option>
-            <option value="kurz">Kurze zuerst</option>
-            <option value="lang">Lange zuerst</option>
-          </select>
+          <Dropdown value={sort} onChange={(v) => setSort(v as SortMode)}>
+            <DropdownOption value="relevanz">Standard</DropdownOption>
+            <DropdownOption value="neueste">Neueste zuerst</DropdownOption>
+            <DropdownOption value="kurz">Kurze zuerst</DropdownOption>
+            <DropdownOption value="lang">Lange zuerst</DropdownOption>
+          </Dropdown>
         )}
 
         {hasFilters && (

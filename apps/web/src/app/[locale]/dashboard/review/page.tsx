@@ -3,6 +3,7 @@
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import autoSourcesData from "@/data/terpira/autoSources.json";
 import { logoutFromSupabase, restoreSessionFromSupabase } from "@/lib/auth";
 import {
@@ -284,28 +285,20 @@ export default function DashboardStudiesPage() {
                   className="rounded-xl border border-border px-3 py-2 text-sm text-foreground outline-none focus:border-emerald-600 dark:border-emerald-500"
                 />
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <select
-                    value={activeDbTag}
-                    onChange={(event) => setActiveDbTag(event.target.value)}
-                    className="rounded-xl border border-border px-3 py-2 text-sm text-foreground outline-none focus:border-emerald-600 dark:border-emerald-500"
-                  >
-                    <option value="all">Alle Tags</option>
+                  <Dropdown value={activeDbTag} onChange={setActiveDbTag}>
+                    <DropdownOption value="all">Alle Tags</DropdownOption>
                     {availableDbTags.map((tag) => (
-                      <option key={tag} value={tag}>
+                      <DropdownOption key={tag} value={tag}>
                         {tag}
-                      </option>
+                      </DropdownOption>
                     ))}
-                  </select>
-                  <select
-                    value={qualityFilter}
-                    onChange={(event) => setQualityFilter(event.target.value as "all" | StudyQuality)}
-                    className="rounded-xl border border-border px-3 py-2 text-sm text-foreground outline-none focus:border-emerald-600 dark:border-emerald-500"
-                  >
-                    <option value="all">Qualität: Alle</option>
-                    <option value="good">Qualität: Gut</option>
-                    <option value="pending">Qualität: Offen</option>
-                    <option value="bad">Qualität: Schlecht</option>
-                  </select>
+                  </Dropdown>
+                  <Dropdown value={qualityFilter} onChange={(v) => setQualityFilter(v as "all" | StudyQuality)}>
+                    <DropdownOption value="all">Qualität: Alle</DropdownOption>
+                    <DropdownOption value="good">Qualität: Gut</DropdownOption>
+                    <DropdownOption value="pending">Qualität: Offen</DropdownOption>
+                    <DropdownOption value="bad">Qualität: Schlecht</DropdownOption>
+                  </Dropdown>
                 </div>
               </div>
 
