@@ -20,12 +20,17 @@ import {
   getReadingStreak,
 } from '@/lib/retention';
 import BookmarkButton from '@/components/BookmarkButton';
-import CommunitySignals from '@/components/CommunitySignals';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
 import { PHASE_ICONS } from '@/lib/grow/phases';
 import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
+import {
+  Bookmark, BookOpen, Flame, Zap, Sprout, AlertTriangle, CheckCircle2, Clock,
+  NotebookPen, Wrench, Stethoscope, Target, Library, Database, Activity,
+  Sparkles, Settings, LogOut, ChevronDown, ChevronUp, ArrowRight, Bell, Mail,
+  TrendingUp, History, type LucideIcon,
+} from 'lucide-react';
 
 /** True when a plant needs attention: no log > 3 days or no watering > 3 days. */
 function dashboardPlantAlert(plantEntries: { date: string; data: { type: string } }[]): boolean {
@@ -58,128 +63,104 @@ function timeAgo(isoDate: string, t: TFn): string {
 
 const INTEREST_ORDER = Object.keys(INTEREST_META) as Interest[];
 
-function SectionHeader({ title, subtitle, badge }: { title: string; subtitle?: string; badge?: number | string }) {
+// ── Shared tile primitives ──────────────────────────────────────────────
+// Every tile on this dashboard uses the same restrained card language as
+// the rest of the product (StudyListItem, AuthBenefits): bg-card/border-border
+// tokens, a small icon badge, rounded-xl — not the ad-hoc pastel gradients
+// this page used to have.
+
+function TileIcon({ icon: Icon, accent }: { icon: LucideIcon; accent: string }) {
   return (
-    <div className="mb-4 flex items-end justify-between gap-3">
-      <div>
-        <h2 className="text-[15px] font-bold tracking-tight text-foreground sm:text-lg">{title}</h2>
-        {subtitle && <p className="mt-1 text-xs text-muted-fg sm:text-sm">{subtitle}</p>}
-      </div>
-      {badge !== undefined && badge !== 0 && badge !== '0' && (
-        <span className="inline-flex min-w-7 items-center justify-center rounded-full bg-emerald-100 px-2 py-1 text-[11px] font-bold text-emerald-700">
-          {badge}
-        </span>
-      )}
-    </div>
+    <span className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-border bg-background ${accent}`}>
+      <Icon className="h-4 w-4" strokeWidth={2} />
+    </span>
   );
 }
 
-function EmptyState({ icon, text, action }: { icon: string; text: string; action?: React.ReactNode }) {
+function Tile({
+  icon, accent = 'text-emerald-600', title, subtitle, badge, className = '', bodyClassName = '', children,
+}: {
+  icon: LucideIcon;
+  accent?: string;
+  title: string;
+  subtitle?: string;
+  badge?: number | string;
+  className?: string;
+  bodyClassName?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-3xl border border-dashed border-border bg-background/80 px-6 py-10 text-center">
-      <span className="text-3xl">{icon}</span>
-      <p className="max-w-sm text-sm text-muted-fg">{text}</p>
+    <section className={`flex flex-col rounded-xl border border-border bg-card p-4 sm:p-5 ${className}`}>
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <div className="flex items-start gap-3">
+          <TileIcon icon={icon} accent={accent} />
+          <div className="min-w-0">
+            <h2 className="text-[13px] font-bold leading-snug text-foreground sm:text-sm">{title}</h2>
+            {subtitle && <p className="mt-0.5 text-[11px] text-muted-fg sm:text-xs">{subtitle}</p>}
+          </div>
+        </div>
+        {badge !== undefined && badge !== 0 && badge !== '0' && (
+          <span className="flex-shrink-0 rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2 py-0.5 text-[11px] font-bold text-emerald-600">
+            {badge}
+          </span>
+        )}
+      </div>
+      <div className={`flex-1 ${bodyClassName}`}>{children}</div>
+    </section>
+  );
+}
+
+function TileEmpty({ icon: Icon, text, action }: { icon: LucideIcon; text: string; action?: React.ReactNode }) {
+  return (
+    <div className="flex flex-col items-center gap-2.5 rounded-lg border border-dashed border-border px-4 py-6 text-center">
+      <Icon className="h-5 w-5 text-muted-fg" strokeWidth={1.75} />
+      <p className="max-w-[26ch] text-xs text-muted-fg">{text}</p>
       {action}
     </div>
   );
 }
 
-function MetricCard({ icon, label, value, tone = 'default' }: { icon: string; label: string; value: number | string; tone?: 'default' | 'accent' }) {
+function ShowMoreButton({ expanded, hiddenCount, onToggle, t }: { expanded: boolean; hiddenCount: number; onToggle: () => void; t: TFn }) {
+  if (hiddenCount <= 0 && !expanded) return null;
   return (
-    <div className={`rounded-3xl border px-4 py-4 shadow-sm backdrop-blur ${tone === 'accent' ? 'border-emerald-200 bg-emerald-50/70' : 'border-border bg-card/80'}`}>
-      <span className="text-lg">{icon}</span>
-      <p className="mt-2 text-2xl font-bold leading-none text-foreground">{value}</p>
-      <p className="mt-1 text-xs font-medium text-muted-fg">{label}</p>
-    </div>
+    <button
+      type="button"
+      onClick={onToggle}
+      className="mt-1.5 flex w-full items-center justify-center gap-1 rounded-lg py-1.5 text-[11px] font-semibold text-muted-fg transition-colors hover:text-emerald-600"
+    >
+      {expanded ? (
+        <>{t('showLess')} <ChevronUp className="h-3 w-3" /></>
+      ) : (
+        <>+{hiddenCount} {t('showMore')} <ChevronDown className="h-3 w-3" /></>
+      )}
+    </button>
   );
 }
 
-function ArticleCard({ article, variant = 'default' }: { article: TerpiraArticle; variant?: 'compact' | 'default' }) {
+function ArticleRow({ article, right }: { article: TerpiraArticle; right?: React.ReactNode }) {
   const t = useTranslations('dashboard');
-  if (variant === 'compact') {
-    return (
-      <Link
-        href={`/studies/${article.slug}`}
-        className="group flex items-start gap-3 rounded-2xl border border-border bg-card px-4 py-3 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:bg-emerald-50/40"
-      >
-        <div className="min-w-0 flex-1">
-          <p className="line-clamp-1 text-[13px] font-semibold text-foreground transition-colors group-hover:text-emerald-700">
-            {article.title}
-          </p>
-          <p className="mt-0.5 text-xs text-muted-fg">
-            {categoryLabels[article.category]} · {article.readMinutes} {t('minReadTime')}
-          </p>
-          <div className="mt-2">
-            <CommunitySignals article={article} allArticles={wikiArticles} limit={2} compact />
-          </div>
-        </div>
-        <BookmarkButton slug={article.slug} size="sm" className="flex-shrink-0" />
-      </Link>
-    );
-  }
-
   return (
     <Link
-      href={`/studies/${article.slug}`}
-      className="group flex flex-col rounded-3xl border border-border bg-card p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md"
+      href={`/studies/${article.slug}` as Route}
+      className="group -mx-2 flex items-center gap-2.5 rounded-lg px-2 py-2 transition-colors hover:bg-background"
     >
-      <div className="mb-3 flex items-start justify-between gap-2">
-        <span className="inline-block rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">
-          {categoryLabels[article.category]}
-        </span>
-        <BookmarkButton slug={article.slug} size="sm" className="flex-shrink-0" />
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-[12.5px] font-semibold text-foreground group-hover:text-emerald-600">{article.title}</p>
+        <p className="mt-0.5 truncate text-[11px] text-muted-fg">
+          {categoryLabels[article.category]} · {article.readMinutes} {t('minReadTime')}
+        </p>
       </div>
-      <h3 className="line-clamp-2 text-[14px] font-bold leading-snug text-foreground transition-colors group-hover:text-emerald-700">
-        {article.title}
-      </h3>
-      <p className="mt-2 line-clamp-2 flex-1 text-xs text-muted-fg">{article.summary}</p>
-      <div className="mt-3">
-        <CommunitySignals article={article} allArticles={wikiArticles} compact />
-      </div>
-      <div className="mt-3 flex items-center gap-3 text-[11px] text-muted-fg">
-        <span>{article.readMinutes} {t('minReadTime')}</span>
-        <span>·</span>
-        <span className="capitalize">{article.difficulty}</span>
-      </div>
+      {right ?? <BookmarkButton slug={article.slug} size="sm" className="flex-shrink-0" />}
     </Link>
   );
 }
 
-function ContinueReadingCard({ article, progress, updatedAt, sectionId }: {
-  article: TerpiraArticle;
-  progress: number;
-  updatedAt: string;
-  sectionId?: string;
-}) {
-  const t = useTranslations('dashboard');
-  const href = sectionId ? `/studies/${article.slug}#${sectionId}` : `/studies/${article.slug}`;
-
-  return (
-    <a
-      href={href}
-      className="group flex min-w-[280px] snap-start flex-col rounded-3xl border border-border bg-card p-5 shadow-sm transition-all duration-150 hover:border-emerald-200 hover:shadow-md sm:min-w-0"
-    >
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-600">{t('continueLabel')}</p>
-          <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-foreground transition-colors group-hover:text-emerald-700">
-            {article.title}
-          </h3>
-        </div>
-        <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700">
-          {progress}%
-        </span>
-      </div>
-      <p className="mt-2 text-xs text-muted-fg">{categoryLabels[article.category]} · {t('lastRead', { time: timeAgo(updatedAt, t) })}</p>
-      <div className="mt-4 h-2 overflow-hidden rounded-full bg-border">
-        <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400" style={{ width: `${progress}%` }} />
-      </div>
-      <div className="mt-4 flex items-center justify-between text-xs text-muted-fg">
-        <span>{sectionId ? t('resumeAt', { section: sectionId.replace('-', ' ') }) : t('readDirectly')}</span>
-        <span className="font-semibold text-emerald-600">{t('openBtn')}</span>
-      </div>
-    </a>
-  );
+/** Caps a list to `max` items and reports how many are hidden; expand shows all. */
+function useExpandableList<T>(items: T[], max: number) {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? items : items.slice(0, max);
+  const hiddenCount = Math.max(0, items.length - max);
+  return { visible, hiddenCount, expanded, toggle: () => setExpanded((v) => !v) };
 }
 
 export default function UserDashboardPage() {
@@ -195,7 +176,6 @@ export default function UserDashboardPage() {
   const { activeGrow } = useGrowState();
   const { hasTodayEntry, entries: growEntries } = useGrowLog(activeGrow?.id ?? null);
 
-  // Compute how many plants need attention
   const alertCount = useMemo(() => {
     if (!activeGrow) return 0;
     const overdueTasks = getOverdueTasks(activeGrow).length;
@@ -223,12 +203,12 @@ export default function UserDashboardPage() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       const raw = localStorage.getItem('secretleaf.last_visit');
       if (raw) setLastVisit(new Date(raw));
       localStorage.setItem('secretleaf.last_visit', new Date().toISOString());
     }, 0);
-    return () => clearTimeout(t);
+    return () => clearTimeout(timer);
   }, []);
 
   const digest = useMemo(() => buildWeeklyDigestPayload(wikiArticles), []);
@@ -305,6 +285,12 @@ export default function UserDashboardPage() {
     return t('goodEvening');
   };
 
+  const savedList = useExpandableList(bookmarkedArticles, 3);
+  const recommendedList = useExpandableList(recommendedArticles, 3);
+  const continueList = useExpandableList(continueReading, 3);
+  const historyList = useExpandableList(historyArticles, 3);
+  const [digestTab, setDigestTab] = useState<'new' | 'important' | 'trending'>('new');
+
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-background">
@@ -321,103 +307,90 @@ export default function UserDashboardPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <section className="relative overflow-hidden border-b border-emerald-100/60 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_38%),linear-gradient(135deg,#0f2e1f_0%,#174b34_46%,#f4f8f5_100%)] text-white">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-[-5%] top-[-10%] h-52 w-52 rounded-full bg-emerald-300/20 blur-3xl" />
-          <div className="absolute right-[-5%] top-12 h-44 w-44 rounded-full bg-teal-200/15 blur-3xl" />
-        </div>
-
-        <div className="relative mx-auto max-w-6xl px-4 pb-8 pt-6 sm:px-5 sm:pb-10">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-2xl">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-emerald-200">{t('growOsEyebrow')}</p>
-              <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+      {/* ── Header ──────────────────────────────────────────────────── */}
+      <div className="border-b border-border bg-card">
+        <div className="mx-auto max-w-6xl px-4 py-5 sm:px-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
                 {greeting()}{session ? `, ${session.user.username}` : ''}
               </h1>
-              <p className="mt-3 text-sm leading-6 text-emerald-50/85 sm:text-base">
-                {t('heroBannerSub')}
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90">
-                  🔥 {readingStreak > 0 ? t('streakBadge', { count: readingStreak }) : t('streakStart')}
+              <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-semibold text-foreground/80">
+                  <Flame className="h-3 w-3 text-amber-500" strokeWidth={2.5} /> {readingStreak > 0 ? t('streakBadge', { count: readingStreak }) : t('streakStart')}
                 </span>
-                <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90">
-                  ⚡ {t('activityBadge', { score: activityScore })}
+                <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-semibold text-foreground/80">
+                  <Zap className="h-3 w-3 text-emerald-500" strokeWidth={2.5} /> {t('activityBadge', { score: activityScore })}
                 </span>
-                <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90">
-                  ✉︎ {t('digestBadge')}
+                <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-semibold text-foreground/80">
+                  <Bookmark className="h-3 w-3 text-sky-500" strokeWidth={2.5} /> {bookmarks.length} {t('metricSaved')}
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-semibold text-foreground/80">
+                  <BookOpen className="h-3 w-3 text-violet-500" strokeWidth={2.5} /> {history.length} {t('metricRead')}
                 </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:min-w-[340px]">
-              <MetricCard icon="🔖" label={t('metricSaved')} value={bookmarks.length} />
-              <MetricCard icon="📖" label={t('metricRead')} value={history.length} />
-              <MetricCard icon="🔥" label={t('metricStreak')} value={readingStreak} tone="accent" />
-              <MetricCard icon="⚡" label={t('metricActivity')} value={activityScore} tone="accent" />
-            </div>
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            {session?.user.role === 'ADMIN' && (
-              <Link
-                href="/dashboard/admin"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-xs font-semibold text-white/90 transition-colors hover:bg-white/15"
+            <div className="flex flex-shrink-0 items-center gap-2">
+              {session?.user.role === 'ADMIN' && (
+                <Link
+                  href="/dashboard/admin"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-semibold text-foreground/80 transition-colors hover:border-emerald-500/30 hover:text-emerald-600"
+                >
+                  <Settings className="h-3.5 w-3.5" strokeWidth={2} /> {t('adminLink')}
+                </Link>
+              )}
+              <button
+                type="button"
+                onClick={() => void (async () => { await logoutFromSupabase(); router.push('/'); })()}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-semibold text-foreground/80 transition-colors hover:border-rose-500/30 hover:text-rose-500"
               >
-                ⚙ {t('adminLink')}
-              </Link>
-            )}
-            <button
-              type="button"
-              onClick={() => void (async () => { await logoutFromSupabase(); router.push('/'); })()}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-xs font-semibold text-white/90 transition-colors hover:bg-white/15"
-            >
-              {t('logoutBtn')}
-            </button>
+                <LogOut className="h-3.5 w-3.5" strokeWidth={2} /> {t('logoutBtn')}
+              </button>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-5 sm:py-8">
+      <div className="mx-auto max-w-6xl px-4 py-5 sm:px-5">
 
-        {/* ═══════════════════ PRIMARY — Grow + Benachrichtigungen nebeneinander ═══════════════════ */}
-        <div className="grid gap-5 lg:grid-cols-[1.3fr_1fr] lg:items-start">
-        <div className="space-y-5">
-        {/* ── Grow Alert Banner ── */}
+        {/* ── Grow alert banner (only when something needs attention) ── */}
         {activeGrow && alertCount > 0 && (
-          <a
-            href={`/grow/${activeGrow.id}`}
-            className="flex items-center gap-3 rounded-2xl border border-rose-300 bg-rose-50 px-4 py-3 transition hover:bg-rose-100 active:scale-[0.99]"
+          <Link
+            href={`/grow/${activeGrow.id}` as Route}
+            className="mb-4 flex items-center gap-3 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 transition hover:bg-rose-500/15"
           >
-            <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-rose-600 text-sm text-white">🚨</span>
+            <AlertTriangle className="h-4 w-4 flex-shrink-0 text-rose-500" strokeWidth={2.25} />
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-bold text-rose-800">
-                {t('alertPlants', { count: alertCount })}
-              </p>
-              <p className="text-[11px] text-rose-500">{t('alertGotoGrow')}</p>
+              <p className="text-sm font-bold text-rose-500">{t('alertPlants', { count: alertCount })}</p>
+              <p className="text-[11px] text-rose-500/70">{t('alertGotoGrow')}</p>
             </div>
-            <svg className="h-4 w-4 flex-shrink-0 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </a>
+            <ArrowRight className="h-4 w-4 flex-shrink-0 text-rose-500/60" strokeWidth={2.5} />
+          </Link>
         )}
-        {activeGrow ? (
-          <section className="rounded-[28px] border border-emerald-200 bg-card p-4 shadow-[0_8px_40px_-8px_rgba(5,150,105,0.18)] ring-1 ring-emerald-100 sm:p-6">
-            <div className="mb-4 flex items-center justify-between gap-3">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-600">{t('activeGrowEyebrow')}</p>
-                <h2 className="mt-1 text-lg font-bold text-foreground">{activeGrow.name}</h2>
-              </div>
-              <Link
-                href={`/grow/${activeGrow.id}` as Route}
-                className="flex-shrink-0 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-700 transition hover:bg-emerald-100"
-              >
-                {t('openBtn')}
-              </Link>
-            </div>
 
-            {/* Grow meta */}
-            <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+        {/* ── Tile grid: everything at a glance, no full-page scroll sections ── */}
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+
+          {/* Grow status — the primary daily-use tile, spans 2 columns */}
+          {activeGrow ? (
+            <section className="flex flex-col rounded-xl border border-emerald-500/25 bg-card p-4 sm:p-5 md:col-span-2">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <TileIcon icon={Sprout} accent="text-emerald-600" />
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-600">{t('activeGrowEyebrow')}</p>
+                    <h2 className="text-sm font-bold text-foreground">{activeGrow.name}</h2>
+                  </div>
+                </div>
+                <Link
+                  href={`/grow/${activeGrow.id}` as Route}
+                  className="flex-shrink-0 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-bold text-emerald-600 transition hover:bg-emerald-500/20"
+                >
+                  {t('openBtn')}
+                </Link>
+              </div>
+
               {(() => {
                 const phase = activeGrow.plan.phases.find((p) => p.id === activeGrow.currentPhaseId)
                   ?? getPhaseForDay(activeGrow.plan, activeGrow.currentDay);
@@ -426,7 +399,7 @@ export default function UserDashboardPage() {
                   ? Math.min(100, Math.round((activeGrow.currentDay / activeGrow.plan.totalDays) * 100))
                   : 0;
                 return (
-                  <>
+                  <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
                     <span className="flex items-center gap-1 text-foreground/80">
                       {phase ? PHASE_ICONS[phase.id] : '🌿'}
                       <span className="font-medium">{phase?.label ?? '—'}</span>
@@ -435,392 +408,255 @@ export default function UserDashboardPage() {
                     <span className="text-muted-fg">{t('growDayProgress', { current: activeGrow.currentDay, total: activeGrow.plan.totalDays })}</span>
                     <span className="text-muted-fg">·</span>
                     <span className="text-muted-fg">{t('growTaskProgress', { done: completed, total, percent })}</span>
-                    <div className="mt-2 w-full">
+                    <div className="mt-1.5 w-full">
                       <div className="h-1.5 overflow-hidden rounded-full bg-border">
                         <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${phaseProgress}%` }} />
                       </div>
                     </div>
-                  </>
+                  </div>
                 );
               })()}
-            </div>
 
-            {/* Overdue warning */}
-            {(() => {
-              const overdue = getOverdueTasks(activeGrow);
-              if (overdue.length === 0) return null;
-              return (
-                <div className="mb-3 flex items-center gap-2 rounded-xl border border-rose-100 bg-rose-50 px-3 py-2">
-                  <span>⚠️</span>
-                  <p className="text-xs font-semibold text-rose-700">
-                    {t('overdueTasks', { count: overdue.length })} — {t('overdueNow')}
-                  </p>
-                </div>
-              );
-            })()}
-
-            {/* Next tasks */}
-            {(() => {
-              const tasks = getUpcomingTasks(activeGrow, 3);
-              if (tasks.length === 0) return (
-                <p className="rounded-xl border border-dashed border-border py-4 text-center text-xs text-muted-fg">{t('allTasksDone')}</p>
-              );
-              return (
-                <div className="space-y-2">
-                  {tasks.map((task) => {
-                    const diff = task.dueDay - activeGrow.currentDay;
-                    const dueLbl = diff === 0
-                      ? t('taskDueToday')
-                      : diff === 1
-                        ? t('taskDueTomorrow')
-                        : diff < 0
-                          ? t('taskOverdue', { days: Math.abs(diff) })
-                          : t('taskInDays', { days: diff });
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div>
+                  {(() => {
+                    const overdue = getOverdueTasks(activeGrow);
+                    const tasks = getUpcomingTasks(activeGrow, 2);
                     return (
-                      <div key={task.id} className="flex items-center gap-3 rounded-xl border border-border bg-background px-4 py-2.5">
-                        <span className="text-base flex-shrink-0">{TASK_CATEGORY_ICONS[task.category]}</span>
-                        <p className="flex-1 text-sm font-medium text-foreground">{task.title}</p>
-                        <span className={`flex-shrink-0 text-[10px] font-semibold ${
-                          diff < 0 ? 'text-rose-600' : diff === 0 ? 'text-emerald-700' : 'text-muted-fg'
-                        }`}>{dueLbl}</span>
+                      <div className="space-y-1.5">
+                        {overdue.length > 0 && (
+                          <div className="flex items-center gap-2 rounded-lg border border-rose-500/25 bg-rose-500/10 px-2.5 py-1.5">
+                            <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0 text-rose-500" strokeWidth={2.25} />
+                            <p className="text-[11px] font-semibold text-rose-500">{t('overdueTasks', { count: overdue.length })}</p>
+                          </div>
+                        )}
+                        {tasks.length === 0 ? (
+                          <p className="rounded-lg border border-dashed border-border py-3 text-center text-[11px] text-muted-fg">{t('allTasksDone')}</p>
+                        ) : (
+                          tasks.map((task) => {
+                            const diff = task.dueDay - activeGrow.currentDay;
+                            const dueLbl = diff === 0 ? t('taskDueToday') : diff === 1 ? t('taskDueTomorrow') : diff < 0 ? t('taskOverdue', { days: Math.abs(diff) }) : t('taskInDays', { days: diff });
+                            return (
+                              <div key={task.id} className="flex items-center gap-2 rounded-lg border border-border bg-background px-2.5 py-1.5">
+                                <span className="flex-shrink-0 text-sm">{TASK_CATEGORY_ICONS[task.category]}</span>
+                                <p className="flex-1 truncate text-[12px] font-medium text-foreground">{task.title}</p>
+                                <span className={`flex-shrink-0 text-[10px] font-semibold ${diff < 0 ? 'text-rose-500' : diff === 0 ? 'text-emerald-600' : 'text-muted-fg'}`}>{dueLbl}</span>
+                              </div>
+                            );
+                          })
+                        )}
                       </div>
                     );
-                  })}
+                  })()}
                 </div>
-              );
-            })()}
 
-            {/* Daily Status */}
-            <div className={`flex items-center gap-2.5 rounded-2xl border px-4 py-2.5 ${
-              hasTodayEntry
-                ? 'border-emerald-200 bg-emerald-50'
-                : 'border-amber-200 bg-amber-50'
-            }`}>
-              <span className="text-base">{hasTodayEntry ? '✅' : '⏰'}</span>
-              <p className={`text-sm font-semibold ${
-                hasTodayEntry ? 'text-emerald-800' : 'text-amber-800'
-              }`}>
-                {hasTodayEntry ? t('dailyDone') : t('dailyMissing')}
-              </p>
-              {!hasTodayEntry && (
-                <span className="ml-auto text-[11px] font-bold text-amber-600">{t('dailyLogNow')}</span>
-              )}
-            </div>
-
-            {/* Primary CTA */}
-            <div className="mt-5">
-              <Link
-                href={`/grow/${activeGrow.id}` as Route}
-                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3.5 text-sm font-bold text-white shadow-md shadow-emerald-900/20 transition hover:bg-emerald-700 active:scale-[0.98]"
-              >
-                <span className="text-base">📓</span>
-                {t('todayLogCTA')}
-                <svg className="ml-auto h-4 w-4 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
-
-            {/* Secondary actions */}
-            <div className="mt-2 flex gap-2">
-              <Link
-                href={'/tools' as Route}
-                className="flex-1 rounded-xl border border-border bg-card px-3 py-2 text-center text-xs font-semibold text-muted-fg transition hover:border-cyan-200 hover:text-cyan-700"
-              >
-                {t('toolsLink')}
-              </Link>
-              <Link
-                href={'/diagnose' as Route}
-                className="flex-1 rounded-xl border border-border bg-card px-3 py-2 text-center text-xs font-semibold text-muted-fg transition hover:border-violet-200 hover:text-violet-700"
-              >
-                {t('diagnoseLink')}
-              </Link>
-            </div>
-          </section>
-        ) : (
-          <section className="rounded-[28px] border border-dashed border-emerald-200 bg-emerald-50/40 dark:bg-emerald-950/20 p-5 text-center">
-            <span className="text-3xl">🌱</span>
-            <h2 className="mt-2 text-base font-bold text-foreground">{t('noActiveGrowTitle')}</h2>
-            <p className="mt-1 text-sm text-muted-fg">{t('noActiveGrowSub')}</p>
-            <Link
-              href={'/start' as Route}
-              className="mt-3 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-emerald-700"
-            >
-              🌱 {t('startGrowCTA')}
-            </Link>
-          </section>
-        )}
-        </div>{/* /grow column */}
-
-        <section className="rounded-[28px] border border-border bg-card/85 p-4 shadow-[0_20px_60px_-40px_rgba(15,23,42,0.35)] backdrop-blur sm:p-6">
-          <SectionHeader
-            title={t('smartNotificationsTitle')}
-            subtitle={t('smartNotificationsSub')}
-            badge={newSinceLastVisit.length + interestMatches.length}
-          />
-          <div className="grid gap-4">
-            <div className="rounded-3xl border border-emerald-100 dark:border-emerald-900/40 bg-[linear-gradient(180deg,rgba(236,253,245,0.9),rgba(255,255,255,0.95))] dark:bg-[linear-gradient(180deg,rgba(6,78,59,0.35),rgba(15,17,23,0.6))] p-4">
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">{t('newSinceLastVisit')}</p>
-                  <p className="mt-1 text-sm text-foreground/80">{t('newSinceLastVisitSub')}</p>
-                </div>
-                <span className="rounded-full bg-emerald-600 px-2.5 py-1 text-[11px] font-bold text-white">{newSinceLastVisit.length}</span>
-              </div>
-              {newSinceLastVisit.length === 0 ? (
-                <EmptyState icon="🛰" text={t('noNewUpdates')} />
-              ) : (
-                <div className="space-y-3">
-                  {newSinceLastVisit.map((article) => (
-                    <ArticleCard key={article.slug} article={article} variant="compact" />
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="rounded-3xl border border-sky-100 dark:border-sky-900/40 bg-[linear-gradient(180deg,rgba(240,249,255,0.9),rgba(255,255,255,0.95))] dark:bg-[linear-gradient(180deg,rgba(12,74,110,0.35),rgba(15,17,23,0.6))] p-4">
-              <div className="mb-3 flex items-center justify-between gap-3">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-600">{t('fitsYourInterests')}</p>
-                  <p className="mt-1 text-sm text-foreground/80">{t('fitsYourInterestsSub')}</p>
-                </div>
-                <span className="rounded-full bg-sky-600 px-2.5 py-1 text-[11px] font-bold text-white">{interestMatches.length}</span>
-              </div>
-              {interestMatches.length === 0 ? (
-                <EmptyState
-                  icon="🎯"
-                  text={interests.length === 0 ? t('noInterestsYet') : t('noInterestMatch')}
-                  action={interests.length === 0 ? (
-                    <Link href="/dashboard/onboarding" className="rounded-xl bg-sky-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-sky-500">
-                      {t('chooseInterests')}
-                    </Link>
-                  ) : undefined}
-                />
-              ) : (
-                <div className="space-y-3">
-                  {interestMatches.map((article) => (
-                    <ArticleCard key={article.slug} article={article} variant="compact" />
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-        </div>{/* /primary grid */}
-
-        {/* ═══════════════════ SECONDARY — Wissensbasis ═══════════════════ */}
-        <div className="mt-12 space-y-8 border-t border-border pt-10">
-          <div className="flex items-center gap-3">
-            <p className="flex-shrink-0 text-[11px] font-bold uppercase tracking-widest text-muted-fg">📚 {t('knowledgeBaseEyebrow')}</p>
-            <div className="h-px flex-1 bg-border" />
-          </div>
-
-        <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
-          <SectionHeader
-            title={t('weeklyDigestTitle')}
-            subtitle={t('weeklyDigestSub')}
-            badge={digest.generatedAt.slice(0, 10)}
-          />
-
-          <div className="-mx-1 flex snap-x gap-4 overflow-x-auto px-1 pb-2 lg:grid lg:grid-cols-[1.15fr_1.15fr_0.9fr] lg:overflow-visible">
-            <div className="min-w-[290px] snap-start rounded-3xl border border-emerald-100 dark:border-emerald-900/40 bg-[linear-gradient(180deg,rgba(236,253,245,0.95),rgba(255,255,255,1))] dark:bg-[linear-gradient(180deg,rgba(6,78,59,0.35),rgba(15,17,23,0.6))] p-4 lg:min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">{t('newGrowStudies')}</p>
-              <div className="mt-3 space-y-3">
-                {digest.newGrowStudies.map((article) => (
-                  <ArticleCard key={article.slug} article={article} variant="compact" />
-                ))}
-              </div>
-            </div>
-
-            <div className="min-w-[290px] snap-start rounded-3xl border border-amber-100 dark:border-amber-900/40 bg-[linear-gradient(180deg,rgba(255,251,235,0.95),rgba(255,255,255,1))] dark:bg-[linear-gradient(180deg,rgba(69,26,3,0.35),rgba(15,17,23,0.6))] p-4 lg:min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600">{t('importantThisWeek')}</p>
-              <div className="mt-3 space-y-3">
-                {digest.importantThisWeek.map((article) => (
-                  <ArticleCard key={article.slug} article={article} variant="compact" />
-                ))}
-              </div>
-            </div>
-
-            <div className="min-w-[290px] snap-start rounded-3xl border border-rose-100 dark:border-rose-900/40 bg-[linear-gradient(180deg,rgba(255,241,242,0.95),rgba(255,255,255,1))] dark:bg-[linear-gradient(180deg,rgba(76,5,25,0.35),rgba(15,17,23,0.6))] p-4 lg:min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-600">{t('trendingTopics')}</p>
-              <div className="mt-3 space-y-3">
-                {digest.trendingTopics.map((topic) => (
+                <div className="flex flex-col gap-2">
+                  <div className={`flex items-center gap-2 rounded-lg border px-3 py-2 ${hasTodayEntry ? 'border-emerald-500/25 bg-emerald-500/10' : 'border-amber-500/25 bg-amber-500/10'}`}>
+                    {hasTodayEntry ? <CheckCircle2 className="h-3.5 w-3.5 flex-shrink-0 text-emerald-500" strokeWidth={2.25} /> : <Clock className="h-3.5 w-3.5 flex-shrink-0 text-amber-500" strokeWidth={2.25} />}
+                    <p className={`text-[11px] font-semibold ${hasTodayEntry ? 'text-emerald-600' : 'text-amber-600'}`}>
+                      {hasTodayEntry ? t('dailyDone') : t('dailyMissing')}
+                    </p>
+                  </div>
                   <Link
-                    key={topic.label}
-                    href={`/studies/${topic.sampleArticle.slug}`}
-                    className="block rounded-2xl border border-border bg-card/80 p-4 shadow-sm transition-all duration-150 hover:border-rose-200 hover:bg-rose-50/40"
+                    href={`/grow/${activeGrow.id}` as Route}
+                    className="flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-emerald-500 active:scale-[0.98]"
                   >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="text-sm font-bold text-foreground">{topic.label}</p>
-                        <p className="mt-1 text-xs text-muted-fg">{t('relevantArticles', { count: topic.articleCount })}</p>
-                      </div>
-                      <span className="rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-700">
-                        +{topic.momentum}
-                      </span>
-                    </div>
-                    <p className="mt-3 line-clamp-2 text-xs text-foreground/80">{t('trendingStartpoint', { title: topic.sampleArticle.title })}</p>
+                    <NotebookPen className="h-3.5 w-3.5" strokeWidth={2.25} />
+                    {t('todayLogCTA')}
                   </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
-          <SectionHeader
-            title={t('continueReadingTitle')}
-            subtitle={t('continueReadingSub')}
-            badge={continueReading.length}
-          />
-          {continueReading.length === 0 ? (
-            <EmptyState
-              icon="📍"
-              text={t('noProgressYet')}
-              action={
-                <Link href="/studies" className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-emerald-500">
-                  {t('discoverStudies')}
-                </Link>
-              }
-            />
-          ) : (
-            <div className="-mx-1 flex snap-x gap-4 overflow-x-auto px-1 pb-2 lg:grid lg:grid-cols-2 lg:overflow-visible">
-              {continueReading.map(({ article, entry }) => (
-                <ContinueReadingCard
-                  key={article.slug}
-                  article={article}
-                  progress={entry.progress}
-                  updatedAt={entry.updatedAt}
-                  {...(entry.lastSectionId ? { sectionId: entry.lastSectionId } : {})}
-                />
-              ))}
-            </div>
-          )}
-        </section>
-
-        <div className="grid gap-8 xl:grid-cols-[1.3fr_0.9fr]">
-          <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
-            <SectionHeader title={t('savedStudiesTitle')} subtitle={t('savedStudiesSub')} badge={bookmarkedArticles.length} />
-            {bookmarkedArticles.length === 0 ? (
-              <EmptyState
-                icon="🔖"
-                text={t('noBookmarksYet')}
-                action={
-                  <Link href="/studies" className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-emerald-500">
-                    {t('discoverStudies')}
-                  </Link>
-                }
-              />
-            ) : (
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {bookmarkedArticles.map((article) => (
-                  <ArticleCard key={article.slug} article={article} />
-                ))}
-              </div>
-            )}
-          </section>
-
-          <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
-            <SectionHeader title={t('streakActivityTitle')} subtitle={t('streakActivitySub')} />
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-              <div className="rounded-3xl border border-amber-100 bg-amber-50/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">{t('readingStreakLabel')}</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">{readingStreak}</p>
-                <p className="mt-1 text-sm text-foreground/80">{readingStreak === 1 ? t('dayInRow') : t('daysInRow')}</p>
-              </div>
-              <div className="rounded-3xl border border-emerald-100 bg-emerald-50/70 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">{t('activityScoreLabel')}</p>
-                <p className="mt-2 text-3xl font-bold text-foreground">{activityScore}</p>
-                <div className="mt-3 h-2 overflow-hidden rounded-full bg-card/80">
-                  <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400" style={{ width: `${activityScore}%` }} />
+                  <div className="flex gap-2">
+                    <Link href={'/tools' as Route} className="flex flex-1 items-center justify-center gap-1 rounded-lg border border-border bg-background px-2 py-1.5 text-[11px] font-semibold text-muted-fg transition hover:border-cyan-500/30 hover:text-cyan-500">
+                      <Wrench className="h-3 w-3" strokeWidth={2} /> {t('tools')}
+                    </Link>
+                    <Link href={'/diagnose' as Route} className="flex flex-1 items-center justify-center gap-1 rounded-lg border border-border bg-background px-2 py-1.5 text-[11px] font-semibold text-muted-fg transition hover:border-violet-500/30 hover:text-violet-500">
+                      <Stethoscope className="h-3 w-3" strokeWidth={2} /> {t('diagnoseLink')}
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            </section>
+          ) : (
+            <section className="flex flex-col items-center justify-center rounded-xl border border-dashed border-emerald-500/30 bg-card p-5 text-center md:col-span-2">
+              <Sprout className="h-6 w-6 text-emerald-600" strokeWidth={1.75} />
+              <h2 className="mt-2 text-sm font-bold text-foreground">{t('noActiveGrowTitle')}</h2>
+              <p className="mt-1 text-xs text-muted-fg">{t('noActiveGrowSub')}</p>
+              <Link href={'/start' as Route} className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-500">
+                <Sprout className="h-3.5 w-3.5" strokeWidth={2} /> {t('startGrowCTA')}
+              </Link>
+            </section>
+          )}
 
-            <div className="mt-5 rounded-3xl border border-border bg-background/80 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-fg">{t('recentlyViewed')}</p>
+          {/* Reading stats — streak, activity, recently viewed */}
+          <Tile icon={TrendingUp} accent="text-amber-500" title={t('streakActivityTitle')} subtitle={t('streakActivitySub')}>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-3">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-amber-600">{t('readingStreakLabel')}</p>
+                <p className="mt-1 text-xl font-bold text-foreground">{readingStreak}</p>
+              </div>
+              <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-emerald-600">{t('activityScoreLabel')}</p>
+                <p className="mt-1 text-xl font-bold text-foreground">{activityScore}</p>
+              </div>
+            </div>
+            <div className="mt-3">
+              <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-fg">{t('recentlyViewed')}</p>
               {historyArticles.length === 0 ? (
-                <p className="mt-3 text-sm text-muted-fg">{t('noReadHistory')}</p>
+                <p className="text-xs text-muted-fg">{t('noReadHistory')}</p>
               ) : (
-                <div className="mt-3 space-y-2">
-                  {historyArticles.map((article) => {
+                <div className="-mt-1">
+                  {historyList.visible.map((article) => {
                     const entry = history.find((item) => item.slug === article.slug);
-                    return (
-                      <Link
-                        key={article.slug}
-                        href={`/studies/${article.slug}`}
-                        className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-sm transition-colors hover:border-emerald-200 hover:bg-emerald-50/40"
-                      >
-                        <div className="min-w-0 flex-1">
-                          <p className="line-clamp-1 font-semibold text-foreground">{article.title}</p>
-                          <p className="mt-0.5 text-xs text-muted-fg">{categoryLabels[article.category]} · {entry ? timeAgo(entry.readAt, t) : ''}</p>
-                        </div>
-                        <span className="text-xs font-semibold text-emerald-600">{t('openLink')}</span>
-                      </Link>
-                    );
+                    return <ArticleRow key={article.slug} article={article} right={<span className="flex-shrink-0 text-[10px] text-muted-fg">{entry ? timeAgo(entry.readAt, t) : ''}</span>} />;
                   })}
+                  <ShowMoreButton expanded={historyList.expanded} hiddenCount={historyList.hiddenCount} onToggle={historyList.toggle} t={t} />
                 </div>
               )}
               {history.length > 0 && (
-                <div className="mt-4 flex justify-end">
+                <div className="mt-2 flex justify-end">
                   {confirmClearHistoryVisible ? (
-                    <div className="flex items-center gap-2 text-xs">
+                    <div className="flex items-center gap-2 text-[11px]">
                       <span className="text-muted-fg">{t('confirmClearHistory')}</span>
-                      <button
-                        type="button"
-                        onClick={() => { clearHistory(); setConfirmClearHistoryVisible(false); }}
-                        className="font-bold text-red-600 transition-colors hover:text-red-700"
-                      >
-                        {t('confirmYes')}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setConfirmClearHistoryVisible(false)}
-                        className="text-muted-fg transition-colors hover:text-foreground/80"
-                      >
-                        {t('confirmCancel')}
-                      </button>
+                      <button type="button" onClick={() => { clearHistory(); setConfirmClearHistoryVisible(false); }} className="font-bold text-rose-500 hover:text-rose-400">{t('confirmYes')}</button>
+                      <button type="button" onClick={() => setConfirmClearHistoryVisible(false)} className="text-muted-fg hover:text-foreground/80">{t('confirmCancel')}</button>
                     </div>
                   ) : (
-                    <button
-                      type="button"
-                      onClick={() => setConfirmClearHistoryVisible(true)}
-                      className="text-xs text-muted-fg transition-colors hover:text-red-500"
-                    >
-                      {t('clearHistory')}
-                    </button>
+                    <button type="button" onClick={() => setConfirmClearHistoryVisible(true)} className="text-[11px] text-muted-fg hover:text-rose-500">{t('clearHistory')}</button>
                   )}
                 </div>
               )}
             </div>
-          </section>
-        </div>
+          </Tile>
 
-        <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
-          <SectionHeader title={t('recommendedTitle')} subtitle={t('recommendedSub')} badge={recommendedArticles.length} />
-          {recommendedArticles.length === 0 && interests.length === 0 ? (
-            <EmptyState
-              icon="✨"
-              text={t('noRecommendedYet')}
-              action={
-                <Link href="/dashboard/onboarding" className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-emerald-500">
-                  {t('chooseInterests')}
-                </Link>
-              }
-            />
-          ) : (
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {recommendedArticles.map((article) => (
-                <ArticleCard key={article.slug} article={article} />
+          {/* Notifications — new since last visit + interest matches */}
+          <Tile icon={Bell} accent="text-sky-500" title={t('smartNotificationsTitle')} subtitle={t('smartNotificationsSub')} badge={newSinceLastVisit.length + interestMatches.length}>
+            <div className="space-y-3">
+              <div>
+                <div className="mb-1 flex items-center justify-between">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-emerald-600">{t('newSinceLastVisit')}</p>
+                  <span className="text-[10px] font-bold text-muted-fg">{newSinceLastVisit.length}</span>
+                </div>
+                {newSinceLastVisit.length === 0 ? (
+                  <p className="text-xs text-muted-fg">{t('noNewUpdates')}</p>
+                ) : (
+                  newSinceLastVisit.slice(0, 2).map((article) => <ArticleRow key={article.slug} article={article} />)
+                )}
+              </div>
+              <div className="border-t border-border pt-3">
+                <div className="mb-1 flex items-center justify-between">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-sky-600">{t('fitsYourInterests')}</p>
+                  <span className="text-[10px] font-bold text-muted-fg">{interestMatches.length}</span>
+                </div>
+                {interestMatches.length === 0 ? (
+                  <TileEmpty
+                    icon={Target}
+                    text={interests.length === 0 ? t('noInterestsYet') : t('noInterestMatch')}
+                    action={interests.length === 0 ? (
+                      <Link href="/dashboard/onboarding" className="rounded-lg bg-sky-600 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-sky-500">{t('chooseInterests')}</Link>
+                    ) : undefined}
+                  />
+                ) : (
+                  interestMatches.slice(0, 2).map((article) => <ArticleRow key={article.slug} article={article} />)
+                )}
+              </div>
+            </div>
+          </Tile>
+
+          {/* Continue reading */}
+          <Tile icon={History} accent="text-violet-500" title={t('continueReadingTitle')} subtitle={t('continueReadingSub')} badge={continueReading.length}>
+            {continueReading.length === 0 ? (
+              <TileEmpty
+                icon={History}
+                text={t('noProgressYet')}
+                action={<Link href="/studies" className="rounded-lg bg-emerald-600 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-emerald-500">{t('discoverStudies')}</Link>}
+              />
+            ) : (
+              <div>
+                {continueList.visible.map(({ article, entry }) => (
+                  <ArticleRow
+                    key={article.slug}
+                    article={article}
+                    right={<span className="flex-shrink-0 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-600">{entry.progress}%</span>}
+                  />
+                ))}
+                <ShowMoreButton expanded={continueList.expanded} hiddenCount={continueList.hiddenCount} onToggle={continueList.toggle} t={t} />
+              </div>
+            )}
+          </Tile>
+
+          {/* Saved studies */}
+          <Tile icon={Bookmark} accent="text-sky-500" title={t('savedStudiesTitle')} subtitle={t('savedStudiesSub')} badge={bookmarkedArticles.length}>
+            {bookmarkedArticles.length === 0 ? (
+              <TileEmpty
+                icon={Bookmark}
+                text={t('noBookmarksYet')}
+                action={<Link href="/studies" className="rounded-lg bg-emerald-600 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-emerald-500">{t('discoverStudies')}</Link>}
+              />
+            ) : (
+              <div>
+                {savedList.visible.map((article) => <ArticleRow key={article.slug} article={article} />)}
+                <ShowMoreButton expanded={savedList.expanded} hiddenCount={savedList.hiddenCount} onToggle={savedList.toggle} t={t} />
+              </div>
+            )}
+          </Tile>
+
+          {/* Recommended */}
+          <Tile icon={Sparkles} accent="text-fuchsia-500" title={t('recommendedTitle')} subtitle={t('recommendedSub')} badge={recommendedArticles.length}>
+            {recommendedArticles.length === 0 && interests.length === 0 ? (
+              <TileEmpty
+                icon={Sparkles}
+                text={t('noRecommendedYet')}
+                action={<Link href="/dashboard/onboarding" className="rounded-lg bg-emerald-600 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-emerald-500">{t('chooseInterests')}</Link>}
+              />
+            ) : (
+              <div>
+                {recommendedList.visible.map((article) => <ArticleRow key={article.slug} article={article} />)}
+                <ShowMoreButton expanded={recommendedList.expanded} hiddenCount={recommendedList.hiddenCount} onToggle={recommendedList.toggle} t={t} />
+              </div>
+            )}
+          </Tile>
+
+          {/* Weekly digest — tabbed instead of 3 stacked columns */}
+          <Tile icon={Mail} accent="text-rose-500" title={t('weeklyDigestTitle')} subtitle={t('weeklyDigestSub')}>
+            <div className="mb-2 flex gap-1 rounded-lg border border-border bg-background p-0.5">
+              {([
+                ['new', t('newGrowStudies')],
+                ['important', t('importantThisWeek')],
+                ['trending', t('trendingTopics')],
+              ] as const).map(([key, label]) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setDigestTab(key)}
+                  className={`flex-1 rounded-md px-2 py-1 text-[10.5px] font-semibold transition-colors ${digestTab === key ? 'bg-card text-emerald-600 shadow-sm' : 'text-muted-fg hover:text-foreground/80'}`}
+                >
+                  {label}
+                </button>
               ))}
             </div>
-          )}
-        </section>
+            {digestTab === 'new' && (
+              <div>{digest.newGrowStudies.slice(0, 3).map((article) => <ArticleRow key={article.slug} article={article} />)}</div>
+            )}
+            {digestTab === 'important' && (
+              <div>{digest.importantThisWeek.slice(0, 3).map((article) => <ArticleRow key={article.slug} article={article} />)}</div>
+            )}
+            {digestTab === 'trending' && (
+              <div className="space-y-2">
+                {digest.trendingTopics.slice(0, 3).map((topic) => (
+                  <Link key={topic.label} href={`/studies/${topic.sampleArticle.slug}` as Route} className="block rounded-lg border border-border bg-background px-3 py-2 transition hover:border-rose-500/30">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-[12px] font-bold text-foreground">{topic.label}</p>
+                      <span className="flex-shrink-0 rounded-full border border-rose-500/30 bg-rose-500/10 px-1.5 py-0.5 text-[9px] font-bold text-rose-500">+{topic.momentum}</span>
+                    </div>
+                    <p className="mt-0.5 text-[10.5px] text-muted-fg">{t('relevantArticles', { count: topic.articleCount })}</p>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </Tile>
 
-        <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
-            <SectionHeader title={t('myInterestsTitle')} subtitle={t('myInterestsSub')} />
-            <div className="flex flex-wrap gap-2">
+          {/* Interests + quick access, combined into one small tile */}
+          <Tile icon={Target} accent="text-teal-500" title={t('myInterestsTitle')} subtitle={t('myInterestsSub')}>
+            <div className="flex flex-wrap gap-1.5">
               {INTEREST_ORDER.map((interest) => {
                 const meta = INTEREST_META[interest];
                 const active = isActive(interest);
@@ -829,10 +665,7 @@ export default function UserDashboardPage() {
                     key={interest}
                     type="button"
                     onClick={() => toggleInterest(interest)}
-                    className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-[13px] font-semibold transition-all duration-150 ${active
-                      ? 'border-emerald-300 bg-emerald-600 text-white shadow-sm'
-                      : 'border-border bg-background text-foreground/80 hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700'
-                    }`}
+                    className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold transition-colors ${active ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-600' : 'border-border bg-background text-foreground/70 hover:border-emerald-500/30 hover:text-emerald-600'}`}
                   >
                     <span>{meta.icon}</span>
                     <span>{meta.label}</span>
@@ -841,34 +674,28 @@ export default function UserDashboardPage() {
               })}
             </div>
             {interestsLoaded && interests.length > 0 && (
-              <p className="mt-3 text-[11px] text-emerald-600">
-                ✓ {t('personalizationActive', { count: interests.length })}
-              </p>
+              <p className="mt-2 text-[10.5px] text-emerald-600">✓ {t('personalizationActive', { count: interests.length })}</p>
             )}
-          </section>
 
-          <section className="rounded-[28px] border border-border bg-card/90 p-4 shadow-sm sm:p-6">
-            <SectionHeader title={t('quickAccessTitle')} subtitle={t('quickAccessSub')} />
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { href: '/studies' as Route, icon: '📚', label: t('allStudies') },
-                { href: '/database' as Route, icon: '🗄', label: t('database') },
-                { href: '/tools' as Route, icon: '🛠', label: t('tools') },
-                { href: '/status' as Route, icon: '🟢', label: t('status') },
-              ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="group flex flex-col items-center gap-2 rounded-3xl border border-border bg-background/70 px-4 py-5 text-center transition-all duration-150 hover:border-emerald-200 hover:bg-emerald-50/40"
-                >
-                  <span className="text-2xl">{item.icon}</span>
-                  <span className="text-[13px] font-semibold text-foreground/80 transition-colors group-hover:text-emerald-700">{item.label}</span>
-                </Link>
-              ))}
+            <div className="mt-3 border-t border-border pt-3">
+              <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-fg">{t('quickAccessTitle')}</p>
+              <div className="grid grid-cols-4 gap-1.5">
+                {[
+                  { href: '/studies' as Route, icon: Library, label: t('allStudies') },
+                  { href: '/database' as Route, icon: Database, label: t('database') },
+                  { href: '/tools' as Route, icon: Wrench, label: t('tools') },
+                  { href: '/status' as Route, icon: Activity, label: t('status') },
+                ].map((item) => (
+                  <Link key={item.href} href={item.href} className="group flex flex-col items-center gap-1 rounded-lg border border-border bg-background px-1 py-2.5 text-center transition-colors hover:border-emerald-500/30">
+                    <item.icon className="h-4 w-4 text-muted-fg transition-colors group-hover:text-emerald-600" strokeWidth={1.75} />
+                    <span className="text-[9.5px] font-semibold leading-tight text-foreground/70 group-hover:text-emerald-600">{item.label}</span>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </section>
+          </Tile>
+
         </div>
-        </div>{/* /secondary */}
       </div>
     </main>
   );

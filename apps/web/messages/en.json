@@ -213,8 +213,10 @@
     "timeWeeksAgo": "{count} weeks ago",
   "confirmCancel": "Cancel",
   "toolsLink": "🧪 Tools",
-  "diagnoseLink": "🩺 Diagnose",
-  "tools": "Tools"
+  "diagnoseLink": "Diagnose",
+  "tools": "Tools",
+  "showMore": "Show more",
+  "showLess": "Show less"
   },
   "start": {
     "pageTitle": "Start a new grow",
