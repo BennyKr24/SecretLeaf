@@ -83,6 +83,47 @@ export async function createRecommendation(
   if (error) throw error;
 }
 
+// ── createPhaseInsightRecommendation ─────────────────────────────────────────
+
+export type CreatePhaseInsightRecommendationInput = {
+  growId: string;
+  steps: string[];
+  /** 2 = high, 1 = medium, 0 = low — matches GrowInsight['priority'] ordering. */
+  priority: number;
+};
+
+/**
+ * Inserts a recommendation row (source='phase_insight') for a SmartInsights
+ * card the user just acted on. Unlike the diagnosis path, phase-insight
+ * recommendations don't sit around 'pending' — SmartInsights already has its
+ * own always-visible action/dismiss UI, so this is called at the moment the
+ * user applies or dismisses the card, immediately followed by a
+ * recordRecommendationEvent call. This only exists to make phase-insight
+ * follow-through queryable for the outcome chain (it was previously
+ * client-side/in-memory only), not to add a second pending-approval UI.
+ */
+export async function createPhaseInsightRecommendation(
+  supabase: SupabaseClient,
+  userId: string,
+  input: CreatePhaseInsightRecommendationInput,
+): Promise<string> {
+  const { data, error } = await supabase
+    .from("recommendations")
+    .insert({
+      grow_id: input.growId,
+      user_id: userId,
+      source: "phase_insight",
+      steps: input.steps,
+      tool_links: [],
+      priority: input.priority,
+    })
+    .select("id")
+    .single<{ id: string }>();
+
+  if (error) throw error;
+  return data.id;
+}
+
 // ── getPendingRecommendations ────────────────────────────────────────────────
 
 export type PendingRecommendation = {

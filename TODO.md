@@ -16,12 +16,8 @@ Datei soll immer nur den aktuellen Stand zeigen, kein Changelog werden.
 
 Das Schema (`diagnoses`, `recommendations`, `recommendation_events`,
 `plant_health_snapshots`, `diagnosis_outcomes`) ist live und für den
-Regelbaum-Diagnosepfad verdrahtet. Zwei Teile der Kette fehlen noch:
+Regelbaum-Diagnosepfad verdrahtet. Ein Teil der Kette fehlt noch:
 
-- [ ] **`lib/grow/insights.ts`-Phasen-Empfehlungen werden nicht persistiert.**
-      Nur clientseitig/im Speicher aus `wikiArticles` berechnet.
-      `source='phase_insight'` existiert im Check-Constraint des Schemas,
-      aber nichts schreibt diese Zeile jemals.
 - [ ] **`plant_health_snapshots` / `diagnosis_outcomes`-Cronjob existiert noch
       nicht.** In Migrations-Kommentaren als zukünftiger Job referenziert
       (`trigger_source in ('daily_cron','on_log_entry')`), nach demselben

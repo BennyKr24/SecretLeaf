@@ -15,6 +15,40 @@ import type { Grow } from '@/lib/grow/types';
 import { getRecommendationsForGrow } from '@/lib/grow/insights';
 import type { GrowInsight, InsightPriority } from '@/lib/grow/insights';
 import { useAssistantPreference } from '@/hooks/useAssistantPreference';
+import { useAuth } from '@/hooks/useAuth';
+import { getSupabaseBrowserClient } from '@/lib/supabaseBrowser';
+import { createPhaseInsightRecommendation, recordRecommendationEvent } from '@/lib/diagnose/db';
+
+// 2 = high, 1 = medium, 0 = low — matches recommendations.priority (smallint).
+const PRIORITY_RANK: Record<InsightPriority, number> = { high: 2, medium: 1, low: 0 };
+
+/**
+ * Persists that the user acted on a phase-insight card, so it becomes
+ * queryable for the outcome chain (previously this was purely client-side).
+ * Fire-and-forget — this is supplementary telemetry, not core UX, so a
+ * failure here shouldn't block or roll back the (already-instant) local
+ * completion loop.
+ */
+function persistPhaseInsightEvent(
+  userId: string,
+  growId: string,
+  insight: GrowInsight,
+  eventType: 'applied' | 'dismissed',
+): void {
+  void (async () => {
+    try {
+      const supabase = getSupabaseBrowserClient();
+      const recommendationId = await createPhaseInsightRecommendation(supabase, userId, {
+        growId,
+        steps: [insight.reason],
+        priority: PRIORITY_RANK[insight.priority],
+      });
+      await recordRecommendationEvent(supabase, userId, recommendationId, eventType);
+    } catch (err) {
+      console.error('[smart-insights] failed to persist phase-insight event:', err);
+    }
+  })();
+}
 
 // ── Priority config ───────────────────────────────────────────────────────────
 
@@ -42,10 +76,12 @@ const ACTION_LABEL: Record<string, string> = {
 function InsightCard({
   insight,
   growId,
+  userId,
   onDone,
 }: {
   insight: GrowInsight;
   growId: string;
+  userId: string | undefined;
   onDone: (slug: string) => void;
 }) {
   const [showFeedback, setShowFeedback] = useState(false);
@@ -54,8 +90,14 @@ function InsightCard({
 
   const handleAction = useCallback(() => {
     setShowFeedback(true);
+    if (userId) persistPhaseInsightEvent(userId, growId, insight, 'applied');
     setTimeout(() => onDone(article.slug), 1600);
-  }, [article.slug, onDone]);
+  }, [article.slug, growId, insight, onDone, userId]);
+
+  const handleDismiss = useCallback(() => {
+    if (userId) persistPhaseInsightEvent(userId, growId, insight, 'dismissed');
+    onDone(article.slug);
+  }, [article.slug, growId, insight, onDone, userId]);
 
   // Build action href
   const actionHref: string = action.type === "log"
@@ -142,7 +184,7 @@ function InsightCard({
           </Link>
           <button
             type="button"
-            onClick={() => onDone(article.slug)}
+            onClick={handleDismiss}
             className="ml-auto text-[11px] text-muted-fg hover:text-foreground"
             aria-label="Insight verwerfen"
           >
@@ -169,6 +211,7 @@ type Props = {
 
 export default function SmartInsights({ grow }: Props) {
   const { enabled, setEnabled } = useAssistantPreference();
+  const { user } = useAuth();
 
   // Resolved pool — sorted by priority+score
   const pool = useMemo(() => getRecommendationsForGrow(grow, 6), [grow]);
@@ -225,6 +268,7 @@ export default function SmartInsights({ grow }: Props) {
             key={insight.article.slug}
             insight={insight}
             growId={grow.id}
+            userId={user?.id}
             onDone={handleDone}
           />
         ))}
