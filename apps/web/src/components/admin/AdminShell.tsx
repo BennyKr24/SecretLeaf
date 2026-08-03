@@ -12,6 +12,12 @@ const NAV_GROUPS = [
     ],
   },
   {
+    label: "Assistent",
+    items: [
+      { href: "/dashboard/admin/assistant", label: "KI-Assistent", icon: "🤖" },
+    ],
+  },
+  {
     label: "Inhalte",
     items: [
       { href: "/dashboard/admin/users", label: "Benutzer", icon: "👥" },
