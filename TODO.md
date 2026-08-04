@@ -33,6 +33,17 @@ Datei soll immer nur den aktuellen Stand zeigen, kein Changelog werden.
       derselbe Symptombereich wie der Punkt oben. Nicht tief untersucht, da
       außerhalb des Scopes der Grow-Seiten-Neugestaltung; noch nicht
       reproduziert mit einem sauberen Test-Account.
+- [ ] **React-Warnung beim Grow-Erstellen:** "Cannot update a component
+      (`NavigationBar`) while rendering a different component
+      (`GrowSetupWizard`)" — `hooks/useActiveGrow.ts:21`s `refresh()` ruft
+      `setActiveGrowState` synchron aus `notifyActiveGrowChanged` /
+      `lib/grow/store.ts`s `setActiveGrow()` auf, ausgelöst während
+      `GrowSetupWizard`s `handleSubmit` rendert. Live beobachtet
+      (2026-08-04) beim Erstellen eines frischen Test-Grows, funktional
+      unauffällig (Grow wurde trotzdem korrekt erstellt), aber ein
+      echtes `setState-in-render`-Muster, das früher oder später
+      Render-Reihenfolge-Bugs verursachen kann. Nicht behoben, da
+      außerhalb des Scopes der Grow-Seiten-Neugestaltung.
 
 ## Studien-/Content-Engine
 
