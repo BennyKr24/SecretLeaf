@@ -1463,7 +1463,7 @@ export default function GrowPage({}: Props) {
   return (
     <main className="min-h-screen bg-background px-4 py-8 sm:px-6">
       <PremiumScrollFx />
-      <div className="mx-auto max-w-2xl space-y-5">
+      <div className="mx-auto max-w-6xl space-y-5">
 
         {/* ── Daily Action Card ────────────────────────── */}
         {assistantEnabled && (
@@ -1471,6 +1471,9 @@ export default function GrowPage({}: Props) {
             <DailyActionCard action={dailyAction} scoreDelta={scoreDelta} isPro={isPro} />
           </div>
         )}
+
+        <div className="grid gap-5 lg:grid-cols-3 lg:items-start">
+        <div className="space-y-5 lg:col-span-2">
 
         {/* ── Grow Overview ───────────────────────────── */}
         <div className="tool-card-lift overflow-hidden rounded-2xl border border-border bg-card shadow-sm" data-reveal>
@@ -1510,15 +1513,6 @@ export default function GrowPage({}: Props) {
           </div>
         </div>
 
-        <div data-reveal>
-          <GrowSettingsPanel
-            grow={grow}
-            onUpdate={updateGrow}
-            assistantEnabled={assistantEnabled}
-            onSetAssistantEnabled={setAssistantEnabled}
-          />
-        </div>
-
         {/* ── Phase Suggestion ─────────────────────────── */}
         {(() => {
           if (!currentPhase || grow.status !== 'aktiv') return null;
@@ -1553,25 +1547,6 @@ export default function GrowPage({}: Props) {
             </div>
           );
         })()}
-        {/* ── Grow Status Header ───────────────────────── */}
-        {assistantEnabled && (
-          <div data-reveal>
-            <GrowStatusHeader score={healthScore} status={healthStatus} />
-          </div>
-        )}
-
-        {/* ── Performance Panel ────────────────────────── */}
-        {assistantEnabled && showPerformancePanel && (
-          <div data-reveal>
-            <GrowPerformancePanel
-              isPro={isPro}
-              yieldImpact={yieldImpact}
-              optScore={optScore}
-              trend={growTrend}
-            />
-          </div>
-        )}
-
         <SectionCard icon={Sprout} title={`Pflanzen (${grow.plants.length})`}>
           {(() => {
             const entriesById = new Map(
@@ -1663,43 +1638,85 @@ export default function GrowPage({}: Props) {
           )}
         </SectionCard>
 
-        {/* ── Quick Actions ────────────────────────────── */}
-        <SectionCard icon={Sparkles} title="Schnellzugriff">
-          <div className="grid grid-cols-3 gap-3">
-            <Link
-              href={`/grow/${grow.id}/log` as Route}
-              className="tool-card-lift flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3.5 text-center transition hover:border-primary/30 hover:bg-primary/10"
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-                <NotebookPen className="h-4 w-4" strokeWidth={2} />
-              </span>
-              <span className="text-[11px] font-semibold text-muted-fg leading-tight">Log hinzufügen</span>
-            </Link>
-            <Link
-              href={'/tools' as Route}
-              className="tool-card-lift flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3.5 text-center transition hover:border-primary/30 hover:bg-primary/10"
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-                <Wrench className="h-4 w-4" strokeWidth={2} />
-              </span>
-              <span className="text-[11px] font-semibold text-muted-fg leading-tight">Tools öffnen</span>
-            </Link>
-            <Link
-              href={`/diagnose?growId=${grow.id}` as Route}
-              className="tool-card-lift flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3.5 text-center transition hover:border-primary/30 hover:bg-primary/10"
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-                <Stethoscope className="h-4 w-4" strokeWidth={2} />
-              </span>
-              <span className="text-[11px] font-semibold text-muted-fg leading-tight">Diagnose</span>
-            </Link>
-          </div>
-        </SectionCard>
-
-        {/* ── Offene Empfehlungen ───────────────────────── */}
-        {assistantEnabled && user && (
-          <RecommendationsPanel growId={grow.id} userId={user.id} />
+        {/* ── Harvest Data ─────────────────────────────── */}
+        {(grow.status === 'abgeschlossen' || grow.currentPhaseId === 'ernte') && (
+          <HarvestSection
+            grow={grow}
+            onSave={(data) => updateGrow(grow.id, { harvest: data })}
+          />
         )}
+
+        </div>
+
+        {/* ── Sidebar ───────────────────────────────────── */}
+        <div className="space-y-5 lg:sticky lg:top-6 lg:col-span-1 lg:self-start">
+
+          {assistantEnabled && (
+            <div data-reveal>
+              <GrowStatusHeader score={healthScore} status={healthStatus} />
+            </div>
+          )}
+
+          {assistantEnabled && showPerformancePanel && (
+            <div data-reveal>
+              <GrowPerformancePanel
+                isPro={isPro}
+                yieldImpact={yieldImpact}
+                optScore={optScore}
+                trend={growTrend}
+              />
+            </div>
+          )}
+
+          <div data-reveal>
+            <GrowSettingsPanel
+              grow={grow}
+              onUpdate={updateGrow}
+              assistantEnabled={assistantEnabled}
+              onSetAssistantEnabled={setAssistantEnabled}
+            />
+          </div>
+
+          {/* ── Quick Actions ──────────────────────────── */}
+          <SectionCard icon={Sparkles} title="Schnellzugriff">
+            <div className="space-y-2">
+              <Link
+                href={`/grow/${grow.id}/log` as Route}
+                className="tool-card-lift flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-2.5 transition hover:border-primary/30 hover:bg-primary/10"
+              >
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+                  <NotebookPen className="h-4 w-4" strokeWidth={2} />
+                </span>
+                <span className="text-[13px] font-semibold text-foreground">Log hinzufügen</span>
+              </Link>
+              <Link
+                href={'/tools' as Route}
+                className="tool-card-lift flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-2.5 transition hover:border-primary/30 hover:bg-primary/10"
+              >
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+                  <Wrench className="h-4 w-4" strokeWidth={2} />
+                </span>
+                <span className="text-[13px] font-semibold text-foreground">Tools öffnen</span>
+              </Link>
+              <Link
+                href={`/diagnose?growId=${grow.id}` as Route}
+                className="tool-card-lift flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-2.5 transition hover:border-primary/30 hover:bg-primary/10"
+              >
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+                  <Stethoscope className="h-4 w-4" strokeWidth={2} />
+                </span>
+                <span className="text-[13px] font-semibold text-foreground">Diagnose</span>
+              </Link>
+            </div>
+          </SectionCard>
+
+          {/* ── Offene Empfehlungen ─────────────────────── */}
+          {assistantEnabled && user && (
+            <RecommendationsPanel growId={grow.id} userId={user.id} />
+          )}
+
+        </div>
+        </div>
 
         {/* ── Smart Insights ───────────────────────────── */}
         {assistantEnabled && (
@@ -1715,14 +1732,6 @@ export default function GrowPage({}: Props) {
 
         {/* SmartInsights manages its own collapsed state — do not gate it here */}
         <SmartInsights grow={grow} />
-
-        {/* ── Harvest Data ─────────────────────────────── */}
-        {(grow.status === 'abgeschlossen' || grow.currentPhaseId === 'ernte') && (
-          <HarvestSection
-            grow={grow}
-            onSave={(data) => updateGrow(grow.id, { harvest: data })}
-          />
-        )}
 
         {/* ── Phase description ────────────────────────── */}
         {currentPhase && (
