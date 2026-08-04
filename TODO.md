@@ -23,6 +23,16 @@ Datei soll immer nur den aktuellen Stand zeigen, kein Changelog werden.
       Download-Pfad (Supabase → lokal) für eine zurückkehrende Session.
       `lib/grow/db.ts` hat bereits `getGrows(supabase)`, aber nichts ruft das
       auf, um den lokalen State beim Login zu befüllen.
+- [ ] **Migrations-Fehler live beobachtet:** `[migration] log_entries upsert
+      failed (chunk): insert or update on table "log_entries" violates
+      foreign key constraint "log_entries_grow_id_fkey"` in
+      `lib/grow/migration.ts:185`, aufgetreten beim erneuten Laden eines
+      Test-Accounts (2026-08-04). Vermutlich versucht der lokal→Supabase-
+      Upload-Pfad, Log-Einträge für einen `grow_id` hochzuladen, dessen
+      Grow-Zeile serverseitig (noch) nicht existiert — möglicherweise
+      derselbe Symptombereich wie der Punkt oben. Nicht tief untersucht, da
+      außerhalb des Scopes der Grow-Seiten-Neugestaltung; noch nicht
+      reproduziert mit einem sauberen Test-Account.
 
 ## Studien-/Content-Engine
 
