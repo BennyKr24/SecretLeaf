@@ -23,6 +23,7 @@ import type { GrowTask, Grow, Plant, LogEntry, HarvestData, GrowPhaseId, GrowSta
 import SmartInsights from '@/components/SmartInsights';
 import GrowKnowledgePanel from '@/components/grow/GrowKnowledgePanel';
 import RecommendationsPanel from '@/components/grow/RecommendationsPanel';
+import { PremiumScrollFx } from '@/components/scroll/PremiumScrollFx';
 import { Analytics } from '@/lib/analytics';
 import {
   getGrowHealthScore,
@@ -36,6 +37,59 @@ import {
   computeTrend,
 } from '@/lib/grow/intelligence';
 import type { DailyAction, GrowHealthStatus, GrowTrend, YieldImpactResult } from '@/lib/grow/intelligence';
+import {
+  Settings, Sprout, AlertTriangle, CheckCircle2, Info, Sparkles, Lock,
+  TrendingUp, TrendingDown, Minus, NotebookPen, Wrench, Stethoscope,
+  ArrowRight, ChevronDown, Star, Leaf, BarChart3, Pencil,
+  type LucideIcon,
+} from 'lucide-react';
+
+// ── Shared section header (icon chip + gradient top bar) ───────────────────────
+// Same dark-tinted chip language as the dashboard tiles (bg-{c}-50
+// dark:bg-{c}-950/40) — restrained, mostly emerald, not a rainbow. See
+// TODO.md / memory for why: bright bg-50-only chips break in dark mode, and
+// a different accent per section reads as trying too hard.
+
+type SectionAccent = 'emerald' | 'amber' | 'rose';
+
+const SECTION_ACCENT: Record<SectionAccent, { bar: string; icon: string; iconText: string }> = {
+  emerald: { bar: 'from-emerald-400 to-emerald-600', icon: 'bg-emerald-50 dark:bg-emerald-950/40', iconText: 'text-emerald-600 dark:text-emerald-400' },
+  amber: { bar: 'from-amber-400 to-amber-600', icon: 'bg-amber-50 dark:bg-amber-950/40', iconText: 'text-amber-600 dark:text-amber-400' },
+  rose: { bar: 'from-rose-400 to-rose-600', icon: 'bg-rose-50 dark:bg-rose-950/40', iconText: 'text-rose-600 dark:text-rose-400' },
+};
+
+function SectionCard({
+  icon: Icon, accent = 'emerald', title, badge, className = '', children, revealDelay,
+}: {
+  icon: LucideIcon;
+  accent?: SectionAccent;
+  title: string;
+  badge?: React.ReactNode;
+  className?: string;
+  children: React.ReactNode;
+  revealDelay?: number;
+}) {
+  const a = SECTION_ACCENT[accent];
+  return (
+    <section
+      className={`tool-card-lift relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm ${className}`}
+      data-reveal
+      {...(revealDelay ? { 'data-reveal-delay': revealDelay } : {})}
+    >
+      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${a.bar}`} />
+      <div className="relative mb-3 flex items-center justify-between gap-3 pt-1">
+        <div className="flex items-center gap-3">
+          <span className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl ${a.icon} ${a.iconText}`}>
+            <Icon className="h-4 w-4" strokeWidth={2} />
+          </span>
+          <h2 className="text-sm font-bold text-foreground">{title}</h2>
+        </div>
+        {badge}
+      </div>
+      <div className="relative">{children}</div>
+    </section>
+  );
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -164,8 +218,13 @@ function GrowSettingsPanel({
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between px-5 py-3.5 text-left"
       >
-        <span className="text-sm font-bold text-foreground">⚙ Grow-Einstellungen</span>
-        <span className={`text-muted-fg transition-transform ${open ? 'rotate-180' : ''}`}>▾</span>
+        <span className="flex items-center gap-2.5 text-sm font-bold text-foreground">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+            <Settings className="h-3.5 w-3.5" strokeWidth={2} />
+          </span>
+          Grow-Einstellungen
+        </span>
+        <ChevronDown className={`h-4 w-4 text-muted-fg transition-transform ${open ? 'rotate-180' : ''}`} strokeWidth={2} />
       </button>
       {open && (
         <div className="space-y-4 border-t border-border px-5 py-4">
@@ -203,7 +262,11 @@ function GrowSettingsPanel({
             onClick={handleSave}
             className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white transition hover:bg-primary-dark"
           >
-            {saved ? '✓ Gespeichert' : 'Speichern'}
+            {saved ? (
+              <span className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4" strokeWidth={2} /> Gespeichert
+              </span>
+            ) : 'Speichern'}
           </button>
           <p className="text-[11px] text-muted-fg">
             Umgebung, Medium und Lichttyp lassen sich nach dem Start nicht mehr ändern, da davon der generierte Aufgabenplan abhängt — dafür einen neuen Grow anlegen.
@@ -211,7 +274,10 @@ function GrowSettingsPanel({
 
           <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-3 py-2.5">
             <div className="min-w-0">
-              <p className="text-xs font-semibold text-foreground">🤖 Tipps &amp; Empfehlungen anzeigen</p>
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+                <Sparkles className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" strokeWidth={2} />
+                Tipps &amp; Empfehlungen anzeigen
+              </p>
               <p className="mt-0.5 text-[11px] text-muted-fg">
                 Steuert Score-Karte, Statuszeile, Performance- und Wissens-Hinweise. Log, Aufgaben und Einstellungen bleiben immer nutzbar.
               </p>
@@ -361,7 +427,7 @@ function GrowPerformancePanel({
           ? 'Du verlierst gerade Ertrag — kleine Korrekturen reichen.'
           : 'Dein Grow läuft nahe am vollen Potenzial.';
 
-  const trendIcon  = !trend || trend.trend === 'stable' ? '→' : trend.trend === 'up' ? '↑' : '↓';
+  const TrendIcon  = !trend || trend.trend === 'stable' ? Minus : trend.trend === 'up' ? TrendingUp : TrendingDown;
   const trendColor = !trend || trend.trend === 'stable' ? 'text-muted-fg' : trend.trend === 'up' ? 'text-primary' : 'text-rose-400';
   const trendLabel =
     !trend || trend.trend === 'stable'
@@ -372,15 +438,21 @@ function GrowPerformancePanel({
 
   if (isPro) {
     return (
-      <div className="rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-orange-500/5 p-4 shadow-sm space-y-3">
+      <div className="relative overflow-hidden rounded-2xl border border-amber-500/25 bg-card p-4 shadow-sm space-y-3">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600" />
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <p className="text-[11px] font-black uppercase tracking-widest text-amber-400">📊 Ertrag-Performance</p>
-          <span className="rounded-full bg-amber-500 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">PRO</span>
+        <div className="flex items-center justify-between pt-1">
+          <p className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">
+            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-950/40">
+              <BarChart3 className="h-3.5 w-3.5" strokeWidth={2} />
+            </span>
+            Ertrag-Performance
+          </p>
+          <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">PRO</span>
         </div>
 
         {/* Entry message — always visible before numbers */}
-        <p className="text-sm font-black text-rose-400 leading-snug">
+        <p className="text-sm font-black text-rose-500 dark:text-rose-400 leading-snug">
           {yieldImpact.totalLoss > 0
             ? lossMessage
             : 'Dein Grow läuft nahe am vollen Potenzial.'}
@@ -388,8 +460,9 @@ function GrowPerformancePanel({
 
         {/* Weekly loss rate */}
         {yieldImpact.weeklyLossRate > 0 && (
-          <p className="text-[11px] font-bold text-rose-400 leading-tight">
-            ⚠ Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
+          <p className="flex items-center gap-1.5 text-[11px] font-bold text-rose-500 dark:text-rose-400 leading-tight">
+            <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
+            Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
           </p>
         )}
 
@@ -428,24 +501,26 @@ function GrowPerformancePanel({
             <p className="text-[9px] font-semibold text-muted-fg mt-0.5 leading-tight">Optimierung</p>
           </div>
           <div className="rounded-xl border border-border bg-card px-2 py-2 text-center">
-            <p className={`text-base font-black ${trendColor}`}>{trendIcon}</p>
+            <TrendIcon className={`mx-auto h-4 w-4 ${trendColor}`} strokeWidth={2.5} />
             <p className={`text-[9px] font-semibold mt-0.5 leading-tight ${trendColor}`}>{trendLabel}</p>
           </div>
         </div>
 
         {/* Momentum sentence */}
         {trend && trend.trend !== 'stable' && (
-          <p className={`text-[11px] font-semibold leading-tight ${trend.trend === 'up' ? 'text-primary' : 'text-rose-400'}`}>
+          <p className={`flex items-center gap-1.5 text-[11px] font-semibold leading-tight ${trend.trend === 'up' ? 'text-primary' : 'text-rose-500 dark:text-rose-400'}`}>
+            {trend.trend === 'up' ? <TrendingUp className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} /> : <TrendingDown className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />}
             {trend.trend === 'up'
-              ? `↑ Du hast deinen Grow seit dem letzten Besuch um +${trend.delta} Punkte verbessert.`
-              : `↓ Dein Grow hat ${Math.abs(trend.delta)} Punkte verloren — jetzt gegensteuern.`}
+              ? `Du hast deinen Grow seit dem letzten Besuch um +${trend.delta} Punkte verbessert.`
+              : `Dein Grow hat ${Math.abs(trend.delta)} Punkte verloren — jetzt gegensteuern.`}
           </p>
         )}
 
         {/* Recovery upside */}
         {yieldImpact.totalGainPotential > 0 && (
-          <p className="text-[11px] text-primary font-semibold leading-tight">
-            ↑ +{yieldImpact.totalGainPotential}g mit dieser Aktion zurückholbar.
+          <p className="flex items-center gap-1.5 text-[11px] text-primary font-semibold leading-tight">
+            <TrendingUp className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
+            +{yieldImpact.totalGainPotential}g mit dieser Aktion zurückholbar.
           </p>
         )}
       </div>
@@ -455,15 +530,21 @@ function GrowPerformancePanel({
   // FREE — real % shown, exact grams blurred
   return (
     <Link href={'/pricing' as Route} className="block">
-      <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-orange-500/5 p-4 shadow-sm">
+      <div className="relative overflow-hidden rounded-2xl border border-amber-500/25 bg-card p-4 shadow-sm transition hover:border-amber-500/40">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600" />
 
         {/* Header visible to all */}
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-[11px] font-black uppercase tracking-widest text-amber-400">📊 Ertrag-Performance</p>
+        <div className="flex items-center justify-between mb-3 pt-1">
+          <p className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">
+            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-950/40">
+              <BarChart3 className="h-3.5 w-3.5" strokeWidth={2} />
+            </span>
+            Ertrag-Performance
+          </p>
         </div>
 
         {/* Entry message — always visible before numbers */}
-        <p className="text-sm font-black text-rose-400 mb-3">
+        <p className="text-sm font-black text-rose-500 dark:text-rose-400 mb-3">
           {yieldImpact.lossPercent >= 20
             ? 'Du verlierst gerade spürbar Ertrag.'
             : 'Dein Grow läuft unter seinem Potenzial.'}
@@ -471,8 +552,9 @@ function GrowPerformancePanel({
 
         {/* Weekly loss visible, gram projection locked */}
         {yieldImpact.weeklyLossRate > 0 && (
-          <p className="text-[11px] font-bold text-rose-400 mb-2 leading-tight">
-            ⚠ Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
+          <p className="flex items-center gap-1.5 text-[11px] font-bold text-rose-500 dark:text-rose-400 mb-2 leading-tight">
+            <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
+            Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
           </p>
         )}
 
@@ -486,11 +568,14 @@ function GrowPerformancePanel({
               <p className="text-xs font-black text-rose-600">−{yieldImpact.lossPercent}% Verlustrisiko</p>
             )}
           </div>
-          <div className="h-2.5 w-full overflow-hidden rounded-full bg-slate-100">
+          <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface">
             <div className={`h-full rounded-full transition-all duration-700 ${barColor}`} style={{ width: `${usedPercent}%` }} />
           </div>
           <div className="flex items-center justify-between">
-            <p className="text-[10px] text-rose-500 font-bold">🔒 Genaue Ertragszahlen nur für PRO sichtbar</p>
+            <p className="flex items-center gap-1.5 text-[10px] text-rose-500 dark:text-rose-400 font-bold">
+              <Lock className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
+              Genaue Ertragszahlen nur für PRO sichtbar
+            </p>
           </div>
         </div>
 
@@ -505,15 +590,15 @@ function GrowPerformancePanel({
             <p className="text-[9px] font-semibold text-muted-fg mt-0.5">Optimierung</p>
           </div>
           <div className="rounded-xl border border-border bg-card px-2 py-2 text-center">
-            <p className={`text-base font-black ${trendColor}`}>{trendIcon}</p>
+            <TrendIcon className={`mx-auto h-4 w-4 ${trendColor}`} strokeWidth={2.5} />
             <p className={`text-[9px] font-semibold mt-0.5 ${trendColor}`}>{trendLabel}</p>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="flex items-center justify-between gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2.5">
-          <p className="text-xs font-bold text-amber-300 leading-snug">Du siehst nur einen Teil — PRO zeigt dir, was du noch verlierst.</p>
-          <span className="flex-shrink-0 rounded-full bg-amber-500 px-3 py-1.5 text-[10px] font-black text-white shadow-sm">🌟 PRO</span>
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2.5">
+          <p className="text-xs font-bold text-amber-700 dark:text-amber-300 leading-snug">Du siehst nur einen Teil — PRO zeigt dir, was du noch verlierst.</p>
+          <span className="flex-shrink-0 rounded-full border border-amber-500/40 bg-card px-3 py-1.5 text-[10px] font-black text-amber-600 dark:text-amber-400 shadow-sm">PRO</span>
         </div>
       </div>
     </Link>
@@ -541,13 +626,14 @@ function ProInsightGate({
     return (
       <div className="mt-2 space-y-1">
         {yieldImpact && (
-          <p className="text-[11px] font-bold text-amber-300/90 leading-tight">
-            📊 {yieldImpact}
+          <p className="flex items-start gap-1.5 text-[11px] font-bold text-amber-200/90 leading-tight">
+            <BarChart3 className="mt-px h-3 w-3 flex-shrink-0" strokeWidth={2} />
+            {yieldImpact}
           </p>
         )}
         {deepInsight && (
           <p className="text-[11px] text-white/70 leading-snug italic">
-            🔬 {deepInsight}
+            {deepInsight}
           </p>
         )}
       </div>
@@ -562,39 +648,67 @@ function ProInsightGate({
 
 const DAILY_ACTION_CONFIG: Record<
   DailyAction['level'],
-  { bg: string; border: string; icon: string; label: string; subtext: string; cta: string }
+  {
+    border: string; bg: string; bar: string; iconChip: string; iconText: string;
+    icon: LucideIcon; label: string; labelText: string; subtext: string;
+    cta: string; deltaPositive: string; deltaNegative: string;
+  }
 > = {
   critical: {
-    bg:     'bg-rose-600',
-    border: 'border-rose-700',
-    icon:   '🚨',
-    label:  'EINZIGE PRIORITÄT HEUTE',
-    subtext:'text-rose-100',
-    cta:    'bg-white text-rose-700 hover:bg-rose-50 shadow-sm',
+    border: 'border-rose-500/30',
+    bg:     'bg-rose-500/10',
+    bar:    'from-rose-400 to-rose-600',
+    iconChip: 'bg-rose-50 dark:bg-rose-950/40',
+    iconText: 'text-rose-600 dark:text-rose-400',
+    icon:   AlertTriangle,
+    label:  'Einzige Priorität heute',
+    labelText: 'text-rose-600 dark:text-rose-400',
+    subtext:'text-muted-fg',
+    cta:    'bg-rose-600 text-white hover:bg-rose-700',
+    deltaPositive: 'bg-primary/15 text-primary',
+    deltaNegative: 'bg-rose-500/15 text-rose-500 dark:text-rose-400',
   },
   warning: {
-    bg:     'bg-amber-500',
-    border: 'border-amber-600',
-    icon:   '⚠️',
-    label:  'HEUTE NICHT VERGESSEN',
-    subtext:'text-amber-100',
-    cta:    'bg-white text-amber-700 hover:bg-amber-50 shadow-sm',
+    border: 'border-amber-500/30',
+    bg:     'bg-amber-500/10',
+    bar:    'from-amber-400 to-amber-600',
+    iconChip: 'bg-amber-50 dark:bg-amber-950/40',
+    iconText: 'text-amber-600 dark:text-amber-400',
+    icon:   AlertTriangle,
+    label:  'Heute nicht vergessen',
+    labelText: 'text-amber-600 dark:text-amber-400',
+    subtext:'text-muted-fg',
+    cta:    'bg-amber-500 text-white hover:bg-amber-600',
+    deltaPositive: 'bg-primary/15 text-primary',
+    deltaNegative: 'bg-rose-500/15 text-rose-500 dark:text-rose-400',
   },
   info: {
-    bg:     'bg-primary',
-    border: 'border-primary-dark',
-    icon:   '💡',
-    label:  'HEUTE AKTIV BLEIBEN',
-    subtext:'text-emerald-100',
-    cta:    'bg-white text-emerald-700 hover:bg-emerald-50 shadow-sm',
+    border: 'border-primary/30',
+    bg:     'bg-primary/10',
+    bar:    'from-primary to-primary-dark',
+    iconChip: 'bg-emerald-50 dark:bg-emerald-950/40',
+    iconText: 'text-emerald-600 dark:text-emerald-400',
+    icon:   Info,
+    label:  'Heute aktiv bleiben',
+    labelText: 'text-primary',
+    subtext:'text-muted-fg',
+    cta:    'bg-primary text-white hover:bg-primary-dark',
+    deltaPositive: 'bg-primary/15 text-primary',
+    deltaNegative: 'bg-rose-500/15 text-rose-500 dark:text-rose-400',
   },
   success: {
-    bg:     'bg-emerald-700',
-    border: 'border-emerald-800',
-    icon:   '✓',
-    label:  'TAG GESICHERT',
-    subtext:'text-emerald-200',
-    cta:    'bg-white/20 border border-white/30 text-white hover:bg-white/30',
+    border: 'border-emerald-500/30',
+    bg:     'bg-emerald-500/10',
+    bar:    'from-emerald-400 to-emerald-600',
+    iconChip: 'bg-emerald-50 dark:bg-emerald-950/40',
+    iconText: 'text-emerald-600 dark:text-emerald-400',
+    icon:   CheckCircle2,
+    label:  'Tag gesichert',
+    labelText: 'text-emerald-600 dark:text-emerald-400',
+    subtext:'text-muted-fg',
+    cta:    'border border-emerald-500/30 bg-card text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40',
+    deltaPositive: 'bg-primary/15 text-primary',
+    deltaNegative: 'bg-rose-500/15 text-rose-500 dark:text-rose-400',
   },
 };
 
@@ -608,34 +722,41 @@ function DailyActionCard({
   isPro: boolean;
 }) {
   const cfg = DAILY_ACTION_CONFIG[action.level];
+  const Icon = cfg.icon;
   const showDelta = scoreDelta != null && scoreDelta !== 0;
 
   return (
-    <div className={`relative overflow-hidden rounded-2xl border ${cfg.bg} ${cfg.border} px-5 py-4 shadow-md`}>
+    <div className={`relative overflow-hidden rounded-2xl border ${cfg.border} ${cfg.bg} px-5 py-4 shadow-sm`}>
+      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${cfg.bar}`} />
       {/* Score delta badge */}
       {showDelta && scoreDelta != null && scoreDelta !== 0 && (
         <span
-          className={`absolute right-4 top-3 animate-bounce rounded-full px-2.5 py-0.5 text-xs font-black shadow-md
-            ${scoreDelta > 0 ? 'bg-white text-emerald-700' : 'bg-rose-100 text-rose-700'}`}
+          className={`absolute right-4 top-3 rounded-full px-2.5 py-0.5 text-xs font-black shadow-sm
+            ${scoreDelta > 0 ? cfg.deltaPositive : cfg.deltaNegative}`}
         >
           {scoreDelta > 0 ? `+${scoreDelta}` : scoreDelta} Score
         </span>
       )}
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-4 pt-1">
         <div className="min-w-0 flex-1">
-          <p className={`text-[10px] font-black uppercase tracking-widest mb-1 ${cfg.subtext}`}>
-            {cfg.icon} {cfg.label}
+          <p className={`flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest mb-1.5 ${cfg.labelText}`}>
+            <span className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md ${cfg.iconChip} ${cfg.iconText}`}>
+              <Icon className="h-3 w-3" strokeWidth={2.5} />
+            </span>
+            {cfg.label}
           </p>
-          <p className="text-base font-black leading-snug text-white">{action.message}</p>
+          <p className="text-base font-black leading-snug text-foreground">{action.message}</p>
           <p className={`mt-1 text-xs leading-snug ${cfg.subtext}`}>{action.subtext}</p>
           {action.consequence && (
-            <p className={`mt-1.5 text-[11px] font-semibold leading-tight opacity-90 ${cfg.subtext}`}>
-              → {action.consequence}
+            <p className="mt-1.5 flex items-start gap-1 text-[11px] font-semibold leading-tight text-muted-fg">
+              <ArrowRight className="mt-px h-3 w-3 flex-shrink-0" strokeWidth={2} />
+              {action.consequence}
             </p>
           )}
           {action.upside && (
-            <p className="mt-1 text-[11px] font-semibold leading-tight text-emerald-100/90">
-              ↑ {action.upside}
+            <p className="mt-1 flex items-start gap-1 text-[11px] font-semibold leading-tight text-primary">
+              <TrendingUp className="mt-px h-3 w-3 flex-shrink-0" strokeWidth={2} />
+              {action.upside}
             </p>
           )}
           <ProInsightGate
@@ -652,7 +773,7 @@ function DailyActionCard({
             {action.ctaLabel}
           </Link>
           {action.recoveryGrams != null && action.recoveryGrams > 0 && (
-            <p className="text-[10px] font-bold text-emerald-300/90 whitespace-nowrap">
+            <p className="text-[10px] font-bold text-primary/90 whitespace-nowrap">
               +{action.recoveryGrams}g mit dieser Aktion zurückholbar
             </p>
           )}
@@ -663,13 +784,6 @@ function DailyActionCard({
 }
 
 // ── Grow Status Header ────────────────────────────────────────────────────────
-
-function scoreToIcon(score: number): string {
-  if (score >= 85) return '🌟';
-  if (score >= 70) return '✅';
-  if (score >= 50) return '⚠️';
-  return '🔴';
-}
 
 function scoreToMomentum(score: number, prevScore?: number): string {
   if (prevScore != null) {
@@ -700,11 +814,12 @@ function GrowStatusHeader({
   }[status.color];
 
   const momentum = scoreToMomentum(score, prevScore);
+  const ScoreIcon = score >= 85 ? Sparkles : score >= 70 ? CheckCircle2 : AlertTriangle;
 
   return (
     <div className={`flex items-center gap-4 rounded-2xl border px-4 py-3 ring-1 ${colors.bg} ${colors.ring}`}>
       <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full ring-2 bg-card ${colors.ring}`}>
-        <span className="text-2xl leading-none">{scoreToIcon(score)}</span>
+        <ScoreIcon className={`h-6 w-6 ${colors.text}`} strokeWidth={2} />
       </div>
       <div className="min-w-0 flex-1">
         <p className={`text-sm font-black leading-snug ${colors.text}`}>{momentum}</p>
@@ -712,8 +827,9 @@ function GrowStatusHeader({
         <p className={`text-[10px] font-bold uppercase tracking-wider opacity-60 mt-0.5 ${colors.text}`}>
           {status.yieldLabel}
         </p>
-        <p className={`text-[10px] font-semibold opacity-70 mt-0.5 ${colors.text}`}>
-          ↑ {status.upsideLabel}
+        <p className={`flex items-center gap-1 text-[10px] font-semibold opacity-70 mt-0.5 ${colors.text}`}>
+          <TrendingUp className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
+          {status.upsideLabel}
         </p>
       </div>
     </div>
@@ -787,7 +903,9 @@ function PlantComparisonBar({
     <div className="mb-3 flex items-stretch gap-2">
       {best && (
         <div className="flex flex-1 items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-3 py-2.5">
-          <span className="text-base leading-none">🟢</span>
+          <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+            <CheckCircle2 className="h-4 w-4" strokeWidth={2} />
+          </span>
           <div className="min-w-0">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary">Beste Pflanze</p>
             <p className="truncate text-xs font-bold text-foreground">{best.name}</p>
@@ -797,20 +915,22 @@ function PlantComparisonBar({
       {worst && (
         <div className="flex flex-1 flex-col gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2.5">
           <div className="flex items-start gap-2">
-            <span className="text-base leading-none">🔴</span>
+            <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400">
+              <AlertTriangle className="h-4 w-4" strokeWidth={2} />
+            </span>
             <div className="min-w-0 flex-1">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-rose-400">Braucht Pflege</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-rose-500 dark:text-rose-400">Braucht Pflege</p>
               <p className="truncate text-xs font-bold text-foreground">{worst.name}</p>
               {worstReason && (
-                <p className="mt-0.5 text-[11px] leading-tight text-rose-400/80">{worstReason}</p>
+                <p className="mt-0.5 text-[11px] leading-tight text-rose-500/80 dark:text-rose-400/80">{worstReason}</p>
               )}
             </div>
           </div>
           <Link
             href={`/grow/${growId}/log?plant=${worst.id}` as Route}
-            className="flex items-center justify-center gap-1 rounded-lg bg-rose-600 px-3 py-1.5 text-xs font-bold text-white transition hover:bg-rose-700 active:scale-[0.97]"
+            className="flex items-center justify-center gap-1.5 rounded-lg bg-rose-600 px-3 py-1.5 text-xs font-bold text-white transition hover:bg-rose-700 active:scale-[0.97]"
           >
-            Jetzt pflegen →
+            Jetzt pflegen <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
           </Link>
         </div>
       )}
@@ -888,8 +1008,8 @@ function PlantCard({
       {/* ── Critical alert strip ── */}
       {isCritical && !isSelected && (
         <div className="flex items-center gap-1.5 border-b border-rose-500/20 bg-rose-500/15 px-4 py-1.5">
-          <span className="text-[11px]">⚠️</span>
-          <span className="text-[11px] font-bold text-rose-400">Handlung nötig</span>
+          <AlertTriangle className="h-3 w-3 flex-shrink-0 text-rose-500 dark:text-rose-400" strokeWidth={2} />
+          <span className="text-[11px] font-bold text-rose-500 dark:text-rose-400">Handlung nötig</span>
         </div>
       )}
       {/* ── Name + status ── */}
@@ -898,7 +1018,9 @@ function PlantCard({
         onClick={onSelect}
         className="flex w-full items-center gap-3 px-4 pt-3 pb-2 text-left"
       >
-        <span className="text-xl leading-none">🌿</span>
+        <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+          <Sprout className="h-4 w-4" strokeWidth={2} />
+        </span>
         {isEditing ? (
           <input
             value={draftName}
@@ -925,7 +1047,10 @@ function PlantCard({
       <div className="px-4 pb-2.5">
         <p className={`text-[11px] leading-tight ${microInsightClass}`}>{microInsight.text}</p>
         {microInsight.consequence && microInsight.level !== 'good' && (
-          <p className="text-[10px] text-slate-400 mt-0.5 leading-tight">→ {microInsight.consequence}</p>
+          <p className="flex items-start gap-1 text-[10px] text-muted-fg mt-0.5 leading-tight">
+            <ArrowRight className="mt-px h-2.5 w-2.5 flex-shrink-0" strokeWidth={2} />
+            {microInsight.consequence}
+          </p>
         )}
       </div>
 
@@ -1056,9 +1181,15 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
 
   if (!editing && existing) {
     return (
-      <div className="rounded-2xl border border-primary/30 bg-primary/10 p-5 shadow-sm">
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-sm font-bold text-primary">🌿 Ernte erfasst</p>
+      <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-card p-5 shadow-sm">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600" />
+        <div className="flex items-center justify-between mb-3 pt-1">
+          <p className="flex items-center gap-2 text-sm font-bold text-primary">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-950/40">
+              <Leaf className="h-4 w-4" strokeWidth={2} />
+            </span>
+            Ernte erfasst
+          </p>
           <button
             type="button"
             onClick={() => { setEditing(true); }}
@@ -1074,7 +1205,7 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
           </div>
           <div className="flex gap-1">
             {[1,2,3,4,5].map(s => (
-              <span key={s} className={`text-xl ${s <= existing.rating ? 'text-amber-400' : 'text-border'}`}>★</span>
+              <Star key={s} className={`h-5 w-5 ${s <= existing.rating ? 'fill-amber-400 text-amber-400' : 'text-border'}`} strokeWidth={1.5} />
             ))}
           </div>
         </div>
@@ -1089,8 +1220,11 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
 
   return (
     <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-      <p className="text-sm font-bold text-foreground mb-4">
-        {existing ? '✏️ Ernte bearbeiten' : '🌿 Ernte erfassen'}
+      <p className="flex items-center gap-2 text-sm font-bold text-foreground mb-4">
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+          {existing ? <Pencil className="h-4 w-4" strokeWidth={2} /> : <Leaf className="h-4 w-4" strokeWidth={2} />}
+        </span>
+        {existing ? 'Ernte bearbeiten' : 'Ernte erfassen'}
       </p>
       <div className="space-y-4">
         {/* Grams */}
@@ -1104,7 +1238,7 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
             onChange={e => setGrams(e.target.value)}
             placeholder="z.B. 45.5"
             className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground
-              placeholder:text-slate-300 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-100"
+              placeholder:text-muted-fg/50 focus:outline-none focus:ring-1 focus:ring-primary/40"
           />
         </div>
         {/* Rating */}
@@ -1116,8 +1250,10 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
                 key={s}
                 type="button"
                 onClick={() => setRating(s)}
-                className={`text-2xl transition-transform hover:scale-110 ${s <= rating ? 'text-amber-400' : 'text-border'}`}
-              >★</button>
+                className="transition-transform hover:scale-110"
+              >
+                <Star className={`h-7 w-7 ${s <= rating ? 'fill-amber-400 text-amber-400' : 'text-border'}`} strokeWidth={1.5} />
+              </button>
             ))}
           </div>
         </div>
@@ -1130,7 +1266,7 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
             rows={3}
             placeholder="Geschmack, Potenz-Einschätzung, was anders machen…"
             className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground
-              placeholder:text-slate-300 focus:border-emerald-400 focus:outline-none resize-none"
+              placeholder:text-muted-fg/50 focus:outline-none focus:ring-1 focus:ring-primary/40 resize-none"
           />
         </div>
         {/* Actions */}
@@ -1292,14 +1428,16 @@ export default function GrowPage({}: Props) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-background px-5">
         <div className="space-y-4 text-center">
-          <span className="text-5xl">🌿</span>
+          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+            <Sprout className="h-8 w-8" strokeWidth={1.75} />
+          </span>
           <h1 className="text-xl font-bold text-foreground">Grow nicht gefunden</h1>
           <p className="text-sm text-muted-fg">Dieser Grow existiert nicht oder wurde gelöscht.</p>
           <Link
             href={'/start' as Route}
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white hover:bg-primary-dark"
           >
-            🌱 Neuen Grow starten
+            <Sprout className="h-4 w-4" strokeWidth={2} /> Neuen Grow starten
           </Link>
         </div>
       </main>
@@ -1324,15 +1462,18 @@ export default function GrowPage({}: Props) {
 
   return (
     <main className="min-h-screen bg-background px-4 py-8 sm:px-6">
+      <PremiumScrollFx />
       <div className="mx-auto max-w-2xl space-y-5">
 
         {/* ── Daily Action Card ────────────────────────── */}
         {assistantEnabled && (
-          <DailyActionCard action={dailyAction} scoreDelta={scoreDelta} isPro={isPro} />
+          <div data-reveal>
+            <DailyActionCard action={dailyAction} scoreDelta={scoreDelta} isPro={isPro} />
+          </div>
         )}
 
         {/* ── Grow Overview ───────────────────────────── */}
-        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+        <div className="tool-card-lift overflow-hidden rounded-2xl border border-border bg-card shadow-sm" data-reveal>
           <div className="h-1.5 w-full bg-gradient-to-r from-primary to-primary-dark" />
           <div className="p-5">
             <div className="flex items-start justify-between gap-3">
@@ -1369,12 +1510,14 @@ export default function GrowPage({}: Props) {
           </div>
         </div>
 
-        <GrowSettingsPanel
-          grow={grow}
-          onUpdate={updateGrow}
-          assistantEnabled={assistantEnabled}
-          onSetAssistantEnabled={setAssistantEnabled}
-        />
+        <div data-reveal>
+          <GrowSettingsPanel
+            grow={grow}
+            onUpdate={updateGrow}
+            assistantEnabled={assistantEnabled}
+            onSetAssistantEnabled={setAssistantEnabled}
+          />
+        </div>
 
         {/* ── Phase Suggestion ─────────────────────────── */}
         {(() => {
@@ -1387,45 +1530,49 @@ export default function GrowPage({}: Props) {
           if (!nextPhase) return null;
           const overdueDays = grow.currentDay - currentPhase.endDay;
           return (
-            <div className="rounded-2xl border border-primary/30 bg-primary/10 p-4 flex items-center justify-between gap-3 shadow-sm">
-              <div>
-                <p className="text-sm font-bold text-foreground">
-                  👉 Bereit für die nächste Phase
-                </p>
-                <p className="text-xs text-muted-fg mt-0.5">
-                  {currentPhase.label} war vor {overdueDays} {overdueDays === 1 ? 'Tag' : 'Tagen'} geplant abgeschlossen zu sein.
-                </p>
+            <div className="flex items-center justify-between gap-3 rounded-2xl border border-primary/30 bg-primary/10 p-4 shadow-sm" data-reveal>
+              <div className="flex items-center gap-3">
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+                  <ArrowRight className="h-4 w-4" strokeWidth={2} />
+                </span>
+                <div>
+                  <p className="text-sm font-bold text-foreground">Bereit für die nächste Phase</p>
+                  <p className="text-xs text-muted-fg mt-0.5">
+                    {currentPhase.label} war vor {overdueDays} {overdueDays === 1 ? 'Tag' : 'Tagen'} geplant abgeschlossen zu sein.
+                  </p>
+                </div>
               </div>
               <button
                 type="button"
                 onClick={() => advancePhase(grow.id, nextPhaseId)}
-                className="flex-shrink-0 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white
-                  hover:bg-emerald-700 transition active:scale-95"
+                className="flex-shrink-0 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white
+                  hover:bg-primary-dark transition active:scale-95"
               >
-                → {nextPhase.label}
+                {nextPhase.label}
               </button>
             </div>
           );
         })()}
         {/* ── Grow Status Header ───────────────────────── */}
         {assistantEnabled && (
-          <GrowStatusHeader score={healthScore} status={healthStatus} />
+          <div data-reveal>
+            <GrowStatusHeader score={healthScore} status={healthStatus} />
+          </div>
         )}
 
         {/* ── Performance Panel ────────────────────────── */}
         {assistantEnabled && showPerformancePanel && (
-          <GrowPerformancePanel
-            isPro={isPro}
-            yieldImpact={yieldImpact}
-            optScore={optScore}
-            trend={growTrend}
-          />
+          <div data-reveal>
+            <GrowPerformancePanel
+              isPro={isPro}
+              yieldImpact={yieldImpact}
+              optScore={optScore}
+              trend={growTrend}
+            />
+          </div>
         )}
 
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <h2 className="mb-3 text-base font-bold text-foreground">
-            Pflanzen ({grow.plants.length})
-          </h2>
+        <SectionCard icon={Sprout} title={`Pflanzen (${grow.plants.length})`}>
           {(() => {
             const entriesById = new Map(
               grow.plants.map((p) => [p.id, entries.filter((e) => e.plantId === p.id)])
@@ -1474,37 +1621,36 @@ export default function GrowPage({}: Props) {
               </>
             );
           })()}
-        </div>
+        </SectionCard>
 
         {/* ── Overdue tasks ────────────────────────────── */}
         {overdue.length > 0 && (
-          <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 p-5 shadow-sm">
-            <h2 className="mb-3 flex items-center gap-2 text-sm font-bold text-rose-400">
-              <span>⚠️</span>
-              {overdue.length === 1 ? '1 überfälliger Task' : `${overdue.length} überfällige Tasks`}
-            </h2>
+          <SectionCard
+            icon={AlertTriangle}
+            accent="rose"
+            title={overdue.length === 1 ? '1 überfälliger Task' : `${overdue.length} überfällige Tasks`}
+          >
             <div className="space-y-2">
               {overdue.map((task) => (
                 <TaskItem key={task.id} task={task} currentDay={grow.currentDay} onComplete={handleComplete} />
               ))}
             </div>
-          </div>
+          </SectionCard>
         )}
 
         {/* ── Upcoming tasks ───────────────────────────── */}
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-base font-bold text-foreground">
-              {upcoming.length === 0 ? 'Tasks' : `Nächste ${upcoming.length} Tasks`}
-            </h2>
-            <Link href={`/grow/${grow.id}/log` as Route} className="text-xs font-semibold text-primary hover:underline">
-              Alle →
+        <SectionCard
+          icon={NotebookPen}
+          title={upcoming.length === 0 ? 'Tasks' : `Nächste ${upcoming.length} Tasks`}
+          badge={
+            <Link href={`/grow/${grow.id}/log` as Route} className="flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
+              Alle <ArrowRight className="h-3 w-3" strokeWidth={2} />
             </Link>
-          </div>
-
+          }
+        >
           {upcoming.length === 0 ? (
             <div className="rounded-xl border border-dashed border-border py-8 text-center">
-              <span className="text-3xl">✨</span>
+              <Sparkles className="mx-auto h-7 w-7 text-emerald-500" strokeWidth={1.75} />
               <p className="mt-2 text-sm font-semibold text-muted-fg">Alle Tasks erledigt!</p>
               <p className="mt-1 text-xs text-muted-fg">Keine weiteren Tasks für diesen Grow geplant.</p>
             </div>
@@ -1515,35 +1661,40 @@ export default function GrowPage({}: Props) {
               ))}
             </div>
           )}
-        </div>
+        </SectionCard>
 
         {/* ── Quick Actions ────────────────────────────── */}
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-          <h2 className="mb-3 text-sm font-bold text-foreground">Schnellzugriff</h2>
+        <SectionCard icon={Sparkles} title="Schnellzugriff">
           <div className="grid grid-cols-3 gap-3">
             <Link
               href={`/grow/${grow.id}/log` as Route}
-              className="flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3 text-center transition hover:border-primary/30 hover:bg-primary/10"
+              className="tool-card-lift flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3.5 text-center transition hover:border-primary/30 hover:bg-primary/10"
             >
-              <span className="text-2xl">📓</span>
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+                <NotebookPen className="h-4 w-4" strokeWidth={2} />
+              </span>
               <span className="text-[11px] font-semibold text-muted-fg leading-tight">Log hinzufügen</span>
             </Link>
             <Link
               href={'/tools' as Route}
-              className="flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3 text-center transition hover:border-primary/20 hover:bg-primary/10"
+              className="tool-card-lift flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3.5 text-center transition hover:border-primary/30 hover:bg-primary/10"
             >
-              <span className="text-2xl">🧪</span>
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+                <Wrench className="h-4 w-4" strokeWidth={2} />
+              </span>
               <span className="text-[11px] font-semibold text-muted-fg leading-tight">Tools öffnen</span>
             </Link>
             <Link
               href={`/diagnose?growId=${grow.id}` as Route}
-              className="flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3 text-center transition hover:border-primary/20 hover:bg-primary/10"
+              className="tool-card-lift flex flex-col items-center gap-2 rounded-xl border border-border bg-surface px-2 py-3.5 text-center transition hover:border-primary/30 hover:bg-primary/10"
             >
-              <span className="text-2xl">🩺</span>
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+                <Stethoscope className="h-4 w-4" strokeWidth={2} />
+              </span>
               <span className="text-[11px] font-semibold text-muted-fg leading-tight">Diagnose</span>
             </Link>
           </div>
-        </div>
+        </SectionCard>
 
         {/* ── Offene Empfehlungen ───────────────────────── */}
         {assistantEnabled && user && (
@@ -1575,15 +1726,18 @@ export default function GrowPage({}: Props) {
 
         {/* ── Phase description ────────────────────────── */}
         {currentPhase && (
-          <div className="rounded-2xl border border-border bg-surface px-5 py-4">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-muted-fg">Aktuelle Phase</p>
-            <p className="mt-1 font-semibold text-foreground">
-              {PHASE_ICONS[currentPhase.id]} {currentPhase.label}
-            </p>
-            <p className="mt-1 text-sm text-muted-fg leading-relaxed">{currentPhase.description}</p>
-            <p className="mt-2 text-xs text-muted-fg">
-              {currentPhase.label}-Tag {Math.max(1, grow.currentDay - currentPhase.startDay + 1)} · noch {Math.max(0, currentPhase.endDay - grow.currentDay + 1)} Tage in dieser Phase
-            </p>
+          <div className="flex items-start gap-3 rounded-2xl border border-border bg-card px-5 py-4 shadow-sm" data-reveal>
+            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-lg dark:bg-emerald-950/40">
+              {PHASE_ICONS[currentPhase.id]}
+            </span>
+            <div className="min-w-0">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-muted-fg">Aktuelle Phase</p>
+              <p className="mt-0.5 font-semibold text-foreground">{currentPhase.label}</p>
+              <p className="mt-1 text-sm text-muted-fg leading-relaxed">{currentPhase.description}</p>
+              <p className="mt-2 text-xs text-muted-fg">
+                {currentPhase.label}-Tag {Math.max(1, grow.currentDay - currentPhase.startDay + 1)} · noch {Math.max(0, currentPhase.endDay - grow.currentDay + 1)} Tage in dieser Phase
+              </p>
+            </div>
           </div>
         )}
 
