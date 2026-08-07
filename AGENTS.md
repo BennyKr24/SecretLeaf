@@ -360,6 +360,18 @@ Iteration fortsetzen.
 
 ---
 
+# 10.1 Motion Gate
+
+Gilt zusätzlich für jede Änderung, die Animation, Transition, Gesten, schwebende Flächen (Nav/Dropdown/Modal/Popover) oder Typografie-Größen betrifft.
+
+Motion-Regeln stehen fest in DESIGN_SYSTEM.md, Abschnitt 15. Material-Regeln (Glass vs. Modal) in Abschnitt 16. Größenabhängige Tracking/Leading-Regeln in Abschnitt 6. Nicht neu erfinden.
+
+Vor Implementierung: Skill `.claude/skills/apple-design` oder `.claude/skills/emil-design-eng` konsultieren; für fertige Bausteine `.claude/skills/animate/RECIPES.md`.
+
+Vor Abschluss: Skill `.claude/skills/review-animations` auf den Diff anwenden. Kein Merge bei offenen Findings gegen Abschnitt 15.10 (Verboten) oder 16.4 (Verboten).
+
+---
+
 # 11. Dokumentenhierarchie
 
 1. PRODUCT.md

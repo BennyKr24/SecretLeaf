@@ -22,17 +22,31 @@
    ───────────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* ── Canonical design tokens (default: premium dark) ── */
-  --bg:           #05070a;
-  --surface:      #0a1115;
-  --text:         #f8fafc;
-  --muted:        #94a3b8;
-  --primary:      #22c55e;
-  --primary-dark: #16a34a;
-  --primary-deep: #123024;
+  /* ── Canonical design tokens (default: premium dark) ──
+     Palette revised 2026-08-07: the previous values were Tailwind's
+     unmodified stock green-500/slate-400 (#22c55e / #94a3b8) — literally
+     the most common "default AI-generated dark SaaS" combination, with no
+     brand consideration behind it. This palette shifts the primary toward
+     a deeper, more particular jade/forest green, warms the near-black
+     background/surface with a green undertone instead of cold pure black,
+     and adds a muted brass/gold secondary accent (trichome/quality-tier
+     association) for premium moments — PRO badges, ratings, highlights —
+     instead of leaning on the primary green or stock Tailwind amber for
+     everything. Status colors (rose/amber for error/warning) are left as
+     Tailwind defaults — those are expected, invisible semantic colors;
+     it's the BRAND accent that needs to not look like a template default. */
+  --bg:           #070f0b;
+  --surface:      #0c1712;
+  --text:         #f3f6f2;
+  --muted:        #8fa396;
+  --primary:      #1fa971;
+  --primary-dark: #16875a;
+  --primary-deep: #0f3226;
   --brand-hero:   #07130d;
-  --line:         #1f2a24;
-  --ring:         #22c55e;
+  --line:         #1c2b22;
+  --ring:         #1fa971;
+  --accent-gold:      #c9a15a;
+  --accent-gold-dark: #a8813f;
 
   /* ── Spacing / radius tokens ── */
   --radius-sm:  0.5rem;
@@ -40,10 +54,17 @@
   --radius-lg:  1rem;
   --radius-xl:  1.5rem;
 
-  /* ── Transition tokens ── */
-  --transition-fast: 120ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-base: 200ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* ── Motion tokens (DESIGN_SYSTEM.md §15) ──
+     Each easing serves one purpose — never one curve for everything. */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);   /* entering/exiting */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* on-screen movement/morph */
+  --ease-linear: linear;                            /* constant motion (progress, marquee) */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);    /* iOS-like drawer/sheet curve */
+
+  /* Purpose-correct duration bands from §15.3, paired with the right curve. */
+  --transition-fast: 140ms var(--ease-out);  /* press feedback, small popovers */
+  --transition-base: 200ms var(--ease-out);  /* dropdowns, selects, UI enter/exit */
+  --transition-slow: 320ms var(--ease-in-out); /* modals, drawers, on-screen movement */
 
   /* ── Tailwind semantic aliases (point to canonicals — no duplicate values) ── */
   --background:       var(--bg);
@@ -55,14 +76,16 @@
 
 .dark {
   /* Keep explicit dark class support aligned with default dark palette */
-  --bg:           #05070a;
-  --surface:      #0a1115;
-  --text:         #f8fafc;
-  --muted:        #94a3b8;
-  --primary:      #22c55e;
-  --primary-dark: #16a34a;
-  --line:         #1f2a24;
-  --ring:         #22c55e;
+  --bg:           #070f0b;
+  --surface:      #0c1712;
+  --text:         #f3f6f2;
+  --muted:        #8fa396;
+  --primary:      #1fa971;
+  --primary-dark: #16875a;
+  --line:         #1c2b22;
+  --ring:         #1fa971;
+  --accent-gold:      #c9a15a;
+  --accent-gold-dark: #a8813f;
   /* ── Aliases auto-update via var() resolution — no duplication needed ── */
 }
 
@@ -85,8 +108,29 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display), "Space Grotesk", sans-serif;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  /* Fallback only. Size-specific tracking/leading (DESIGN_SYSTEM.md
+     Typography section) come from the fontSize scale in tailwind.config.ts
+     for any heading carrying an explicit text-* class — a class selector
+     always outranks this element selector, so those win automatically.
+     This value only applies to headings with no size class. */
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+/* ── Glass material (apple-design §12) — translucent floating layer for
+   nav bars, dropdowns, popovers, menus. Content should visibly move
+   underneath. Never stack a glass surface on top of another. ── */
+.glass-surface {
+  background: color-mix(in srgb, var(--card) 72%, transparent);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+/* ── Modal material (apple-design §12) — opaque task surface. Modals pair
+   with a dimming scrim on the backdrop instead of becoming translucent
+   themselves; unlike dropdowns they're not anchored to a trigger. ── */
+.modal-surface {
+  background: var(--card);
 }
 
 main {
@@ -323,6 +367,22 @@ html {
 .sl-plant-leaf--fast {
   animation-name: slLeafSwayFast;
   animation-duration: 6.8s;
+}
+
+/* ── Reduced motion — global catch-all (§15.9) ──────────────────────
+   Collapses every animation/transition app-wide to near-instant.
+   Duration-only: doesn't force transform/opacity so it can't break
+   non-motion layout. The block below adds a crafted fallback for the
+   landing-hero effects specifically. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
