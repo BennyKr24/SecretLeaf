@@ -45,6 +45,34 @@ Datei soll immer nur den aktuellen Stand zeigen, kein Changelog werden.
       Render-Reihenfolge-Bugs verursachen kann. Nicht behoben, da
       außerhalb des Scopes der Grow-Seiten-Neugestaltung.
 
+## Design/Motion-System Rollout
+
+- [ ] **Emoji-als-Icon-Sweep — Rest-27-Dateien nicht einzeln nachverifiziert.**
+      Root-Cause-Fix für "sieht immer noch billig/KI-generiert aus"
+      (2026-08-06/07): Emoji als funktionale UI-Icons + unveränderte
+      Tailwind-Stock-Farbpalette (`green-500`/`slate-400`) identifiziert und
+      projektweit auf Lucide-Icons + neue Jade/Gold-Palette umgestellt
+      (`globals.css`, `tailwind.config.ts`, `DESIGN_SYSTEM.md` §5). Nach dem
+      Sweep (eigene Fixes + mehrere Background-Agent-Durchläufe) fand ein
+      abschließendes `grep` nach Emoji projektweit noch **27 Dateien** mit
+      Treffern. Die meisten davon wurden als legitim triagiert (Prosa in
+      JSON-Changelogs, Code-Kommentare, bewusst beibehaltene
+      Sprachflaggen-/Farb-Punkt-Fälle) oder direkt gefixt
+      (`layout.tsx`-Footer, `onboarding/page.tsx`, `intelligence.ts`,
+      `LocaleBanner.tsx`), aber die volle 27-Datei-Liste wurde nicht
+      einzeln nachgeprüft — es können noch einzelne echte
+      Emoji-als-Icon-Stellen übrig sein. Erneut grep'en (ripgrep mit
+      `-P '[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}\x{2190}-\x{21FF}]'` über
+      `apps/web/src`) und Rest triagieren — Prosa/Kommentare/bewusste
+      Sprachflaggen ignorieren, nur echte Icon-Ersatz-Stellen fixen.
+- [ ] **`Dropdown.tsx` → `base-ui` Swap, zurückgestellt.** Der Kowalski-Skill
+      `pick-ui-library` empfiehlt base-ui für Dropdowns statt Marke-Eigenbau.
+      Beim Motion-Rollout (2026-08-07) bewusst nicht gemacht — 42 Call-Sites
+      über 14 Dateien, echter Architektur-Eingriff statt CSS-Fix. Der
+      Hand-Bau ist inzwischen voll regelkonform (Glass-Material,
+      Materialize-Animation, Origin-aware), also kein Bug, nur ein
+      "könnte man" für mehr eingebaute A11y/Focus-Management.
+
 ## Studien-/Content-Engine
 
 - [ ] **Echter Regex-False-Positive-Bug im Produktiv-Klassifizierer.**
