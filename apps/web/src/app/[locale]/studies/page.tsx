@@ -62,17 +62,17 @@ export default function StudiesPage() {
           <div className="mt-6 flex flex-wrap gap-2">
             <Link href={"/studies/sources" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
-                px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-all">
+                px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors duration-150">
               <Microscope className="h-3.5 w-3.5" strokeWidth={2} /> Quellenregister
             </Link>
             <Link href={"/studies/pests" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
-                px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-all">
+                px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors duration-150">
               <Bug className="h-3.5 w-3.5" strokeWidth={2} /> Schädlings-Lexikon
             </Link>
             <Link href={"/studies/deficiencies" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
-                px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-all">
+                px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors duration-150">
               <FlaskConical className="h-3.5 w-3.5" strokeWidth={2} /> Nährstoffmängel
             </Link>
           </div>

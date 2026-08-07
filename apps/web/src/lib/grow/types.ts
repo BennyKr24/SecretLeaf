@@ -66,15 +66,6 @@ export type TaskCategory =
   | "ernte"
   | "allgemein";
 
-export const TASK_CATEGORY_ICONS: Record<TaskCategory, string> = {
-  bewaesserung: "💧",
-  duengung: "🧪",
-  training: "✂️",
-  kontrolle: "🔍",
-  ernte: "🌿",
-  allgemein: "📋",
-};
-
 // ── Grow Task ─────────────────────────────────────────────────────────────────
 
 export type GrowTask = {
@@ -252,14 +243,6 @@ export const LOG_ENTRY_TYPE_LABELS: Record<LogEntryType, string> = {
   training: "Training",
   notiz: "Notiz",
   tool_result: "Tool-Ergebnis",
-};
-
-export const LOG_ENTRY_TYPE_ICONS: Record<LogEntryType, string> = {
-  wasser: "💧",
-  duenger: "🧪",
-  training: "✂️",
-  notiz: "📝",
-  tool_result: "📐",
 };
 
 // ── Log Entry (Core Entity) ───────────────────────────────────────────────────

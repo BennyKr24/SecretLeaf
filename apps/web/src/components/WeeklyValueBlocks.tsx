@@ -5,6 +5,8 @@ import type { Route } from 'next';
 import type { TerpiraArticle } from '@/lib/terpira/types';
 import { categoryLabels } from '@/data/terpira/wiki';
 import BookmarkButton from './BookmarkButton';
+import { CATEGORY_ICONS } from '@/lib/terpira/categoryIcons';
+import { FileText } from 'lucide-react';
 
 type SectionDef = {
   id: string;
@@ -17,12 +19,6 @@ type SectionDef = {
   linkHref?: string;
 };
 
-const CATEGORY_ICONS: Record<string, string> = {
-  anbau: '🌱', genetik: '🧬', chemie: '⚗️', terpene: '🌺',
-  medizin: '🩺', konsumformen: '💨', konzentrate: '💎', recht: '⚖️',
-  sicherheit: '🛡️', qualitaet: '🔬', markt: '📊', werkzeuge: '🛠️',
-};
-
 function evidenceLevel(sourceCount: number): { label: string; cls: string } {
   if (sourceCount >= 5) return { label: 'Hohe Evidenz', cls: 'evidence-high border' };
   if (sourceCount >= 3) return { label: 'Mittlere Evidenz', cls: 'evidence-med border' };
@@ -32,6 +28,7 @@ function evidenceLevel(sourceCount: number): { label: string; cls: string } {
 function WeeklyCard({ article, rank }: { article: TerpiraArticle; rank: number }) {
   const sourceCount = article.sourceIds?.length ?? 0;
   const ev = evidenceLevel(sourceCount);
+  const CategoryIcon = CATEGORY_ICONS[article.category] ?? FileText;
 
   return (
     <div className="relative group">
@@ -54,7 +51,7 @@ function WeeklyCard({ article, rank }: { article: TerpiraArticle; rank: number }
 
         {/* Icon + title */}
         <div>
-          <span className="text-xl mb-1.5 block">{CATEGORY_ICONS[article.category] ?? '📄'}</span>
+          <CategoryIcon className="mb-1.5 h-5 w-5 text-emerald-600" strokeWidth={2} />
           <h3 className="text-[13px] font-bold text-foreground group-hover:text-emerald-700 transition-colors leading-snug line-clamp-2">
             {article.title}
           </h3>
@@ -137,7 +134,7 @@ export default function WeeklyValueBlocks({
               {section.linkHref && (
                 <Link href={section.linkHref as Route} className="group flex items-center gap-1 text-sm font-medium text-muted-fg hover:text-emerald-600 transition-colors">
                   {section.linkLabel}
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="w-4 h-4 transition-transform [@media(hover:hover)]:group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
@@ -166,18 +163,19 @@ export default function WeeklyValueBlocks({
             <div className="space-y-1.5">
               {meistGelesenArticles.slice(0, 5).map((article, i) => {
                 const sourceCount = article.sourceIds?.length ?? 0;
+                const CategoryIcon = CATEGORY_ICONS[article.category] ?? FileText;
                 return (
                   <div key={article.slug} className="relative">
                     <Link
                       href={`/studies/${article.slug}` as Route}
                       className="group flex items-center gap-4 rounded-xl border border-transparent bg-card px-5 py-3.5
-                        hover:border-emerald-100 hover:shadow-sm hover:bg-emerald-50/20 transition-all duration-150"
+                        hover:border-emerald-100 hover:shadow-sm hover:bg-emerald-50/20 transition-[border-color,box-shadow,background-color] duration-150"
                     >
                       <span className="w-6 text-center text-xs font-bold text-muted-fg flex-shrink-0 tabular-nums">
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 border border-amber-100 text-sm flex-shrink-0">
-                        {CATEGORY_ICONS[article.category] ?? '📄'}
+                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 border border-amber-100 text-amber-600 flex-shrink-0">
+                        <CategoryIcon className="h-4 w-4" strokeWidth={2} />
                       </span>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-semibold text-foreground group-hover:text-emerald-700 transition-colors line-clamp-1">

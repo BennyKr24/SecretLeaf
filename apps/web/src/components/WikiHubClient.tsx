@@ -5,6 +5,8 @@ import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 import type { TerpiraArticle, TerpiraCategory, TerpiraDifficulty } from '@/lib/terpira/types';
+import { CATEGORY_ICONS } from '@/lib/terpira/categoryIcons';
+import { FileText, LayoutGrid, type LucideIcon } from 'lucide-react';
 
 // ─── Typen & Konfiguration ───────────────────────────────────────────────────
 
@@ -26,12 +28,6 @@ const DIFFICULTY_META: Record<TerpiraDifficulty, { label: string; color: string;
   einsteiger:    { label: 'Einsteiger',    color: 'text-blue-700',   bg: 'bg-blue-100',   ring: 'ring-blue-300' },
   fortgeschritten: { label: 'Fortgeschritten', color: 'text-amber-700', bg: 'bg-amber-100', ring: 'ring-amber-300' },
   profi:         { label: 'Profi',         color: 'text-purple-700', bg: 'bg-purple-100', ring: 'ring-purple-300' },
-};
-
-const CATEGORY_ICONS: Record<string, string> = {
-  anbau: '🌱', genetik: '🧬', chemie: '⚗️', terpene: '🌺',
-  medizin: '🩺', konsumformen: '💨', konzentrate: '💎', recht: '⚖️',
-  sicherheit: '🛡️', qualitaet: '🔬', markt: '📊', werkzeuge: '🛠️',
 };
 
 const ORDERED_CATEGORIES: TerpiraCategory[] = [
@@ -125,10 +121,11 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
   const diff = DIFFICULTY_META[article.difficulty];
   const sourceCount = article.sourceIds?.length ?? 0;
   const evidence = evidenceMeta(sourceCount);
+  const CategoryIcon = CATEGORY_ICONS[article.category] ?? FileText;
 
   return (
     <article className="group relative flex flex-col rounded-2xl border border-border bg-card
-      shadow-sm hover:shadow-md hover:border-emerald-200 transition-all duration-200 overflow-hidden">
+      shadow-sm hover:shadow-md hover:border-emerald-200 transition-[box-shadow,border-color] duration-200 overflow-hidden">
       {/* Kategorie-Farbleiste */}
       <div className="h-1 w-full bg-gradient-to-r from-primary to-emerald-400" />
 
@@ -136,7 +133,7 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
         {/* Badges */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-1.5">
-            <span className="text-base leading-none">{CATEGORY_ICONS[article.category] ?? '📄'}</span>
+            <CategoryIcon className="h-4 w-4 text-emerald-600" strokeWidth={2} />
             <span className="text-xs font-medium text-muted-fg">{categoryLabel}</span>
           </div>
           <div className="flex items-center gap-1.5">
@@ -144,7 +141,7 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
               type="button"
               aria-label={isBookmarked ? 'Aus Merkliste entfernen' : 'Zur Merkliste hinzufügen'}
               onClick={() => onToggleBookmark(article.slug)}
-              className={`inline-flex h-6 w-6 items-center justify-center rounded-full border text-xs transition-all
+              className={`inline-flex h-6 w-6 items-center justify-center rounded-full border text-xs transition-[transform,background-color,border-color,color] duration-150 active:scale-90
                 ${isBookmarked
                   ? 'border-amber-300 bg-amber-100 text-amber-700'
                   : 'border-border bg-card text-muted-fg hover:border-amber-200 hover:text-amber-600'
@@ -479,11 +476,11 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
             placeholder="Studien durchsuchen… (/ oder Strg+F)"
             className="w-full rounded-xl border border-border bg-card py-2.5 pl-9 pr-10 text-sm
               text-foreground placeholder:text-muted-fg outline-none
-              focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all shadow-sm"
+              focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-[border-color,box-shadow] duration-150 shadow-sm"
           />
           {localSearch && (
             <button onClick={() => setLocalSearch('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80">
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80 transition-transform duration-150 active:scale-90">
               ✕
             </button>
           )}
@@ -502,7 +499,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
         {hasFilters && (
           <button onClick={resetFilters}
             className="rounded-xl border border-border bg-card px-3 py-2.5 text-sm
-              text-foreground/80 hover:text-red-600 hover:border-red-200 transition-all shadow-sm">
+              text-foreground/80 hover:text-red-600 hover:border-red-200 transition-[transform,color,border-color] duration-150 active:scale-[0.97] shadow-sm">
             Zurücksetzen
           </button>
         )}
@@ -520,7 +517,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
                   <Link
                     key={entry.slug}
                     href={`/studies/${entry.slug}` as Route}
-                    className="block rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground/80 hover:border-emerald-200 hover:text-emerald-700 transition-all"
+                    className="block rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground/80 hover:border-emerald-200 hover:text-emerald-700 transition-colors duration-200"
                   >
                     {entry.title}
                   </Link>
@@ -537,7 +534,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
                   <Link
                     key={entry.slug}
                     href={`/studies/${entry.slug}` as Route}
-                    className="block rounded-lg border border-amber-100 bg-card px-3 py-2 text-sm text-foreground/80 hover:border-amber-300 hover:text-amber-800 transition-all"
+                    className="block rounded-lg border border-amber-100 bg-card px-3 py-2 text-sm text-foreground/80 hover:border-amber-300 hover:text-amber-800 transition-colors duration-200"
                   >
                     {entry.title}
                   </Link>
@@ -552,7 +549,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
       <div ref={tabsRef} className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
         <CategoryTab
           label="Alle"
-          icon="🌿"
+          icon={LayoutGrid}
           count={articles.length}
           active={activeCategory === 'alle'}
           onClick={() => setActiveCategory('alle')}
@@ -561,7 +558,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
           <CategoryTab
             key={cat}
             label={categoryLabels[cat] ?? cat}
-            icon={CATEGORY_ICONS[cat] ?? '📄'}
+            icon={CATEGORY_ICONS[cat] ?? FileText}
             count={categoryCounts[cat] ?? 0}
             active={activeCategory === cat}
             onClick={() => setActiveCategory(cat as TerpiraCategory)}
@@ -579,7 +576,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
             <button
               key={diff}
               onClick={() => setActiveDifficulty(diff)}
-              className={`rounded-full px-3 py-1 text-xs font-semibold transition-all
+              className={`rounded-full px-3 py-1 text-xs font-semibold transition-[transform,background-color,color,box-shadow] duration-150 active:scale-[0.97]
                 ${isActive
                   ? `ring-2 ${meta ? `${meta.bg} ${meta.color} ${meta.ring}` : 'ring-border bg-border text-foreground'}`
                   : 'bg-border text-foreground/80 hover:bg-border'
@@ -594,7 +591,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
         })}
         <button
           onClick={() => setFreshOnly(v => !v)}
-          className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
+          className={`rounded-full px-3 py-1 text-xs font-semibold transition-[transform,background-color,color,box-shadow] duration-150 active:scale-[0.97] ${
             freshOnly
               ? 'ring-2 ring-emerald-300 bg-emerald-100 text-emerald-800'
               : 'bg-border text-foreground/80 hover:bg-border'
@@ -656,19 +653,19 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
           <Link href={"/studies/sources" as Route}
             className="inline-flex items-center gap-1.5 rounded-lg border border-border
               bg-background px-3 py-2 text-sm text-foreground/80 hover:border-emerald-300
-              hover:bg-emerald-50 hover:text-emerald-800 transition-all">
+              hover:bg-emerald-50 hover:text-emerald-800 transition-colors duration-200">
             🔬 {totalSources} Wissenschaftliche Quellen
           </Link>
           <Link href={"/database/fertilizers" as Route}
             className="inline-flex items-center gap-1.5 rounded-lg border border-border
               bg-background px-3 py-2 text-sm text-foreground/80 hover:border-amber-300
-              hover:bg-amber-50 hover:text-amber-800 transition-all">
+              hover:bg-amber-50 hover:text-amber-800 transition-colors duration-200">
             🌿 Dünger-Katalog
           </Link>
           <Link href={"/search" as Route}
           className="inline-flex items-center gap-1.5 rounded-lg border border-border
               bg-background px-3 py-2 text-sm text-foreground/80 hover:border-cyan-300
-              hover:bg-cyan-50 hover:text-cyan-800 transition-all">
+              hover:bg-cyan-50 hover:text-cyan-800 transition-colors duration-200">
             🔍 Volltext-Suche
           </Link>
         </div>
@@ -682,20 +679,20 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
 
 // ─── Kategorie-Tab ────────────────────────────────────────────────────────────
 
-function CategoryTab({ label, icon, count, active, onClick }: {
-  label: string; icon: string; count: number; active: boolean; onClick: () => void;
+function CategoryTab({ label, icon: Icon, count, active, onClick }: {
+  label: string; icon: LucideIcon; count: number; active: boolean; onClick: () => void;
 }) {
   return (
     <button
       onClick={onClick}
       className={`inline-flex items-center gap-1.5 flex-shrink-0 rounded-xl px-3 py-2 text-sm
-        font-medium transition-all duration-150
+        font-medium transition-[transform,background-color,border-color,color,box-shadow] duration-150 active:scale-[0.97]
         ${active
           ? 'bg-primary text-white shadow-md shadow-emerald-900/20'
           : 'bg-card border border-border text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 shadow-sm'
         }`}
     >
-      <span className="text-base leading-none">{icon}</span>
+      <Icon className="h-4 w-4" strokeWidth={2} />
       <span>{label}</span>
       <span className={`rounded-full px-1.5 py-0.5 text-xs font-bold ${
         active ? 'bg-card/20 text-white' : 'bg-border text-muted-fg'
@@ -728,7 +725,7 @@ function EmptyState({ onReset, query, suggestions, onSelectSuggestion }: {
             <button
               key={hint}
               onClick={() => onSelectSuggestion(hint)}
-              className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition"
+              className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition active:scale-[0.97]"
             >
               {hint}
             </button>
@@ -737,7 +734,7 @@ function EmptyState({ onReset, query, suggestions, onSelectSuggestion }: {
       )}
 
       <button onClick={onReset}
-        className="mt-4 inline-flex rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition">
+        className="mt-4 inline-flex rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-dark transition active:scale-[0.97]">
         Filter zurücksetzen
       </button>
     </div>

@@ -15,7 +15,7 @@ export default function ToolToggle({ label, checked, onChange, hint }: Props) {
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className="flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 text-left transition-all hover:border-emerald-300"
+        className="flex w-full items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 text-left transition-[transform,border-color] duration-150 hover:border-emerald-300 active:scale-[0.97]"
       >
         <span className="text-sm font-medium text-foreground">{label}</span>
         <span

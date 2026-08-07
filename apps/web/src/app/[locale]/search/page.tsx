@@ -37,7 +37,7 @@ function ResultCard({ result }: { result: SearchResult }) {
   return (
     <Link
       href={result.url as Route}
-      className="group block bg-card rounded-xl border border-border hover:border-emerald-300 hover:shadow-md transition-all p-5"
+      className="group block bg-card rounded-xl border border-border hover:border-emerald-300 hover:shadow-md transition-[border-color,box-shadow] duration-200 p-5"
     >
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-background border border-border flex items-center justify-center text-lg">
@@ -153,7 +153,7 @@ function SearchContent() {
           </p>
 
           <form onSubmit={handleSubmit} className="relative">
-            <div className="flex items-center bg-white/10 backdrop-blur border border-white/20 rounded-2xl px-5 py-3 gap-3 focus-within:bg-white/15 focus-within:border-emerald-400/50 transition-all">
+            <div className="flex items-center bg-white/10 backdrop-blur border border-white/20 rounded-2xl px-5 py-3 gap-3 focus-within:bg-white/15 focus-within:border-emerald-400/50 transition-colors duration-150">
               <svg className="w-5 h-5 text-muted-fg flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -171,7 +171,7 @@ function SearchContent() {
                 <button
                   type="button"
                   onClick={() => { setQuery(''); setData(null); setHasSearched(false); }}
-                  className="text-muted-fg hover:text-slate-300 transition"
+                  className="text-muted-fg hover:text-slate-300 transition active:scale-90"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -180,7 +180,7 @@ function SearchContent() {
               )}
               <button
                 type="submit"
-                className="flex-shrink-0 px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold rounded-xl transition"
+                className="flex-shrink-0 px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold rounded-xl transition active:scale-[0.97]"
               >
                 Suchen
               </button>
@@ -198,7 +198,7 @@ function SearchContent() {
               <button
                 key={k}
                 onClick={() => handleKindChange(k)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${
+                className={`px-4 py-2 rounded-xl text-sm font-medium border transition-[transform,background-color,border-color,color] duration-150 active:scale-[0.97] ${
                   activeKind === k
                     ? 'bg-emerald-600 text-white border-emerald-600'
                     : 'bg-card text-foreground/80 border-border hover:border-emerald-300'
@@ -261,7 +261,7 @@ function SearchContent() {
                   <button
                     key={s}
                     onClick={() => { setQuery(s); doSearch(s, activeKind); }}
-                    className="px-3 py-1.5 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 rounded-lg text-sm hover:bg-emerald-200 dark:hover:bg-emerald-950/60 transition"
+                    className="px-3 py-1.5 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 rounded-lg text-sm hover:bg-emerald-200 dark:hover:bg-emerald-950/60 transition active:scale-[0.97]"
                   >
                     {s}
                   </button>
@@ -280,7 +280,7 @@ function SearchContent() {
                 <button
                   key={tag}
                   onClick={() => { setQuery(tag); doSearch(tag, 'all'); }}
-                  className="flex items-center gap-1 px-3 py-1.5 bg-background hover:bg-emerald-100 dark:bg-emerald-950/40 text-foreground/80 hover:text-emerald-700 dark:text-emerald-400 rounded-lg text-sm transition"
+                  className="flex items-center gap-1 px-3 py-1.5 bg-background hover:bg-emerald-100 dark:bg-emerald-950/40 text-foreground/80 hover:text-emerald-700 dark:text-emerald-400 rounded-lg text-sm transition active:scale-[0.97]"
                 >
                   {tag}
                   <span className="text-xs text-muted-fg">{count}</span>
@@ -306,7 +306,7 @@ function SearchContent() {
                 <Link
                   key={item.href}
                   href={item.href as Route}
-                  className="bg-card border border-border hover:border-emerald-300 rounded-xl p-4 text-center transition-all hover:shadow-sm"
+                  className="bg-card border border-border hover:border-emerald-300 rounded-xl p-4 text-center transition-[border-color,box-shadow] duration-200 hover:shadow-sm"
                 >
                   <div className="text-2xl mb-1">{item.label.split(' ')[0]}</div>
                   <div className="text-sm font-medium text-foreground/80">{item.label.slice(3)}</div>

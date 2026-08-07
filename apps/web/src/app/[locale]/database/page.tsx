@@ -2,6 +2,22 @@ import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { Route } from "next";
 import { fertilizerCatalog } from "@/data/terpira/fertilizers";
+import {
+  Flower2,
+  Sprout,
+  Leaf,
+  Euro,
+  Star,
+  Droplets,
+  Rocket,
+  Bug,
+  FlaskConical,
+  Microscope,
+  RefreshCw,
+  Check,
+  Ruler,
+  type LucideIcon,
+} from "lucide-react";
 
 // — Server-side catalogue stats —
 const total = fertilizerCatalog.length;
@@ -17,61 +33,74 @@ const premiumCount = fertilizerCatalog.filter((f) => f.cost === "premium").lengt
 const QUICK_FILTER_CLS =
   "border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-950/50 hover:border-emerald-300";
 
-const QUICK_FILTERS = [
+const QUICK_FILTERS: Array<{
+  label: string;
+  icon: LucideIcon;
+  href: string;
+  count: number | null;
+  cls: string;
+}> = [
   {
     label: "Blüte",
-    icon: "🌸",
+    icon: Flower2,
     href: "/database/fertilizers?phase=flower",
     count: flowerCount,
     cls: QUICK_FILTER_CLS,
   },
   {
     label: "Grow / Veg",
-    icon: "🌱",
+    icon: Sprout,
     href: "/database/fertilizers?phase=veg",
     count: vegCount,
     cls: QUICK_FILTER_CLS,
   },
   {
     label: "Organisch",
-    icon: "🍃",
+    icon: Leaf,
     href: "/database/fertilizers?useCase=soil-organic",
     count: organicCount,
     cls: QUICK_FILTER_CLS,
   },
   {
     label: "Budget",
-    icon: "💶",
+    icon: Euro,
     href: "/database/fertilizers?cost=budget",
     count: budgetCount,
     cls: QUICK_FILTER_CLS,
   },
   {
     label: "Premium",
-    icon: "⭐",
+    icon: Star,
     href: "/database/fertilizers?cost=premium",
     count: premiumCount,
     cls: QUICK_FILTER_CLS,
   },
   {
     label: "Hydro & Coco",
-    icon: "💧",
+    icon: Droplets,
     href: "/database/fertilizers?useCase=hydro-performance",
     count: null,
     cls: QUICK_FILTER_CLS,
   },
   {
     label: "Max. Ertrag",
-    icon: "🚀",
+    icon: Rocket,
     href: "/database/fertilizers?useCase=max-yield",
     count: null,
     cls: QUICK_FILTER_CLS,
   },
-] as const;
+];
 
-const USE_CASES = [
+const USE_CASES: Array<{
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+  href: string;
+  accentCls: string;
+  labelCls: string;
+}> = [
   {
-    icon: "💧",
+    icon: Droplets,
     title: "Hydro & Coco",
     desc: "Mineraldünger für präzise EC-Steuerung im Wasser- und Coco-Anbau.",
     href: "/database/fertilizers?useCase=hydro-performance",
@@ -79,7 +108,7 @@ const USE_CASES = [
     labelCls: "text-emerald-700 dark:text-emerald-400",
   },
   {
-    icon: "🌿",
+    icon: Leaf,
     title: "Erde & Bio",
     desc: "Organische und bio-organische Linien für lebendige Böden und sanfte Ernährung.",
     href: "/database/fertilizers?useCase=soil-organic",
@@ -87,7 +116,7 @@ const USE_CASES = [
     labelCls: "text-emerald-700 dark:text-emerald-400",
   },
   {
-    icon: "💶",
+    icon: Euro,
     title: "Budget-freundlich",
     desc: "Günstige Produkte mit guter Abdeckung – ideal für den Einstieg.",
     href: "/database/fertilizers?cost=budget",
@@ -95,7 +124,7 @@ const USE_CASES = [
     labelCls: "text-emerald-700 dark:text-emerald-400",
   },
   {
-    icon: "🚀",
+    icon: Rocket,
     title: "Maximaler Ertrag",
     desc: "Hochleistungs-Dünger mit besonders hohem Ertragspotenzial.",
     href: "/database/fertilizers?useCase=max-yield",
@@ -103,7 +132,7 @@ const USE_CASES = [
     labelCls: "text-emerald-700 dark:text-emerald-400",
   },
   {
-    icon: "🌸",
+    icon: Flower2,
     title: "Blüte optimiert",
     desc: "PK-starke Blütedünger und Bloom-Booster für die Reifephase.",
     href: "/database/fertilizers?phase=flower",
@@ -111,18 +140,25 @@ const USE_CASES = [
     labelCls: "text-emerald-700 dark:text-emerald-400",
   },
   {
-    icon: "⭐",
+    icon: Star,
     title: "Premium Systeme",
     desc: "Die besten Markensysteme ohne Kompromisse – CANNA, Athena, AN und mehr.",
     href: "/database/fertilizers?cost=premium",
     accentCls: "border-emerald-100 dark:border-emerald-900/40 bg-emerald-50/60 dark:bg-emerald-950/30 hover:border-emerald-300",
     labelCls: "text-emerald-700 dark:text-emerald-400",
   },
-] as const;
+];
 
-const LEXICONS = [
+const LEXICONS: Array<{
+  icon: LucideIcon;
+  label: string;
+  desc: string;
+  href: string;
+  accentCls: string;
+  labelCls: string;
+}> = [
   {
-    icon: "🐛",
+    icon: Bug,
     label: "Schädlinge",
     desc: "Symptome, Monitoring und Gegenmaßnahmen.",
     href: "/studies/pests",
@@ -130,7 +166,7 @@ const LEXICONS = [
     labelCls: "text-rose-700 dark:text-rose-400",
   },
   {
-    icon: "🧪",
+    icon: FlaskConical,
     label: "Nährstoffmängel",
     desc: "Diagnose und Korrektur nach Symptom.",
     href: "/studies/deficiencies",
@@ -138,14 +174,14 @@ const LEXICONS = [
     labelCls: "text-sky-700 dark:text-sky-400",
   },
   {
-    icon: "🔬",
+    icon: Microscope,
     label: "Quellenregister",
     desc: "Wissenschaftliche Quellen nach Publisher & Typ.",
     href: "/studies/sources",
     accentCls: "border-emerald-100 dark:border-emerald-900/40 hover:border-emerald-300 hover:bg-emerald-50 dark:bg-emerald-950/30 dark:hover:bg-emerald-950/30",
     labelCls: "text-emerald-700 dark:text-emerald-400",
   },
-] as const;
+];
 
 export default function DatabaseHubPage() {
   return (
@@ -230,7 +266,7 @@ export default function DatabaseHubPage() {
                 href={f.href as Route}
                 className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${f.cls}`}
               >
-                <span>{f.icon}</span>
+                <f.icon className="h-4 w-4" strokeWidth={2} />
                 {f.label}
                 {f.count != null && (
                   <span className="rounded-full bg-card/70 px-1.5 py-0.5 text-xs tabular-nums">
@@ -257,9 +293,9 @@ export default function DatabaseHubPage() {
               <Link
                 key={uc.href}
                 href={uc.href as Route}
-                className={`group flex flex-col rounded-2xl border p-5 transition-all duration-150 hover:-translate-y-0.5 hover:shadow-md ${uc.accentCls}`}
+                className={`group flex flex-col rounded-2xl border p-5 transition-[border-color,background-color,transform,box-shadow] duration-150 hover:-translate-y-0.5 hover:shadow-md ${uc.accentCls}`}
               >
-                <span className="text-2xl">{uc.icon}</span>
+                <uc.icon className="h-6 w-6 text-foreground/80" strokeWidth={2} />
                 <h3 className="mt-3 text-base font-bold text-foreground">{uc.title}</h3>
                 <p className="mt-1 flex-1 text-sm text-muted-fg">{uc.desc}</p>
                 <span className={`mt-4 text-xs font-semibold group-hover:underline ${uc.labelCls}`}>
@@ -288,8 +324,8 @@ export default function DatabaseHubPage() {
                 href={lex.href as Route}
                 className={`group flex items-start gap-4 rounded-2xl border bg-card p-4 transition-colors ${lex.accentCls}`}
               >
-                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border border-border bg-background text-lg">
-                  {lex.icon}
+                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border border-border bg-background">
+                  <lex.icon className="h-4 w-4" strokeWidth={2} />
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className={`text-sm font-bold ${lex.labelCls}`}>{lex.label}</p>
@@ -317,13 +353,13 @@ export default function DatabaseHubPage() {
         <div className="mx-auto max-w-5xl">
           <div className="flex flex-wrap gap-6 sm:gap-10">
             {[
-              { icon: "🔄", text: "Preise täglich aktualisiert" },
-              { icon: "✓", text: "Redaktionell geprüfte Daten" },
-              { icon: "📐", text: "NPK + EC + PPFD je Produkt" },
-              { icon: "🔬", text: "Wissenschaftlich fundiert" },
-            ].map(({ icon, text }) => (
+              { icon: RefreshCw, text: "Preise täglich aktualisiert" },
+              { icon: Check, text: "Redaktionell geprüfte Daten" },
+              { icon: Ruler, text: "NPK + EC + PPFD je Produkt" },
+              { icon: Microscope, text: "Wissenschaftlich fundiert" },
+            ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2 text-sm text-muted-fg">
-                <span className="text-emerald-600 dark:text-emerald-400">{icon}</span>
+                <Icon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" strokeWidth={2} />
                 {text}
               </div>
             ))}

@@ -127,7 +127,7 @@ function PhasePills({ value, onChange }: PhasePillsProps) {
             key={p}
             type="button"
             onClick={() => onChange(p)}
-            className={`flex-1 rounded-xl border px-3 py-2 text-xs font-semibold transition-all ${
+            className={`flex-1 rounded-xl border px-3 py-2 text-xs font-semibold transition-[transform,border-color,background-color,color] duration-150 active:scale-[0.97] ${
               value === p
                 ? 'border-emerald-400 bg-emerald-50 text-emerald-700'
                 : 'border-border bg-card text-muted-fg hover:border-emerald-200 hover:text-foreground'

@@ -12,6 +12,7 @@ import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { wikiArticles, categoryLabels } from '@/data/terpira/wiki';
 import type { TerpiraArticle } from '@/lib/terpira/types';
+import { Bot, Leaf } from 'lucide-react';
 
 // ─── Typen ────────────────────────────────────────────────────────────────────
 
@@ -274,9 +275,9 @@ export default function WikiAskBot() {
         aria-label="Studien-Assistent öffnen"
         className={`
           fixed bottom-6 right-6 z-50 flex items-center gap-2
-          rounded-full px-4 py-3 shadow-xl transition-all duration-300
+          rounded-full px-4 py-3 shadow-xl transition-[transform,background-color,box-shadow,opacity] duration-200
           bg-primary text-white hover:bg-primary-dark hover:shadow-2xl
-          hover:scale-105 active:scale-95
+          [@media(hover:hover)]:hover:scale-105 active:scale-95
           ${open ? 'opacity-0 pointer-events-none' : 'opacity-100'}
         `}
       >
@@ -290,9 +291,22 @@ export default function WikiAskBot() {
       </button>
 
       {/* ── Panel Overlay ─────────────────────────────────────────── */}
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-end justify-end sm:items-end p-4 sm:p-6"
-          role="dialog" aria-modal aria-label="Studien-Assistent">
+      {/* Always mounted + class-toggled, not conditionally rendered: the
+          previous `{open && ...}` relied on `animate-in`/`slide-in-from-bottom-8`
+          utility classes from the tailwindcss-animate plugin — which isn't
+          installed (see tailwind.config.ts `plugins: []`), so this panel had
+          ZERO working entrance/exit animation, ever. This is a slide-up sheet
+          (Drawer/Sheet recipe, not a trigger-anchored dropdown): closed state
+          is translate-y-full, open state is translate-y-0, animating on the
+          iOS-like ease-drawer curve. `invisible` removes it from the a11y
+          tree/tab order while closed — same pattern as components/UserMenu.tsx
+          and components/ui/Dropdown.tsx. */}
+      <div
+        className={`fixed inset-0 z-50 flex items-end justify-end sm:items-end p-4 sm:p-6 transition-opacity duration-300 ${
+          open ? 'opacity-100' : 'invisible pointer-events-none opacity-0'
+        }`}
+        role="dialog" aria-modal aria-label="Studien-Assistent"
+      >
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/20 backdrop-blur-sm"
@@ -300,16 +314,18 @@ export default function WikiAskBot() {
           />
 
           {/* Panel */}
-          <div className="relative flex flex-col w-full max-w-md h-[85vh] max-h-[640px]
-            rounded-2xl bg-card shadow-2xl border border-border overflow-hidden
-            animate-in slide-in-from-bottom-8 duration-300 ease-out">
+          <div className={`modal-surface relative flex flex-col w-full max-w-md h-[85vh] max-h-[640px]
+            rounded-2xl shadow-2xl border border-border overflow-hidden
+            transition-transform duration-500 [transition-timing-function:var(--ease-drawer)] ${
+              open ? 'translate-y-0' : 'translate-y-full'
+            }`}>
 
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4
               bg-gradient-to-r from-primary-deep to-primary text-white flex-shrink-0">
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-card/20 flex items-center justify-center text-base">
-                  🤖
+                <div className="w-8 h-8 rounded-full bg-card/20 flex items-center justify-center">
+                  <Bot className="h-4 w-4" strokeWidth={2} />
                 </div>
                 <div>
                   <p className="font-bold text-sm">Studien-Assistent</p>
@@ -319,12 +335,12 @@ export default function WikiAskBot() {
               <div className="flex items-center gap-2">
                 {messages.length > 0 && (
                   <button onClick={reset}
-                    className="text-xs text-white/60 hover:text-white px-2 py-1 rounded-lg hover:bg-card/10 transition">
+                    className="text-xs text-white/60 hover:text-white px-2 py-1 rounded-lg hover:bg-card/10 transition active:scale-[0.97]">
                     Zurücksetzen
                   </button>
                 )}
                 <button onClick={() => setOpen(false)}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-card/10 transition">
+                  className="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-card/10 transition active:scale-90">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
@@ -359,7 +375,7 @@ export default function WikiAskBot() {
                           onClick={() => void ask(s.q)}
                           className="text-left rounded-xl border border-border bg-card px-3 py-2.5
                             text-xs text-foreground hover:border-emerald-300 hover:bg-emerald-50
-                            hover:text-emerald-800 transition-all shadow-sm"
+                            hover:text-emerald-800 transition-[transform,border-color,background-color,color] duration-150 active:scale-[0.97] shadow-sm"
                         >
                           {s.label}
                         </button>
@@ -375,8 +391,8 @@ export default function WikiAskBot() {
                   >
                     {msg.role === 'bot' && (
                       <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-emerald-400
-                        flex-shrink-0 flex items-center justify-center text-xs text-white mr-2 mt-1">
-                        🌿
+                        flex-shrink-0 flex items-center justify-center text-white mr-2 mt-1">
+                        <Leaf className="h-3 w-3" strokeWidth={2} />
                       </div>
                     )}
 
@@ -415,7 +431,7 @@ export default function WikiAskBot() {
                                   onClick={() => setOpen(false)}
                                   className="flex items-start gap-2 rounded-lg border border-border
                                     bg-card px-3 py-2 text-xs hover:border-emerald-300
-                                    hover:bg-emerald-50 transition-all"
+                                    hover:bg-emerald-50 transition-[border-color,background-color] duration-200"
                                 >
                                   <span className="text-emerald-500 mt-0.5">→</span>
                                   <div>
@@ -447,7 +463,7 @@ export default function WikiAskBot() {
                   disabled={loading}
                   className="flex-1 rounded-xl border border-border bg-background px-4 py-2.5
                     text-sm text-foreground placeholder:text-muted-fg outline-none
-                    focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-all
+                    focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-[border-color,box-shadow,opacity] duration-150
                     disabled:opacity-50"
                 />
                 <button
@@ -455,7 +471,7 @@ export default function WikiAskBot() {
                   disabled={!input.trim() || loading}
                   className="w-10 h-10 rounded-xl bg-primary text-white flex items-center
                     justify-center hover:bg-primary-dark disabled:opacity-40 disabled:cursor-not-allowed
-                    transition-all active:scale-95"
+                    transition-[transform,background-color,opacity] duration-150 active:scale-95"
                 >
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -467,8 +483,7 @@ export default function WikiAskBot() {
               </p>
             </div>
           </div>
-        </div>
-      )}
+      </div>
     </>
   );
 }

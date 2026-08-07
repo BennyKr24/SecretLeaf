@@ -44,7 +44,7 @@ export default function ToolRangeBar({ label, value, min, max, unit, zones }: Pr
         })}
         {/* Marker */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 h-5 w-5 rounded-full border-2 border-white bg-slate-900 shadow-md transition-all duration-300"
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 h-5 w-5 rounded-full border-2 border-white bg-slate-900 shadow-md transition-[left] duration-300"
           style={{ left: `${markerPercent}%` }}
         />
       </div>

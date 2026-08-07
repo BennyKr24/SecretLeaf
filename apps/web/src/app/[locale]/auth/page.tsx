@@ -209,7 +209,7 @@ function AuthPageInner() {
         </div>
         <div className="relative z-10">
           <Link href="/" className="inline-flex items-center gap-2.5 group mb-14">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-base transition-transform group-hover:scale-110">🌿</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-base transition-transform [@media(hover:hover)]:group-hover:scale-110">🌿</span>
             <span className="text-lg font-bold text-white tracking-tight">SecretLeaf</span>
           </Link>
           <div className="mb-10">
@@ -241,7 +241,7 @@ function AuthPageInner() {
         {/* Mobile logo */}
         <div className="lg:hidden mb-8">
           <Link href="/" className="inline-flex items-center gap-2 group">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-sm transition-transform group-hover:scale-110">🌿</span>
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-sm transition-transform [@media(hover:hover)]:group-hover:scale-110">🌿</span>
             <span className="text-[15px] font-bold text-foreground tracking-tight">SecretLeaf</span>
           </Link>
         </div>
@@ -265,7 +265,7 @@ function AuthPageInner() {
                       <p className="font-semibold mb-1">E-Mail gesendet</p>
                       <p>{info}</p>
                       <button type="button" onClick={submitForgot}
-                        className="mt-3 text-xs font-semibold text-emerald-700 underline-offset-2 hover:underline">
+                        className="mt-3 text-xs font-semibold text-emerald-700 underline-offset-2 hover:underline transition-transform duration-150 active:scale-[0.97]">
                         Erneut senden
                       </button>
                     </div>
@@ -287,14 +287,14 @@ function AuthPageInner() {
                   />
                   {globalError && <ErrorBox message={globalError} />}
                   <button type="submit" disabled={pending}
-                    className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm flex items-center justify-center gap-2">
+                    className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-500 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed transition-[transform,background-color,opacity] duration-150 shadow-sm flex items-center justify-center gap-2">
                     {pending ? <><Spinner />Wird gesendet…</> : 'Link zum Zurücksetzen senden'}
                   </button>
                 </form>
               )}
               <p className="mt-6 text-center text-sm text-muted-fg">
                 <button type="button" onClick={() => switchMode('login')}
-                  className="font-semibold text-emerald-600 hover:text-emerald-700 transition-colors">
+                  className="font-semibold text-emerald-600 hover:text-emerald-700 transition-[transform,color] duration-150 active:scale-[0.97]">
                   ← Zurück zum Login
                 </button>
               </p>
@@ -314,7 +314,7 @@ function AuthPageInner() {
               <div className="mb-6 flex rounded-xl border border-border bg-background p-1 gap-1">
                 {(['login', 'register'] as const).map(m => (
                   <button key={m} type="button" onClick={() => switchMode(m)}
-                    className={`flex-1 rounded-lg py-2 text-sm font-semibold transition-all duration-150 ${
+                    className={`flex-1 rounded-lg py-2 text-sm font-semibold active:scale-[0.97] transition-[transform,background-color,color,box-shadow] duration-150 ${
                       mode === m ? 'bg-card text-foreground shadow-sm' : 'text-muted-fg hover:text-foreground/80'
                     }`}>
                     {m === 'login' ? 'Anmelden' : 'Registrieren'}
@@ -382,7 +382,7 @@ function AuthPageInner() {
                 {mode === 'login' && (
                   <div className="flex justify-end">
                     <button type="button" onClick={() => switchMode('forgot')}
-                      className="text-xs font-medium text-muted-fg hover:text-emerald-600 transition-colors">
+                      className="text-xs font-medium text-muted-fg hover:text-emerald-600 transition-[transform,color] duration-150 active:scale-[0.97]">
                       Passwort vergessen?
                     </button>
                   </div>
@@ -391,7 +391,7 @@ function AuthPageInner() {
                 {globalError && <ErrorBox message={globalError} />}
 
                 <button type="submit" disabled={pending}
-                  className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-500 active:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm shadow-emerald-900/20 flex items-center justify-center gap-2">
+                  className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-500 active:bg-emerald-700 active:scale-[0.97] disabled:opacity-50 disabled:cursor-not-allowed transition-[transform,background-color,opacity] duration-150 shadow-sm shadow-emerald-900/20 flex items-center justify-center gap-2">
                   {pending ? (
                     <><Spinner />{mode === 'login' ? 'Anmelden…' : 'Konto erstellen…'}</>
                   ) : (

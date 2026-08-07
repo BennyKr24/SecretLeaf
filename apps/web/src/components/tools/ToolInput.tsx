@@ -25,7 +25,7 @@ export default function ToolInput({ label, value, onChange, unit, min, max, step
         <button
           type="button"
           onClick={() => onChange(Math.max(min ?? -Infinity, value - step))}
-          className="flex h-10 w-10 items-center justify-center rounded-l-xl border border-r-0 border-border bg-background text-foreground/80 hover:bg-card transition-colors text-lg font-medium"
+          className="flex h-10 w-10 items-center justify-center rounded-l-xl border border-r-0 border-border bg-background text-foreground/80 hover:bg-card transition-[transform,background-color] duration-150 active:scale-90 text-lg font-medium"
           aria-label="Verringern"
         >
           −
@@ -40,14 +40,14 @@ export default function ToolInput({ label, value, onChange, unit, min, max, step
           min={min}
           max={max}
           step={step}
-          className={`h-10 w-full border-y text-center text-sm font-semibold text-foreground outline-none transition-all
+          className={`h-10 w-full border-y text-center text-sm font-semibold text-foreground outline-none transition-[border-color,box-shadow]
             ${isInvalid ? 'border-rose-300 ring-2 ring-rose-200' : 'border-border focus:ring-2 focus:ring-emerald-200'}
             [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
         />
         <button
           type="button"
           onClick={() => onChange(Math.min(max ?? Infinity, value + step))}
-          className="flex h-10 w-10 items-center justify-center rounded-r-xl border border-l-0 border-border bg-background text-foreground/80 hover:bg-card transition-colors text-lg font-medium"
+          className="flex h-10 w-10 items-center justify-center rounded-r-xl border border-l-0 border-border bg-background text-foreground/80 hover:bg-card transition-[transform,background-color] duration-150 active:scale-90 text-lg font-medium"
           aria-label="Erhöhen"
         >
           +

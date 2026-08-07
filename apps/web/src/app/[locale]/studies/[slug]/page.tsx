@@ -10,6 +10,7 @@ import HistoryTracker from "@/components/HistoryTracker";
 import BookmarkButton from "@/components/BookmarkButton";
 import CommunitySignals from '@/components/CommunitySignals';
 import { WikiArticleOpenTracker } from './client';
+import { Microscope, CheckCircle2, AlertTriangle, Bot, Square } from 'lucide-react';
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -94,7 +95,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
               </span>
               {articleSources.length > 0 && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-cyan-100 dark:bg-cyan-950/40 px-3 py-1 text-xs font-semibold text-cyan-700 dark:text-cyan-400">
-                  🔬 {articleSources.length} Quellen
+                  <Microscope className="h-3 w-3" strokeWidth={2} /> {articleSources.length} Quellen
                 </span>
               )}
               <span className="text-xs text-muted-fg">Aktualisiert: {article.lastUpdated}</span>
@@ -130,7 +131,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
               <ul className="mt-2 space-y-1.5">
                 {article.keyTakeaways.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-emerald-900">
-                    <span className="text-emerald-500 flex-shrink-0 font-bold mt-0.5">✓</span>
+                    <CheckCircle2 className="text-emerald-500 flex-shrink-0 mt-0.5 h-4 w-4" strokeWidth={2} />
                     {item}
                   </li>
                 ))}
@@ -141,7 +142,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
             {article.warnings && article.warnings.length > 0 && (
               <div className="mt-4 rounded-xl border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 p-4">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
-                  ⚠️ Hinweis
+                  <AlertTriangle className="h-4 w-4" strokeWidth={2} /> Hinweis
                 </h2>
                 <ul className="mt-2 space-y-1 pl-4 text-sm text-amber-900">
                   {article.warnings.map((w) => (
@@ -182,12 +183,12 @@ export default async function WikiArticlePage({ params }: PageProps) {
                     {section.checklist && section.checklist.length > 0 && (
                       <div className="ml-10 rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 p-4">
                         <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-1.5">
-                          ✅ Checkliste
+                          <CheckCircle2 className="h-4 w-4" strokeWidth={2} /> Checkliste
                         </p>
                         <ul className="space-y-1.5">
                           {section.checklist.map((item) => (
                             <li key={item} className="flex items-start gap-2 text-sm text-emerald-900">
-                              <span className="flex-shrink-0 mt-0.5 text-emerald-500">□</span>
+                              <Square className="flex-shrink-0 mt-0.5 h-3.5 w-3.5 text-emerald-500" strokeWidth={2} />
                               {item}
                             </li>
                           ))}
@@ -254,7 +255,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
 
               {/* Wiki-Bot Hinweis */}
               <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 p-4">
-                <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 mb-1">🤖 Studien-Assistent</p>
+                <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 mb-1 flex items-center gap-1"><Bot className="h-3.5 w-3.5" strokeWidth={2} /> Studien-Assistent</p>
                 <p className="text-xs text-emerald-700 dark:text-emerald-400">
                   Fragen zu diesem Thema? Der Studien-Assistent fasst Inhalte zusammen und verlinkt
                   relevante Artikel. Unten rechts öffnen.
@@ -263,7 +264,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
 
               {/* Quellen-Hinweis */}
               <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-                <p className="text-xs font-semibold text-foreground/80 mb-1">🔬 Quellen</p>
+                <p className="text-xs font-semibold text-foreground/80 mb-1 flex items-center gap-1"><Microscope className="h-3.5 w-3.5" strokeWidth={2} /> Quellen</p>
                 <p className="text-xs text-muted-fg">
                   Referenzen stehen unten im Artikel oder im{' '}
                   <Link href={"/studies/sources" as Route} className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 font-semibold">
@@ -326,7 +327,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
                     <a href={source.url} target="_blank" rel="noreferrer"
                       className="flex-shrink-0 self-start rounded-lg border border-border bg-card
                         px-2.5 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:border-emerald-300
-                        hover:bg-emerald-50 dark:bg-emerald-950/30 transition-all">
+                        hover:bg-emerald-50 dark:bg-emerald-950/30 transition-[border-color,background-color] duration-150">
                       Öffnen ↗
                     </a>
                   </li>
@@ -345,7 +346,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
                     key={entry.slug}
                       href={`/studies/${entry.slug}` as Route}
                     className="rounded-xl border border-border bg-background p-4
-                      hover:border-emerald-300 hover:bg-emerald-50 dark:bg-emerald-950/30 transition-all group"
+                      hover:border-emerald-300 hover:bg-emerald-50 dark:bg-emerald-950/30 transition-[border-color,background-color] duration-150 group"
                   >
                     <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-400 mb-1">
                       {categoryLabels[entry.category]}

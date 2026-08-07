@@ -7,6 +7,7 @@ import { getSetupCoverage, getToolHistory } from '@/hooks/useToolState';
 import { toolRegistry } from '@/lib/tools/registry';
 import { toolCategoryColor, toolCategoryIcon, toolCategoryLabel, toolCategoryAccent } from '@/lib/tools/types';
 import type { ToolCategory } from '@/lib/tools/types';
+import { CheckCircle2, Circle } from 'lucide-react';
 
 const categoryIconBg: Record<ToolCategory, string> = {
   klima: 'bg-cyan-50 ring-cyan-200',
@@ -56,7 +57,7 @@ export default function ToolsHubClient() {
           </p>
           <Link
             href={`/tools/${recentTool.slug}` as Route}
-            className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md"
+            className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-4 shadow-sm transition-[transform,border-color,box-shadow] [@media(hover:hover)]:hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md"
           >
             <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ring-1 ${categoryIconBg[recentTool.category]} ${toolCategoryAccent[recentTool.category]}`}>
               <recentTool.icon className="h-5 w-5" strokeWidth={2} />
@@ -97,7 +98,7 @@ export default function ToolsHubClient() {
         {/* Progress bar */}
         <div className="mt-4 overflow-hidden rounded-full bg-background" style={{ height: 8 }}>
           <div
-            className="h-full rounded-full bg-emerald-500 transition-all duration-700"
+            className="h-full rounded-full bg-emerald-500 transition-[width] duration-700"
             style={{ width: `${percent}%` }}
           />
         </div>
@@ -110,14 +111,14 @@ export default function ToolsHubClient() {
               <Link
                 key={c.key}
                 href={`/tools/${c.slug}` as Route}
-                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-all
+                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition-colors
                   ${
                     isDone
                       ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
                       : 'border-border bg-background text-muted-fg hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700'
                   }`}
               >
-                {isDone ? '✓' : '○'} {c.label}
+                {isDone ? <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} /> : <Circle className="h-3.5 w-3.5" strokeWidth={2} />} {c.label}
               </Link>
             );
           })}

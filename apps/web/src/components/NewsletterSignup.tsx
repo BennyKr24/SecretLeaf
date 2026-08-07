@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Analytics } from '@/lib/analytics';
+import { Mail, CheckCircle2 } from 'lucide-react';
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState('');
@@ -41,7 +42,7 @@ export default function NewsletterSignup() {
       <div className="mx-auto max-w-6xl px-5 py-14">
         <div className="mx-auto max-w-xl text-center">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[10px] font-bold text-emerald-700 tracking-widest uppercase mb-4">
-            📬 Wöchentliche Zusammenfassung
+            <Mail className="h-3 w-3" strokeWidth={2} /> Wöchentliche Zusammenfassung
           </span>
           <h2 className="text-2xl font-bold tracking-tight text-foreground">
             Jede Woche das Wichtigste
@@ -52,8 +53,8 @@ export default function NewsletterSignup() {
           </p>
 
           {status === 'success' ? (
-            <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 px-6 py-4 text-sm font-semibold text-emerald-700">
-              ✓ Du bist dabei! Wir benachrichtigen dich bei neuen Updates.
+            <div className="mt-6 flex items-center justify-center gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50 px-6 py-4 text-sm font-semibold text-emerald-700">
+              <CheckCircle2 className="h-4 w-4 flex-shrink-0" strokeWidth={2} /> Du bist dabei! Wir benachrichtigen dich bei neuen Updates.
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="mt-6 flex flex-col sm:flex-row gap-2">
@@ -65,14 +66,14 @@ export default function NewsletterSignup() {
                 placeholder="deine@email.de"
                 className="flex-1 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground
                   placeholder:text-muted-fg focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100
-                  transition-all duration-150"
+                  transition-[border-color,box-shadow] duration-150"
               />
               <button
                 type="submit"
                 disabled={status === 'loading'}
                 className="rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white
-                  hover:bg-emerald-500 transition-all duration-150 shadow-sm flex-shrink-0
-                  disabled:opacity-60 disabled:cursor-not-allowed"
+                  hover:bg-emerald-500 transition-[transform,background-color,opacity] duration-150 shadow-sm flex-shrink-0
+                  active:scale-[0.97] disabled:opacity-60 disabled:cursor-not-allowed"
               >
               {status === 'loading' ? 'Wird übermittelt…' : 'Abonnieren'}
               </button>
@@ -85,11 +86,13 @@ export default function NewsletterSignup() {
 
           <div className="mt-5 flex flex-wrap justify-center gap-5 text-[11px] text-muted-fg">
             {[
-              '✓ Wöchentlich, kein Spam',
-              '✓ Neue Top-Studien',
-              '✓ Jederzeit abmeldbar',
+              'Wöchentlich, kein Spam',
+              'Neue Top-Studien',
+              'Jederzeit abmeldbar',
             ].map(item => (
-              <span key={item}>{item}</span>
+              <span key={item} className="flex items-center gap-1">
+                <CheckCircle2 className="h-3 w-3 flex-shrink-0" strokeWidth={2} /> {item}
+              </span>
             ))}
           </div>
         </div>

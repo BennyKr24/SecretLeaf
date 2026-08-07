@@ -6,15 +6,10 @@ import { wikiArticles, sourceRegister } from "@/data/terpira/wiki";
 import type { TerpiraArticle } from "@/lib/terpira/types";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { PremiumScrollFx } from "@/components/scroll/PremiumScrollFx";
-
+import { CATEGORY_ICONS } from "@/lib/terpira/categoryIcons";
+import { FileText } from "lucide-react";
 
 /* ─── Minimal helpers kept for the studies section at the bottom ─── */
-
-const CATEGORY_ICONS: Record<string, string> = {
-  anbau: "🌱", genetik: "🧬", chemie: "⚗️", terpene: "🌺",
-  medizin: "🩺", konsumformen: "💨", konzentrate: "💎", recht: "⚖️",
-  sicherheit: "🛡️", qualitaet: "🔬", markt: "📊", werkzeuge: "🛠️",
-};
 
 type EvidenceLabels = { high: string; med: string; foundational: string };
 
@@ -27,16 +22,17 @@ function evidenceLevel(n: number, labels: EvidenceLabels): { label: string; cls:
 function StudyCard({ article, evidenceLabels }: { article: TerpiraArticle; evidenceLabels: EvidenceLabels }) {
   const n = article.sourceIds?.length ?? 0;
   const ev = evidenceLevel(n, evidenceLabels);
+  const CategoryIcon = CATEGORY_ICONS[article.category] ?? FileText;
   return (
     <Link
       href={`/studies/${article.slug}` as Route}
       className="group relative flex flex-col gap-3 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-5
-        shadow-[0_20px_45px_rgba(0,0,0,0.32)] transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/30 hover:bg-emerald-500/[0.06]"
+        shadow-[0_20px_45px_rgba(0,0,0,0.32)] transition-[transform,border-color,background-color] duration-200 hover:-translate-y-0.5 hover:border-emerald-400/30 hover:bg-emerald-500/[0.06]"
     >
       <div className="pointer-events-none absolute -right-8 -top-10 h-24 w-24 rounded-full bg-emerald-400/10 blur-2xl" />
       <div className="flex items-start justify-between gap-2">
-        <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.05] text-lg">
-          {CATEGORY_ICONS[article.category] ?? "📄"}
+        <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.05] text-emerald-300">
+          <CategoryIcon className="h-4 w-4" strokeWidth={2} />
         </span>
         {n > 0 && (
           <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${ev.cls}`}>
@@ -59,128 +55,40 @@ function StudyCard({ article, evidenceLabels }: { article: TerpiraArticle; evide
   );
 }
 
-function ProductDashboardMock() {
+// One dominant photo, one minimal floating status chip. The previous version
+// crammed a header row + stat grid + progress bar + activity feed + AI-banner
+// into one card — competing with itself. Apple/Linear heroes show ONE thing
+// generously; everything else here was cut, not hidden (DESIGN_SYSTEM.md
+// §2.2 Simplicity Wins / §12 Visual Density — this card was violating both).
+function HeroPlantVisual() {
   return (
-    <div className="relative mx-auto w-full max-w-[940px]" data-parallax="0.12">
-      <div className="pointer-events-none absolute -inset-12 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.16),transparent_66%)] blur-2xl" />
-      <div className="pointer-events-none absolute -bottom-10 left-16 right-16 h-20 rounded-full bg-emerald-400/15 blur-3xl" />
+    <div className="relative mx-auto w-full max-w-[480px]" data-parallax="0.12">
+      <div className="pointer-events-none absolute -inset-16 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.22),transparent_65%)] blur-3xl" />
 
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0a1310] shadow-[0_24px_90px_rgba(0,0,0,0.55)]">
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-300/80">Grow OS</p>
-            <h3 className="mt-1 text-xl font-semibold text-slate-50">Meine Pflanze</h3>
-          </div>
-          <span className="flex items-center gap-1.5 rounded-full border border-emerald-300/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Live
-          </span>
-        </div>
-
-        <div className="p-5 sm:p-6">
-          <div className="space-y-4">
-              <div className="grid gap-4 rounded-2xl border border-white/10 bg-black/20 p-3 sm:grid-cols-[150px_1fr]">
-                <div className="relative overflow-hidden rounded-xl border border-emerald-300/20">
-                  <Image
-                    src="/images/hero/plant-thumbnail.png"
-                    alt="Cannabis Pflanze"
-                    width={700}
-                    height={700}
-                    className="h-full min-h-[130px] w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-base font-semibold text-slate-100">OG Kush</p>
-                      <p className="text-xs text-slate-400">Blüte · Tag 42</p>
-                    </div>
-                    <p className="text-sm font-semibold text-emerald-300">67%</p>
-                  </div>
-
-                  <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                    <div className="h-full w-[67%] rounded-full bg-gradient-to-r from-emerald-300 to-green-500" />
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-2 text-[11px]">
-                    <div>
-                      <p className="text-slate-500">Gesundheit</p>
-                      <p className="font-semibold text-emerald-200">Sehr gut</p>
-                    </div>
-                    <div>
-                      <p className="text-slate-500">Bewässerung</p>
-                      <p className="font-semibold text-slate-200">In 2 Tagen</p>
-                    </div>
-                    <div>
-                      <p className="text-slate-500">Nächste Aufgabe</p>
-                      <p className="font-semibold text-amber-200">Düngen</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
-                <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Übersicht</p>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  {[
-                    { label: "Temperatur", value: "25 C", tone: "text-emerald-200" },
-                    { label: "Luftfeuchtigkeit", value: "55%", tone: "text-cyan-200" },
-                    { label: "VPD", value: "0.92", tone: "text-amber-200" },
-                    { label: "pH", value: "6.2", tone: "text-fuchsia-200" },
-                  ].map((item) => (
-                    <div key={item.label} className="rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-2">
-                      <p className="text-[10px] uppercase tracking-wider text-slate-500">{item.label}</p>
-                      <p className={`mt-1 text-base font-semibold ${item.tone}`}>{item.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid gap-2 sm:grid-cols-[1.4fr_1fr]">
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-3">
-                  <p className="mb-2 text-[11px] uppercase tracking-widest text-slate-500">Letzte Aktivität</p>
-                  <div className="flex items-center justify-between text-sm text-slate-300">
-                    <span>Bewässerung · 2.5L · pH 6.3</span>
-                    <span className="text-slate-500">Heute, 08:30</span>
-                  </div>
-                </div>
-
-                <div className="rounded-2xl border border-emerald-300/20 bg-emerald-400/[0.06] p-3">
-                  <p className="mb-1 text-[11px] uppercase tracking-widest text-emerald-200/70">AI Diagnose</p>
-                  <p className="text-sm font-semibold text-emerald-100">Pflanze stabil und gesund</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="relative aspect-[4/5] overflow-hidden rounded-[32px] shadow-[0_40px_120px_rgba(0,0,0,0.65)]">
+        <Image
+          src="/images/hero/plant-thumbnail.png"
+          alt="OG Kush Blüte, Nahaufnahme"
+          fill
+          sizes="(min-width: 1024px) 480px, 90vw"
+          className="object-cover"
+          priority
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/10" />
       </div>
-  );
-}
 
-function HeroPlantDecor() {
-  return (
-    <div className="pointer-events-none absolute -right-14 top-[-26px] z-20 hidden h-[680px] w-[390px] xl:block" aria-hidden="true">
-      <div className="absolute right-0 top-16 h-[560px] w-[280px] rounded-full bg-emerald-500/16 blur-[82px]" />
-
-      <Image
-        src="/images/hero/plant-background.png"
-        alt="Cannabis Blüten"
-        width={887}
-        height={1774}
-        className="absolute right-[-42px] top-6 h-[620px] w-[310px] object-cover opacity-90 mix-blend-screen sl-photo-leaf sl-plant-leaf--slow"
-        loading="lazy"
-      />
-      <Image
-        src="/images/hero/leaf-detail.png"
-        alt="Cannabis Blatt Detail"
-        width={910}
-        height={1727}
-        className="absolute right-[-76px] top-[170px] h-[360px] w-[190px] object-cover opacity-80 mix-blend-screen sl-photo-leaf sl-plant-leaf--fast"
-        loading="lazy"
-      />
+      {/* One minimal floating glass chip (DESIGN_SYSTEM.md §16) instead of a
+          dense stat grid — scales from the trigger-less "arrives as a real
+          surface" read, not a UI panel. */}
+      <div className="glass-surface absolute -bottom-7 left-6 right-6 flex items-center justify-between gap-4 rounded-2xl border border-white/10 px-5 py-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:right-auto sm:w-[300px]">
+        <div>
+          <p className="text-[11px] uppercase tracking-wider text-emerald-300/80">OG Kush · Tag 42</p>
+          <p className="mt-0.5 text-2xl font-bold text-white">
+            67<span className="text-base font-medium text-slate-400">% bis Ernte</span>
+          </p>
+        </div>
+        <span className="flex h-2.5 w-2.5 flex-shrink-0 rounded-full bg-emerald-400 shadow-[0_0_12px_2px_rgba(52,211,153,0.6)]" aria-hidden="true" />
+      </div>
     </div>
   );
 }
@@ -218,12 +126,10 @@ export default async function LandingPage() {
           <div className="absolute inset-x-0 top-[72px] h-px bg-gradient-to-r from-transparent via-emerald-200/30 to-transparent" />
         </div>
 
-        <HeroPlantDecor />
-
         <div className="relative mx-auto max-w-7xl px-4 pb-14 pt-12 sm:px-6 sm:pb-20 sm:pt-16">
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:gap-10">
             <div className="order-1 lg:order-2" data-parallax="0.14" data-reveal data-reveal-delay="30">
-              <ProductDashboardMock />
+              <HeroPlantVisual />
             </div>
 
             <div className="order-2 max-w-[470px] space-y-7 lg:order-1" data-reveal>
@@ -232,7 +138,11 @@ export default async function LandingPage() {
                 {t("eyebrow")}
               </span>
 
-              <h1 className="text-5xl font-semibold leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-[78px]">
+              {/* text-[..px] breakpoints are arbitrary values — they don't pull the
+                  fontSize scale's letterSpacing, so each needs its own tracking
+                  (DESIGN_SYSTEM.md §6). Uses the full 72–96px hero range the doc
+                  already specifies, instead of stopping at 78px on every screen. */}
+              <h1 className="text-5xl font-semibold leading-[0.98] tracking-tight text-white sm:text-6xl sm:tracking-[-0.03em] lg:text-[88px] lg:tracking-[-0.04em] xl:text-[96px]">
                 Grow smarter.
                 <br />
                 <span className="bg-gradient-to-r from-emerald-300 to-green-500 bg-clip-text text-transparent">Not harder.</span>
@@ -241,7 +151,7 @@ export default async function LandingPage() {
               <p className="max-w-[460px] text-lg leading-relaxed text-slate-400 sm:text-xl">{t("heroSub")}</p>
 
               <div className="flex flex-wrap gap-3">
-                <CTAButton href="/start" size="lg" variant="primary" className="shadow-xl shadow-emerald-950/50 transition hover:-translate-y-0.5">
+                <CTAButton href="/start" size="lg" variant="primary" className="shadow-xl shadow-emerald-950/50 transition-transform duration-200 hover:-translate-y-0.5">
                   {t("ctaStart")}
                 </CTAButton>
                 <CTAButton href="/tools" size="lg" variant="ghost" className="border border-white/15 bg-white/5 text-slate-200 hover:bg-white/10">
@@ -256,7 +166,11 @@ export default async function LandingPage() {
       <section className="border-b border-white/5 bg-[#040b09]" data-reveal>
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
           <p className="text-center text-xs uppercase tracking-[0.22em] text-slate-500">Vertraut von über 10.000 Growern weltweit</p>
-          <div className="mt-4 grid grid-cols-2 gap-3 text-center text-sm text-slate-400 sm:grid-cols-3 lg:grid-cols-6">
+
+          {/* Plain editorial line instead of bordered boxes pretending to be
+              logo marks — without real logo assets, the box treatment read as
+              placeholder/unfinished rather than premium. */}
+          <p className="mt-5 text-center text-[13px] font-semibold uppercase tracking-wider text-slate-500">
             {[
               "GROWER.CH",
               "CANNABIS MAGAZIN",
@@ -264,14 +178,15 @@ export default async function LandingPage() {
               "420",
               "GROW DIARIES",
               "ERNTEHELFER",
-            ].map((logo) => (
-              <div key={logo} className="rounded-xl border border-white/10 bg-white/[0.02] px-3 py-3 font-semibold tracking-wide text-slate-500 transition hover:border-emerald-400/20 hover:text-slate-300">
-                {logo}
-              </div>
+            ].map((logo, i, arr) => (
+              <span key={logo}>
+                <span className="transition-colors hover:text-slate-300">{logo}</span>
+                {i < arr.length - 1 && <span className="mx-3 text-slate-700">·</span>}
+              </span>
             ))}
-          </div>
+          </p>
 
-          <div className="mt-4 grid grid-cols-2 gap-3 text-center text-sm text-slate-400 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="mt-8 grid grid-cols-2 gap-3 text-center text-sm text-slate-400 sm:grid-cols-3 lg:grid-cols-6">
             {[
               "10.000+ Grower",
               "4,9/5 Bewertung",
@@ -280,7 +195,7 @@ export default async function LandingPage() {
               "24/7 Monitoring",
               "EU Privacy-first",
             ].map((item) => (
-              <div key={item} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 transition hover:border-emerald-400/30 hover:bg-emerald-500/[0.06]">
+              <div key={item} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 transition-colors hover:border-emerald-400/30 hover:bg-emerald-500/[0.06]">
                 {item}
               </div>
             ))}
@@ -327,7 +242,7 @@ export default async function LandingPage() {
               <Link
                 key={item.title}
                 href={item.href as Route}
-                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-[0_20px_55px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-emerald-400/30 hover:bg-emerald-500/[0.07]"
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 shadow-[0_20px_55px_rgba(0,0,0,0.35)] transition-[transform,border-color,background-color] duration-200 hover:-translate-y-1 hover:border-emerald-400/30 hover:bg-emerald-500/[0.07]"
               >
                 <div className="absolute -right-8 -top-8 h-20 w-20 rounded-full bg-emerald-400/10 blur-2xl" />
                 <span className="inline-flex rounded-full border border-emerald-300/30 bg-emerald-400/10 px-2.5 py-1 text-[10px] uppercase tracking-widest text-emerald-200">
@@ -335,9 +250,9 @@ export default async function LandingPage() {
                 </span>
                 <h3 className="mt-4 text-xl font-semibold text-white">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.body}</p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-emerald-300 transition-all group-hover:gap-2">
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-emerald-300">
                   Oeffnen
-                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2}>
+                  <svg className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2}>
                     <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
@@ -355,7 +270,7 @@ export default async function LandingPage() {
               <h2 className="mt-1 text-2xl font-semibold text-white sm:text-3xl">{articleCount} {t("studiesCount")}</h2>
               <p className="mt-1 text-sm text-slate-400">{t("studiesSub", { count: sourceCount })}</p>
             </div>
-            <Link href={"/studies" as Route} className="hidden text-sm font-semibold text-slate-300 transition hover:text-emerald-300 sm:inline-flex">
+            <Link href={"/studies" as Route} className="hidden text-sm font-semibold text-slate-300 transition-colors hover:text-emerald-300 sm:inline-flex">
               {t("studiesAllLink")}
             </Link>
           </div>

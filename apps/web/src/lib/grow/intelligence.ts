@@ -613,7 +613,7 @@ export function getPlantMicroInsight(plantEntries: LogEntry[]): PlantMicroInsigh
 
   if (lastWater) {
     const days = daysSince(lastWater.date);
-    if (days === 0)  return { text: 'Heute bewässert ✓',                  level: 'good',     consequence: 'Optimale Bedingungen aufrechterhalten.',  upside: 'Blütendichte und Trichomproduktion auf Maximum.' };
+    if (days === 0)  return { text: 'Heute bewässert',                    level: 'good',     consequence: 'Optimale Bedingungen aufrechterhalten.',  upside: 'Blütendichte und Trichomproduktion auf Maximum.' };
     if (days === 1)  return { text: 'Gestern bewässert',                   level: 'good',     consequence: 'Optimale Bedingungen aufrechterhalten.',  upside: 'Optimaler Rhythmus für starkes Wachstum.' };
     if (days <= 2)   return { text: `Bewässert vor ${days} Tagen`,         level: 'good',     consequence: 'Weiter regelmäßig gießen.',               upside: 'Weiter so für gleichmäßiges Wachstum.' };
     if (days <= 4)   return { text: `Seit ${days} Tagen nicht bewässert`,  level: 'warning',  consequence: 'Trockenstress verlangsamt Wachstum.' };

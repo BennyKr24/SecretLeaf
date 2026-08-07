@@ -165,7 +165,7 @@ export default function GrowKnowledgePanel({
   if (!activeRule || !article) return null;
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+    <div className="rounded-2xl border border-border bg-card p-5" data-reveal>
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-primary">Wissen im Grow-Kontext</p>

@@ -17,9 +17,12 @@ import {
 type Props = {
   growId: string;
   userId: string;
+  /** Render without its own card shell — for nesting inside a parent card
+      (e.g. the grow dashboard's consolidated sidebar Insights card). */
+  bare?: boolean;
 };
 
-export default function RecommendationsPanel({ growId, userId }: Props) {
+export default function RecommendationsPanel({ growId, userId, bare = false }: Props) {
   const [recommendations, setRecommendations] = useState<PendingRecommendation[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [actingOn, setActingOn] = useState<string | null>(null);
@@ -68,7 +71,7 @@ export default function RecommendationsPanel({ growId, userId }: Props) {
   if (!loaded || recommendations.length === 0) return null;
 
   return (
-    <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+    <section className={bare ? 'border-t border-border pt-5' : 'rounded-2xl border border-border bg-card p-5 shadow-sm'}>
       <div className="flex items-center gap-3">
         <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
           <Sparkles className="h-4 w-4" strokeWidth={2} />
@@ -102,7 +105,7 @@ export default function RecommendationsPanel({ growId, userId }: Props) {
                 type="button"
                 disabled={actingOn === rec.id}
                 onClick={() => handleEvent(rec.id, 'applied')}
-                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-white transition hover:bg-primary-dark disabled:opacity-50"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-white transition hover:bg-primary-dark active:scale-[0.97] disabled:opacity-50"
               >
                 <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.25} />
                 Angewendet
@@ -111,7 +114,7 @@ export default function RecommendationsPanel({ growId, userId }: Props) {
                 type="button"
                 disabled={actingOn === rec.id}
                 onClick={() => handleEvent(rec.id, 'dismissed')}
-                className="flex items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-semibold text-muted-fg transition hover:border-rose-500/30 hover:text-rose-500 disabled:opacity-50"
+                className="flex items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-semibold text-muted-fg transition hover:border-rose-500/30 hover:text-rose-500 active:scale-[0.97] disabled:opacity-50"
               >
                 <X className="h-3.5 w-3.5" strokeWidth={2.25} />
                 Verwerfen

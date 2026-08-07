@@ -39,7 +39,7 @@ const VARIANTS: Record<CardVariant, string> = {
 };
 
 const INTERACTIVE =
-  "cursor-pointer transition-all duration-150 hover:border-emerald-400 hover:shadow-md";
+  "cursor-pointer transition-[transform,border-color,box-shadow] duration-150 hover:border-emerald-400 hover:shadow-md";
 
 // ── Component ─────────────────────────────────────────────────────────────────
 

@@ -13,6 +13,7 @@ import type {
   GrowUmgebung,
   TaskCategory,
 } from "./types";
+import { Egg, Sprout, Leaf, Flower2, Gem, Scissors, type LucideIcon } from "lucide-react";
 
 // ── Phase Metadata ────────────────────────────────────────────────────────────
 
@@ -34,13 +35,13 @@ export const PHASE_DESCRIPTIONS: Record<GrowPhaseId, string> = {
   ernte: "Ernte, Trocknung und Curing.",
 };
 
-export const PHASE_ICONS: Record<GrowPhaseId, string> = {
-  keimung: "🌰",
-  saemling: "🌱",
-  veg: "🌿",
-  bluete: "🌸",
-  spaetbluete: "💎",
-  ernte: "✂️",
+export const PHASE_ICONS: Record<GrowPhaseId, LucideIcon> = {
+  keimung: Egg,
+  saemling: Sprout,
+  veg: Leaf,
+  bluete: Flower2,
+  spaetbluete: Gem,
+  ernte: Scissors,
 };
 
 /** Ordered list of all phases from start to harvest. */

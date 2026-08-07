@@ -4,12 +4,8 @@ import type { Route } from "next";
 import { categoryLabels, wikiArticles } from "@/data/terpira/wiki";
 import StudiesListView from "@/components/StudiesListView";
 import type { TerpiraCategory } from "@/lib/terpira/types";
-
-const CATEGORY_ICONS: Record<string, string> = {
-  anbau: '🌱', genetik: '🧬', chemie: '⚗️', terpene: '🌺',
-  medizin: '🩺', konsumformen: '💨', konzentrate: '💎', recht: '⚖️',
-  sicherheit: '🛡️', qualitaet: '🔬', markt: '📊', werkzeuge: '🛠️',
-};
+import { CATEGORY_ICONS } from "@/lib/terpira/categoryIcons";
+import { FileText } from "lucide-react";
 
 const CATEGORY_DESCRIPTIONS: Partial<Record<TerpiraCategory, string>> = {
   anbau:         'Alles zu Anbau, Pflege und Ernte – von der Keimung bis zur Trocknung und zum Curing.',
@@ -46,7 +42,7 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
   if (!validCategories.includes(cat)) notFound();
 
   const label = categoryLabels[cat];
-  const icon = CATEGORY_ICONS[cat] ?? '📄';
+  const CategoryIcon = CATEGORY_ICONS[cat] ?? FileText;
   const description = CATEGORY_DESCRIPTIONS[cat];
   const articles = wikiArticles.filter(a => a.category === cat);
 
@@ -77,8 +73,8 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-2xl flex-shrink-0">
-              {icon}
+            <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-emerald-300 flex-shrink-0">
+              <CategoryIcon className="h-6 w-6" strokeWidth={2} />
             </span>
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-400">Fachgebiet</p>

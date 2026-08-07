@@ -6,6 +6,19 @@ import { useTranslations } from "next-intl";
 import { useAuth, type AuthUser } from "@/hooks/useAuth";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { User, BarChart3, Sprout, LogOut } from "lucide-react";
+import type { ComponentType } from "react";
+
+/**
+ * A status dot is a state indicator, not a concept-icon — it doesn't map to
+ * any Lucide glyph. Shaped to slot into MenuItem's `icon` prop alongside
+ * real Lucide icons.
+ */
+type MenuIcon = ComponentType<{ className?: string; strokeWidth?: number }>;
+
+function StatusDot() {
+  return <span className="block h-2 w-2 rounded-full bg-emerald-400" />;
+}
 // ── Avatar ────────────────────────────────────────────────────────────────────
 
 function Avatar({ user }: { user: AuthUser }) {
@@ -45,13 +58,13 @@ function PlanBadge({ plan, role }: { plan: "free" | "pro" | "team"; role: string
 
 function MenuItem({
   href,
-  icon,
+  icon: Icon,
   label,
   onClick,
   danger,
 }: {
   href?: string;
-  icon: string;
+  icon: MenuIcon;
   label: string;
   onClick?: () => void;
   danger?: boolean;
@@ -71,14 +84,18 @@ function MenuItem({
         className={base + (danger ? dangerCls : safe)}
         {...linkProps}
       >
-        <span className="text-base w-5 text-center">{icon}</span>
+        <span className="flex w-5 items-center justify-center">
+          <Icon className="h-4 w-4" strokeWidth={2} />
+        </span>
         {label}
       </Link>
     );
   }
   return (
     <button onClick={onClick} className={base + (danger ? dangerCls : safe)}>
-      <span className="text-base w-5 text-center">{icon}</span>
+      <span className="flex w-5 items-center justify-center">
+        <Icon className="h-4 w-4" strokeWidth={2} />
+      </span>
       {label}
     </button>
   );
@@ -139,7 +156,7 @@ export function UserMenu() {
         <ThemeToggle />
         <Link
           href="/auth"
-          className="hidden sm:flex items-center gap-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950 px-3.5 py-1.5 text-[13.5px] font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900 hover:border-emerald-300 dark:hover:border-emerald-700 transition-all duration-150 shadow-sm"
+          className="hidden sm:flex items-center gap-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950 px-3.5 py-1.5 text-[13.5px] font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900 hover:border-emerald-300 dark:hover:border-emerald-700 transition-colors duration-150 shadow-sm"
         >
           {t("login")}
         </Link>
@@ -160,11 +177,19 @@ export function UserMenu() {
         <Avatar user={user} />
       </button>
 
-      {open && (
-        <div
-          role="menu"
-          className="absolute right-0 top-[calc(100%+8px)] z-50 w-56 rounded-2xl border border-border bg-card shadow-xl shadow-black/10 dark:shadow-black/40 p-1.5 animate-in fade-in slide-in-from-top-2 duration-150"
-        >
+      {/* Always mounted + class-toggled, not conditionally rendered: the
+          previous `{open && ...}` relied on `animate-in`/`fade-in`/
+          `slide-in-from-top-2` utility classes from the tailwindcss-animate
+          plugin — which isn't installed (see tailwind.config.ts `plugins: []`),
+          so this menu had ZERO transition, ever. Origin-aware glass
+          materialize per DESIGN_SYSTEM.md §15.6 / apple-design §12, same
+          pattern as components/ui/Dropdown.tsx. */}
+      <div
+        role="menu"
+        className={`absolute right-0 top-[calc(100%+8px)] z-50 w-56 origin-top-right rounded-2xl border border-border bg-card/80 backdrop-blur-xl backdrop-saturate-150 shadow-xl shadow-black/10 dark:shadow-black/40 p-1.5 transition-[opacity,transform,filter] duration-200 ease-out ${
+          open ? 'opacity-100 scale-100 blur-none' : 'pointer-events-none invisible opacity-0 scale-95 blur-sm'
+        }`}
+      >
           {/* User identity header */}
           <div className="px-3 py-2.5 mb-1 rounded-lg bg-background">
             <div className="flex items-center gap-2.5">
@@ -182,10 +207,10 @@ export function UserMenu() {
           </div>
 
           {/* Navigation items — no items that duplicate the top nav bar */}
-          <MenuItem href="/profile" icon="👤" label={t("profile")} onClick={() => setOpen(false)} />
-          <MenuItem href="/dashboard/user" icon="📊" label={t("dashboard")} onClick={() => setOpen(false)} />
-          <MenuItem href="/status" icon="🟢" label={nav("status")} onClick={() => setOpen(false)} />
-          <MenuItem href="/start" icon="🌱" label={t("myGrows")} onClick={() => setOpen(false)} />
+          <MenuItem href="/profile" icon={User} label={t("profile")} onClick={() => setOpen(false)} />
+          <MenuItem href="/dashboard/user" icon={BarChart3} label={t("dashboard")} onClick={() => setOpen(false)} />
+          <MenuItem href="/status" icon={StatusDot} label={nav("status")} onClick={() => setOpen(false)} />
+          <MenuItem href="/start" icon={Sprout} label={t("myGrows")} onClick={() => setOpen(false)} />
 
           {/* Divider */}
           <div className="my-1 border-t border-border" />
@@ -203,9 +228,8 @@ export function UserMenu() {
           {/* Divider */}
           <div className="my-1 border-t border-border" />
 
-          <MenuItem icon="🚪" label={t("logout")} onClick={handleLogout} danger />
-        </div>
-      )}
+          <MenuItem icon={LogOut} label={t("logout")} onClick={handleLogout} danger />
+      </div>
     </div>
   );
 }

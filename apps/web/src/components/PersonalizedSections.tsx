@@ -8,12 +8,8 @@ import { useReadingHistory } from '@/hooks/useReadingHistory';
 import type { TerpiraArticle, TerpiraCategory } from '@/lib/terpira/types';
 import { categoryLabels } from '@/data/terpira/wiki';
 import BookmarkButton from './BookmarkButton';
-
-const CATEGORY_ICONS: Record<string, string> = {
-  anbau: '🌱', genetik: '🧬', chemie: '⚗️', terpene: '🌺',
-  medizin: '🩺', konsumformen: '💨', konzentrate: '💎', recht: '⚖️',
-  sicherheit: '🛡️', qualitaet: '🔬', markt: '📊', werkzeuge: '🛠️',
-};
+import { CATEGORY_ICONS } from '@/lib/terpira/categoryIcons';
+import { FileText, BookOpen, Sparkles } from 'lucide-react';
 
 const DIFFICULTY_DOT: Record<string, string> = {
   einsteiger: 'bg-blue-400',
@@ -38,6 +34,7 @@ function evidenceLevel(sourceCount: number): { label: string; cls: string } {
 function MiniCard({ article }: { article: TerpiraArticle }) {
   const sourceCount = article.sourceIds?.length ?? 0;
   const ev = evidenceLevel(sourceCount);
+  const CategoryIcon = CATEGORY_ICONS[article.category] ?? FileText;
   return (
     <div className="relative">
       <Link
@@ -46,8 +43,8 @@ function MiniCard({ article }: { article: TerpiraArticle }) {
           hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-50"
       >
         <div className="flex items-start justify-between gap-1.5">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-background border border-border text-base flex-shrink-0 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors">
-            {CATEGORY_ICONS[article.category] ?? '📄'}
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-background border border-border text-emerald-600 flex-shrink-0 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors">
+            <CategoryIcon className="h-4 w-4" strokeWidth={2} />
           </span>
           {sourceCount > 0 && (
             <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${ev.cls}`}>
@@ -88,7 +85,7 @@ function SavedStudiesPanel({ allArticles }: { allArticles: TerpiraArticle[] }) {
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 tracking-widest uppercase mb-2">
               🔖 Meine Sammlung
             </span>
-            <h2 className="text-xl font-bold tracking-tight text-foreground">Gespeicherte Studien</h2>
+            <h2 className="text-xl font-bold text-foreground">Gespeicherte Studien</h2>
           </div>
           <span className="text-xs text-muted-fg">{saved.length} gespeichert</span>
         </div>
@@ -121,25 +118,26 @@ function ReadingHistoryPanel({ allArticles }: { allArticles: TerpiraArticle[] })
         <div className="mb-5 flex items-end justify-between">
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-border border border-border px-2.5 py-0.5 text-[10px] font-bold text-foreground/80 tracking-widest uppercase mb-2">
-              📖 Weiterlesen
+              <BookOpen className="h-3 w-3" strokeWidth={2} /> Weiterlesen
             </span>
-            <h2 className="text-xl font-bold tracking-tight text-foreground">Zuletzt gelesen</h2>
+            <h2 className="text-xl font-bold text-foreground">Zuletzt gelesen</h2>
           </div>
         </div>
         <div className="space-y-1.5">
           {articles.map((article, i) => {
             const sourceCount = article.sourceIds?.length ?? 0;
+            const CategoryIcon = CATEGORY_ICONS[article.category] ?? FileText;
             return (
               <Link
                 key={article.slug}
                 href={`/studies/${article.slug}` as Route}
                 className="group flex items-center gap-4 rounded-xl border border-transparent bg-card px-5 py-3.5
-                  hover:border-emerald-100 hover:shadow-sm hover:bg-emerald-50/20 transition-all duration-150"
+                  hover:border-emerald-100 hover:shadow-sm hover:bg-emerald-50/20 transition-[border-color,box-shadow,background-color] duration-150"
               >
                 <span className="w-5 text-center text-xs font-bold text-muted-fg flex-shrink-0 tabular-nums">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="text-base flex-shrink-0">{CATEGORY_ICONS[article.category] ?? '📄'}</span>
+                <CategoryIcon className="h-4 w-4 flex-shrink-0 text-emerald-600" strokeWidth={2} />
                 <div className="flex-1 min-w-0">
                   <h3 className="text-sm font-semibold text-foreground group-hover:text-emerald-700 transition-colors line-clamp-1">
                     {article.title}
@@ -191,19 +189,20 @@ function PersonalizedCategorySections({ categoryArticles, allCategories }: {
       {loaded && preferredCategories.length > 0 && (
         <div className="mx-auto max-w-6xl px-5 pt-10">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[11px] font-semibold text-emerald-700">
-            ✦ Für dich zusammengestellt – basierend auf deinen Interessen
+            <Sparkles className="h-3 w-3" strokeWidth={2} /> Für dich zusammengestellt – basierend auf deinen Interessen
           </div>
         </div>
       )}
       <div className="mx-auto max-w-6xl px-5 pb-8 space-y-6 mt-6">
         {sectionsToShow.map(cat => {
           const articles = (categoryArticles[cat] ?? []).slice(0, 4);
+          const CategoryIcon = CATEGORY_ICONS[cat] ?? FileText;
           return (
             <div key={cat} className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
               <div className="border-b border-border bg-gradient-to-r from-background/80 to-card px-5 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-card border border-border text-base shadow-sm">
-                    {CATEGORY_ICONS[cat] ?? '📄'}
+                  <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-card border border-border text-emerald-600 shadow-sm">
+                    <CategoryIcon className="h-4 w-4" strokeWidth={2} />
                   </span>
                   <h3 className="text-sm font-bold text-foreground">{categoryLabels[cat]}</h3>
                   <span className="rounded-full bg-emerald-50 border border-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
@@ -215,7 +214,7 @@ function PersonalizedCategorySections({ categoryArticles, allCategories }: {
                   className="group flex items-center gap-1 text-xs font-medium text-muted-fg hover:text-emerald-600 transition-colors"
                 >
                   Alle
-                  <svg className="w-3 h-3 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <svg className="w-3 h-3 transition-transform [@media(hover:hover)]:group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
@@ -280,7 +279,7 @@ function RecommendedStudies({ allArticles }: { allArticles: TerpiraArticle[] }) 
           <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-50 border border-purple-200 px-2.5 py-0.5 text-[10px] font-bold text-purple-700 tracking-widest uppercase mb-2">
             ✦ Empfohlen für dich
           </span>
-          <h2 className="text-xl font-bold tracking-tight text-foreground">Passend zu deinen Interessen</h2>
+          <h2 className="text-xl font-bold text-foreground">Passend zu deinen Interessen</h2>
           <p className="mt-1 text-sm text-muted-fg">Artikel, die zu deiner Auswahl passen – noch nicht gelesen</p>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

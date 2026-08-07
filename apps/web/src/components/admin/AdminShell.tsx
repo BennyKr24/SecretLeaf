@@ -3,43 +3,58 @@
 import { Link, usePathname } from "@/i18n/navigation";
 import type { ReactNode } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
+import {
+  Home,
+  Bot,
+  Users,
+  Microscope,
+  Settings,
+  Dna,
+  BarChart3,
+  Monitor,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
 
-const NAV_GROUPS = [
+const NAV_GROUPS: Array<{
+  label: string;
+  items: Array<{ href: string; label: string; icon: LucideIcon; exact?: boolean }>;
+}> = [
   {
     label: "Übersicht",
     items: [
-      { href: "/dashboard/admin", label: "Übersicht", icon: "🏠", exact: true },
+      { href: "/dashboard/admin", label: "Übersicht", icon: Home, exact: true },
     ],
   },
   {
     label: "Assistent",
     items: [
-      { href: "/dashboard/admin/assistant", label: "KI-Assistent", icon: "🤖" },
+      { href: "/dashboard/admin/assistant", label: "KI-Assistent", icon: Bot },
     ],
   },
   {
     label: "Inhalte",
     items: [
-      { href: "/dashboard/admin/users", label: "Benutzer", icon: "👥" },
-      { href: "/dashboard/admin/studies", label: "Studien", icon: "🔬" },
+      { href: "/dashboard/admin/users", label: "Benutzer", icon: Users },
+      { href: "/dashboard/admin/studies", label: "Studien", icon: Microscope },
     ],
   },
   {
     label: "Pipeline",
     items: [
-      { href: "/dashboard/admin/engine", label: "Pipeline-Engine", icon: "⚙️" },
-      { href: "/dashboard/admin/algorithm", label: "Algorithmus", icon: "🧬" },
+      { href: "/dashboard/admin/engine", label: "Pipeline-Engine", icon: Settings },
+      { href: "/dashboard/admin/algorithm", label: "Algorithmus", icon: Dna },
     ],
   },
   {
     label: "Monitoring",
     items: [
-      { href: "/dashboard/admin/analytics", label: "Auswertungen", icon: "📊" },
-      { href: "/dashboard/admin/system", label: "System", icon: "🖥️" },
-      { href: "/dashboard/admin/settings", label: "Einstellungen", icon: "🔧" },
+      { href: "/dashboard/admin/analytics", label: "Auswertungen", icon: BarChart3 },
+      { href: "/dashboard/admin/system", label: "System", icon: Monitor },
+      { href: "/dashboard/admin/settings", label: "Einstellungen", icon: Wrench },
     ],
   },
-] as const;
+];
 
 export function AdminShell({ children }: { children: ReactNode }) {
   const auth = useAdminAuth();
@@ -124,21 +139,23 @@ export function AdminShell({ children }: { children: ReactNode }) {
               </p>
               <div className="space-y-0.5">
                 {group.items.map((item) => {
-                  const isActive =
-                    ("exact" in item && item.exact)
-                      ? pathname === item.href
-                      : pathname.startsWith(item.href);
+                  const isActive = item.exact
+                    ? pathname === item.href
+                    : pathname.startsWith(item.href);
+                  const Icon = item.icon;
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-all ${
+                      className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-[background-color,color,box-shadow] duration-150 ${
                         isActive
                           ? "bg-emerald-100 dark:bg-emerald-900/30 text-primary ring-1 ring-emerald-200"
                           : "text-muted-fg hover:bg-background hover:text-foreground"
                       }`}
                     >
-                      <span className="w-5 text-center text-sm leading-none">{item.icon}</span>
+                      <span className="flex w-5 items-center justify-center">
+                        <Icon className="h-4 w-4" strokeWidth={2} />
+                      </span>
                       <span>{item.label}</span>
                       {isActive && (
                         <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary" />

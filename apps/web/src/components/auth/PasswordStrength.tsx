@@ -13,10 +13,10 @@ type Props = {
   password: string;
 };
 
-type Level = { label: string; color: string; bg: string; width: string };
+type Level = { label: string; color: string; bg: string; scale: number };
 
 function getLevel(pw: string): Level {
-  if (pw.length === 0) return { label: '', color: 'bg-border', bg: 'bg-background', width: 'w-0' };
+  if (pw.length === 0) return { label: '', color: 'bg-border', bg: 'bg-background', scale: 0 };
 
   let score = 0;
   if (pw.length >= MIN_PASSWORD_LENGTH) score++;
@@ -25,11 +25,11 @@ function getLevel(pw: string): Level {
   if (/[0-9]/.test(pw)) score++;
   if (/[^A-Za-z0-9]/.test(pw)) score++;
 
-  if (score <= 1) return { label: 'Sehr schwach', color: 'bg-red-400',    bg: 'bg-background', width: 'w-1/5' };
-  if (score === 2) return { label: 'Schwach',      color: 'bg-orange-400', bg: 'bg-background', width: 'w-2/5' };
-  if (score === 3) return { label: 'Mittel',       color: 'bg-amber-400',  bg: 'bg-background', width: 'w-3/5' };
-  if (score === 4) return { label: 'Gut',          color: 'bg-emerald-400',bg: 'bg-background', width: 'w-4/5' };
-  return               { label: 'Stark',           color: 'bg-emerald-500',bg: 'bg-background', width: 'w-full' };
+  if (score <= 1) return { label: 'Sehr schwach', color: 'bg-red-400',    bg: 'bg-background', scale: 1 / 5 };
+  if (score === 2) return { label: 'Schwach',      color: 'bg-orange-400', bg: 'bg-background', scale: 2 / 5 };
+  if (score === 3) return { label: 'Mittel',       color: 'bg-amber-400',  bg: 'bg-background', scale: 3 / 5 };
+  if (score === 4) return { label: 'Gut',          color: 'bg-emerald-400',bg: 'bg-background', scale: 4 / 5 };
+  return               { label: 'Stark',           color: 'bg-emerald-500',bg: 'bg-background', scale: 1 };
 }
 
 export default function PasswordStrength({ password }: Props) {
@@ -39,7 +39,13 @@ export default function PasswordStrength({ password }: Props) {
   return (
     <div className="space-y-1">
       <div className={`h-1 w-full rounded-full overflow-hidden ${level.bg}`}>
-        <div className={`h-full rounded-full transition-all duration-300 ${level.color} ${level.width}`} />
+        {/* Fixed-width track, fill driven by GPU-accelerated transform:
+            scaleX() with a left origin instead of animating `width` (matches
+            the confidence-bar pattern established elsewhere in this app). */}
+        <div
+          className={`h-full w-full origin-left rounded-full transition-transform duration-300 ease-out ${level.color}`}
+          style={{ transform: `scaleX(${level.scale})` }}
+        />
       </div>
       {level.label && (
         <p className="text-[11px] text-muted-fg">

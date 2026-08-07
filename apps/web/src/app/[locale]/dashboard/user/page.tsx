@@ -25,7 +25,7 @@ import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
 import { PHASE_ICONS } from '@/lib/grow/phases';
-import { TASK_CATEGORY_ICONS } from '@/lib/grow/types';
+import { TASK_CATEGORY_ICONS } from '@/lib/grow/taskIcons';
 import {
   Bookmark, BookOpen, Flame, Zap, Sprout, AlertTriangle, CheckCircle2, Clock,
   NotebookPen, Wrench, Stethoscope, Target, Library, Database, Activity,
@@ -334,7 +334,7 @@ export default function UserDashboardPage() {
         <div className="relative mx-auto max-w-6xl px-4 py-5 sm:px-5">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+              <h1 className="text-xl font-bold text-foreground sm:text-2xl">
                 {greeting()}
                 {session && (
                   <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">, {session.user.username}</span>
@@ -425,10 +425,11 @@ export default function UserDashboardPage() {
                 const phaseProgress = activeGrow.plan.totalDays > 0
                   ? Math.min(100, Math.round((activeGrow.currentDay / activeGrow.plan.totalDays) * 100))
                   : 0;
+                const PhaseIcon = phase ? PHASE_ICONS[phase.id] : Sprout;
                 return (
                   <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
                     <span className="flex items-center gap-1 text-foreground/80">
-                      {phase ? PHASE_ICONS[phase.id] : '🌿'}
+                      <PhaseIcon className="h-3.5 w-3.5" strokeWidth={2} />
                       <span className="font-medium">{phase?.label ?? '—'}</span>
                     </span>
                     <span className="text-muted-fg">·</span>
@@ -437,7 +438,7 @@ export default function UserDashboardPage() {
                     <span className="text-muted-fg">{t('growTaskProgress', { done: completed, total, percent })}</span>
                     <div className="mt-1.5 w-full">
                       <div className="h-1.5 overflow-hidden rounded-full bg-border">
-                        <div className="h-full rounded-full bg-emerald-500 transition-all" style={{ width: `${phaseProgress}%` }} />
+                        <div className="h-full rounded-full bg-emerald-500 transition-[width] duration-300" style={{ width: `${phaseProgress}%` }} />
                       </div>
                     </div>
                   </div>
@@ -463,9 +464,10 @@ export default function UserDashboardPage() {
                           tasks.map((task) => {
                             const diff = task.dueDay - activeGrow.currentDay;
                             const dueLbl = diff === 0 ? t('taskDueToday') : diff === 1 ? t('taskDueTomorrow') : diff < 0 ? t('taskOverdue', { days: Math.abs(diff) }) : t('taskInDays', { days: diff });
+                            const CategoryIcon = TASK_CATEGORY_ICONS[task.category];
                             return (
                               <div key={task.id} className="flex items-center gap-2 rounded-lg border border-border bg-background px-2.5 py-1.5">
-                                <span className="flex-shrink-0 text-sm">{TASK_CATEGORY_ICONS[task.category]}</span>
+                                <CategoryIcon className="h-3.5 w-3.5 flex-shrink-0 text-muted-fg" strokeWidth={2} />
                                 <p className="flex-1 truncate text-[12px] font-medium text-foreground">{task.title}</p>
                                 <span className={`flex-shrink-0 text-[10px] font-semibold ${diff < 0 ? 'text-rose-500' : diff === 0 ? 'text-emerald-600' : 'text-muted-fg'}`}>{dueLbl}</span>
                               </div>
@@ -510,7 +512,7 @@ export default function UserDashboardPage() {
               </span>
               <h2 className="relative mt-3 text-base font-bold text-foreground">{t('noActiveGrowTitle')}</h2>
               <p className="relative mt-1 text-xs text-muted-fg">{t('noActiveGrowSub')}</p>
-              <Link href={'/start' as Route} className="relative mt-4 inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-500">
+              <Link href={'/start' as Route} className="relative mt-4 inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition [@media(hover:hover)]:hover:-translate-y-0.5 hover:bg-emerald-500">
                 <Sprout className="h-3.5 w-3.5" strokeWidth={2} /> {t('startGrowCTA')}
               </Link>
             </section>
@@ -697,14 +699,16 @@ export default function UserDashboardPage() {
                     onClick={() => toggleInterest(interest)}
                     className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold transition-colors ${active ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-600' : 'border-border bg-background text-foreground/70 hover:border-emerald-500/30 hover:text-emerald-600'}`}
                   >
-                    <span>{meta.icon}</span>
+                    <meta.icon className="h-3 w-3" strokeWidth={2} />
                     <span>{meta.label}</span>
                   </button>
                 );
               })}
             </div>
             {interestsLoaded && interests.length > 0 && (
-              <p className="mt-2 text-[10.5px] text-emerald-600">✓ {t('personalizationActive', { count: interests.length })}</p>
+              <p className="mt-2 flex items-center gap-1 text-[10.5px] text-emerald-600">
+                <CheckCircle2 className="h-3 w-3 flex-shrink-0" strokeWidth={2} /> {t('personalizationActive', { count: interests.length })}
+              </p>
             )}
 
             <div className="mt-3 border-t border-border pt-3">

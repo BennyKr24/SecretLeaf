@@ -1,6 +1,9 @@
 // ── Diagnose-System: Entscheidungsbaum ─────────────────────────────────────
 
-import { Leaf, Sprout, Thermometer, Bug, type LucideIcon } from "lucide-react";
+import {
+  Leaf, Sprout, Thermometer, Bug, AlertTriangle, Flame, Snowflake, Wind,
+  Droplets, Microscope, Citrus, Sun, AlertCircle, type LucideIcon,
+} from "lucide-react";
 
 export type DiagnoseToolLink = {
   slug: string;
@@ -12,7 +15,10 @@ export type Confidence = "high" | "medium" | "low";
 export type DiagnoseResult = {
   id: string;
   title: string;
-  icon: string;
+  /** Lucide icon for symptom-type results (pests, climate, warnings). */
+  icon?: LucideIcon;
+  /** Tailwind bg-* class for nutrient-deficiency results shown as a color swatch dot instead of an icon. */
+  dotColor?: string;
   confidence: Confidence;
   reasoning: string;
   cause: string;
@@ -49,7 +55,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "n-mangel": {
     id: "n-mangel",
     title: "Stickstoffmangel (N)",
-    icon: "🟡",
+    dotColor: "bg-yellow-400",
     confidence: "high",
     reasoning:
       "Gleichmäßige Vergilbung alter Blätter von unten nach oben ist das Lehrbuchbild für N-Mobilisierung – einer der eindeutigsten Mängel überhaupt.",
@@ -68,7 +74,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "p-mangel": {
     id: "p-mangel",
     title: "Phosphormangel (P)",
-    icon: "🟣",
+    dotColor: "bg-purple-400",
     confidence: "medium",
     reasoning:
       "Dunkles Laub mit Violetttönen deutet auf P-Blockade hin – ähnliche Symptome treten auch bei Kältestress auf, daher mittlere Sicherheit.",
@@ -87,7 +93,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "k-mangel": {
     id: "k-mangel",
     title: "Kaliummangel (K)",
-    icon: "🔴",
+    dotColor: "bg-red-400",
     confidence: "high",
     reasoning:
       "Randnekrosen an alten Blättern (nicht Spitze, nicht Mitte) sind ein starkes Kalium-Signal – besonders charakteristisch in der Blüte.",
@@ -106,7 +112,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "ca-mangel": {
     id: "ca-mangel",
     title: "Calciummangel (Ca)",
-    icon: "🟤",
+    dotColor: "bg-amber-700",
     confidence: "medium",
     reasoning:
       "Deformierter Neuwuchs passt zu Ca-Immobilität, aber hohes VPD und pH-Fehler sehen ähnlich aus – Klimawerte sollten gegengeprüft werden.",
@@ -124,7 +130,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "mg-mangel": {
     id: "mg-mangel",
     title: "Magnesiummangel (Mg)",
-    icon: "🍋",
+    icon: Citrus,
     confidence: "high",
     reasoning:
       "Interkostale Chlorosen mit grünen Adern an alten Blättern – dieses Muster ist nahezu unverwechselbar für Mg-Mangel.",
@@ -143,7 +149,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "fe-mangel": {
     id: "fe-mangel",
     title: "Eisenmangel (Fe)",
-    icon: "💛",
+    icon: Sun,
     confidence: "high",
     reasoning:
       "Limonengrüner Neuwuchs mit noch erkennbaren grünen Adern ist spezifisch für Fe – fast ausnahmslos eine pH-Drift-Folge.",
@@ -162,7 +168,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "lockout": {
     id: "lockout",
     title: "Nährstoffblockade",
-    icon: "⚠️",
+    icon: AlertTriangle,
     confidence: "medium",
     reasoning:
       "Mehrere Mangelsymptome gleichzeitig ohne klare Richtung und keine Reaktion auf Nachfüttern – EC und pH im Drain sollten das bestätigen.",
@@ -181,7 +187,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "uebersalzung": {
     id: "uebersalzung",
     title: "Übersalzung / Nutrient Burn",
-    icon: "🔥",
+    icon: Flame,
     confidence: "high",
     reasoning:
       "Tipping (braune Spitzen bei sonst gesunden Blättern ohne Mangelbild) ist das eindeutigste Nutrient-Burn-Zeichen – selten etwas anderes.",
@@ -201,7 +207,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "hitzestress": {
     id: "hitzestress",
     title: "Hitzestress",
-    icon: "🌡️",
+    icon: Thermometer,
     confidence: "high",
     reasoning:
       "Tacoing (nach oben rollende Blätter) ist die direkte pflanzliche Schutzreaktion gegen Überhitzung – ein sehr zuverlässiges Zeichen.",
@@ -223,7 +229,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "kaeltestress": {
     id: "kaeltestress",
     title: "Kältestress",
-    icon: "🧊",
+    icon: Snowflake,
     confidence: "medium",
     reasoning:
       "Violette Anthocyan-Einlagerung + langsames Wachstum bei bekannt kühlem Substrat passen gut zusammen – P-Blockade sieht aber ähnlich aus.",
@@ -241,7 +247,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "vpd-hoch": {
     id: "vpd-hoch",
     title: "Hohes VPD / Trockenstress",
-    icon: "💨",
+    icon: Wind,
     confidence: "medium",
     reasoning:
       "Trockenstress durch hohes VPD erklärt Stomata-Reaktion und sekundäre Ca-Probleme – VPD-Messung bestätigt die Diagnose.",
@@ -260,7 +266,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "ueberwaesserung": {
     id: "ueberwaesserung",
     title: "Überwässerung / Wurzelstress",
-    icon: "💧",
+    icon: Droplets,
     confidence: "medium",
     reasoning:
       "Welken trotz feuchtem Substrat ist das Überwässerungs-Paradox – Wurzelkrankheiten scheiden als Alternative nicht aus.",
@@ -280,7 +286,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "spinnmilben": {
     id: "spinnmilben",
     title: "Spinnmilben",
-    icon: "🕷️",
+    icon: Bug,
     confidence: "high",
     reasoning:
       "Feine Gespinste auf der Blattunterseite kombiniert mit hellen Saugpunkten oben sind ein eindeutiges Spinnmilben-Zeichen.",
@@ -299,7 +305,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "trauermuecken": {
     id: "trauermuecken",
     title: "Trauermücken",
-    icon: "🦟",
+    icon: Bug,
     confidence: "high",
     reasoning:
       "Schwarze Flieger direkt über nassem Substrat passen kaum zu etwas anderem – Trauermückenbefall ist sehr klar erkennbar.",
@@ -318,7 +324,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "thripse": {
     id: "thripse",
     title: "Thripse",
-    icon: "🪲",
+    icon: Bug,
     confidence: "high",
     reasoning:
       "Silbrige Schabspuren (kein Gespinst) mit schwarzen Kotpunkten auf Blattunterseiten sind thrips-spezifisch – Verwechslungsgefahr gering.",
@@ -337,7 +343,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "blattlaeuse": {
     id: "blattlaeuse",
     title: "Blattläuse",
-    icon: "🐛",
+    icon: Bug,
     confidence: "high",
     reasoning:
       "Sichtbare Kolonien an Triebspitzen mit klebriger Honigtau-Ausscheidung sind Blattläuse – kaum Verwechslungsmöglichkeit.",
@@ -356,7 +362,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "botrytis": {
     id: "botrytis",
     title: "Botrytis (Grauschimmel)",
-    icon: "🍄",
+    icon: AlertCircle,
     confidence: "high",
     reasoning:
       "Grau-staubiger Rasen in Blütenständen ist Botrytis cinerea – das Muster ist unverwechselbar und erfordert sofortiges Handeln.",
@@ -375,7 +381,7 @@ export const diagnoseResults: Record<string, DiagnoseResult> = {
   "breitmilben": {
     id: "breitmilben",
     title: "Breitmilben",
-    icon: "🔬",
+    icon: Microscope,
     confidence: "medium",
     reasoning:
       "Verkrüppelte Triebspitzen ohne jede Reaktion auf Düngungsanpassung deuten auf Milben hin – Mikroskopkontrolle ist zur Bestätigung nötig.",
@@ -530,7 +536,7 @@ export const diagnoseNodes: Record<string, DiagnoseNode> = {
 diagnoseResults["wurzellaeuse"] = {
   id: "wurzellaeuse",
   title: "Wurzelläuse (Cannabis Root Aphid)",
-  icon: "🪲",
+  icon: Bug,
   confidence: "low",
   reasoning:
     "Mangelbild ohne jede Reaktion auf Nährstoff- oder pH-Anpassung kann viele Ursachen haben – Wurzelläuse sind selten, aber schwer erkennbar.",
@@ -550,7 +556,7 @@ diagnoseResults["wurzellaeuse"] = {
 diagnoseResults["rostmilben"] = {
   id: "rostmilben",
   title: "Hanfrostmilbe (Hemp Russet Mite)",
-  icon: "🟤",
+  dotColor: "bg-amber-700",
   confidence: "medium",
   reasoning:
     "Bronzefärbung von unten nach oben kombiniert mit beschädigten Trichomen passt zu Rostmilben – Mikroskop-Check bestätigt.",

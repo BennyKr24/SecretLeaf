@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { INTEREST_META, type Interest } from '@/hooks/useInterests';
 import { Link } from '@/i18n/navigation';
+import { Leaf, Sparkles } from 'lucide-react';
 
 const INTEREST_ORDER = Object.keys(INTEREST_META) as Interest[];
 
@@ -61,17 +62,19 @@ function OnboardingInner() {
         {/* Logo */}
         <div className="mb-8 text-center">
           <Link href="/" className="inline-flex items-center gap-2 group">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-base transition-transform group-hover:scale-110">🌿</span>
-            <span className="text-[15px] font-bold text-foreground tracking-tight">SecretLeaf</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-white transition-transform [@media(hover:hover)]:group-hover:scale-110">
+              <Leaf className="h-4 w-4" strokeWidth={2} />
+            </span>
+            <span className="text-[15px] font-bold text-foreground">SecretLeaf</span>
           </Link>
         </div>
 
         {/* Header */}
         <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-100 text-2xl mb-4">
-            ✦
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 mb-4">
+            <Sparkles className="h-6 w-6" strokeWidth={2} />
           </div>
-          <h1 className="text-2xl font-bold text-foreground tracking-tight">
+          <h1 className="text-2xl font-bold text-foreground">
             Welche Themen interessieren dich?
           </h1>
           <p className="mt-2 text-sm text-muted-fg leading-relaxed">
@@ -89,15 +92,15 @@ function OnboardingInner() {
                 key={interest}
                 type="button"
                 onClick={() => toggle(interest)}
-                className={`flex items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-150 select-none
+                className={`flex items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-[border-color,background-color,box-shadow] duration-150 select-none
                   ${active
                     ? 'border-emerald-400 bg-emerald-50 shadow-sm ring-1 ring-emerald-300/60'
                     : 'border-border bg-card hover:border-emerald-200 hover:bg-emerald-50/30'
                   }`}
               >
-                <span className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl text-xl transition-all duration-150
+                <span className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl transition-colors duration-150
                   ${active ? 'bg-emerald-100' : 'bg-border'}`}>
-                  {meta.icon}
+                  <meta.icon className="h-5 w-5" strokeWidth={2} />
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className={`text-[14px] font-bold transition-colors ${active ? 'text-emerald-800' : 'text-foreground'}`}>
@@ -107,7 +110,7 @@ function OnboardingInner() {
                     {meta.categories.slice(0, 3).join(' · ')}
                   </p>
                 </div>
-                <div className={`flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full border transition-all duration-150
+                <div className={`flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full border transition-colors duration-150
                   ${active
                     ? 'border-emerald-500 bg-emerald-500'
                     : 'border-border bg-card'
@@ -129,7 +132,7 @@ function OnboardingInner() {
           type="button"
           onClick={handleContinue}
           disabled={saving}
-          className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-150 shadow-sm flex items-center justify-center gap-2"
+          className="w-full rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed transition-[background-color,opacity] duration-150 shadow-sm flex items-center justify-center gap-2"
         >
           {saving ? (
             <>

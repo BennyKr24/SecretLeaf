@@ -4,6 +4,9 @@ import { useCallback, useEffect, useState } from "react";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import {
+  Microscope, X, CheckCircle2, XCircle, Pencil, Trash2, ArrowDown, ArrowUp,
+} from "lucide-react";
 
 type StudyRow = {
   id: string;
@@ -219,7 +222,7 @@ export default function AdminStudiesPage() {
             <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Studien</span>
           </div>
           <div className="mt-1 flex items-center gap-3">
-            <span className="text-2xl">🔬</span>
+            <Microscope className="h-6 w-6 text-primary" strokeWidth={2} />
             <div>
               <h1 className="text-2xl font-bold text-foreground">Studien-Management</h1>
               <p className="text-sm text-muted-fg">Alle Studien filtern, sortieren, prüfen und bearbeiten.</p>
@@ -267,9 +270,13 @@ export default function AdminStudiesPage() {
           </Dropdown>
           <button
             onClick={() => setSortDir((d) => (d === "desc" ? "asc" : "desc"))}
-            className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-muted-fg hover:bg-background"
+            className="flex items-center justify-center gap-1.5 rounded-xl border border-border px-3 py-2 text-sm font-medium text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
           >
-            {sortDir === "desc" ? "↓ Absteigend" : "↑ Aufsteigend"}
+            {sortDir === "desc" ? (
+              <><ArrowDown className="h-3.5 w-3.5" strokeWidth={2} /> Absteigend</>
+            ) : (
+              <><ArrowUp className="h-3.5 w-3.5" strokeWidth={2} /> Aufsteigend</>
+            )}
           </button>
         </div>
       </div>
@@ -279,7 +286,9 @@ export default function AdminStudiesPage() {
       {actionMsg && (
         <div className="mb-4 flex items-center justify-between rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-700">
           {actionMsg}
-          <button onClick={() => setActionMsg(null)} className="text-emerald-500 hover:text-emerald-700">✕</button>
+          <button onClick={() => setActionMsg(null)} className="text-emerald-500 transition-transform duration-150 active:scale-90 hover:text-emerald-700">
+            <X className="h-3.5 w-3.5" strokeWidth={2} />
+          </button>
         </div>
       )}
 
@@ -326,10 +335,10 @@ export default function AdminStudiesPage() {
                       <td className="px-3 py-3 text-xs text-muted-fg">{formatDate(study.created_at)}</td>
                       <td className="px-3 py-3">
                         <div className="flex gap-1">
-                          <button onClick={() => void handleQuickAction(study.id, "good")} className="rounded-lg bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 hover:bg-emerald-100" title="Genehmigen">✓</button>
-                          <button onClick={() => void handleQuickAction(study.id, "bad")} className="rounded-lg bg-red-50 px-2 py-1 text-xs font-medium text-red-700 hover:bg-red-100" title="Ablehnen">✗</button>
-                          <button onClick={() => openEdit(study)} className="rounded-lg bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100" title="Bearbeiten">✎</button>
-                          <button onClick={() => setDeletingId(study.id)} className="rounded-lg bg-background px-2 py-1 text-xs font-medium text-foreground/80 hover:bg-border" title="Löschen">⌫</button>
+                          <button onClick={() => void handleQuickAction(study.id, "good")} className="rounded-lg bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 transition-transform duration-150 active:scale-90 hover:bg-emerald-100" title="Genehmigen"><CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} /></button>
+                          <button onClick={() => void handleQuickAction(study.id, "bad")} className="rounded-lg bg-red-50 px-2 py-1 text-xs font-medium text-red-700 transition-transform duration-150 active:scale-90 hover:bg-red-100" title="Ablehnen"><XCircle className="h-3.5 w-3.5" strokeWidth={2} /></button>
+                          <button onClick={() => openEdit(study)} className="rounded-lg bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 transition-transform duration-150 active:scale-90 hover:bg-blue-100" title="Bearbeiten"><Pencil className="h-3.5 w-3.5" strokeWidth={2} /></button>
+                          <button onClick={() => setDeletingId(study.id)} className="rounded-lg bg-background px-2 py-1 text-xs font-medium text-foreground/80 transition-transform duration-150 active:scale-90 hover:bg-border" title="Löschen"><Trash2 className="h-3.5 w-3.5" strokeWidth={2} /></button>
                         </div>
                       </td>
                     </tr>
@@ -356,14 +365,14 @@ export default function AdminStudiesPage() {
                 <button
                   disabled={page <= 1}
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition hover:bg-background disabled:opacity-40"
+                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background disabled:opacity-40"
                 >
                   Zurück
                 </button>
                 <button
                   disabled={page >= data.totalPages}
                   onClick={() => setPage((p) => p + 1)}
-                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition hover:bg-background disabled:opacity-40"
+                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background disabled:opacity-40"
                 >
                   Weiter
                 </button>
@@ -373,72 +382,96 @@ export default function AdminStudiesPage() {
         </>
       )}
 
-      {/* Edit Modal */}
-      {editing && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-6 shadow-xl">
-            <h2 className="text-lg font-bold text-foreground">Studie bearbeiten</h2>
-            <div className="mt-4 space-y-3">
-              <div>
-                <label className="mb-1 block text-xs font-medium text-muted-fg">Titel</label>
-                <input value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm" />
-              </div>
-              <div>
-                <label className="mb-1 block text-xs font-medium text-muted-fg">Beschreibung</label>
-                <textarea value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} rows={3} className="w-full rounded-xl border border-border px-3 py-2 text-sm" />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
+      {/* Edit Modal — always mounted + class-toggled (not conditionally
+          rendered) so open/close can transition instead of popping
+          instantly, same pattern as components/UserMenu.tsx. Modals stay
+          opaque + centered (.modal-surface, DESIGN_SYSTEM.md §16) — the
+          glass/blur treatment is reserved for trigger-anchored dropdowns. */}
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+          editing ? "opacity-100" : "invisible pointer-events-none opacity-0"
+        }`}
+      >
+        <div
+          className={`modal-surface w-full max-w-lg rounded-2xl border border-border p-6 shadow-xl transition-[opacity,transform] duration-300 ${
+            editing ? "scale-100 opacity-100" : "scale-[0.96] opacity-0"
+          }`}
+        >
+          {editing && (
+            <>
+              <h2 className="text-lg font-bold text-foreground">Studie bearbeiten</h2>
+              <div className="mt-4 space-y-3">
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-muted-fg">Qualitätsstatus</label>
-                  <Dropdown value={editing.qualityStatus} onChange={(v) => setEditing({ ...editing, qualityStatus: v })}>
-                    <DropdownOption value="pending">Offen</DropdownOption>
-                    <DropdownOption value="good">Gut</DropdownOption>
-                    <DropdownOption value="bad">Schlecht</DropdownOption>
-                  </Dropdown>
+                  <label className="mb-1 block text-xs font-medium text-muted-fg">Titel</label>
+                  <input value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm" />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-muted-fg">Priorität</label>
-                  <Dropdown value={editing.editorialPriority} onChange={(v) => setEditing({ ...editing, editorialPriority: v })}>
-                    <DropdownOption value="high">High</DropdownOption>
-                    <DropdownOption value="medium">Medium</DropdownOption>
-                    <DropdownOption value="low">Low</DropdownOption>
-                  </Dropdown>
+                  <label className="mb-1 block text-xs font-medium text-muted-fg">Beschreibung</label>
+                  <textarea value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} rows={3} className="w-full rounded-xl border border-border px-3 py-2 text-sm" />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-muted-fg">Qualitätsstatus</label>
+                    <Dropdown value={editing.qualityStatus} onChange={(v) => setEditing({ ...editing, qualityStatus: v })}>
+                      <DropdownOption value="pending">Offen</DropdownOption>
+                      <DropdownOption value="good">Gut</DropdownOption>
+                      <DropdownOption value="bad">Schlecht</DropdownOption>
+                    </Dropdown>
+                  </div>
+                  <div>
+                    <label className="mb-1 block text-xs font-medium text-muted-fg">Priorität</label>
+                    <Dropdown value={editing.editorialPriority} onChange={(v) => setEditing({ ...editing, editorialPriority: v })}>
+                      <DropdownOption value="high">High</DropdownOption>
+                      <DropdownOption value="medium">Medium</DropdownOption>
+                      <DropdownOption value="low">Low</DropdownOption>
+                    </Dropdown>
+                  </div>
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-medium text-muted-fg">Tags (kommagetrennt)</label>
+                  <input value={editing.tags} onChange={(e) => setEditing({ ...editing, tags: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm" />
                 </div>
               </div>
-              <div>
-                <label className="mb-1 block text-xs font-medium text-muted-fg">Tags (kommagetrennt)</label>
-                <input value={editing.tags} onChange={(e) => setEditing({ ...editing, tags: e.target.value })} className="w-full rounded-xl border border-border px-3 py-2 text-sm" />
+              <div className="mt-5 flex justify-end gap-3">
+                <button onClick={() => setEditing(null)} className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background">
+                  Abbrechen
+                </button>
+                <button onClick={() => void handleSaveEdit()} disabled={saving} className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700 disabled:opacity-50">
+                  {saving ? "Speichert..." : "Speichern"}
+                </button>
               </div>
-            </div>
-            <div className="mt-5 flex justify-end gap-3">
-              <button onClick={() => setEditing(null)} className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg hover:bg-background">
-                Abbrechen
-              </button>
-              <button onClick={() => void handleSaveEdit()} disabled={saving} className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50">
-                {saving ? "Speichert..." : "Speichern"}
-              </button>
-            </div>
-          </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
 
-      {/* Delete Confirm Modal */}
-      {deletingId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-6 shadow-xl">
-            <h2 className="text-lg font-bold text-foreground">Studie löschen?</h2>
-            <p className="mt-2 text-sm text-muted-fg">Diese Aktion kann nicht rückgängig gemacht werden.</p>
-            <div className="mt-5 flex justify-end gap-3">
-              <button onClick={() => setDeletingId(null)} className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg hover:bg-background">
-                Abbrechen
-              </button>
-              <button onClick={() => void handleDelete(deletingId)} className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">
-                Löschen
-              </button>
-            </div>
-          </div>
+      {/* Delete Confirm Modal — same always-mounted pattern as the edit modal. */}
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+          deletingId ? "opacity-100" : "invisible pointer-events-none opacity-0"
+        }`}
+      >
+        <div
+          className={`modal-surface w-full max-w-sm rounded-2xl border border-border p-6 shadow-xl transition-[opacity,transform] duration-300 ${
+            deletingId ? "scale-100 opacity-100" : "scale-[0.96] opacity-0"
+          }`}
+        >
+          {deletingId && (
+            <>
+              <h2 className="text-lg font-bold text-foreground">Studie löschen?</h2>
+              <p className="mt-2 text-sm text-muted-fg">Diese Aktion kann nicht rückgängig gemacht werden.</p>
+              <div className="mt-5 flex justify-end gap-3">
+                <button onClick={() => setDeletingId(null)} className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background">
+                  Abbrechen
+                </button>
+                <button onClick={() => void handleDelete(deletingId)} className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-red-700">
+                  Löschen
+                </button>
+              </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

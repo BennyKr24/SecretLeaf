@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { translate } from "@/lib/translate";
+import { Globe } from "lucide-react";
 
 type Status = "idle" | "loading" | "done" | "error";
 
@@ -62,7 +63,7 @@ export function TranslateButton({ text, block = false, className = "" }: Props) 
             {status === "loading" ? (
               <span className="inline-block h-2.5 w-2.5 rounded-full border border-current border-t-transparent animate-spin" />
             ) : (
-              "🌐"
+              <Globe className="h-2.5 w-2.5" strokeWidth={2} />
             )}
             {status === "loading" ? t("loading") : t("button")}
           </button>

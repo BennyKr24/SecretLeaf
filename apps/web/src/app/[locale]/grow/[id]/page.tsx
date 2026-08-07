@@ -5,6 +5,16 @@
 //
 // Grow session: overview, current phase, upcoming & overdue tasks (with
 // complete action), quick actions and phase timeline.
+//
+// Layout redesigned 2026-08-07 (DESIGN_SYSTEM.md §2.4 "Calm Interfaces" /
+// §12 "Visual Density"): the previous version stacked three independent
+// red/amber "you're losing yield" surfaces (Daily Action banner, Grow
+// Status Header, PRO paywall) in the first viewport, plus 8+ identically
+// weighted bordered cards with no hierarchy. This version consolidates to
+// one calm hero, one "Today" zone (the only place urgent color appears),
+// a decluttered main column, and a single sidebar Insights card. All data
+// hooks/calculators below are unchanged from the previous version — only
+// the presentational components and their arrangement changed.
 // ────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
@@ -12,13 +22,18 @@ import { Link } from '@/i18n/navigation';
 import { useParams } from 'next/navigation';
 import type { Route } from 'next';
 import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
+import { Card } from '@/components/ui/Card';
+import { IconChip, type IconChipTone } from '@/components/ui/IconChip';
+import { Badge, type BadgeTone } from '@/components/ui/Badge';
+import { ProgressBar, type ProgressBarTone } from '@/components/ui/ProgressBar';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
 import { useAuth } from '@/hooks/useAuth';
 import { useAssistantPreference } from '@/hooks/useAssistantPreference';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
 import { PHASE_ICONS, PHASE_ORDER } from '@/lib/grow/phases';
-import { TASK_CATEGORY_ICONS, GROW_STATUS_LABELS } from '@/lib/grow/types';
+import { GROW_STATUS_LABELS } from '@/lib/grow/types';
+import { TASK_CATEGORY_ICONS } from '@/lib/grow/taskIcons';
 import type { GrowTask, Grow, Plant, LogEntry, HarvestData, GrowPhaseId, GrowStatus } from '@/lib/grow/types';
 import SmartInsights from '@/components/SmartInsights';
 import GrowKnowledgePanel from '@/components/grow/GrowKnowledgePanel';
@@ -38,56 +53,44 @@ import {
 } from '@/lib/grow/intelligence';
 import type { DailyAction, GrowHealthStatus, GrowTrend, YieldImpactResult } from '@/lib/grow/intelligence';
 import {
-  Settings, Sprout, AlertTriangle, CheckCircle2, Info, Sparkles, Lock,
+  Settings, Sprout, AlertTriangle, CheckCircle2, Info, Sparkles,
   TrendingUp, TrendingDown, Minus, NotebookPen, Wrench, Stethoscope,
   ArrowRight, ChevronDown, Star, Leaf, BarChart3, Pencil,
   type LucideIcon,
 } from 'lucide-react';
 
-// ── Shared section header (icon chip + gradient top bar) ───────────────────────
-// Same dark-tinted chip language as the dashboard tiles (bg-{c}-50
-// dark:bg-{c}-950/40) — restrained, mostly emerald, not a rainbow. See
-// TODO.md / memory for why: bright bg-50-only chips break in dark mode, and
-// a different accent per section reads as trying too hard.
+// ── Shared section wrapper ──────────────────────────────────────────────────
+// Calm by default: a plain Card + IconChip header. Colored accents are no
+// longer echoed on every card — only the Today card (§ below) is allowed
+// urgent color, per DESIGN_SYSTEM.md §2.4.
 
-type SectionAccent = 'emerald' | 'amber' | 'rose';
-
-const SECTION_ACCENT: Record<SectionAccent, { bar: string; icon: string; iconText: string }> = {
-  emerald: { bar: 'from-emerald-400 to-emerald-600', icon: 'bg-emerald-50 dark:bg-emerald-950/40', iconText: 'text-emerald-600 dark:text-emerald-400' },
-  amber: { bar: 'from-amber-400 to-amber-600', icon: 'bg-amber-50 dark:bg-amber-950/40', iconText: 'text-amber-600 dark:text-amber-400' },
-  rose: { bar: 'from-rose-400 to-rose-600', icon: 'bg-rose-50 dark:bg-rose-950/40', iconText: 'text-rose-600 dark:text-rose-400' },
-};
-
-function SectionCard({
-  icon: Icon, accent = 'emerald', title, badge, className = '', children, revealDelay,
+function Section({
+  icon: Icon, tone = 'primary', title, badge, className = '', children, revealDelay,
 }: {
   icon: LucideIcon;
-  accent?: SectionAccent;
+  tone?: IconChipTone;
   title: string;
   badge?: React.ReactNode;
   className?: string;
   children: React.ReactNode;
   revealDelay?: number;
 }) {
-  const a = SECTION_ACCENT[accent];
   return (
-    <section
-      className={`tool-card-lift relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm ${className}`}
+    <Card
+      padding="lg"
+      className={`space-y-4 ${className}`}
       data-reveal
       {...(revealDelay ? { 'data-reveal-delay': revealDelay } : {})}
     >
-      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${a.bar}`} />
-      <div className="relative mb-3 flex items-center justify-between gap-3 pt-1">
+      <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl ${a.icon} ${a.iconText}`}>
-            <Icon className="h-4 w-4" strokeWidth={2} />
-          </span>
+          <IconChip icon={Icon} tone={tone} />
           <h2 className="text-sm font-bold text-foreground">{title}</h2>
         </div>
         {badge}
       </div>
-      <div className="relative">{children}</div>
-    </section>
+      {children}
+    </Card>
   );
 }
 
@@ -109,9 +112,9 @@ function dayLabelClass(dueDay: number, currentDay: number): string {
   return 'text-muted-fg';
 }
 
-// ── Progress bars ─────────────────────────────────────────────────────────────
+// ── Progress ──────────────────────────────────────────────────────────────────
 
-function GrowProgressBar({ grow }: { grow: Grow }) {
+function GrowProgress({ grow }: { grow: Grow }) {
   const { completed, total, percent } = getTaskProgress(grow);
   const phaseProgress = grow.plan.totalDays > 0
     ? Math.min(100, Math.round((grow.currentDay / grow.plan.totalDays) * 100))
@@ -124,18 +127,14 @@ function GrowProgressBar({ grow }: { grow: Grow }) {
           <span className="text-muted-fg">Grow-Fortschritt</span>
           <span className="font-semibold text-foreground">Tag {grow.currentDay} / {grow.plan.totalDays}</span>
         </div>
-        <div className="h-2 overflow-hidden rounded-full bg-surface">
-          <div className="h-full rounded-full bg-primary transition-all duration-500" style={{ width: `${phaseProgress}%` }} />
-        </div>
+        <ProgressBar percent={phaseProgress} />
       </div>
       <div>
         <div className="mb-1.5 flex items-center justify-between text-xs">
           <span className="text-muted-fg">Tasks erledigt</span>
           <span className="font-semibold text-foreground">{completed} / {total}</span>
         </div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-surface">
-          <div className="h-full rounded-full bg-primary transition-all duration-500" style={{ width: `${percent}%` }} />
-        </div>
+        <ProgressBar percent={percent} size="sm" />
       </div>
     </div>
   );
@@ -153,15 +152,16 @@ function PhaseTimeline({ grow }: { grow: Grow }) {
       {grow.plan.phases.map((phase, idx) => {
         const isPast   = grow.currentDay > phase.endDay;
         const isActive = currentPhase?.id === phase.id;
+        const PhaseIcon = PHASE_ICONS[phase.id];
         return (
           <div key={phase.id} className="flex items-center gap-1 flex-shrink-0">
             <div className="flex flex-col items-center gap-1">
-              <div className={`flex h-8 w-8 items-center justify-center rounded-full text-sm transition-all ${
+              <div className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors duration-200 ${
                 isActive ? 'bg-primary text-white ring-2 ring-primary/30' :
                 isPast   ? 'bg-primary/20 text-primary' :
                            'bg-surface text-muted-fg'
               }`}>
-                {PHASE_ICONS[phase.id]}
+                <PhaseIcon className="h-3.5 w-3.5" strokeWidth={2} />
               </div>
               <span className={`text-[9px] font-semibold whitespace-nowrap ${
                 isActive ? 'text-primary' : isPast ? 'text-muted-fg' : 'text-muted-fg/50'
@@ -179,128 +179,240 @@ function PhaseTimeline({ grow }: { grow: Grow }) {
   );
 }
 
-// ── Grow settings panel ─────────────────────────────────────────────────────
+// ── Grow Hero ─────────────────────────────────────────────────────────────────
+// Merges the previous "Grow Overview" card and sidebar "Grow Status Header"
+// into one calm, bigger-typography hero. Quick actions fold in here instead
+// of occupying their own sidebar card.
 
-const GROW_STATUS_OPTIONS: GrowStatus[] = ['aktiv', 'pausiert', 'abgeschlossen', 'abgebrochen'];
+function healthSummary(score: number): string {
+  if (score >= 85) return 'Läuft rund — du bist voll auf Kurs.';
+  if (score >= 70) return 'Guter Kurs. Ein paar Kleinigkeiten warten.';
+  if (score >= 50) return 'Ein paar Dinge brauchen deine Aufmerksamkeit.';
+  return 'Zeit für ein Update — schau kurz rein.';
+}
 
-function GrowSettingsPanel({
+const QUICK_LINKS: Array<{ icon: LucideIcon; label: string; href: (growId: string) => Route }> = [
+  { icon: NotebookPen, label: 'Log', href: (id) => `/grow/${id}/log` as Route },
+  { icon: Wrench, label: 'Tools', href: () => '/tools' as Route },
+  { icon: Stethoscope, label: 'Diagnose', href: (id) => `/diagnose?growId=${id}` as Route },
+];
+
+function GrowHero({
   grow,
-  onUpdate,
-  assistantEnabled,
-  onSetAssistantEnabled,
+  currentPhase,
+  percent,
+  healthScore,
+  healthStatus,
+  advancePhase,
 }: {
   grow: Grow;
-  onUpdate: (growId: string, updates: Partial<Grow>) => void;
-  assistantEnabled: boolean;
-  onSetAssistantEnabled: (value: boolean) => void;
+  currentPhase: Grow['plan']['phases'][number] | null | undefined;
+  percent: number;
+  healthScore: number;
+  healthStatus: GrowHealthStatus;
+  advancePhase: (growId: string, phaseId: GrowPhaseId) => void;
 }) {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState(grow.name);
-  const [pflanzenAnzahl, setPflanzenAnzahl] = useState(String(grow.pflanzenAnzahl));
-  const [status, setStatus] = useState<GrowStatus>(grow.status);
-  const [saved, setSaved] = useState(false);
+  const statusTone: IconChipTone = healthStatus.color === 'green' ? 'primary' : healthStatus.color === 'yellow' ? 'amber' : 'rose';
+  const StatusIcon = healthScore >= 85 ? Sparkles : healthScore >= 70 ? CheckCircle2 : AlertTriangle;
 
-  const handleSave = () => {
-    const parsedCount = Math.max(1, parseInt(pflanzenAnzahl, 10) || grow.pflanzenAnzahl);
-    onUpdate(grow.id, {
-      name: name.trim() || grow.name,
-      pflanzenAnzahl: parsedCount,
-      status,
-    });
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
-  };
+  const PhaseIcon = currentPhase ? PHASE_ICONS[currentPhase.id] : Leaf;
 
   return (
-    <div className="rounded-2xl border border-border bg-card shadow-sm">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between px-5 py-3.5 text-left"
-      >
-        <span className="flex items-center gap-2.5 text-sm font-bold text-foreground">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-            <Settings className="h-3.5 w-3.5" strokeWidth={2} />
-          </span>
-          Grow-Einstellungen
-        </span>
-        <ChevronDown className={`h-4 w-4 text-muted-fg transition-transform ${open ? 'rotate-180' : ''}`} strokeWidth={2} />
-      </button>
-      {open && (
-        <div className="space-y-4 border-t border-border px-5 py-4">
-          <div>
-            <label className="mb-1 block text-xs font-semibold text-muted-fg">Name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/40"
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="mb-1 block text-xs font-semibold text-muted-fg">Pflanzenanzahl</label>
-              <input
-                type="number"
-                min={1}
-                value={pflanzenAnzahl}
-                onChange={(e) => setPflanzenAnzahl(e.target.value)}
-                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/40"
-              />
-            </div>
-            <div>
-              <label className="mb-1 block text-xs font-semibold text-muted-fg">Status</label>
-              <Dropdown value={status} onChange={(v) => setStatus(v as GrowStatus)}>
-                {GROW_STATUS_OPTIONS.map((s) => (
-                  <DropdownOption key={s} value={s}>{GROW_STATUS_LABELS[s]}</DropdownOption>
+    <Card padding="lg" className="space-y-5" data-reveal>
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <p className="text-[11px] font-bold uppercase tracking-widest text-primary">Aktiver Grow</p>
+          <h1 className="mt-1 text-3xl font-bold leading-tight text-foreground sm:text-4xl">{grow.name}</h1>
+          <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-fg">
+            <span className="flex items-center gap-1.5" title="Wachstumsphase manuell umstellen">
+              <PhaseIcon className="h-3.5 w-3.5 text-primary" strokeWidth={2} />
+              <Dropdown
+                variant="ghost"
+                value={currentPhase?.id ?? grow.currentPhaseId}
+                onChange={(v) => advancePhase(grow.id, v as GrowPhaseId)}
+              >
+                {grow.plan.phases.map((phase) => (
+                  <DropdownOption key={phase.id} value={phase.id}>{phase.label}</DropdownOption>
                 ))}
               </Dropdown>
-            </div>
+            </span>
+            <span className="text-border">·</span>
+            <span>Tag {grow.currentDay}</span>
+            <span className="text-border">·</span>
+            <span>{grow.pflanzenAnzahl} {grow.pflanzenAnzahl === 1 ? 'Pflanze' : 'Pflanzen'}</span>
           </div>
-          <button
-            type="button"
-            onClick={handleSave}
-            className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white transition hover:bg-primary-dark"
-          >
-            {saved ? (
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4" strokeWidth={2} /> Gespeichert
-              </span>
-            ) : 'Speichern'}
-          </button>
-          <p className="text-[11px] text-muted-fg">
-            Umgebung, Medium und Lichttyp lassen sich nach dem Start nicht mehr ändern, da davon der generierte Aufgabenplan abhängt — dafür einen neuen Grow anlegen.
-          </p>
+        </div>
 
-          <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-3 py-2.5">
-            <div className="min-w-0">
-              <p className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
-                <Sparkles className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" strokeWidth={2} />
-                Tipps &amp; Empfehlungen anzeigen
+        <div className="flex items-center gap-3 sm:flex-shrink-0">
+          <div className="text-right">
+            <p className="text-2xl font-bold text-foreground">{percent}%</p>
+            <p className="text-[11px] text-muted-fg">erledigt</p>
+          </div>
+          <IconChip icon={StatusIcon} tone={statusTone} size="lg" />
+        </div>
+      </div>
+
+      <GrowProgress grow={grow} />
+      <PhaseTimeline grow={grow} />
+
+      <p className="text-xs text-muted-fg">{healthSummary(healthScore)}</p>
+
+      <div className="flex flex-wrap gap-2 border-t border-border pt-4">
+        {QUICK_LINKS.map(({ icon: Icon, label, href }) => (
+          <Link
+            key={label}
+            href={href(grow.id)}
+            className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 text-[13px] font-semibold text-foreground transition-colors duration-150 hover:border-primary/30 hover:bg-primary/10"
+          >
+            <Icon className="h-3.5 w-3.5 text-primary" strokeWidth={2} />
+            {label}
+          </Link>
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+// ── Today card ────────────────────────────────────────────────────────────────
+// The one place urgent/red color is allowed. Merges the previous Daily
+// Action banner + Phase Suggestion banner + Overdue Tasks list — three
+// separately-bordered surfaces that all said some version of "pay
+// attention now" — into a single focused card.
+
+const DAILY_ACTION_CONFIG: Record<
+  DailyAction['level'],
+  { border: string; bg: string; bar: string; tone: IconChipTone; label: string; labelText: string; cta: string; deltaTone: (positive: boolean) => BadgeTone; icon: LucideIcon }
+> = {
+  critical: { border: 'border-rose-500/30', bg: 'bg-rose-500/5', bar: 'from-rose-400 to-rose-600', tone: 'rose', icon: AlertTriangle, label: 'Einzige Priorität heute', labelText: 'text-rose-600 dark:text-rose-400', cta: 'bg-rose-600 text-white hover:bg-rose-700', deltaTone: (p) => (p ? 'primary' : 'rose') },
+  warning:  { border: 'border-amber-500/30', bg: 'bg-amber-500/5', bar: 'from-amber-400 to-amber-600', tone: 'amber', icon: AlertTriangle, label: 'Heute nicht vergessen', labelText: 'text-amber-600 dark:text-amber-400', cta: 'bg-amber-500 text-white hover:bg-amber-600', deltaTone: (p) => (p ? 'primary' : 'rose') },
+  info:     { border: 'border-primary/30', bg: 'bg-primary/5', bar: 'from-primary to-primary-dark', tone: 'primary', icon: Info, label: 'Heute aktiv bleiben', labelText: 'text-primary', cta: 'bg-primary text-white hover:bg-primary-dark', deltaTone: (p) => (p ? 'primary' : 'rose') },
+  success:  { border: 'border-emerald-500/30', bg: 'bg-emerald-500/5', bar: 'from-emerald-400 to-emerald-600', tone: 'primary', icon: CheckCircle2, label: 'Tag gesichert', labelText: 'text-emerald-600 dark:text-emerald-400', cta: 'border border-emerald-500/30 bg-card text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40', deltaTone: (p) => (p ? 'primary' : 'rose') },
+};
+
+function ProInsightGate({ yieldImpact, deepInsight, isPro }: { yieldImpact?: string; deepInsight?: string; isPro: boolean }) {
+  if (!isPro || (!yieldImpact && !deepInsight)) return null;
+  return (
+    <div className="mt-2 space-y-1">
+      {yieldImpact && (
+        <p className="flex items-start gap-1.5 text-[11px] font-bold text-amber-600 dark:text-amber-300/90 leading-tight">
+          <BarChart3 className="mt-px h-3 w-3 flex-shrink-0" strokeWidth={2} />
+          {yieldImpact}
+        </p>
+      )}
+      {deepInsight && <p className="text-[11px] text-muted-fg leading-snug italic">{deepInsight}</p>}
+    </div>
+  );
+}
+
+type PhaseSuggestion = {
+  currentPhaseLabel: string;
+  overdueDays: number;
+  nextPhase: { id: GrowPhaseId; label: string };
+};
+
+function TodayCard({
+  action,
+  scoreDelta,
+  isPro,
+  overdue,
+  currentDay,
+  onComplete,
+  phaseSuggestion,
+  onAdvancePhase,
+}: {
+  action: DailyAction | null;
+  scoreDelta?: number | null;
+  isPro: boolean;
+  overdue: GrowTask[];
+  currentDay: number;
+  onComplete: (taskId: string) => void;
+  phaseSuggestion: PhaseSuggestion | null;
+  onAdvancePhase: (phaseId: GrowPhaseId) => void;
+}) {
+  const cfg = action ? DAILY_ACTION_CONFIG[action.level] : DAILY_ACTION_CONFIG.warning;
+  const Icon = action ? cfg.icon : AlertTriangle;
+  const showDelta = action != null && scoreDelta != null && scoreDelta !== 0;
+
+  return (
+    <Card padding="lg" className={`relative overflow-hidden border ${cfg.border} ${cfg.bg}`} data-reveal>
+      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${cfg.bar}`} />
+
+      {showDelta && scoreDelta != null && (
+        <Badge tone={cfg.deltaTone(scoreDelta > 0)} className="absolute right-4 top-3">
+          {scoreDelta > 0 ? `+${scoreDelta}` : scoreDelta} Score
+        </Badge>
+      )}
+
+      {action && (
+        <div className="flex items-start gap-3 pt-1">
+          <IconChip icon={Icon} tone={cfg.tone} />
+          <div className="min-w-0 flex-1">
+            <p className={`text-[10px] font-black uppercase tracking-widest ${cfg.labelText}`}>{cfg.label}</p>
+            <p className="mt-1 text-base font-bold leading-snug text-foreground">{action.message}</p>
+            <p className="mt-1 text-xs leading-snug text-muted-fg">{action.subtext}</p>
+            {action.consequence && (
+              <p className="mt-1.5 flex items-start gap-1 text-[11px] font-semibold leading-tight text-muted-fg">
+                <ArrowRight className="mt-px h-3 w-3 flex-shrink-0" strokeWidth={2} />
+                {action.consequence}
               </p>
-              <p className="mt-0.5 text-[11px] text-muted-fg">
-                Steuert Score-Karte, Statuszeile, Performance- und Wissens-Hinweise. Log, Aufgaben und Einstellungen bleiben immer nutzbar.
+            )}
+            {action.upside && (
+              <p className="mt-1 flex items-start gap-1 text-[11px] font-semibold leading-tight text-primary">
+                <TrendingUp className="mt-px h-3 w-3 flex-shrink-0" strokeWidth={2} />
+                {action.upside}
               </p>
-            </div>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={assistantEnabled}
-              onClick={() => onSetAssistantEnabled(!assistantEnabled)}
-              className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors ${
-                assistantEnabled ? 'bg-primary' : 'bg-border'
-              }`}
+            )}
+            <ProInsightGate
+              {...(action.yieldImpact ? { yieldImpact: action.yieldImpact } : {})}
+              {...(action.deepInsight ? { deepInsight: action.deepInsight } : {})}
+              isPro={isPro}
+            />
+          </div>
+          <div className="flex flex-shrink-0 flex-col items-end gap-1">
+            <Link
+              href={action.ctaHref as Route}
+              className={`rounded-xl px-4 py-2.5 text-sm font-bold transition-transform duration-150 active:scale-95 ${cfg.cta}`}
             >
-              <span
-                className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
-                  assistantEnabled ? 'translate-x-[22px]' : 'translate-x-0.5'
-                }`}
-              />
-            </button>
+              {action.ctaLabel}
+            </Link>
+            {action.recoveryGrams != null && action.recoveryGrams > 0 && (
+              <p className="text-[10px] font-bold text-primary/90 whitespace-nowrap">
+                +{action.recoveryGrams}g mit dieser Aktion zurückholbar
+              </p>
+            )}
           </div>
         </div>
       )}
-    </div>
+
+      {phaseSuggestion && (
+        <div className={`flex items-center justify-between gap-3 rounded-xl border border-border bg-card/70 px-4 py-3 ${action ? 'mt-4' : ''}`}>
+          <div className="flex items-center gap-3">
+            <IconChip icon={ArrowRight} size="sm" />
+            <p className="text-xs text-foreground">
+              <span className="font-semibold">Bereit für {phaseSuggestion.nextPhase.label}</span> — {phaseSuggestion.currentPhaseLabel} war vor {phaseSuggestion.overdueDays} {phaseSuggestion.overdueDays === 1 ? 'Tag' : 'Tagen'} geplant abgeschlossen.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => onAdvancePhase(phaseSuggestion.nextPhase.id)}
+            className="flex-shrink-0 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-white transition-transform duration-150 hover:bg-primary-dark active:scale-95"
+          >
+            {phaseSuggestion.nextPhase.label}
+          </button>
+        </div>
+      )}
+
+      {overdue.length > 0 && (
+        <div className={`space-y-2 ${(action || phaseSuggestion) ? 'mt-4 border-t border-border/60 pt-4' : ''}`}>
+          <p className="text-xs font-bold text-foreground">
+            {overdue.length === 1 ? '1 überfälliger Task' : `${overdue.length} überfällige Tasks`}
+          </p>
+          {overdue.map((task) => (
+            <TaskItem key={task.id} task={task} currentDay={currentDay} onComplete={onComplete} />
+          ))}
+        </div>
+      )}
+    </Card>
   );
 }
 
@@ -314,14 +426,15 @@ type TaskItemProps = {
 
 function TaskItem({ task, currentDay, onComplete }: TaskItemProps) {
   const overdue = task.dueDay < currentDay;
+  const CategoryIcon = TASK_CATEGORY_ICONS[task.category];
   return (
-    <div className={`flex items-start gap-3 rounded-xl border px-4 py-3 transition-all ${
+    <div className={`flex items-start gap-3 rounded-xl border px-4 py-3 transition-colors duration-150 ${
       overdue ? 'border-rose-500/20 bg-rose-500/10' : 'border-border bg-card hover:border-primary/20'
     }`}>
       <button
         type="button"
         onClick={() => onComplete(task.id)}
-        className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-all ${
+        className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border-2 transition-[transform,border-color,background-color] duration-150 active:scale-90 ${
           overdue
             ? 'border-rose-400/60 hover:border-rose-400 hover:bg-rose-500/10'
             : 'border-border hover:border-primary/60 hover:bg-primary/10'
@@ -335,7 +448,7 @@ function TaskItem({ task, currentDay, onComplete }: TaskItemProps) {
         )}
       </div>
       <div className="flex flex-shrink-0 flex-col items-end gap-1">
-        <span className="text-base">{TASK_CATEGORY_ICONS[task.category]}</span>
+        <CategoryIcon className="h-4 w-4 text-muted-fg" strokeWidth={2} />
         <span className={`text-[10px] ${dayLabelClass(task.dueDay, currentDay)}`}>
           {dayLabel(task.dueDay, currentDay)}
         </span>
@@ -355,8 +468,6 @@ function computePlantStatus(plantEntries: LogEntry[]): PlantStatus {
   return days <= 3 ? "good" : "needs-attention";
 }
 
-// getMicroInsight replaced by getPlantMicroInsight from intelligence.ts
-
 function getWorstReason(plantEntries: LogEntry[]): string {
   if (plantEntries.length === 0) return "Kein Eintrag vorhanden";
   const lastWater = plantEntries.find((e) => e.data.type === "wasser");
@@ -371,10 +482,15 @@ function getWorstReason(plantEntries: LogEntry[]): string {
   return `Letzte Pflege vor ${days} Tagen`;
 }
 
-const PLANT_STATUS_CONFIG: Record<PlantStatus, { label: string; classes: string }> = {
-  good:              { label: "OK",     classes: "bg-primary/20 text-primary"                      },
-  "needs-attention": { label: "Prüfen", classes: "bg-amber-500/15 text-amber-400"                  },
-  "no-data":         { label: "Neu",    classes: "bg-surface text-muted-fg border border-border"   },
+const PLANT_STATUS_TONE: Record<PlantStatus, BadgeTone> = {
+  good: "primary",
+  "needs-attention": "amber",
+  "no-data": "muted",
+};
+const PLANT_STATUS_LABEL: Record<PlantStatus, string> = {
+  good: "OK",
+  "needs-attention": "Prüfen",
+  "no-data": "Neu",
 };
 
 /** True when a plant has no log in > 3 days OR no watering in > 3 days. */
@@ -391,15 +507,19 @@ function isPlantCritical(plantEntries: LogEntry[]): boolean {
   return false;
 }
 
-// ── Grow Performance Panel ───────────────────────────────────────────────────
+// ── Performance section (inside the consolidated Insights card) ─────────────
 
-/**
-/**
- * PRO: Emotional yield performance panel.
- * Shows potential vs current, loss %, visual progress bar, and trend.
- * FREE: Shows vague % with blurred detail + hard paywall CTA.
- */
-function GrowPerformancePanel({
+function StatTile({ label, value, tone }: { label: string; value: string; tone: 'primary' | 'amber' | 'rose' | 'muted' }) {
+  const textTone = { primary: 'text-primary', amber: 'text-amber-500 dark:text-amber-400', rose: 'text-rose-500 dark:text-rose-400', muted: 'text-muted-fg' }[tone];
+  return (
+    <div className="rounded-xl border border-border bg-background px-2 py-2 text-center">
+      <p className={`text-base font-black ${textTone}`}>{value}</p>
+      <p className="mt-0.5 text-[9px] font-semibold leading-tight text-muted-fg">{label}</p>
+    </div>
+  );
+}
+
+function PerformanceSection({
   isPro,
   yieldImpact,
   optScore,
@@ -413,112 +533,34 @@ function GrowPerformancePanel({
   const usedPercent = yieldImpact.potentialYield > 0
     ? Math.round((yieldImpact.currentEstimate / yieldImpact.potentialYield) * 100)
     : 100;
+  const barTone: ProgressBarTone = usedPercent >= 80 ? 'primary' : usedPercent >= 50 ? 'amber' : 'rose';
 
-  const barColor =
-    usedPercent >= 80 ? 'bg-emerald-500' :
-    usedPercent >= 50 ? 'bg-amber-500'   : 'bg-rose-500';
-
-  const lossMessage =
-    yieldImpact.lossPercent >= 40
-      ? 'Du verlierst gerade fast die Hälfte deines möglichen Ertrags.'
-      : yieldImpact.lossPercent >= 20
-        ? 'Dein Grow arbeitet gerade unter seinem Potenzial — das ist noch korrigierbar.'
-        : yieldImpact.lossPercent > 0
-          ? 'Du verlierst gerade Ertrag — kleine Korrekturen reichen.'
-          : 'Dein Grow läuft nahe am vollen Potenzial.';
-
-  const TrendIcon  = !trend || trend.trend === 'stable' ? Minus : trend.trend === 'up' ? TrendingUp : TrendingDown;
-  const trendColor = !trend || trend.trend === 'stable' ? 'text-muted-fg' : trend.trend === 'up' ? 'text-primary' : 'text-rose-400';
-  const trendLabel =
-    !trend || trend.trend === 'stable'
-      ? 'Stabil'
-      : trend.trend === 'up'
-        ? `+${trend.delta} gewonnen`
-        : `${trend.delta} verloren`;
+  const TrendIcon = !trend || trend.trend === 'stable' ? Minus : trend.trend === 'up' ? TrendingUp : TrendingDown;
+  const trendTone: 'primary' | 'muted' | 'rose' = !trend || trend.trend === 'stable' ? 'muted' : trend.trend === 'up' ? 'primary' : 'rose';
+  const trendLabel = !trend || trend.trend === 'stable' ? 'Stabil' : trend.trend === 'up' ? `+${trend.delta}` : `${trend.delta}`;
 
   if (isPro) {
     return (
-      <div className="relative overflow-hidden rounded-2xl border border-amber-500/25 bg-card p-4 shadow-sm space-y-3">
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600" />
-        {/* Header */}
-        <div className="flex items-center justify-between pt-1">
-          <p className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">
-            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-950/40">
-              <BarChart3 className="h-3.5 w-3.5" strokeWidth={2} />
-            </span>
-            Ertrag-Performance
-          </p>
-          <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400">PRO</span>
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-semibold text-muted-fg">Ertrag-Potenzial genutzt</p>
+          <p className="text-sm font-bold text-foreground">{usedPercent}%</p>
         </div>
-
-        {/* Entry message — always visible before numbers */}
-        <p className="text-sm font-black text-rose-500 dark:text-rose-400 leading-snug">
-          {yieldImpact.totalLoss > 0
-            ? lossMessage
-            : 'Dein Grow läuft nahe am vollen Potenzial.'}
+        <ProgressBar percent={usedPercent} tone={barTone} />
+        <p className="text-xs leading-relaxed text-muted-fg">
+          ~{yieldImpact.projectedYield}g von {yieldImpact.potentialYield}g möglich
+          {yieldImpact.lossPercent > 0 && ` · ${yieldImpact.lossPercent}% Differenz`}
         </p>
-
-        {/* Weekly loss rate */}
-        {yieldImpact.weeklyLossRate > 0 && (
-          <p className="flex items-center gap-1.5 text-[11px] font-bold text-rose-500 dark:text-rose-400 leading-tight">
-            <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
-            Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
-          </p>
-        )}
-
-        {/* Projected yield vs Potential */}
-        <div className="rounded-xl border border-border bg-card px-3 py-2.5 space-y-2">
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-[10px] font-semibold text-muted-fg uppercase tracking-wider">Wenn nichts geändert wird</p>
-              <p className="text-lg font-black text-foreground leading-tight mt-0.5">
-                ~{yieldImpact.projectedYield}g
-                <span className="text-sm font-semibold text-muted-fg"> statt {yieldImpact.potentialYield}g möglich</span>
-              </p>
-            </div>
-            {yieldImpact.lossPercent > 0 && (
-              <p className="text-sm font-black text-rose-400">−{yieldImpact.lossPercent}%</p>
-            )}
-          </div>
-          {/* Progress bar */}
-          <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface">
-            <div
-              className={`h-full rounded-full transition-all duration-700 ${barColor}`}
-              style={{ width: `${usedPercent}%` }}
-            />
-          </div>
-          <p className="text-[10px] text-muted-fg font-medium">{usedPercent}% des Potenzials genutzt</p>
-        </div>
-
-        {/* Stats row */}
         <div className="grid grid-cols-3 gap-2">
-          <div className="rounded-xl border border-rose-500/20 bg-card px-2 py-2 text-center">
-            <p className="text-base font-black text-rose-400">{yieldImpact.totalLoss > 0 ? `−${yieldImpact.totalLoss}g` : '—'}</p>
-            <p className="text-[9px] font-semibold text-rose-400/70 mt-0.5 leading-tight">Verlust-Risiko</p>
-          </div>
-          <div className="rounded-xl border border-primary/20 bg-card px-2 py-2 text-center">
-            <p className={`text-base font-black ${optScore >= 80 ? 'text-primary' : optScore >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>{optScore}%</p>
-            <p className="text-[9px] font-semibold text-muted-fg mt-0.5 leading-tight">Optimierung</p>
-          </div>
-          <div className="rounded-xl border border-border bg-card px-2 py-2 text-center">
-            <TrendIcon className={`mx-auto h-4 w-4 ${trendColor}`} strokeWidth={2.5} />
-            <p className={`text-[9px] font-semibold mt-0.5 leading-tight ${trendColor}`}>{trendLabel}</p>
+          <StatTile label="Verlust-Risiko" value={yieldImpact.totalLoss > 0 ? `${yieldImpact.totalLoss}g` : '—'} tone="rose" />
+          <StatTile label="Optimierung" value={`${optScore}%`} tone={optScore >= 80 ? 'primary' : optScore >= 50 ? 'amber' : 'rose'} />
+          <div className="rounded-xl border border-border bg-background px-2 py-2 text-center">
+            <TrendIcon className={`mx-auto h-4 w-4 ${trendTone === 'primary' ? 'text-primary' : trendTone === 'rose' ? 'text-rose-500 dark:text-rose-400' : 'text-muted-fg'}`} strokeWidth={2.5} />
+            <p className="mt-0.5 text-[9px] font-semibold leading-tight text-muted-fg">{trendLabel}</p>
           </div>
         </div>
-
-        {/* Momentum sentence */}
-        {trend && trend.trend !== 'stable' && (
-          <p className={`flex items-center gap-1.5 text-[11px] font-semibold leading-tight ${trend.trend === 'up' ? 'text-primary' : 'text-rose-500 dark:text-rose-400'}`}>
-            {trend.trend === 'up' ? <TrendingUp className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} /> : <TrendingDown className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />}
-            {trend.trend === 'up'
-              ? `Du hast deinen Grow seit dem letzten Besuch um +${trend.delta} Punkte verbessert.`
-              : `Dein Grow hat ${Math.abs(trend.delta)} Punkte verloren — jetzt gegensteuern.`}
-          </p>
-        )}
-
-        {/* Recovery upside */}
         {yieldImpact.totalGainPotential > 0 && (
-          <p className="flex items-center gap-1.5 text-[11px] text-primary font-semibold leading-tight">
+          <p className="flex items-center gap-1.5 text-[11px] font-semibold leading-tight text-primary">
             <TrendingUp className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
             +{yieldImpact.totalGainPotential}g mit dieser Aktion zurückholbar.
           </p>
@@ -527,312 +569,65 @@ function GrowPerformancePanel({
     );
   }
 
-  // FREE — real % shown, exact grams blurred
+  // FREE — calm, honest upsell. No blur/lock/red-alarm treatment; the real
+  // percentage is shown, exact grams and trend detail are the PRO value-add.
   return (
-    <Link href={'/pricing' as Route} className="block">
-      <div className="relative overflow-hidden rounded-2xl border border-amber-500/25 bg-card p-4 shadow-sm transition hover:border-amber-500/40">
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400 to-amber-600" />
-
-        {/* Header visible to all */}
-        <div className="flex items-center justify-between mb-3 pt-1">
-          <p className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">
-            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-950/40">
-              <BarChart3 className="h-3.5 w-3.5" strokeWidth={2} />
-            </span>
-            Ertrag-Performance
-          </p>
+    <Link
+      href={'/pricing' as Route}
+      className="block rounded-xl border border-border bg-background p-4 transition-colors duration-150 hover:border-primary/30"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-sm font-semibold text-foreground">{usedPercent}% deines Ertrag-Potenzials genutzt</p>
+          <p className="mt-1 text-xs text-muted-fg">PRO zeigt dir genaue Zahlen, Verlustrisiko und Trend.</p>
         </div>
-
-        {/* Entry message — always visible before numbers */}
-        <p className="text-sm font-black text-rose-500 dark:text-rose-400 mb-3">
-          {yieldImpact.lossPercent >= 20
-            ? 'Du verlierst gerade spürbar Ertrag.'
-            : 'Dein Grow läuft unter seinem Potenzial.'}
-        </p>
-
-        {/* Weekly loss visible, gram projection locked */}
-        {yieldImpact.weeklyLossRate > 0 && (
-          <p className="flex items-center gap-1.5 text-[11px] font-bold text-rose-500 dark:text-rose-400 mb-2 leading-tight">
-            <AlertTriangle className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} />
-            Du verlierst gerade ~{yieldImpact.weeklyLossRate}g pro Woche.
-          </p>
-        )}
-
-        {/* Progress bar with real %, projection locked */}
-        <div className="rounded-xl border border-border bg-card px-3 py-2.5 space-y-2 mb-3">
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-[10px] font-semibold text-muted-fg uppercase tracking-wider">{usedPercent}% des Potenzials genutzt</p>
-            </div>
-            {yieldImpact.lossPercent > 0 && (
-              <p className="text-xs font-black text-rose-600">−{yieldImpact.lossPercent}% Verlustrisiko</p>
-            )}
-          </div>
-          <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface">
-            <div className={`h-full rounded-full transition-all duration-700 ${barColor}`} style={{ width: `${usedPercent}%` }} />
-          </div>
-          <div className="flex items-center justify-between">
-            <p className="flex items-center gap-1.5 text-[10px] text-rose-500 dark:text-rose-400 font-bold">
-              <Lock className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
-              Genaue Ertragszahlen nur für PRO sichtbar
-            </p>
-          </div>
-        </div>
-
-        {/* Blurred stats — real values, hidden */}
-        <div className="grid grid-cols-3 gap-2 blur-[4px] select-none pointer-events-none mb-3">
-          <div className="rounded-xl border border-rose-500/20 bg-card px-2 py-2 text-center">
-            <p className="text-base font-black text-rose-400">{yieldImpact.totalLoss > 0 ? `−${yieldImpact.totalLoss}g` : '—'}</p>
-            <p className="text-[9px] font-semibold text-rose-400/70 mt-0.5">Verlust-Risiko</p>
-          </div>
-          <div className="rounded-xl border border-amber-500/20 bg-card px-2 py-2 text-center">
-            <p className="text-base font-black text-amber-400">{optScore}%</p>
-            <p className="text-[9px] font-semibold text-muted-fg mt-0.5">Optimierung</p>
-          </div>
-          <div className="rounded-xl border border-border bg-card px-2 py-2 text-center">
-            <TrendIcon className={`mx-auto h-4 w-4 ${trendColor}`} strokeWidth={2.5} />
-            <p className={`text-[9px] font-semibold mt-0.5 ${trendColor}`}>{trendLabel}</p>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="flex items-center justify-between gap-3 rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2.5">
-          <p className="text-xs font-bold text-amber-700 dark:text-amber-300 leading-snug">Du siehst nur einen Teil — PRO zeigt dir, was du noch verlierst.</p>
-          <span className="flex-shrink-0 rounded-full border border-amber-500/40 bg-card px-3 py-1.5 text-[10px] font-black text-amber-600 dark:text-amber-400 shadow-sm">PRO</span>
-        </div>
+        <Badge tone="pro">PRO</Badge>
       </div>
+      <ProgressBar percent={usedPercent} tone={barTone} className="mt-3" />
     </Link>
   );
 }
 
-// ── PRO Insight Gate ─────────────────────────────────────────────────────────
+// ── Consolidated sidebar Insights card ───────────────────────────────────────
+// Replaces four separately-bordered sidebar boxes (Grow Status Header,
+// Grow Performance Panel, Recommendations, Smart Insights) with one card.
+// RecommendationsPanel/SmartInsights render `bare` (no outer card shell,
+// self-contained top border only when they actually render content).
 
-/**
- * Blurred teaser shown to FREE users in place of PRO intelligence data.
- * Clicking opens the profile page where plan upgrade will live.
- */
-function ProInsightGate({
+function InsightsCard({
+  showPerformance,
+  isPro,
   yieldImpact,
-  deepInsight,
-  isPro,
+  optScore,
+  trend,
+  growId,
+  userId,
+  grow,
 }: {
-  yieldImpact?: string;
-  deepInsight?: string;
+  showPerformance: boolean;
   isPro: boolean;
+  yieldImpact: YieldImpactResult;
+  optScore: number;
+  trend: GrowTrend | null;
+  growId: string;
+  userId: string | undefined;
+  grow: Grow;
 }) {
-  if (!yieldImpact && !deepInsight) return null;
-
-  if (isPro) {
-    return (
-      <div className="mt-2 space-y-1">
-        {yieldImpact && (
-          <p className="flex items-start gap-1.5 text-[11px] font-bold text-amber-200/90 leading-tight">
-            <BarChart3 className="mt-px h-3 w-3 flex-shrink-0" strokeWidth={2} />
-            {yieldImpact}
-          </p>
-        )}
-        {deepInsight && (
-          <p className="text-[11px] text-white/70 leading-snug italic">
-            {deepInsight}
-          </p>
-        )}
-      </div>
-    );
-  }
-
-  // FREE users — hide, panel handles conversion
-  return null;
-}
-
-// ── Daily Action Card ────────────────────────────────────────────────────────
-
-const DAILY_ACTION_CONFIG: Record<
-  DailyAction['level'],
-  {
-    border: string; bg: string; bar: string; iconChip: string; iconText: string;
-    icon: LucideIcon; label: string; labelText: string; subtext: string;
-    cta: string; deltaPositive: string; deltaNegative: string;
-  }
-> = {
-  critical: {
-    border: 'border-rose-500/30',
-    bg:     'bg-rose-500/10',
-    bar:    'from-rose-400 to-rose-600',
-    iconChip: 'bg-rose-50 dark:bg-rose-950/40',
-    iconText: 'text-rose-600 dark:text-rose-400',
-    icon:   AlertTriangle,
-    label:  'Einzige Priorität heute',
-    labelText: 'text-rose-600 dark:text-rose-400',
-    subtext:'text-muted-fg',
-    cta:    'bg-rose-600 text-white hover:bg-rose-700',
-    deltaPositive: 'bg-primary/15 text-primary',
-    deltaNegative: 'bg-rose-500/15 text-rose-500 dark:text-rose-400',
-  },
-  warning: {
-    border: 'border-amber-500/30',
-    bg:     'bg-amber-500/10',
-    bar:    'from-amber-400 to-amber-600',
-    iconChip: 'bg-amber-50 dark:bg-amber-950/40',
-    iconText: 'text-amber-600 dark:text-amber-400',
-    icon:   AlertTriangle,
-    label:  'Heute nicht vergessen',
-    labelText: 'text-amber-600 dark:text-amber-400',
-    subtext:'text-muted-fg',
-    cta:    'bg-amber-500 text-white hover:bg-amber-600',
-    deltaPositive: 'bg-primary/15 text-primary',
-    deltaNegative: 'bg-rose-500/15 text-rose-500 dark:text-rose-400',
-  },
-  info: {
-    border: 'border-primary/30',
-    bg:     'bg-primary/10',
-    bar:    'from-primary to-primary-dark',
-    iconChip: 'bg-emerald-50 dark:bg-emerald-950/40',
-    iconText: 'text-emerald-600 dark:text-emerald-400',
-    icon:   Info,
-    label:  'Heute aktiv bleiben',
-    labelText: 'text-primary',
-    subtext:'text-muted-fg',
-    cta:    'bg-primary text-white hover:bg-primary-dark',
-    deltaPositive: 'bg-primary/15 text-primary',
-    deltaNegative: 'bg-rose-500/15 text-rose-500 dark:text-rose-400',
-  },
-  success: {
-    border: 'border-emerald-500/30',
-    bg:     'bg-emerald-500/10',
-    bar:    'from-emerald-400 to-emerald-600',
-    iconChip: 'bg-emerald-50 dark:bg-emerald-950/40',
-    iconText: 'text-emerald-600 dark:text-emerald-400',
-    icon:   CheckCircle2,
-    label:  'Tag gesichert',
-    labelText: 'text-emerald-600 dark:text-emerald-400',
-    subtext:'text-muted-fg',
-    cta:    'border border-emerald-500/30 bg-card text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40',
-    deltaPositive: 'bg-primary/15 text-primary',
-    deltaNegative: 'bg-rose-500/15 text-rose-500 dark:text-rose-400',
-  },
-};
-
-function DailyActionCard({
-  action,
-  scoreDelta,
-  isPro,
-}: {
-  action: DailyAction;
-  scoreDelta?: number | null;
-  isPro: boolean;
-}) {
-  const cfg = DAILY_ACTION_CONFIG[action.level];
-  const Icon = cfg.icon;
-  const showDelta = scoreDelta != null && scoreDelta !== 0;
-
   return (
-    <div className={`relative overflow-hidden rounded-2xl border ${cfg.border} ${cfg.bg} px-5 py-4 shadow-sm`}>
-      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${cfg.bar}`} />
-      {/* Score delta badge */}
-      {showDelta && scoreDelta != null && scoreDelta !== 0 && (
-        <span
-          className={`absolute right-4 top-3 rounded-full px-2.5 py-0.5 text-xs font-black shadow-sm
-            ${scoreDelta > 0 ? cfg.deltaPositive : cfg.deltaNegative}`}
-        >
-          {scoreDelta > 0 ? `+${scoreDelta}` : scoreDelta} Score
-        </span>
+    <Card padding="lg" className="space-y-5" data-reveal>
+      <div className="flex items-center gap-3">
+        <IconChip icon={Sparkles} />
+        <h2 className="text-sm font-bold text-foreground">Insights</h2>
+      </div>
+
+      {showPerformance && (
+        <PerformanceSection isPro={isPro} yieldImpact={yieldImpact} optScore={optScore} trend={trend} />
       )}
-      <div className="flex items-start justify-between gap-4 pt-1">
-        <div className="min-w-0 flex-1">
-          <p className={`flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest mb-1.5 ${cfg.labelText}`}>
-            <span className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md ${cfg.iconChip} ${cfg.iconText}`}>
-              <Icon className="h-3 w-3" strokeWidth={2.5} />
-            </span>
-            {cfg.label}
-          </p>
-          <p className="text-base font-black leading-snug text-foreground">{action.message}</p>
-          <p className={`mt-1 text-xs leading-snug ${cfg.subtext}`}>{action.subtext}</p>
-          {action.consequence && (
-            <p className="mt-1.5 flex items-start gap-1 text-[11px] font-semibold leading-tight text-muted-fg">
-              <ArrowRight className="mt-px h-3 w-3 flex-shrink-0" strokeWidth={2} />
-              {action.consequence}
-            </p>
-          )}
-          {action.upside && (
-            <p className="mt-1 flex items-start gap-1 text-[11px] font-semibold leading-tight text-primary">
-              <TrendingUp className="mt-px h-3 w-3 flex-shrink-0" strokeWidth={2} />
-              {action.upside}
-            </p>
-          )}
-          <ProInsightGate
-            {...(action.yieldImpact ? { yieldImpact: action.yieldImpact } : {})}
-            {...(action.deepInsight ? { deepInsight: action.deepInsight } : {})}
-            isPro={isPro}
-          />
-        </div>
-        <div className="flex-shrink-0 flex flex-col items-end gap-1">
-          <Link
-            href={action.ctaHref as Route}
-            className={`rounded-xl px-4 py-2.5 text-sm font-bold transition active:scale-95 ${cfg.cta}`}
-          >
-            {action.ctaLabel}
-          </Link>
-          {action.recoveryGrams != null && action.recoveryGrams > 0 && (
-            <p className="text-[10px] font-bold text-primary/90 whitespace-nowrap">
-              +{action.recoveryGrams}g mit dieser Aktion zurückholbar
-            </p>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
 
-// ── Grow Status Header ────────────────────────────────────────────────────────
+      {userId && <RecommendationsPanel growId={growId} userId={userId} bare />}
 
-function scoreToMomentum(score: number, prevScore?: number): string {
-  if (prevScore != null) {
-    const delta = score - prevScore;
-    if (delta >= 5)   return `Du hast deinen Grow um +${delta} Punkte verbessert.`;
-    if (delta <= -10) return `Dein Grow hat ${Math.abs(delta)} Punkte verloren — du hast Fortschritt verloren.`;
-    if (delta <= -5)  return `Dein Grow hat ${Math.abs(delta)} Punkte verloren — jetzt gegensteuern.`;
-  }
-  if (score >= 85) return 'Du bist heute auf Kurs — alles unter Kontrolle.';
-  if (score >= 70) return 'Du bist in Gefahr — Potenzial wird täglich verschenkt.';
-  if (score >= 50) return 'Du verlierst Ertrag — ein Eingriff stoppt das heute.';
-  return 'Kritisch — jeder Tag ohne Aktion kostet dich Ertrag.';
-}
-
-function GrowStatusHeader({
-  score,
-  status,
-  prevScore,
-}: {
-  score: number;
-  status: GrowHealthStatus;
-  prevScore?: number;
-}) {
-  const colors = {
-    green:  { ring: 'ring-primary/30 border-primary/30',       bg: 'bg-primary/10',    text: 'text-primary',    score: 'text-primary'    },
-    yellow: { ring: 'ring-amber-500/30 border-amber-500/30',   bg: 'bg-amber-500/10',  text: 'text-amber-400',  score: 'text-amber-400'  },
-    red:    { ring: 'ring-rose-500/30 border-rose-500/30',     bg: 'bg-rose-500/10',   text: 'text-rose-400',   score: 'text-rose-400'   },
-  }[status.color];
-
-  const momentum = scoreToMomentum(score, prevScore);
-  const ScoreIcon = score >= 85 ? Sparkles : score >= 70 ? CheckCircle2 : AlertTriangle;
-
-  return (
-    <div className={`flex items-center gap-4 rounded-2xl border px-4 py-3 ring-1 ${colors.bg} ${colors.ring}`}>
-      <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full ring-2 bg-card ${colors.ring}`}>
-        <ScoreIcon className={`h-6 w-6 ${colors.text}`} strokeWidth={2} />
-      </div>
-      <div className="min-w-0 flex-1">
-        <p className={`text-sm font-black leading-snug ${colors.text}`}>{momentum}</p>
-        <p className={`text-xs opacity-80 mt-0.5 ${colors.text}`}>{status.text}</p>
-        <p className={`text-[10px] font-bold uppercase tracking-wider opacity-60 mt-0.5 ${colors.text}`}>
-          {status.yieldLabel}
-        </p>
-        <p className={`flex items-center gap-1 text-[10px] font-semibold opacity-70 mt-0.5 ${colors.text}`}>
-          <TrendingUp className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
-          {status.upsideLabel}
-        </p>
-      </div>
-    </div>
+      <SmartInsights grow={grow} bare />
+    </Card>
   );
 }
 
@@ -900,12 +695,10 @@ function PlantComparisonBar({
   if (!best && !worst) return null;
   const worstReason = worst ? getWorstReason(worstEntries) : null;
   return (
-    <div className="mb-3 flex items-stretch gap-2">
+    <div className="flex items-stretch gap-2">
       {best && (
         <div className="flex flex-1 items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-3 py-2.5">
-          <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-            <CheckCircle2 className="h-4 w-4" strokeWidth={2} />
-          </span>
+          <IconChip icon={CheckCircle2} tone="primary" size="sm" />
           <div className="min-w-0">
             <p className="text-[10px] font-bold uppercase tracking-wider text-primary">Beste Pflanze</p>
             <p className="truncate text-xs font-bold text-foreground">{best.name}</p>
@@ -915,9 +708,7 @@ function PlantComparisonBar({
       {worst && (
         <div className="flex flex-1 flex-col gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2.5">
           <div className="flex items-start gap-2">
-            <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400">
-              <AlertTriangle className="h-4 w-4" strokeWidth={2} />
-            </span>
+            <IconChip icon={AlertTriangle} tone="rose" size="sm" />
             <div className="min-w-0 flex-1">
               <p className="text-[10px] font-bold uppercase tracking-wider text-rose-500 dark:text-rose-400">Braucht Pflege</p>
               <p className="truncate text-xs font-bold text-foreground">{worst.name}</p>
@@ -928,7 +719,7 @@ function PlantComparisonBar({
           </div>
           <Link
             href={`/grow/${growId}/log?plant=${worst.id}` as Route}
-            className="flex items-center justify-center gap-1.5 rounded-lg bg-rose-600 px-3 py-1.5 text-xs font-bold text-white transition hover:bg-rose-700 active:scale-[0.97]"
+            className="flex items-center justify-center gap-1.5 rounded-lg bg-rose-600 px-3 py-1.5 text-xs font-bold text-white transition-transform duration-150 hover:bg-rose-700 active:scale-[0.97]"
           >
             Jetzt pflegen <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
           </Link>
@@ -992,7 +783,6 @@ function PlantCard({
   onCancelNotes,
 }: PlantCardProps) {
   const status = computePlantStatus(plantEntries);
-  const { label: statusLabel, classes: statusClasses } = PLANT_STATUS_CONFIG[status];
   const microInsight = getPlantMicroInsight(plantEntries);
   const microInsightClass =
     microInsight.level === 'good'     ? 'text-primary' :
@@ -1004,7 +794,7 @@ function PlantCard({
     : CARD_VARIANT_CLASSES[variant];
 
   return (
-    <div className={`rounded-2xl border transition-all ${baseClasses}`}>
+    <div className={`rounded-2xl border transition-colors duration-200 ${baseClasses}`}>
       {/* ── Critical alert strip ── */}
       {isCritical && !isSelected && (
         <div className="flex items-center gap-1.5 border-b border-rose-500/20 bg-rose-500/15 px-4 py-1.5">
@@ -1018,9 +808,7 @@ function PlantCard({
         onClick={onSelect}
         className="flex w-full items-center gap-3 px-4 pt-3 pb-2 text-left"
       >
-        <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-          <Sprout className="h-4 w-4" strokeWidth={2} />
-        </span>
+        <IconChip icon={Sprout} size="sm" />
         {isEditing ? (
           <input
             value={draftName}
@@ -1038,9 +826,7 @@ function PlantCard({
             {plant.name}
           </span>
         )}
-        <span className={`flex-shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${statusClasses}`}>
-          {statusLabel}
-        </span>
+        <Badge tone={PLANT_STATUS_TONE[status]}>{PLANT_STATUS_LABEL[status]}</Badge>
       </button>
 
       {/* ── Micro insight ── */}
@@ -1118,7 +904,7 @@ function PlantCard({
           <>
             <Link
               href={`/grow/${growId}/log?plant=${plant.id}` as Route}
-              className={`rounded-lg px-3 py-1 text-xs font-bold text-white transition active:scale-[0.97] ${
+              className={`rounded-lg px-3 py-1 text-xs font-bold text-white transition-transform duration-150 active:scale-[0.97] ${
                 variant === "worst"
                   ? "bg-rose-600 hover:bg-rose-700"
                   : "bg-primary hover:bg-primary-dark"
@@ -1128,14 +914,14 @@ function PlantCard({
             </Link>
             <Link
               href={`/diagnose?growId=${growId}&plantId=${plant.id}` as Route}
-              className="rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg transition hover:border-primary/50 hover:text-primary"
+              className="rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg transition-colors duration-150 hover:border-primary/50 hover:text-primary"
             >
               Diagnose
             </Link>
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onRename(); }}
-              className="ml-auto rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg transition hover:bg-surface"
+              className="ml-auto rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg transition-colors duration-150 hover:bg-surface"
             >
               Umbenennen
             </button>
@@ -1143,7 +929,7 @@ function PlantCard({
               <button
                 type="button"
                 onClick={(e) => { e.stopPropagation(); onEditNotes(); }}
-                className="rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg transition hover:bg-surface"
+                className="rounded-lg border border-border px-3 py-1 text-xs font-semibold text-muted-fg transition-colors duration-150 hover:bg-surface"
               >
                 + Notiz
               </button>
@@ -1181,13 +967,11 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
 
   if (!editing && existing) {
     return (
-      <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-card p-5 shadow-sm">
+      <Card padding="lg" className="relative overflow-hidden border-primary/30" data-reveal>
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600" />
-        <div className="flex items-center justify-between mb-3 pt-1">
+        <div className="flex items-center justify-between pt-1">
           <p className="flex items-center gap-2 text-sm font-bold text-primary">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-950/40">
-              <Leaf className="h-4 w-4" strokeWidth={2} />
-            </span>
+            <IconChip icon={Leaf} size="sm" />
             Ernte erfasst
           </p>
           <button
@@ -1198,7 +982,7 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
             Bearbeiten
           </button>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="mt-3 flex items-center gap-4">
           <div className="text-center">
             <p className="text-2xl font-black text-primary">{existing.grams}g</p>
             <p className="text-[10px] uppercase tracking-wide text-primary/70">Trockengewicht</p>
@@ -1214,16 +998,14 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
             {existing.notes}
           </p>
         )}
-      </div>
+      </Card>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+    <Card padding="lg" data-reveal>
       <p className="flex items-center gap-2 text-sm font-bold text-foreground mb-4">
-        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-          {existing ? <Pencil className="h-4 w-4" strokeWidth={2} /> : <Leaf className="h-4 w-4" strokeWidth={2} />}
-        </span>
+        <IconChip icon={existing ? Pencil : Leaf} size="sm" />
         {existing ? 'Ernte bearbeiten' : 'Ernte erfassen'}
       </p>
       <div className="space-y-4">
@@ -1250,7 +1032,7 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
                 key={s}
                 type="button"
                 onClick={() => setRating(s)}
-                className="transition-transform hover:scale-110"
+                className="transition-transform duration-150 [@media(hover:hover)]:hover:scale-110 active:scale-95"
               >
                 <Star className={`h-7 w-7 ${s <= rating ? 'fill-amber-400 text-amber-400' : 'text-border'}`} strokeWidth={1.5} />
               </button>
@@ -1276,7 +1058,7 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
             onClick={handleSave}
             disabled={!grams || parseFloat(grams) <= 0 || rating < 1}
             className="rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary-dark
-              disabled:opacity-40 disabled:cursor-not-allowed transition"
+              disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-150"
           >
             Ernte speichern
           </button>
@@ -1284,11 +1066,143 @@ function HarvestSection({ grow, onSave }: { grow: Grow; onSave: (data: HarvestDa
             <button
               type="button"
               onClick={() => setEditing(false)}
-              className="rounded-xl border border-border px-4 py-2 text-sm font-semibold text-foreground hover:bg-background transition"
+              className="rounded-xl border border-border px-4 py-2 text-sm font-semibold text-foreground hover:bg-background transition-colors duration-150"
             >
               Abbrechen
             </button>
           )}
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+// ── Grow settings panel ─────────────────────────────────────────────────────
+
+const GROW_STATUS_OPTIONS: GrowStatus[] = ['aktiv', 'pausiert', 'abgeschlossen', 'abgebrochen'];
+
+function GrowSettingsPanel({
+  grow,
+  onUpdate,
+  assistantEnabled,
+  onSetAssistantEnabled,
+}: {
+  grow: Grow;
+  onUpdate: (growId: string, updates: Partial<Grow>) => void;
+  assistantEnabled: boolean;
+  onSetAssistantEnabled: (value: boolean) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState(grow.name);
+  const [pflanzenAnzahl, setPflanzenAnzahl] = useState(String(grow.pflanzenAnzahl));
+  const [status, setStatus] = useState<GrowStatus>(grow.status);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = () => {
+    const parsedCount = Math.max(1, parseInt(pflanzenAnzahl, 10) || grow.pflanzenAnzahl);
+    onUpdate(grow.id, {
+      name: name.trim() || grow.name,
+      pflanzenAnzahl: parsedCount,
+      status,
+    });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="rounded-2xl border border-border bg-card">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between px-5 py-3.5 text-left"
+      >
+        <span className="flex items-center gap-2.5 text-sm font-bold text-foreground">
+          <IconChip icon={Settings} size="sm" />
+          Grow-Einstellungen
+        </span>
+        <ChevronDown className={`h-4 w-4 text-muted-fg transition-transform ${open ? 'rotate-180' : ''}`} strokeWidth={2} />
+      </button>
+      {/* Accordion via grid-template-rows (0fr↔1fr): always mounted so it can
+          animate both directions and self-sizes without a magic max-height —
+          DESIGN_SYSTEM.md §16, animate/RECIPES.md Accordion. */}
+      <div
+        className={`grid overflow-hidden transition-[grid-template-rows] duration-200 ease-out ${
+          open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        }`}
+      >
+        <div className="min-h-0">
+        <div className={`space-y-4 border-t border-border px-5 py-4 transition-opacity duration-150 ${open ? 'opacity-100' : 'opacity-0'}`}>
+          <div>
+            <label className="mb-1 block text-xs font-semibold text-muted-fg">Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/40"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="mb-1 block text-xs font-semibold text-muted-fg">Pflanzenanzahl</label>
+              <input
+                type="number"
+                min={1}
+                value={pflanzenAnzahl}
+                onChange={(e) => setPflanzenAnzahl(e.target.value)}
+                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary/40"
+              />
+            </div>
+            <div>
+              <label className="mb-1 block text-xs font-semibold text-muted-fg">Status</label>
+              <Dropdown value={status} onChange={(v) => setStatus(v as GrowStatus)}>
+                {GROW_STATUS_OPTIONS.map((s) => (
+                  <DropdownOption key={s} value={s}>{GROW_STATUS_LABELS[s]}</DropdownOption>
+                ))}
+              </Dropdown>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handleSave}
+            className="w-full rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white transition-colors duration-150 hover:bg-primary-dark"
+          >
+            {saved ? (
+              <span className="inline-flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4" strokeWidth={2} /> Gespeichert
+              </span>
+            ) : 'Speichern'}
+          </button>
+          <p className="text-[11px] text-muted-fg">
+            Umgebung, Medium und Lichttyp lassen sich nach dem Start nicht mehr ändern, da davon der generierte Aufgabenplan abhängt — dafür einen neuen Grow anlegen.
+          </p>
+
+          <div className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-3 py-2.5">
+            <div className="min-w-0">
+              <p className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+                <Sparkles className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" strokeWidth={2} />
+                Tipps &amp; Empfehlungen anzeigen
+              </p>
+              <p className="mt-0.5 text-[11px] text-muted-fg">
+                Steuert Score-Karte, Statuszeile, Performance- und Wissens-Hinweise. Log, Aufgaben und Einstellungen bleiben immer nutzbar.
+              </p>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={assistantEnabled}
+              onClick={() => onSetAssistantEnabled(!assistantEnabled)}
+              className={`relative h-6 w-11 flex-shrink-0 rounded-full transition-colors ${
+                assistantEnabled ? 'bg-primary' : 'bg-border'
+              }`}
+            >
+              <span
+                className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${
+                  assistantEnabled ? 'translate-x-[22px]' : 'translate-x-0.5'
+                }`}
+              />
+            </button>
+          </div>
+        </div>
         </div>
       </div>
     </div>
@@ -1428,9 +1342,7 @@ export default function GrowPage({}: Props) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-background px-5">
         <div className="space-y-4 text-center">
-          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-            <Sprout className="h-8 w-8" strokeWidth={1.75} />
-          </span>
+          <IconChip icon={Sprout} size="lg" className="mx-auto" />
           <h1 className="text-xl font-bold text-foreground">Grow nicht gefunden</h1>
           <p className="text-sm text-muted-fg">Dieser Grow existiert nicht oder wurde gelöscht.</p>
           <Link
@@ -1460,94 +1372,54 @@ export default function GrowPage({}: Props) {
 
   const showPerformancePanel = entries.length >= 3 || healthScore < 70;
 
+  const phaseSuggestion: PhaseSuggestion | null = (() => {
+    if (!currentPhase || grow.status !== 'aktiv') return null;
+    if (grow.currentDay <= currentPhase.endDay) return null;
+    const currentIdx = PHASE_ORDER.indexOf(currentPhase.id);
+    const nextPhaseId = PHASE_ORDER[currentIdx + 1];
+    if (!nextPhaseId) return null;
+    const nextPhase = grow.plan.phases.find(p => p.id === nextPhaseId);
+    if (!nextPhase) return null;
+    return {
+      currentPhaseLabel: currentPhase.label,
+      overdueDays: grow.currentDay - currentPhase.endDay,
+      nextPhase: { id: nextPhaseId, label: nextPhase.label },
+    };
+  })();
+
+  const showTodayCard = (assistantEnabled && dailyAction) || overdue.length > 0 || phaseSuggestion;
+
   return (
     <main className="min-h-screen bg-background px-4 py-8 sm:px-6">
       <PremiumScrollFx />
-      <div className="mx-auto max-w-6xl space-y-5">
+      <div className="mx-auto max-w-6xl space-y-6">
 
-        {/* ── Daily Action Card ────────────────────────── */}
-        {assistantEnabled && (
-          <div data-reveal>
-            <DailyActionCard action={dailyAction} scoreDelta={scoreDelta} isPro={isPro} />
-          </div>
+        <GrowHero
+          grow={grow}
+          currentPhase={currentPhase}
+          percent={percent}
+          healthScore={healthScore}
+          healthStatus={healthStatus}
+          advancePhase={advancePhase}
+        />
+
+        {showTodayCard && (
+          <TodayCard
+            action={assistantEnabled ? dailyAction : null}
+            scoreDelta={scoreDelta}
+            isPro={isPro}
+            overdue={overdue}
+            currentDay={grow.currentDay}
+            onComplete={handleComplete}
+            phaseSuggestion={phaseSuggestion}
+            onAdvancePhase={(phaseId) => advancePhase(grow.id, phaseId)}
+          />
         )}
 
-        <div className="grid gap-5 lg:grid-cols-3 lg:items-start">
-        <div className="space-y-5 lg:col-span-2">
+        <div className="grid gap-6 lg:grid-cols-3 lg:items-start">
+        <div className="space-y-6 lg:col-span-2">
 
-        {/* ── Grow Overview ───────────────────────────── */}
-        <div className="tool-card-lift overflow-hidden rounded-2xl border border-border bg-card shadow-sm" data-reveal>
-          <div className="h-1.5 w-full bg-gradient-to-r from-primary to-primary-dark" />
-          <div className="p-5">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-primary">Aktiver Grow</p>
-                <h1 className="mt-1 text-2xl font-bold text-foreground">{grow.name}</h1>
-                <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-fg">
-                  <span className="flex items-center gap-1.5" title="Wachstumsphase manuell umstellen">
-                    <span>{currentPhase ? PHASE_ICONS[currentPhase.id] : '🌿'}</span>
-                    <Dropdown
-                      variant="ghost"
-                      value={currentPhase?.id ?? grow.currentPhaseId}
-                      onChange={(v) => advancePhase(grow.id, v as GrowPhaseId)}
-                    >
-                      {grow.plan.phases.map((phase) => (
-                        <DropdownOption key={phase.id} value={phase.id}>{phase.label}</DropdownOption>
-                      ))}
-                    </Dropdown>
-                  </span>
-                  <span className="text-border">·</span>
-                  <span>Tag {grow.currentDay}</span>
-                  <span className="text-border">·</span>
-                  <span>{grow.pflanzenAnzahl} {grow.pflanzenAnzahl === 1 ? 'Pflanze' : 'Pflanzen'}</span>
-                </div>
-              </div>
-              <div className="flex-shrink-0 rounded-xl bg-primary/10 px-3 py-1.5 text-center">
-                <span className="block text-lg font-black text-primary">{percent}%</span>
-                <span className="text-[10px] font-medium text-primary/70">erledigt</span>
-              </div>
-            </div>
-            <div className="mt-4"><GrowProgressBar grow={grow} /></div>
-            <div className="mt-4"><PhaseTimeline grow={grow} /></div>
-
-          </div>
-        </div>
-
-        {/* ── Phase Suggestion ─────────────────────────── */}
-        {(() => {
-          if (!currentPhase || grow.status !== 'aktiv') return null;
-          if (grow.currentDay <= currentPhase.endDay) return null;
-          const currentIdx = PHASE_ORDER.indexOf(currentPhase.id);
-          const nextPhaseId = PHASE_ORDER[currentIdx + 1];
-          if (!nextPhaseId) return null;
-          const nextPhase = grow.plan.phases.find(p => p.id === nextPhaseId);
-          if (!nextPhase) return null;
-          const overdueDays = grow.currentDay - currentPhase.endDay;
-          return (
-            <div className="flex items-center justify-between gap-3 rounded-2xl border border-primary/30 bg-primary/10 p-4 shadow-sm" data-reveal>
-              <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-                  <ArrowRight className="h-4 w-4" strokeWidth={2} />
-                </span>
-                <div>
-                  <p className="text-sm font-bold text-foreground">Bereit für die nächste Phase</p>
-                  <p className="text-xs text-muted-fg mt-0.5">
-                    {currentPhase.label} war vor {overdueDays} {overdueDays === 1 ? 'Tag' : 'Tagen'} geplant abgeschlossen zu sein.
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => advancePhase(grow.id, nextPhaseId)}
-                className="flex-shrink-0 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white
-                  hover:bg-primary-dark transition active:scale-95"
-              >
-                {nextPhase.label}
-              </button>
-            </div>
-          );
-        })()}
-        <SectionCard icon={Sprout} title={`Pflanzen (${grow.plants.length})`}>
+        <Section icon={Sprout} title={`Pflanzen (${grow.plants.length})`}>
           {(() => {
             const entriesById = new Map(
               grow.plants.map((p) => [p.id, entries.filter((e) => e.plantId === p.id)])
@@ -1596,25 +1468,10 @@ export default function GrowPage({}: Props) {
               </>
             );
           })()}
-        </SectionCard>
-
-        {/* ── Overdue tasks ────────────────────────────── */}
-        {overdue.length > 0 && (
-          <SectionCard
-            icon={AlertTriangle}
-            accent="rose"
-            title={overdue.length === 1 ? '1 überfälliger Task' : `${overdue.length} überfällige Tasks`}
-          >
-            <div className="space-y-2">
-              {overdue.map((task) => (
-                <TaskItem key={task.id} task={task} currentDay={grow.currentDay} onComplete={handleComplete} />
-              ))}
-            </div>
-          </SectionCard>
-        )}
+        </Section>
 
         {/* ── Upcoming tasks ───────────────────────────── */}
-        <SectionCard
+        <Section
           icon={NotebookPen}
           title={upcoming.length === 0 ? 'Tasks' : `Nächste ${upcoming.length} Tasks`}
           badge={
@@ -1636,7 +1493,7 @@ export default function GrowPage({}: Props) {
               ))}
             </div>
           )}
-        </SectionCard>
+        </Section>
 
         {/* ── Harvest Data ─────────────────────────────── */}
         {(grow.status === 'abgeschlossen' || grow.currentPhaseId === 'ernte') && (
@@ -1649,76 +1506,32 @@ export default function GrowPage({}: Props) {
         </div>
 
         {/* ── Sidebar ───────────────────────────────────── */}
-        <div className="space-y-5 lg:sticky lg:top-6 lg:col-span-1 lg:self-start">
+        <div className="space-y-6 lg:sticky lg:top-6 lg:col-span-1 lg:self-start">
 
           {assistantEnabled && (
-            <div data-reveal>
-              <GrowStatusHeader score={healthScore} status={healthStatus} />
-            </div>
-          )}
-
-          {assistantEnabled && showPerformancePanel && (
-            <div data-reveal>
-              <GrowPerformancePanel
-                isPro={isPro}
-                yieldImpact={yieldImpact}
-                optScore={optScore}
-                trend={growTrend}
-              />
-            </div>
-          )}
-
-          <div data-reveal>
-            <GrowSettingsPanel
+            <InsightsCard
+              showPerformance={showPerformancePanel}
+              isPro={isPro}
+              yieldImpact={yieldImpact}
+              optScore={optScore}
+              trend={growTrend}
+              growId={grow.id}
+              userId={user?.id}
               grow={grow}
-              onUpdate={updateGrow}
-              assistantEnabled={assistantEnabled}
-              onSetAssistantEnabled={setAssistantEnabled}
             />
-          </div>
-
-          {/* ── Quick Actions ──────────────────────────── */}
-          <SectionCard icon={Sparkles} title="Schnellzugriff">
-            <div className="space-y-2">
-              <Link
-                href={`/grow/${grow.id}/log` as Route}
-                className="tool-card-lift flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-2.5 transition hover:border-primary/30 hover:bg-primary/10"
-              >
-                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-                  <NotebookPen className="h-4 w-4" strokeWidth={2} />
-                </span>
-                <span className="text-[13px] font-semibold text-foreground">Log hinzufügen</span>
-              </Link>
-              <Link
-                href={'/tools' as Route}
-                className="tool-card-lift flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-2.5 transition hover:border-primary/30 hover:bg-primary/10"
-              >
-                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-                  <Wrench className="h-4 w-4" strokeWidth={2} />
-                </span>
-                <span className="text-[13px] font-semibold text-foreground">Tools öffnen</span>
-              </Link>
-              <Link
-                href={`/diagnose?growId=${grow.id}` as Route}
-                className="tool-card-lift flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-2.5 transition hover:border-primary/30 hover:bg-primary/10"
-              >
-                <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
-                  <Stethoscope className="h-4 w-4" strokeWidth={2} />
-                </span>
-                <span className="text-[13px] font-semibold text-foreground">Diagnose</span>
-              </Link>
-            </div>
-          </SectionCard>
-
-          {/* ── Offene Empfehlungen ─────────────────────── */}
-          {assistantEnabled && user && (
-            <RecommendationsPanel growId={grow.id} userId={user.id} />
           )}
 
+          <GrowSettingsPanel
+            grow={grow}
+            onUpdate={updateGrow}
+            assistantEnabled={assistantEnabled}
+            onSetAssistantEnabled={setAssistantEnabled}
+          />
+
         </div>
         </div>
 
-        {/* ── Smart Insights ───────────────────────────── */}
+        {/* ── Knowledge panel — quiet editorial footnote ──── */}
         {assistantEnabled && (
           <GrowKnowledgePanel
             grow={grow}
@@ -1730,14 +1543,13 @@ export default function GrowPage({}: Props) {
           />
         )}
 
-        {/* SmartInsights manages its own collapsed state — do not gate it here */}
-        <SmartInsights grow={grow} />
-
         {/* ── Phase description ────────────────────────── */}
-        {currentPhase && (
-          <div className="flex items-start gap-3 rounded-2xl border border-border bg-card px-5 py-4 shadow-sm" data-reveal>
-            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-lg dark:bg-emerald-950/40">
-              {PHASE_ICONS[currentPhase.id]}
+        {currentPhase && (() => {
+          const PhaseIcon = PHASE_ICONS[currentPhase.id];
+          return (
+          <div className="flex items-start gap-3 rounded-2xl border border-border bg-card px-5 py-4" data-reveal>
+            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400">
+              <PhaseIcon className="h-4 w-4" strokeWidth={2} />
             </span>
             <div className="min-w-0">
               <p className="text-[11px] font-bold uppercase tracking-wider text-muted-fg">Aktuelle Phase</p>
@@ -1748,7 +1560,8 @@ export default function GrowPage({}: Props) {
               </p>
             </div>
           </div>
-        )}
+          );
+        })()}
 
       </div>
     </main>

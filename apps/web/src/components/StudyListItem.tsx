@@ -3,26 +3,8 @@
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import type { TerpiraArticle, TerpiraDifficulty } from '@/lib/terpira/types';
-import {
-  Sprout, Dna, FlaskConical, Citrus, Stethoscope, Wind, Gem, Scale,
-  Shield, Microscope, BarChart3, Wrench, FileText, type LucideIcon,
-} from 'lucide-react';
-
-// One consistent icon + accent color per content category, used everywhere
-// a category badge appears (list items, filters) so the same category
-// always reads the same way instead of relying on generic plant emoji.
-const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  anbau: Sprout, genetik: Dna, chemie: FlaskConical, terpene: Citrus,
-  medizin: Stethoscope, konsumformen: Wind, konzentrate: Gem, recht: Scale,
-  sicherheit: Shield, qualitaet: Microscope, markt: BarChart3, werkzeuge: Wrench,
-};
-
-const CATEGORY_ACCENT: Record<string, string> = {
-  anbau: 'text-emerald-600', genetik: 'text-violet-600', chemie: 'text-cyan-600',
-  terpene: 'text-pink-600', medizin: 'text-rose-600', konsumformen: 'text-slate-600',
-  konzentrate: 'text-fuchsia-600', recht: 'text-blue-600', sicherheit: 'text-amber-600',
-  qualitaet: 'text-teal-600', markt: 'text-orange-600', werkzeuge: 'text-indigo-600',
-};
+import { CATEGORY_ICONS, CATEGORY_ACCENT } from '@/lib/terpira/categoryIcons';
+import { FileText } from 'lucide-react';
 
 const DIFFICULTY_STYLE: Record<TerpiraDifficulty, { pill: string; dot: string }> = {
   einsteiger:     { pill: 'text-blue-600 bg-blue-50 border-blue-100',    dot: 'bg-blue-400' },
@@ -72,7 +54,7 @@ export default function StudyListItem({ article, snippet }: Props) {
     <Link
       href={`/studies/${article.slug}` as Route}
       className="group flex items-start gap-4 rounded-xl border border-transparent bg-card px-5 py-4
-        hover:border-emerald-200 hover:bg-emerald-50/10 hover:shadow-sm transition-all duration-150"
+        hover:border-emerald-200 hover:bg-emerald-50/10 hover:shadow-sm transition-[border-color,background-color,box-shadow] duration-150"
     >
       {/* Icon */}
       <span className={`mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg

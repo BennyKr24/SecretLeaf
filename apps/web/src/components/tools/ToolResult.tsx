@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ResultLevel } from '@/lib/tools/types';
 import { resultLevelClass } from '@/lib/tools/types';
 import { TranslateButton } from '@/components/TranslateButton';
+import { CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
 
 type ToolResultProps = {
   label: string;
@@ -54,7 +55,13 @@ export function ToolResult({ label, value, unit, level, explanation, large }: To
         {level && (
           <div className="mt-1.5">
             <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${resultLevelClass[level]}`}>
-              {level === 'gruen' ? '✓ Optimal' : level === 'gelb' ? '⚠ Grenzwertig' : '✗ Kritisch'}
+              {level === 'gruen' ? (
+                <><CheckCircle2 className="h-3 w-3" strokeWidth={2} /> Optimal</>
+              ) : level === 'gelb' ? (
+                <><AlertTriangle className="h-3 w-3" strokeWidth={2} /> Grenzwertig</>
+              ) : (
+                <><XCircle className="h-3 w-3" strokeWidth={2} /> Kritisch</>
+              )}
             </span>
           </div>
         )}

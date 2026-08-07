@@ -4,6 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import {
+  Settings, AlertTriangle, AlertCircle, Info, Inbox, Calendar, Microscope,
+  Search, User, ShoppingCart, Store, ShieldCheck, Users, Dna,
+  Bot, type LucideIcon,
+} from "lucide-react";
 
 type OverviewData = {
   newToday: number;
@@ -40,13 +45,13 @@ function StatCard({
   value,
   sub,
   accent,
-  icon,
+  icon: Icon,
 }: {
   label: string;
   value: string | number;
   sub?: string;
   accent?: "green" | "amber" | "red" | "blue";
-  icon?: string;
+  icon?: LucideIcon;
 }) {
   const accents = {
     green: "border-l-4 border-l-emerald-400",
@@ -58,7 +63,7 @@ function StatCard({
     <div className={`rounded-2xl border border-border bg-card p-5 shadow-sm ${accent ? accents[accent] : ""}`}>
       <div className="flex items-start justify-between">
         <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-fg">{label}</p>
-        {icon && <span className="text-xl opacity-70">{icon}</span>}
+        {Icon && <Icon className="h-5 w-5 opacity-70" strokeWidth={2} />}
       </div>
       <p className="mt-2 text-3xl font-bold text-foreground">{value}</p>
       {sub && <p className="mt-1 text-xs text-muted-fg">{sub}</p>}
@@ -132,7 +137,7 @@ export default function AdminOverviewPage() {
           href="/dashboard/admin/engine"
           className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 dark:bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
         >
-          <span>⚙️</span>
+          <Settings className="h-4 w-4" strokeWidth={2} />
           Engine steuern
         </Link>
       </div>
@@ -146,7 +151,7 @@ export default function AdminOverviewPage() {
 
       {error && (
         <div className="mb-4 flex items-center gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          <span className="text-lg">⚠️</span>
+          <AlertTriangle className="h-5 w-5 flex-shrink-0" strokeWidth={2} />
           {error}
         </div>
       )}
@@ -158,7 +163,7 @@ export default function AdminOverviewPage() {
             <div className="mb-5 space-y-2">
               {data.pipelineStatus === "failing" && (
                 <div className="flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                  <span>🔴</span>
+                  <AlertCircle className="h-4 w-4 flex-shrink-0" strokeWidth={2} />
                   <span className="font-semibold">Pipeline fehlerhaft</span>
                   <span className="text-red-500">—</span>
                   <span>{data.consecutiveFailures} Fehler in Folge. Bitte sofort prüfen.</span>
@@ -169,7 +174,7 @@ export default function AdminOverviewPage() {
               )}
               {data.pipelineStatus === "degraded" && (
                 <div className="flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
-                  <span>🟡</span>
+                  <AlertTriangle className="h-4 w-4 flex-shrink-0" strokeWidth={2} />
                   <span className="font-semibold">Pipeline eingeschränkt</span>
                   <span className="text-amber-500">—</span>
                   <span>{data.consecutiveFailures} Fehler in Folge. Bitte im Blick behalten.</span>
@@ -180,7 +185,7 @@ export default function AdminOverviewPage() {
               )}
               {data.pendingReview > 0 && (
                 <div className="flex items-center gap-3 rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700">
-                  <span>🔵</span>
+                  <Info className="h-4 w-4 flex-shrink-0" strokeWidth={2} />
                   <span><span className="font-semibold">{data.pendingReview} Studi{data.pendingReview === 1 ? "e" : "en"}</span> warten auf Prüfung.</span>
                   <Link href="/dashboard/admin/studies?filter=pending" className="ml-auto font-semibold underline hover:no-underline">
                     Jetzt prüfen →
@@ -192,15 +197,15 @@ export default function AdminOverviewPage() {
 
           {/* KPI Cards */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <StatCard label="Heute neu" value={data.newToday} icon="📥" accent="green" />
-            <StatCard label="Diese Woche" value={data.newThisWeek} icon="📅" />
-            <StatCard label="Gesamt Studien" value={data.totalStudies} icon="🔬" />
+            <StatCard label="Heute neu" value={data.newToday} icon={Inbox} accent="green" />
+            <StatCard label="Diese Woche" value={data.newThisWeek} icon={Calendar} />
+            <StatCard label="Gesamt Studien" value={data.totalStudies} icon={Microscope} />
             <StatCard
               label="Zu prüfen"
               value={data.pendingReview}
-              icon="🔍"
+              icon={Search}
               {...(data.pendingReview > 0 ? { accent: "amber" as const } : {})}
-              sub={data.pendingReview > 0 ? "Manuelle Prüfung ausstehend" : "Alles geprüft ✓"}
+              sub={data.pendingReview > 0 ? "Manuelle Prüfung ausstehend" : "Alles geprüft"}
             />
           </div>
 
@@ -276,8 +281,8 @@ export default function AdminOverviewPage() {
                     </div>
                   )}
                   {data.lastRun.errors && (
-                    <p className="mt-3 rounded-xl bg-red-50 px-3 py-2 text-xs text-red-600">
-                      ⚠ {data.lastRun.errors}
+                    <p className="mt-3 flex items-start gap-1.5 rounded-xl bg-red-50 px-3 py-2 text-xs text-red-600">
+                      <AlertTriangle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} /> {data.lastRun.errors}
                     </p>
                   )}
                 </div>
@@ -301,10 +306,10 @@ export default function AdminOverviewPage() {
                   </Link>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  <StatCard label="Registriert" value={systemStats.totalAuthUsers} icon="👤" />
-                  <StatCard label="Consumer" value={systemStats.usersByRole.CONSUMER ?? 0} icon="🛒" accent="green" />
-                  <StatCard label="Provider" value={systemStats.usersByRole.PROVIDER ?? 0} icon="🏪" accent="blue" />
-                  <StatCard label="Admins" value={systemStats.usersByRole.ADMIN ?? 0} icon="🛡️" />
+                  <StatCard label="Registriert" value={systemStats.totalAuthUsers} icon={User} />
+                  <StatCard label="Consumer" value={systemStats.usersByRole.CONSUMER ?? 0} icon={ShoppingCart} accent="green" />
+                  <StatCard label="Provider" value={systemStats.usersByRole.PROVIDER ?? 0} icon={Store} accent="blue" />
+                  <StatCard label="Admins" value={systemStats.usersByRole.ADMIN ?? 0} icon={ShieldCheck} />
                 </div>
               </div>
 
@@ -315,35 +320,35 @@ export default function AdminOverviewPage() {
                   {([
                     {
                       href: "/dashboard/admin/users" as const,
-                      icon: "👥",
+                      icon: Users,
                       title: "Benutzer",
                       sub: `${systemStats.totalAuthUsers} registriert`,
                       color: "hover:border-blue-300",
                     },
                     {
                       href: "/dashboard/admin/studies" as const,
-                      icon: "🔬",
+                      icon: Microscope,
                       title: "Studien prüfen",
                       sub: data.pendingReview > 0 ? `${data.pendingReview} ausstehend` : "Alles aktuell",
                       color: data.pendingReview > 0 ? "border-amber-200 hover:border-amber-400" : "hover:border-emerald-300",
                     },
                     {
                       href: "/dashboard/admin/engine" as const,
-                      icon: "⚙️",
+                      icon: Settings,
                       title: "Engine",
                       sub: `Status: ${STATUS_CONFIG[data.pipelineStatus].label}`,
                       color: data.pipelineStatus === "healthy" ? "hover:border-emerald-300" : "border-amber-200 hover:border-amber-400",
                     },
                     {
                       href: "/dashboard/admin/algorithm" as const,
-                      icon: "🧬",
+                      icon: Dna,
                       title: "Algorithmus",
                       sub: "Keywords & Filter konfigurieren",
                       color: "hover:border-purple-300",
                     },
                     {
                       href: "/dashboard/admin/assistant" as const,
-                      icon: "🤖",
+                      icon: Bot,
                       title: "KI-Assistent",
                       sub: "Notizen & Content-Entwürfe (Claude)",
                       color: "hover:border-cyan-300",
@@ -354,7 +359,7 @@ export default function AdminOverviewPage() {
                       href={item.href}
                       className={`group rounded-2xl border border-border bg-card p-4 shadow-sm transition hover:shadow-md ${item.color}`}
                     >
-                      <p className="text-2xl">{item.icon}</p>
+                      <item.icon className="h-6 w-6 text-muted-fg" strokeWidth={2} />
                       <p className="mt-2 text-sm font-semibold text-foreground">{item.title}</p>
                       <p className="mt-0.5 text-xs text-muted-fg">{item.sub}</p>
                     </Link>

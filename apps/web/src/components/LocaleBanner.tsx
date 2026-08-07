@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { Route } from "next";
+import { X } from "lucide-react";
 
 const BANNER_KEY = "locale-banner-dismissed";
 
@@ -63,9 +64,9 @@ export function LocaleBanner() {
         <button
           onClick={dismiss}
           aria-label="Dismiss"
-          className="flex h-6 w-6 items-center justify-center rounded-md text-blue-400 dark:text-blue-600 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors duration-150 text-sm"
+          className="flex h-6 w-6 items-center justify-center rounded-md text-blue-400 dark:text-blue-600 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors duration-150"
         >
-          ✕
+          <X className="h-3.5 w-3.5" strokeWidth={2} />
         </button>
       </div>
     </div>

@@ -30,7 +30,7 @@ function BarChart({ data, maxValue }: { data: Array<{ label: string; value: numb
           <div className="flex-1">
             <div className="h-5 rounded-full bg-border">
               <div
-                className="h-5 rounded-full bg-emerald-600 dark:bg-emerald-500 transition-all"
+                className="h-5 rounded-full bg-emerald-600 dark:bg-emerald-500 transition-[width] duration-300"
                 style={{ width: maxValue > 0 ? `${Math.max(2, (d.value / maxValue) * 100)}%` : "2%" }}
               />
             </div>

@@ -5,6 +5,10 @@ import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { AdminShell } from "@/components/admin/AdminShell";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import {
+  Key, BookOpen, Ban, Dna, Scale, Leaf, AlertTriangle, Clipboard,
+  Check, X, Lock, CheckCircle2, type LucideIcon,
+} from "lucide-react";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -54,13 +58,13 @@ type Tab =
   | "scoring"
   | "anchor";
 
-const TABS: { key: Tab; label: string; icon: string }[] = [
-  { key: "keywords", label: "Pflicht-Keywords", icon: "🔑" },
-  { key: "sources", label: "Quellen", icon: "📚" },
-  { key: "exclusions", label: "Ausschlüsse", icon: "🚫" },
-  { key: "clusters", label: "Topic-Cluster", icon: "🧬" },
-  { key: "scoring", label: "Bewertung", icon: "⚖️" },
-  { key: "anchor", label: "Cannabis-Anker", icon: "🌿" },
+const TABS: { key: Tab; label: string; icon: LucideIcon }[] = [
+  { key: "keywords", label: "Pflicht-Keywords", icon: Key },
+  { key: "sources", label: "Quellen", icon: BookOpen },
+  { key: "exclusions", label: "Ausschlüsse", icon: Ban },
+  { key: "clusters", label: "Topic-Cluster", icon: Dna },
+  { key: "scoring", label: "Bewertung", icon: Scale },
+  { key: "anchor", label: "Cannabis-Anker", icon: Leaf },
 ];
 
 // ── Helper Components ───────────────────────────────────────────────────────
@@ -92,7 +96,7 @@ function SaveButton({
     <button
       onClick={onClick}
       disabled={saving}
-      className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50"
+      className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 active:scale-[0.97] disabled:opacity-50"
     >
       {saving ? "Wird gespeichert..." : label}
     </button>
@@ -105,7 +109,7 @@ function SectionCard({
   children,
 }: {
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
@@ -127,7 +131,7 @@ function SetupRequired() {
   return (
     <div className="rounded-2xl border border-amber-300 bg-amber-50 p-6">
       <div className="flex items-start gap-3">
-        <span className="text-3xl">⚠️</span>
+        <AlertTriangle className="h-8 w-8 flex-shrink-0 text-amber-500" strokeWidth={2} />
         <div className="flex-1">
           <h3 className="text-lg font-bold text-amber-900">
             Datenbank-Setup erforderlich
@@ -144,7 +148,7 @@ function SetupRequired() {
           </p>
           <button
             onClick={() => setShowSql(!showSql)}
-            className="mt-3 rounded-lg border border-amber-300 bg-card px-4 py-1.5 text-sm font-medium text-amber-900 hover:bg-amber-50"
+            className="mt-3 rounded-lg border border-amber-300 bg-card px-4 py-1.5 text-sm font-medium text-amber-900 transition-transform duration-150 active:scale-[0.97] hover:bg-amber-50"
           >
             {showSql ? "SQL ausblenden" : "Migration-SQL anzeigen"}
           </button>
@@ -157,9 +161,9 @@ function SetupRequired() {
                 onClick={() => {
                   navigator.clipboard.writeText(MIGRATION_SQL);
                 }}
-                className="mt-2 rounded bg-green-700 px-3 py-1 text-xs text-white hover:bg-green-600"
+                className="mt-2 flex items-center gap-1.5 rounded bg-green-700 px-3 py-1 text-xs text-white transition-transform duration-150 active:scale-[0.97] hover:bg-green-600"
               >
-                📋 SQL kopieren
+                <Clipboard className="h-3.5 w-3.5" strokeWidth={2} /> SQL kopieren
               </button>
             </div>
           )}
@@ -278,7 +282,7 @@ export default function AlgorithmPage() {
               <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Algorithmus</span>
             </div>
             <div className="mt-1 flex items-center gap-3">
-              <span className="text-2xl">🧬</span>
+              <Dna className="h-6 w-6 text-primary" strokeWidth={2} />
               <div>
                 <h1 className="text-2xl font-bold text-foreground">Algorithmus-Konfiguration</h1>
                 <p className="text-sm text-muted-fg">Keywords, Quellen, Ausschlüsse, Scoring-Parameter und mehr.</p>
@@ -318,13 +322,13 @@ export default function AlgorithmPage() {
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition ${
+              className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition active:scale-[0.97] ${
                 activeTab === tab.key
                   ? "bg-emerald-600 dark:bg-emerald-500 text-white"
                   : "text-muted-fg hover:bg-background"
               }`}
             >
-              <span>{tab.icon}</span>
+              <tab.icon className="h-4 w-4" strokeWidth={2} />
               {tab.label}
             </button>
           ))}
@@ -455,21 +459,21 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
             >
               <button
                 onClick={() => toggleKeyword(idx)}
-                className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
+                className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                   kw.enabled
                     ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
                     : "border-border bg-card text-transparent"
                 }`}
               >
-                ✓
+                {kw.enabled && <Check className="h-3.5 w-3.5" strokeWidth={2.5} />}
               </button>
               <code className="flex-1 text-sm text-foreground">{kw.term}</code>
               <StatusBadge ok={kw.enabled} />
               <button
                 onClick={() => removeKeyword(idx)}
-                className="text-xs text-red-400 hover:text-red-600"
+                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
               >
-                ✕
+                <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
             </div>
           ))}
@@ -487,7 +491,7 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={addKeyword}
-            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
           >
             + Hinzufügen
           </button>
@@ -500,7 +504,7 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("required_keywords")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -585,13 +589,13 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
             >
               <button
                 onClick={() => toggleSource(idx)}
-                className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
+                className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                   src.enabled
                     ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
                     : "border-border bg-card text-transparent"
                 }`}
               >
-                ✓
+                {src.enabled && <Check className="h-3.5 w-3.5" strokeWidth={2.5} />}
               </button>
               <span className="flex-1 text-sm font-medium text-foreground">
                 {src.name}
@@ -607,9 +611,9 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
               </span>
               <button
                 onClick={() => removeSource(idx)}
-                className="text-xs text-red-400 hover:text-red-600"
+                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
               >
-                ✕
+                <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
             </div>
           ))}
@@ -630,7 +634,7 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
           </Dropdown>
           <button
             onClick={addSource}
-            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
           >
             +
           </button>
@@ -643,7 +647,7 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("preferred_sources")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -666,16 +670,16 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
               key={idx}
               className="flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2"
             >
-              <span className="text-red-500">🚫</span>
+              <Ban className="h-4 w-4 flex-shrink-0 text-red-500" strokeWidth={2} />
               <span className="flex-1 text-sm font-medium text-red-800">
                 {b.name}
               </span>
               <code className="text-xs text-red-600">{b.pattern}</code>
               <button
                 onClick={() => removeBlocked(idx)}
-                className="text-xs text-red-400 hover:text-red-600"
+                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
               >
-                ✕
+                <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
             </div>
           ))}
@@ -702,7 +706,7 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={addBlocked}
-            className="rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600"
+            className="rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-red-600"
           >
             + Blockieren
           </button>
@@ -785,7 +789,7 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
               key={idx}
               className="flex items-center gap-3 rounded-lg bg-background px-3 py-2"
             >
-              <span className="text-xs text-muted-fg">🔒</span>
+              <Lock className="h-3 w-3 flex-shrink-0 text-muted-fg" strokeWidth={2} />
               <code className="flex-1 text-xs text-foreground">
                 {rule.pattern}
               </code>
@@ -815,13 +819,13 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
             >
               <button
                 onClick={() => toggleRule(idx)}
-                className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
+                className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                   rule.enabled
                     ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
                     : "border-border bg-card text-transparent"
                 }`}
               >
-                ✓
+                {rule.enabled && <Check className="h-3.5 w-3.5" strokeWidth={2.5} />}
               </button>
               <code className="flex-1 text-sm text-foreground">
                 {rule.pattern}
@@ -831,9 +835,9 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
               </span>
               <button
                 onClick={() => removeRule(idx)}
-                className="text-xs text-red-400 hover:text-red-600"
+                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
               >
-                ✕
+                <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
             </div>
           ))}
@@ -861,7 +865,7 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
             />
             <button
               onClick={addRule}
-              className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+              className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
             >
               +
             </button>
@@ -877,7 +881,7 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("custom_exclusions")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -985,7 +989,7 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
               className="rounded-lg border border-border bg-background p-3"
             >
               <div className="flex items-center gap-2">
-                <span className="text-xs">🔒</span>
+                <Lock className="h-3 w-3 text-muted-fg" strokeWidth={2} />
                 <span className="font-semibold text-sm text-foreground">
                   {c.label}
                 </span>
@@ -1027,13 +1031,13 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => toggleCluster(idx)}
-                  className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
+                  className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                     cluster.enabled
                       ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
                       : "border-border bg-card text-transparent"
                   }`}
                 >
-                  ✓
+                  {cluster.enabled && <Check className="h-3.5 w-3.5" strokeWidth={2.5} />}
                 </button>
                 <span className="font-semibold text-sm text-foreground">
                   {cluster.label}
@@ -1044,9 +1048,9 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
                 <StatusBadge ok={cluster.enabled} />
                 <button
                   onClick={() => removeCluster(idx)}
-                  className="ml-auto text-xs text-red-400 hover:text-red-600"
+                  className="ml-auto flex items-center gap-1 text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
                 >
-                  ✕ Entfernen
+                  <X className="h-3 w-3" strokeWidth={2} /> Entfernen
                 </button>
               </div>
               <div className="mt-2">
@@ -1131,7 +1135,7 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
           </div>
           <button
             onClick={addCluster}
-            className="mt-3 rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+            className="mt-3 rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
           >
             + Cluster erstellen
           </button>
@@ -1144,7 +1148,7 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("topic_clusters")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -1273,7 +1277,18 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
 
       <SectionCard
         title="Score-Gewichtung"
-        description={`Die 5 Scoring-Faktoren und ihre Gewichtung. Summe: ${(totalWeight * 100).toFixed(0)}% ${Math.abs(totalWeight - 1) > 0.01 ? "(⚠️ sollte 100% sein!)" : "✓"}`}
+        description={
+          <>
+            Die 5 Scoring-Faktoren und ihre Gewichtung. Summe: {(totalWeight * 100).toFixed(0)}%{" "}
+            {Math.abs(totalWeight - 1) > 0.01 ? (
+              <span className="inline-flex items-center gap-1 text-amber-600">
+                <AlertTriangle className="inline h-3.5 w-3.5" strokeWidth={2} /> sollte 100% sein!
+              </span>
+            ) : (
+              <CheckCircle2 className="inline h-3.5 w-3.5 text-emerald-600" strokeWidth={2} />
+            )}
+          </>
+        }
       >
         <div className="space-y-4">
           {(
@@ -1318,7 +1333,7 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("scoring_params")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
           >
             Zurücksetzen
           </button>
@@ -1398,13 +1413,13 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
             >
               <button
                 onClick={() => toggleTerm(idx)}
-                className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition ${
+                className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                   term.enabled
                     ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
                     : "border-border bg-card text-transparent"
                 }`}
               >
-                ✓
+                {term.enabled && <Check className="h-3.5 w-3.5" strokeWidth={2.5} />}
               </button>
               <code className="flex-1 text-sm text-foreground">
                 {term.term}
@@ -1412,7 +1427,7 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
               <button
                 onClick={() => toggleWordBoundary(idx)}
                 title="Word Boundary (\\b)"
-                className={`rounded-md border px-2 py-0.5 text-[10px] font-mono transition ${
+                className={`rounded-md border px-2 py-0.5 text-[10px] font-mono transition active:scale-90 ${
                   term.wordBoundary
                     ? "border-blue-300 bg-blue-100 text-blue-700"
                     : "border-border bg-card text-muted-fg"
@@ -1423,9 +1438,9 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
               <StatusBadge ok={term.enabled} />
               <button
                 onClick={() => removeTerm(idx)}
-                className="text-xs text-red-400 hover:text-red-600"
+                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
               >
-                ✕
+                <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
             </div>
           ))}
@@ -1452,7 +1467,7 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
           </label>
           <button
             onClick={addTerm}
-            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
           >
             + Hinzufügen
           </button>
@@ -1475,7 +1490,7 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
           />
           <button
             onClick={() => reset("cannabis_anchor")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg hover:bg-background"
+            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
           >
             Zurücksetzen
           </button>

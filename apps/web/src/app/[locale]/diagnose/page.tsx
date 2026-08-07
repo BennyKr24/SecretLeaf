@@ -58,7 +58,7 @@ export default function DiagnosePage() {
             <button
               key={category.id}
               onClick={() => setSelected(category)}
-              className="flex flex-col items-start gap-3 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md hover:border-emerald-200 active:scale-[0.97] transition-all p-5 text-left"
+              className="flex flex-col items-start gap-3 rounded-2xl border border-border bg-card shadow-sm hover:shadow-md hover:border-emerald-200 active:scale-[0.97] transition-[transform,border-color,box-shadow] duration-150 p-5 text-left"
             >
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400">
                 <category.icon className="h-5 w-5" strokeWidth={2} />

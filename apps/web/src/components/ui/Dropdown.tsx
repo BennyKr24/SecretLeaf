@@ -72,7 +72,7 @@ export function Dropdown({ value, onChange, children, className = '', variant = 
             triggerClassName ??
             (variant === 'ghost'
               ? 'flex cursor-pointer items-center gap-1 rounded-md border-0 bg-transparent font-medium text-foreground outline-none transition-colors hover:text-primary focus:ring-1 focus:ring-primary/40'
-              : 'flex w-full items-center justify-between gap-2 rounded-xl border border-border bg-card px-3 py-2 text-left text-sm font-medium text-foreground outline-none transition-all hover:border-emerald-500/40 focus:ring-2 focus:ring-emerald-500/30')
+              : 'flex w-full items-center justify-between gap-2 rounded-xl border border-border bg-card px-3 py-2 text-left text-sm font-medium text-foreground outline-none transition-[border-color,box-shadow] hover:border-emerald-500/40 focus:ring-2 focus:ring-emerald-500/30')
           }
         >
           <span className="truncate">{labels[value] ?? value}</span>
@@ -82,12 +82,19 @@ export function Dropdown({ value, onChange, children, className = '', variant = 
         </button>
         {/* Always mounted (not conditionally rendered) so DropdownOption children
             register their label for the closed trigger on first paint, instead
-            of only after the popup has been opened once. Visibility is purely
-            a CSS toggle. */}
+            of only after the popup has been opened once. Origin-aware scale/fade
+            per DESIGN_SYSTEM.md §15.5/§15.6: never scale(0), always scale from
+            the trigger it's anchored to (top, since it always opens below).
+            Translucent glass material (apple-design §12) with a "materialize"
+            entrance — blur radius animates together with scale/opacity so it
+            reads as a real surface arriving, not a flat fade.
+            `invisible` still snaps the exit instantly (removes from the a11y
+            tree/tab order) — the enter direction, the one users actually watch,
+            is what animates. */}
         <div
           role="listbox"
-          className={`absolute z-30 mt-1.5 max-h-64 w-full min-w-max overflow-auto rounded-xl border border-border bg-card p-1 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.6)] ${
-            open ? '' : 'pointer-events-none invisible opacity-0'
+          className={`absolute z-30 mt-1.5 max-h-64 w-full min-w-max origin-top overflow-auto rounded-xl border border-border bg-card/80 backdrop-blur-xl backdrop-saturate-150 p-1 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.6)] transition-[opacity,transform,filter] duration-200 ease-out ${
+            open ? 'opacity-100 scale-100 blur-none' : 'pointer-events-none invisible opacity-0 scale-95 blur-sm'
           }`}
         >
           {children}

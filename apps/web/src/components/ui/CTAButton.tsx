@@ -20,7 +20,7 @@ export type CTAButtonSize = "sm" | "md" | "lg";
 
 const BASE =
   "inline-flex items-center justify-center gap-2 font-semibold rounded-xl " +
-  "transition-all duration-150 select-none " +
+  "transition-[transform,background-color,border-color,color,box-shadow] duration-150 select-none " +
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 " +
   "disabled:opacity-50 disabled:pointer-events-none";
 

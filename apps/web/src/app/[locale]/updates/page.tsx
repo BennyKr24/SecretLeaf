@@ -64,7 +64,7 @@ function UpdateCard({ update }: { update: UpdateEntry }) {
   return (
     <Link
       href={`/updates/${update.slug}` as Route}
-      className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:border-primary/30 hover:bg-surface"
+      className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-6 transition-[border-color,background-color] duration-200 hover:border-primary/30 hover:bg-surface"
     >
       {/* Meta row */}
       <div className="flex flex-wrap items-center gap-2">
@@ -108,7 +108,7 @@ function FeaturedCard({ update }: { update: UpdateEntry }) {
   return (
     <Link
       href={`/updates/${update.slug}` as Route}
-      className="group relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-primary/20 bg-card p-7 transition-all duration-200 hover:border-primary/40 hover:bg-surface sm:p-8"
+      className="group relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-primary/20 bg-card p-7 transition-[border-color,background-color] duration-200 hover:border-primary/40 hover:bg-surface sm:p-8"
     >
       {/* Ambient glow */}
       <div className="pointer-events-none absolute -right-12 -top-12 h-48 w-48 rounded-full bg-primary/5 blur-3xl" />

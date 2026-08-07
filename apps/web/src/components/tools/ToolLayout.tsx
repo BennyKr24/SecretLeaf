@@ -105,7 +105,7 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
                 <Link
                   key={tool.slug}
                   href={`/tools/${tool.slug}` as Route}
-                  className="group flex items-center gap-4 rounded-xl border border-border bg-card p-4 shadow-sm transition-all hover:border-emerald-200 hover:shadow-md"
+                  className="group flex items-center gap-4 rounded-xl border border-border bg-card p-4 shadow-sm transition-[border-color,box-shadow] hover:border-emerald-200 hover:shadow-md"
                 >
                   <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg ring-1 ${categoryIconBg[tool.category]}`}>
                     <tool.icon className="h-5 w-5" strokeWidth={2} />

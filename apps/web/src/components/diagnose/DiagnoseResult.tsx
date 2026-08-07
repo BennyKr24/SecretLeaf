@@ -11,6 +11,7 @@ import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 import { createDiagnosis, createRecommendation } from "@/lib/diagnose/db";
 import { TranslateButton } from "@/components/TranslateButton";
 import { getDiagnoseKnowledgeContext } from "@/lib/diagnose/knowledge";
+import { Brain, Zap, ClipboardList, CheckCircle2, RotateCcw } from "lucide-react";
 
 // ── Confidence badge ──────────────────────────────────────────────────────────
 
@@ -112,7 +113,11 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
       <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="text-3xl leading-none">{result.icon}</span>
+            {result.dotColor ? (
+              <span className={`h-5 w-5 shrink-0 rounded-full ${result.dotColor}`} />
+            ) : result.icon ? (
+              <result.icon className="h-7 w-7 shrink-0 text-foreground/80" strokeWidth={2} />
+            ) : null}
             <h2 className="text-lg font-bold text-foreground leading-snug">
               <TranslateButton text={result.title} />
             </h2>
@@ -128,7 +133,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
 
         {/* Confidence bar */}
         <div className="h-1 rounded-full bg-background overflow-hidden">
-          <div className={`h-full rounded-full transition-all ${conf.dot} ${conf.barWidth}`} />
+          <div className={`h-full rounded-full transition-[width,background-color] duration-200 ${conf.dot} ${conf.barWidth}`} />
         </div>
 
         <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-muted-fg">
@@ -147,7 +152,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
 
       {/* ── Why this result ── */}
       <div className="rounded-2xl bg-card border border-border shadow-sm px-5 py-4 flex gap-3">
-        <span className="mt-0.5 text-base shrink-0">🧠</span>
+        <Brain className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2} />
         <div className="flex flex-col gap-1">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
             Warum diese Diagnose?
@@ -160,7 +165,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
 
       {/* ── Cause ── */}
       <div className="flex items-start gap-2 rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground">
-        <span className="mt-0.5 shrink-0">⚡</span>
+        <Zap className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2} />
         <span>
           <span className="font-semibold">Ursache: </span>
           {result.cause}
@@ -195,7 +200,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
               <Link
                 key={tool.slug}
                 href={`/tools/${tool.slug}` as Route}
-                className="flex items-center justify-between rounded-xl border border-border bg-background hover:bg-primary/10 hover:border-primary/40 active:scale-[0.98] transition-all px-4 py-3 text-sm font-medium text-foreground group"
+                className="flex items-center justify-between rounded-xl border border-border bg-background hover:bg-primary/10 hover:border-primary/40 active:scale-[0.98] transition-[transform,background-color,border-color] duration-150 px-4 py-3 text-sm font-medium text-foreground group"
               >
                 <span>{tool.label}</span>
                 <span className="text-muted-fg group-hover:text-primary transition text-base">
@@ -237,14 +242,14 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
         {resolvedGrowId && !saved && (
           <button
             onClick={handleAddToGrow}
-            className="w-full rounded-xl bg-primary hover:bg-primary-dark active:scale-95 transition text-white font-semibold py-3 px-4 text-sm"
+            className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary-dark active:scale-95 transition text-white font-semibold py-3 px-4 text-sm"
           >
-            📋 Im Grow-Log speichern
+            <ClipboardList className="h-4 w-4" strokeWidth={2} /> Im Grow-Log speichern
           </button>
         )}
         {saved && (
-          <div className="w-full rounded-xl bg-primary/15 border border-primary/35 text-primary font-semibold py-3 px-4 text-sm text-center">
-            ✅ Im Grow-Log gespeichert
+          <div className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary/15 border border-primary/35 text-primary font-semibold py-3 px-4 text-sm text-center">
+            <CheckCircle2 className="h-4 w-4" strokeWidth={2} /> Im Grow-Log gespeichert
           </div>
         )}
         {!resolvedGrowId && (
@@ -255,9 +260,9 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
 
         <button
           onClick={onReset}
-          className="w-full rounded-xl border border-border hover:bg-background active:scale-95 transition text-muted-fg font-medium py-3 px-4 text-sm"
+          className="w-full flex items-center justify-center gap-2 rounded-xl border border-border hover:bg-background active:scale-95 transition text-muted-fg font-medium py-3 px-4 text-sm"
         >
-          🔄 Neue Diagnose starten
+          <RotateCcw className="h-4 w-4" strokeWidth={2} /> Neue Diagnose starten
         </button>
       </div>
     </div>

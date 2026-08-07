@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { CheckCircle2 } from "lucide-react";
 
 // ── Plan helpers ──────────────────────────────────────────────────────────────
 
@@ -178,7 +179,7 @@ export default function ProfilePage() {
                 <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
               )}
               {saveState === "success" && (
-                <span className="text-sm">✓</span>
+                <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} />
               )}
               {saveLabel}
             </button>

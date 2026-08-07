@@ -9,6 +9,7 @@ import { createLogEntry as dbCreateLogEntry } from '@/lib/grow/db';
 import { createLogEntry as storeCreateLogEntry, deleteLogEntry as storeDeleteLogEntry, getActiveGrow } from '@/lib/grow/store';
 import type { Grow } from '@/lib/grow/types';
 import type { ToolResultData } from '@/lib/tools/types';
+import { Sprout, CheckCircle2, Loader2, Save } from 'lucide-react';
 
 type Props = {
   toolSlug: string;
@@ -72,7 +73,7 @@ export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props
   if (!hasGrow) {
     return (
       <div className="flex items-center gap-2 rounded-xl border border-dashed border-border bg-background px-4 py-3">
-        <span className="text-base">🌱</span>
+        <Sprout className="h-4 w-4 flex-shrink-0 text-emerald-600" strokeWidth={2} />
         <p className="text-xs text-muted-fg">
           <span className="font-semibold">Kein aktiver Grow.</span>{' '}
           <Link href="/start" className="text-emerald-600 hover:underline">
@@ -92,11 +93,17 @@ export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props
         onClick={() => {
           void handleSave();
         }}
-        className="flex w-full items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-left transition-all hover:border-emerald-300 hover:bg-emerald-100/80 disabled:cursor-not-allowed disabled:opacity-70"
+        className="flex w-full items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-left transition-[transform,border-color,background-color,opacity] duration-150 hover:border-emerald-300 hover:bg-emerald-100/80 active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-70"
       >
         <div className="flex items-center gap-2.5">
-          <span className="text-base">
-            {status === 'saved' ? '✓' : status === 'saving' ? '⏳' : '💾'}
+          <span className="flex h-4 w-4 flex-shrink-0 items-center justify-center">
+            {status === 'saved' ? (
+              <CheckCircle2 className="h-4 w-4" strokeWidth={2} />
+            ) : status === 'saving' ? (
+              <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2} />
+            ) : (
+              <Save className="h-4 w-4" strokeWidth={2} />
+            )}
           </span>
           <div>
             <p className="text-sm font-semibold text-emerald-800">

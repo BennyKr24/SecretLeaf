@@ -23,12 +23,32 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
     history: [],
   });
 
+  // Light fade between steps so question/result content doesn't teleport in
+  // place on every click. Triggered directly from the action handlers below
+  // (event-driven), not from an effect watching `state` — this repo's lint
+  // config flags synchronous setState-in-effect as a cascading-render
+  // anti-pattern (see TODO.md), so the visible-toggle fades elsewhere in the
+  // app (grow/[id]/log/page.tsx SavedBanner/DailyCompletionBanner) are always
+  // driven by the user action itself. Double rAF forces the browser to paint
+  // the opacity-0 frame before flipping back to opacity-100, so the
+  // transition reliably fires instead of being coalesced into one frame.
+  const [stepVisible, setStepVisible] = useState(true);
+  function triggerStepFade() {
+    setStepVisible(false);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setStepVisible(true));
+    });
+  }
+  const stepFadeClass = `transition-opacity duration-200 ease-out ${stepVisible ? "opacity-100" : "opacity-0"}`;
+
   function handleOption(option: { nextNodeId?: string; resultId?: string }) {
     if (option.resultId) {
+      triggerStepFade();
       setState({ kind: "result", resultId: option.resultId });
       return;
     }
     if (option.nextNodeId) {
+      triggerStepFade();
       setState((prev) => ({
         kind: "question",
         nodeId: option.nextNodeId!,
@@ -40,6 +60,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
   function handleBack() {
     if (state.kind === "result") {
       // Find the last node that led to this result — just go back to start
+      triggerStepFade();
       setState({ kind: "question", nodeId: category.startNodeId, history: [] });
       return;
     }
@@ -48,6 +69,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
       return;
     }
     const prev = state.history[state.history.length - 1] ?? category.startNodeId;
+    triggerStepFade();
     setState({
       kind: "question",
       nodeId: prev,
@@ -56,6 +78,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
   }
 
   function handleReset() {
+    triggerStepFade();
     setState({ kind: "question", nodeId: category.startNodeId, history: [] });
   }
 
@@ -67,7 +90,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
         <div className="flex flex-col gap-4">
           <button
             onClick={handleReset}
-            className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition"
+            className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition active:scale-[0.97]"
           >
             ← Zurück
           </button>
@@ -76,11 +99,11 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
       );
     }
     return (
-      <div className="flex flex-col gap-4">
+      <div className={`flex flex-col gap-4 ${stepFadeClass}`}>
         {/* Back button */}
         <button
           onClick={handleReset}
-          className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition self-start"
+          className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition active:scale-[0.97] self-start"
         >
           ← Neue Diagnose
         </button>
@@ -96,7 +119,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
       <div className="flex flex-col gap-4">
         <button
           onClick={handleBack}
-          className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition self-start"
+          className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition active:scale-[0.97] self-start"
         >
           ← Zurück
         </button>
@@ -108,12 +131,12 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
   const stepCount = state.history.length + 1;
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className={`flex flex-col gap-5 ${stepFadeClass}`}>
       {/* Header nav */}
       <div className="flex items-center gap-3">
         <button
           onClick={handleBack}
-          className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition shrink-0"
+          className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition active:scale-[0.97] shrink-0"
         >
           ← Zurück
         </button>
@@ -121,7 +144,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
           {Array.from({ length: stepCount }).map((_, i) => (
             <div
               key={i}
-              className={`h-1.5 rounded-full transition-all ${
+              className={`h-1.5 rounded-full transition-[width,background-color] duration-200 ${
                 i < stepCount - 1 ? "w-6 bg-primary/40" : "w-8 bg-primary"
               }`}
             />
@@ -149,7 +172,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
             <button
               key={i}
               onClick={() => handleOption(option)}
-              className="text-left rounded-xl border border-border bg-background hover:bg-primary/10 hover:border-primary/40 active:scale-[0.98] transition-all px-4 py-3 text-sm text-foreground font-medium"
+              className="text-left rounded-xl border border-border bg-background hover:bg-primary/10 hover:border-primary/40 active:scale-[0.98] transition-[transform,background-color,border-color] duration-150 px-4 py-3 text-sm text-foreground font-medium"
             >
               {option.label}
             </button>

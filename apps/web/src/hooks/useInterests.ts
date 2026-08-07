@@ -1,35 +1,36 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { Sprout, Stethoscope, Microscope, BookOpen, Dna, type LucideIcon } from 'lucide-react';
 
 const STORAGE_KEY = 'secretleaf.interests';
 
 export type Interest = 'grow' | 'medizin' | 'labor' | 'anfaenger' | 'fortgeschritten';
 
-export const INTEREST_META: Record<Interest, { label: string; icon: string; categories: string[] }> = {
+export const INTEREST_META: Record<Interest, { label: string; icon: LucideIcon; categories: string[] }> = {
   grow: {
     label: 'Grow',
-    icon: '🌱',
+    icon: Sprout,
     categories: ['anbau', 'chemie', 'genetik', 'werkzeuge'],
   },
   medizin: {
     label: 'Medizin',
-    icon: '🩺',
+    icon: Stethoscope,
     categories: ['medizin', 'terpene', 'qualitaet', 'sicherheit'],
   },
   labor: {
     label: 'Labor',
-    icon: '🔬',
+    icon: Microscope,
     categories: ['qualitaet', 'chemie', 'konzentrate', 'terpene'],
   },
   anfaenger: {
     label: 'Anfänger',
-    icon: '📗',
+    icon: BookOpen,
     categories: ['sicherheit', 'anbau', 'recht', 'konsumformen'],
   },
   fortgeschritten: {
     label: 'Fortgeschritten',
-    icon: '🧬',
+    icon: Dna,
     categories: ['genetik', 'konzentrate', 'chemie', 'markt'],
   },
 };

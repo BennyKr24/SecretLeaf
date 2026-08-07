@@ -23,7 +23,7 @@ const PasswordField = forwardRef<HTMLInputElement, Props>(
             id={id}
             type={visible ? 'text' : 'password'}
             className={`w-full rounded-xl border bg-card px-4 py-3 pr-11 text-sm text-foreground placeholder:text-muted-fg
-              outline-none transition-all duration-150
+              outline-none transition-[border-color,box-shadow] duration-150
               ${error
                 ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
                 : 'border-border focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100'
@@ -34,7 +34,7 @@ const PasswordField = forwardRef<HTMLInputElement, Props>(
             type="button"
             aria-label={visible ? 'Passwort verbergen' : 'Passwort anzeigen'}
             onClick={() => setVisible(v => !v)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80 active:scale-90 transition-[transform,color] duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 rounded"
           >
             {visible ? (
               /* eye-slash */

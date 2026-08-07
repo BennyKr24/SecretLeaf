@@ -430,7 +430,7 @@ export default function FertilizerPlansPage() {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-foreground/80 hover:border-rose-300 hover:text-rose-700"
+                className="rounded-lg border border-border bg-background px-3 py-2 text-sm font-semibold text-foreground/80 transition-transform duration-150 hover:border-rose-300 hover:text-rose-700 active:scale-[0.97]"
               >
                 Zurücksetzen
               </button>
@@ -443,7 +443,7 @@ export default function FertilizerPlansPage() {
                 key={`chip-${key}`}
                 type="button"
                 onClick={() => setActiveCategory((prev) => (prev === key ? "all" : (key as PlanCategory)))}
-                className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                className={`rounded-full border px-3 py-1 text-xs font-semibold transition-transform duration-150 active:scale-[0.97] ${
                   activeCategory === key
                     ? "border-emerald-300 bg-emerald-50 text-emerald-800"
                     : "border-border bg-card text-foreground/80 hover:border-emerald-200"
@@ -588,7 +588,7 @@ export default function FertilizerPlansPage() {
               <button
                 type="button"
                 onClick={resetFilters}
-                className="mt-4 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+                className="mt-4 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 hover:bg-emerald-700 active:scale-[0.97]"
               >
                 Alle Pläne anzeigen
               </button>

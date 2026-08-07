@@ -144,7 +144,7 @@ export default function NaehrstoffRechnerPage() {
                 value={inputs.produktName}
                 onChange={(e) => setInput('produktName', e.target.value)}
                 className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-medium text-foreground outline-none
-                  transition-all hover:border-emerald-300 focus:ring-2 focus:ring-emerald-200"
+                  transition-[border-color,box-shadow] hover:border-emerald-300 focus:ring-2 focus:ring-emerald-200"
                 placeholder="z. B. BioBizz, Canna …"
               />
               <p className="text-xs text-muted-fg">Für eigene Zuordnung</p>

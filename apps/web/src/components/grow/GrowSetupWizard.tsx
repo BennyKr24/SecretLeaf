@@ -26,6 +26,11 @@ import {
   LICHT_TYP_LABELS,
   ERFAHRUNG_LABELS,
 } from '@/lib/grow/types';
+import {
+  Home, Sun, Leaf, Sprout, Package, Droplet, Lightbulb, Zap, Aperture,
+  Sparkles, TreePine, MapPin, Layers, Target, Check, CheckCircle2,
+  type LucideIcon,
+} from 'lucide-react';
 
 // ── Wizard State ──────────────────────────────────────────────────────────────
 
@@ -72,26 +77,26 @@ function StepHeader({ step, title, subtitle }: StepHeaderProps) {
 type OptionCardProps = {
   label: string;
   description?: string;
-  icon: string;
+  icon: LucideIcon;
   selected: boolean;
   onSelect: () => void;
 };
 
-function OptionCard({ label, description, icon, selected, onSelect }: OptionCardProps) {
+function OptionCard({ label, description, icon: Icon, selected, onSelect }: OptionCardProps) {
   return (
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all ${
+      className={`flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left transition-[transform,border-color,background-color,box-shadow] duration-150 active:scale-[0.97] ${
         selected
           ? 'border-emerald-400 bg-emerald-50 ring-1 ring-emerald-300'
           : 'border-border bg-card hover:border-emerald-200 hover:bg-emerald-50/30'
       }`}
     >
-      <span className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-xl ${
-        selected ? 'bg-emerald-100' : 'bg-background'
+      <span className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg ${
+        selected ? 'bg-emerald-100 text-emerald-700' : 'bg-background text-foreground/70'
       }`}>
-        {icon}
+        <Icon className="h-5 w-5" strokeWidth={2} />
       </span>
       <div className="min-w-0">
         <p className={`text-sm font-semibold ${selected ? 'text-emerald-800' : 'text-foreground'}`}>
@@ -102,8 +107,8 @@ function OptionCard({ label, description, icon, selected, onSelect }: OptionCard
         )}
       </div>
       {selected && (
-        <span className="ml-auto flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white text-[10px] font-black">
-          ✓
+        <span className="ml-auto flex-shrink-0 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-white">
+          <Check className="h-3 w-3" strokeWidth={3} />
         </span>
       )}
     </button>
@@ -118,7 +123,7 @@ function ProgressBar({ step }: { step: number }) {
       {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
         <div
           key={i}
-          className={`h-1 flex-1 rounded-full transition-all duration-300 ${
+          className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
             i < step ? 'bg-emerald-500' : i === step - 1 ? 'bg-emerald-300' : 'bg-border'
           }`}
         />
@@ -143,7 +148,7 @@ function Counter({ value, onChange, min = 1, max = 20 }: CounterProps) {
         type="button"
         disabled={value <= min}
         onClick={() => onChange(Math.max(min, value - 1))}
-        className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card text-lg font-bold text-foreground/80 transition hover:border-emerald-300 hover:text-emerald-700 disabled:opacity-40"
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card text-lg font-bold text-foreground/80 transition hover:border-emerald-300 hover:text-emerald-700 active:scale-90 disabled:opacity-40"
       >
         −
       </button>
@@ -154,7 +159,7 @@ function Counter({ value, onChange, min = 1, max = 20 }: CounterProps) {
         type="button"
         disabled={value >= max}
         onClick={() => onChange(Math.min(max, value + 1))}
-        className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card text-lg font-bold text-foreground/80 transition hover:border-emerald-300 hover:text-emerald-700 disabled:opacity-40"
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card text-lg font-bold text-foreground/80 transition hover:border-emerald-300 hover:text-emerald-700 active:scale-90 disabled:opacity-40"
       >
         +
       </button>
@@ -164,10 +169,10 @@ function Counter({ value, onChange, min = 1, max = 20 }: CounterProps) {
 
 // ── Step 1: Name + Umgebung ───────────────────────────────────────────────────
 
-const UMGEBUNG_META: Record<GrowUmgebung, { icon: string; desc: string }> = {
-  indoor:     { icon: '🏠', desc: 'Zelt, Growroom oder ähnliches' },
-  outdoor:    { icon: '☀️', desc: 'Garten, Balkon oder Feld' },
-  greenhouse: { icon: '🌿', desc: 'Gewächshaus oder Folientunnel' },
+const UMGEBUNG_META: Record<GrowUmgebung, { icon: LucideIcon; desc: string }> = {
+  indoor:     { icon: Home, desc: 'Zelt, Growroom oder ähnliches' },
+  outdoor:    { icon: Sun, desc: 'Garten, Balkon oder Feld' },
+  greenhouse: { icon: Leaf, desc: 'Gewächshaus oder Folientunnel' },
 };
 
 type Step1Props = {
@@ -219,7 +224,7 @@ function Step1({ data, update, onNext }: Step1Props) {
         type="button"
         disabled={!canAdvance}
         onClick={onNext}
-        className="mt-6 w-full rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 disabled:opacity-40"
+        className="mt-6 w-full rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 active:scale-[0.97] disabled:opacity-40"
       >
         Weiter →
       </button>
@@ -229,18 +234,18 @@ function Step1({ data, update, onNext }: Step1Props) {
 
 // ── Step 2: Medium + Licht ────────────────────────────────────────────────────
 
-const MEDIUM_META: Record<GrowMedium, { icon: string; desc: string }> = {
-  erde:  { icon: '🪴', desc: 'Klassisch, fehlerverzeihend' },
-  coco:  { icon: '🥥', desc: 'Schnelleres Wachstum, mehr Kontrolle' },
-  hydro: { icon: '💧', desc: 'Maximales Potenzial, höherer Aufwand' },
+const MEDIUM_META: Record<GrowMedium, { icon: LucideIcon; desc: string }> = {
+  erde:  { icon: Sprout, desc: 'Klassisch, fehlerverzeihend' },
+  coco:  { icon: Package, desc: 'Schnelleres Wachstum, mehr Kontrolle' },
+  hydro: { icon: Droplet, desc: 'Maximales Potenzial, höherer Aufwand' },
 };
 
-const LICHT_META: Record<LichtTyp, { icon: string; desc: string }> = {
-  led:   { icon: '💡', desc: 'Effizient, wenig Wärme' },
-  hps:   { icon: '🔆', desc: 'Bewährt, intensiv' },
-  cmh:   { icon: '🌕', desc: 'Vollspektrum, Hybrid' },
-  cfl:   { icon: '💫', desc: 'Günstig, für Keimlinge' },
-  sonne: { icon: '☀️', desc: 'Natürlich, kostenlos' },
+const LICHT_META: Record<LichtTyp, { icon: LucideIcon; desc: string }> = {
+  led:   { icon: Lightbulb, desc: 'Effizient, wenig Wärme' },
+  hps:   { icon: Zap, desc: 'Bewährt, intensiv' },
+  cmh:   { icon: Aperture, desc: 'Vollspektrum, Hybrid' },
+  cfl:   { icon: Sparkles, desc: 'Günstig, für Keimlinge' },
+  sonne: { icon: Sun, desc: 'Natürlich, kostenlos' },
 };
 
 type Step2Props = {
@@ -296,14 +301,14 @@ function Step2({ data, update, onNext, onBack }: Step2Props) {
         <button
           type="button"
           onClick={onBack}
-          className="flex-1 rounded-xl border border-border bg-card px-5 py-3 text-sm font-bold text-foreground/80 transition hover:border-emerald-300"
+          className="flex-1 rounded-xl border border-border bg-card px-5 py-3 text-sm font-bold text-foreground/80 transition hover:border-emerald-300 active:scale-[0.97]"
         >
           ← Zurück
         </button>
         <button
           type="button"
           onClick={onNext}
-          className="flex-[2] rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700"
+          className="flex-[2] rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 active:scale-[0.97]"
         >
           Weiter →
         </button>
@@ -314,10 +319,10 @@ function Step2({ data, update, onNext, onBack }: Step2Props) {
 
 // ── Step 3: Erfahrung + Pflanzen ──────────────────────────────────────────────
 
-const ERFAHRUNG_META: Record<Erfahrung, { icon: string; desc: string }> = {
-  einsteiger:     { icon: '🌱', desc: 'Erster oder zweiter Grow' },
-  fortgeschritten:{ icon: '🌿', desc: 'Du hast bereits einige Grows abgeschlossen' },
-  profi:          { icon: '🌲', desc: 'Optimierter Grow, maximaler Output' },
+const ERFAHRUNG_META: Record<Erfahrung, { icon: LucideIcon; desc: string }> = {
+  einsteiger:     { icon: Sprout, desc: 'Erster oder zweiter Grow' },
+  fortgeschritten:{ icon: Leaf, desc: 'Du hast bereits einige Grows abgeschlossen' },
+  profi:          { icon: TreePine, desc: 'Optimierter Grow, maximaler Output' },
 };
 
 type Step3Props = {
@@ -369,14 +374,14 @@ function Step3({ data, update, onNext, onBack }: Step3Props) {
         <button
           type="button"
           onClick={onBack}
-          className="flex-1 rounded-xl border border-border bg-card px-5 py-3 text-sm font-bold text-foreground/80 transition hover:border-emerald-300"
+          className="flex-1 rounded-xl border border-border bg-card px-5 py-3 text-sm font-bold text-foreground/80 transition hover:border-emerald-300 active:scale-[0.97]"
         >
           ← Zurück
         </button>
         <button
           type="button"
           onClick={onNext}
-          className="flex-[2] rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700"
+          className="flex-[2] rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 active:scale-[0.97]"
         >
           Weiter →
         </button>
@@ -387,13 +392,13 @@ function Step3({ data, update, onNext, onBack }: Step3Props) {
 
 // ── Step 4: Summary + Submit ──────────────────────────────────────────────────
 
-type SummaryRowProps = { label: string; value: string; icon: string };
+type SummaryRowProps = { label: string; value: string; icon: LucideIcon };
 
-function SummaryRow({ label, value, icon }: SummaryRowProps) {
+function SummaryRow({ label, value, icon: Icon }: SummaryRowProps) {
   return (
     <div className="flex items-center justify-between gap-3 py-2.5">
       <span className="flex items-center gap-2 text-sm text-muted-fg">
-        <span className="text-base">{icon}</span>
+        <Icon className="h-4 w-4" strokeWidth={2} />
         {label}
       </span>
       <span className="text-sm font-semibold text-foreground">{value}</span>
@@ -419,21 +424,21 @@ function Step4({ data, onBack, onSubmit, submitting }: Step4Props) {
 
       {/* Summary card */}
       <div className="mb-6 divide-y divide-border rounded-2xl border border-border bg-background px-5">
-        <SummaryRow label="Grow Name" value={data.name} icon="🌱" />
-        <SummaryRow label="Umgebung"  value={GROW_UMGEBUNG_LABELS[data.umgebung]} icon="📍" />
-        <SummaryRow label="Substrat"  value={GROW_MEDIUM_LABELS[data.medium]}     icon="🪴" />
-        <SummaryRow label="Licht"     value={LICHT_TYP_LABELS[data.lichtTyp]}     icon="💡" />
-        <SummaryRow label="Level"     value={ERFAHRUNG_LABELS[data.erfahrung]}    icon="🎯" />
-        <SummaryRow label="Pflanzen"  value={`${data.pflanzenAnzahl}`}            icon="🌿" />
+        <SummaryRow label="Grow Name" value={data.name} icon={Sprout} />
+        <SummaryRow label="Umgebung"  value={GROW_UMGEBUNG_LABELS[data.umgebung]} icon={MapPin} />
+        <SummaryRow label="Substrat"  value={GROW_MEDIUM_LABELS[data.medium]}     icon={Layers} />
+        <SummaryRow label="Licht"     value={LICHT_TYP_LABELS[data.lichtTyp]}     icon={Lightbulb} />
+        <SummaryRow label="Level"     value={ERFAHRUNG_LABELS[data.erfahrung]}    icon={Target} />
+        <SummaryRow label="Pflanzen"  value={`${data.pflanzenAnzahl}`}            icon={Leaf} />
       </div>
 
       {/* What happens next */}
       <div className="mb-6 rounded-xl border border-emerald-100 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 px-4 py-3">
         <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">Was als nächstes passiert:</p>
         <ul className="mt-1.5 space-y-1 text-xs text-emerald-600 dark:text-emerald-400">
-          <li>✓ Grow-Plan mit Phasen wird generiert</li>
-          <li>✓ Tägliche Tasks für dein Level werden zugewiesen</li>
-          <li>✓ Du wirst direkt zu deinem Grow weitergeleitet</li>
+          <li className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} /> Grow-Plan mit Phasen wird generiert</li>
+          <li className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} /> Tägliche Tasks für dein Level werden zugewiesen</li>
+          <li className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 flex-shrink-0" strokeWidth={2} /> Du wirst direkt zu deinem Grow weitergeleitet</li>
         </ul>
       </div>
 
@@ -442,7 +447,7 @@ function Step4({ data, onBack, onSubmit, submitting }: Step4Props) {
           type="button"
           disabled={submitting}
           onClick={onBack}
-          className="flex-1 rounded-xl border border-border bg-card px-5 py-3 text-sm font-bold text-foreground/80 transition hover:border-emerald-300 disabled:opacity-40"
+          className="flex-1 rounded-xl border border-border bg-card px-5 py-3 text-sm font-bold text-foreground/80 transition hover:border-emerald-300 active:scale-[0.97] disabled:opacity-40"
         >
           ← Zurück
         </button>
@@ -458,7 +463,9 @@ function Step4({ data, onBack, onSubmit, submitting }: Step4Props) {
               Plan wird erstellt…
             </span>
           ) : (
-            '🌱 Grow erstellen →'
+            <span className="flex items-center justify-center gap-2">
+              <Sprout className="h-4 w-4" strokeWidth={2} /> Grow erstellen →
+            </span>
           )}
         </button>
       </div>

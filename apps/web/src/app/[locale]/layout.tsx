@@ -7,6 +7,7 @@ import { NavigationBar } from "@/components/NavigationBar";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LocaleBanner } from "@/components/LocaleBanner";
 import { routing } from "@/i18n/routing";
+import { Leaf } from "lucide-react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://secretleaf.de";
 
@@ -65,8 +66,8 @@ export default async function LocaleLayout({ children, params }: Props) {
           <div className="mx-auto max-w-6xl px-5 py-10">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-sm">
-                  🌿
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-white">
+                  <Leaf className="h-4 w-4" strokeWidth={2} />
                 </span>
                 <div>
                   <p className="text-sm font-semibold text-foreground">SecretLeaf</p>

@@ -672,7 +672,7 @@ function FertilizersPageInner() {
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80 transition-[color,transform] duration-150 active:scale-90"
                 >
                   ×
                 </button>
@@ -685,7 +685,7 @@ function FertilizersPageInner() {
                 <button
                   key={p}
                   onClick={() => setSelectedPhase(p)}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition-[border-color,background-color,color,transform] duration-150 active:scale-[0.97] ${
                     selectedPhase === p
                       ? 'border-emerald-500 bg-emerald-500 text-white'
                       : 'border-border bg-card text-muted-fg hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400'
@@ -702,7 +702,7 @@ function FertilizersPageInner() {
                 <button
                   key={c}
                   onClick={() => setSelectedCost(c === 'all' ? 'all' : c)}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${
+                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition-[border-color,background-color,color,transform] duration-150 active:scale-[0.97] ${
                     selectedCost === c
                       ? 'border-slate-700 bg-slate-700 text-white'
                       : 'border-border bg-card text-muted-fg hover:border-slate-400'
@@ -724,7 +724,7 @@ function FertilizersPageInner() {
                     setSelectedFormat('all'); setSelectedApplication('all'); setSelectedBrand('all');
                     setSelectedCost('all'); setUseCase('balanced'); setSortBy('best-match');
                   }}
-                  className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-fg hover:border-rose-300 hover:text-rose-600 dark:text-rose-400"
+                  className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-fg hover:border-rose-300 hover:text-rose-600 dark:text-rose-400 transition-[color,border-color,transform] duration-150 active:scale-[0.97]"
                 >
                   Filter löschen ×
                 </button>
@@ -810,7 +810,7 @@ function FertilizersPageInner() {
             <div className="mt-2 flex flex-wrap items-center gap-1.5">
               <span className="text-xs text-amber-700 dark:text-amber-400 font-medium">Meintest du:</span>
               {suggestedQueries.map((s) => (
-                <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400 hover:bg-amber-100">
+                <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400 hover:bg-amber-100 transition-[background-color,transform] duration-150 active:scale-[0.97]">
                   {s}
                 </button>
               ))}
@@ -829,7 +829,7 @@ function FertilizersPageInner() {
             <button
               key={brand}
               onClick={() => setSelectedBrand(selectedBrand === brand ? 'all' : brand)}
-              className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${
+              className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-[border-color,background-color,color,transform] duration-150 active:scale-[0.97] ${
                 selectedBrand === brand
                   ? 'border-emerald-500 bg-emerald-500 text-white'
                   : 'border-border bg-card text-foreground/80 hover:border-emerald-300'
@@ -849,7 +849,7 @@ function FertilizersPageInner() {
             {suggestedQueries.length > 0 && (
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                 {suggestedQueries.map((s) => (
-                  <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-emerald-200 dark:border-emerald-900/40 bg-card px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:bg-emerald-950/30">
+                  <button key={s} onClick={() => setSearchQuery(s)} className="rounded-full border border-emerald-200 dark:border-emerald-900/40 bg-card px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:bg-emerald-950/30 transition-[background-color,transform] duration-150 active:scale-[0.97]">
                     {s}
                   </button>
                 ))}
@@ -861,7 +861,7 @@ function FertilizersPageInner() {
                 setSelectedFormat('all'); setSelectedApplication('all'); setSelectedBrand('all');
                 setSelectedCost('all'); setUseCase('balanced'); setSortBy('best-match');
               }}
-              className="mt-5 rounded-lg bg-emerald-600 px-5 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+              className="mt-5 rounded-lg bg-emerald-600 px-5 py-2 text-sm font-semibold text-white hover:bg-emerald-700 transition-[background-color,transform] duration-150 active:scale-[0.97]"
             >
               Alle Filter zurücksetzen
             </button>
@@ -958,14 +958,28 @@ function FertilizersPageInner() {
                     <div className="border-t border-border">
                       <button
                         onClick={() => toggleDetails(fert.id)}
-                        className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-semibold text-muted-fg hover:bg-background hover:text-emerald-700 dark:text-emerald-400"
+                        className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-semibold text-muted-fg hover:bg-background hover:text-emerald-700 dark:text-emerald-400 transition-[background-color,color,transform] duration-150 active:scale-[0.97]"
                       >
                         <span>{isOpen ? 'Details schließen' : 'Details & Preisvergleich'}</span>
                         <span className="text-base leading-none">{isOpen ? '▲' : '▼'}</span>
                       </button>
 
-                      {isOpen && (
-                        <div className="space-y-4 border-t border-border px-4 pb-4 pt-3">
+                      {/* Always mounted + class-toggled (grid-rows collapses the height so
+                          the closed state doesn't leave a reserved gap in the card, since
+                          this panel lives in normal flow rather than as an absolute-positioned
+                          overlay) — same materialize recipe as components/ui/Dropdown.tsx,
+                          anchored to the toggle button above it. */}
+                      <div
+                        className={`grid overflow-hidden transition-[grid-template-rows] duration-200 ease-out ${
+                          isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                        }`}
+                      >
+                        <div className="min-h-0">
+                          <div
+                            className={`glass-surface origin-top space-y-4 border-t border-border px-4 pb-4 pt-3 transition-[opacity,transform] duration-200 ${
+                              isOpen ? 'opacity-100 scale-100' : 'pointer-events-none opacity-0 scale-95'
+                            }`}
+                          >
 
                           {/* Prices */}
                           <div>
@@ -1032,8 +1046,9 @@ function FertilizersPageInner() {
                               </p>
                             )}
                           </div>
+                          </div>
                         </div>
-                      )}
+                      </div>
                     </div>
                   </article>
                 );
@@ -1044,7 +1059,7 @@ function FertilizersPageInner() {
             {totalVisible > pageSize && (
               <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-2">
-                  <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={safePage === 1} className="rounded-lg border border-border px-4 py-2 text-sm text-foreground/80 disabled:opacity-40 hover:border-emerald-300">
+                  <button onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={safePage === 1} className="rounded-lg border border-border px-4 py-2 text-sm text-foreground/80 disabled:opacity-40 hover:border-emerald-300 transition-[border-color,transform] duration-150 active:scale-[0.97]">
                     ← Zurück
                   </button>
                   {Array.from({ length: totalPagesVisible }, (_, i) => i + 1)
@@ -1056,7 +1071,7 @@ function FertilizersPageInner() {
                         <button
                           key={p}
                           onClick={() => setCurrentPage(p)}
-                          className={`rounded-lg border px-3.5 py-2 text-sm font-medium ${
+                          className={`rounded-lg border px-3.5 py-2 text-sm font-medium transition-[border-color,background-color,color,transform] duration-150 active:scale-[0.97] ${
                             p === safePage
                               ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400'
                               : 'border-border bg-card text-foreground/80 hover:border-emerald-300'
@@ -1066,7 +1081,7 @@ function FertilizersPageInner() {
                         </button>
                       ];
                     })}
-                  <button onClick={() => setCurrentPage((p) => Math.min(totalPagesVisible, p + 1))} disabled={safePage === totalPagesVisible} className="rounded-lg border border-border px-4 py-2 text-sm text-foreground/80 disabled:opacity-40 hover:border-emerald-300">
+                  <button onClick={() => setCurrentPage((p) => Math.min(totalPagesVisible, p + 1))} disabled={safePage === totalPagesVisible} className="rounded-lg border border-border px-4 py-2 text-sm text-foreground/80 disabled:opacity-40 hover:border-emerald-300 transition-[border-color,transform] duration-150 active:scale-[0.97]">
                     Weiter →
                   </button>
                 </div>

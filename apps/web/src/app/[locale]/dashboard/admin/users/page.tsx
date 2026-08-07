@@ -173,13 +173,13 @@ export default function AdminUsersPage() {
       {error && (
         <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-700">
           {error}
-          <button onClick={() => setError(null)} className="ml-2 font-semibold hover:underline">×</button>
+          <button onClick={() => setError(null)} className="ml-2 font-semibold transition-transform duration-150 active:scale-90 hover:underline">×</button>
         </div>
       )}
       {success && (
         <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-700">
           {success}
-          <button onClick={() => setSuccess(null)} className="ml-2 font-semibold hover:underline">×</button>
+          <button onClick={() => setSuccess(null)} className="ml-2 font-semibold transition-transform duration-150 active:scale-90 hover:underline">×</button>
         </div>
       )}
 
@@ -202,7 +202,7 @@ export default function AdminUsersPage() {
         </Dropdown>
         <button
           onClick={() => void fetchUsers()}
-          className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-muted-fg transition hover:bg-background"
+          className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background"
         >
           Aktualisieren
         </button>
@@ -259,14 +259,14 @@ export default function AdminUsersPage() {
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() => { setEditingUser(user); setEditRole(user.role); }}
-                          className="rounded-lg px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 transition hover:bg-emerald-100 dark:bg-emerald-950/40"
+                          className="rounded-lg px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 transition active:scale-90 hover:bg-emerald-100 dark:bg-emerald-950/40"
                           title="Rolle bearbeiten"
                         >
                           ✎ Rolle
                         </button>
                         <button
                           onClick={() => setDeletingUser(user)}
-                          className="rounded-lg px-2 py-1 text-xs font-medium text-red-600 transition hover:bg-red-50"
+                          className="rounded-lg px-2 py-1 text-xs font-medium text-red-600 transition active:scale-90 hover:bg-red-50"
                           title="Benutzer löschen"
                         >
                           ⌫
@@ -296,14 +296,14 @@ export default function AdminUsersPage() {
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1}
-              className="rounded-xl border border-border px-3 py-1.5 text-xs font-medium text-muted-fg transition hover:bg-background disabled:opacity-40"
+              className="rounded-xl border border-border px-3 py-1.5 text-xs font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background disabled:opacity-40"
             >
               ← Zurück
             </button>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages}
-              className="rounded-xl border border-border px-3 py-1.5 text-xs font-medium text-muted-fg transition hover:bg-background disabled:opacity-40"
+              className="rounded-xl border border-border px-3 py-1.5 text-xs font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background disabled:opacity-40"
             >
               Weiter →
             </button>
@@ -311,98 +311,122 @@ export default function AdminUsersPage() {
         </div>
       )}
 
-      {/* Edit Role Modal */}
-      {editingUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="mx-4 w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-xl">
-            <h3 className="text-lg font-bold text-foreground">Rolle bearbeiten</h3>
-            <p className="mt-1 text-sm text-muted-fg">
-              Benutzer: <span className="font-mono font-medium">{editingUser.email ?? editingUser.id}</span>
-            </p>
+      {/* Edit Role Modal — always mounted + class-toggled (not conditionally
+          rendered) so open/close can transition instead of popping
+          instantly, same pattern as components/UserMenu.tsx. Modals stay
+          opaque + centered (.modal-surface, DESIGN_SYSTEM.md §16) — the
+          glass/blur treatment is reserved for trigger-anchored dropdowns. */}
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+          editingUser ? "opacity-100" : "invisible pointer-events-none opacity-0"
+        }`}
+      >
+        <div
+          className={`modal-surface mx-4 w-full max-w-md rounded-2xl border border-border p-6 shadow-xl transition-[opacity,transform] duration-300 ${
+            editingUser ? "scale-100 opacity-100" : "scale-[0.96] opacity-0"
+          }`}
+        >
+          {editingUser && (
+            <>
+              <h3 className="text-lg font-bold text-foreground">Rolle bearbeiten</h3>
+              <p className="mt-1 text-sm text-muted-fg">
+                Benutzer: <span className="font-mono font-medium">{editingUser.email ?? editingUser.id}</span>
+              </p>
 
-            <div className="mt-4 space-y-2">
-              {ROLES.map((role) => (
-                <label
-                  key={role}
-                  className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition ${
-                    editRole === role
-                      ? "border-emerald-600 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950/40"
-                      : "border-border hover:bg-background"
-                  }`}
+              <div className="mt-4 space-y-2">
+                {ROLES.map((role) => (
+                  <label
+                    key={role}
+                    className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition ${
+                      editRole === role
+                        ? "border-emerald-600 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950/40"
+                        : "border-border hover:bg-background"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="role"
+                      value={role}
+                      checked={editRole === role}
+                      onChange={() => setEditRole(role)}
+                      className="accent-[#1f7a4f]"
+                    />
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">{role}</p>
+                      <p className="text-xs text-muted-fg">
+                        {role === "ADMIN" && "Voller Zugriff auf das Admin-Panel und alle Funktionen."}
+                        {role === "PROVIDER" && "Kann Angebote erstellen und Studien bearbeiten."}
+                        {role === "CONSUMER" && "Standard-Benutzer. Kann Studien lesen und suchen."}
+                      </p>
+                    </div>
+                  </label>
+                ))}
+              </div>
+
+              <div className="mt-5 flex justify-end gap-3">
+                <button
+                  onClick={() => setEditingUser(null)}
+                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background"
                 >
-                  <input
-                    type="radio"
-                    name="role"
-                    value={role}
-                    checked={editRole === role}
-                    onChange={() => setEditRole(role)}
-                    className="accent-[#1f7a4f]"
-                  />
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">{role}</p>
-                    <p className="text-xs text-muted-fg">
-                      {role === "ADMIN" && "Voller Zugriff auf das Admin-Panel und alle Funktionen."}
-                      {role === "PROVIDER" && "Kann Angebote erstellen und Studien bearbeiten."}
-                      {role === "CONSUMER" && "Standard-Benutzer. Kann Studien lesen und suchen."}
-                    </p>
-                  </div>
-                </label>
-              ))}
-            </div>
-
-            <div className="mt-5 flex justify-end gap-3">
-              <button
-                onClick={() => setEditingUser(null)}
-                className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition hover:bg-background"
-              >
-                Abbrechen
-              </button>
-              <button
-                onClick={() => void handleRoleChange()}
-                disabled={actionLoading || editRole === editingUser.role}
-                className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-50"
-              >
-                {actionLoading ? "Wird gespeichert..." : "Rolle speichern"}
-              </button>
-            </div>
-          </div>
+                  Abbrechen
+                </button>
+                <button
+                  onClick={() => void handleRoleChange()}
+                  disabled={actionLoading || editRole === editingUser.role}
+                  className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition active:scale-[0.97] hover:bg-emerald-700 disabled:opacity-50"
+                >
+                  {actionLoading ? "Wird gespeichert..." : "Rolle speichern"}
+                </button>
+              </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
 
-      {/* Delete Confirmation Modal */}
-      {deletingUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="mx-4 w-full max-w-md rounded-2xl border border-red-200 bg-card p-6 shadow-xl">
-            <h3 className="text-lg font-bold text-red-700">Benutzer löschen</h3>
-            <p className="mt-2 text-sm text-muted-fg">
-              Bist du sicher, dass du den Benutzer{" "}
-              <span className="font-mono font-semibold text-foreground">
-                {deletingUser.email ?? deletingUser.id}
-              </span>{" "}
-              endgültig löschen möchtest?
-            </p>
-            <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">
-              Diese Aktion kann nicht rückgängig gemacht werden. Alle Daten des Benutzers werden unwiderruflich gelöscht.
-            </p>
+      {/* Delete Confirmation Modal — same always-mounted pattern as above. */}
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+          deletingUser ? "opacity-100" : "invisible pointer-events-none opacity-0"
+        }`}
+      >
+        <div
+          className={`modal-surface mx-4 w-full max-w-md rounded-2xl border border-red-200 p-6 shadow-xl transition-[opacity,transform] duration-300 ${
+            deletingUser ? "scale-100 opacity-100" : "scale-[0.96] opacity-0"
+          }`}
+        >
+          {deletingUser && (
+            <>
+              <h3 className="text-lg font-bold text-red-700">Benutzer löschen</h3>
+              <p className="mt-2 text-sm text-muted-fg">
+                Bist du sicher, dass du den Benutzer{" "}
+                <span className="font-mono font-semibold text-foreground">
+                  {deletingUser.email ?? deletingUser.id}
+                </span>{" "}
+                endgültig löschen möchtest?
+              </p>
+              <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">
+                Diese Aktion kann nicht rückgängig gemacht werden. Alle Daten des Benutzers werden unwiderruflich gelöscht.
+              </p>
 
-            <div className="mt-5 flex justify-end gap-3">
-              <button
-                onClick={() => setDeletingUser(null)}
-                className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition hover:bg-background"
-              >
-                Abbrechen
-              </button>
-              <button
-                onClick={() => void handleDelete()}
-                disabled={actionLoading}
-                className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50"
-              >
-                {actionLoading ? "Wird gelöscht..." : "Endgültig löschen"}
-              </button>
-            </div>
-          </div>
+              <div className="mt-5 flex justify-end gap-3">
+                <button
+                  onClick={() => setDeletingUser(null)}
+                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background"
+                >
+                  Abbrechen
+                </button>
+                <button
+                  onClick={() => void handleDelete()}
+                  disabled={actionLoading}
+                  className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition active:scale-[0.97] hover:bg-red-700 disabled:opacity-50"
+                >
+                  {actionLoading ? "Wird gelöscht..." : "Endgültig löschen"}
+                </button>
+              </div>
+            </>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

@@ -1063,6 +1063,19 @@ export default function PestLexiconPage() {
   const [activeStage, setActiveStage] = useState<PlantStage | "alle">("alle");
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
   const [lightbox, setLightbox] = useState<{ title: string; images: string[]; index: number } | null>(null);
+  // Lags one step behind `lightbox`: keeps the last-open payload around while
+  // `lightbox` is null so the dialog can stay mounted and play its exit
+  // transition instead of the image vanishing instantly on close. Adjusted
+  // during render (React's documented pattern for deriving state from a prop/
+  // state change) rather than in a useEffect, which would fire the
+  // set-state-in-effect rule for a synchronous setState.
+  const [prevLightbox, setPrevLightbox] = useState(lightbox);
+  const [displayLightbox, setDisplayLightbox] = useState<{ title: string; images: string[]; index: number } | null>(null);
+  if (lightbox !== prevLightbox) {
+    setPrevLightbox(lightbox);
+    if (lightbox) setDisplayLightbox(lightbox);
+  }
+  const lightboxOpen = lightbox !== null;
 
   const openLightbox = (title: string, images: string[], index: number) => {
     setLightbox({ title, images, index });
@@ -1134,7 +1147,7 @@ export default function PestLexiconPage() {
     );
   };
 
-  const lightboxCurrentSrc = lightbox ? lightbox.images[lightbox.index] ?? lightbox.images[0] ?? null : null;
+  const lightboxCurrentSrc = displayLightbox ? displayLightbox.images[displayLightbox.index] ?? displayLightbox.images[0] ?? null : null;
 
   return (
     <main className="min-h-screen bg-background px-6 py-10">
@@ -1248,7 +1261,7 @@ export default function PestLexiconPage() {
                   key={key}
                   type="button"
                   onClick={() => setActiveCategory(active ? "alle" : typedKey)}
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold ${active ? "border-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400" : "border-border bg-background text-foreground/80"}`}
+                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition-[border-color,background-color,color,transform] duration-150 active:scale-[0.97] ${active ? "border-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400" : "border-border bg-background text-foreground/80"}`}
                 >
                   {categoryLabel[typedKey]} ({count})
                 </button>
@@ -1272,7 +1285,7 @@ export default function PestLexiconPage() {
               <button
                 type="button"
                 onClick={() => setSelectedSymptoms([])}
-                className="rounded-lg border border-cyan-300 bg-card px-3 py-1.5 text-xs font-semibold text-cyan-700 dark:text-cyan-400 hover:bg-cyan-100 dark:bg-cyan-950/40"
+                className="rounded-lg border border-cyan-300 bg-card px-3 py-1.5 text-xs font-semibold text-cyan-700 dark:text-cyan-400 transition-[background-color,transform] duration-150 hover:bg-cyan-100 dark:bg-cyan-950/40 active:scale-[0.97]"
               >
                 Auswahl zurücksetzen
               </button>
@@ -1287,7 +1300,7 @@ export default function PestLexiconPage() {
                   key={option.id}
                   type="button"
                   onClick={() => toggleSymptom(option.id)}
-                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
+                  className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition-[border-color,background-color,color,transform] duration-150 active:scale-[0.97] ${
                     active
                       ? "border-cyan-300 bg-cyan-100 dark:bg-cyan-950/40 text-cyan-800 dark:text-cyan-400"
                       : "border-border bg-card text-foreground/80 hover:border-cyan-300"
@@ -1336,14 +1349,14 @@ export default function PestLexiconPage() {
                     key={src}
                     type="button"
                     onClick={() => openLightbox(entry.name, entry.images, index)}
-                    className="group relative overflow-hidden rounded-md"
+                    className="group relative overflow-hidden rounded-md transition-transform duration-150 active:scale-[0.97]"
                   >
                     <Image
                       src={src}
                       alt={`${entry.name} Foto ${index + 1}`}
                       width={320}
                       height={210}
-                      className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.04]"
+                      className="h-full w-full object-cover transition-transform duration-200 [@media(hover:hover)]:group-hover:scale-[1.04]"
                     />
                     <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-black/45 px-2 py-1 text-[10px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
                       Vergrößern
@@ -1547,67 +1560,86 @@ export default function PestLexiconPage() {
           </div>
         )}
 
-        {lightbox && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" role="dialog" aria-modal="true" onClick={() => setLightbox(null)}>
-            <div className="w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
-              <div className="mb-2 flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold text-white">
-                  {lightbox.title} - Foto {lightbox.index + 1} / {lightbox.images.length}
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setLightbox(null)}
-                  className="rounded-lg border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold text-white hover:bg-white/20"
-                >
-                  Schließen
-                </button>
-              </div>
-              <div className="relative overflow-hidden rounded-xl border border-white/20 bg-black">
-                {lightboxCurrentSrc && (
-                  <Image
-                    src={lightboxCurrentSrc}
-                    alt={`${lightbox.title} Foto ${lightbox.index + 1}`}
-                    width={1800}
-                    height={1200}
-                    className="h-auto max-h-[80vh] w-full object-contain"
-                  />
-                )}
-                {lightbox.images.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => moveLightbox(-1)}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/45 px-3 py-2 text-sm font-bold text-white hover:bg-black/60"
-                    >
-                      ←
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => moveLightbox(1)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/45 px-3 py-2 text-sm font-bold text-white hover:bg-black/60"
-                    >
-                      →
-                    </button>
-                  </>
-                )}
-              </div>
-              {lightbox.images.length > 1 && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {lightbox.images.map((src, idx) => (
-                    <button
-                      key={`${src}-${idx}`}
-                      type="button"
-                      onClick={() => setLightbox({ ...lightbox, index: idx })}
-                      className={`overflow-hidden rounded-md border ${idx === lightbox.index ? "border-cyan-300" : "border-white/30"}`}
-                    >
-                      <Image src={src} alt={`${lightbox.title} Vorschau ${idx + 1}`} width={100} height={70} className="h-14 w-20 object-cover" />
-                    </button>
-                  ))}
-                </div>
+        {/* Always mounted + class-toggled instead of `{lightbox && (...)}` so the
+            image lightbox can play an entrance/exit transition (previously it had
+            none — the dialog just popped in/out instantly). `displayLightbox`
+            lags one render behind `lightbox` so the last-open photo stays on
+            screen while the exit transition fades/scales it out. A modal-surface
+            treatment isn't right here — this should show the image, not an
+            opaque card — so only the backdrop dims and the panel itself
+            fades/scales, centered by default. */}
+        <div
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 transition-opacity duration-300 ${
+            lightboxOpen ? "opacity-100" : "pointer-events-none invisible opacity-0"
+          }`}
+          role="dialog"
+          aria-modal="true"
+          aria-hidden={!lightboxOpen}
+          onClick={() => setLightbox(null)}
+        >
+          <div
+            className={`w-full max-w-5xl transition-[opacity,transform] duration-300 ${
+              lightboxOpen ? "scale-100 opacity-100" : "scale-96 opacity-0"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-2 flex items-center justify-between gap-3">
+              <p className="text-sm font-semibold text-white">
+                {displayLightbox?.title} - Foto {(displayLightbox?.index ?? 0) + 1} / {displayLightbox?.images.length ?? 0}
+              </p>
+              <button
+                type="button"
+                onClick={() => setLightbox(null)}
+                className="rounded-lg border border-white/30 bg-white/10 px-3 py-1 text-xs font-semibold text-white transition-[background-color,transform] duration-150 hover:bg-white/20 active:scale-[0.97]"
+              >
+                Schließen
+              </button>
+            </div>
+            <div className="relative overflow-hidden rounded-xl border border-white/20 bg-black">
+              {lightboxCurrentSrc && (
+                <Image
+                  src={lightboxCurrentSrc}
+                  alt={`${displayLightbox?.title ?? ""} Foto ${(displayLightbox?.index ?? 0) + 1}`}
+                  width={1800}
+                  height={1200}
+                  className="h-auto max-h-[80vh] w-full object-contain"
+                />
+              )}
+              {displayLightbox && displayLightbox.images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => moveLightbox(-1)}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/45 px-3 py-2 text-sm font-bold text-white transition-[background-color,transform] duration-150 hover:bg-black/60 active:scale-90"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => moveLightbox(1)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full border border-white/40 bg-black/45 px-3 py-2 text-sm font-bold text-white transition-[background-color,transform] duration-150 hover:bg-black/60 active:scale-90"
+                  >
+                    →
+                  </button>
+                </>
               )}
             </div>
+            {displayLightbox && displayLightbox.images.length > 1 && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {displayLightbox.images.map((src, idx) => (
+                  <button
+                    key={`${src}-${idx}`}
+                    type="button"
+                    onClick={() => setLightbox((prev) => (prev ? { ...prev, index: idx } : prev))}
+                    className={`overflow-hidden rounded-md border transition-[border-color,transform] duration-150 active:scale-[0.97] ${idx === displayLightbox.index ? "border-cyan-300" : "border-white/30"}`}
+                  >
+                    <Image src={src} alt={`${displayLightbox.title} Vorschau ${idx + 1}`} width={100} height={70} className="h-14 w-20 object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </section>
     </main>
   );

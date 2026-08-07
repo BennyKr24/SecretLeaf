@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Analytics } from '@/lib/analytics';
 import type { UpdateCta } from '@/lib/updates';
+import { CheckCircle2 } from 'lucide-react';
 
 // ── View Tracker ──────────────────────────────────────────────────────────────
 // Unsichtbare Komponente: feuert update_viewed auf Mount.
@@ -88,8 +89,8 @@ export function UpdateNewsletterBlock() {
   if (status === 'success') {
     return (
       <div className="rounded-2xl border border-primary/20 bg-primary/5 px-6 py-5 text-center">
-        <p className="text-sm font-semibold text-primary">
-          ✓ Eingetragen — wir benachrichtigen dich beim nächsten Update.
+        <p className="flex items-center justify-center gap-1.5 text-sm font-semibold text-primary">
+          <CheckCircle2 className="h-4 w-4 flex-shrink-0" strokeWidth={2} /> Eingetragen — wir benachrichtigen dich beim nächsten Update.
         </p>
       </div>
     );

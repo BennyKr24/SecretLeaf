@@ -18,10 +18,15 @@ import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 import { useGrowState } from '@/hooks/useGrowState';
 import { useGrowLog } from '@/hooks/useGrowLog';
 import {
-  LOG_ENTRY_TYPE_ICONS,
   LOG_ENTRY_TYPE_LABELS,
   TRAINING_METHOD_LABELS,
 } from '@/lib/grow/types';
+import { LOG_ENTRY_TYPE_ICONS } from '@/lib/grow/taskIcons';
+import {
+  Flame, Sprout, Trophy, CheckCircle2, Zap, Droplets, FlaskConical,
+  NotebookPen, Scissors, Wrench, Lightbulb, Pencil, Leaf, ClipboardList,
+  type LucideIcon,
+} from 'lucide-react';
 import type {
   LogEntryType,
   LogEntryData,
@@ -131,23 +136,24 @@ function StreakBadge({ streak, pulse }: { streak: number; pulse: boolean }) {
 
   if (streak === 0) {
     return (
-      <div className={`inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-semibold text-muted-fg transition-all duration-300 ${pulse ? 'scale-110 border-primary/50 bg-primary/10 text-primary' : ''}`}>
-        <span>{pulse ? '🔥' : '🌱'}</span>
+      <div className={`inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-sm font-semibold text-muted-fg transition-[transform,border-color,background-color,color] duration-300 ${pulse ? 'scale-110 border-primary/50 bg-primary/10 text-primary' : ''}`}>
+        {pulse ? <Flame className="h-4 w-4" strokeWidth={2} /> : <Sprout className="h-4 w-4" strokeWidth={2} />}
         <span className="hidden sm:inline">{pulse ? '1 Tag gestartet!' : 'Noch kein Streak'}</span>
       </div>
     );
   }
 
   return (
-    <div className={`inline-flex flex-col items-end rounded-2xl border px-3 py-1.5 text-right transition-all duration-300 ${
+    <div className={`inline-flex flex-col items-end rounded-2xl border px-3 py-1.5 text-right transition-[transform,border-color,background-color,color,box-shadow] duration-300 ${
       isMilestone && pulse
         ? 'scale-110 border-amber-400 bg-amber-500 text-white shadow-lg shadow-amber-900/25'
         : pulse
         ? 'scale-110 border-primary/60 bg-primary text-white shadow-md shadow-primary/20'
         : 'border-primary/30 bg-primary/10 text-primary'
     }`}>
-      <span className="text-sm font-black leading-tight">
-        {isMilestone && pulse ? '🏆' : '🔥'} {streak} {streak === 1 ? 'Tag' : 'Tage'} Ertrag geschützt
+      <span className="flex items-center gap-1 text-sm font-black leading-tight">
+        {isMilestone && pulse ? <Trophy className="h-3.5 w-3.5" strokeWidth={2} /> : <Flame className="h-3.5 w-3.5" strokeWidth={2} />}
+        {streak} {streak === 1 ? 'Tag' : 'Tage'} Ertrag geschützt
       </span>
       {narrative && (
         <span className={`text-[10px] font-bold leading-tight ${
@@ -161,12 +167,15 @@ function StreakBadge({ streak, pulse }: { streak: number; pulse: boolean }) {
 }
 
 // ── Reward messages per log type ─────────────────────────────────────────────
+// Headlines have no trailing checkmark — the reward banner already renders
+// one dedicated icon badge (CheckCircle2) right next to them; repeating it
+// as text would be redundant.
 const LOG_SAVE_REWARD: Record<LogEntryType, { headline: string; sub: string; yieldLine: string }> = {
-  wasser:      { headline: 'Du hast Trockenstress vermieden ✓',              sub: '+2–4g Ertrag geschützt.',                         yieldLine: 'Dein Grow bleibt im Wachstumsrhythmus.' },
-  duenger:     { headline: 'Gut reagiert — Nährstoffmangel vermieden ✓',    sub: '+3–6g Ertrag stabilisiert.',                      yieldLine: 'Dein Grow ist jetzt ausgeglichen.' },
-  training:    { headline: 'Guter Schritt — mehr Lichtfläche geschaffen ✓',  sub: '+5–10g mehr Ertrag ermöglicht.',              yieldLine: 'Dein Grow hat jetzt mehr Licht.' },
-  notiz:       { headline: 'Du hast deinen Grow dokumentiert ✓',            sub: 'Bessere Grundlage für die nächste Entscheidung.',  yieldLine: 'Jede Notiz macht deinen Grow kalkulierbarer.' },
-  tool_result: { headline: 'Du hast ein Problem früh erkannt ✓',            sub: 'Ertragsverlust gestoppt.',                         yieldLine: 'Dein Grow ist jetzt besser kontrolliert.' },
+  wasser:      { headline: 'Du hast Trockenstress vermieden',              sub: '+2–4g Ertrag geschützt.',                         yieldLine: 'Dein Grow bleibt im Wachstumsrhythmus.' },
+  duenger:     { headline: 'Gut reagiert — Nährstoffmangel vermieden',    sub: '+3–6g Ertrag stabilisiert.',                      yieldLine: 'Dein Grow ist jetzt ausgeglichen.' },
+  training:    { headline: 'Guter Schritt — mehr Lichtfläche geschaffen',  sub: '+5–10g mehr Ertrag ermöglicht.',              yieldLine: 'Dein Grow hat jetzt mehr Licht.' },
+  notiz:       { headline: 'Du hast deinen Grow dokumentiert',            sub: 'Bessere Grundlage für die nächste Entscheidung.',  yieldLine: 'Jede Notiz macht deinen Grow kalkulierbarer.' },
+  tool_result: { headline: 'Du hast ein Problem früh erkannt',            sub: 'Ertragsverlust gestoppt.',                         yieldLine: 'Dein Grow ist jetzt besser kontrolliert.' },
 };
 
 /** Inline success banner — slides in below QuickAdd, auto-dismisses. */
@@ -176,22 +185,22 @@ function SavedBanner({ type, visible, completedTask }: { type: LogEntryType | nu
     <div
       role="status"
       aria-live="polite"
-      className={`overflow-hidden transition-all duration-300 ease-out ${
+      className={`overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
         visible ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
       }`}
     >
       {type && reward && (
         <div className="rounded-2xl border border-primary/30 bg-primary/10 px-4 py-3 shadow-sm">
           <div className="flex items-start gap-3">
-            <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-base text-white shadow-sm">
-              ✓
+            <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-sm">
+              <CheckCircle2 className="h-4 w-4" strokeWidth={2.5} />
             </span>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-black text-foreground">{reward.headline}</p>
               <p className="text-xs text-primary mt-0.5">{reward.sub}</p>
               {completedTask ? (
-                <p className="mt-1.5 text-xs font-bold text-foreground bg-primary/15 rounded-lg px-2 py-1 inline-block">
-                  ⚡ Kritisches Problem behoben: <span className="font-black">{completedTask}</span>
+                <p className="mt-1.5 flex items-center gap-1 text-xs font-bold text-foreground bg-primary/15 rounded-lg px-2 py-1">
+                  <Zap className="h-3 w-3 flex-shrink-0" strokeWidth={2} /> Kritisches Problem behoben: <span className="font-black">{completedTask}</span>
                 </p>
               ) : (
                 <p className="mt-1.5 text-[11px] font-bold text-primary">↑ {reward.yieldLine}</p>
@@ -213,14 +222,14 @@ function DailyCompletionBanner({ visible, streak }: { visible: boolean; streak: 
                    'Morgen siehst du, ob heute etwas gewirkt hat.';
   return (
     <div
-      className={`overflow-hidden transition-all duration-500 ease-out ${
+      className={`overflow-hidden transition-[max-height,opacity] duration-500 ease-out ${
         visible ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
       }`}
     >
       <div className="flex items-center gap-3 rounded-2xl border border-primary/30 bg-primary/10 px-4 py-3">
-        <span className="text-xl leading-none">✅</span>
+        <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-primary" strokeWidth={2} />
         <div>
-          <p className="text-sm font-black text-foreground">Du hast verhindert, dass dein Grow Ertrag verliert ✓</p>
+          <p className="text-sm font-black text-foreground">Du hast verhindert, dass dein Grow Ertrag verliert</p>
           <p className="text-xs text-primary/80">{msg}</p>
           <p className="text-[11px] font-bold text-primary mt-1">→ Morgen entscheidet sich, ob dein Grow stabil bleibt</p>
         </div>
@@ -229,11 +238,11 @@ function DailyCompletionBanner({ visible, streak }: { visible: boolean; streak: 
   );
 }
 
-const LOG_ACTION_LABEL: Record<string, string> = {
-  wasser:   '💧 Jetzt gießen',
-  duenger:  '🧪 Düngung loggen',
-  notiz:    '📝 Notiz eintragen',
-  training: '✂️ Training loggen',
+const LOG_ACTION_LABEL: Record<string, { icon: LucideIcon; label: string }> = {
+  wasser:   { icon: Droplets, label: 'Jetzt gießen' },
+  duenger:  { icon: FlaskConical, label: 'Düngung loggen' },
+  notiz:    { icon: NotebookPen, label: 'Notiz eintragen' },
+  training: { icon: Scissors, label: 'Training loggen' },
 };
 
 /** Subtle action card — appears after a log entry, dismisses after 8s. */
@@ -260,20 +269,20 @@ function LogInsightCard({
 
   const actionHref =
     action.type === 'log' ? `/grow/${growId}/log?type=${action.logType}` : action.href;
-  const actionLabel =
+  const { icon: ActionIcon, label: actionLabel } =
     action.type === 'log'
-      ? (LOG_ACTION_LABEL[action.logType] ?? 'Jetzt handeln')
-      : '🔧 Tool öffnen';
+      ? (LOG_ACTION_LABEL[action.logType] ?? { icon: Sprout, label: 'Jetzt handeln' })
+      : { icon: Wrench, label: 'Tool öffnen' };
 
   return (
     <div
-      className={`overflow-hidden transition-all duration-500 ease-out ${
+      className={`overflow-hidden transition-[max-height,opacity] duration-500 ease-out ${
         visible ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
       }`}
     >
       <div className="relative overflow-hidden rounded-2xl border border-border bg-card px-4 py-3">
         <div className="flex items-start gap-3">
-          <span className="mt-0.5 text-base leading-none">💡</span>
+          <Lightbulb className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-400" strokeWidth={2} />
           <div className="min-w-0 flex-1">
             <p className="text-[12px] font-medium leading-snug text-foreground">
               {article.growValue}
@@ -286,11 +295,11 @@ function LogInsightCard({
               <Link
                 href={actionHref as Route}
                 onClick={handleAct}
-                className={`rounded-lg px-3 py-1 text-[11px] font-bold text-white transition active:scale-[0.97] ${
+                className={`flex items-center gap-1 rounded-lg px-3 py-1 text-[11px] font-bold text-white transition active:scale-[0.97] ${
                   priority === 'high' ? 'bg-rose-600 hover:bg-rose-700' : 'bg-emerald-600 hover:bg-emerald-700'
                 }`}
               >
-                {actionLabel}
+                <ActionIcon className="h-3 w-3" strokeWidth={2} /> {actionLabel}
               </Link>
               <Link
                 href={`/studies/${article.slug}` as Route}
@@ -305,10 +314,11 @@ function LogInsightCard({
           </div>
         </div>
         {/* Feedback overlay */}
-        <div className={`absolute inset-0 flex flex-col items-center justify-center gap-1 bg-emerald-500 transition-all duration-300 ${
+        <div className={`absolute inset-0 flex flex-col items-center justify-center gap-1 bg-emerald-500 transition-opacity duration-300 ${
           showFeedback ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}>
-          <p className="text-sm font-black text-white">Du hast ein kritisches Problem behoben ✓</p>
+          <CheckCircle2 className="h-5 w-5 text-white" strokeWidth={2} />
+          <p className="text-sm font-black text-white">Du hast ein kritisches Problem behoben</p>
           <p className="text-[11px] font-bold text-emerald-100">Du hast Ertragsverlust gestoppt.</p>
         </div>
       </div>
@@ -397,7 +407,7 @@ function QuickAddBar({
     <div className={`rounded-2xl border bg-card p-4 ${isEditing ? 'border-amber-500/40 ring-1 ring-amber-500/20' : 'border-border'}`}>
       {isEditing && (
         <div className="mb-3 flex items-center gap-2 rounded-xl bg-amber-500/10 px-3 py-2">
-          <span className="text-sm">✏️</span>
+          <Pencil className="h-3.5 w-3.5 text-amber-400" strokeWidth={2} />
           <p className="text-xs font-bold text-amber-400">Eintrag bearbeiten</p>
         </div>
       )}
@@ -419,7 +429,9 @@ function QuickAddBar({
 
       {/* Type selector row — locked in edit mode */}
       <div className="flex gap-2 overflow-x-auto pb-1">
-        {QUICK_ADD_TYPES.map(({ type, label }) => (
+        {QUICK_ADD_TYPES.map(({ type, label }) => {
+          const TypeIcon = LOG_ENTRY_TYPE_ICONS[type];
+          return (
           <button
             key={type}
             onClick={() => {
@@ -436,10 +448,11 @@ function QuickAddBar({
                 : 'border border-border bg-surface text-muted-fg hover:border-primary/40 hover:text-primary'
             }`}
           >
-            <span>{LOG_ENTRY_TYPE_ICONS[type]}</span>
+            <TypeIcon className="h-4 w-4" strokeWidth={2} />
             {label}
           </button>
-        ))}
+          );
+        })}
       </div>
 
       {/* Inline form */}
@@ -612,7 +625,12 @@ function QuickAddBar({
                   : 'bg-primary shadow-primary/20 hover:bg-primary-dark'
               }`}
             >
-              {isEditing ? '✏️ Änderungen speichern' : `${LOG_ENTRY_TYPE_ICONS[activeType]} Eintrag speichern`}
+              {isEditing ? (
+                <><Pencil className="h-4 w-4" strokeWidth={2} /> Änderungen speichern</>
+              ) : (() => {
+                const SaveIcon = LOG_ENTRY_TYPE_ICONS[activeType];
+                return <><SaveIcon className="h-4 w-4" strokeWidth={2} /> Eintrag speichern</>;
+              })()}
             </button>
             <button
               onClick={onCancel}
@@ -646,17 +664,17 @@ function EntryCard({
 }) {
   const [confirming, setConfirming] = useState(false);
   const time = new Date(entry.date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
-  const icon = LOG_ENTRY_TYPE_ICONS[entry.data.type];
+  const EntryIcon = LOG_ENTRY_TYPE_ICONS[entry.data.type];
   const label = LOG_ENTRY_TYPE_LABELS[entry.data.type];
   const summary = entrySummary(entry);
 
   return (
-    <div className={`group flex items-start gap-3 rounded-xl border bg-card px-4 py-3 transition-all ${
+    <div className={`group flex items-start gap-3 rounded-xl border bg-card px-4 py-3 transition-[border-color,box-shadow] duration-200 ${
       isNew ? 'border-primary/50 shadow-sm shadow-primary/10' : 'border-border hover:border-border'
     }`}>
       {/* Icon */}
-      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-base">
-        {icon}
+      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-muted-fg">
+        <EntryIcon className="h-4 w-4" strokeWidth={2} />
       </span>
 
       {/* Content */}
@@ -902,7 +920,7 @@ export default function GrowLogPage({}: Props) {
   if (!grow) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background px-4 text-center">
-        <span className="text-4xl">🌿</span>
+        <Leaf className="h-10 w-10 text-emerald-500" strokeWidth={1.75} />
         <h1 className="text-lg font-bold text-foreground">Grow nicht gefunden</h1>
         <Link href="/dashboard/user" className="text-sm font-semibold text-primary hover:underline">
           Zurück zum Dashboard
@@ -1007,7 +1025,7 @@ export default function GrowLogPage({}: Props) {
         {/* ── Timeline ────────────────────────────────────────────────────── */}
         {grouped.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border py-14 text-center">
-            <span className="text-3xl">📋</span>
+            <ClipboardList className="mx-auto h-8 w-8 text-muted-fg" strokeWidth={1.75} />
             <p className="mt-3 text-sm font-semibold text-muted-fg">Noch keine Einträge</p>
             <p className="mt-1 text-xs text-muted-fg">
               Wähle oben eine Kategorie und speichere deinen ersten Log.

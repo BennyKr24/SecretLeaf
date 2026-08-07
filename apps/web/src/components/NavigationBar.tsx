@@ -6,6 +6,7 @@ import SearchBar from "@/components/SearchBar";
 import { UserMenu } from "@/components/UserMenu";
 import { useAuth } from "@/hooks/useAuth";
 import { useActiveGrow } from "@/hooks/useActiveGrow";
+import { Leaf, Sprout } from "lucide-react";
 
 export function NavigationBar() {
   const t = useTranslations("nav");
@@ -13,15 +14,18 @@ export function NavigationBar() {
   const activeGrow = useActiveGrow();
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-border bg-card/95 backdrop-blur-xl">
+    // Translucent glass material (DESIGN_SYSTEM.md §15.6 / apple-design §12):
+    // low enough opacity that content actually shows through the blur —
+    // bg-card/95 was so opaque the backdrop-blur had nothing to blur.
+    <nav className="sticky top-0 z-40 w-full border-b border-border/60 bg-card/70 backdrop-blur-xl backdrop-saturate-150">
       <div className="max-w-6xl mx-auto px-5 h-[60px] flex items-center gap-6">
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 font-semibold text-foreground text-[15px] flex-shrink-0 tracking-tight group"
+          className="flex items-center gap-2.5 font-semibold text-foreground text-[15px] flex-shrink-0 group"
         >
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-sm transition-transform duration-200 group-hover:scale-110">
-            🌿
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-white transition-transform duration-200 group-hover:scale-110">
+            <Leaf className="h-4 w-4" strokeWidth={2} />
           </span>
           <span className="hidden sm:inline">SecretLeaf</span>
         </Link>
@@ -35,7 +39,7 @@ export function NavigationBar() {
             href={activeGrow ? `/grow/${activeGrow.id}` : "/start"}
             className="nav-link flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-150"
           >
-            <span className="text-[12px]">🌱</span>
+            <Sprout className="h-3.5 w-3.5" strokeWidth={2} />
             {activeGrow ? t("myGrow") : t("startGrow")}
           </Link>
           {!isLoggedIn && (
