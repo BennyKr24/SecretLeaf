@@ -876,21 +876,22 @@ const baseWikiArticles: TerpiraArticle[] = [
   },
   {
     slug: "hash-typen-vergleichen",
-    title: "Hash-Typen professionell eingeordnet",
-    summary: "Ursprung, Verfahrensfamilien, klassische und moderne Typen sowie klare Systematik: was wirklich zusammengehört und wie man Qualität fachlich bewertet.",
+    title: "Hash-Typen der Welt",
+    summary: "Von marokkanischem Zero-Zero bis nepalesischen Temple Balls: Ursprung, Verfahrensfamilien und rund 20 regionale Presshash-Traditionen im Überblick – plus eine klare Systematik, wie man Qualität fachlich bewertet statt sich auf Namen zu verlassen.",
     category: "konzentrate",
     difficulty: "profi",
-    readMinutes: 16,
-    lastUpdated: "2026-03-26",
-    tags: ["Klassifikation", "Dry Sift", "Bubble Hash", "Rosin", "Charas", "Kif", "Qualität"],
+    readMinutes: 23,
+    lastUpdated: "2026-08-13",
+    tags: ["Klassifikation", "Dry Sift", "Bubble Hash", "Rosin", "Live Rosin", "Full Melt", "Charas", "Kif", "Presshash", "Regionale Stile", "Qualität"],
     keyTakeaways: [
       "Hash sollte zuerst nach Verfahrensfamilien klassifiziert werden: mechanisch, eiswasserbasiert, pressbasiert und lösungsmittelgestützt.",
       "Historische Begriffe (z. B. Charas, Kif, Afghan, Lebanese) beschreiben oft Herkunft und Stil, nicht automatisch objektive Qualität.",
       "Produktfamilien gehören zusammen, wenn sie dieselbe Trennlogik nutzen und im selben Post-Processing weiterverarbeitet werden.",
-      "Professionelle Bewertung kombiniert Sensorik, physikalische Parameter, Kontaminantenstatus und Chargenkonsistenz."
+      "Professionelle Bewertung kombiniert Sensorik, physikalische Parameter, Kontaminantenstatus und Chargenkonsistenz.",
+      "Namen wie Malana Cream, Zero-Zero oder Mazar-i-Sharif bezeichnen Herkunft und Handwerkstradition – gerade die bekanntesten werden aber auch am häufigsten kopiert oder falsch etikettiert, denn es gibt keine geschützte Herkunftsbezeichnung wie bei Wein oder Käse."
     ],
     quickFacts: [
-      { label: "Ursprungsregionen", value: "Nordafrika, Levante, Zentral-/Südasien" },
+      { label: "Ursprungsregionen", value: "Marokko, Afghanistan, Levante, Indien/Nepal/Pakistan, Zentralasien" },
       { label: "Kernfrage", value: "Verfahrensfamilie vor Marketingname" },
       { label: "Qualitätsbasis", value: "Verfahren, Analytik, Konsistenz" }
     ],
@@ -907,22 +908,44 @@ const baseWikiArticles: TerpiraArticle[] = [
         heading: "2) Historischer Ursprung und regionale Stilbegriffe",
         content: [
           "Historisch entstanden verschiedene Hash-Kulturen in unterschiedlichen Regionen mit eigenen Rohwaren, Klimabedingungen und Presstechniken.",
-          "Nordafrika ist eng mit Kief-/Siebtraditionen verbunden; in Teilen Zentral- und Südasiens sind handgeriebene und gepresste Formen historisch prägend; in der Levante entwickelten sich eigene Presshash-Stile mit spezifischer Reifung und Marktlogik.",
+          "Nordafrika ist eng mit Kief-/Siebtraditionen verbunden, in Teilen Zentral- und Südasiens sind handgeriebene und gepresste Formen historisch prägend, und in der Levante entwickelten sich eigene Presshash-Stile mit spezifischer Reifung und Marktlogik. Wie unterschiedlich diese Traditionen tatsächlich sind – bis hin zu einzelnen Dörfern und Tälern mit eigenem Namen – zeigt Abschnitt 4.",
           "Wichtig: Regionenamen sind Stilmarker, aber keine automatische Garantie für Reinheit, Potenz oder Sicherheitsprofil."
         ]
       },
       {
-        heading: "3) Verfahrensfamilien im professionellen Vergleich",
+        heading: "3) Mechanische Trennung: Kief, Dry Sift und Bubble Hash",
+        content: [
+          "Kief und Dry Sift lassen sich weiter unterscheiden: Handgesiebter Kief (Silk-Screen, mehrere Siebstufen von grob zu fein) liefert tendenziell die reinste Fraktion, weil Fremdmaterial mechanisch aussortiert wird. Tumbler- oder Pollinator-Kief trennt maschinell und schneller, dafür meist mit mehr Pflanzenresten in der Fraktion – ein Kompromiss zwischen Aufwand und Reinheit, keine Qualitätsaussage für sich genommen.",
+          "Bubble Hash wird nach Mikron-Siebgröße in Güteklassen sortiert – feinere Siebe liefern eher die reinsten, vollständig schmelzenden Fraktionen ('Full Melt'), gröbere Siebe eher Material mit mehr Rückständen. Die genauen Sieb- und Bewertungskennzahlen (WPFF/FOFF) behandelt der Artikel Bubble Hash: Vom Wash zur Qualität; die vollständige Grading-Sprache rund um Full Melt, Sterne-Systeme und Premium-Label erklärt Full Melt, Sterne-System und Marketingsprache.",
+          "Live Hash Rosin ist eine Weiterverarbeitung von Bubble Hash aus frisch gefrorenem statt getrocknetem Ausgangsmaterial – zwei kombinierte Verfahrensschritte, kein anderer Name für dasselbe Produkt. Die gesamte Rosin-Familie (Flower Rosin, Hash Rosin, Live Rosin, Live Hash Rosin) ordnet der Artikel Rosin einordnen ohne Hype ein."
+        ]
+      },
+      {
+        heading: "4) Regionale und traditionelle Presshash-Stile im Detail",
+        content: [
+          "Presshash ist keine einzelne Tradition, sondern ein Sammelbegriff für dutzende regionale Handwerksstile, die sich über Jahrhunderte in Nordafrika, dem Nahen Osten sowie Zentral- und Südasien entwickelt haben. Viele dieser Namen bezeichneten ursprünglich einen Ort, ein Tal oder eine Handelsstadt und wurden erst später zu Qualitäts- oder Marketingbegriffen. Die folgende Übersicht ordnet die wichtigsten Stile nach Herkunftsregion – mit dem durchgängigen Hinweis, dass ein Name allein nie Reinheit oder Sicherheit belegt.",
+          "In Marokko existiert neben den bereits erwähnten Beldia-Linien eine feinere Sieb-Nomenklatur. Zero-Zero ('00') bezeichnet den ersten und feinsten Siebdurchgang – kompakt, aromatisch, mit minimalem Pflanzenanteil; der Begriff wird in der Praxis aber auch lose als allgemeines Premium-Label verwendet. Polm bzw. Super Polm meint fein gesiebten marokkanischen Hash und wird oft synonym zu Zero-Zero benutzt; Super Polm entsteht aus feuchterem Ausgangsmaterial und wird leicht zu klebrigen Blöcken gepresst. Ketama ist nach der Handelsstadt im Rif-Gebirge benannt und steht zugleich für einen gröberen, weniger konzentrierten Siebdurchgang mit kräftigerem, raueren Geschmack – der Name funktioniert also sowohl als Ortsbezeichnung als auch als informelle Güteklasse. Gold Seal wird als Spitzenqualität vermarktet – goldbraun, formbar, mild im Abgang –, taucht bei denselben Händlern aber auch als Label für afghanischen und pakistanischen Hash auf; der Begriff liest sich damit eher als regionsübergreifende Marketing-Konvention denn als spezifisch marokkanischer Stil.",
+          "In Afghanistan bildet Garda (bzw. Awal Namber Garda) die Ausgangsbasis: Kief, der durch Schütteln getrockneter Blüten über feines Tuch gewonnen wird, gestaffelt in Durchgängen – 'Awal Namber' heißt 'erste Nummer' bzw. erstklassig, gefolgt von zweiter und dritter Qualität. Diese Terminologie teilen sich Afghanistan, Pakistan und Kaschmir. Mazar-i-Sharif-Hash ist ein benannter Premiumstil aus der Region um Balkh/Mazar-i-Sharif im Norden des Landes, erkennbar an schwarzer Außenseite, weicherem braunem Kern und mildem Aroma – gilt traditionell als Spitzenqualität. Black Afghan (Afghan Black) ist dagegen der übliche europäische Handelsname für den Standard-Exporthash – pechschwarz, gummiartig, kräftig von Hand geknetet.",
+          "Libanesischer Hash tritt historisch in mehreren Farblinien auf, die auf Erntezeitpunkt und Reifung zurückgehen, nicht auf Zusatzstoffe. Blonde Lebanese stammt von früher geernteten Pflanzen, mit hellen/klaren Trichomen, einem eher klaren, anregenden Effekt und würzig-zitrusartig-blumigem Aroma. Red Lebanese stammt von später geernteten, länger gereiften Pflanzen: Über Monate in Stoffsäcken oxidiert THC teilweise zu CBN, was einen schwereren, eher sedierenden Effekt und ein erdig-süßeres Aroma ergibt – die Farbe entsteht in beiden Fällen durch Oxidation während der Reifung, nicht durch Zusätze. Yellow Lebanese wird von manchen Quellen als eigene Zwischenstufe zwischen Blonde und Red geführt, von anderen rein synonym zu Blonde verwendet – der Begriff ist real im Umlauf, die Drei-Stufen-Unterscheidung aber nicht durchgängig belegt, weshalb sie hier mit Vorsicht zu lesen ist.",
+          "Charas nimmt eine Sonderstellung ein, weil es nicht aus getrocknetem Material gepresst, sondern von Hand direkt von frischen Blüten abgerieben wird – ein eigener Prozess, kein Presshash im engeren Sinn. Innerhalb dieser Tradition haben sich mehrere benannte Regionalstile etabliert. Malana Cream stammt aus handgeriebenem Charas einer spezifischen alten Landrasse im Dorf Malana im Parvati-Tal (Himachal Pradesh) und ist für einen sehr hohen Harzgehalt bekannt – gerade wegen dieser Berühmtheit wird der Name von anderen Anbietern besonders häufig fälschlich verwendet. Manali Cream ist nach dem nahegelegenen Touristenort Manali benannt und wird oft austauschbar mit oder als verdünnte Nachahmung von Malana Cream verkauft; ob es sich um einen eigenständigen Stil oder primär um ein Trittbrettfahrer-Label handelt, ist unter Kennern umstritten. Kashmiri Charas kommt aus einer eigenen Region abseits des Parvati-Tals, folgt derselben Handreib-Methode, gilt aber als aromatischer/würziger und im Rauch tendenziell schärfer. Kerala- bzw. Idukki-Gold-Charas trägt den Ruf einer Landrassen-Sorte, die seit den 1980ern im Idukki-Distrikt bekannt ist – gut dokumentiert ist vor allem der Sorten-Ruf, weniger eine eigenständige Verarbeitungstradition; der Name beschreibt also in erster Linie eine berühmte Sorte, deren Ruf auf den daraus hergestellten Hash abfärbt, keinen eigenen Herstellungsweg. Nepalesische Temple Balls ergänzen diese Gruppe als eigene, seit Langem etablierte Press- und Reifetradition mit charakteristischer Kugelform.",
+          "Aus dem Chitral-Distrikt in Pakistan stammt Chitrali (Chitrali Black) – in Reiseberichten der 1960er- bis 80er-Jahre als aromatisch und durch Pflanzenpigmente rötlich-violett beschrieben, heute unter dem Namen 'Chitrali Black Hash' gehandelt.",
+          "Auch die Türkei und der Balkanraum haben eine lange, gut dokumentierte Hash-Kultur, die sich über Sufi-Netzwerke und Kaffeehäuser im Osmanischen Reich über Anatolien und den Balkan verbreitete. Anders als bei Marokko oder Afghanistan hat sich hier aber keine vergleichbare Taxonomie einzelner Substile mit eigenen Namen etabliert; die moderne Herstellung ähnelt im Wesentlichen der afghanisch-pakistanischen Methode.",
+          "Aus dem Tschui-Tal in Kirgistan stammt eine folkloristisch überlieferte, gelegentlich als 'Horseback Hash' bezeichnete Praxis: Wildwachsender Cannabis ist im Tal reichlich vorhanden, und Reiseberichte beschreiben, wie Pferde durch die Wildbestände geritten werden, sich Harz im Fell absetzt und dieses anschließend abgekratzt und verdichtet wird. Die Geschichte ist real überliefert, aber eher kulturell-folkloristisch dokumentiert als kommerziell standardisiert – als Kauf-Gütesiegel taugt der Begriff nicht, als kulturhistorisches Kuriosum ist er trotzdem interessant.",
+          "Wichtig bei allen genannten Namen: Sie beschreiben Herkunft, Handwerkstradition und Verfahren – nicht automatisch aktuelle Qualität oder Sicherheit. Gerade die bekanntesten Namen wie Malana Cream oder Zero-Zero werden am häufigsten kopiert oder falsch etikettiert, weil ihr Ruf Nachfrage erzeugt. Es gibt keine geschützte Herkunftsbezeichnung wie bei Wein oder Käse – Analytik und Sensorik (Abschnitt 6/7) bleiben die eigentliche Bewertungsgrundlage, nicht der Name auf dem Etikett."
+        ]
+      },
+      {
+        heading: "5) Verfahrensfamilien im professionellen Vergleich",
         content: [
           "Dry Sift/Kief: trocken-mechanische Trennung. Stärken liegen in klarer Prozesslogik und guter Skalierbarkeit, Risiken liegen in Verunreinigung durch Pflanzenreste bei ungenauer Fraktionierung.",
-          "Ice Water/Bubble: nasskalte Trennung. Stärken sind hohe Reinheitsfenster bei sauberer Prozessführung; kritische Punkte sind Trocknungsmanagement, Wasseraktivität und mikrobiologische Stabilität.",
+          "Ice Water/Bubble: nasskalte Trennung. Stärken sind hohe Reinheitsfenster bei sauberer Prozessführung; kritische Punkte sind Trocknungsmanagement, Wasseraktivität und mikrobiologische Stabilität. Die konkreten Sieb- und Bewertungskennzahlen behandelt der Artikel Bubble Hash: Vom Wash zur Qualität.",
           "Presshash/Traditionsstile: Verdichtung und Reifung sind zentrale Faktoren. Ergebnisqualität hängt stark von Ausgangsfraktion, Druck-/Wärmeprofil und Lagerregime ab.",
-          "Rosin-Linien: lösungsmittelfreie Press-Weiterverarbeitung von geeigneten Vorprodukten. Qualität wird von Input-Material und thermischer Belastung begrenzt.",
+          "Rosin-Linien: lösungsmittelfreie Press-Weiterverarbeitung von geeigneten Vorprodukten. Qualität wird von Input-Material und thermischer Belastung begrenzt; die vollständige Einordnung der Rosin-Familie liefert der Artikel Rosin einordnen ohne Hype.",
           "Lösungsmittelgestützte Extrakte: eigene Produktklasse; für Vergleich mit klassischem Hash müssen Restlösungsmittel- und Reinheitsdaten zwingend betrachtet werden."
         ]
       },
       {
-        heading: "4) Welche Begriffe werden häufig verwechselt?",
+        heading: "6) Welche Begriffe werden häufig verwechselt?",
         content: [
           "Kief ist nicht automatisch fertiger Presshash; Bubble ist nicht automatisch Rosin; Rosin ist ein Endprodukt aus geeigneten Vorstufen, keine Herkunftsbezeichnung.",
           "" +
@@ -932,7 +955,7 @@ const baseWikiArticles: TerpiraArticle[] = [
         ]
       },
       {
-        heading: "5) Worauf du bei der Qualität achten kannst",
+        heading: "7) Worauf du bei der Qualität achten kannst",
         content: [
           "Sensorik: Klarheit der Aromen, Fremdnoten, Oxidationshinweise, gleichbleibender Charakter zwischen mehreren Käufen oder Ernten.",
           "Physikalik: Homogenität, Trennverhalten bei definierter Temperatur, Stabilität in Lagerung.",
@@ -946,16 +969,18 @@ const baseWikiArticles: TerpiraArticle[] = [
         ]
       },
       {
-        heading: "6) Praktisch: Worauf du beim Kauf oder Selbermachen achtest",
+        heading: "8) Praktisch: Worauf du beim Kauf oder Selbermachen achtest",
         content: [
           "Orientiere dich zuerst an der Verfahrensfamilie, nicht am Handelsnamen - das schützt vor Verwechslungen zwischen Stilbegriff und Technik.",
           "Trenne für dich die Produktgeschichte (Herkunft, Stil, Kultur) von den sicherheitsrelevanten Daten wie Kontaminanten oder Restlösungsmitteln - beides ist interessant, aber nur eines ist sicherheitsrelevant.",
-          "Wenn du selbst herstellst, notiere zumindest grob Ausgangsmaterial, Verfahren und Ergebnis - das hilft dir, spätere Chargen einzuordnen."
+          "Wenn du selbst herstellst, notiere zumindest grob Ausgangsmaterial, Verfahren und Ergebnis - das hilft dir, spätere Chargen einzuordnen.",
+          "Für drei Themen, die hier bewusst nur kurz angerissen werden, gibt es eigene Vertiefungen: die vollständige Grading- und Marketingsprache (Full Melt, Sterne-Systeme, Premium-Label) im Artikel Full Melt, Sterne-System und Marketingsprache, die Mikron- und WPFF/FOFF-Bewertung von Bubble Hash im Artikel Bubble Hash: Vom Wash zur Qualität, und die gesamte Rosin-Familie im Artikel Rosin einordnen ohne Hype."
         ],
         checklist: [
           "Verfahrensfamilie zuerst klären, Marketingbegriffe zweitrangig",
           "Herkunft/Stil getrennt von Sicherheitsdaten bewerten",
-          "Bei Eigenherstellung: Ausgangsmaterial und Ergebnis kurz notieren"
+          "Bei Eigenherstellung: Ausgangsmaterial und Ergebnis kurz notieren",
+          "Bei Detailfragen zu Grading, Bubble-Hash-Bewertung oder Rosin die drei vertiefenden Artikel nutzen statt Marketingtexte"
         ]
       }
     ],
@@ -989,6 +1014,14 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         question: "Worauf kommt es beim Vergleichen am meisten an?",
         answer: "Sensorik, Analytik und Stabilität gemeinsam betrachten, statt sich auf einzelne Marketingbegriffe zu verlassen."
+      },
+      {
+        question: "Warum werden Namen wie Malana Cream so oft gefälscht?",
+        answer: "Weil der Ruf einer bestimmten Herkunft - etwa einer Landrasse aus einem einzelnen Tal - Nachfrage erzeugt, es aber keine geschützte Herkunftsbezeichnung wie bei Wein oder Käse gibt. Jeder kann sein Produkt so nennen; verlässlich ist nur, was Sensorik und Analytik zeigen, nicht der Name auf der Verpackung."
+      },
+      {
+        question: "Sind alle regionalen Presshash-Namen gleich gut belegt?",
+        answer: "Nein. Manche wie Zero-Zero oder Mazar-i-Sharif sind gut dokumentierte, klar abgegrenzte Stile. Andere wie Yellow Lebanese oder Manali Cream werden in Quellen uneinheitlich benutzt - teils als eigene Stufe, teils als Synonym oder Nachahmer-Label. Diese Unschärfe ist Teil der ehrlichen Einordnung, kein Grund, den Begriff zu ignorieren."
       }
     ],
     glossary: [
@@ -1003,6 +1036,26 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         term: "Post-Processing",
         definition: "Nachgelagerte Verarbeitungsschritte wie Pressen, Stabilisieren oder Reifung nach der initialen Trennung."
+      },
+      {
+        term: "Full Melt",
+        definition: "Marktbegriff für Bubble-Hash-Fraktionen, die beim Erhitzen vollständig und rückstandsarm schmelzen; kein geschützter Standard, daher immer im Kontext von Mikron-Sieb und Analytik zu lesen."
+      },
+      {
+        term: "Live (Hash) Rosin",
+        definition: "Rosin, das aus Bubble Hash gepresst wird, welches wiederum aus frisch gefrorenem statt getrocknetem Pflanzenmaterial gewonnen wurde – zwei kombinierte Verfahrensschritte, kein eigenständiges drittes Trennprinzip."
+      },
+      {
+        term: "Garda",
+        definition: "Durch Sieben getrockneter Blüten über feines Tuch gewonnener Kief in Afghanistan/Pakistan/Kaschmir, gestaffelt nach Durchgängen ('Awal Namber' = erste, hochwertigste Stufe) – die Ausgangsbasis vor dem Pressen."
+      },
+      {
+        term: "Zero-Zero (00)",
+        definition: "Marokkanische Bezeichnung für den ersten, feinsten Siebdurchgang von Dry Sift; wird in der Praxis auch lose als allgemeines Premium-Label verwendet, nicht nur als technischer Begriff."
+      },
+      {
+        term: "Charas",
+        definition: "Handgeriebenes Harz direkt von frischen Cannabisblüten, vor allem in Indien/Nepal/Kaschmir verbreitet – kein Presshash im engeren Sinn, da kein getrocknetes Ausgangsmaterial gepresst wird."
       }
     ],
     sourceIds: [
@@ -1012,7 +1065,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       "iso17025",
       "nature-postharvest-cannabis"
     ],
-    relatedSlugs: ["wasseraktivitaet-und-curing", "coa-richtig-lesen", "terpene-und-wirkprofil"]
+    relatedSlugs: ["full-melt-und-marketingsprache", "bubble-hash-qualitaetskriterien", "rosin-einordnung-ohne-hype"]
   },
   {
     slug: "wasseraktivitaet-und-curing",
@@ -4683,199 +4736,397 @@ const expansionWikiArticles: TerpiraArticle[] = [
   }),
   createArticle({
     slug: "bubble-hash-qualitaetskriterien",
-    title: "Bubble Hash: Qualitätskriterien",
-    summary: "Welche Faktoren für Reinheit, Stabilität und Vergleichbarkeit wirklich zählen und welche Kurzlabels wenig aussagen.",
+    title: "Bubble Hash: Vom Wash zur Qualität",
+    summary: "Wie aus Eis, Wasser und feinen Sieben überhaupt Hash wird, warum das Ausgangsmaterial (WPFF, FOFF oder getrocknet) den größten Unterschied macht und welche Fachbegriffe du beim Kauf oder Selbermachen wirklich kennen solltest.",
     category: "konzentrate",
     difficulty: "fortgeschritten",
-    readMinutes: 8,
-    tags: ["Bubble Hash", "Qualität", "Stabilität", "Bewertung"],
+    readMinutes: 9,
+    tags: ["Bubble Hash", "Ice Water Hash", "WPFF", "Wash", "Bubble Bags"],
     keyTakeaways: [
-      "Bubble Hash sollte über Reinheit, Stabilität und Chargenkontext bewertet werden, nicht nur über Szenevokabular.",
-      "Trocknung und Lagerung sind für die Produktintegrität fast so wichtig wie die Trennung selbst.",
-      "Objektive Daten schlagen Rangbegriffe ohne Kontext."
+      "Bubble Hash (auch Ice Water Hash oder Cold Water Hash genannt) entsteht, indem Trichome mechanisch mit Eiswasser und Bewegung von der Pflanze gelöst und über gestufte Mikron-Siebe (Bubble Bags) ausgefiltert werden — ohne Lösungsmittel.",
+      "Das Ausgangsmaterial entscheidet mehr über das Endergebnis als jede Technik danach: WPFF (Whole Plant Fresh Frozen) gilt als Königsweg für Terpenerhalt, aber der oft genannte Gegenbegriff FOFF (Flower Only Fresh Frozen) ist deutlich schlechter belegt und sollte mit Vorsicht behandelt werden.",
+      "Bei mehreren Washes derselben Pflanzenmasse liefert der erste Wash tendenziell die höchste Qualität, danach nimmt sie mit jedem weiteren Durchgang ab.",
+      "Sandig oder ölig ist eine Texturfrage, kein Qualitätsurteil — beide Konsistenzen können hochwertig oder minderwertig sein."
     ],
     quickFacts: [
-      { label: "Kernpunkt", value: "Saubere Nachernte" },
-      { label: "Warnsignal", value: "Nur Szenegrade ohne Daten" },
-      { label: "Wichtig", value: "Stabilität über Zeit" }
+      { label: "Bestes Ausgangsmaterial", value: "WPFF – ganze Pflanze, sofort gefroren" },
+      { label: "Wash-Reihenfolge", value: "1. Wash meist höchste Qualität" },
+      { label: "Typisches Bag-Set", value: "6–8 Bags, 220–25 Mikron" },
+      { label: "Erfinderin Ice-O-Lator", value: "Mila Jansen, 1998" }
     ],
     sections: [
       {
-        heading: "Was Bubble Hash professionell auszeichnet",
+        heading: "Was beim Waschen überhaupt passiert",
         content: [
-          "Fachlich relevant sind Reinheit, sensorische Klarheit, Lagerstabilität und Kontaminantenstatus. Szeneetiketten allein reichen nicht.",
-          "Gerade bei hochwertigen Produkten entscheiden Nachbehandlung und Dokumentation über echte Vergleichbarkeit."
+          "Der Grundgedanke hinter Bubble Hash ist simpel: Trichomköpfe werden bei niedriger Temperatur spröde und lösen sich leichter von der Pflanze als bei Raumtemperatur. Eiswasser plus Bewegung reicht deshalb aus, um sie mechanisch abzulösen — ganz ohne Lösungsmittel oder Hitze.",
+          "Das Gemisch aus Pflanzenmaterial, Eis und Wasser läuft anschließend durch mehrere ineinander gehängte Nylon-Siebbeutel mit abgestufter Maschenweite. Grobes Pflanzenmaterial bleibt oben hängen, die eigentlichen Trichomköpfe sammeln sich je nach Größe in den feineren Beuteln darunter.",
+          "Wichtig zu wissen: Das ist hier bewusst keine Schritt-für-Schritt-Anleitung mit Zeiten, Eismengen oder Rührtechnik — dafür gibt es dedizierte Anleitungen. Dieser Artikel konzentriert sich darauf, die Begriffe und Qualitätssignale zu verstehen, die dir beim Kauf oder bei der Einordnung deines eigenen Ergebnisses begegnen."
         ]
       },
       {
-        heading: "Wo die typischen Fehlbewertungen liegen",
+        heading: "Das Ausgangsmaterial entscheidet mehr als die Technik danach",
         content: [
-          "Begriffe aus Communities oder Shops klingen präzise, sind aber oft nicht standardisiert. Ohne Mess- und Chargenkontext bleiben sie begrenzt aussagekräftig.",
-          "Plattformen sollten daher eigene Bewertungskriterien definieren."
+          "Bei WPFF (Whole Plant Fresh Frozen) wird die komplette Pflanze — Blüten und die trichomreichen Zuckerblätter — direkt nach der Ernte eingefroren, ohne vorherige Trocknung oder Kur. Ziel ist, möglichst viel trichomtragende Oberfläche unverändert in den Wash zu bringen und Oxidation der Terpene zu minimieren, bevor sie überhaupt entweichen können.",
+          "In der Community wird WPFF durchgehend mit einem volleren, frischeren Terpenprofil und besserem Melt-Verhalten assoziiert. Der Preis dafür: Du brauchst deutlich mehr rohes Pflanzenmaterial pro Gramm fertigem Hash, weil frisches Material viel Wasser mitbringt, das später verlorengeht.",
+          "FOFF (Flower Only Fresh Frozen) taucht meist als Gegenbegriff zu WPFF auf — die Idee dahinter wäre, nur die Blüte (ohne Zuckerblätter und Stängel) frisch einzufrieren. Anders als bei WPFF gibt es dafür aber keine belastbare Quelle, die den Begriff wirklich sauber definiert oder mit Daten unterlegt, obwohl er in Produktnamen und Artikeltiteln kursiert. Behandle FOFF also eher als 'Begriff, den du im Kontrast zu WPFF siehst', nicht als gesicherten Fachterminus.",
+          "Reines 'Fresh Frozen' ohne weiteren Zusatz ist der allgemeine Oberbegriff für sofort nach der Ernte eingefrorenes Material, ohne Aussage darüber, ob nur Blüte oder die ganze Pflanze verwendet wurde.",
+          "Die traditionelle Variante bleibt getrocknetes und ausgehärtetes ('cured') Material als Ausgangsstoff. Daraus gewaschener Hash fällt in der Regel dunkler und stärker oxidiert aus, mit einem anderen, weniger 'frisch-blumigen' Aroma als Fresh-Frozen-Hash — manchmal aber mit höherer Rohausbeute, weil das Material kompakter und einfacher zu verarbeiten ist."
+        ]
+      },
+      {
+        heading: "Werkzeug-Vokabular, das dir ständig begegnet",
+        content: [
+          "Ice-O-Lator war ursprünglich ein Markenname für das Nylon-Mehrfachsieb-System, mit dem die eiswasserbasierte Trennung im großen Stil bekannt wurde. Zugeschrieben wird die Erfindung Mila Jansen, bekannt als 'die Hash-Queen' und auch Erfinderin der Trockensieb-Maschine 'Pollinator' — öffentlich vorgestellt 1998 auf dem Cannabis Cup.",
+          "Bubble Bags bezeichnet die abgestuften Mikron-Siebbeutel-Sets, mit denen heute praktisch jeder wäscht. Marcus 'Bubbleman' Richardson gilt als derjenige, der 1999 das erste kommerzielle Mehrfach-Bag-Kit (3 Beutel) auf den Markt brachte — daraus haben sich die heute üblichen 6- bis 8-Beutel-Sets mit Standardgrößen wie 220/190/160/120/90/73/45/25 Mikron entwickelt.",
+          "Ein Wash ist ein vollständiger Durchgang aus Rühren/Agitation und Filtern durch die Beutel. Üblich sind 2–3 aufeinanderfolgende Washes derselben Pflanzenmasse — die Qualität nimmt dabei von Wash zu Wash ab, weil die leichter lösbaren, saubersten Trichomköpfe zuerst abgehen.",
+          "Der Work Bag ist der oberste, gröbste Beutel im Set (meist rund 220 Mikron). Er liefert selbst kein verwertbares Produkt, sondern hält Eis und Pflanzenmaterial zurück und schützt so die feineren Beutel darunter vor grober Verunreinigung.",
+          "Sandig und ölig/greasy sind reine Texturbeschreibungen für das fertige Produkt: sandig heißt trocken, körnig, krümelig; ölig oder greasy heißt klebrig, fast zusammengeschmolzen. Keine der beiden Texturen ist für sich genommen ein Qualitätsmerkmal — beides kommt in guter wie in schlechter Qualität vor."
         ],
         checklist: [
-          "Chargen-ID und Lagerbedingungen erfassen",
-          "Kontaminanten- und Stabilitätsdaten einbeziehen",
-          "Szenegrad nie ohne Kriterienliste verwenden"
+          "Frage nach dem Ausgangsmaterial: WPFF/Fresh Frozen oder getrocknet-kuriert? Das prägt Farbe und Aroma stärker als fast alles andere.",
+          "Bei mehreren Washes: Wash 1 ist normalerweise die Premiumfraktion, spätere Washes sind nicht automatisch schlecht, aber tendenziell schwächer.",
+          "Farbe grob einordnen: Fresh-Frozen-Hash ist oft heller/goldener, Hash aus getrocknetem Material tendenziell dunkler und stärker oxidiert wirkend.",
+          "Textur (sandig vs. ölig) getrennt von Qualität bewerten — es ist ein Geschmacks-/Handhabungsmerkmal, kein Gütesiegel.",
+          "Lagerung im Blick behalten: frisch gewaschenes, gut getrocknetes Hash sollte sich nicht klumpig-feucht anfühlen oder nach Ammoniak/Schimmel riechen."
+        ]
+      },
+      {
+        heading: "Wie das mit Sternen und 'Full Melt' zusammenhängt",
+        content: [
+          "Sobald Hash gewaschen und getrocknet ist, wird es in der Szene oft nach einem 1-6-Sterne-System oder mit Labels wie 'Full Melt', 'Half Melt' oder 'Food Grade' eingeordnet. Diese Einstufung baut auf dem hier beschriebenen Wash- und Mikron-Prozess auf, ist aber ein eigenes Bewertungsthema mit eigenen Fallstricken bei der Marketingsprache.",
+          "Wie dieses Grading-System im Detail funktioniert und wo es an seine Grenzen stößt, erklärt der Artikel Full Melt, Sterne-System und Marketingsprache ausführlich — hier reicht der Hinweis, dass die Sterne- und Melt-Begriffe direkt auf den Trenn- und Wash-Schritten aufsetzen, die du gerade gelesen hast."
+        ]
+      },
+      {
+        heading: "Single Source und Full Spectrum: Herkunfts- statt Qualitätsbegriffe",
+        content: [
+          "Single Source Hash bezeichnet Hash, das aus einer einzigen Sorte bzw. einer einzigen Ernte eines einzelnen Growers gewaschen wurde, statt aus mehreren Quellen gemischt zu sein — ähnlich dem Gedanken hinter Single-Origin-Kaffee. Das ist ein nachvollziehbares Herkunftsmerkmal, aber kein formal festgelegter Qualitätsgrad — behandle es als 'ehrlicher über die Herkunft', nicht automatisch als 'besser'.",
+          "Full Spectrum Hash meint, den gesamten Mikronbereich eines Washs zusammen zu sammeln statt nur eine einzelne Siebgröße zu isolieren, mit dem Argument eines komplexeren Geschmacksprofils. Zu diesem Begriff gibt es bisher nur wenige belastbare Quellen — nimm ihn eher als kursierende Idee denn als gesicherten Fachbegriff."
         ]
       }
     ],
+    warnings: [
+      "Dieser Artikel erklärt bewusst nur Begriffe und Qualitätssignale, keine Herstellungsanleitung mit Mengen, Zeiten oder Ausrüstungsdetails.",
+      "FOFF ist ein in der Szene gebräuchlicher, aber schlecht dokumentierter Begriff — behandle Angaben dazu mit Vorsicht, besonders wenn sie als alleiniges Qualitätsversprechen verwendet werden."
+    ],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: Reinheit",
-        text: "Wie frei ein Produkt von unerwünschten Pflanzenresten, Fremdstoffen oder anderen störenden Bestandteilen ist."
+        title: "Kurz erklärt: WPFF vs. FOFF",
+        text: "WPFF (Whole Plant Fresh Frozen) heißt: ganze Pflanze samt Zuckerblättern wird sofort nach der Ernte eingefroren, ohne Trocknung — gut belegt und mit besserem Terpenerhalt assoziiert. FOFF (Flower Only Fresh Frozen) wäre die reine Blüten-Variante davon, ist aber als Begriff kaum sauber definiert oder belegt."
       },
       {
-        title: "Kurz erklärt: Stabilität",
-        text: "Wie gut ein Produkt unter realen Lager- und Transportbedingungen seine Eigenschaften behält."
+        title: "Kurz erklärt: Single Source Hash",
+        text: "Hash aus einer einzigen Sorte und einer einzigen Anbauquelle statt aus gemischtem Material mehrerer Grower — ein Herkunftsmerkmal, kein offizieller Qualitätsgrad."
       }
     ],
     faq: [
       {
-        question: "Sind Community-Grade wertlos?",
-        answer: "Nicht wertlos, aber ohne definierte Kriterien nur begrenzt belastbar."
+        question: "Ist WPFF automatisch besser als getrocknetes Ausgangsmaterial?",
+        answer: "In der Tendenz ja, was Terpenerhalt und Frischearoma angeht, das ist gut dokumentiert. 'Besser' hängt aber auch von der eigenen Verarbeitung ab — schlecht gewaschenes WPFF schlägt kein sauber verarbeitetes Material aus getrockneter Blüte automatisch."
       },
       {
-        question: "Warum ist Trocknung so wichtig?",
-        answer: "Weil sie Einfluss auf Haltbarkeit, Mikrobiologie und Profilintegrität hat."
+        question: "Warum wird FOFF nicht genauso ernst genommen wie WPFF?",
+        answer: "Weil sich der Begriff zwar in Produktnamen und Community-Sprache hält, aber bisher keine Quelle gefunden wurde, die ihn wirklich sauber definiert oder mit Daten unterlegt. WPFF ist dagegen fest etabliert und konsistent beschrieben."
+      },
+      {
+        question: "Sagt sandige oder ölige Textur etwas über die Qualität aus?",
+        answer: "Nein, direkt nicht. Beide Texturen entstehen durch Trocknungsgrad und Trichomdichte, nicht durch Reinheit oder Wirkstoffgehalt. Wichtiger sind Ausgangsmaterial, Wash-Nummer und Lagerung."
+      },
+      {
+        question: "Ist der erste Wash immer der beste?",
+        answer: "In der Regel ja, weil sich die am leichtesten lösbaren, saubersten Trichomköpfe zuerst ablösen. Spätere Washes derselben Pflanzenmasse sind aber nicht wertlos, nur tendenziell schwächer in Reinheit und Melt-Verhalten."
       }
     ],
     glossary: [
-      { term: "Reinheit", definition: "Grad, in dem ein Produkt frei von störenden oder unerwünschten Bestandteilen ist." },
-      { term: "Chargenkontext", definition: "Alle Informationen rund um Herkunft, Prozess und Lagerung einer Charge." },
-      { term: "Integrität", definition: "Erhalt der ursprünglichen und gewünschten Produkteigenschaften." },
+      { term: "WPFF (Whole Plant Fresh Frozen)", definition: "Ganze Pflanze inklusive Zuckerblättern, direkt nach der Ernte eingefroren, ohne Trocknung — Standard für maximalen Terpenerhalt." },
+      { term: "FOFF (Flower Only Fresh Frozen)", definition: "Nur die Blüte, nicht die ganze Pflanze, sofort gefroren — gängiger Gegenbegriff zu WPFF, aber schlecht dokumentiert und nicht rigoros definiert." },
+      { term: "Ice-O-Lator", definition: "Ursprünglich Markenname für das Nylon-Mehrfachsieb-Waschsystem für Eiswasser-Hash, bekannt gemacht von Mila Jansen." },
+      { term: "Bubble Bags", definition: "Gestufte Mikron-Siebbeutel-Sets zur Filterung von Eiswasser-Hash, kommerziell populär gemacht von Marcus 'Bubbleman' Richardson." },
+      { term: "Wash", definition: "Ein vollständiger Durchgang aus Rühren und Sieben von Pflanzenmaterial in Eiswasser. Mehrere Washes derselben Pflanzenmasse sind üblich, mit abnehmender Qualität pro Durchgang." },
+      { term: "Work Bag", definition: "Oberster, gröbster Beutel im Bag-Set (~220 Mikron), hält Eis und Pflanzenreste zurück, liefert selbst kein Produkt." },
+      { term: "Sandig / ölig (greasy)", definition: "Texturbeschreibungen für fertiges Bubble Hash — trocken-körnig vs. klebrig-verschmolzen. Kein Qualitätsmaßstab für sich allein." },
+      { term: "Single Source Hash", definition: "Hash aus einer einzigen Sorte und Anbauquelle statt aus gemischtem Material — Herkunftsmerkmal, kein formaler Qualitätsgrad." },
+      { term: "Full Spectrum Hash", definition: "Hash, das den gesamten Mikronbereich eines Washs zusammen statt nur eine Siebgröße enthält — dünn belegter Begriff, mit Vorsicht zu behandeln." }
     ],
-    relatedSlugs: ["hash-typen-vergleichen", "wasseraktivitaet-und-curing", "full-melt-und-marketingsprache"]
+    relatedSlugs: ["hash-typen-vergleichen", "full-melt-und-marketingsprache", "rosin-einordnung-ohne-hype", "wasseraktivitaet-und-curing"]
   }),
   createArticle({
     slug: "rosin-einordnung-ohne-hype",
     title: "Rosin einordnen ohne Hype",
-    summary: "Wie Input-Material, Temperaturbelastung und Nachbehandlung das Ergebnis formen und warum das besser ist als reine Trendbegriffe.",
+    summary: "Flower Rosin, Hash Rosin, Live Rosin, Live Hash Rosin, WPFF: was diese Begriffe technisch wirklich unterscheidet - und warum ausgerechnet \"Live Rosin\" bis heute zwei verschiedene Dinge meinen kann, je nachdem wen du fragst.",
     category: "konzentrate",
     difficulty: "fortgeschritten",
-    readMinutes: 8,
-    tags: ["Rosin", "Qualität", "Input", "Einordnung"],
+    readMinutes: 10,
+    tags: ["Rosin", "Hash Rosin", "Live Rosin", "Cure"],
     keyTakeaways: [
-      "Rosin ist keine automatische Qualitätsgarantie; Endqualität hängt zuerst am Input-Material.",
-      "Trendbegriffe verdecken oft, dass Stabilität, Reinheit und Chargenkonsistenz wichtiger sind.",
-      "Für Aufklärung lohnt sich eine klare Trennung zwischen Technikbegriff und Produktqualität."
+      "Flower Rosin, Hash Rosin und Live Rosin sind keine Rangfolge von \"besser\", sondern unterscheiden sich darin, was gepresst wurde (Blüte oder Bubble Hash) und ob das Material vorher getrocknet oder frisch gefroren war.",
+      "\"Live Rosin\" ist in der Praxis ein zweideutiger Begriff - je nach Hersteller meint er direkt aus frisch gefrorener Blüte gepresstes Rosin oder aus frisch gefrorenem Hash gepresstes Rosin (= Live Hash Rosin). Das ist eine echte, ungelöste Uneinigkeit in der Szene, keine falsche Nutzung durch einzelne Marken.",
+      "Hash Rosin hat eine deutlich höhere Ausbeute als Flower Rosin (grob 50-85 % gegenüber 10-20 % vom eingesetzten Gewicht), weil beim Bubble-Hash-Schritt schon ein Großteil des unerwünschten Pflanzenmaterials weggewaschen wurde.",
+      "Die Textur (Badder, Jam, flach/brüchig) sagt mehr über Cure und Presstemperatur aus als über die Kategorie selbst - dieselbe Live Hash Rosin kann je nach Reifung ganz unterschiedlich aussehen."
     ],
     quickFacts: [
-      { label: "Hebel", value: "Input plus Nachbehandlung" },
-      { label: "Irrtum", value: "Rosin gleich Premium" },
-      { label: "Qualität", value: "Nur mit Daten und Kontext" }
+      { label: "Flower Rosin Ausbeute", value: "ca. 10-20 % des Blütengewichts" },
+      { label: "Hash Rosin Ausbeute", value: "ca. 50-85 % des Hash-Gewichts" },
+      { label: "Live Rosin", value: "Begriff wird uneinheitlich verwendet" },
+      { label: "Nie \"live\"", value: "Flower Rosin (frisches Material presst nass)" }
     ],
     sections: [
       {
-        heading: "Warum Rosin so oft überhöht wird",
+        heading: "Was Rosin überhaupt ist - und was nicht dazugehört",
         content: [
-          "Der Begriff steht in vielen Communities für Hochwertigkeit. Das ist verständlich, aber fachlich zu kurz.",
-          "Ohne Blick auf Ausgangsmaterial, Prozesssauberkeit und Stabilität bleibt die Einordnung oberflächlich."
+          "Rosin ist eine Sammelbezeichnung für Konzentrate, die ausschließlich mit Hitze und Druck gepresst werden - ganz ohne Lösungsmittel wie Butan oder Propan. Das unterscheidet die ganze Rosin-Familie von der BHO-Familie (Budder, Sauce, Diamonds, Sugar, Crumble), die auf Lösungsmittelextraktion basiert. Diese Produkte kommen in diesem Artikel bewusst nicht vor - eigene Herstellung, eigene Risiken, eigenes Thema.",
+          "Innerhalb der Rosin-Familie entscheiden im Kern zwei Fragen über den Namen: Was wurde gepresst - rohe Blüte oder schon vorher gewaschenes Bubble Hash? Und war das Ausgangsmaterial vorher getrocknet/kuriert oder frisch gefroren? Aus der Kombination dieser zwei Fragen ergeben sich fast alle Begriffe, die im Handel und in Foren kursieren."
         ]
       },
       {
-        heading: "Wie du Rosin professionell beschreibst",
+        heading: "Flower Rosin: direkt aus der getrockneten Blüte",
         content: [
-          "Sprich über Vorstufe, Chargenkontext, Lagerung und Analytik. Das schafft mehr Vertrauen als Szenevokabular allein.",
-          "Gerade auf grossen Seiten lohnt sich ein standardisiertes Datenraster."
+          "Flower Rosin ist die direkteste Variante: getrocknete und kurierte Blüten werden in kleine Stücke gebrochen, in einen feinen Filterbeutel gepackt und mit Hitze und Druck gepresst. Es gibt keinen Zwischenschritt über Hash - die Blüte wandert direkt in die Presse.",
+          "Die Ausbeute liegt grob bei 10-20 % vom eingesetzten Blütengewicht. Dafür bekommst du oft ein sehr vollständiges Aromabild der Pflanze, weil neben den Trichomen auch mehr Pflanzenlipide mitgepresst werden - das macht das Ergebnis meist etwas weniger fein als Hash Rosin, nicht automatisch schlechter im Geschmack.",
+          "Ein Punkt, der oft übersehen wird: Flower Rosin kann per Definition nie \"live\" sein. Frisches, ungetrocknetes Pflanzenmaterial presst sich nicht zu Rosin - es presst sich zu einem nassen, wässrigen Brei, weil noch zu viel Pflanzenwasser drin ist. Für \"live\" braucht es immer zuerst den Umweg über Bubble Hash."
+        ]
+      },
+      {
+        heading: "Hash Rosin: der Umweg über Bubble Hash macht den Unterschied",
+        content: [
+          "Hash Rosin wird nicht aus roher Blüte, sondern aus Bubble Hash (Eiswasser-Hash) gepresst. Die Trichomköpfe werden zuerst per Eiswasser-Wäsche vom Rest der Pflanze getrennt und getrocknet, und erst dieses Hash kommt anschließend in die Presse.",
+          "Weil beim Waschen schon ein Großteil des Pflanzenmaterials rausfällt, liegt die Ausbeute deutlich höher als bei Flower Rosin - grob 50-85 % vom eingesetzten Hash-Gewicht. Das macht Hash Rosin nicht automatisch sicherer, aber meist konzentrierter in Aroma und Wirkstoffgehalt.",
+          "Wichtig: \"Hash Rosin\" ist ein Oberbegriff. Das zugrunde liegende Hash kann aus getrocknetem/kuriertem Material stammen oder aus frisch gefrorenem Material - nur die zweite Variante fällt unter \"live\". Wie du Bubble Hash selbst nach Qualität einordnest, steht ausführlich in Bubble Hash: Vom Wash zur Qualität."
+        ]
+      },
+      {
+        heading: "Live Rosin: der Begriff, den nicht mal die Industrie einheitlich benutzt",
+        content: [
+          "Hier wird es unübersichtlich - und zwar nicht, weil du etwas falsch verstehst, sondern weil der Begriff tatsächlich zwei verschiedene Dinge meinen kann, je nachdem wen du fragst.",
+          "Häufigste, umgangssprachliche Nutzung: Live Rosin ist direkt aus frisch gefrorener Blüte gepresst - die Pflanze wird kurz nach der Ernte eingefroren statt getrocknet und kuriert, und dieses gefrorene Material wird dann direkt gepresst. Parallel zu Flower Rosin, nur mit gefroren statt getrocknet als Ausgangspunkt.",
+          "Andere, eher herstellerseitige/technische Nutzung: Live Rosin ist aus frisch gefrorenem Hash gepresst - also funktional dasselbe, was andere Quellen \"Live Hash Rosin\" nennen.",
+          "Das ist keine Erfindung, um kompliziert zu wirken: Selbst große Branchenquellen widersprechen sich zwischen ihren eigenen Seiten. Leafly etwa definiert \"Live Rosin\" im eigenen Glossar als aus Blüte gepresst, formuliert an anderer Stelle aber sinngemäß \"jede Live Rosin ist Hash Rosin, aber nicht jede Hash Rosin ist Live Rosin\" - was nur Sinn ergibt, wenn Live Rosin als Unterkategorie von Hash Rosin gemeint ist. Beide Lesarten existieren parallel in der Szene, und das ist ehrlich der aktuelle Stand, keine Wissenslücke bei dir.",
+          "Für dich heißt das in der Praxis: Steht auf einem Etikett nur \"Live Rosin\" ohne weitere Angabe, kannst du daraus allein nicht sicher ableiten, ob aus Blüte oder aus Hash gepresst wurde. Beides ist legitim benanntes Live Rosin - es lohnt sich, genauer hinzuschauen oder nachzufragen."
         ],
         checklist: [
-          "Input-Material offen benennen",
-          "Stabilität und Kontaminanten mitdenken",
-          "Trendbegriffe nur mit Kriterien erklären"
+          "\"Flower Rosin\" → direkt aus getrockneter Blüte, kein Hash-Schritt davor, kann nie \"live\" sein",
+          "\"Hash Rosin\" ohne \"Live\" → aus Bubble Hash gepresst, wahrscheinlich aus getrocknetem Material - im Zweifel nachfragen",
+          "\"Live Rosin\" allein → zweideutig: entweder aus frisch gefrorener Blüte direkt gepresst oder aus frisch gefrorenem Hash gepresst",
+          "\"Live Hash Rosin\" → der präzise Begriff: frisch gefrorenes Material wurde zuerst zu Hash gewaschen, dieses frisch gefrorene Hash wurde gepresst",
+          "\"WPFF\" im Namen → die ganze Pflanze (inkl. Stängel/Zuckerblätter), nicht nur Blüten, wurde frisch gefroren gewaschen",
+          "\"Jelly Hash Rosin\" → kann Textur meinen oder einfach eine Sortenbezeichnung sein, nicht automatisch als eigene Qualitätsstufe werten"
+        ]
+      },
+      {
+        heading: "Live Hash Rosin: wenn beide Schritte zusammenkommen",
+        content: [
+          "Live Hash Rosin ist der präziseste Begriff in der ganzen Familie, weil er einen klar zweistufigen Prozess beschreibt: Frisch geerntetes Pflanzenmaterial wird nie getrocknet, sondern sofort eingefroren. Aus diesem gefrorenen Material wird per Eiswasser-Methode Bubble Hash gewaschen. Erst dieses frisch gefrorene Hash wird anschließend gepresst.",
+          "Das gilt in der Szene oft als eine der hochwertigsten Kategorien überhaupt - aus zwei Gründen: Erstens werden konzentrierte Trichomköpfe statt grober Pflanzenmasse gepresst (wie bei jedem Hash Rosin). Zweitens bleiben Terpene besser erhalten, weil das Material nie den Trocknungs- und Curing-Prozess durchläuft, bei dem typischerweise ein Teil der flüchtigen Terpene verloren geht."
+        ]
+      },
+      {
+        heading: "WPFF Hash Rosin: wenn auch Stängel und Zuckerblätter mitgewaschen werden",
+        content: [
+          "WPFF steht für \"Whole Plant Fresh Frozen\" - hier wird nicht nur die Blüte frisch gefroren, sondern die ganze geerntete Pflanze inklusive harzbedeckter Stängel und Zuckerblätter, direkt nach der Ernte. Dieses Gesamtmaterial wird zu Bubble Hash gewaschen und dann gepresst.",
+          "Die Logik dahinter: Weil mehr trichombedeckte Pflanzenteile in die Wäsche gehen und nicht nur Blüte, soll ein volleres, komplexeres Terpenprofil entstehen als bei reinem Blüten-Fresh-Frozen (FOFF). Was WPFF und FOFF im Detail unterscheidet und wie du das bei Bubble Hash selbst einordnest, findest du in Bubble Hash: Vom Wash zur Qualität - hier reicht der Hinweis, dass dir diese Abkürzung öfter auf Live-Hash-Rosin-Etiketten begegnet."
+        ]
+      },
+      {
+        heading: "Jelly Hash Rosin: ein Begriff ohne klare Definition",
+        content: [
+          "Anders als die Begriffe oben lässt sich \"Jelly Hash Rosin\" ehrlicherweise nicht sauber definieren - die Nutzung ist in der Praxis inkonsistent, und das solltest du so einordnen, nicht als Lücke in deinem Wissen.",
+          "Ein Teil der Verwirrung: \"Live Resin Jelly\" ist ein ganz anderes, lösungsmittelbasiertes Produkt aus der BHO-Familie und gehört technisch gar nicht zur Rosin-Familie - wird aber sprachlich oft mit \"Jelly Hash Rosin\" vermischt.",
+          "Andere Nutzung: \"Jelly\" als reine Texturbeschreibung, ungefähr gleichbedeutend mit \"Jam\" oder \"Badder\" - weich, gelartig, golden, mit feinen THCA-Kristallen in einer terpenreichen Masse.",
+          "Und ein dritter Störfaktor: Viele Produktnamen mit \"Jelly\" beziehen sich schlicht auf die Sorte (Gelato-Genetik, umgangssprachlich \"Jelly\"), nicht auf eine Texturklasse. Siehst du \"Jelly Hash Rosin\" auf einem Etikett, ist das eher ein Hinweis, genauer nachzufragen, als eine verlässliche Kategorie für sich."
+        ]
+      },
+      {
+        heading: "Warum dieselbe Rosin-Art unterschiedlich aussehen kann: Cure und Presstemperatur",
+        content: [
+          "Selbst bei gleicher Kategorie, zum Beispiel zwei Live Hash Rosins, kann die Textur stark variieren - das liegt meist an der Reifung nach dem Pressen und an der Presstemperatur, nicht an der Kategorie selbst.",
+          "Cold Cure: Frisch gepresstes Rosin reift über längere Zeit in geschlossenen Gläsern bei niedriger Temperatur, grob 5-20°C. Das Ergebnis ist meist eine cremige, stabile Badder-Textur mit guter Terpenerhaltung.",
+          "Warm Cure: Reifung bei höherer Temperatur lässt Terpene schneller von den Cannabinoiden trennen - es entsteht eher eine Jam- oder Sauce-artige Textur mit sichtbaren THCA-Kristallen in einer flüssigeren Terpenschicht.",
+          "Auch die Presstemperatur selbst spielt mit rein: niedrigere Temperaturen liefern tendenziell mehr Badder-/Jam-artige Texturen und bessere Terpenerhaltung bei geringerer Ausbeute, höhere Temperaturen mehr Ausbeute bei mehr Terpenverlust und einem flacheren, brüchigeren Ergebnis. Das ist hier nur zum Verständnis gedacht, nicht als Anleitung - konkrete Temperatur- und Zeitangaben hängen stark von Presse, Material und Erfahrung ab.",
+          "Zur Einordnung: Budder, Sauce, Diamonds, Sugar und Crumble gehören zu einer anderen, lösungsmittelbasierten Produktfamilie (BHO) und werden hier bewusst nicht behandelt."
         ]
       }
     ],
+    warnings: [
+      "Dieser Artikel erklärt Begriffe und Prozesslogik, keine Presstemperaturen oder -zeiten als Anleitung - beides hängt stark von Presse, Material und Erfahrung ab."
+    ],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: Input-Material",
-        text: "Das Ausgangsprodukt, dessen Qualität das Ergebnis später stark begrenzt oder ermöglicht."
+        title: "Kurz erklärt: Blüte pressen vs. Hash pressen",
+        text: "Flower Rosin presst direkt aus der Blüte. Hash Rosin presst aus Bubble Hash, das vorher aus der Blüte gewaschen wurde. Der Zwischenschritt über Hash ist der Grund, warum Hash Rosin meist konzentrierter ausfällt und eine höhere Ausbeute vom eingesetzten Gewicht hat."
       },
       {
-        title: "Kurz erklärt: Hype",
-        text: "Übersteigerte Wahrnehmung eines Begriffs oder Produkts, die oft mehr Marketing als Einordnung ist."
+        title: "Kurz erklärt: getrocknet vs. frisch gefroren",
+        text: "Getrocknetes/kuriertes Material hat den normalen Trocknungsprozess durchlaufen. Frisch gefrorenes Material wurde kurz nach der Ernte eingefroren, ohne zu trocknen - das ist die Voraussetzung für alles, was \"live\" im Namen trägt."
+      },
+      {
+        title: "Kurz erklärt: Warum \"Live Rosin\" zwei Bedeutungen hat",
+        text: "Manche meinen damit aus frisch gefrorener Blüte direkt gepresstes Rosin, andere meinen dasselbe wie \"Live Hash Rosin\" - aus frisch gefrorenem Hash gepresst. Beide Lesarten sind in Umlauf, ohne dass sich die Szene auf eine geeinigt hätte - deshalb lohnt sich beim Kauf ein zweiter Blick aufs Etikett."
       }
     ],
     faq: [
       {
-        question: "Ist Rosin immer lösungsmittelfrei?",
-        answer: "Der Begriff wird so verwendet, aber für die Gesamtbewertung bleiben Vorstufe und Prozesskontext trotzdem relevant."
+        question: "Ist Live Rosin dasselbe wie Live Hash Rosin?",
+        answer: "Nicht zwingend - und das ist der Kernpunkt der Verwirrung um den Begriff. Ein Teil der Szene nutzt \"Live Rosin\" für direkt aus frisch gefrorener Blüte gepresstes Rosin, ein anderer Teil (eher herstellerseitig) meint damit dasselbe wie \"Live Hash Rosin\", also aus frisch gefrorenem Hash gepresst. Beide Nutzungen sind verbreitet, ohne dass sich die Branche geeinigt hätte - ohne zusätzliche Angabe auf dem Etikett lässt sich das nicht zuverlässig unterscheiden."
       },
       {
-        question: "Kann Rosin aus schlechtem Input gut werden?",
-        answer: "Nur sehr begrenzt. Gute Verarbeitung ersetzt schwaches Ausgangsmaterial nicht."
+        question: "Ist Rosin automatisch lösungsmittelfrei?",
+        answer: "Ja - das ist die verlässliche Konstante in der ganzen Rosin-Familie. Nur Hitze und Druck, keine Lösungsmittel wie Butan oder Propan. Das unterscheidet Rosin klar von der BHO-Familie (Budder, Sauce, Diamonds, Sugar, Crumble)."
+      },
+      {
+        question: "Warum ist Hash Rosin oft teurer als Flower Rosin aus derselben Ernte?",
+        answer: "Weil vor dem Pressen ein zusätzlicher, aufwendiger Schritt steckt - die Eiswasser-Wäsche zu Bubble Hash - und weil insgesamt mehr Ausgangsmaterial und Arbeit hineingeht, als die reine Hash-Ausbeute-Zahl vermuten lässt."
+      },
+      {
+        question: "Was bedeutet \"Jelly Hash Rosin\" genau?",
+        answer: "Ehrlich gesagt: uneinheitlich. Der Begriff wird mal für eine weiche, gelartige Textur genutzt, mal fälschlich mit dem lösungsmittelbasierten \"Live Resin Jelly\" vermischt, und manchmal ist \"Jelly\" schlicht Teil der Sortenbezeichnung (Gelato-Genetik). Nimm den Begriff nicht als verlässliche Qualitätsstufe."
       }
     ],
     glossary: [
-      { term: "Input-Material", definition: "Ausgangsprodukt, das die spätere Qualität eines Endprodukts mitbestimmt." },
-      { term: "Nachbehandlung", definition: "Alle Schritte nach der eigentlichen Gewinnung oder Pressung, etwa Stabilisierung und Lagerung." },
-      { term: "Chargenkonsistenz", definition: "Wie ähnlich mehrere Chargen in relevanten Eigenschaften ausfallen." },
+      { term: "Flower Rosin", definition: "Direkt aus getrockneter/kurierter Blüte gepresstes Rosin, ohne vorherigen Hash-Schritt. Kann per Definition nie \"live\" sein, weil frisches statt getrocknetes Material beim Pressen nur zu einem nassen Brei würde." },
+      { term: "Hash Rosin", definition: "Rosin, das aus Bubble Hash statt aus roher Blüte gepresst wird. Oberbegriff - das zugrunde liegende Hash kann aus getrocknetem oder frisch gefrorenem Material stammen." },
+      { term: "Live Rosin", definition: "Ein in der Praxis uneinheitlich verwendeter Begriff: je nach Quelle entweder direkt aus frisch gefrorener Blüte gepresstes Rosin, oder Rosin aus frisch gefrorenem Hash (dann deckungsgleich mit \"Live Hash Rosin\"). Beim Kauf lohnt sich genaueres Nachfragen." },
+      { term: "Live Hash Rosin", definition: "Der präzise Begriff für den zweistufigen Prozess: frisch gefrorenes, nie getrocknetes Pflanzenmaterial wird zu Bubble Hash gewaschen, dieses frisch gefrorene Hash wird anschließend gepresst. Gilt als eine der hochwertigsten Rosin-Kategorien." },
+      { term: "WPFF Hash Rosin", definition: "Hash Rosin aus \"Whole Plant Fresh Frozen\"-Material - die ganze frisch geerntete Pflanze inklusive harzbedeckter Stängel und Zuckerblätter wird eingefroren und gewaschen, nicht nur die Blüten." },
+      { term: "Cold Cure", definition: "Reifung von frisch gepresstem Rosin in geschlossenen Gläsern bei niedriger Temperatur (grob 5-20°C) über längere Zeit. Ergibt meist eine cremige, stabile Badder-Textur und erhält mehr Terpene." },
+      { term: "Warm Cure", definition: "Reifung bei höherer Temperatur. Terpene trennen sich schneller von den Cannabinoiden, es entsteht eher eine Jam-/Sauce-artige Textur mit sichtbaren THCA-Kristallen in flüssigem Terpen." },
+      { term: "Jelly Hash Rosin", definition: "Ein Begriff ohne einheitliche Definition: mal als Texturbezeichnung für eine weiche, gelartige Konsistenz genutzt, mal mit dem lösungsmittelbasierten \"Live Resin Jelly\" vermischt, mal schlicht die Sortenbezeichnung (Gelato-/\"Jelly\"-Genetik). Nicht als verlässliche Qualitätsstufe lesen." }
     ],
     relatedSlugs: ["hash-typen-vergleichen", "bubble-hash-qualitaetskriterien", "full-melt-und-marketingsprache"]
   }),
   createArticle({
     slug: "full-melt-und-marketingsprache",
-    title: "Full Melt und Marketingsprache",
-    summary: "Warum Szene- und Shopbegriffe eine Einordnung brauchen und wie man sie auf grossen Wissensseiten sauber erklärt.",
+    title: "Full Melt, Sterne-System und Marketingsprache bei Hash",
+    summary: "Was 'Full Melt', das 1-6-Sterne-System und Begriffe wie 'Top Shelf' wirklich bedeuten - und warum keiner davon ein Laborzertifikat ersetzt.",
     category: "konzentrate",
-    difficulty: "profi",
-    readMinutes: 7,
-    tags: ["Full Melt", "Marketing", "Klassifikation", "Content"],
+    difficulty: "fortgeschritten",
+    readMinutes: 9,
+    tags: ["Full Melt", "Sterne-System", "Marketing", "Hash-Qualität", "Glossar"],
     keyTakeaways: [
-      "Viele Begriffe in Konzentratkategorien sind sprachlich stark, aber fachlich unscharf.",
-      "Gute Wissensseiten erklären Herkunft und Nutzung eines Begriffs, übernehmen ihn aber nicht unkritisch als Qualitätsurteil.",
-      "Ein Glossar mit Kriterienlogik verhindert Missverständnisse im Katalog."
+      "'Full Melt' und das 1-6-Sterne-System sind reale, in der ganzen Hash-Community verbreitete Begriffe - basierend auf optischer Einschätzung und einem einfachen Melt-Test, nicht auf einer offiziellen Prüfung.",
+      "Begriffe wie 'Top Shelf', 'Private Reserve' oder 'Connoisseur Grade' haben dagegen keine festgelegten Kriterien - sie sind Werbesprache, kein Qualitätsnachweis.",
+      "Nur eine echte Laboranalyse (COA von einem akkreditierten Labor) misst tatsächlich Wirkstoffgehalt, Rückstände und Verunreinigungen - das kann kein Melt-Test und keine Sterne-Zahl leisten."
     ],
     quickFacts: [
-      { label: "Thema", value: "Begriffsklärung" },
-      { label: "Risiko", value: "Marketing als Qualitätsersatz" },
-      { label: "Lösung", value: "Glossar plus Kriterienlogik" }
+      { label: "Sterne-Skala", value: "1-6, community-bewertet, keine offizielle Prüfstelle" },
+      { label: "Full Melt", value: "5-6 Sterne, schmilzt komplett und rückstandsfrei" },
+      { label: "Objektiv messbar", value: "Nur ein Labor-COA (Potenz, Rückstände, Keime)" }
     ],
     sections: [
       {
-        heading: "Warum Sprache im Konzentratbereich so aufgeladen ist",
+        heading: "Was 'Full Melt' wirklich bedeutet",
         content: [
-          "Szenebegriffe transportieren Status, Erfahrung und Erwartungen. Genau deshalb müssen sie für neue Nutzer sauber eingeordnet werden.",
-          "Sonst wird Marketing leicht mit Messbarkeit verwechselt."
+          "'Full Melt' ist kein austauschbares Werbewort, sondern ein feststehender Begriff aus der Hash-Community. Er beschreibt Konzentrat, das beim Erhitzen komplett und rückstandsfrei schmilzt oder verdampft - kein verbrannter Rest, keine schwarzen Krümel auf dem heißen Dab-Nagel.",
+          "Getestet wird das ganz praktisch mit dem sogenannten Melt-Test: Ein erhitztes Werkzeug wird an eine kleine Probe gehalten. Verflüssigt sie sich klar und vollständig, gilt sie als Full Melt. Bleibt schwarzer Pflanzenrest übrig oder verkohlt die Probe, ist sie es nicht.",
+          "Wichtig dabei: Das ist eine Prüfmethode aus der Szene, keine Laboranalyse. Es gibt keine Behörde, kein Labor und keine Zertifizierungsstelle, die 'Full Melt' offiziell vergibt. Die Einstufung kommt von Herstellern, Händlern oder erfahrenen Konsumenten, die selbst getestet haben."
         ]
       },
       {
-        heading: "Wie Plattformen damit umgehen sollten",
+        heading: "Das 1-6-Sterne-System im Detail",
         content: [
-          "Erkläre Begriffe, aber knüpfe Produktbewertung an nachvollziehbare Kriterien und nicht an Szeneetiketten.",
-          "Das reduziert Fehlkäufe und macht Kataloge professioneller."
+          "Rund um Eis-Wasser-Hash (Bubble Hash) und Dry Sift hat sich eine informelle 1-6-Sterne-Skala etabliert, die genau diese Melt-Qualität in Stufen einteilt. Sie ist weit verbreitet und in der ganzen Community bekannt - aber ebenfalls nicht amtlich geprüft.",
+          "1-2 Sterne, 'Food Grade' oder 'Cooking Grade': viel Pflanzenmaterial, verkohlt beim Erhitzen statt zu schmelzen. Zum Dabben ungeeignet, aber brauchbar für Edibles oder zum Kochen, wo es ohnehin aufgelöst wird.",
+          "3-4 Sterne, 'Half Melt': wird beim Erhitzen weich oder bildet Blasen, hinterlässt aber sichtbare schwarze Reste statt komplett zu verflüssigen. Gut zum Rauchen oder zum Weiterpressen zu Rosin, aber kein sauberer Dab.",
+          "5-6 Sterne, 'Full Melt': fast nur noch Trichomköpfe, kaum Pflanzenmaterial. Schmilzt beim Dab vollständig und rückstandsfrei - 6 Sterne gilt als oberste Stufe.",
+          "Noch darunter gibt es 'No Melt': Material, das schon beim Versuch verbrennt statt zu schmelzen - selbst für Food Grade zu unrein.",
+          "Auch hier gilt: Die Skala wird von niemandem übergeordnet kontrolliert. Sie basiert auf visueller Einschätzung und dem Melt-Test durch Verkäufer oder Hersteller selbst, und die genauen Grenzen zwischen den Stufen werden in unterschiedlichen Quellen nicht ganz einheitlich beschrieben. Als grobe, breit geteilte Orientierung ist sie trotzdem nützlich."
         ],
         checklist: [
-          "Jeden Szenebegriff im Glossar definieren",
-          "Kriterien von Werbesprache trennen",
-          "Community-Begriffe nur mit Kontext darstellen"
+          "Kleines Stück auf ein erhitztes Dab-Tool oder eine heiße Fläche geben",
+          "Beobachten: verflüssigt es sich klar, oder bleibt schwarzer Rest übrig?",
+          "Blasenbildung allein reicht nicht - erst vollständiges, rückstandsfreies Schmelzen zählt als Full Melt",
+          "Bei Kaufware nachfragen, wie und woran die Sterne-Einstufung festgemacht wurde"
+        ]
+      },
+      {
+        heading: "Marketing-Begriffe ohne festgelegte Kriterien",
+        content: [
+          "Neben der Sterne-Skala kursieren im Handel Begriffe, die deutlich weniger greifbar sind. 'Top Shelf' klingt nach einer festen Qualitätsstufe - ist es aber nicht. Selbst Leafly, eines der größten Cannabis-Glossare überhaupt, schreibt dazu offen: Keine Aufsichtsbehörde definiert oder kontrolliert, was 'Top Shelf' bedeutet.",
+          "Ähnlich unscharf: 'Private Reserve' (suggeriert eine besonders zurückgehaltene, exklusive Charge - der Begriff stammt ursprünglich aus der kalifornischen Dispensary-Kultur), 'Connoisseur Grade' (richtet sich sprachlich an 'kenntnisreiche' Konsumenten, ohne dass ein Schwellenwert dahintersteht) sowie 'Craft', 'Small Batch', 'Artisanal' und 'Boutique' (sollen sorgfältige Produktion in kleinem Maßstab andeuten, ohne dass Losgröße oder Verfahren irgendwo festgelegt sind).",
+          "Das macht diese Begriffe nicht automatisch unehrlich - oft steckt wirklich gute Ware dahinter. Aber es sind Werbebegriffe, kein Qualitätsnachweis. Zwei Shops können 'Top Shelf' für komplett unterschiedliche Ware verwenden, und beide 'verstoßen' gegen nichts, weil es keine Definition gibt, die sie verletzen könnten."
+        ]
+      },
+      {
+        heading: "Farbe, Textur, Geruch: nützliche Hinweise, kein Beweis",
+        content: [
+          "In der Community kursieren auch sensorische Faustregeln, die dir beim ersten Einschätzen helfen können - aber wirklich nur als grober Anhaltspunkt, nicht als Garantie.",
+          "Farbe: Helle, goldene bzw. 'blonde' Färbung wird oft als Zeichen für Reinheit gelesen, dunklere Farbe als möglicher Hinweis auf Verunreinigung. Farbe hängt aber auch stark von Sorte, Curing und Handling ab - sie sagt für sich allein nichts Sicheres über Reinheit aus.",
+          "Textur: 'Sandig' (trocken, krümelig) und 'ölig/fettig' (klebrig) werden oft gegeneinander ausgespielt. Tatsächlich kann beides für sich genommen hochwertig sein - Textur allein ist kein Reinheitssignal.",
+          "Geruch: Ein kräftiger, frischer 'terpiger' Duft gilt als gutes Zeichen, ein stumpfer oder abgestandener Geruch als Hinweis auf Abbau. Auch das ist rein subjektiv und durch nichts Messbares abgesichert.",
+          "Nutze diese drei Punkte gern als ersten Eindruck - verlass dich bei einer echten Kaufentscheidung aber nie allein darauf."
+        ]
+      },
+      {
+        heading: "Mesh-Größe: der eine wirklich objektive Wert in diesem Wortfeld",
+        content: [
+          "Ein Begriff sticht aus dem ganzen Vokabular heraus, weil er tatsächlich eine physikalische Messgröße beschreibt: die Mesh- bzw. Mikrongröße der Siebe, mit denen Eis-Wasser-Hash getrennt wird - üblich ist die Leiter 25/45/73/90/120/160/190/220 Mikron.",
+          "Die Zahl selbst ist real und nachprüfbar: Sie gibt die Maschenweite des Siebs in Mikrometern an. Was daraus dann als 'Qualität' abgeleitet wird - etwa die verbreitete Annahme, 73-120 Mikron liefere die besten Köpfe - ist wieder Community-Konsens, keine festgelegte Norm.",
+          "Kurz: Die Zahl ist objektiv. Ihre Interpretation als Qualitätsmerkmal ist es nicht."
+        ]
+      },
+      {
+        heading: "Was ein echter Labor-Standard leistet - und Sterne-Werte nicht",
+        content: [
+          "Der wichtigste Unterschied in diesem ganzen Themenfeld: Sterne-Bewertung, Full Melt, Top Shelf und Co. sind optische bzw. sensorische Einschätzungen aus der Community. Sie werden von niemandem kontrolliert oder zertifiziert.",
+          "Echte, akkreditierte Standards sehen anders aus: Normen wie ASTM D8244/D8282, eine Laborakkreditierung nach ISO/IEC 17025 sowie ein Certificate of Analysis (COA) aus einem akkreditierten Labor messen tatsächlich - Cannabinoid-Gehalt, Lösungsmittelrückstände, Pestizide, Schwermetalle, mikrobielle Belastung.",
+          "Ein 6-Sterne-Etikett sagt dir, dass ein Konzentrat wahrscheinlich sehr rein von Pflanzenmaterial ist. Es sagt dir nichts darüber, ob Lösungsmittel-, Pestizid- oder Schimmelrückstände enthalten sind - das zeigt ausschließlich ein Labortest, kein Melt-Test und keine Sterne-Zahl.",
+          "Für dich als Konsument heißt das: Optik und Melt-Test sind ein guter erster Eindruck. Bei ernsthaften Bedenken ersetzen sie keinen echten COA."
+        ]
+      },
+      {
+        heading: "Ein strengerer Maßstab: Frenchy Cannolis 10 Kategorien",
+        content: [
+          "Wie viel differenzierter man Hash bewerten kann, zeigt das persönliche Punktesystem von Frenchy Cannoli, einer der einflussreichsten Figuren, die die moderne Eis-Wasser-Hash-Technik im Westen bekannt gemacht haben: Aussehen, Konsistenz/Körper, Aroma/Bouquet, Komplexität & Balance, Intensität/Dauer, Melt (für ihn der wichtigste Einzelfaktor), Geschmeidigkeit beim Rauchen, Stabilität, Geschmack sowie Gesamteindruck & Einzigartigkeit.",
+          "Das System ist erkennbar von der Weinverkostung inspiriert und für ausführliche, qualitative Reviews gedacht, nicht für ein schnelles Shop-Etikett. Wichtig: Das ist Cannolis persönlicher Maßstab, kein Branchenstandard - aber er zeigt gut, wie viel differenzierter 'Qualität' bewertet werden kann als mit einem einzelnen Marketingwort.",
+          "Einen Mittelweg gehen manche Cannabis Cups und Wettbewerbe: Eine Jury bewertet Optik, Aroma, Geschmack, Wirkung und Reinheit (oft mit rund 75% Gewichtung), ergänzt um echte Laborwerte (rund 25%). Strukturierter als reine Sterne-Vergabe, aber immer noch von subjektiven Jury-Entscheidungen abhängig und von Veranstalter zu Veranstalter unterschiedlich."
+        ],
+        checklist: [
+          "Bei Wettbewerbs-Auszeichnungen nachsehen, ob überhaupt Laborwerte in die Bewertung eingeflossen sind",
+          "Persönliche Bewertungssysteme (z. B. von bekannten Herstellern) als Meinung einordnen, nicht als Norm",
+          "Bei wichtigen Kaufentscheidungen nach einem COA fragen statt nach der Marketingbezeichnung allein zu gehen"
         ]
       }
     ],
+    warnings: [
+      "Sterne-Bewertungen und 'Full Melt' sind Selbsteinschätzungen von Herstellern oder Verkäufern - es gibt keine kontrollierende Stelle, die das zertifiziert oder überprüft.",
+      "Optik, Melt-Test, Farbe und Geruch ersetzen keine Laboranalyse. Ob Lösungsmittel-, Pestizid- oder Schimmelrückstände enthalten sind, siehst und schmeckst du nicht."
+    ],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: Szenebegriff",
-        text: "Ein Ausdruck aus Community oder Handel, der oft mehr kulturelle als standardisierte technische Bedeutung trägt."
+        title: "Kurz erklärt: Melt-Test",
+        text: "Eine kleine Probe wird an ein erhitztes Werkzeug gehalten. Schmilzt sie klar und vollständig, gilt sie als Full Melt - bleibt schwarzer Rest übrig, ist sie es nicht."
       },
       {
-        title: "Kurz erklärt: Kriterienlogik",
-        text: "Bewertung nach festen und transparenten Merkmalen statt nach Schlagworten."
+        title: "Kurz erklärt: COA (Certificate of Analysis)",
+        text: "Ein Prüfbericht von einem akkreditierten Labor, der Wirkstoffgehalt, Rückstände und Verunreinigungen tatsächlich misst - im Gegensatz zu Sterne-Zahlen oder Marketingbegriffen."
       }
     ],
     faq: [
       {
-        question: "Soll ich solche Begriffe ganz vermeiden?",
-        answer: "Nein, aber immer erklären und nicht als alleinige Qualitätsaussage stehen lassen."
+        question: "Ist 6 Sterne automatisch die beste verfügbare Qualität?",
+        answer: "Es ist die oberste Stufe der informellen Melt-Skala, ja - aber ohne Laborwerte weißt du damit nichts über Rückstände wie Lösungsmittel, Pestizide oder Schimmel. Das eine schließt das andere nicht ein."
       },
       {
-        question: "Warum ist das für große Seiten wichtig?",
-        answer: "Weil unerklärte Begriffe für Einsteiger irreführend sind und Kataloge uneinheitlich machen."
+        question: "Was bedeutet 'Top Shelf' dann konkret?",
+        answer: "Nichts Festgelegtes. Es ist ein Werbebegriff für 'besonders hochwertig', den jeder Shop nach eigenem Maßstab vergibt - selbst große Cannabis-Glossare wie Leafly weisen ausdrücklich darauf hin, dass keine Behörde ihn definiert."
+      },
+      {
+        question: "Warum schmilzt schlechte Ware nicht sauber?",
+        answer: "Je mehr Pflanzenmaterial (statt reiner Trichomköpfe) enthalten ist, desto eher verkohlt die Probe beim Erhitzen, statt sich zu verflüssigen. Genau das prüft der Melt-Test."
+      },
+      {
+        question: "Sagt die Farbe etwas Verlässliches über die Reinheit aus?",
+        answer: "Nur bedingt. Hellere Farbe wird als Hinweis auf Reinheit gelesen, aber Sorte, Curing und Handling beeinflussen die Farbe genauso. Als alleiniges Kriterium taugt sie nicht."
       }
     ],
     glossary: [
-      { term: "Szenebegriff", definition: "Nicht standardisierter Ausdruck aus Kultur, Community oder Handel." },
-      { term: "Glossar", definition: "Sammlung definierter Begriffe zur einheitlichen Sprachverwendung." },
-      { term: "Qualitätsurteil", definition: "Bewertung eines Produkts anhand nachvollziehbarer und relevanter Kriterien." },
+      { term: "Full Melt", definition: "Konzentrat, das beim Erhitzen vollständig und rückstandsfrei schmilzt oder verdampft - entspricht 5-6 Sternen auf der informellen Skala." },
+      { term: "Half Melt", definition: "Konzentrat, das beim Erhitzen weich wird oder Blasen bildet, aber sichtbare schwarze Pflanzenreste hinterlässt statt komplett zu schmelzen - 3-4 Sterne." },
+      { term: "Food Grade / No Melt", definition: "Material mit hohem Pflanzenmaterial-Anteil, das beim Erhitzen verkohlt statt zu schmelzen. Für Edibles brauchbar, nicht zum Dabben." },
+      { term: "Sterne-System", definition: "Informelle, community-bewertete 1-6-Skala für die Melt-Qualität von Hash. Keine offizielle Prüfstelle vergibt oder kontrolliert die Einstufung." },
+      { term: "Top Shelf", definition: "Werbebegriff für besonders hochwertige Ware, ohne festgelegte Kriterien oder kontrollierende Stelle." },
+      { term: "Mesh / Mikron", definition: "Physikalisch reale Maschenweite eines Siebs in Mikrometern, verwendet zur Trennung von Eis-Wasser-Hash. Objektiv messbar, im Gegensatz zu den meisten anderen Begriffen auf dieser Seite." },
+      { term: "COA (Certificate of Analysis)", definition: "Prüfbericht eines akkreditierten Labors mit tatsächlichen Messwerten zu Wirkstoffgehalt, Rückständen und Verunreinigungen." },
+      { term: "ISO/IEC 17025", definition: "Internationale Akkreditierungsnorm für die Kompetenz von Prüf- und Kalibrierlaboren - der Maßstab hinter einem vertrauenswürdigen COA." }
     ],
     relatedSlugs: ["hash-typen-vergleichen", "rosin-einordnung-ohne-hype", "bubble-hash-qualitaetskriterien"]
   }),

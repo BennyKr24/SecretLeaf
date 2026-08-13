@@ -31,6 +31,7 @@ import { useGrowLog } from '@/hooks/useGrowLog';
 import { useAuth } from '@/hooks/useAuth';
 import { useAssistantPreference } from '@/hooks/useAssistantPreference';
 import { getUpcomingTasks, getOverdueTasks, getTaskProgress, getPhaseForDay } from '@/lib/grow/planGenerator';
+import { getPhaseRelativeDay } from '@/lib/grow/utils';
 import { PHASE_ICONS, PHASE_ORDER } from '@/lib/grow/phases';
 import { GROW_STATUS_LABELS } from '@/lib/grow/types';
 import { TASK_CATEGORY_ICONS } from '@/lib/grow/taskIcons';
@@ -114,18 +115,22 @@ function dayLabelClass(dueDay: number, currentDay: number): string {
 
 // ── Progress ──────────────────────────────────────────────────────────────────
 
-function GrowProgress({ grow }: { grow: Grow }) {
+function GrowProgress({ grow, currentPhase }: { grow: Grow; currentPhase: Grow['plan']['phases'][number] | null | undefined }) {
   const { completed, total, percent } = getTaskProgress(grow);
   const phaseProgress = grow.plan.totalDays > 0
     ? Math.min(100, Math.round((grow.currentDay / grow.plan.totalDays) * 100))
     : 0;
+  const phaseDay = currentPhase ? getPhaseRelativeDay(grow.currentDay, currentPhase) : null;
 
   return (
     <div className="space-y-3">
       <div>
         <div className="mb-1.5 flex items-center justify-between text-xs">
           <span className="text-muted-fg">Grow-Fortschritt</span>
-          <span className="font-semibold text-foreground">Tag {grow.currentDay} / {grow.plan.totalDays}</span>
+          <span className="font-semibold text-foreground">
+            {currentPhase && phaseDay !== null ? `${currentPhase.label}-Tag ${phaseDay} · ` : ''}
+            Tag {grow.currentDay} / {grow.plan.totalDays}
+          </span>
         </div>
         <ProgressBar percent={phaseProgress} />
       </div>
@@ -237,7 +242,10 @@ function GrowHero({
               </Dropdown>
             </span>
             <span className="text-border">·</span>
-            <span>Tag {grow.currentDay}</span>
+            <span>
+              {currentPhase ? `Phase-Tag ${getPhaseRelativeDay(grow.currentDay, currentPhase)} · ` : ''}
+              Tag {grow.currentDay} gesamt
+            </span>
             <span className="text-border">·</span>
             <span>{grow.pflanzenAnzahl} {grow.pflanzenAnzahl === 1 ? 'Pflanze' : 'Pflanzen'}</span>
           </div>
@@ -252,7 +260,7 @@ function GrowHero({
         </div>
       </div>
 
-      <GrowProgress grow={grow} />
+      <GrowProgress grow={grow} currentPhase={currentPhase} />
       <PhaseTimeline grow={grow} />
 
       <p className="text-xs text-muted-fg">{healthSummary(healthScore)}</p>
@@ -1556,7 +1564,7 @@ export default function GrowPage({}: Props) {
               <p className="mt-0.5 font-semibold text-foreground">{currentPhase.label}</p>
               <p className="mt-1 text-sm text-muted-fg leading-relaxed">{currentPhase.description}</p>
               <p className="mt-2 text-xs text-muted-fg">
-                {currentPhase.label}-Tag {Math.max(1, grow.currentDay - currentPhase.startDay + 1)} · noch {Math.max(0, currentPhase.endDay - grow.currentDay + 1)} Tage in dieser Phase
+                {currentPhase.label}-Tag {getPhaseRelativeDay(grow.currentDay, currentPhase)} · noch {Math.max(0, currentPhase.endDay - grow.currentDay + 1)} Tage in dieser Phase
               </p>
             </div>
           </div>

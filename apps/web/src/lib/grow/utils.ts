@@ -84,6 +84,13 @@ export function getPhaseForDay(phases: GrowPhase[], day: number): GrowPhase | nu
   return match ?? phases[phases.length - 1] ?? null;
 }
 
+/**
+ * Returns the grow day counted from the start of the given phase (1-indexed).
+ */
+export function getPhaseRelativeDay(currentDay: number, phase: GrowPhase): number {
+  return Math.max(1, currentDay - phase.startDay + 1);
+}
+
 // ── Date Formatting ───────────────────────────────────────────────────────────
 
 /**

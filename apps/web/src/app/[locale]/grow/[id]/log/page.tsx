@@ -35,6 +35,8 @@ import type {
 } from '@/lib/grow/types';
 import { getInsightsForLogType } from '@/lib/grow/insights';
 import type { GrowInsight } from '@/lib/grow/insights';
+import { getPhaseForDay } from '@/lib/grow/planGenerator';
+import { getPhaseRelativeDay } from '@/lib/grow/utils';
 import { Analytics } from '@/lib/analytics';
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -744,6 +746,9 @@ export default function GrowLogPage({}: Props) {
   const searchParams = useSearchParams();
   const { grows, loaded: growLoaded } = useGrowState();
   const grow = grows.find((g) => g.id === id) ?? null;
+  const currentPhase = grow
+    ? grow.plan.phases.find((p) => p.id === grow.currentPhaseId) ?? getPhaseForDay(grow.plan, grow.currentDay)
+    : null;
   const { entries, loaded: logLoaded, addEntry, deleteEntry, updateEntry, currentStreak, entriesByPlant } = useGrowLog(id);
 
   const initPlant = searchParams.get('plant') ?? '';
@@ -952,7 +957,10 @@ export default function GrowLogPage({}: Props) {
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-widest text-primary">Grow Log</p>
                 <h1 className="text-base font-bold leading-tight text-foreground">{grow.name}</h1>
-                <p className="text-xs text-muted-fg">Tag {grow.currentDay} · {entries.length} Einträge</p>
+                <p className="text-xs text-muted-fg">
+                  {currentPhase ? `${currentPhase.label}-Tag ${getPhaseRelativeDay(grow.currentDay, currentPhase)} · ` : ''}
+                  Tag {grow.currentDay} gesamt · {entries.length} Einträge
+                </p>
               </div>
             </div>
             <StreakBadge streak={currentStreak} pulse={streakPulse} />
