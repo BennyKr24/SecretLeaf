@@ -35,9 +35,6 @@ export default function SearchBar() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <span className="flex-1 text-left text-muted-fg">{t('placeholder')}</span>
-        <kbd className="hidden sm:flex items-center gap-1 px-1.5 py-0.5 border border-border rounded text-[10px] font-mono text-muted-fg bg-card group-hover:border-border">
-          ⌘K
-        </kbd>
       </button>
 
       <SearchModal open={open} onClose={handleClose} />
