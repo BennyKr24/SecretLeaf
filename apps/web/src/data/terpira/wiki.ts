@@ -5387,7 +5387,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     tags: ["Sicherheit", "Schimmel", "Ernte", "Lagerung"],
     keyTakeaways: [
       "Ein einzelner Fund ist selten isoliert - prüfe die ganze Ernte, nicht nur die auffällige Stelle.",
-      "Je klarer du vorher weisst, worauf du achten musst, desto schneller reagierst du im Ernstfall.",
+      "Je klarer du vorher weißt, worauf du achten musst, desto schneller reagierst du im Ernstfall.",
       "Wenn du etwas weitergegeben hast, sag den Leuten Bescheid, bevor sie es konsumieren."
     ],
     quickFacts: [
@@ -5472,7 +5472,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Wie du für dich selbst eine klare Linie findest",
         content: [
           "Leg dir vorher fest, welche Warnzeichen für dich ein Stopp-Signal sind - modriger statt erdig-würziger Geruch, feuchte Stellen, ungewöhnliche Verfärbungen. Dann musst du im Moment nicht neu entscheiden, sondern nur abgleichen.",
-          "Gerade bei der ersten grösseren Ernte gibt dir das Sicherheit und du triffst die Entscheidung schneller."
+          "Gerade bei der ersten größeren Ernte gibt dir das Sicherheit und du triffst die Entscheidung schneller."
         ],
         checklist: [
           "COA (falls vorhanden) mit dem tatsächlichen Zustand abgleichen",
@@ -6382,6 +6382,16 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
   "schimmel-und-mykotoxine-bei-cannabis": {
     growValue: "Trockne auf aw < 0.65 und halte den Trocknungsraum unter 50% RH – sichtbarer Schimmel beginnt erst ab aw > 0.75.",
     qualityScore: 5,
+    growCategory: "yield",
+  },
+  "recall-und-sperrprozesse-fuer-chargen": {
+    growValue: "Findest du in einem Glas Schimmel oder Fehlgeruch, prüfe die komplette Ernte aus demselben Trocknungs-/Curing-Durchgang – nicht nur die eine Stelle wegschneiden, Myzel breitet sich unsichtbar weiter aus als sichtbar.",
+    qualityScore: 4,
+    growCategory: "yield",
+  },
+  "batch-release-und-freigabekriterien": {
+    growValue: "Verlass dich nie nur auf ein gutes COA – leg dir vorher eigene Stopp-Signale fest (Geruch, Verfärbung, feuchte Stellen) und gleiche sie nach der Lagerung ab, bevor du konsumierst.",
+    qualityScore: 4,
     growCategory: "yield",
   },
   // ── Genetics ─────────────────────────────────────────────────────────────
