@@ -381,7 +381,7 @@ export default async function StatusPage() {
         </div>
 
         <section className="mt-8 rounded-[28px] border border-border bg-card p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Weiter geht's</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Weiter geht&apos;s</p>
           <h2 className="mt-2 text-2xl font-bold text-foreground">Direkt weitermachen</h2>
           <p className="mt-2 text-sm text-muted-fg">
             Diese Bereiche funktionieren unabhängig vom aktuellen Status.

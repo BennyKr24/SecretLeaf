@@ -308,7 +308,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
         }
       })();
     },
-    [user, entries, refresh]
+    [user, entries, refresh, growId]
   );
 
   const updateEntry = useCallback(
@@ -348,7 +348,7 @@ export function useGrowLog(growId: string | null): UseGrowLogReturn {
 
       return updated;
     },
-    [user, entries, refresh]
+    [user, entries, refresh, growId]
   );
 
   const entriesByPlant = useCallback(

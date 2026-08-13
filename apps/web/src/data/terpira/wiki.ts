@@ -746,9 +746,9 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "In SecretLeaf relevant wenn",
         content: [
-          "du Chargen vergleichen willst und nicht weisst, warum sich Aroma unterscheidet",
+          "du Chargen vergleichen willst und nicht weißt, warum sich Aroma unterscheidet",
           "dein Curing oder deine Lagerung das Profil verändern und du den Grund nicht kennst",
-          "du Laborwerte einordnen möchtest und nicht weisst, welche Terpenangabe belastbar ist"
+          "du Laborwerte einordnen möchtest und nicht weißt, welche Terpenangabe belastbar ist"
         ]
       },
       {
@@ -834,7 +834,7 @@ const baseWikiArticles: TerpiraArticle[] = [
         checklist: [
           "Niedrig starten",
           "Wartezeit vor Redose einhalten",
-          "Keine Teilnahme am Strassenverkehr"
+          "Keine Teilnahme am Straßenverkehr"
         ]
       }
     ],    simpleExplainers: [
@@ -960,7 +960,7 @@ const baseWikiArticles: TerpiraArticle[] = [
           "Sensorik: Klarheit der Aromen, Fremdnoten, Oxidationshinweise, gleichbleibender Charakter zwischen mehreren Käufen oder Ernten.",
           "Physikalik: Homogenität, Trennverhalten bei definierter Temperatur, Stabilität in Lagerung.",
           "Analytik: Cannabinoid-/Terpenprofil, Kontaminanten, mikrobiologische Parameter, ggf. Restlösungsmittel in relevanten Klassen.",
-          "Konsistenz: Schmeckt und wirkt eine zweite Charge derselben Quelle ähnlich wie die erste - grosse Sprünge sind ein Warnsignal."
+          "Konsistenz: Schmeckt und wirkt eine zweite Charge derselben Quelle ähnlich wie die erste - große Sprünge sind ein Warnsignal."
         ],
         checklist: [
           "Herkunft und Verfahrensfamilie so gut wie möglich nachvollziehen",
@@ -3515,7 +3515,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Was in einen belastbaren IPM-Plan gehört",
         content: [
-          "Lege fest, welche Zonen kontrolliert werden, wie Funde dokumentiert werden und wer über Massnahmen entscheidet.",
+          "Lege fest, welche Zonen kontrolliert werden, wie Funde dokumentiert werden und wer über Maßnahmen entscheidet.",
           "Nur so bleiben Eingriffe verhältnismässig und auditierbar."
         ],
         checklist: [
@@ -3546,7 +3546,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       }
     ],
     glossary: [
-      { term: "IPM", definition: "Integrierter Ansatz zur Prävention und Kontrolle von Schädlingen über mehrere Massnahmenebenen." },
+      { term: "IPM", definition: "Integrierter Ansatz zur Prävention und Kontrolle von Schädlingen über mehrere Maßnahmenebenen." },
       { term: "Quarantäne", definition: "Zeitlich und räumlich getrennte Beobachtung neuer Pflanzen oder Materialien." },
       { term: "Sticky Trap", definition: "Klebefalle zur Früherkennung fliegender Schädlinge und zur Trendbeobachtung." },
     ],
@@ -4714,7 +4714,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       },
       {
         title: "Kurz erklärt: Setting",
-        text: "Die äussere Umgebung, also Ort, Menschen, Sicherheit und Umstände rund um die Anwendung."
+        text: "Die äußere Umgebung, also Ort, Menschen, Sicherheit und Umstände rund um die Anwendung."
       }
     ],
     faq: [
@@ -5549,7 +5549,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     simpleExplainers: [
       {
         title: "Kurz erklärt: Lichtschutz",
-        text: "Massnahmen oder Materialien, die verhindern sollen, dass Licht sensible Inhaltsstoffe abbaut."
+        text: "Maßnahmen oder Materialien, die verhindern sollen, dass Licht sensible Inhaltsstoffe abbaut."
       },
       {
         title: "Kurz erklärt: Haltbarkeit",
@@ -6225,7 +6225,7 @@ const createLiteArticle = (seed: LiteArticleSeed): TerpiraArticle =>
       }
     ],
     glossary: [
-      { term: "Kriterium", definition: "Vorab festgelegter Massstab, an dem du etwas bewertest." },
+      { term: "Kriterium", definition: "Vorab festgelegter Maßstab, an dem du etwas bewertest." },
       { term: "Einordnung", definition: "Ein Ergebnis oder eine Beobachtung im richtigen Zusammenhang verstehen, statt isoliert zu betrachten." },
       { term: "Kontext", definition: "Die Rahmenbedingungen, die bestimmen, wie ein Ergebnis richtig einzuordnen ist." },
     ]
@@ -6398,6 +6398,21 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
   "genetik-und-phaenotyp-selektion": {
     growValue: "Definiere Selektionsziele vor dem Pheno-Hunt schriftlich – wer erst danach priorisiert, wählt nach Bauchgefühl.",
     qualityScore: 4,
+    growCategory: "yield",
+  },
+  "crossing-backcrossing-grundlagen": {
+    growValue: "Beim Rückkreuzen zählt die Generation, nicht nur der Elternteil – BX1 bringt dich erst auf einen Teil des Weges zur Rückkreuzungslinie zurück, meist braucht es BX2 oder BX3 für stabile Ergebnisse.",
+    qualityScore: 3,
+    growCategory: "yield",
+  },
+  "genetische-stabilitaet-ueber-generationen": {
+    growValue: "Teste genetische Stabilität mit mehreren Samen (6–12) derselben Charge nebeneinander unter identischen Bedingungen – einzelne einheitlich wirkende F1-Pflanzen sagen für sich allein nichts über die Stabilität der Linie aus.",
+    qualityScore: 3,
+    growCategory: "yield",
+  },
+  "selektionsscorecards-fuer-pheno-hunts": {
+    growValue: "Begrenze deine Pheno-Hunt-Scorecard auf 10–15 gewichtete Kriterien und bewerte möglichst blind, ohne die Sortenbezeichnung zu kennen – sonst verzerrt die Erwartungshaltung die Auswahl.",
+    qualityScore: 3,
     growCategory: "yield",
   },
   "feminisiert-vs-regular-vs-autoflower": {
