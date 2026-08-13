@@ -9,7 +9,7 @@ import type { TerpiraArticle, TerpiraCategory } from '@/lib/terpira/types';
 import { categoryLabels } from '@/data/terpira/wiki';
 import BookmarkButton from './BookmarkButton';
 import { CATEGORY_ICONS } from '@/lib/terpira/categoryIcons';
-import { FileText, BookOpen, Sparkles } from 'lucide-react';
+import { FileText, BookOpen, Sparkles, Bookmark } from 'lucide-react';
 
 const DIFFICULTY_DOT: Record<string, string> = {
   einsteiger: 'bg-blue-400',
@@ -83,7 +83,7 @@ function SavedStudiesPanel({ allArticles }: { allArticles: TerpiraArticle[] }) {
         <div className="mb-5 flex items-end justify-between">
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 tracking-widest uppercase mb-2">
-              🔖 Meine Sammlung
+              <Bookmark className="h-2.5 w-2.5" strokeWidth={2.5} /> Meine Sammlung
             </span>
             <h2 className="text-xl font-bold text-foreground">Gespeicherte Studien</h2>
           </div>
@@ -277,7 +277,7 @@ function RecommendedStudies({ allArticles }: { allArticles: TerpiraArticle[] }) 
       <div className="mx-auto max-w-6xl px-5 py-10">
         <div className="mb-5">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-50 border border-purple-200 px-2.5 py-0.5 text-[10px] font-bold text-purple-700 tracking-widest uppercase mb-2">
-            ✦ Empfohlen für dich
+            <Sparkles className="h-2.5 w-2.5" strokeWidth={2.5} /> Empfohlen für dich
           </span>
           <h2 className="text-xl font-bold text-foreground">Passend zu deinen Interessen</h2>
           <p className="mt-1 text-sm text-muted-fg">Artikel, die zu deiner Auswahl passen – noch nicht gelesen</p>

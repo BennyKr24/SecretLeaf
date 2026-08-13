@@ -2,15 +2,16 @@
 
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
+import type { ReactNode } from 'react';
 import type { TerpiraArticle } from '@/lib/terpira/types';
 import { categoryLabels } from '@/data/terpira/wiki';
 import BookmarkButton from './BookmarkButton';
 import { CATEGORY_ICONS } from '@/lib/terpira/categoryIcons';
-import { FileText } from 'lucide-react';
+import { FileText, Pin, Sprout, TrendingUp, Users, Flame } from 'lucide-react';
 
 type SectionDef = {
   id: string;
-  eyebrow: string;
+  eyebrow: ReactNode;
   eyebrowColor: string;
   title: string;
   subtitle: string;
@@ -87,7 +88,7 @@ export default function WeeklyValueBlocks({
   const sections: SectionDef[] = [
     {
       id: 'wichtig',
-      eyebrow: '📌 Diese Woche wichtig',
+      eyebrow: <span className="inline-flex items-center gap-1.5"><Pin className="h-2.5 w-2.5" strokeWidth={2.5} /> Diese Woche wichtig</span>,
       eyebrowColor: 'bg-red-50 border-red-200 text-red-700',
       title: 'Wichtigste Artikel der Woche',
       subtitle: 'Die relevantesten Beiträge – nach wissenschaftlicher Abdeckung',
@@ -97,7 +98,7 @@ export default function WeeklyValueBlocks({
     },
     {
       id: 'grow',
-      eyebrow: '🌱 Grow-Wissen',
+      eyebrow: <span className="inline-flex items-center gap-1.5"><Sprout className="h-2.5 w-2.5" strokeWidth={2.5} /> Grow-Wissen</span>,
       eyebrowColor: 'bg-emerald-50 border-emerald-200 text-emerald-700',
       title: 'Aktuelle Grow-Erkenntnisse',
       subtitle: 'Neues Wissen für bessere Ergebnisse beim Cannabis-Anbau',
@@ -107,7 +108,7 @@ export default function WeeklyValueBlocks({
     },
     {
       id: 'trends',
-      eyebrow: '📈 Markt & Entwicklung',
+      eyebrow: <span className="inline-flex items-center gap-1.5"><TrendingUp className="h-2.5 w-2.5" strokeWidth={2.5} /> Markt & Entwicklung</span>,
       eyebrowColor: 'bg-blue-50 border-blue-200 text-blue-700',
       title: 'Trends im Cannabis-Bereich',
       subtitle: 'Technologie, Genetik und Methoden im Überblick',
@@ -155,7 +156,7 @@ export default function WeeklyValueBlocks({
           <div className="mx-auto max-w-6xl px-5 py-12">
             <div className="mb-6">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-[10px] font-bold text-amber-700 tracking-widest uppercase mb-2">
-                👥 Community-Favoriten
+                <Users className="h-2.5 w-2.5" strokeWidth={2.5} /> Community-Favoriten
               </span>
               <h2 className="text-xl font-bold tracking-tight text-foreground">Beliebt bei Growern</h2>
               <p className="mt-1 text-sm text-muted-fg">Die meistgelesenen Artikel der Community</p>
@@ -186,7 +187,7 @@ export default function WeeklyValueBlocks({
                       {/* Social proof badges */}
                       <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
                         <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-100 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
-                          🔥 Beliebt
+                          <Flame className="h-2.5 w-2.5" strokeWidth={2.5} /> Beliebt
                         </span>
                         {sourceCount > 0 && (
                           <span className="rounded-md bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 text-[11px] font-bold text-emerald-700">

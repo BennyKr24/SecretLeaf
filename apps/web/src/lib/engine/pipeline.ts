@@ -28,6 +28,7 @@ import { deduplicateStudies } from "./dedup";
 import { classifyStudies } from "./classify";
 import type { ClassifyOverrides } from "./classify";
 import { scoreStudies } from "./score";
+import type { ScoreOverrides } from "./score";
 import { fetchExistingFingerprints, persistStudies } from "./storage";
 import { shouldPipelineRun } from "./monitor";
 import {
@@ -207,6 +208,7 @@ export async function runPipeline(
 
     // Load dynamic engine config from DB (if available)
     let classifyOverrides: ClassifyOverrides | undefined;
+    let scoreOverrides: ScoreOverrides | undefined;
     if (supabase) {
       const configLog = logs.createLogger("dynamic-config");
       try {
@@ -235,6 +237,33 @@ export async function runPipeline(
           const exclusions = dynConfig.custom_exclusions?.rules;
           if (exclusions && exclusions.length > 0) {
             classifyOverrides.extraExclusions = buildCustomExclusionRules(exclusions);
+          }
+
+          // Blocked sources — reuse the exclusion mechanism (a blocked
+          // publisher rejects the study outright, not just a lower score).
+          const blockedSources = dynConfig.blocked_sources?.sources;
+          if (blockedSources && blockedSources.length > 0) {
+            const blockRules = blockedSources.map((b) => ({
+              pattern: new RegExp(
+                b.pattern || b.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+                "i",
+              ),
+              reason: b.reason || `blocked-source:${b.name}`,
+            }));
+            classifyOverrides.extraExclusions = [
+              ...(classifyOverrides.extraExclusions ?? []),
+              ...blockRules,
+            ];
+          }
+
+          // Preferred sources + scoring weights
+          scoreOverrides = {};
+          const preferredSources = dynConfig.preferred_sources?.sources;
+          if (preferredSources && preferredSources.length > 0) {
+            scoreOverrides.preferredSources = preferredSources;
+          }
+          if (dynConfig.scoring_params?.weights) {
+            scoreOverrides.weights = dynConfig.scoring_params.weights;
           }
 
           // Cannabis anchor override
@@ -331,6 +360,7 @@ export async function runPipeline(
       classifyResult.classified,
       config.minAcceptScore,
       scoreLog,
+      scoreOverrides,
     );
 
     // ── Stage 6: Assemble ─────────────────────────────────────────────

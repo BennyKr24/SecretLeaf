@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import { Users, Pencil } from "lucide-react";
 
 type AdminUser = {
   id: string;
@@ -145,7 +146,7 @@ export default function AdminUsersPage() {
           <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Benutzer</span>
         </div>
         <div className="mt-1 flex items-center gap-3">
-          <span className="text-2xl">👥</span>
+          <Users className="h-6 w-6 text-emerald-600" strokeWidth={2} />
           <div>
             <h1 className="text-2xl font-bold text-foreground">Benutzerverwaltung</h1>
             <p className="text-sm text-muted-fg">Rollen verwalten, Benutzerkonten einsehen und administrieren.</p>
@@ -259,10 +260,10 @@ export default function AdminUsersPage() {
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() => { setEditingUser(user); setEditRole(user.role); }}
-                          className="rounded-lg px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 transition active:scale-90 hover:bg-emerald-100 dark:bg-emerald-950/40"
+                          className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 transition active:scale-90 hover:bg-emerald-100 dark:bg-emerald-950/40"
                           title="Rolle bearbeiten"
                         >
-                          ✎ Rolle
+                          <Pencil className="h-3 w-3" strokeWidth={2} /> Rolle
                         </button>
                         <button
                           onClick={() => setDeletingUser(user)}

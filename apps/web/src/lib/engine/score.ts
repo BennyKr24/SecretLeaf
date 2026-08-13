@@ -28,6 +28,18 @@ import {
   SOFT_SIGNALS,
 } from "./config";
 import type { PipelineLogger } from "./logger";
+import type { PreferredSource } from "./configLoader";
+
+// ── Dynamic Score Overrides ──────────────────────────────────────────────────
+
+export type ScoreWeights = Record<keyof typeof SCORE_WEIGHTS, number>;
+
+export type ScoreOverrides = {
+  /** Admin-configured publisher quality boosts, checked before the hardcoded lists. */
+  preferredSources?: PreferredSource[];
+  /** Admin-configured composite score weights, replacing SCORE_WEIGHTS wholesale. */
+  weights?: ScoreWeights;
+};
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -43,8 +55,15 @@ function scoreEvidence(studyType: StudyType): number {
 
 // ── Publisher Quality ───────────────────────────────────────────────────────
 
-function scorePublisher(publisher: string): number {
+function scorePublisher(publisher: string, preferredSources?: PreferredSource[]): number {
   const normalized = publisher.toLowerCase();
+
+  const dynamicMatch = preferredSources?.find(
+    (p) => p.enabled && normalized.includes(p.name.toLowerCase()),
+  );
+  if (dynamicMatch) {
+    return dynamicMatch.quality === "high" ? 90 : 68;
+  }
 
   if (HIGH_QUALITY_PUBLISHERS.some((hint) => normalized.includes(hint))) {
     return 90;
@@ -132,11 +151,13 @@ export function scoreStudy(
   study: NormalizedStudy,
   classification: ClassificationResult,
   minAcceptScore: number,
+  overrides?: ScoreOverrides,
 ): ScoringResult {
   const corpus = `${study.title} ${study.publisher} ${study.abstract ?? ""}`.toLowerCase();
+  const weights = overrides?.weights ?? SCORE_WEIGHTS;
 
   const evidenceLevel = scoreEvidence(classification.studyType);
-  const publisherQuality = scorePublisher(study.publisher);
+  const publisherQuality = scorePublisher(study.publisher, overrides?.preferredSources);
   const freshness = scoreFreshness(study.year);
   const topicFit = classification.topicFit;
   const editorialUtility = scoreEditorialUtility(corpus, classification.matchedTopics);
@@ -144,11 +165,11 @@ export function scoreStudy(
 
   // Weighted composite score
   let rawScore =
-    topicFit * SCORE_WEIGHTS.topicFit +
-    evidenceLevel * SCORE_WEIGHTS.evidenceLevel +
-    publisherQuality * SCORE_WEIGHTS.publisherQuality +
-    freshness * SCORE_WEIGHTS.freshness +
-    editorialUtility * SCORE_WEIGHTS.editorialUtility +
+    topicFit * weights.topicFit +
+    evidenceLevel * weights.evidenceLevel +
+    publisherQuality * weights.publisherQuality +
+    freshness * weights.freshness +
+    editorialUtility * weights.editorialUtility +
     softSignalDelta;
 
   // Penalty: no topic match
@@ -201,6 +222,7 @@ export function scoreStudies(
   items: Array<{ study: NormalizedStudy; classification: ClassificationResult }>,
   minAcceptScore: number,
   logger: PipelineLogger,
+  overrides?: ScoreOverrides,
 ): Array<{
   study: NormalizedStudy;
   classification: ClassificationResult;
@@ -209,7 +231,7 @@ export function scoreStudies(
   const results = items.map(({ study, classification }) => ({
     study,
     classification,
-    scoring: scoreStudy(study, classification, minAcceptScore),
+    scoring: scoreStudy(study, classification, minAcceptScore, overrides),
   }));
 
   const accepted = results.filter((r) => r.scoring.accepted);

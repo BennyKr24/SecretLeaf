@@ -12,6 +12,7 @@ import type { Route } from 'next';
 import { useGrowState } from '@/hooks/useGrowState';
 import type { Grow } from '@/lib/grow/types';
 import { GROW_STATUS_LABELS, GROW_UMGEBUNG_LABELS, GROW_MEDIUM_LABELS } from '@/lib/grow/types';
+import { Star, Leaf } from 'lucide-react';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -104,9 +105,11 @@ function GrowHistoryCard({ grow }: { grow: Grow }) {
       {harvest && (
         <div className="flex items-center gap-1 mb-4">
           {[1, 2, 3, 4, 5].map(star => (
-            <span key={star} className={`text-lg leading-none ${star <= harvest.rating ? 'text-amber-400' : 'text-border'}`}>
-              ★
-            </span>
+            <Star
+              key={star}
+              className={`h-4 w-4 ${star <= harvest.rating ? 'fill-amber-400 text-amber-400' : 'fill-border text-border'}`}
+              strokeWidth={0}
+            />
           ))}
         </div>
       )}
@@ -128,7 +131,7 @@ function GrowHistoryCard({ grow }: { grow: Grow }) {
 function EmptyHistory() {
   return (
     <div className="rounded-2xl border-2 border-dashed border-border py-16 text-center">
-      <p className="text-4xl mb-3">🌿</p>
+      <Leaf className="mx-auto mb-3 h-9 w-9 text-muted-fg" strokeWidth={1.5} />
       <p className="font-semibold text-foreground">Noch keine abgeschlossenen Grows</p>
       <p className="mt-1 text-sm text-muted-fg max-w-xs mx-auto">
         Sobald du einen Grow als &quot;Abgeschlossen&quot; markierst, erscheint er hier mit allen Stats.

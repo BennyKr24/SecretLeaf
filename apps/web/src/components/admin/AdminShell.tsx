@@ -3,6 +3,7 @@
 import { Link, usePathname } from "@/i18n/navigation";
 import type { ReactNode } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
+import { IconChip } from "@/components/ui/IconChip";
 import {
   Home,
   Bot,
@@ -13,6 +14,9 @@ import {
   BarChart3,
   Monitor,
   Wrench,
+  ShieldAlert,
+  Lock,
+  Leaf,
   type LucideIcon,
 } from "lucide-react";
 
@@ -75,7 +79,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="mx-auto max-w-md rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <p className="text-4xl">🔒</p>
+          <IconChip icon={Lock} tone="muted" size="lg" className="mx-auto" />
           <h1 className="mt-4 text-2xl font-bold text-foreground">Administratoranmeldung erforderlich</h1>
           <p className="mt-2 text-sm text-muted-fg">Bitte melde dich mit einem Admin-Konto an.</p>
           <Link
@@ -93,7 +97,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="mx-auto max-w-md rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
-          <p className="text-4xl">⛔</p>
+          <IconChip icon={ShieldAlert} tone="rose" size="lg" className="mx-auto" />
           <h1 className="mt-4 text-2xl font-bold text-foreground">Zugriff verweigert</h1>
           <p className="mt-2 text-sm text-muted-fg">Dein Konto verfügt nicht über Admin-Berechtigungen.</p>
           <Link
@@ -119,7 +123,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
         {/* Logo */}
         <div className="border-b border-border px-5 py-4">
           <Link href="/" className="flex items-center gap-2.5 text-base font-bold text-foreground">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-sm">🌿</span>
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-sm">
+              <Leaf className="h-3.5 w-3.5 text-white" strokeWidth={2} />
+            </span>
             <span>SecretLeaf</span>
           </Link>
           <div className="mt-2 flex items-center gap-1.5">

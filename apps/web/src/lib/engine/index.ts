@@ -51,7 +51,6 @@ export { recordFeedback, recordFeedbackBatch, computeFeedbackAggregates, topEnga
 export {
   computeAdaptiveWeights,
   saveWeightAdjustment,
-  loadLatestWeights,
   buildStudyProfiles,
   BASELINE_WEIGHTS,
 } from "./adaptive";

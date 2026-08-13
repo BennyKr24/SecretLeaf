@@ -15,6 +15,7 @@ import {
   type VPDOutput,
 } from '@/lib/tools/vpd';
 import SaveToGrowButton from '@/components/tools/SaveToGrowButton';
+import { BarChart3 } from 'lucide-react';
 
 const meta = getToolBySlug('vpd')!;
 
@@ -324,7 +325,9 @@ export default function VpdPage() {
 
           {/* Phase reference card */}
           <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <h3 className="mb-3 text-sm font-bold text-foreground">📊 VPD-Zielbereiche</h3>
+            <h3 className="mb-3 flex items-center gap-1.5 text-sm font-bold text-foreground">
+              <BarChart3 className="h-4 w-4" strokeWidth={2} /> VPD-Zielbereiche
+            </h3>
             <div className="space-y-2">
               {(['saemling', 'veg', 'bluete'] as const).map((p) => {
                 const isActive = inputs.phase === p;

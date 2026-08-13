@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import { Monitor } from "lucide-react";
 
 type SystemStats = {
   usersByRole: Record<string, number>;
@@ -80,7 +81,7 @@ export default function AdminSystemPage() {
           <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">System</span>
         </div>
         <div className="mt-1 flex items-center gap-3">
-          <span className="text-2xl">🖥️</span>
+          <Monitor className="h-6 w-6 text-emerald-600" strokeWidth={2} />
           <div>
             <h1 className="text-2xl font-bold text-foreground">System</h1>
             <p className="text-sm text-muted-fg">Systemstatistiken, Benutzer-Metriken und Konfiguration im Überblick.</p>

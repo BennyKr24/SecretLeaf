@@ -43,7 +43,6 @@ type EngineConfig = {
   blocked_sources: { sources: BlockedSource[] };
   custom_exclusions: { rules: CustomExclusion[] };
   topic_clusters: {
-    overrides: Record<string, unknown>;
     customClusters: CustomCluster[];
   };
   scoring_params: ScoringParams;

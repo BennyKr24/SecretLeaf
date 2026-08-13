@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import { BarChart3 } from "lucide-react";
 
 type AnalyticsData = {
   topStudies: Array<{
@@ -80,7 +81,7 @@ export default function AdminAnalyticsPage() {
           <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Analytics</span>
         </div>
         <div className="mt-1 flex items-center gap-3">
-          <span className="text-2xl">📊</span>
+          <BarChart3 className="h-6 w-6 text-emerald-600" strokeWidth={2} />
           <div>
             <h1 className="text-2xl font-bold text-foreground">Analytics</h1>
             <p className="text-sm text-muted-fg">Studienperformance, Quellen und Engagement-Metriken.</p>

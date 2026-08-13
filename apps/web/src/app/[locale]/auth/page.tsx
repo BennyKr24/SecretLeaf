@@ -8,6 +8,7 @@ import AuthInput from '@/components/auth/AuthInput';
 import PasswordField from '@/components/auth/PasswordField';
 import PasswordStrength, { MIN_PASSWORD_LENGTH } from '@/components/auth/PasswordStrength';
 import AuthBenefits from '@/components/auth/AuthBenefits';
+import { Lock, Shield, Mail, Gift, Leaf, type LucideIcon } from 'lucide-react';
 
 /** Path users are redirected to after password reset email is sent */
 const RESET_REDIRECT_PATH = '/auth/reset';
@@ -58,11 +59,11 @@ function sanitizeError(raw: string): string {
   return 'Etwas ist schiefgelaufen. Bitte versuche es erneut.';
 }
 
-const trustItems = [
-  { icon: '🔒', label: 'SSL-verschlüsselt' },
-  { icon: '🛡', label: 'Datenschutzkonform' },
-  { icon: '✉', label: 'Kein Spam' },
-  { icon: '🎁', label: 'Kostenlos starten' },
+const trustItems: Array<{ icon: LucideIcon; label: string }> = [
+  { icon: Lock, label: 'SSL-verschlüsselt' },
+  { icon: Shield, label: 'Datenschutzkonform' },
+  { icon: Mail, label: 'Kein Spam' },
+  { icon: Gift, label: 'Kostenlos starten' },
 ];
 
 function Spinner() {
@@ -209,7 +210,9 @@ function AuthPageInner() {
         </div>
         <div className="relative z-10">
           <Link href="/" className="inline-flex items-center gap-2.5 group mb-14">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-base transition-transform [@media(hover:hover)]:group-hover:scale-110">🌿</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 text-base transition-transform [@media(hover:hover)]:group-hover:scale-110">
+              <Leaf className="h-4 w-4 text-white" strokeWidth={2} />
+            </span>
             <span className="text-lg font-bold text-white tracking-tight">SecretLeaf</span>
           </Link>
           <div className="mb-10">
@@ -228,7 +231,7 @@ function AuthPageInner() {
           <div className="grid grid-cols-2 gap-3">
             {trustItems.map(t => (
               <div key={t.label} className="flex items-center gap-2 text-[12px] text-slate-400">
-                <span className="text-emerald-500">{t.icon}</span>
+                <t.icon className="h-3.5 w-3.5 text-emerald-500" strokeWidth={2} />
                 {t.label}
               </div>
             ))}
@@ -241,7 +244,9 @@ function AuthPageInner() {
         {/* Mobile logo */}
         <div className="lg:hidden mb-8">
           <Link href="/" className="inline-flex items-center gap-2 group">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-sm transition-transform [@media(hover:hover)]:group-hover:scale-110">🌿</span>
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-600 text-sm transition-transform [@media(hover:hover)]:group-hover:scale-110">
+              <Leaf className="h-3.5 w-3.5 text-white" strokeWidth={2} />
+            </span>
             <span className="text-[15px] font-bold text-foreground tracking-tight">SecretLeaf</span>
           </Link>
         </div>
@@ -422,7 +427,7 @@ function AuthPageInner() {
           <div className="lg:hidden mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2">
             {trustItems.map(t => (
               <span key={t.label} className="flex items-center gap-1.5 text-[11px] text-muted-fg">
-                <span className="text-emerald-500">{t.icon}</span>
+                <t.icon className="h-3 w-3 text-emerald-500" strokeWidth={2} />
                 {t.label}
               </span>
             ))}

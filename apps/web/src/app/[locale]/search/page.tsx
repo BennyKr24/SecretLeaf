@@ -5,12 +5,20 @@ import { useRouter, Link } from '@/i18n/navigation';
 import { useSearchParams } from 'next/navigation';
 import type { Route } from 'next';
 import type { SearchResponse, SearchResult, SearchResultKind } from '@/lib/search/engine';
+import { BookOpen, Leaf, BookMarked, Microscope, Search, Database, Wrench, type LucideIcon } from 'lucide-react';
+
+const KIND_ICON: Record<SearchResultKind, LucideIcon> = {
+  wiki: BookOpen,
+  fertilizer: Leaf,
+  glossary: BookMarked,
+  source: Microscope,
+};
 
 const KIND_LABEL: Record<SearchResultKind, string> = {
-  wiki: '📚 Studien',
-  fertilizer: '🌿 Dünger',
-  glossary: '📖 Glossar',
-  source: '🔬 Quelle',
+  wiki: 'Studien',
+  fertilizer: 'Dünger',
+  glossary: 'Glossar',
+  source: 'Quelle',
 };
 
 const KIND_COLOR: Record<SearchResultKind, string> = {
@@ -34,17 +42,15 @@ function HighlightedText({ text }: { text: string }) {
 }
 
 function ResultCard({ result }: { result: SearchResult }) {
+  const KindIcon = KIND_ICON[result.kind];
   return (
     <Link
       href={result.url as Route}
       className="group block bg-card rounded-xl border border-border hover:border-emerald-300 hover:shadow-md transition-[border-color,box-shadow] duration-200 p-5"
     >
       <div className="flex items-start gap-4">
-        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-background border border-border flex items-center justify-center text-lg">
-          {result.kind === 'wiki' && '📚'}
-          {result.kind === 'fertilizer' && '🌿'}
-          {result.kind === 'glossary' && '📖'}
-          {result.kind === 'source' && '🔬'}
+        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-background border border-border flex items-center justify-center">
+          <KindIcon className="h-4.5 w-4.5 text-emerald-600" strokeWidth={1.75} />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -56,8 +62,8 @@ function ResultCard({ result }: { result: SearchResult }) {
                 {result.badge}
               </span>
             )}
-            <span className={`ml-auto px-2 py-0.5 rounded-full text-xs font-medium border ${KIND_COLOR[result.kind]}`}>
-              {KIND_LABEL[result.kind]}
+            <span className={`ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border ${KIND_COLOR[result.kind]}`}>
+              <KindIcon className="h-3 w-3" strokeWidth={2} /> {KIND_LABEL[result.kind]}
             </span>
           </div>
           <p className="text-xs text-muted-fg mb-2">{result.subtitle}</p>
@@ -131,9 +137,9 @@ function SearchContent() {
   };
 
   const kinds: Array<SearchResultKind | 'all'> = ['all', 'wiki', 'fertilizer', 'glossary', 'source'];
-  const kindLabel: Record<string, string> = {
-    all: 'Alle', wiki: '📚 Studien', fertilizer: '🌿 Dünger',
-    glossary: '📖 Glossar', source: '🔬 Quellen',
+  const kindFilterLabel: Record<string, string> = {
+    all: 'Alle', wiki: 'Studien', fertilizer: 'Dünger',
+    glossary: 'Glossar', source: 'Quellen',
   };
 
   return (
@@ -194,17 +200,19 @@ function SearchContent() {
         <div className="flex flex-wrap gap-2 mb-6">
           {kinds.map((k) => {
             const count = k === 'all' ? data?.totalResults : (data?.facets.byKind[k as SearchResultKind] ?? 0);
+            const KindIcon = k === 'all' ? null : KIND_ICON[k];
             return (
               <button
                 key={k}
                 onClick={() => handleKindChange(k)}
-                className={`px-4 py-2 rounded-xl text-sm font-medium border transition-[transform,background-color,border-color,color] duration-150 active:scale-[0.97] ${
+                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium border transition-[transform,background-color,border-color,color] duration-150 active:scale-[0.97] ${
                   activeKind === k
                     ? 'bg-emerald-600 text-white border-emerald-600'
                     : 'bg-card text-foreground/80 border-border hover:border-emerald-300'
                 }`}
               >
-                {kindLabel[k]}
+                {KindIcon && <KindIcon className="h-3.5 w-3.5" strokeWidth={2} />}
+                {kindFilterLabel[k]}
                 {data && count !== undefined && (
                   <span className={`ml-2 text-xs ${activeKind === k ? 'text-emerald-200' : 'text-muted-fg'}`}>
                     {count}
@@ -251,7 +259,7 @@ function SearchContent() {
 
         {!isPending && data?.isEmpty && (
           <div className="text-center py-16">
-            <p className="text-4xl mb-3">🔍</p>
+            <Search className="mx-auto mb-3 h-9 w-9 text-muted-fg" strokeWidth={1.5} />
             <h2 className="text-xl font-bold text-foreground mb-2">Keine Treffer gefunden</h2>
             <p className="text-muted-fg mb-4">Für „{data.query}“ gibt es keine Ergebnisse.</p>
             {data.suggestions.length > 0 && (
@@ -298,18 +306,18 @@ function SearchContent() {
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { label: '📚 Studien', href: '/studies', count: '13' },
-                { label: '🗂 Datenbank', href: '/database', count: '1+' },
-                { label: '🧰 Werkzeuge', href: '/tools', count: '1+' },
-                { label: '🔬 Quellen', href: '/studies/sources', count: '41' },
+                { icon: BookOpen, label: 'Studien', href: '/studies', count: '13' },
+                { icon: Database, label: 'Datenbank', href: '/database', count: '1+' },
+                { icon: Wrench, label: 'Werkzeuge', href: '/tools', count: '1+' },
+                { icon: Microscope, label: 'Quellen', href: '/studies/sources', count: '41' },
               ].map((item) => (
                 <Link
                   key={item.href}
                   href={item.href as Route}
                   className="bg-card border border-border hover:border-emerald-300 rounded-xl p-4 text-center transition-[border-color,box-shadow] duration-200 hover:shadow-sm"
                 >
-                  <div className="text-2xl mb-1">{item.label.split(' ')[0]}</div>
-                  <div className="text-sm font-medium text-foreground/80">{item.label.slice(3)}</div>
+                  <item.icon className="mx-auto mb-1 h-6 w-6 text-emerald-600" strokeWidth={1.75} />
+                  <div className="text-sm font-medium text-foreground/80">{item.label}</div>
                   <div className="text-xs text-muted-fg mt-1">{item.count}</div>
                 </Link>
               ))}

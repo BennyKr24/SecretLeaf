@@ -8,6 +8,7 @@ import type { ToolMeta, ToolCategory } from '@/lib/tools/types';
 import { toolCategoryLabel, toolCategoryIcon, toolCategoryColor, toolCategoryAccent } from '@/lib/tools/types';
 import { getToolBySlug } from '@/lib/tools/registry';
 import type { ReactNode } from 'react';
+import { Lightbulb } from 'lucide-react';
 
 type Props = {
   meta: ToolMeta;
@@ -84,7 +85,9 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
         {/* Praxis-Tipps */}
         {tips && tips.length > 0 && (
           <section className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <h3 className="mb-3 text-sm font-bold text-foreground">💡 Praxistipps</h3>
+            <h3 className="mb-3 flex items-center gap-1.5 text-sm font-bold text-foreground">
+              <Lightbulb className="h-4 w-4" strokeWidth={2} /> Praxistipps
+            </h3>
             <ul className="space-y-2.5">
               {tips.map((tip) => (
                 <li key={tip} className="flex items-start gap-2.5 text-sm text-foreground/80">

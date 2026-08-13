@@ -48,6 +48,27 @@
   --accent-gold:      #c9a15a;
   --accent-gold-dark: #a8813f;
 
+  /* ── RGB triplets, kept in lockstep with the hex values above ──
+     Tailwind's opacity modifiers (bg-card/80 etc.) need a color in the
+     `rgb(var(--x) / <alpha-value>)` shape to work — a plain var(--hex)
+     reference can't have an alpha channel spliced in, so Tailwind silently
+     generates no rule at all for `/NN` variants of these tokens (found via
+     an invisible base-ui Select popup, 2026-08-13 — see TODO.md). Hex vars
+     above stay as-is for existing direct var(--x) consumers; these are
+     purely additive for Tailwind's opacity-modifier machinery. */
+  --bg-rgb:           7 15 11;
+  --surface-rgb:      12 23 18;
+  --text-rgb:         243 246 242;
+  --muted-rgb:        143 163 150;
+  --primary-rgb:      31 169 113;
+  --primary-dark-rgb: 22 135 90;
+  --primary-deep-rgb: 15 50 38;
+  --brand-hero-rgb:   7 19 13;
+  --line-rgb:         28 43 34;
+  --ring-rgb:         31 169 113;
+  --accent-gold-rgb:      201 161 90;
+  --accent-gold-dark-rgb: 168 129 63;
+
   /* ── Spacing / radius tokens ── */
   --radius-sm:  0.5rem;
   --radius-md:  0.75rem;
@@ -72,6 +93,13 @@
   --foreground:       var(--text);
   --border:           var(--line);
   --muted-foreground: var(--muted);
+
+  /* ── Same aliasing, RGB-triplet side (see comment above) ── */
+  --background-rgb:       var(--bg-rgb);
+  --card-rgb:             var(--surface-rgb);
+  --foreground-rgb:       var(--text-rgb);
+  --border-rgb:           var(--line-rgb);
+  --muted-foreground-rgb: var(--muted-rgb);
 }
 
 .dark {
@@ -87,6 +115,17 @@
   --accent-gold:      #c9a15a;
   --accent-gold-dark: #a8813f;
   /* ── Aliases auto-update via var() resolution — no duplication needed ── */
+
+  --bg-rgb:           7 15 11;
+  --surface-rgb:      12 23 18;
+  --text-rgb:         243 246 242;
+  --muted-rgb:        143 163 150;
+  --primary-rgb:      31 169 113;
+  --primary-dark-rgb: 22 135 90;
+  --line-rgb:         28 43 34;
+  --ring-rgb:         31 169 113;
+  --accent-gold-rgb:      201 161 90;
+  --accent-gold-dark-rgb: 168 129 63;
 }
 
 * {

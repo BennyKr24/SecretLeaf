@@ -163,7 +163,20 @@ export async function runMigration(
 
   // ── 3. Upsert log entries (chunked) ──────────────────────────────────────────
   if (entries.length > 0) {
-    const entryRows = entries.map((e) => ({
+    // Skip entries whose grow_id isn't in this batch's upserted grows (e.g.
+    // orphaned local data from a deleted/already-migrated grow) instead of
+    // letting one bad row's FK violation abort the entire chunk.
+    const growIds = new Set(grows.map((g) => g.id));
+    const validEntries = entries.filter((e) => growIds.has(e.growId));
+    const orphanedEntries = entries.filter((e) => !growIds.has(e.growId));
+    if (orphanedEntries.length > 0) {
+      console.warn(
+        `[migration] skipping ${orphanedEntries.length} log entr${orphanedEntries.length === 1 ? "y" : "ies"} with a grow_id not present in this upload batch:`,
+        orphanedEntries.map((e) => ({ id: e.id, growId: e.growId })),
+      );
+    }
+
+    const entryRows = validEntries.map((e) => ({
       id: e.id,
       grow_id: e.growId,
       user_id: userId,

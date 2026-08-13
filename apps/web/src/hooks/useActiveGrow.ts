@@ -11,10 +11,16 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import { useCallback, useEffect, useState } from "react";
-import { getActiveGrow } from "@/lib/grow/store";
+import { getActiveGrow, getGrows } from "@/lib/grow/store";
 import type { Grow } from "@/lib/grow/types";
+import { useAuth } from "@/hooks/useAuth";
+import { usePathname } from "@/i18n/navigation";
+import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
+import { restoreGrowsFromSupabase } from "@/lib/grow/restore";
 
 export function useActiveGrow(): Grow | null {
+  const { user } = useAuth();
+  const pathname = usePathname();
   const [activeGrow, setActiveGrowState] = useState<Grow | null>(null);
 
   const refresh = useCallback(() => {
@@ -26,6 +32,31 @@ export function useActiveGrow(): Grow | null {
     const t = setTimeout(refresh, 0);
     return () => clearTimeout(t);
   }, [refresh]);
+
+  // Re-sync on every route change. A `secretleaf:activeGrowChanged` dispatch
+  // that lands right before router.push() (e.g. GrowSetupWizard's submit)
+  // can be dropped by Next.js's navigation transition — live-observed
+  // 2026-08-12: NavigationBar stuck showing "no active grow" after creating
+  // a new grow, even though localStorage already had the correct data.
+  // Re-checking on pathname change is independent of that event timing.
+  useEffect(() => {
+    const t = setTimeout(refresh, 0);
+    return () => clearTimeout(t);
+  }, [pathname, refresh]);
+
+  // Logged-in users on a fresh device/browser have no local grows yet —
+  // restore from Supabase (shared with useGrowState) so the nav bar doesn't
+  // show "no active grow" until the user happens to visit a grow page first.
+  useEffect(() => {
+    if (!user) return;
+    if (getGrows().length > 0) return;
+    const supabase = getSupabaseBrowserClient();
+    restoreGrowsFromSupabase(supabase)
+      .then(() => refresh())
+      .catch((err) => {
+        console.error("[useActiveGrow] Supabase restore failed:", err);
+      });
+  }, [user, refresh]);
 
   useEffect(() => {
     const handleStorage = (e: StorageEvent) => {

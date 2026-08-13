@@ -36,24 +36,29 @@ const config: Config = {
         '7xl': ['4.5rem', { lineHeight: '1.02', letterSpacing: '-0.035em' }],
       },
       colors: {
-        // Semantic tokens — resolved from CSS custom properties in globals.css
+        // Semantic tokens — resolved from CSS custom properties in globals.css.
+        // `rgb(var(--x-rgb) / <alpha-value>)` (not plain `var(--x)`) so
+        // opacity modifiers work: bg-card/80, border-border/40, etc.
+        // Tailwind can't splice an alpha channel into a bare hex var, so a
+        // plain `var(--x)` reference silently produces no CSS rule at all
+        // for any `/NN` usage — see TODO.md, found 2026-08-13.
         // Usage: bg-background, text-foreground, bg-card, border-border
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
-        card: 'var(--card)',
-        surface: 'var(--surface)',
-        border: { DEFAULT: 'var(--border)' },
-        'muted-fg': 'var(--muted-foreground)',
-        ring: 'var(--ring)',
-        primary: 'var(--primary)',
-        'primary-dark': 'var(--primary-dark)',
-        'primary-deep': 'var(--primary-deep)',
-        'brand-hero': 'var(--brand-hero)',
+        background: 'rgb(var(--background-rgb) / <alpha-value>)',
+        foreground: 'rgb(var(--foreground-rgb) / <alpha-value>)',
+        card: 'rgb(var(--card-rgb) / <alpha-value>)',
+        surface: 'rgb(var(--surface-rgb) / <alpha-value>)',
+        border: { DEFAULT: 'rgb(var(--border-rgb) / <alpha-value>)' },
+        'muted-fg': 'rgb(var(--muted-foreground-rgb) / <alpha-value>)',
+        ring: 'rgb(var(--ring-rgb) / <alpha-value>)',
+        primary: 'rgb(var(--primary-rgb) / <alpha-value>)',
+        'primary-dark': 'rgb(var(--primary-dark-rgb) / <alpha-value>)',
+        'primary-deep': 'rgb(var(--primary-deep-rgb) / <alpha-value>)',
+        'brand-hero': 'rgb(var(--brand-hero-rgb) / <alpha-value>)',
         // Secondary accent (DESIGN_SYSTEM.md palette, 2026-08-07) — muted
         // brass/gold for premium moments (PRO badges, ratings, highlights).
         // Use sparingly; primary green stays the dominant brand color.
-        gold: 'var(--accent-gold)',
-        'gold-dark': 'var(--accent-gold-dark)',
+        gold: 'rgb(var(--accent-gold-rgb) / <alpha-value>)',
+        'gold-dark': 'rgb(var(--accent-gold-dark-rgb) / <alpha-value>)',
       },
     },
   },

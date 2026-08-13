@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import { Settings } from "lucide-react";
 
 type RunLog = {
   id: string;
@@ -129,7 +130,7 @@ export default function AdminEnginePage() {
           <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Engine</span>
         </div>
         <div className="mt-1 flex items-center gap-3">
-          <span className="text-2xl">⚙️</span>
+          <Settings className="h-6 w-6 text-emerald-600" strokeWidth={2} />
           <div>
             <h1 className="text-2xl font-bold text-foreground">Engine Control</h1>
             <p className="text-sm text-muted-fg">Pipeline manuell steuern, adaptive Weights triggern, Logs einsehen.</p>

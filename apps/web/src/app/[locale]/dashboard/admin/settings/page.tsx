@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import { Wrench } from "lucide-react";
 
 type SettingsData = {
   weights: Record<string, number>;
@@ -103,7 +104,7 @@ export default function AdminSettingsPage() {
           <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Einstellungen</span>
         </div>
         <div className="mt-1 flex items-center gap-3">
-          <span className="text-2xl">🔧</span>
+          <Wrench className="h-6 w-6 text-emerald-600" strokeWidth={2} />
           <div>
             <h1 className="text-2xl font-bold text-foreground">Einstellungen</h1>
             <p className="text-sm text-muted-fg">Scoring Weights, Pipeline-Defaults und Systemeinstellungen konfigurieren.</p>

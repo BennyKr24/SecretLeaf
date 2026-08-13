@@ -6,7 +6,7 @@ import type { Route } from 'next';
 import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 import type { TerpiraArticle, TerpiraCategory, TerpiraDifficulty } from '@/lib/terpira/types';
 import { CATEGORY_ICONS } from '@/lib/terpira/categoryIcons';
-import { FileText, LayoutGrid, type LucideIcon } from 'lucide-react';
+import { FileText, LayoutGrid, Bookmark, X, Microscope, Leaf, Search, type LucideIcon } from 'lucide-react';
 
 // ─── Typen & Konfiguration ───────────────────────────────────────────────────
 
@@ -147,7 +147,7 @@ function ArticleCard({ article, categoryLabel, isNew, isBookmarked, onToggleBook
                   : 'border-border bg-card text-muted-fg hover:border-amber-200 hover:text-amber-600'
                 }`}
             >
-              {isBookmarked ? '★' : '☆'}
+              <Bookmark className="h-3 w-3" strokeWidth={2} fill={isBookmarked ? 'currentColor' : 'none'} />
             </button>
             {isNew && (
               <span className="inline-flex rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold text-emerald-700">
@@ -481,7 +481,7 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
           {localSearch && (
             <button onClick={() => setLocalSearch('')}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-fg hover:text-foreground/80 transition-transform duration-150 active:scale-90">
-              ✕
+              <X className="h-3.5 w-3.5" strokeWidth={2} />
             </button>
           )}
         </div>
@@ -654,19 +654,19 @@ export default function WikiHubClient({ articles, categoryLabels, totalSources }
             className="inline-flex items-center gap-1.5 rounded-lg border border-border
               bg-background px-3 py-2 text-sm text-foreground/80 hover:border-emerald-300
               hover:bg-emerald-50 hover:text-emerald-800 transition-colors duration-200">
-            🔬 {totalSources} Wissenschaftliche Quellen
+            <Microscope className="h-4 w-4" strokeWidth={2} /> {totalSources} Wissenschaftliche Quellen
           </Link>
           <Link href={"/database/fertilizers" as Route}
             className="inline-flex items-center gap-1.5 rounded-lg border border-border
               bg-background px-3 py-2 text-sm text-foreground/80 hover:border-amber-300
               hover:bg-amber-50 hover:text-amber-800 transition-colors duration-200">
-            🌿 Dünger-Katalog
+            <Leaf className="h-4 w-4" strokeWidth={2} /> Dünger-Katalog
           </Link>
           <Link href={"/search" as Route}
           className="inline-flex items-center gap-1.5 rounded-lg border border-border
               bg-background px-3 py-2 text-sm text-foreground/80 hover:border-cyan-300
               hover:bg-cyan-50 hover:text-cyan-800 transition-colors duration-200">
-            🔍 Volltext-Suche
+            <Search className="h-4 w-4" strokeWidth={2} /> Volltext-Suche
           </Link>
         </div>
         <p className="mt-4 text-xs text-muted-fg">
@@ -713,7 +713,7 @@ function EmptyState({ onReset, query, suggestions, onSelectSuggestion }: {
 }) {
   return (
     <div className="rounded-2xl border-2 border-dashed border-border bg-background py-16 text-center">
-      <div className="text-4xl mb-3">🔍</div>
+      <Search className="mx-auto mb-3 h-9 w-9 text-muted-fg" strokeWidth={1.5} />
       <p className="font-semibold text-foreground/80">Keine Artikel gefunden</p>
       <p className="mt-1 text-sm text-muted-fg">
         Für „{query || 'deine Suche'}“ gab es keine Treffer. Probiere andere Begriffe oder eine Kategorie.

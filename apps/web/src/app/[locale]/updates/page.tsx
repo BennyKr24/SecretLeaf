@@ -10,6 +10,7 @@ import {
 } from '@/lib/updates';
 import type { UpdateEntry } from '@/lib/updates';
 import { CategoryFilterLink } from './client';
+import { Leaf } from 'lucide-react';
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
 
@@ -240,7 +241,7 @@ export default async function UpdatesPage({
       <section className="mx-auto max-w-4xl px-5 py-10 sm:py-14">
         {filteredUpdates.length === 0 ? (
           <div className="flex flex-col items-center gap-3 py-20 text-center">
-            <p className="text-2xl">🌿</p>
+            <Leaf className="h-6 w-6 text-muted-fg" strokeWidth={1.5} />
             <p className="text-base font-semibold text-foreground">
               Keine Updates in dieser Kategorie
             </p>

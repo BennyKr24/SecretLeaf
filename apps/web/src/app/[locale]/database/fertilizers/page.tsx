@@ -21,6 +21,7 @@ import {
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
+import { Sprout, Flower2, Settings, Search, List, Star } from 'lucide-react';
 
 type SortField = 'best-match' | 'name' | 'npk-total' | 'cost' | 'ec-min' | 'ppfd-min';
 type ViewMode = 'grid' | 'list';
@@ -44,10 +45,10 @@ type FilterProfile = {
 
 const FILTER_PROFILE_STORAGE_KEY = 'secretleaf.fertilizerFilterProfiles.v1';
 
-const phaseLabelMap: Record<FertilizerPhase, string> = {
-  veg: '🌱 Veg',
-  flower: '🌸 Blüte',
-  universal: '⚙️ Universal'
+const phaseLabelMap: Record<FertilizerPhase, ReactNode> = {
+  veg: <span className="inline-flex items-center gap-1"><Sprout className="h-3.5 w-3.5" strokeWidth={2} />Veg</span>,
+  flower: <span className="inline-flex items-center gap-1"><Flower2 className="h-3.5 w-3.5" strokeWidth={2} />Blüte</span>,
+  universal: <span className="inline-flex items-center gap-1"><Settings className="h-3.5 w-3.5" strokeWidth={2} />Universal</span>,
 };
 
 const baseLabelMap: Record<FertilizerBase, string> = {
@@ -731,7 +732,7 @@ function FertilizersPageInner() {
               )}
               <Dropdown value={viewMode} onChange={(v) => setViewMode(v as ViewMode)}>
                 <DropdownOption value="grid">⊞ Kacheln</DropdownOption>
-                <DropdownOption value="list">☰ Liste</DropdownOption>
+                <DropdownOption value="list"><span className="inline-flex items-center gap-1.5"><List className="h-3.5 w-3.5" strokeWidth={2} />Liste</span></DropdownOption>
               </Dropdown>
             </div>
           </div>
@@ -843,7 +844,7 @@ function FertilizersPageInner() {
         {/* No results */}
         {totalVisible === 0 ? (
           <div className="rounded-2xl border border-border bg-background py-16 text-center">
-            <p className="text-2xl">🔍</p>
+            <Search className="mx-auto h-7 w-7 text-muted-fg" strokeWidth={1.5} />
             <p className="mt-3 font-semibold text-foreground/80">Keine Dünger gefunden</p>
             <p className="mt-1 text-sm text-muted-fg">Versuche weniger Filter oder eine andere Suche.</p>
             {suggestedQueries.length > 0 && (
@@ -932,9 +933,21 @@ function FertilizersPageInner() {
                         <span className="font-bold text-orange-500">P {fert.npk.p}</span>
                         <span className="font-bold text-red-500">K {fert.npk.k}</span>
                         <span className="ml-auto text-muted-fg">EC {fert.ec_range.min}–{fert.ec_range.max}</span>
-                        {fert.yeild_potential === 'very_high' && <span title="Sehr hohes Ertragspotenzial" className="text-amber-500">★★★</span>}
-                        {fert.yeild_potential === 'high' && <span title="Hohes Ertragspotenzial" className="text-amber-400">★★</span>}
-                        {fert.yeild_potential === 'average' && <span title="Durchschnittliches Ertragspotenzial" className="text-muted-fg">★</span>}
+                        {fert.yeild_potential === 'very_high' && (
+                          <span title="Sehr hohes Ertragspotenzial" className="flex items-center text-amber-500">
+                            {[0, 1, 2].map((i) => <Star key={i} className="h-3 w-3 fill-current" strokeWidth={0} />)}
+                          </span>
+                        )}
+                        {fert.yeild_potential === 'high' && (
+                          <span title="Hohes Ertragspotenzial" className="flex items-center text-amber-400">
+                            {[0, 1].map((i) => <Star key={i} className="h-3 w-3 fill-current" strokeWidth={0} />)}
+                          </span>
+                        )}
+                        {fert.yeild_potential === 'average' && (
+                          <span title="Durchschnittliches Ertragspotenzial" className="flex items-center text-muted-fg">
+                            <Star className="h-3 w-3 fill-current" strokeWidth={0} />
+                          </span>
+                        )}
                       </div>
 
                       {/* Tags (max 3) */}

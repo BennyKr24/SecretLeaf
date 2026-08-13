@@ -15,6 +15,7 @@
 import type { ClassificationResult, NormalizedStudy, StudyType, TopicKey } from "./types";
 import {
   CANNABIS_ANCHOR,
+  CANNABIS_ANCHOR_UNAMBIGUOUS,
   HARD_EXCLUSIONS,
   SOFT_SIGNALS,
   TOPIC_CLUSTERS,
@@ -93,6 +94,14 @@ function validateCannabisAnchor(
 ): string | null {
   const anchor = anchorOverride ?? CANNABIS_ANCHOR;
   if (!anchor.test(corpus)) {
+    return "no-cannabis-anchor";
+  }
+
+  // Default anchor only (dynamic admin overrides keep their existing
+  // behavior unchanged): ambiguous acronyms/terms (thc/cbd/terpene/...)
+  // collide with unrelated fields when used alone — require an unmistakable
+  // cannabis term somewhere in the corpus too.
+  if (!anchorOverride && !CANNABIS_ANCHOR_UNAMBIGUOUS.test(corpus)) {
     return "no-cannabis-anchor";
   }
 

@@ -134,8 +134,26 @@ export const MID_QUALITY_PUBLISHERS: string[] = [
 
 // ── Cannabis Anchor Pattern ─────────────────────────────────────────────────
 
-export const CANNABIS_ANCHOR =
-  /medical cannabis|cannabis|cannabinoid|endocannabinoid|\bthc\b|\bthca\b|\bcbd\b|\bcbda\b|\bcbn\b|\bcbg\b|terpene|terpenoid|marijuana|hashish/i;
+// Unmistakably cannabis-specific on their own — sufficient anchor evidence
+// by themselves.
+export const CANNABIS_ANCHOR_UNAMBIGUOUS =
+  /medical cannabis|cannabis|cannabinoid|endocannabinoid|marijuana|hashish/i;
+
+// Short acronyms/terms that collide with unrelated fields when used alone
+// (e.g. a geology paper spelling out "Thermo-Hydro-Chemical (THC)", "CBD-CdS
+// thin films" in materials science, terpene-synthase papers on non-cannabis
+// plants). validateCannabisAnchor() below only accepts these as anchor
+// evidence when CANNABIS_ANCHOR_UNAMBIGUOUS also matches the corpus.
+export const CANNABIS_ANCHOR_AMBIGUOUS =
+  /\bthc\b|\bthca\b|\bcbd\b|\bcbda\b|\bcbn\b|\bcbg\b|terpene|terpenoid/i;
+
+// Combined pattern — used for "does this look cannabis-related at all"
+// checks (e.g. counting anchor mentions) once the unambiguous gate has
+// already passed.
+export const CANNABIS_ANCHOR = new RegExp(
+  `${CANNABIS_ANCHOR_UNAMBIGUOUS.source}|${CANNABIS_ANCHOR_AMBIGUOUS.source}`,
+  "i",
+);
 
 // ── Hard Exclusion Rules ────────────────────────────────────────────────────
 

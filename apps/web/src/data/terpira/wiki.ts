@@ -530,11 +530,11 @@ const baseWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Muss ich teure Geräte kaufen, um gut anzubauen?",
-        answer: "Nein. Entscheidend ist die SOP-Konsistenz, nicht die Ausrüstung. Günstige Sensoren mit zuverlaussigem Logging schlagen teure Einzelgeräte."
+        answer: "Nein. Entscheidend ist eine feste Routine, nicht die Ausrüstung. Günstige Sensoren mit zuverlässigem Logging schlagen teure Einzelgeräte."
       },
       {
         question: "Wie oft sollte ich mich um die Pflanzen kümmern?",
-        answer: "Das hängt vom Setup ab. Wichtig ist die Frequenz und Konsistenz: tägliche Beobachtung + wöchentliche Messung + monatliche Analyse nach SOP."
+        answer: "Das hängt vom Setup ab. Wichtig ist die Frequenz und Konsistenz: tägliche Beobachtung + wöchentliche Messung + monatliche Analyse nach fester Routine."
       }
     ],
     glossary: [
@@ -662,7 +662,7 @@ const baseWikiArticles: TerpiraArticle[] = [
         heading: "Auswahl und Verifizierung",
         content: [
           "Top-Kandidaten sollten in mindestens einem Bestätigungsdurchlauf erneut performen.",
-          "Nur reproduzierbare Linien sind für den operativen Betrieb sinnvoll."
+          "Nur reproduzierbare Linien lohnen sich für den langfristigen Anbau."
         ],
         checklist: [
           "Blindvergleich der Kandidaten",
@@ -892,7 +892,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     quickFacts: [
       { label: "Ursprungsregionen", value: "Nordafrika, Levante, Zentral-/Südasien" },
       { label: "Kernfrage", value: "Verfahrensfamilie vor Marketingname" },
-      { label: "Qualitätsbasis", value: "SOP, Labor, Batch-Konsistenz" }
+      { label: "Qualitätsbasis", value: "Verfahren, Analytik, Konsistenz" }
     ],
     sections: [
       {
@@ -932,37 +932,36 @@ const baseWikiArticles: TerpiraArticle[] = [
         ]
       },
       {
-        heading: "5) Professionelle Bewertungsmatrix",
+        heading: "5) Worauf du bei der Qualität achten kannst",
         content: [
-          "Sensorik: Klarheit der Aromen, Fremdnoten, Oxidationshinweise, konsistente Chargencharakteristik.",
-          "Physikalik: Homogenität, Trennverhalten bei definierter Temperatur, Stabilität in Lagerung und Transport.",
+          "Sensorik: Klarheit der Aromen, Fremdnoten, Oxidationshinweise, gleichbleibender Charakter zwischen mehreren Käufen oder Ernten.",
+          "Physikalik: Homogenität, Trennverhalten bei definierter Temperatur, Stabilität in Lagerung.",
           "Analytik: Cannabinoid-/Terpenprofil, Kontaminanten, mikrobiologische Parameter, ggf. Restlösungsmittel in relevanten Klassen.",
-          "Prozessqualität: SOP-Reifegrad, Rückverfolgbarkeit, Reklamationsquote und Batch-to-Batch-Abweichung."
+          "Konsistenz: Schmeckt und wirkt eine zweite Charge derselben Quelle ähnlich wie die erste - grosse Sprünge sind ein Warnsignal."
         ],
         checklist: [
-          "Jede Charge mit eindeutiger ID und Herkunftsdokumentation",
-          "COA-Prüfung inkl. Datum, Methode und Nachweisgrenzen",
-          "Lager- und Transportbedingungen pro Batch protokollieren",
-          "Abweichungen aus Sensorik und Labor im CAPA-Prozess nachhalten"
+          "Herkunft und Verfahrensfamilie so gut wie möglich nachvollziehen",
+          "COA prüfen, wenn vorhanden - Datum, Methode und Nachweisgrenzen anschauen",
+          "Lagerung seit dem Kauf oder der eigenen Herstellung im Blick behalten"
         ]
       },
       {
-        heading: "6) Praktische Einordnung für Plattformen und Einkauf",
+        heading: "6) Praktisch: Worauf du beim Kauf oder Selbermachen achtest",
         content: [
-          "Baue Kataloge nicht nur nach Handelsnamen auf, sondern nach Verfahrensfamilien und Qualitätskriterien. Das erleichtert Vergleichbarkeit und Aufklärung.",
-          "Trenne Produktstory (Herkunft, Stil, Kultur) sauber von Compliance- und Sicherheitsdaten.",
-          "Nutze einheitliche Datenfelder für jede Hash-Klasse, damit Nutzer und Teams Konsistenz statt Einzelfallwissen erhalten."
+          "Orientiere dich zuerst an der Verfahrensfamilie, nicht am Handelsnamen - das schützt vor Verwechslungen zwischen Stilbegriff und Technik.",
+          "Trenne für dich die Produktgeschichte (Herkunft, Stil, Kultur) von den sicherheitsrelevanten Daten wie Kontaminanten oder Restlösungsmitteln - beides ist interessant, aber nur eines ist sicherheitsrelevant.",
+          "Wenn du selbst herstellst, notiere zumindest grob Ausgangsmaterial, Verfahren und Ergebnis - das hilft dir, spätere Chargen einzuordnen."
         ],
         checklist: [
-          "Verfahrensfamilie als Pflichtfeld im Datenmodell",
-          "Herkunft/Stil als separates Feld, nicht als Qualitätslabel",
-          "Einheitliche Mindestdaten für alle Konzentratklassen"
+          "Verfahrensfamilie zuerst klären, Marketingbegriffe zweitrangig",
+          "Herkunft/Stil getrennt von Sicherheitsdaten bewerten",
+          "Bei Eigenherstellung: Ausgangsmaterial und Ergebnis kurz notieren"
         ]
       }
     ],
     warnings: [
-      "Detaillierte Herstellungsanleitungen werden hier bewusst nicht bereitgestellt; Fokus liegt auf Einordnung, Qualitätsmanagement und Risikoaufklärung.",
-      "Regionale Rechtslage und regulatorische Anforderungen sind vor jeder operativen Umsetzung separat zu prüfen."
+      "Detaillierte Herstellungsanleitungen werden hier bewusst nicht bereitgestellt; Fokus liegt auf Einordnung und Risikoaufklärung.",
+      "Regionale Rechtslage ist vor der Umsetzung separat zu prüfen."
     ],
     simpleExplainers: [
       {
@@ -988,8 +987,8 @@ const baseWikiArticles: TerpiraArticle[] = [
         answer: "Nicht pauschal. Rosin hat eigene Stärken, aber Endqualität bleibt vom Input-Material, der Prozessführung und der Stabilität nach Verarbeitung abhängig."
       },
       {
-        question: "Was ist für professionelle Vergleiche am wichtigsten?",
-        answer: "Eine einheitliche Bewertungsmatrix aus Sensorik, Analytik, Stabilität und Chargenkonsistenz statt einzelner Marketingwerte."
+        question: "Worauf kommt es beim Vergleichen am meisten an?",
+        answer: "Sensorik, Analytik und Stabilität gemeinsam betrachten, statt sich auf einzelne Marketingbegriffe zu verlassen."
       }
     ],
     glossary: [
@@ -1027,7 +1026,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "Wasseraktivität ist ein zentraler Sicherheitsparameter nach der Ernte.",
       "Falsche Curing-Routinen zerstören Aromaprofile und erhöhen Kontaminationsrisiken.",
-      "Messbare SOPs schlagen subjektives Fühlen im Glas deutlich."
+      "Eine feste Mess-Routine schlägt subjektives Fühlen im Glas deutlich."
     ],
     quickFacts: [
       { label: "Kernmetrik", value: "aw statt nur RH" },
@@ -1038,20 +1037,20 @@ const baseWikiArticles: TerpiraArticle[] = [
       {
         heading: "Nachernte als Qualitätshebel",
         content: [
-          "Curing ist kein kosmetischer Schritt, sondern ein kritischer Teil des Qualitätsmanagements.",
+          "Curing ist kein kosmetischer Schritt, sondern ein kritischer Teil der Qualität deiner Ernte.",
           "Ein fehlerhafter Ablauf kann zuvor gute Ernten stark entwerten."
         ]
       },
       {
-        heading: "Operative Umsetzung",
+        heading: "Praktische Umsetzung",
         content: [
-          "Arbeite mit fixen Messintervallen, Chargenkennzeichnung und klaren Grenzwerten für Nachjustierungen.",
-          "Dokumentiere Auffälligkeiten früh, um spätere Reklamationen nachvollziehen zu können."
+          "Arbeite mit festen Messintervallen, klarer Beschriftung deiner Gläser und klaren Grenzwerten für Nachjustierungen.",
+          "Dokumentiere Auffälligkeiten früh, damit du später nachvollziehen kannst, woran es lag."
         ],
         checklist: [
-          "Charge eindeutig labeln",
+          "Jedes Glas eindeutig beschriften",
           "aw und Temperatur protokollieren",
-          "Abweichungen mit Korrekturmassnahme verknüpfen"
+          "Abweichungen und deine Reaktion darauf gemeinsam notieren"
         ]
       }
     ],
@@ -1301,11 +1300,11 @@ const baseWikiArticles: TerpiraArticle[] = [
         heading: "Monitoring und Alarmierung",
         content: [
           "Lege harte Alert-Level für VPD-Drift, EC-Ausreisser und Temperatursprünge fest.",
-          "Verknüpfe jeden Alarm mit klarer Reaktionsanweisung für das Team."
+          "Verknüpfe jeden Alarm mit einer klaren Reaktion, die du sofort ausführen kannst."
         ],
         checklist: [
-          "Alarmmatrix dokumentiert",
-          "Eskalationsverantwortliche benannt",
+          "Schwellenwerte pro Sensor dokumentiert",
+          "Klar, wer im Ernstfall reagiert - du selbst oder wer sonst Zugang hat",
           "Monatliche Überprüfung der Schwellenwerte"
         ]
       }
@@ -3457,7 +3456,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Von der Reaktion zur Prävention",
         content: [
           "Viele Grow-Probleme eskalieren, weil Monitoring erst dann beginnt, wenn sichtbare Schäden da sind.",
-          "Ein sauberes IPM verknüpft Eingangskontrolle, Raumhygiene, Teamdisziplin und dokumentierte Eskalationsstufen."
+          "Ein sauberes IPM verknüpft Eingangskontrolle, Raumhygiene, deine eigene Konsequenz und ein klares Bild davon, wann du eingreifst."
         ]
       },
       {
@@ -3668,7 +3667,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     faq: [
       {
         question: "Wie lange kann ich eine Mutterpflanze halten?",
-        answer: "Technisch lange, aber operativ ist eine geregelte Rotation oft sinnvoller, um Vitalität und Hygiene zu sichern."
+        answer: "Technisch lange, aber in der Praxis ist ein regelmässiger Austausch oft sinnvoller, um Vitalität und Hygiene zu sichern."
       },
       {
         question: "Brauche ich Backups derselben Linie?",
@@ -4148,7 +4147,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     keyTakeaways: [
       "Decarboxylierung ist ein temperatur- und zeitabhängiger Prozess mit Zielkonflikten bei Erhalt und Umwandlung.",
       "Zu pauschale Temperaturregeln ignorieren Material, Feuchte und Prozessziel.",
-      "Für Wissensseiten ist Einordnung wichtiger als operative Kochrezepte."
+      "Zu verstehen, warum ein Temperaturfenster funktioniert, hilft dir mehr als ein starres Rezept ohne Kontext."
     ],
     quickFacts: [
       { label: "Kernbegriff", value: "Umwandlung saurer Vorstufen" },
@@ -4382,12 +4381,12 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Welche Verpackungslogik funktioniert",
         content: [
           "Ziel ist nicht nur dicht, sondern kontrolliert: wenig Sauerstoff, möglichst wenig Licht und stabile Temperaturen.",
-          "Für Teams lohnt es sich, Packmittel und Reklamationsdaten gemeinsam zu betrachten."
+          "Es lohnt sich, dein Packmittel und beobachtete Aromaveränderungen gemeinsam zu betrachten, statt sie getrennt abzuhaken."
         ],
         checklist: [
           "Lager- und Transporttemperaturen begrenzen",
           "Lichtschutz als Pflichtkriterium behandeln",
-          "Aromareklamationen mit Chargenalter verknüpfen"
+          "Aromaveränderungen mit dem Alter der Ernte in Verbindung bringen"
         ]
       }
     ],
@@ -4421,7 +4420,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
   createArticle({
     slug: "sensorik-panels-fuer-cannabisprodukte",
     title: "Sensorik-Panels für Cannabisprodukte",
-    summary: "Wie strukturierte Geruchs- und Profilbewertung professioneller wird als spontane Einzelmeinungen im Team.",
+    summary: "Wie strukturierte Geruchs- und Profilbewertung verlässlicher wird als eine spontane Einzelmeinung.",
     category: "terpene",
     difficulty: "profi",
     readMinutes: 8,
@@ -5091,7 +5090,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Wie ein sauberer Rückstandscheck aussieht",
         content: [
           "Prüfe Stoffabdeckung, Grenzwerte, Methode, Chargenbezug und Testfrequenz. Erst dann wird aus Daten ein Sicherheitsurteil.",
-          "Das gilt für Plattformen genauso wie für Einkaufsteams."
+          "Das gilt genauso, egal ob du dich auf ein Testergebnis von einem Verkäufer verlässt oder deine eigene Ernte prüfen lässt."
         ],
         checklist: [
           "Panelabdeckung dokumentieren",
@@ -5129,133 +5128,131 @@ const expansionWikiArticles: TerpiraArticle[] = [
   }),
   createArticle({
     slug: "recall-und-sperrprozesse-fuer-chargen",
-    title: "Recall- und Sperrprozesse für Chargen",
-    summary: "Wie Produkte bei Verdachtsfällen kontrolliert gestoppt, bewertet und kommuniziert werden sollten.",
+    title: "Was tun, wenn mit einer Ernte etwas nicht stimmt?",
+    summary: "Wie du reagierst, wenn du nach der Ernte ein Problem entdeckst - von Schimmelverdacht bis Kontamination - statt einfach weiterzumachen.",
     category: "sicherheit",
     difficulty: "profi",
     readMinutes: 8,
-    tags: ["Recall", "Sperrung", "Charge", "CAPA"],
+    tags: ["Sicherheit", "Schimmel", "Ernte", "Lagerung"],
     keyTakeaways: [
-      "Ein Recall funktioniert nur mit klaren Rollen, Datenspuren und Eskalationswegen.",
-      "Je früher Sperrlogik definiert ist, desto geringer ist der Schaden im Ereignisfall.",
-      "Kommunikation nach innen und aussen muss vorbereitet statt improvisiert sein."
+      "Ein einzelner Fund ist selten isoliert - prüfe die ganze Ernte, nicht nur die auffällige Stelle.",
+      "Je klarer du vorher weisst, worauf du achten musst, desto schneller reagierst du im Ernstfall.",
+      "Wenn du etwas weitergegeben hast, sag den Leuten Bescheid, bevor sie es konsumieren."
     ],
     quickFacts: [
-      { label: "Kernpunkt", value: "Vorbereitung vor dem Vorfall" },
-      { label: "Pflicht", value: "Rollen und Eskalation" },
-      { label: "Daten", value: "Rückverfolgung plus Statushistorie" }
+      { label: "Kernpunkt", value: "Lieber vorher überlegen als im Ernstfall improvisieren" },
+      { label: "Wichtig", value: "Ganze Ernte prüfen, nicht nur die Stelle" },
+      { label: "Dokumentation", value: "Welches Glas aus welchem Grow stammt" }
     ],
     sections: [
       {
-        heading: "Warum Recall-Prozesse oft scheitern",
+        heading: "Warum ein Fund oft mehr betrifft als die eine Stelle",
         content: [
-          "Nicht am Willen, sondern an fehlender Struktur: unklare Verantwortungen, verstreute Daten und keine eindeutige Chargenlogik.",
-          "Gerade deshalb sollte der Prozess lange vor dem ersten Ereignis definiert sein."
+          "Wenn du in einem Glas Schimmel oder ungewöhnlichen Geruch findest, ist das selten reiner Zufall an genau dieser Stelle - meist deutet es auf ein Problem hin, das die ganze Ernte betrifft: zu feucht getrocknet, zu früh eingelagert, eine feuchte Stelle im Curing-Behälter.",
+          "Deshalb lohnt sich ein kurzer Check der gesamten Ernte, sobald irgendwo etwas auffällt - nicht nur das eine Glas wegwerfen und weitermachen, als wäre nichts gewesen."
         ]
       },
       {
-        heading: "Was ein belastbarer Ablauf braucht",
+        heading: "Was du konkret tun solltest",
         content: [
-          "Sperrstatus, Entscheidungswege, Kommunikationsvorlagen und CAPA-Folgen müssen verbunden sein. Nur dann lässt sich professionell reagieren.",
-          "Auch auf einer Wissensseite ist das ein zentraler Drop-Artikel für B2B- und Qualitätskontext."
+          "Betroffenes Material erstmal beiseitelegen statt es zu verwenden oder weiterzugeben, bis klar ist, was los ist. Bei sichtbarem Schimmel gilt: nicht die befallene Stelle wegschneiden und den Rest behalten - Cannabisblüten sind porös, Sporen können sich weiter verteilt haben, als man sieht.",
+          "Wenn du bereits etwas von dieser Ernte weitergegeben hast, sag kurz Bescheid, damit niemand unwissentlich etwas Fragwürdiges konsumiert."
         ],
         checklist: [
-          "Sperrstatus systemisch abbilden",
-          "Eskalationsrollen benennen",
-          "Kommunikationsbausteine vorab definieren"
+          "Betroffenes Material klar getrennt und beschriftet beiseitelegen",
+          "Rest der Ernte auf dieselben Anzeichen prüfen",
+          "Bei Weitergabe: kurz Bescheid geben statt abzuwarten"
         ]
       }
     ],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: Recall",
-        text: "Gezielte Rückholung oder Rücknahme von Produkten wegen Sicherheits- oder Compliance-Risiken."
+        title: "Kurz erklärt: Warum nicht einfach wegschneiden?",
+        text: "Schimmel bildet feine Fäden (Myzel), die sich im porösen Blütenmaterial weiter ausbreiten können, als optisch sichtbar ist - die sichtbare Stelle ist oft nur die Spitze des Problems."
       },
       {
-        title: "Kurz erklärt: CAPA",
-        text: "Corrective and Preventive Actions, also Massnahmen zur Fehlerbehebung und Vorbeugung künftiger Wiederholungen."
+        title: "Kurz erklärt: Woran erkenne ich, ob es die ganze Ernte betrifft?",
+        text: "Gleiche Lagerbedingungen (Glas, Feuchtigkeit, Zeitpunkt) bedeuten meist ein ähnliches Risiko - prüfe deshalb alle Behälter aus demselben Trocknungs-/Curing-Durchgang, nicht nur den auffälligen."
       }
     ],
     faq: [
       {
-        question: "Reicht eine einfache Sperrliste?",
-        answer: "Selten. Ohne Bewegungsdaten, Rollen und Kommunikationslogik bleibt eine Sperrliste zu schwach."
+        question: "Reicht es, nur das eine Glas wegzuwerfen?",
+        answer: "Nicht ohne die anderen zu checken. Wenn die Ursache in der Trocknung oder Lagerung lag, betrifft sie meist mehr als ein Glas."
       },
       {
-        question: "Warum gehört CAPA dazu?",
-        answer: "Weil ein Ereignis nicht nur gestoppt, sondern ursachenseitig verstanden und zukünftig verhindert werden muss."
+        question: "Muss ich wirklich alles wegwerfen, wenn ich unsicher bin?",
+        answer: "Im Zweifel ja, zumindest den betroffenen Teil. Bei eingeatmetem Schimmel geht Gesundheit klar vor der Ernte, die du sonst verlieren würdest."
       }
     ],
     glossary: [
-      { term: "Recall", definition: "Strukturierte Rückholung oder Rücknahme betroffener Produkte." },
-      { term: "Sperrstatus", definition: "Markierung, dass eine Charge nicht weiter verteilt oder verwendet werden darf." },
-      { term: "CAPA", definition: "Systematischer Ansatz für Korrektur- und Vorbeugemassnahmen nach Abweichungen." },
+      { term: "Myzel", definition: "Das feine Fadengeflecht von Schimmelpilzen, das sich unsichtbar weiter ausbreiten kann als die sichtbare Verfärbung." },
+      { term: "Curing", definition: "Die kontrollierte Nachreifung/Lagerung getrockneter Blüten, bei der Feuchtigkeitsprobleme meist erst auffallen." },
     ],
     relatedSlugs: ["batch-release-und-freigabekriterien", "schimmel-und-mykotoxine-bei-cannabis"]
   }),
   createArticle({
     slug: "batch-release-und-freigabekriterien",
-    title: "Batch Release und Freigabekriterien",
-    summary: "Welche Prüfpunkte vor einer Freigabe sinnvoll sind und warum Freigaben mehr als nur ein COA brauchen.",
+    title: "Wann kannst du deiner Ernte wirklich vertrauen?",
+    summary: "Warum ein einzelner Laborwert nicht reicht, um eine Ernte als unbedenklich einzustufen - und worauf du zusätzlich achten solltest.",
     category: "qualitaet",
     difficulty: "fortgeschritten",
     readMinutes: 8,
-    tags: ["Batch Release", "Freigabe", "Qualität", "COA"],
+    tags: ["Qualität", "COA", "Lagerung", "Sicherheit"],
     keyTakeaways: [
-      "Freigabe ist eine Entscheidung über Risiko und Eignung, nicht nur ein Haken hinter einem Laborbericht.",
-      "COA, Verpackung, Historie und Abweichungen sollten gemeinsam bewertet werden.",
-      "Klare Kriterien schaffen Teamkonsistenz und schnellere Entscheidungen."
+      "Ob eine Ernte gut ist, entscheidet sich nicht an einer einzelnen Zahl, sondern am Gesamtbild.",
+      "COA, Lagerzustand, Geruch und sichtbare Auffälligkeiten gehören zusammen bewertet.",
+      "Klare eigene Kriterien machen die Entscheidung schneller und weniger vom Bauchgefühl abhängig."
     ],
     quickFacts: [
-      { label: "Pflicht", value: "Freigabekatalog" },
-      { label: "Mehr als COA", value: "Auch Historie und Zustand" },
-      { label: "Nutzen", value: "Skalierbare Qualitätsentscheidungen" }
+      { label: "Nicht nur", value: "Ein Laborwert" },
+      { label: "Zusätzlich prüfen", value: "Lagerung, Geruch, Optik" },
+      { label: "Nutzen", value: "Schnellere, sicherere Entscheidung" }
     ],
     sections: [
       {
         heading: "Warum ein COA allein nicht reicht",
         content: [
-          "Selbst gute Laborberichte decken nicht automatisch Verpackung, Lagerung, Transport oder sichtbare Abweichungen ab.",
-          "Eine seriöse Freigabe betrachtet deshalb den gesamten Chargenkontext."
+          "Selbst ein gutes Laborergebnis (COA) deckt nicht automatisch ab, wie die Ware seither gelagert, transportiert oder verpackt wurde - und sagt nichts über Auffälligkeiten aus, die erst danach entstanden sind.",
+          "Ein ehrlicher Check schaut deshalb auf die ganze Situation, nicht nur auf die Zahl auf dem Papier."
         ]
       },
       {
-        heading: "Wie Freigaben standardisiert werden",
+        heading: "Wie du für dich selbst eine klare Linie findest",
         content: [
-          "Lege Pflichtkriterien, Grenzfälle und Eskalationswege schriftlich fest. So sinkt die Abhängigkeit von Einzelpersonen.",
-          "Gerade für einen ersten grossen Drop schafft das Vertrauen und Tempo zugleich."
+          "Leg dir vorher fest, welche Warnzeichen für dich ein Stopp-Signal sind - modriger statt erdig-würziger Geruch, feuchte Stellen, ungewöhnliche Verfärbungen. Dann musst du im Moment nicht neu entscheiden, sondern nur abgleichen.",
+          "Gerade bei der ersten grösseren Ernte gibt dir das Sicherheit und du triffst die Entscheidung schneller."
         ],
         checklist: [
-          "COA plus Verpackungscheck verknüpfen",
-          "Abweichungen vor Freigabe bewerten",
-          "Freigabeentscheidungen revisionssicher speichern"
+          "COA (falls vorhanden) mit dem tatsächlichen Zustand abgleichen",
+          "Auffälligkeiten vor dem Konsum ernst nehmen, nicht wegreden",
+          "Entscheidung und Beobachtung kurz notieren, falls später ein Vergleich nötig wird"
         ]
       }
     ],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: Batch Release",
-        text: "Formale Entscheidung, dass eine definierte Charge die Kriterien für Ausgabe oder Verkauf erfüllt."
+        title: "Kurz erklärt: COA",
+        text: "Certificate of Analysis - ein Laborbericht, der Cannabinoid-Gehalt und ggf. Schadstoffe einer Probe dokumentiert."
       },
       {
         title: "Kurz erklärt: Grenzfall",
-        text: "Charge oder Befund, der nicht klar im Grünbereich liegt und deshalb besondere Prüfung braucht."
+        text: "Ein Befund oder Eindruck, der nicht eindeutig unbedenklich ist und deshalb eine bewusste Extra-Prüfung braucht statt eines schnellen Achselzuckens."
       }
     ],
     faq: [
       {
-        question: "Wer sollte freigeben dürfen?",
-        answer: "Nur klar definierte Rollen mit Zugriff auf alle relevanten Daten und einem standardisierten Entscheidungsrahmen."
+        question: "Reicht ein gutes Laborergebnis als Freifahrtschein?",
+        answer: "Nicht ganz. Es bestätigt nur den Zustand zum Zeitpunkt der Probenahme - Lagerung und Zeit danach können trotzdem etwas verändern."
       },
       {
-        question: "Kann ich Freigaben automatisieren?",
-        answer: "Teilweise ja, aber Grenzfälle und Kontextdaten brauchen meist menschliche Bewertung."
+        question: "Was, wenn ich unsicher bin, aber nichts eindeutig Schlechtes sehe?",
+        answer: "Im Zweifel lieber genauer hinschauen (Lupe, Geruchstest) als direkt zu konsumieren - Grenzfälle verdienen die zwei Extra-Minuten."
       }
     ],
     glossary: [
-      { term: "Batch Release", definition: "Freigabe einer Charge nach Prüfung definierter Kriterien." },
-      { term: "Freigabekatalog", definition: "Sammlung aller Kriterien, die für eine Freigabe geprüft werden müssen." },
-      { term: "Revisionssicher", definition: "So dokumentiert, dass Änderungen nachvollziehbar und belastbar bleiben." },
+      { term: "COA", definition: "Certificate of Analysis - Laborbericht zu Inhaltsstoffen und Schadstoffen einer Probe." },
+      { term: "Grenzfall", definition: "Ein Zustand, der nicht klar gut oder schlecht ist und deshalb bewusst genauer geprüft werden sollte." },
     ],
     relatedSlugs: ["coa-richtig-lesen", "recall-und-sperrprozesse-fuer-chargen"]
   }),
@@ -5275,7 +5272,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     quickFacts: [
       { label: "Feinde", value: "Licht, Sauerstoff, Wärme" },
       { label: "Hebel", value: "Passendes Packmittel" },
-      { label: "Praxis", value: "Lagerdaten mit Reklamationen verknüpfen" }
+      { label: "Praxis", value: "Veränderungen über Zeit selbst beobachten" }
     ],
     sections: [
       {
@@ -5289,7 +5286,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Welche Fragen gute Lagerung beantwortet",
         content: [
           "Wie alt ist die Charge, wie wurde sie transportiert und war sie Licht oder Hitze ausgesetzt? Diese Punkte sollten nie unsichtbar bleiben.",
-          "Erst zusammen mit Reklamationen und Analytik entsteht ein lernfähiges System."
+          "Erst wenn du das mit dem tatsächlichen Zustand und, falls vorhanden, einem Laborwert zusammen betrachtest, erkennst du Muster."
         ],
         checklist: [
           "Packmittel nach Produktklasse auswählen",
@@ -5314,8 +5311,8 @@ const expansionWikiArticles: TerpiraArticle[] = [
         answer: "Nicht automatisch. Schutzwirkung, Headspace, Handling und Lieferkette müssen zusammengedacht werden."
       },
       {
-        question: "Warum sind Lagerdaten für Content relevant?",
-        answer: "Weil sie erklären, warum reale Produktqualität von Freigabeprofilen abweichen kann."
+        question: "Warum reicht ein Laborwert vom Kauf nicht als Dauer-Garantie?",
+        answer: "Weil sich die Qualität seit dem Test durch Licht, Wärme oder falsche Lagerung verändert haben kann - der Laborwert gilt für den Zeitpunkt der Probe, nicht für immer."
       }
     ],
     glossary: [
@@ -5442,7 +5439,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Vom Log zur Steuerung",
         content: [
-          "Ein Dashboard wird erst operativ wertvoll, wenn jede angezeigte Kennzahl sichtbar macht, wann eingegriffen werden muss und wer dafür verantwortlich ist.",
+          "Ein Dashboard wird erst wirklich nützlich, wenn jede angezeigte Kennzahl dir sofort zeigt, wann du eingreifen musst.",
           "Trendansichten (Verlauf über Zeit) sind aussagekräftiger als reine Tabellen mit Momentanwerten, weil sie Drift erkennbar machen, bevor ein Schwellenwert überschritten wird."
         ]
       },
@@ -5589,7 +5586,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         heading: "Schritt 1: Setup klein und reproduzierbar halten",
         content: [
-          "Wähle ein überschaubares Setup mit klar kontrollierbaren Variablen: Licht, Abluft, Umluft, Temperatur, RH und ein einfaches Substrat. Forschung zu Cannabis-Kultivierung und professionelle Grow-SOPs zeigen übereinstimmend, dass Stabilität den größten Hebel hat.",
+          "Wähle ein überschaubares Setup mit klar kontrollierbaren Variablen: Licht, Abluft, Umluft, Temperatur, RH und ein einfaches Substrat. Forschung zu Cannabis-Kultivierung und die Erfahrung erfahrener Grower zeigen übereinstimmend, dass Stabilität den größten Hebel hat.",
           "Für den Einstieg ist ein verzeihendes Medium mit dokumentierbarem Giessrhythmus wichtiger als ein aggressives High-Performance-System. Erde oder ein gut vorbereiteter Mix mit klarer Trocknungsdynamik ist meist einfacher als sofortige Hydro-Steuerung."
         ],
         checklist: [
@@ -5641,7 +5638,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Schritt 4: Ernte nicht raten, sondern beobachten",
         content: [
           "Einsteiger profitieren von klaren Reifeindikatoren statt Kalenderdenken. Beobachte Trichome, Pflanzenvitalität, Klima und Trocknungsplanung als zusammenhängenden Prozess.",
-          "Direkt nach der Ernte entscheidet sauberes Trocknen über Aroma, Schimmelrisiko und Konsistenz. Professionelle Teams behandeln Postharvest als Teil des Grows und nicht als letzten Nebenjob."
+          "Direkt nach der Ernte entscheidet sauberes Trocknen über Aroma, Schimmelrisiko und Konsistenz. Erfahrene Grower behandeln die Nacherntephase als Teil des Grows und nicht als letzten Nebenjob."
         ],
         checklist: [
           "Vor der Ernte Trocknungsraum auf Temperatur und RH vorbereiten",
@@ -5678,10 +5675,6 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Grow-Log", definition: "Laufende Dokumentation von Klima, Giessen, Düngung und Auffälligkeiten pro Tag." },
       { term: "Canopy", definition: "Oberer Pflanzenbereich, in dem Licht und Klima besonders relevant gemessen werden." },
       { term: "Drain", definition: "Abflusswasser nach der Bewässerung, nutzbar für EC- und pH-Kontrolle." }
-    ],
-    downloads: [
-      { title: "Anfänger Grow-Checkliste", href: "/terpira/tutorials/how-to-grow-anfänger-checkliste.txt", kind: "TXT-Checkliste" },
-      { title: "Anfänger SOP-Vorlage", href: "/terpira/tutorials/how-to-grow-anfänger-sop.txt", kind: "TXT-SOP-Vorlage" }
     ],
     relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-einfach-erklaert", "cannabis-substrat-und-wurzelzone"]
   }),
@@ -5797,127 +5790,119 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Blatttemperatur", definition: "Blatttemperatur, die für eine realistische VPD-Berechnung wichtiger ist als die reine Raumtemperatur." },
       { term: "Run-Review", definition: "Strukturierte Auswertung eines abgeschlossenen Grows mit Fokus auf Ursache und Wirkung." }
     ],
-    downloads: [
-      { title: "Fortgeschrittene Wochenreview-Checkliste", href: "/terpira/tutorials/how-to-grow-fortgeschritten-checkliste.txt", kind: "TXT-Checkliste" },
-      { title: "Fortgeschrittene SOP-Vorlage für Run-Review", href: "/terpira/tutorials/how-to-grow-fortgeschritten-sop.txt", kind: "TXT-SOP-Vorlage" }
-    ],
     relatedSlugs: ["lichtstress-und-canopy-management", "naehrstoffblockaden-und-antagonismen", "vpd-und-ec-kombi-rechner-guide", "substrat-vergleich-coco-erde-hydro"]
   }),
   createArticle({
     slug: "how-to-grow-cannabis-profi-tutorial",
     title: "How to Grow Cannabis: Schritt-für-Schritt für Profis",
-    summary: "Ein fortlaufendes Betriebsmodell für Teams mit hoher Datendichte, SOPs, Chargendenken und reproduzierbarer Premium-Qualität.",
+    summary: "Wie du als erfahrener Grower über mehrere Zonen oder Durchläufe hinweg konstant gute Ergebnisse erzielst, statt bei jedem Run wieder von vorne zu lernen.",
     category: "anbau",
     difficulty: "profi",
     readMinutes: 18,
-    tags: ["How to Grow", "Anbau", "Profi", "Step by Step", "SOP", "QA", "Chargen"],
+    tags: ["How to Grow", "Anbau", "Profi", "Step by Step", "Konsistenz", "Datenlog", "Multi-Zone"],
     keyTakeaways: [
-      "Auf Profi-Niveau wird nicht mehr die einzelne Pflanze optimiert, sondern die Wiederholbarkeit eines ganzen Systems.",
-      "SOPs, Kalibrierung, Freigabekriterien und Ursachenanalyse sind genauso wichtig wie Klima oder Feed.",
-      "Die stärksten Teams koppeln wissenschaftliche Evidenz an operative Routinen und Chargen-Review."
+      "Auf Profi-Niveau optimierst du nicht mehr die einzelne Pflanze, sondern die Wiederholbarkeit deines ganzen Systems.",
+      "Feste Routinen, kalibrierte Messgeräte und ehrliche Ursachenanalyse sind genauso wichtig wie Klima oder Feed.",
+      "Die konstantesten Ergebnisse kommen von Growern, die wissenschaftliche Grundlagen mit einer festen eigenen Routine und echtem Ernte-Review verbinden."
     ],
     quickFacts: [
-      { label: "Zielgruppe", value: "Teams mit SOP-Anspruch" },
-      { label: "Fokus", value: "Reproduzierbarkeit und QA" },
-      { label: "Messstil", value: "Chargen- und Zonenvergleich" }
+      { label: "Für wen", value: "Erfahrene Grower mit mehreren Zonen/Durchläufen" },
+      { label: "Fokus", value: "Reproduzierbarkeit statt Einzelwerte" },
+      { label: "Messstil", value: "Zonen- und Durchlauf-Vergleich" }
     ],
     sections: [
       {
-        heading: "Schritt 1: Betrieb über SOPs und Freigabekriterien führen",
+        heading: "Schritt 1: Nach fester Routine statt Tagesstimmung arbeiten",
         content: [
-          "Professionelle Grows werden über Standards, nicht über Tagesstimmung gesteuert. Definiere SOPs für Raumvorbereitung, Stecklingsannahme, Bewässerung, Sensor-Checks, Hygiene und Postharvest-Übergaben.",
-          "Freigabekriterien je Phase helfen, dass Teams nur dann skalieren oder umstellen, wenn die Basis stabil ist. Ohne diese Gates wird jedes Problem zu teuer und schwer reproduzierbar."
+          "Auf diesem Niveau läuft ein Grow nach Standards, nicht nach Tagesform. Leg dir feste Routinen fest für Raumvorbereitung, Stecklingsübernahme, Bewässerung, Sensor-Checks, Hygiene und den Übergang in die Erntephase.",
+          "Eigene Kriterien je Phase helfen dir, nur dann zur nächsten Phase zu wechseln, wenn die Basis wirklich stabil ist. Ohne diese Checkpunkte wird jedes Problem teurer und schwerer nachvollziehbar."
         ],
         checklist: [
-          "SOP-Versionen mit Datum und Verantwortlichkeit pflegen",
-          "Phasen-Gates für Veg, Stretch, Blüte und Ernte schriftlich definieren",
-          "Abweichungen immer mit CAPA-Logik dokumentieren"
+          "Routinen mit Datum aktuell halten, wenn sich etwas ändert",
+          "Klare Übergangskriterien für Veg, Stretch, Blüte und Ernte schriftlich festhalten",
+          "Abweichungen immer mit Ursache dokumentieren, nicht nur mit Symptom"
         ]
       },
       {
         heading: "Schritt 2: Klima, Licht und Feed als verknüpfte Datenspuren lesen",
         content: [
-          "Auf Profi-Niveau werden keine Einzelwerte diskutiert, sondern Trends: Sensor-Drift, Zonenunterschiede, Bewässerungsfenster, PPFD-Verteilung, Blattmasse und Drain-Verhalten. Erst daraus entstehen belastbare Entscheidungen.",
+          "Auf Profi-Niveau schaust du nicht auf Einzelwerte, sondern auf Trends: Sensor-Drift, Zonenunterschiede, Bewässerungsfenster, PPFD-Verteilung, Blattmasse und Drain-Verhalten. Erst daraus entstehen belastbare Entscheidungen.",
           "Studien zu Cannabis-Produktionssystemen und Erfahrungen aus professionellen Indoor-Setups zeigen, dass die größten Gewinne aus konsistenter Standardisierung und früher Abweichungserkennung kommen."
         ],
         checklist: [
           "Zone gegen Zone vergleichen statt nur Mittelwerte lesen",
-          "Messgeräte nach Kalibrierintervall sperren oder freigeben",
-          "Klima- und Feed-Daten mit Ereignislog verknüpfen"
+          "Messgeräte nach festem Intervall kalibrieren oder austauschen",
+          "Klima- und Feed-Daten mit deinem Grow-Log verknüpfen"
         ]
       },
       {
-        heading: "Schritt 2b: Produktionswochen als wiederholbares Betriebsschema",
+        heading: "Schritt 2b: Der Durchlauf als wiederholbarer Ablauf",
         content: [
-          "Woche 0 Pre-Flight: Raumfreigabe, Sensorstatus, Hygiene, Wasser und Material müssen vor Pflanzenannahme validiert sein. Ohne saubere Startfreigabe beginnt jede Charge mit Blindflug.",
-          "Woche 1-3 Etablierung: Clone-Qualität, Anwuchsquote und Zonenunterschiede eng monitoren. Jetzt werden SOP-Lücken sichtbar, bevor sie später als Ertragsproblem auftreten.",
-          "Woche 4-6 Produktionsdruck: Stretch, Canopy-Dichte und Klima-Kopplung erzeugen die höchste operative Last. Schichtübergaben und Event-Logging müssen hier besonders sauber sein.",
-          "Woche 7-9 Reife und Risikoabwehr: Botrytis-, Hygiene- und Trockenmasse-Risiken steigen. Freigabekriterien für Erntefenster sollten nicht nur auf Optik, sondern auf Charge, Zone und Laborlogik beruhen.",
-          "Woche 10+ Postharvest und CAPA: Trocknung, Curing, Labor, Sperrentscheidungen und Review müssen in einer geschlossenen Prozessschleife enden. Erst dann ist die Charge wirklich abgeschlossen."
+          "Woche 0 Vorbereitung: Raum, Sensorstatus, Hygiene, Wasser und Material vor der Pflanzenübernahme checken. Ohne sauberen Start beginnt jeder Durchlauf im Blindflug.",
+          "Woche 1-3 Etablierung: Clone-Qualität, Anwuchsquote und Zonenunterschiede eng beobachten. Jetzt zeigen sich Lücken in deiner Routine, bevor sie später zum Ertragsproblem werden.",
+          "Woche 4-6 Stretch-Phase: Stretch, Canopy-Dichte und Klima-Kopplung erzeugen die höchste Belastung im Ablauf. Sauberes, zeitnahes Logging ist hier besonders wichtig.",
+          "Woche 7-9 Reife: Botrytis-, Hygiene- und Trockenmasse-Risiken steigen. Das Erntefenster solltest du nicht nur nach Optik festlegen, sondern nach Zone und deinen bisherigen Beobachtungen.",
+          "Woche 10+ Nacherntephase: Trocknung, Curing, ggf. Laborcheck und ein ehrliches Review gehören zusammen. Erst danach ist der Durchlauf wirklich abgeschlossen."
         ],
         checklist: [
-          "Jede Charge mit Pre-Flight und Exit-Review starten und beenden",
-          "Schichtwechsel nur mit dokumentiertem Ereignisstand übergeben",
-          "CAPA-Massnahmen spätestens im Folgezyklus verifizieren"
+          "Jeden Durchlauf mit Vorbereitung starten und mit Review beenden",
+          "Wichtige Ereignisse zeitnah statt aus dem Gedächtnis notieren",
+          "Korrekturen aus einem Durchlauf spätestens im nächsten wirklich umsetzen"
         ]
       },
       {
-        heading: "Schritt 3: Risiko aktiv managen - Hygiene, Pathogene, Lieferkette",
+        heading: "Schritt 3: Risiko aktiv managen - Hygiene, Pathogene, Wasserqualität",
         content: [
-          "Premium-Qualität scheitert oft nicht an Wuchs, sondern an Hygiene, Probenahme und Nachverfolgbarkeit. Integriere Clone-Hygiene, Schimmelprävention, Wasserqualität und Lieferantenkontrolle in denselben Managementrahmen wie Licht und Ertrag.",
-          "Gerade bei hoher Pflanzendichte oder engen Takten werden kleine Hygienefehler schnell zum Chargenproblem. Profi-Grower planen deshalb Risikoabwehr als Kernprozess ein."
+          "Premium-Qualität scheitert selten am Wuchs, sondern an Hygiene, Probenahme und Nachverfolgbarkeit. Behandle Clone-Hygiene, Schimmelprävention, Wasserqualität und die Qualität deiner Zubehör-/Nährstoffquellen genauso ernst wie Licht und Ertrag.",
+          "Gerade bei mehreren Zonen oder engem Zeitplan werden kleine Hygienefehler schnell zum Problem über den ganzen Durchlauf. Erfahrene Grower planen Risikovorsorge deshalb von Anfang an mit ein."
         ],
         checklist: [
-          "Hygiene-SOP mit Verantwortlichkeiten pro Schicht festlegen",
-          "Wasser, Werkzeuge und Clone-Zugänge als Risikopunkte auditieren",
-          "Frühwarnsignale für Pathogene und Schädlinge in Reviews aufnehmen"
+          "Feste Hygiene-Routine für dich selbst festlegen, nicht nur situativ reagieren",
+          "Wasser, Werkzeuge und Steckling-Herkunft als Risikopunkte im Blick behalten",
+          "Frühwarnsignale für Pathogene und Schädlinge ins Review aufnehmen"
         ]
       },
       {
-        heading: "Schritt 4: Nach der Ernte beginnt die nächste Prozessschleife",
+        heading: "Schritt 4: Nach der Ernte beginnt der nächste Lernzyklus",
         content: [
-          "Postharvest, Curing und Laborlogik gehören in denselben Performance-Zyklus wie die Kulturphase. Nur so lassen sich Qualitätsverluste, Chargenunterschiede und Vermarktungsprobleme systematisch beheben.",
-          "Ein Profi-Tutorial endet deshalb nicht mit dem Chop. Es endet mit Freigabe, Review, Datenarchiv und klarer Hypothese für den nächsten Durchlauf."
+          "Nacherntephase, Curing und Laborcheck gehören in denselben Blick wie die Kulturphase. Nur so lassen sich Qualitätsschwankungen zwischen Durchläufen systematisch verstehen und beheben.",
+          "Ein Profi-Durchlauf endet deshalb nicht mit der Ernte selbst. Er endet mit Review, einem kurzen Datenarchiv und einer klaren Idee, was du beim nächsten Mal anders machst."
         ],
         checklist: [
-          "Trocknung und Curing mit eigenen SOPs und Alarmgrenzen fahren",
-          "Laborergebnisse gegen Prozessdaten spiegeln",
-          "Nach jeder Charge ein Review mit QA, Cultivation und Postharvest machen"
+          "Trocknung und Curing nach eigener fester Routine mit Alarmwerten fahren",
+          "Laborergebnisse (falls vorhanden) gegen deine eigenen Prozessdaten spiegeln",
+          "Nach jedem Durchlauf ein kurzes ehrliches Review schreiben"
         ]
       }
     ],
     warnings: [
-      "Hohe Datendichte ohne klare Entscheidungsregeln führt zu Analyse-Overload statt besserem Grow.",
-      "Wenn Hygiene und Freigabekriterien fehlen, kompensiert auch perfektes Klima keine Chargenrisiken."
+      "Hohe Datendichte ohne klare Entscheidungsregeln führt zu Analyse-Overload statt zu einem besseren Grow.",
+      "Wenn Hygiene und klare Übergangskriterien fehlen, kompensiert auch perfektes Klima keine Risiken über den Durchlauf hinweg."
     ],
     simpleExplainers: [
       {
-        title: "Kurz erklärt: SOP",
-        text: "Standard Operating Procedure - eine feste Arbeitsanweisung, damit dieselbe Aufgabe immer gleich ausgeführt wird."
+        title: "Kurz erklärt: Feste Routine",
+        text: "Eine schriftlich festgehaltene, immer gleiche Arbeitsweise für eine Aufgabe - damit sie unabhängig von Tagesform oder Erinnerung gleich gut ausgeführt wird."
       },
       {
-        title: "Kurz erklärt: CAPA-System",
-        text: "Corrective and Preventive Action - strukturierter Umgang mit Abweichungen, Ursachen und Vorbeugung."
+        title: "Kurz erklärt: Ursachenanalyse",
+        text: "Statt nur das sichtbare Symptom zu beheben, systematisch nach dem eigentlichen Auslöser eines Problems suchen, um es dauerhaft zu vermeiden."
       }
     ],
     faq: [
       {
-        question: "Wann wird aus einem guten Grow ein professionelles System?",
-        answer: "Wenn Ergebnisse über mehrere Zyklen, Personen und Zonen reproduzierbar sind und Abweichungen dokumentiert sowie korrigiert werden."
+        question: "Wann wird aus einem guten Grow ein wirklich professionelles System?",
+        answer: "Wenn Ergebnisse über mehrere Durchläufe und Zonen hinweg reproduzierbar sind und Abweichungen dokumentiert sowie tatsächlich korrigiert werden."
       },
       {
         question: "Was ist auf Profi-Niveau der größte Engpass?",
-        answer: "Fast nie nur ein Dünger oder ein Lichtwert, sondern fehlende Standardisierung zwischen Kultur, Hygiene, QA und Postharvest."
+        answer: "Fast nie nur ein Dünger oder ein Lichtwert, sondern fehlende Konsistenz zwischen Kultur, Hygiene und Nacherntephase."
       }
     ],
     glossary: [
-      { term: "SOP", definition: "Standardisierte Arbeitsanweisung für wiederholbare Prozesse im Betrieb." },
-      { term: "CAPA", definition: "System für Korrektur und Vorbeugung nach erkannter Abweichung." },
-      { term: "Freigabekriterium", definition: "Definierter Schwellenwert oder Check, der vor dem Übergang in die nächste Phase erfüllt sein muss." }
-    ],
-    downloads: [
-      { title: "Profi Chargen-Checkliste", href: "/terpira/tutorials/how-to-grow-profi-checkliste.txt", kind: "TXT-Checkliste" },
-      { title: "Profi SOP-Template für Cultivation und QA", href: "/terpira/tutorials/how-to-grow-profi-sop.txt", kind: "TXT-SOP-Vorlage" }
+      { term: "Feste Routine", definition: "Eine immer gleich ausgeführte, dokumentierte Arbeitsweise für wiederholbare Aufgaben im Grow." },
+      { term: "Ursachenanalyse", definition: "Systematische Suche nach dem eigentlichen Auslöser eines Problems statt nur der Behandlung des Symptoms." },
+      { term: "Übergangskriterium", definition: "Selbst festgelegter Schwellenwert oder Check, der vor dem Wechsel in die nächste Phase erfüllt sein sollte." }
     ],
     relatedSlugs: ["mutterpflanzen-und-clone-hygiene", "schimmel-und-mykotoxine-bei-cannabis", "grow-log-und-kpi-dashboard"]
   })
@@ -5938,9 +5923,9 @@ const createLiteArticle = (seed: LiteArticleSeed): TerpiraArticle =>
   createArticle({
     ...seed,
     keyTakeaways: [
-      `${seed.title} fokussiert auf reproduzierbare Standards statt Einzeltricks.`,
-      "Klare Datenspuren und definierte Kriterien machen Vergleiche belastbar.",
-      "Für große Wissensseiten ist strukturierte Einordnung wichtiger als Hype-Sprache."
+      `${seed.title} hilft dir, das Thema einzuordnen statt dich auf Einzelmeinungen zu verlassen.`,
+      "Klare, nachvollziehbare Kriterien machen eigene Vergleiche verlässlicher.",
+      "Fundierte Einordnung ist wichtiger als reine Marketingsprache."
     ],
     quickFacts: [
       { label: "Kategorie", value: categoryLabels[seed.category] },
@@ -5951,20 +5936,20 @@ const createLiteArticle = (seed: LiteArticleSeed): TerpiraArticle =>
       {
         heading: "Kontext und Einordnung",
         content: [
-          "Dieser Beitrag ordnet das Thema für Teams und Nutzer in einen belastbaren Rahmen ein, damit Entscheidungen nicht nur auf Einzelbeobachtungen beruhen.",
-          "Im Fokus stehen nachvollziehbare Kriterien, saubere Begriffsnutzung und der Bezug zu realen Prozessdaten."
+          "Dieser Beitrag ordnet das Thema in einen nachvollziehbaren Rahmen ein, damit deine Einschätzung nicht nur auf einer Einzelbeobachtung beruht.",
+          "Im Fokus stehen klare Kriterien, saubere Begriffsnutzung und der Bezug zu echten Messwerten statt zu Marketingsprache."
         ]
       },
       {
         heading: "Praxisorientierte Umsetzung",
         content: [
-          "Der Inhalt verbindet Grundlagen mit operativen Checks, damit das Thema nicht nur verstanden, sondern im Alltag konsistent angewendet werden kann.",
-          "Besonders für einen grossen ersten Drop entsteht so ein klarer Mehrwert in Orientierung und Vergleichbarkeit."
+          "Der Inhalt verbindet die Grundlagen mit konkreten Praxis-Checks, damit du das Thema nicht nur verstehst, sondern es auch direkt anwenden kannst.",
+          "So bekommst du eine klare Orientierung, statt dich bei jeder Entscheidung neu durchzufragen."
         ],
         checklist: [
-          "Kriterien vorab festlegen",
-          "Dokumentation mit Zeitstempel pflegen",
-          "Abweichungen und Korrekturen nachvollziehbar erfassen"
+          "Eigene Kriterien vorab festlegen, bevor du vergleichst",
+          "Beobachtungen kurz notieren statt aus dem Gedächtnis zu urteilen",
+          "Auffälligkeiten und Abweichungen nachvollziehbar festhalten"
         ]
       }
     ],
@@ -5975,23 +5960,23 @@ const createLiteArticle = (seed: LiteArticleSeed): TerpiraArticle =>
       },
       {
         title: "Kurz erklärt: Warum ist das wichtig?",
-        text: "Saubere Einordnung reduziert Fehlentscheidungen und verbessert die Qualität von Content, Prozessen und Nutzerverständnis."
+        text: "Eine saubere Einordnung reduziert Fehleinschätzungen und hilft dir, Qualität wirklich zu erkennen statt nur zu vermuten."
       }
     ],
     faq: [
       {
         question: "Wie nutze ich den Artikel am besten?",
-        answer: "Starte mit den Kernpunkten, arbeite die Checkliste durch und vergleiche danach mit deinen aktuellen Prozessen oder Daten."
+        answer: "Starte mit den Kernpunkten, arbeite die Checkliste durch und vergleiche danach mit deiner eigenen Erfahrung oder deinen Beobachtungen."
       },
       {
         question: "Ist das ein starres Regelwerk?",
-        answer: "Nein. Es ist ein strukturierter Rahmen, der je nach Setup angepasst werden sollte, ohne die Datendisziplin zu verlieren."
+        answer: "Nein. Es ist ein hilfreicher Rahmen, den du an deine eigene Situation anpassen kannst, ohne dabei den Überblick zu verlieren."
       }
     ],
     glossary: [
-      { term: "Kriterium", definition: "Vorab definierter Massstab zur Bewertung eines Sachverhalts oder Prozesses." },
-      { term: "Datenspur", definition: "Nachvollziehbare Dokumentation von Messwerten, Entscheidungen und Änderungen." },
-      { term: "Kontext", definition: "Rahmenbedingungen, die bestimmen, wie ein Ergebnis richtig eingeordnet wird." },
+      { term: "Kriterium", definition: "Vorab festgelegter Massstab, an dem du etwas bewertest." },
+      { term: "Einordnung", definition: "Ein Ergebnis oder eine Beobachtung im richtigen Zusammenhang verstehen, statt isoliert zu betrachten." },
+      { term: "Kontext", definition: "Die Rahmenbedingungen, die bestimmen, wie ein Ergebnis richtig einzuordnen ist." },
     ]
   });
 
@@ -5999,17 +5984,15 @@ const thirdWaveSeeds: LiteArticleSeed[] = [
   { slug: "terpen-oxidationsprodukte-und-bedeutung", title: "Terpen-Oxidationsprodukte und Bedeutung", summary: "Wie oxidierte Terpenanteile Profile verändern und warum frische Analytik plus Lagerkontext zusammengehören.", category: "chemie", difficulty: "profi", readMinutes: 9, tags: ["Terpene", "Oxidation", "Analytik", "Chemie"], relatedSlugs: ["thc-zu-cbn-abbau-und-oxidation", "lagerung-und-terpenverlust-vermeiden", "analytik-hplc-vs-gc-bei-cannabinoiden"] },
   { slug: "matrixeffekte-in-der-cannabisanalytik", title: "Matrixeffekte in der Cannabis-Analytik", summary: "Warum dieselbe Methode je Produktmatrix unterschiedlich reagieren kann und was das für Vergleichbarkeit bedeutet.", category: "chemie", difficulty: "profi", readMinutes: 9, tags: ["Matrix", "Analytik", "Labor", "Methodik"], relatedSlugs: ["analytik-hplc-vs-gc-bei-cannabinoiden", "sampling-und-probenahme-fehler", "coa-richtig-lesen"] },
   { slug: "minor-terpene-und-profiltiefe", title: "Minor-Terpene und Profiltiefe", summary: "Warum kleine Terpenanteile für Profilcharakter und Vergleichbarkeit wichtig sein können.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Minor Terpene", "Profil", "Aroma", "Analytik"], relatedSlugs: ["terpene-und-wirkprofil", "myrcen-limonen-caryophyllen-einordnung", "sensorik-panels-fuer-cannabisprodukte"] },
-  { slug: "terpen-panels-und-qualitaetslabels", title: "Terpen-Panels und Qualitätslabels", summary: "Wie Terpenpanels für Kataloge standardisiert werden können, ohne in Marketingkürzel abzurutschen.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Terpenpanel", "Label", "Katalog", "Qualität"], relatedSlugs: ["sensorik-panels-fuer-cannabisprodukte", "terpene-und-wirkprofil", "coa-richtig-lesen"] },
+  { slug: "terpen-panels-und-qualitaetslabels", title: "Terpen-Panels und Qualitätslabels", summary: "Wie du Terpenpanels aussagekräftig liest, ohne dich von Marketingkürzeln blenden zu lassen.", category: "terpene", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Terpenpanel", "Label", "Qualität", "Analytik"], relatedSlugs: ["sensorik-panels-fuer-cannabisprodukte", "terpene-und-wirkprofil", "coa-richtig-lesen"] },
   { slug: "orale-produkte-und-first-pass-risiken", title: "Orale Produkte und First-Pass-Risiken", summary: "Einordnung von Effektdauer, Verzögerung und Fehlsteuerung bei oraler Anwendung.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Oral", "First Pass", "Timing", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "sublingual-tinkturen-richtig-einordnen", "inhalation-set-setting-und-harm-reduction"] },
   { slug: "dosisprotokolle-ohne-uebertreibung", title: "Dosisprotokolle ohne Übertreibung", summary: "Wie strukturierte Dosisprotokolle für Aufklärung funktionieren, ohne falsche Sicherheit zu erzeugen.", category: "konsumformen", difficulty: "fortgeschritten", readMinutes: 7, tags: ["Dosis", "Protokoll", "Aufklärung", "Risiko"], relatedSlugs: ["inhalation-vs-edibles", "inhalation-set-setting-und-harm-reduction"] },
-  { slug: "concentrate-categorization-fuer-plattformen", title: "Concentrate-Categorization für Plattformen", summary: "Wie Konzentrate so kategorisiert werden, dass Nutzer vergleichen können und Daten konsistent bleiben.", category: "konzentrate", difficulty: "profi", readMinutes: 8, tags: ["Konzentrate", "Katalog", "Taxonomie", "Plattform"], relatedSlugs: ["hash-typen-vergleichen", "full-melt-und-marketingsprache", "rosin-einordnung-ohne-hype"] },
+  { slug: "concentrate-categorization-fuer-plattformen", title: "Konzentrate richtig einordnen und vergleichen", summary: "Wie du Konzentrate nach Herstellungsverfahren statt nach Marketingnamen einordnest, um sie wirklich vergleichen zu können.", category: "konzentrate", difficulty: "profi", readMinutes: 8, tags: ["Konzentrate", "Einordnung", "Taxonomie", "Vergleich"], relatedSlugs: ["hash-typen-vergleichen", "full-melt-und-marketingsprache", "rosin-einordnung-ohne-hype"] },
   { slug: "kontaminantenprofile-bei-extrakten", title: "Kontaminantenprofile bei Extrakten", summary: "Welche Kontaminantenklassen bei konzentrierten Produkten besondere Aufmerksamkeit brauchen.", category: "konzentrate", difficulty: "fortgeschritten", readMinutes: 8, tags: ["Extrakte", "Kontaminanten", "Sicherheit", "Labor"], relatedSlugs: ["bubble-hash-qualitaetskriterien", "pgr-und-kontaminanten", "pestizidklassen-und-rueckstandsrisiken"] },
   { slug: "microbial-trending-und-fruehwarnung", title: "Microbial Trending und Frühwarnung", summary: "Wie mikrobielle Messreihen als Frühwarnsystem für Qualitäts- und Sicherheitsprobleme genutzt werden.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Mikrobiologie", "Trending", "Frühwarnung", "Sicherheit"], relatedSlugs: ["schimmel-und-mykotoxine-bei-cannabis", "recall-und-sperrprozesse-fuer-chargen", "wasseraktivitaet-und-curing"] },
-  { slug: "supplier-risk-scoring-fuer-cannabis", title: "Supplier-Risk-Scoring für Cannabis", summary: "Wie Lieferanten nach Datenqualität, Abweichungen und Zuverlässigkeit bewertet werden können.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Lieferanten", "Scoring", "Risiko", "Qualität"], relatedSlugs: ["schwere-metalle-und-aufnahmewege", "microbial-trending-und-fruehwarnung"] },
+  { slug: "supplier-risk-scoring-fuer-cannabis", title: "Wie zuverlässig ist deine Bezugsquelle wirklich?", summary: "Woran du erkennst, ob Samenbank, Dünger-Marke oder Verkäufer eine verlässliche Quelle sind - und worauf du bei wiederholten Käufen achten solltest.", category: "sicherheit", difficulty: "profi", readMinutes: 8, tags: ["Bezugsquelle", "Vertrauen", "Risiko", "Qualität"], relatedSlugs: ["schwere-metalle-und-aufnahmewege", "microbial-trending-und-fruehwarnung"] },
   { slug: "interlaborvergleich-und-ringtests", title: "Interlaborvergleich und Ringtests", summary: "Warum Ringtests wichtig sind, um Laborqualität und Vergleichbarkeit langfristig abzusichern.", category: "qualitaet", difficulty: "profi", readMinutes: 8, tags: ["Ringtest", "Interlabor", "Qualität", "Analytik"], relatedSlugs: ["coa-richtig-lesen", "analytik-hplc-vs-gc-bei-cannabinoiden", "sampling-und-probenahme-fehler"] },
-  { slug: "stabilitaetsprogramme-fuer-produktlinien", title: "Stabilitätsprogramme für Produktlinien", summary: "Wie strukturierte Stabilitätsprüfungen über Chargen und Zeit aufgebaut werden.", category: "qualitaet", difficulty: "profi", readMinutes: 9, tags: ["Stabilität", "Produktlinie", "Qualität", "Programm"], relatedSlugs: ["lagerung-verpackung-und-lichtschutz", "batch-release-und-freigabekriterien", "thc-zu-cbn-abbau-und-oxidation"] },
-  { slug: "content-taxonomie-und-tag-governance", title: "Content-Taxonomie und Tag-Governance", summary: "Wie große Wissensseiten Kategorien und Tags so steuern, dass Suche und Navigation stabil bleiben.", category: "werkzeuge", difficulty: "profi", readMinutes: 8, tags: ["Taxonomie", "Tags", "Governance", "Wiki"], relatedSlugs: ["grow-log-und-kpi-dashboard", "sensor-kalibrierung-und-messfehler", "concentrate-categorization-fuer-plattformen"] },
-  { slug: "release-checklisten-fuer-wiki-drops", title: "Release-Checklisten für Wiki-Drops", summary: "Praxis-Checkliste für groß angelegte Content-Drops mit Qualitäts- und Konsistenzkontrolle.", category: "werkzeuge", difficulty: "einsteiger", readMinutes: 6, tags: ["Release", "Checkliste", "Wiki", "QA"], relatedSlugs: ["content-taxonomie-und-tag-governance", "batch-release-und-freigabekriterien", "grow-log-und-kpi-dashboard"] }
+  { slug: "stabilitaetsprogramme-fuer-produktlinien", title: "Wie stabil bleibt Qualität wirklich über Zeit?", summary: "Wie du für dich selbst nachvollziehst, ob sich Qualität zwischen Ernten oder Käufen über die Zeit verändert.", category: "qualitaet", difficulty: "profi", readMinutes: 9, tags: ["Stabilität", "Zeit", "Qualität", "Vergleich"], relatedSlugs: ["lagerung-verpackung-und-lichtschutz", "batch-release-und-freigabekriterien", "thc-zu-cbn-abbau-und-oxidation"] }
 ];
 
 const thirdWaveWikiArticles: TerpiraArticle[] = thirdWaveSeeds.map(createLiteArticle);

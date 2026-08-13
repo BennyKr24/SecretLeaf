@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import GrowSetupWizard from '@/components/grow/GrowSetupWizard';
+import { Sprout } from 'lucide-react';
 
 export async function generateMetadata() {
   const t = await getTranslations('start');
@@ -16,7 +17,7 @@ export default async function StartPage() {
       <div className="mx-auto flex max-w-md flex-col">
         {/* Header */}
         <div className="mb-8 text-center">
-          <span className="text-4xl">🌱</span>
+          <Sprout className="mx-auto h-9 w-9 text-emerald-600" strokeWidth={1.5} />
           <h1 className="mt-3 text-2xl font-bold text-foreground">
             {t('pageTitle')}
           </h1>

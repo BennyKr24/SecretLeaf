@@ -33,9 +33,8 @@ import {
   createGrow as dbCreateGrow,
   updateGrow as dbUpdateGrow,
   deleteGrow as dbDeleteGrow,
-  getGrows as dbGetGrows,
 } from "@/lib/grow/db";
-import { rowToGrow } from "@/lib/grow/rowToGrow";
+import { restoreGrowsFromSupabase } from "@/lib/grow/restore";
 import { Analytics } from "@/lib/analytics";
 import { storage, STORAGE_KEYS } from "@/lib/store";
 import { captureGrowError } from "@/lib/grow/telemetry";
@@ -114,21 +113,12 @@ export function useGrowState(): UseGrowStateReturn {
       return () => clearTimeout(t);
     }
 
-    // Logged-in: load from Supabase
+    // Logged-in: load from Supabase (shared restore path — also used by
+    // useActiveGrow so the nav bar sees the same data on a fresh device).
     const supabase = getSupabaseBrowserClient();
-    dbGetGrows(supabase)
-      .then((rows) => {
-        const loadedGrows = rows.map(rowToGrow);
+    restoreGrowsFromSupabase(supabase)
+      .then((loadedGrows) => {
         setGrows(loadedGrows);
-        storage.set(STORAGE_KEYS.GROWS, loadedGrows);
-        // On a new device localStorage has no active grow ID.
-        // Default to the most recently created grow so the dashboard isn't blank.
-        if (loadedGrows.length === 0) {
-          storage.remove(STORAGE_KEYS.ACTIVE_GROW_ID);
-        } else if (!getActiveGrowId()) {
-          const first = loadedGrows[0];
-          if (first) storeSetActiveGrow(first.id);
-        }
         setLoaded(true);
       })
       .catch((err) => {
@@ -178,9 +168,13 @@ export function useGrowState(): UseGrowStateReturn {
           storage.set(STORAGE_KEYS.GROWS, current.map((g) =>
             g.id === grow.id ? grow : g
           ));
-          if (grow.status === "aktiv") storeSetActiveGrow(grow.id);
           return current;
         });
+        // Outside the updater: dispatches a cross-component event
+        // (secretleaf:activeGrowChanged, picked up by NavigationBar's
+        // useActiveGrow) — must not run inside a setState updater, which
+        // React can invoke during another component's render.
+        if (grow.status === "aktiv") storeSetActiveGrow(grow.id);
       } catch (err) {
         console.error("[grows] createGrow Supabase failed, rolling back:", err);
         captureGrowError("createGrow", { userId: user.id, growId: grow.id }, err);

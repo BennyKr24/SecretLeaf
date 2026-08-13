@@ -10,7 +10,7 @@
 //   preferred_sources   — Publishers with quality boost
 //   blocked_sources     — Publishers/patterns to reject
 //   custom_exclusions   — Additional hard exclusion rules
-//   topic_clusters      — Custom search queries & cluster overrides
+//   topic_clusters      — Additional custom clusters
 //   scoring_params      — Min accept score, weights, thresholds
 //   cannabis_anchor     — Anchor terms for cannabis validation
 // ──────────────────────────────────────────────────────────────────────────────
@@ -40,12 +40,6 @@ export type CustomExclusion = {
   pattern: string;
   reason: string;
   enabled: boolean;
-};
-
-export type TopicClusterOverride = {
-  queries?: string[];
-  includePatterns?: string[];
-  enabled?: boolean;
 };
 
 export type CustomCluster = {
@@ -81,7 +75,6 @@ export type EngineConfigData = {
   blocked_sources: { sources: BlockedSource[] };
   custom_exclusions: { rules: CustomExclusion[] };
   topic_clusters: {
-    overrides: Record<string, TopicClusterOverride>;
     customClusters: CustomCluster[];
   };
   scoring_params: ScoringParams;
@@ -125,7 +118,7 @@ const DEFAULT_CONFIG: EngineConfigData = {
   },
   blocked_sources: { sources: [] },
   custom_exclusions: { rules: [] },
-  topic_clusters: { overrides: {}, customClusters: [] },
+  topic_clusters: { customClusters: [] },
   scoring_params: {
     minAcceptScore: 34,
     crossrefRowsPerQuery: 60,
