@@ -35,10 +35,24 @@ const UMLAUT: Record<string, string> = {
   Ä: 'ae', Ö: 'oe', Ü: 'ue',
 };
 
+// Bewusst breiter als eine minimale Stopwortliste: Modal-/Hilfsverben und
+// Pronomen wie "sollte" oder "ich" sind in praktisch jeder Nutzerfrage
+// enthalten und würden sonst (v.a. durch den Längenbonus ab 6 Zeichen in
+// scoreArticle/scoreFaqMatch) wie starke inhaltliche Signale gewichtet und
+// falsche Treffer über echte Themen-Tokens stellen.
 const STOP = new Set([
-  'und', 'der', 'die', 'das', 'ein', 'eine', 'in', 'an', 'auf', 'fur', 'fuer',
-  'mit', 'von', 'zu', 'wie', 'was', 'ist', 'auch', 'bei', 'the', 'and', 'of',
-  'a', 'to', 'for', 'is', 'what', 'how', 'does', 'do', 'er', 'sie', 'es',
+  'und', 'der', 'die', 'das', 'ein', 'eine', 'einen', 'einem', 'einer', 'in',
+  'an', 'auf', 'fur', 'fuer', 'mit', 'von', 'zu', 'wie', 'was', 'ist', 'auch',
+  'bei', 'the', 'and', 'of', 'a', 'to', 'for', 'is', 'what', 'how', 'does',
+  'do', 'er', 'sie', 'es', 'ich', 'du', 'wir', 'ihr', 'mich', 'dich', 'uns',
+  'euch', 'mein', 'meine', 'dein', 'deine', 'sein', 'seine', 'ihre', 'unser',
+  'kann', 'kannst', 'konnte', 'koennte', 'soll', 'sollte', 'sollten', 'muss',
+  'musst', 'muessen', 'will', 'willst', 'wollen', 'mag', 'moegen', 'habe',
+  'hast', 'hat', 'haben', 'hatte', 'wurde', 'wurden', 'werde', 'wirst',
+  'werden', 'nicht', 'kein', 'keine', 'dann', 'noch', 'mehr', 'sehr', 'nur',
+  'schon', 'immer', 'oder', 'aber', 'wenn', 'dass', 'dieser', 'diese',
+  'dieses', 'alle', 'alles', 'wo', 'wann', 'warum', 'welche', 'welcher',
+  'welches', 'gibt', 'geben',
 ]);
 
 function norm(s: string): string {
@@ -92,6 +106,46 @@ function findArticles(query: string, limit = 4): ScoredArticle[] {
     .slice(0, limit);
 }
 
+// Bewertet einen einzelnen FAQ-Eintrag gegen die Suchtokens. Treffer in der
+// Frage zählen deutlich stärker als Treffer in der Antwort – sonst matcht
+// (wie zuvor) fast jede Frage, deren Antwort zufällig ein Wort enthält.
+function scoreFaqMatch(question: string, answer: string, tokens: string[]): number {
+  if (tokens.length === 0) return 0;
+  const q = norm(question);
+  const a = norm(answer);
+  let score = 0;
+  for (const t of tokens) {
+    if (q.includes(t)) score += t.length >= 6 ? 6 : 3;
+    if (a.includes(t)) score += 1;
+  }
+  return score;
+}
+
+type FaqHit = {
+  article: TerpiraArticle;
+  faq: NonNullable<TerpiraArticle['faq']>[number];
+  score: number;
+};
+
+// Sucht den am besten passenden FAQ-Eintrag über ALLE Artikel, nicht nur
+// die Top-Kandidaten aus scoreArticle. Grund: scoreArticle gewichtet
+// Titeltreffer stark (Gewicht 12) – ein Artikel, dessen Titel zufällig ein
+// Query-Wort enthält, kann so vor dem Artikel landen, der die Frage wörtlich
+// als FAQ beantwortet. Ein Mindest-Score verhindert schwache Zufallstreffer.
+function findBestFaq(tokens: string[]): FaqHit | null {
+  const MIN_SCORE = 10;
+  let best: FaqHit | null = null;
+  for (const article of wikiArticles) {
+    for (const faq of article.faq ?? []) {
+      const score = scoreFaqMatch(faq.question, faq.answer, tokens);
+      if (score > 0 && (!best || score > best.score)) {
+        best = { article, faq, score };
+      }
+    }
+  }
+  return best && best.score >= MIN_SCORE ? best : null;
+}
+
 function synthesizeAnswer(query: string, results: ScoredArticle[]): string {
   if (results.length === 0) {
     return (
@@ -100,36 +154,54 @@ function synthesizeAnswer(query: string, results: ScoredArticle[]): string {
     );
   }
 
-  const { article } = results[0]!;
+  const top = results[0]!;
+  const tokens = tok(query);
   const lines: string[] = [];
 
-  lines.push(article.summary);
-  lines.push('');
+  // Direkter FAQ-Treffer (über alle Artikel gesucht) beantwortet die Frage
+  // konkret statt nur den generischen Artikel-Summary zu zeigen.
+  const bestFaq = findBestFaq(tokens);
 
-  if (article.keyTakeaways.length > 0) {
-    lines.push('**Kernpunkte:**');
-    for (const kp of article.keyTakeaways.slice(0, 3)) {
-      lines.push(`• ${kp}`);
+  if (bestFaq) {
+    lines.push(`**${bestFaq.faq.question}**`);
+    lines.push(bestFaq.faq.answer);
+    if (bestFaq.article.slug !== top.article.slug) {
+      lines.push('');
+      lines.push(`Aus dem Artikel „${bestFaq.article.title}“.`);
     }
+  } else {
+    lines.push(top.article.summary);
     lines.push('');
+
+    if (top.article.keyTakeaways.length > 0) {
+      lines.push('**Kernpunkte:**');
+      for (const kp of top.article.keyTakeaways.slice(0, 3)) {
+        lines.push(`• ${kp}`);
+      }
+    }
+
+    const explainer = top.article.simpleExplainers?.[0];
+    if (explainer && tokens.length <= 4) {
+      lines.push('');
+      lines.push(`**${explainer.title}**`);
+      lines.push(explainer.text);
+    }
   }
 
-  // FAQ-Treffer suchen
-  const queryNorm = norm(query);
-  const faqMatch = (article.faq ?? []).find(f =>
-    tok(query).some(t => norm(f.question).includes(t) || norm(f.answer).includes(t))
-  );
-  if (faqMatch) {
-    lines.push(`**Häufige Frage:** ${faqMatch.question}`);
-    lines.push(faqMatch.answer);
+  // Zweiter, klar eigenständiger Artikel mit vergleichbarer Relevanz kurz
+  // mit anführen, statt Fragen immer nur aus einem einzelnen Artikel zu
+  // beantworten – deckt Fälle ab, in denen zwei Artikel gemeinsam die
+  // Antwort ausmachen (z. B. Dosierung + Aufnahmeweg).
+  const second = results[1];
+  if (
+    second &&
+    second.article.slug !== top.article.slug &&
+    second.article.slug !== bestFaq?.article.slug &&
+    second.score >= top.score * 0.45
+  ) {
     lines.push('');
-  }
-
-  // Simpleexplainer
-  const explainer = article.simpleExplainers?.[0];
-  if (explainer && !faqMatch && queryNorm.split(' ').length <= 4) {
-    lines.push(`**${explainer.title}**`);
-    lines.push(explainer.text);
+    lines.push(`**Ergänzend – „${second.article.title}“:**`);
+    lines.push(second.article.keyTakeaways[0] ?? second.article.summary);
   }
 
   return lines.join('\n').trim();

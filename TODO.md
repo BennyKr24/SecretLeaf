@@ -18,26 +18,22 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ## 🤖 Studien-Assistent
 
-- [ ] 🔍 **Studien-Assistent (`components/WikiAskBot.tsx`) soll "schlauer und
-      konkreter" antworten** — Nutzerwunsch 2026-08-13, nachdem eine große
-      Recherche-Runde neue Wiki-Artikel-Inhalte lieferte. Wichtiger Fund beim
-      Nachschauen: Der Bot braucht **keinen separaten "Fütterungs"-Schritt** —
-      er ist rein clientseitig (kein externes LLM, keine Embeddings) und liest
-      zur Laufzeit direkt aus `wikiArticles` in `data/terpira/wiki.ts`,
-      demselben Array, das auch `/studies/[slug]` rendert. Sobald ein Artikel
-      in `GROW_KNOWLEDGE` kuratiert ist, kennt der Assistent ihn automatisch.
-      Was für "schlauer" tatsächlich fehlt:
-      1. **Content-Abdeckung** — passiert bereits durch die laufende
-         Kuratierung neuer Recherche-Artikel. Für gute Trefferqualität sollten
-         `faq`- und `keyTakeaways`-Einträge an Formulierungen orientiert sein,
-         wie Nutzer real fragen würden — `scoreArticle()` matcht nur auf
-         Keyword-Overlap, keine Synonyme/Semantik.
-      2. **Synthese-Logik ist simpel** (`synthesizeAnswer()`,
-         `WikiAskBot.tsx:95-136`): nimmt nur den bestbewerteten *einen*
-         Artikel, hängt Summary + erste 3 Kernpunkte + ggf. einen
-         FAQ-Treffer zusammen. Kein Zusammenführen mehrerer relevanter
-         Artikel, keine echte Beantwortung von Unterfragen — das ist der
-         eigentliche Hebel für "konkreter", nicht mehr Content allein.
-      Offene Entscheidung: reicht Content-Kuratierung + FAQ-Feintuning, oder
-      soll die Synthese-Logik selbst überarbeitet werden (Multi-Artikel-
-      Zusammenfassung, evtl. echtes LLM statt Keyword-Scoring)?
+- [x] ✅ **Studien-Assistent (`components/WikiAskBot.tsx`) "schlauer und
+      konkreter"** — erledigt 2026-08-13. Zwei Root-Cause-Fixes in
+      `synthesizeAnswer()`/`findBestFaq()`:
+      1. **FAQ-Matching entkoppelt vom Artikel-Ranking**: `findBestFaq()`
+         durchsucht jetzt alle Artikel-FAQs direkt statt nur die Top-2 aus
+         `scoreArticle()` — vorher konnte ein Artikel mit zufälligem
+         Titel-Treffer (Gewicht 12) vor dem Artikel landen, der die Frage
+         wörtlich als FAQ beantwortet.
+      2. **Stopwortliste stark erweitert**: Modalverben/Pronomen wie "ich",
+         "sollte", "kann" wurden vorher als Keyword-Tokens gewertet (inkl.
+         Längenbonus ab 6 Zeichen) und haben Fragen zu falschen Artikeln
+         gezogen.
+      3. **Zweiter, eigenständiger Artikel wird bei vergleichbarer Relevanz
+         kurz mit angehängt** ("Ergänzend – ...") statt Antworten immer nur
+         aus einem einzelnen Artikel zu synthetisieren.
+      Live getestet: wörtliche FAQ-Fragen (z. B. "Wie lange zwischen zwei
+      Portionen Edibles warten?", "Ist Live Resin dasselbe wie Live Rosin?")
+      liefern jetzt die exakte FAQ-Antwort statt einer generischen
+      Artikel-Zusammenfassung.
