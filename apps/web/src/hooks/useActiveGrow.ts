@@ -11,6 +11,7 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import { useCallback, useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 import { getActiveGrow, getGrows } from "@/lib/grow/store";
 import type { Grow } from "@/lib/grow/types";
 import { useAuth } from "@/hooks/useAuth";
@@ -33,12 +34,8 @@ export function useActiveGrow(): Grow | null {
     return () => clearTimeout(t);
   }, [refresh]);
 
-  // Re-sync on every route change. A `secretleaf:activeGrowChanged` dispatch
-  // that lands right before router.push() (e.g. GrowSetupWizard's submit)
-  // can be dropped by Next.js's navigation transition — live-observed
-  // 2026-08-12: NavigationBar stuck showing "no active grow" after creating
-  // a new grow, even though localStorage already had the correct data.
-  // Re-checking on pathname change is independent of that event timing.
+  // Re-sync on every route change, as defense in depth alongside the
+  // flushSync'd event listener below.
   useEffect(() => {
     const t = setTimeout(refresh, 0);
     return () => clearTimeout(t);
@@ -64,7 +61,11 @@ export function useActiveGrow(): Grow | null {
         refresh();
       }
     };
-    const handleChanged = () => refresh();
+    // flushSync so the state commits synchronously, before the caller (e.g.
+    // GrowSetupWizard's `await createGrow(); router.push(...)`) can move on
+    // to a navigation that would otherwise race the update — see
+    // notifyActiveGrowChanged() in lib/grow/store.ts for the dispatch side.
+    const handleChanged = () => flushSync(() => refresh());
     window.addEventListener("storage", handleStorage);
     window.addEventListener("secretleaf:activeGrowChanged", handleChanged);
     return () => {
