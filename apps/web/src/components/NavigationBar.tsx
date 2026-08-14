@@ -6,7 +6,7 @@ import SearchBar from "@/components/SearchBar";
 import { UserMenu } from "@/components/UserMenu";
 import { useAuth } from "@/hooks/useAuth";
 import { useActiveGrow } from "@/hooks/useActiveGrow";
-import { Leaf, Sprout } from "lucide-react";
+import { Leaf } from "lucide-react";
 
 export function NavigationBar() {
   const t = useTranslations("nav");
@@ -37,9 +37,8 @@ export function NavigationBar() {
         <div className="hidden md:flex items-center gap-0.5 text-[13.5px] text-foreground/80">
           <Link
             href={activeGrow ? `/grow/${activeGrow.id}` : "/start"}
-            className="nav-link flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-150"
+            className="nav-link px-3 py-1.5 rounded-md font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-150"
           >
-            <Sprout className="h-3.5 w-3.5" strokeWidth={2} />
             {activeGrow ? t("myGrow") : t("startGrow")}
           </Link>
           {!isLoggedIn && (

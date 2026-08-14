@@ -14,7 +14,7 @@ import { Leaf } from 'lucide-react';
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://secretleaf.de';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://secretleaf.net';
 
 export const metadata: Metadata = {
   title: 'Updates – SecretLeaf',

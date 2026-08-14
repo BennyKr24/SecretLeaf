@@ -104,7 +104,7 @@ export default async function LandingPage() {
 
   const topStudies = [...wikiArticles]
     .sort((a, b) => (b.sourceIds?.length ?? 0) - (a.sourceIds?.length ?? 0))
-    .slice(0, 6);
+    .slice(0, 3);
 
   const evidenceLabels: EvidenceLabels = {
     high: tStudies("evidenceHigh"),
@@ -165,35 +165,15 @@ export default async function LandingPage() {
 
       <section className="border-b border-white/5 bg-[#040b09]" data-reveal>
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
-          <p className="text-center text-xs uppercase tracking-[0.22em] text-slate-500">Vertraut von über 10.000 Growern weltweit</p>
+          <p className="text-center text-xs uppercase tracking-[0.22em] text-slate-500">Basierend auf geprüften Quellen</p>
 
-          {/* Plain editorial line instead of bordered boxes pretending to be
-              logo marks — without real logo assets, the box treatment read as
-              placeholder/unfinished rather than premium. */}
-          <p className="mt-5 text-center text-[13px] font-semibold uppercase tracking-wider text-slate-500">
+          {/* Only claims we can actually back with real, computed numbers —
+              no user/review counts or press mentions until those exist. */}
+          <div className="mt-5 grid grid-cols-1 gap-3 text-center text-sm text-slate-400 sm:grid-cols-3">
             {[
-              "GROWER.CH",
-              "CANNABIS MAGAZIN",
-              "HIGH-TECH GROWING",
-              "420",
-              "GROW DIARIES",
-              "ERNTEHELFER",
-            ].map((logo, i, arr) => (
-              <span key={logo}>
-                <span className="transition-colors hover:text-slate-300">{logo}</span>
-                {i < arr.length - 1 && <span className="mx-3 text-slate-700">·</span>}
-              </span>
-            ))}
-          </p>
-
-          <div className="mt-8 grid grid-cols-2 gap-3 text-center text-sm text-slate-400 sm:grid-cols-3 lg:grid-cols-6">
-            {[
-              "10.000+ Grower",
-              "4,9/5 Bewertung",
-              "1.200+ Reviews",
-              `${sourceCount}+ Quellen`,
-              "24/7 Monitoring",
-              "EU Privacy-first",
+              `${articleCount} Fachartikel`,
+              `${sourceCount}+ wiss. Quellen`,
+              "Kostenlos nutzbar",
             ].map((item) => (
               <div key={item} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 transition-colors hover:border-emerald-400/30 hover:bg-emerald-500/[0.06]">
                 {item}
@@ -251,7 +231,7 @@ export default async function LandingPage() {
                 <h3 className="mt-4 text-xl font-semibold text-white">{item.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.body}</p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-emerald-300">
-                  Oeffnen
+                  Öffnen
                   <svg className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2}>
                     <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -321,10 +301,8 @@ export default async function LandingPage() {
               </p>
               <div className="mt-6 grid grid-cols-2 gap-2">
                 {[
-                  { label: "Aktive Sessions", value: "1.842" },
-                  { label: "Wöchentliche Logs", value: "18k+" },
+                  { label: "Fachartikel", value: `${articleCount}` },
                   { label: "Validierte Quellen", value: `${sourceCount}+` },
-                  { label: "Diagnose-Hitrate", value: "92%" },
                 ].map((metric) => (
                   <div key={metric.label} className="rounded-lg border border-white/10 bg-black/20 px-3 py-3">
                     <p className="text-[11px] uppercase tracking-widest text-slate-500">{metric.label}</p>

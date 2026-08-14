@@ -34,7 +34,18 @@ export function PremiumScrollFx() {
     const revealElements = Array.from(document.querySelectorAll<RevealElement>("[data-reveal]"));
     const parallaxElements = Array.from(document.querySelectorAll<ParallaxElement>("[data-parallax]"));
 
-    for (const element of revealElements) {
+    // Elements already inside the viewport at mount are already what the
+    // user sees in the SSR-rendered page — hiding them first (opacity: 0)
+    // and waiting on the IntersectionObserver to reveal them again caused a
+    // visible flash-to-black on every load and on fast scrolling. Only
+    // elements that are actually off-screen get the reveal treatment.
+    const belowFoldElements = revealElements.filter((element) => {
+      const rect = element.getBoundingClientRect();
+      const alreadyInView = rect.top < window.innerHeight && rect.bottom > 0;
+      return !alreadyInView;
+    });
+
+    for (const element of belowFoldElements) {
       const delayRaw = Number(element.dataset.revealDelay ?? "0");
       if (!Number.isNaN(delayRaw) && delayRaw > 0) {
         element.style.transitionDelay = `${delayRaw}ms`;
@@ -53,7 +64,7 @@ export function PremiumScrollFx() {
       { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
     );
 
-    for (const element of revealElements) observer.observe(element);
+    for (const element of belowFoldElements) observer.observe(element);
 
     const onScroll = () => {
       targetY = window.scrollY;

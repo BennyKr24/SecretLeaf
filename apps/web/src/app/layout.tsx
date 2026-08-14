@@ -10,8 +10,8 @@ const manrope = Manrope({ subsets: ["latin"], variable: "--font-body" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
 
 export const metadata: Metadata = {
-  title: "SecretLeaf – Cannabis Intelligence Platform",
-  description: "Die führende Wissensplattform für evidenzbasiertes Cannabis-Wissen.",
+  title: "SecretLeaf – Grow Operating System für Cannabis",
+  description: "Die Plattform, die dir sagt, was du bei deinem Cannabis-Grow als Nächstes tun musst — Tracking, Diagnose und Tools in einem System.",
 };
 
 // Inline script to apply dark class before first paint to avoid flash

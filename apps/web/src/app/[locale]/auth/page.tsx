@@ -216,7 +216,7 @@ function AuthPageInner() {
             <span className="text-lg font-bold text-white tracking-tight">SecretLeaf</span>
           </Link>
           <div className="mb-10">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-500 mb-3">Wissensplattform für Cannabis</p>
+            <p className="text-[11px] font-bold uppercase tracking-widest text-emerald-500 mb-3">Grow Operating System für Cannabis</p>
             <h2 className="text-3xl font-bold text-white leading-tight tracking-tight">
               Fundiertes Wissen,<br />
               <span className="bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent">das den Unterschied macht.</span>

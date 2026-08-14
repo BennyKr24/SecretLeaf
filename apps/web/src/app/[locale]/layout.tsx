@@ -9,7 +9,7 @@ import { LocaleBanner } from "@/components/LocaleBanner";
 import { routing } from "@/i18n/routing";
 import { Leaf } from "lucide-react";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://secretleaf.de";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://secretleaf.net";
 
 type Props = {
   children: React.ReactNode;
@@ -26,11 +26,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonicalUrl = locale === "de" ? BASE_URL : `${BASE_URL}/en`;
 
   return {
-    title: "SecretLeaf – Cannabis Intelligence Platform",
+    title:
+      locale === "en"
+        ? "SecretLeaf – Grow Operating System for Cannabis"
+        : "SecretLeaf – Grow Operating System für Cannabis",
     description:
       locale === "en"
-        ? "The leading knowledge platform for evidence-based cannabis cultivation."
-        : "Die führende Wissensplattform für evidenzbasiertes Cannabis-Wissen.",
+        ? "The platform that tells you what to do next in your cannabis grow — tracking, diagnosis and tools in one system."
+        : "Die Plattform, die dir sagt, was du bei deinem Cannabis-Grow als Nächstes tun musst — Tracking, Diagnose und Tools in einem System.",
     alternates: {
       canonical: canonicalUrl,
       languages: {
