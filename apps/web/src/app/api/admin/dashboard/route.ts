@@ -322,7 +322,7 @@ export async function POST(req: Request) {
       case "engine-trigger": {
         const { getCronSecret } = await import("@/lib/env");
         const cronSecret = getCronSecret();
-        const params = new URLSearchParams({ "x-cron-key": cronSecret });
+        const params = new URLSearchParams();
         if (body.dryRun) params.set("dryRun", "true");
         if (body.lookbackDays) params.set("lookbackDays", String(body.lookbackDays));
         if (body.maxProcessed) params.set("maxProcessed", String(body.maxProcessed));
@@ -330,7 +330,7 @@ export async function POST(req: Request) {
         const baseUrl = getBaseUrl(req);
         const url = `${baseUrl}/api/automation/engine-sync?${params.toString()}`;
 
-        const res = await fetch(url, { cache: "no-store" });
+        const res = await fetch(url, { cache: "no-store", headers: { Authorization: `Bearer ${cronSecret}` } });
         const result = await res.json();
 
         logInfo("admin.engine-trigger", { by: adminOrResponse.userId, dryRun: !!body.dryRun });
@@ -343,9 +343,9 @@ export async function POST(req: Request) {
         const cronSecret = getCronSecret();
 
         const baseUrl = getBaseUrl(req);
-        const url = `${baseUrl}/api/automation/engine-adapt?x-cron-key=${encodeURIComponent(cronSecret)}`;
+        const url = `${baseUrl}/api/automation/engine-adapt`;
 
-        const res = await fetch(url, { cache: "no-store" });
+        const res = await fetch(url, { cache: "no-store", headers: { Authorization: `Bearer ${cronSecret}` } });
         const result = await res.json();
 
         logInfo("admin.engine-adapt", { by: adminOrResponse.userId });
@@ -356,13 +356,13 @@ export async function POST(req: Request) {
       case "engine-reprocess": {
         const { getCronSecret } = await import("@/lib/env");
         const cronSecret = getCronSecret();
-        const params = new URLSearchParams({ "x-cron-key": cronSecret });
+        const params = new URLSearchParams();
         if (body.batchSize) params.set("batchSize", String(body.batchSize));
 
         const baseUrl = getBaseUrl(req);
         const url = `${baseUrl}/api/automation/engine-reprocess?${params.toString()}`;
 
-        const res = await fetch(url, { cache: "no-store" });
+        const res = await fetch(url, { cache: "no-store", headers: { Authorization: `Bearer ${cronSecret}` } });
         const result = await res.json();
 
         logInfo("admin.engine-reprocess", { by: adminOrResponse.userId });

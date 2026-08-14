@@ -2,7 +2,7 @@
 // Study Engine – Health Monitor API Route
 // ──────────────────────────────────────────────────────────────────────────────
 //
-// GET /api/automation/engine-health?x-cron-key=...
+// GET /api/automation/engine-health (Authorization: Bearer <CRON_SECRET> oder Header x-cron-key: <CRON_SECRET>)
 //
 // Returns pipeline health snapshot + circuit breaker status.
 // Protected by CRON_SECRET.

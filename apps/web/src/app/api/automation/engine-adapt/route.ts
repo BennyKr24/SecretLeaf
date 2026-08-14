@@ -2,7 +2,7 @@
 // Study Engine – Adaptive Weights API Route (Cron)
 // ──────────────────────────────────────────────────────────────────────────────
 //
-// GET /api/automation/engine-adapt?x-cron-key=...
+// GET /api/automation/engine-adapt (Authorization: Bearer <CRON_SECRET> oder Header x-cron-key: <CRON_SECRET>)
 //
 // Triggers the adaptive weight computation:
 // 1. Fetches feedback aggregates

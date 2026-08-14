@@ -2,7 +2,7 @@
 // Health Snapshot + Diagnosis Outcome Cron
 // ──────────────────────────────────────────────────────────────────────────────
 //
-// GET /api/automation/health-snapshot?x-cron-key=...
+// GET /api/automation/health-snapshot (Authorization: Bearer <CRON_SECRET> oder Header x-cron-key: <CRON_SECRET>)
 //
 // Daily job: writes a plant_health_snapshots row for every grow, then checks
 // every still-open diagnosis for its 3-day/7-day auto outcome reading. See

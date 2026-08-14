@@ -5,8 +5,7 @@
 // Replaces the old studies-sync with the full engine pipeline.
 // Protected by CRON_SECRET, records automation runs.
 //
-// GET /api/automation/engine-sync?x-cron-key=...
-//   or header: x-cron-key: ...
+// GET /api/automation/engine-sync (Authorization: Bearer <CRON_SECRET> oder Header x-cron-key: <CRON_SECRET>)
 // ──────────────────────────────────────────────────────────────────────────────
 
 import { recordAutomationRun } from "@/lib/automationRuns";

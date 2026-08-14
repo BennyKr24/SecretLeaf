@@ -94,7 +94,10 @@ export async function GET(request: Request) {
     }
 
     if (query.q) {
-      const escaped = query.q.replace(/[%_]/g, "");
+      // Nur Buchstaben/Zahlen/Whitespace/Bindestrich zulassen — verhindert,
+      // dass Nutzereingaben aus dem ilike-Wert ausbrechen und zusätzliche
+      // PostgREST-Filterklauseln (Kommas, Punkte, Klammern etc.) einschleusen.
+      const escaped = query.q.replace(/[^\p{L}\p{N}\s-]/gu, "").trim();
       if (escaped.length > 0) {
         selectQuery = selectQuery.or(`title.ilike.%${escaped}%,description.ilike.%${escaped}%,source.ilike.%${escaped}%`);
       }

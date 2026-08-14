@@ -2,7 +2,7 @@
 // Study Engine – Reprocess API Route (Cron)
 // ──────────────────────────────────────────────────────────────────────────────
 //
-// GET /api/automation/engine-reprocess?x-cron-key=...
+// GET /api/automation/engine-reprocess (Authorization: Bearer <CRON_SECRET> oder Header x-cron-key: <CRON_SECRET>)
 //
 // Triggers the reprocessing loop to re-evaluate existing studies with
 // updated scoring rules and adaptive weights.
