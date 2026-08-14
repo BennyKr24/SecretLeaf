@@ -23,13 +23,13 @@ const DEFAULTS: VPDInputs = {
   lufttemperatur: 26,
   luftfeuchtigkeit: 60,
   blattOffsetManuell: false,
-  blattOffset: 2,
+  blattOffset: -2,
   phase: 'veg',
 };
 
 const TIPS = [
   'Blatttemperatur ist entscheidend — LED-Lampen machen Blätter ca. 1–3 °C kühler als die Raumluft.',
-  'Hohe VPD-Werte in der Blüte (0.8–1.4 kPa) verstärken Terpenproduktion und härten Knospen.',
+  'Hohe VPD-Werte in der Blüte (0.8–1.5 kPa) verstärken Terpenproduktion und härten Knospen.',
   'VPD unter 0.4 kPa erhöht das Botrytis-Risiko massiv — besonders in dichten Canopies.',
   'Wechsle beim Phasenübergang schrittweise: nicht sofort von Sämlings-VPD auf Blüten-VPD.',
   'Gute Luftzirkulation senkt effektiv die Blatttemperatur und damit den VPD.',
@@ -242,7 +242,7 @@ export default function VpdPage() {
             label="Blatttemperatur manuell einstellen"
             checked={inputs.blattOffsetManuell}
             onChange={(v) => setInput('blattOffsetManuell', v)}
-            {...(!inputs.blattOffsetManuell && { hint: `Standard: +2 °C Offset (Blatt bei ${(inputs.lufttemperatur + 2).toFixed(1)} °C).` })}
+            {...(!inputs.blattOffsetManuell && { hint: `Standard: −2 °C Offset (Blatt bei ${(inputs.lufttemperatur - 2).toFixed(1)} °C).` })}
           />
 
           {inputs.blattOffsetManuell && (
@@ -303,7 +303,7 @@ export default function VpdPage() {
                 label="Blatttemperatur"
                 value={`${output.leafTemp}`}
                 unit="°C"
-                explanation={`${inputs.blattOffsetManuell ? `Manueller Offset +${inputs.blattOffset} °C.` : 'Standard LED-Offset +2 °C.'}`}
+                explanation={`${inputs.blattOffsetManuell ? `Manueller Offset ${inputs.blattOffset >= 0 ? '+' : ''}${inputs.blattOffset} °C.` : 'Standard LED-Offset −2 °C.'}`}
               />
             </div>
 
@@ -342,7 +342,7 @@ export default function VpdPage() {
                   >
                     <span>{VPD_PHASE_LABELS[p]}</span>
                     <span className="tabular-nums">
-                      {p === 'saemling' ? '0.40 – 0.80' : p === 'veg' ? '0.70 – 1.00' : '1.00 – 1.40'} kPa
+                      {p === 'saemling' ? '0.40 – 0.80' : p === 'veg' ? '0.80 – 1.20' : '1.00 – 1.50'} kPa
                     </span>
                   </div>
                 );

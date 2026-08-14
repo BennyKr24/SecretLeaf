@@ -27,7 +27,7 @@ export type YieldOutput = {
 // g/Watt by experience level (indoor)
 const GPW: Record<TerpiraDifficulty, number> = {
   einsteiger: 0.5,
-  fortgeschritten: 0.8,
+  fortgeschritten: 0.75,
   profi: 1.1,
 };
 

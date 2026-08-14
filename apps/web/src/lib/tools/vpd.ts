@@ -4,12 +4,14 @@ import { round } from './units';
 // ── VPD Calculation ─────────────────────────────────────────────────────────
 // SVP(T) = 0.6108 × e^(17.27×T/(T+237.3))  [kPa]  — Magnus formula
 // VPD    = SVP(leafTemp) − (RH/100) × SVP(airTemp)
-// leafTemp = airTemp + offset (default +2 °C for LED grow lights)
+// leafTemp = airTemp + offset (default −2 °C für LED: Blatt läuft kühler als
+// Luft, da LEDs kaum Infrarot abstrahlen. Bei HPS ist das Vorzeichen
+// umgekehrt — dafür den manuellen Offset nutzen.)
 //
 // Phase zones (grün):
 //   Sämling / Klon : 0.40 – 0.80 kPa
-//   Vegetativ      : 0.70 – 1.00 kPa
-//   Blüte          : 1.00 – 1.40 kPa
+//   Vegetativ      : 0.80 – 1.20 kPa
+//   Blüte          : 1.00 – 1.50 kPa
 
 export type VPDPhase = 'saemling' | 'veg' | 'bluete';
 
@@ -42,8 +44,8 @@ function svp(tempC: number): number {
 /** Phase-specific optimal VPD range [min, max] in kPa */
 const OPTIMAL_RANGES: Record<VPDPhase, [number, number]> = {
   saemling: [0.4, 0.8],
-  veg:      [0.7, 1.0],
-  bluete:   [1.0, 1.4],
+  veg:      [0.8, 1.2],
+  bluete:   [1.0, 1.5],
 };
 
 export const VPD_PHASE_LABELS: Record<VPDPhase, string> = {
@@ -92,7 +94,7 @@ function vpdExplanation(vpd: number, phase: VPDPhase): string {
 export function calculateVPD(inputs: VPDInputs): VPDOutput {
   const { lufttemperatur, luftfeuchtigkeit, blattOffsetManuell, blattOffset, phase } = inputs;
 
-  const offset   = blattOffsetManuell ? blattOffset : 2;
+  const offset   = blattOffsetManuell ? blattOffset : -2;
   const leafTemp = round(lufttemperatur + offset, 1);
   const svpAir   = round(svp(lufttemperatur), 3);
   const svpLeaf  = round(svp(leafTemp), 3);
@@ -135,7 +137,7 @@ export function calculateVPD(inputs: VPDInputs): VPDOutput {
       value: svpLeaf,
       formatted: `${svpLeaf}`,
       unit: 'kPa',
-      explanation: `Sättigungsdampfdruck bei ${leafTemp} °C Blatttemperatur (+${offset} °C Offset).`,
+      explanation: `Sättigungsdampfdruck bei ${leafTemp} °C Blatttemperatur (${offset >= 0 ? '+' : ''}${offset} °C Offset).`,
     },
   ];
 

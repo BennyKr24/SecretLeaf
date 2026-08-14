@@ -33,9 +33,9 @@ function heightFactor(heightCm: number): number {
 
 function ppfdLevel(ppfd: number, phase: 'veg' | 'bluete'): ResultLevel {
   if (phase === 'veg') {
-    if (ppfd >= 400 && ppfd <= 700) return 'gruen';
+    if (ppfd >= 400 && ppfd <= 600) return 'gruen';
     if (ppfd >= 250 && ppfd < 400) return 'gelb';
-    if (ppfd > 700 && ppfd <= 900) return 'gelb';
+    if (ppfd > 600 && ppfd <= 800) return 'gelb';
     return 'rot';
   }
   // Blüte
@@ -46,14 +46,29 @@ function ppfdLevel(ppfd: number, phase: 'veg' | 'bluete'): ResultLevel {
 }
 
 function ppfdExplanation(ppfd: number, phase: 'veg' | 'bluete'): string {
-  const ziel = phase === 'veg' ? '400–700 µmol/m²/s' : '600–1.000 µmol/m²/s';
+  const ziel = phase === 'veg' ? '400–600 µmol/m²/s' : '600–1.000 µmol/m²/s';
   if (ppfd < (phase === 'veg' ? 250 : 400)) {
     return `Deutlich unter dem Zielbereich (${ziel}). Lampe näher positionieren oder stärkeres Modell einsetzen.`;
   }
-  if (ppfd > (phase === 'veg' ? 900 : 1300)) {
+  if (ppfd > (phase === 'veg' ? 800 : 1300)) {
     return `Über dem empfohlenen Bereich (${ziel}). Lichtstress wahrscheinlich — Abstand erhöhen oder dimmen.`;
   }
   return `Im empfohlenen Bereich für ${phase === 'veg' ? 'vegetative Phase' : 'Blütephase'} (${ziel}).`;
+}
+
+// DLI-Zielbereiche (mol/m²/Tag) nach Phase — Resource Innovation Institute u. a.
+function dliLevel(dli: number, phase: 'veg' | 'bluete'): ResultLevel {
+  if (phase === 'veg') {
+    if (dli >= 20 && dli <= 40) return 'gruen';
+    if (dli >= 15 && dli < 20) return 'gelb';
+    if (dli > 40 && dli <= 50) return 'gelb';
+    return 'rot';
+  }
+  // Blüte
+  if (dli >= 25 && dli <= 50) return 'gruen';
+  if (dli >= 20 && dli < 25) return 'gelb';
+  if (dli > 50 && dli <= 60) return 'gelb';
+  return 'rot';
 }
 
 export function calculateLighting(inputs: LightingInputs): LightingOutput {
@@ -81,6 +96,7 @@ export function calculateLighting(inputs: LightingInputs): LightingOutput {
       value: dli,
       formatted: `${dli}`,
       unit: 'mol/m²/d',
+      level: dliLevel(dli, phase),
       explanation: dli < 20 ? 'Niedrig — eher für Keimlinge/Klone geeignet.' : dli > 55 ? 'Sehr hoch — CO2-Supplementierung empfohlen.' : 'Guter Bereich für aktives Wachstum.',
     },
     {

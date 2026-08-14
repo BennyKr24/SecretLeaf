@@ -34,20 +34,32 @@ const SUBSTRAT_FACTOR: Record<Substrat, number> = {
   hydro: 1.05,
 };
 
-function ecLevel(ziel: number, phase: NutrientInputs['phase']): ResultLevel {
-  if (phase === 'veg') {
-    if (ziel <= 1.6) return 'gruen';
-    if (ziel <= 2.0) return 'gelb';
-    return 'rot';
-  }
-  if (phase === 'uebergang') {
-    if (ziel <= 1.8) return 'gruen';
-    if (ziel <= 2.2) return 'gelb';
-    return 'rot';
-  }
-  // Blüte
-  if (ziel <= 2.2) return 'gruen';
-  if (ziel <= 2.8) return 'gelb';
+// EC-Zielbereiche sind mediumabhängig: Coco hat keine Puffer-Kapazität und
+// verträgt/braucht spürbar höhere EC als Erde, die Salzspitzen abpuffert.
+// Hydro-Werte sind unverändert von Erde übernommen (keine belastbare Quelle
+// gefunden) — konservativer Mittelweg, kein bestätigter Zielwert.
+const EC_THRESHOLDS: Record<NutrientInputs['phase'], Record<Substrat, { gruen: number; gelb: number }>> = {
+  veg: {
+    erde:  { gruen: 1.6, gelb: 2.0 },
+    coco:  { gruen: 2.0, gelb: 2.4 },
+    hydro: { gruen: 1.6, gelb: 2.0 },
+  },
+  uebergang: {
+    erde:  { gruen: 1.8, gelb: 2.2 },
+    coco:  { gruen: 2.2, gelb: 2.6 },
+    hydro: { gruen: 1.8, gelb: 2.2 },
+  },
+  bluete: {
+    erde:  { gruen: 2.0, gelb: 2.4 },
+    coco:  { gruen: 2.8, gelb: 3.2 },
+    hydro: { gruen: 2.2, gelb: 2.8 },
+  },
+};
+
+function ecLevel(ziel: number, phase: NutrientInputs['phase'], substrat: Substrat): ResultLevel {
+  const { gruen, gelb } = EC_THRESHOLDS[phase][substrat];
+  if (ziel <= gruen) return 'gruen';
+  if (ziel <= gelb) return 'gelb';
   return 'rot';
 }
 
@@ -70,7 +82,7 @@ export function calculateNutrients(inputs: NutrientInputs): NutrientOutput {
   const dosierungProLiter = round(dosierungBasis * ecDifferenz * phaseFactor * substratFactor, 2);
   const gesamtDosierung = round(dosierungProLiter * wassermenge, 1);
 
-  const level = ecLevel(zielEC, phase);
+  const level = ecLevel(zielEC, phase, substrat);
   const phaseLabel = phase === 'veg' ? 'vegetative Phase' : phase === 'bluete' ? 'Blütephase' : 'Übergangsphase';
 
   const results: ToolResultData[] = [
