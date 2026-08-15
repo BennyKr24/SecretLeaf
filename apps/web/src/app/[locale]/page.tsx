@@ -7,7 +7,7 @@ import type { TerpiraArticle } from "@/lib/terpira/types";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { PremiumScrollFx } from "@/components/scroll/PremiumScrollFx";
 import { CATEGORY_ICONS } from "@/lib/terpira/categoryIcons";
-import { FileText } from "lucide-react";
+import { FileText, FlaskConical, Sprout } from "lucide-react";
 
 /* ─── Minimal helpers kept for the studies section at the bottom ─── */
 
@@ -55,39 +55,67 @@ function StudyCard({ article, evidenceLabels }: { article: TerpiraArticle; evide
   );
 }
 
-// One dominant photo, one minimal floating status chip. The previous version
-// crammed a header row + stat grid + progress bar + activity feed + AI-banner
-// into one card — competing with itself. Apple/Linear heroes show ONE thing
-// generously; everything else here was cut, not hidden (DESIGN_SYSTEM.md
-// §2.2 Simplicity Wins / §12 Visual Density — this card was violating both).
-function HeroPlantVisual() {
+// Explicit left/right split instead of one photo with a floating stat: each
+// side is its own tile with its own label, so a grower's eye locks onto the
+// left and a knowledge-only visitor's eye locks onto the right within the
+// first glance — self-selection, not just dual mention in copy. Each tile
+// stays to a single stat/line (DESIGN_SYSTEM.md §2.2 Simplicity Wins / §12
+// Visual Density) — twice as many tiles, not denser ones.
+function HeroDualVisual({ sourceCount }: { sourceCount: number }) {
   return (
-    <div className="relative mx-auto w-full max-w-[480px]" data-parallax="0.12">
+    <div className="relative mx-auto w-full max-w-[560px]" data-parallax="0.12">
       <div className="pointer-events-none absolute -inset-16 bg-[radial-gradient(ellipse_at_center,rgba(34,197,94,0.22),transparent_65%)] blur-3xl" />
 
-      <div className="relative aspect-[4/5] overflow-hidden rounded-[32px] shadow-[0_40px_120px_rgba(0,0,0,0.65)]">
-        <Image
-          src="/images/hero/plant-thumbnail.png"
-          alt="OG Kush Blüte, Nahaufnahme"
-          fill
-          sizes="(min-width: 1024px) 480px, 90vw"
-          className="object-cover"
-          priority
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/10" />
-      </div>
+      <div className="grid grid-cols-2 gap-3 sm:gap-4">
+        {/* Left: Grow — real photo, the grow-demo chip anchored at the bottom. */}
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[24px] shadow-[0_30px_90px_rgba(0,0,0,0.55)] sm:rounded-[28px]">
+          <Image
+            src="/images/hero/plant-thumbnail.png"
+            alt="OG Kush Blüte, Nahaufnahme"
+            fill
+            sizes="(min-width: 1024px) 270px, 44vw"
+            className="object-cover"
+            priority
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/10" />
 
-      {/* One minimal floating glass chip (DESIGN_SYSTEM.md §16) instead of a
-          dense stat grid — scales from the trigger-less "arrives as a real
-          surface" read, not a UI panel. */}
-      <div className="glass-surface absolute -bottom-7 left-6 right-6 flex items-center justify-between gap-4 rounded-2xl border border-white/10 px-5 py-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)] sm:right-auto sm:w-[300px]">
-        <div>
-          <p className="text-[11px] uppercase tracking-wider text-emerald-300/80">OG Kush · Tag 42</p>
-          <p className="mt-0.5 text-2xl font-bold text-white">
-            67<span className="text-base font-medium text-slate-400">% bis Ernte</span>
-          </p>
+          <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/35 px-2 py-1 text-[9px] font-semibold uppercase tracking-widest text-emerald-200 backdrop-blur-sm sm:left-4 sm:top-4 sm:px-2.5">
+            <Sprout className="h-3 w-3 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
+            Grow
+          </span>
+
+          <div className="absolute inset-x-3 bottom-3 rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 backdrop-blur-md sm:inset-x-4 sm:bottom-4">
+            <p className="text-[9px] uppercase tracking-wider text-emerald-300/80 sm:text-[10px]">OG Kush · Tag 42</p>
+            <p className="mt-0.5 text-lg font-bold text-white sm:text-xl">
+              67<span className="text-xs font-medium text-slate-400 sm:text-sm">% bis Ernte</span>
+            </p>
+          </div>
         </div>
-        <span className="flex h-2.5 w-2.5 flex-shrink-0 rounded-full bg-emerald-400 shadow-[0_0_12px_2px_rgba(52,211,153,0.6)]" aria-hidden="true" />
+
+        {/* Right: Wissen — mirrors the left tile 1:1 (photo, label, bottom chip). */}
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[24px] shadow-[0_30px_90px_rgba(0,0,0,0.55)] sm:rounded-[28px]">
+          <Image
+            src="/images/hero/knowledge-loupe.png"
+            alt="Cannabis-Trichome unter der Lupe"
+            fill
+            sizes="(min-width: 1024px) 270px, 44vw"
+            className="object-cover"
+            priority
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-black/10" />
+
+          <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/35 px-2 py-1 text-[9px] font-semibold uppercase tracking-widest text-emerald-200 backdrop-blur-sm sm:left-4 sm:top-4 sm:px-2.5">
+            <FlaskConical className="h-3 w-3 flex-shrink-0" strokeWidth={2} aria-hidden="true" />
+            Wissen
+          </span>
+
+          <div className="absolute inset-x-3 bottom-3 rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 backdrop-blur-md sm:inset-x-4 sm:bottom-4">
+            <p className="text-[9px] uppercase tracking-wider text-emerald-300/80 sm:text-[10px]">Wissensbasis</p>
+            <p className="mt-0.5 text-lg font-bold text-white sm:text-xl">
+              {sourceCount}<span className="text-xs font-medium text-slate-400 sm:text-sm">+ Quellen</span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -102,9 +130,15 @@ export default async function LandingPage() {
   const articleCount = wikiArticles.length;
   const sourceCount = sourceRegister.length;
 
-  const topStudies = [...wikiArticles]
-    .sort((a, b) => (b.sourceIds?.length ?? 0) - (a.sourceIds?.length ?? 0))
-    .slice(0, 3);
+  const [heroHeadlineMain, heroHeadlineTwist] = t("heroHeadline").split("\n");
+
+  // Aushängeschild-Artikel für die Startseite — bewusst kuratiert statt automatisch
+  // nach Quellenzahl sortiert, damit hier die interessantesten/besten Studien stehen
+  // statt nur die mit den meisten Quellen. Bei Bedarf hier anpassen.
+  const FEATURED_STUDY_SLUGS = ["hash-typen-vergleichen", "inhalation-vs-edibles", "terpene-und-wirkprofil"];
+  const topStudies = FEATURED_STUDY_SLUGS
+    .map((slug) => wikiArticles.find((article) => article.slug === slug))
+    .filter((article): article is TerpiraArticle => Boolean(article));
 
   const evidenceLabels: EvidenceLabels = {
     high: tStudies("evidenceHigh"),
@@ -129,7 +163,7 @@ export default async function LandingPage() {
         <div className="relative mx-auto max-w-7xl px-4 pb-14 pt-12 sm:px-6 sm:pb-20 sm:pt-16">
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:gap-10">
             <div className="order-1 lg:order-2" data-parallax="0.14" data-reveal data-reveal-delay="30">
-              <HeroPlantVisual />
+              <HeroDualVisual sourceCount={sourceCount} />
             </div>
 
             <div className="order-2 max-w-[470px] space-y-7 lg:order-1" data-reveal>
@@ -143,14 +177,14 @@ export default async function LandingPage() {
                   (DESIGN_SYSTEM.md §6). Uses the full 72–96px hero range the doc
                   already specifies, instead of stopping at 78px on every screen. */}
               <h1 className="text-5xl font-semibold leading-[0.98] tracking-tight text-white sm:text-6xl sm:tracking-[-0.03em] lg:text-[88px] lg:tracking-[-0.04em] xl:text-[96px]">
-                Grow smarter.
+                {heroHeadlineMain}
                 <br />
-                <span className="bg-gradient-to-r from-emerald-300 to-green-500 bg-clip-text text-transparent">Not harder.</span>
+                <span className="bg-gradient-to-r from-emerald-300 to-green-500 bg-clip-text text-transparent">{heroHeadlineTwist}</span>
               </h1>
 
-              <p className="max-w-[460px] text-lg leading-relaxed text-slate-400 sm:text-xl">{t("heroSub")}</p>
+              <p className="max-w-[460px] text-lg leading-relaxed text-slate-400 sm:text-xl">{t("heroSub", { count: sourceCount })}</p>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <CTAButton href="/start" size="lg" variant="primary" className="shadow-xl shadow-emerald-950/50 transition-transform duration-200 hover:-translate-y-0.5">
                   {t("ctaStart")}
                 </CTAButton>
@@ -158,6 +192,10 @@ export default async function LandingPage() {
                   {t("ctaTools")}
                 </CTAButton>
               </div>
+
+              <Link href={"/studies" as Route} className="inline-flex text-sm font-semibold text-slate-400 transition-colors hover:text-emerald-300">
+                {t("ctaStudies", { count: articleCount })}
+              </Link>
             </div>
           </div>
         </div>
@@ -183,7 +221,34 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <section className="border-b border-white/5 bg-[#030807]" data-reveal data-reveal-delay="50">
+      <section className="bg-[#060f0d]" data-reveal data-reveal-delay="50">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">{t("studiesEyebrow")}</p>
+              <h2 className="mt-1 text-2xl font-semibold text-white sm:text-3xl">{t("studiesHeadline")}</h2>
+              <p className="mt-1 text-sm text-slate-400">{t("studiesSub", { articles: articleCount, count: sourceCount })}</p>
+            </div>
+            <Link href={"/studies" as Route} className="hidden text-sm font-semibold text-slate-300 transition-colors hover:text-emerald-300 sm:inline-flex">
+              {t("studiesAllLink")}
+            </Link>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {topStudies.map((article) => (
+              <StudyCard key={article.slug} article={article} evidenceLabels={evidenceLabels} />
+            ))}
+          </div>
+
+          <div className="mt-7 flex justify-center">
+            <CTAButton href="/studies" variant="ghost" size="sm" className="border border-white/15 text-slate-200 hover:bg-white/10">
+              {t("studiesCTA", { count: articleCount })}
+            </CTAButton>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-white/5 bg-[#030807]" data-reveal data-reveal-delay="90">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
           <div className="mb-8 flex items-end justify-between gap-4">
             <div>
@@ -242,33 +307,6 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-[#060f0d]" data-reveal data-reveal-delay="90">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-          <div className="mb-6 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">{t("studiesEyebrow")}</p>
-              <h2 className="mt-1 text-2xl font-semibold text-white sm:text-3xl">{articleCount} {t("studiesCount")}</h2>
-              <p className="mt-1 text-sm text-slate-400">{t("studiesSub", { count: sourceCount })}</p>
-            </div>
-            <Link href={"/studies" as Route} className="hidden text-sm font-semibold text-slate-300 transition-colors hover:text-emerald-300 sm:inline-flex">
-              {t("studiesAllLink")}
-            </Link>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {topStudies.map((article) => (
-              <StudyCard key={article.slug} article={article} evidenceLabels={evidenceLabels} />
-            ))}
-          </div>
-
-          <div className="mt-7 flex justify-center">
-            <CTAButton href="/studies" variant="ghost" size="sm" className="border border-white/15 text-slate-200 hover:bg-white/10">
-              {t("studiesCTA", { count: articleCount })}
-            </CTAButton>
-          </div>
-        </div>
-      </section>
-
       <section className="border-y border-white/5 bg-[#040a08]" data-reveal data-reveal-delay="120">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16">
           <div className="grid gap-4 lg:grid-cols-2">
@@ -321,7 +359,23 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      <section className="bg-[#030807]" data-reveal data-reveal-delay="150">
+      {/* PLACEHOLDER: Textentwurf aus Projekt-Kontext (README/Commit-Historie) abgeleitet,
+          keine erfundenen biografischen Fakten — von Benny zu personalisieren/ersetzen. */}
+      <section className="bg-[#040b09]" data-reveal data-reveal-delay="150">
+        <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-16">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-300/80">Über uns</p>
+          <h2 className="mt-3 text-2xl font-semibold text-white sm:text-3xl">Wir sind SecretLeaf.</h2>
+          <p className="mt-4 text-base leading-relaxed text-slate-400 sm:text-lg">
+            Uns hat gestört, dass gute Cannabis-Informationen im Netz kaum von schlechten zu unterscheiden sind —
+            Forenwissen neben echten Studien, ohne Kennzeichnung. Also bauen wir beides selbst: ein System, das dir
+            beim Anbau hilft, und eine Wissensbasis, die nur zeigt, was wir auch belegen können. Keine erfundenen
+            Zahlen, keine bezahlten Bewertungen — nur das, was wir selbst nachvollziehen können.
+          </p>
+          <p className="mt-5 text-sm font-semibold text-emerald-300">— Das SecretLeaf-Team</p>
+        </div>
+      </section>
+
+      <section className="bg-[#030807]" data-reveal data-reveal-delay="180">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
           <div className="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-gradient-to-br from-emerald-500/15 via-transparent to-transparent p-8 shadow-[0_20px_70px_rgba(0,0,0,0.45)] sm:p-10">
             <div className="pointer-events-none absolute -right-14 -top-14 h-44 w-44 rounded-full bg-emerald-400/20 blur-3xl" />
@@ -329,15 +383,19 @@ export default async function LandingPage() {
             <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-tight text-white sm:text-5xl">
               Professionelles Grow-Operating-System.
               <br />
-              Nicht nur eine Sammlung von Tools.
+              Und eine Wissensbasis, der du trauen kannst.
             </h2>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
               Grow-Tracker, Diagnose und Tools teilen sich ein Setup und dieselben Daten — kein Wechseln zwischen Insel-Lösungen, keine doppelte Eingabe.
+              Und wer nur nachlesen will: {articleCount} geprüfte Fachartikel warten unabhängig vom Grow-Setup.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <CTAButton href="/start" size="lg" variant="primary">Jetzt kostenlos starten</CTAButton>
               <CTAButton href="/tools" size="lg" variant="ghost" className="border border-white/20 bg-white/5 text-slate-100 hover:bg-white/10">
                 Produkt ansehen
+              </CTAButton>
+              <CTAButton href="/studies" size="lg" variant="ghost" className="border border-white/20 bg-white/5 text-slate-100 hover:bg-white/10">
+                Studien lesen
               </CTAButton>
             </div>
           </div>

@@ -18,12 +18,13 @@
     "rights": "All rights reserved"
   },
   "home": {
-    "heroHeadline": "Grow smarter.\nNot harder.",
-    "heroSub": "The platform that tells you exactly what to do when growing cannabis. Grow tracker, pro tools and instant diagnosis — in one system.",
-    "eyebrow": "Grow Operating System",
+    "heroHeadline": "Your grow.\nYour knowledge.",
+    "heroSub": "Grow tracker and pro tools for your cultivation, plus a vetted knowledge base with {count}+ scientific sources — even if you don't grow at all.",
+    "eyebrow": "Grow System & Knowledge Base",
     "coreBadge": "Core feature",
     "ctaStart": "Start Grow",
     "ctaTools": "Explore Tools",
+    "ctaStudies": "or read {count} studies directly →",
     "ctaGetStarted": "Get started →",
     "trustArticles": "Expert Articles",
     "trustSources": "Scientific Sources",
@@ -61,8 +62,8 @@
     "step3Title": "Track your grow",
     "step3Text": "Log daily: watering, feeding, training. The streak keeps you coming back.",
     "studiesEyebrow": "Knowledge base",
-    "studiesCount": "scientific articles",
-    "studiesSub": "Backed by {count}+ peer-reviewed sources.",
+    "studiesHeadline": "What the science actually says about cannabis.",
+    "studiesSub": "{articles} expert articles, backed by {count}+ peer-reviewed sources.",
     "studiesCTA": "Show all {count} articles →",
     "studiesAllLink": "All studies →"
   },

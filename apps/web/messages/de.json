@@ -18,12 +18,13 @@
     "rights": "Alle Rechte vorbehalten"
   },
   "home": {
-    "heroHeadline": "Smarter anbauen.\nNicht härter.",
-    "heroSub": "Die Plattform, die dir sagt, was du beim Cannabis-Anbau tun musst. Grow-Tracker, Profi-Tools und sofortige Diagnose in einem System.",
-    "eyebrow": "Grow Operating System",
+    "heroHeadline": "Dein Grow.\nDein Wissen.",
+    "heroSub": "Grow-Tracker und Profi-Tools für deinen Anbau, plus eine geprüfte Wissensbasis mit {count}+ wissenschaftlichen Quellen — auch wenn du gar nicht growst.",
+    "eyebrow": "Grow-System & Wissensbasis",
     "coreBadge": "Kernfeature",
     "ctaStart": "Grow starten",
     "ctaTools": "Tools entdecken",
+    "ctaStudies": "oder direkt {count} Studien lesen →",
     "ctaGetStarted": "Grow starten →",
     "trustArticles": "Fachartikel",
     "trustSources": "Wiss. Quellen",
@@ -61,8 +62,8 @@
     "step3Title": "Grow tracken",
     "step3Text": "Täglich eintragen: Bewässerung, Nährstoffgabe, Training. Die Serie motiviert dich zurückzukommen.",
     "studiesEyebrow": "Wissensbasis",
-    "studiesCount": "wissenschaftliche Artikel",
-    "studiesSub": "Gestützt auf {count}+ peer-reviewed Quellen.",
+    "studiesHeadline": "Was Wissenschaft wirklich über Cannabis sagt.",
+    "studiesSub": "{articles} Fachartikel, gestützt auf {count}+ peer-reviewed Quellen.",
     "studiesCTA": "Alle {count} Artikel anzeigen →",
     "studiesAllLink": "Alle Studien →"
   },
