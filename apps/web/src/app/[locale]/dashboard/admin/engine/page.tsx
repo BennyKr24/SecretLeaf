@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import { Card } from "@/components/ui/Card";
+import { CTAButton } from "@/components/ui/CTAButton";
 import { Settings } from "lucide-react";
 
 type RunLog = {
@@ -25,11 +27,44 @@ function formatDate(iso: string): string {
   });
 }
 
+type ResultStat = { label: string; value: string | number };
+
+// Pull a friendly stat row out of whichever action produced this result —
+// engine-trigger (metrics.*), engine-reprocess (top-level), engine-adapt
+// (adjustment.*) all have different shapes, so this stays permissive.
+function extractStats(result: Record<string, unknown>): ResultStat[] {
+  const stats: ResultStat[] = [];
+  const metrics = (result.metrics ?? result) as Record<string, unknown>;
+  const numericKeys: Array<[string, string]> = [
+    ["fetched", "Fetched"],
+    ["accepted", "Akzeptiert"],
+    ["rejected", "Abgelehnt"],
+    ["inserted", "Inserted"],
+    ["updated", "Updated"],
+    ["skipped", "Skipped"],
+    ["processed", "Verarbeitet"],
+    ["upgraded", "Hochgestuft"],
+    ["downgraded", "Runtergestuft"],
+    ["unchanged", "Unverändert"],
+  ];
+  for (const [key, label] of numericKeys) {
+    if (typeof metrics[key] === "number") stats.push({ label, value: metrics[key] as number });
+  }
+  const adjustment = result.adjustment as Record<string, unknown> | undefined;
+  if (adjustment && typeof adjustment.basedOnStudies === "number") {
+    stats.push({ label: "Basis-Studien", value: adjustment.basedOnStudies as number });
+  }
+  if (typeof result.appliedToEngineConfig === "boolean") {
+    stats.push({ label: "Übernommen", value: result.appliedToEngineConfig ? "Ja" : "Nein" });
+  }
+  return stats;
+}
+
 function ActionCard({
   title,
   description,
   buttonLabel,
-  buttonColor = "green",
+  variant = "primary",
   loading,
   onTrigger,
   children,
@@ -37,30 +72,20 @@ function ActionCard({
   title: string;
   description: string;
   buttonLabel: string;
-  buttonColor?: "green" | "blue" | "amber";
+  variant?: "primary" | "secondary";
   loading: boolean;
   onTrigger: () => void;
   children?: React.ReactNode;
 }) {
-  const colors = {
-    green: "bg-emerald-600 dark:bg-emerald-500 hover:bg-emerald-700",
-    blue: "bg-blue-600 hover:bg-blue-700",
-    amber: "bg-amber-600 hover:bg-amber-700",
-  };
-
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+    <Card padding="md">
       <h3 className="font-semibold text-foreground">{title}</h3>
       <p className="mt-1 text-xs text-muted-fg">{description}</p>
       {children}
-      <button
-        onClick={onTrigger}
-        disabled={loading}
-        className={`mt-4 rounded-xl px-4 py-2 text-sm font-semibold text-white transition disabled:opacity-50 ${colors[buttonColor]}`}
-      >
+      <CTAButton variant={variant} onClick={onTrigger} disabled={loading} className="mt-4">
         {loading ? "Wird ausgeführt..." : buttonLabel}
-      </button>
-    </div>
+      </CTAButton>
+    </Card>
   );
 }
 
@@ -123,6 +148,8 @@ export default function AdminEnginePage() {
 
   if (auth.status !== "authenticated") return null;
 
+  const stats = result ? extractStats(result) : [];
+
   return (
     <div>
       <div className="mb-7">
@@ -130,7 +157,7 @@ export default function AdminEnginePage() {
           <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Engine</span>
         </div>
         <div className="mt-1 flex items-center gap-3">
-          <Settings className="h-6 w-6 text-emerald-600" strokeWidth={2} />
+          <Settings className="h-6 w-6 text-primary" strokeWidth={2} />
           <div>
             <h1 className="text-2xl font-bold text-foreground">Engine Control</h1>
             <p className="text-sm text-muted-fg">Pipeline manuell steuern, adaptive Weights triggern, Logs einsehen.</p>
@@ -144,7 +171,7 @@ export default function AdminEnginePage() {
           title="Pipeline starten"
           description="Startet die vollständige Fetch → Normalize → Dedup → Classify → Score → Store Pipeline."
           buttonLabel={dryRun ? "Testlauf starten" : "Pipeline starten"}
-          buttonColor="green"
+          variant="primary"
           loading={triggeringSync}
           onTrigger={() => void triggerAction("engine-trigger", setTriggeringSync, {
             dryRun,
@@ -154,17 +181,17 @@ export default function AdminEnginePage() {
         >
           <div className="mt-3 space-y-2">
             <div className="flex items-center gap-2">
-              <input type="checkbox" id="dryRun" checked={dryRun} onChange={(e) => setDryRun(e.target.checked)} className="rounded" />
+              <input type="checkbox" id="dryRun" checked={dryRun} onChange={(e) => setDryRun(e.target.checked)} className="accent-primary rounded" />
               <label htmlFor="dryRun" className="text-xs text-muted-fg">Testlauf (kein DB-Schreibvorgang)</label>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="block text-[10px] text-muted-fg">Lookback (Tage)</label>
-                <input type="number" value={lookbackDays} onChange={(e) => setLookbackDays(e.target.value)} min={1} max={90} className="w-full rounded-lg border border-border px-2 py-1 text-xs" />
+                <input type="number" value={lookbackDays} onChange={(e) => setLookbackDays(e.target.value)} min={1} max={90} className="w-full rounded-lg border border-border bg-card px-2 py-1 text-xs focus:border-primary focus:outline-none focus:ring-1 focus:ring-[var(--ring)]" />
               </div>
               <div>
                 <label className="block text-[10px] text-muted-fg">Max Studies</label>
-                <input type="number" value={maxProcessed} onChange={(e) => setMaxProcessed(e.target.value)} min={1} max={1000} className="w-full rounded-lg border border-border px-2 py-1 text-xs" />
+                <input type="number" value={maxProcessed} onChange={(e) => setMaxProcessed(e.target.value)} min={1} max={1000} className="w-full rounded-lg border border-border bg-card px-2 py-1 text-xs focus:border-primary focus:outline-none focus:ring-1 focus:ring-[var(--ring)]" />
               </div>
             </div>
           </div>
@@ -172,9 +199,9 @@ export default function AdminEnginePage() {
 
         <ActionCard
           title="Adaptive Scoring"
-          description="Berechnet optimierte Bewertungsgewichtungen auf Basis von Feedback-Daten (Pearson-Korrelation)."
+          description="Berechnet optimierte Bewertungsgewichtungen aus Feedback-Daten (Pearson-Korrelation) und übernimmt sie automatisch in die aktive Scoring-Konfiguration."
           buttonLabel="Gewichtungen berechnen"
-          buttonColor="blue"
+          variant="secondary"
           loading={triggeringAdapt}
           onTrigger={() => void triggerAction("engine-adapt", setTriggeringAdapt)}
         />
@@ -183,7 +210,7 @@ export default function AdminEnginePage() {
           title="Neuverarbeitung"
           description="Klassifiziert und bewertet bestehende Studien erneut mit aktuellen Regeln."
           buttonLabel="Neuverarbeitung starten"
-          buttonColor="amber"
+          variant="secondary"
           loading={triggeringReprocess}
           onTrigger={() => void triggerAction("engine-reprocess", setTriggeringReprocess)}
         />
@@ -193,18 +220,35 @@ export default function AdminEnginePage() {
       {(result || error) && (
         <div className="mt-4">
           {error && (
-            <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
+            <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-900/40 dark:bg-rose-950/30 dark:text-rose-300">
+              {error}
+            </div>
           )}
           {result && (
-            <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+            <Card padding="md" className="tool-pop">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-foreground">Ergebnis</h3>
-                <button onClick={() => setResult(null)} className="text-xs text-muted-fg hover:text-muted-fg">Schließen</button>
+                <button onClick={() => setResult(null)} className="text-xs text-muted-fg hover:text-foreground">Schließen</button>
               </div>
-              <pre className="mt-2 max-h-64 overflow-auto rounded-xl bg-background p-3 text-xs text-foreground/80">
-                {JSON.stringify(result, null, 2)}
-              </pre>
-            </div>
+              {stats.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {stats.map((s) => (
+                    <div key={s.label} className="rounded-xl border border-border bg-background px-3 py-2 text-center">
+                      <p className="text-lg font-bold text-foreground">{s.value}</p>
+                      <p className="text-[10px] uppercase tracking-wide text-muted-fg">{s.label}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <details className="mt-3">
+                <summary className="cursor-pointer text-xs text-muted-fg hover:text-foreground">
+                  Rohdaten anzeigen
+                </summary>
+                <pre className="mt-2 max-h-64 overflow-auto rounded-xl bg-background p-3 text-xs text-foreground/80">
+                  {JSON.stringify(result, null, 2)}
+                </pre>
+              </details>
+            </Card>
           )}
         </div>
       )}
@@ -213,7 +257,7 @@ export default function AdminEnginePage() {
       <div className="mt-6">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-foreground">Pipeline Logs</h2>
-          <button onClick={() => void fetchLogs()} className="text-xs font-medium text-emerald-700 dark:text-emerald-400 hover:underline">
+          <button onClick={() => void fetchLogs()} className="text-xs font-medium text-primary hover:underline">
             Aktualisieren
           </button>
         </div>
@@ -221,7 +265,7 @@ export default function AdminEnginePage() {
         <div className="min-h-[320px] overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
           {loadingLogs ? (
             <div className="flex min-h-[320px] items-center justify-center gap-3">
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
               <span className="text-sm text-muted-fg">Logs werden geladen...</span>
             </div>
           ) : (
@@ -243,8 +287,8 @@ export default function AdminEnginePage() {
                     <tr key={run.id} className="border-b border-border transition hover:bg-background">
                       <td className="px-4 py-3 font-medium text-foreground">{run.job_name}</td>
                       <td className="px-3 py-3">
-                        <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-semibold ${run.success ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"}`}>
-                          <span className={`h-1.5 w-1.5 rounded-full ${run.success ? "bg-emerald-500" : "bg-red-500"}`} />
+                        <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-semibold ${run.success ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400" : "bg-rose-500/15 text-rose-700 dark:text-rose-400"}`}>
+                          <span className={`h-1.5 w-1.5 rounded-full ${run.success ? "bg-emerald-500" : "bg-rose-500"}`} />
                           {run.success ? "OK" : "Fehler"}
                         </span>
                       </td>
@@ -252,7 +296,7 @@ export default function AdminEnginePage() {
                       <td className="px-3 py-3 text-xs font-mono">{run.fetched}</td>
                       <td className="px-3 py-3 text-xs font-mono">{run.inserted}</td>
                       <td className="px-3 py-3 text-xs font-mono">{run.updated}</td>
-                      <td className="max-w-[200px] truncate px-3 py-3 text-xs text-red-600" title={run.error_details ?? ""}>
+                      <td className="max-w-[200px] truncate px-3 py-3 text-xs text-rose-600 dark:text-rose-400" title={run.error_details ?? ""}>
                         {run.error_details ?? "—"}
                       </td>
                     </tr>

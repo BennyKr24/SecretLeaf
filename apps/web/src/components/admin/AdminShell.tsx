@@ -12,11 +12,11 @@ import {
   Settings,
   Dna,
   BarChart3,
-  Monitor,
-  Wrench,
   ShieldAlert,
   Lock,
   Leaf,
+  LogOut,
+  ArrowLeft,
   type LucideIcon,
 } from "lucide-react";
 
@@ -48,14 +48,7 @@ const NAV_GROUPS: Array<{
     items: [
       { href: "/dashboard/admin/engine", label: "Pipeline-Engine", icon: Settings },
       { href: "/dashboard/admin/algorithm", label: "Algorithmus", icon: Dna },
-    ],
-  },
-  {
-    label: "Monitoring",
-    items: [
       { href: "/dashboard/admin/analytics", label: "Auswertungen", icon: BarChart3 },
-      { href: "/dashboard/admin/system", label: "System", icon: Monitor },
-      { href: "/dashboard/admin/settings", label: "Einstellungen", icon: Wrench },
     ],
   },
 ];
@@ -119,7 +112,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-background">
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 z-30 flex h-screen w-60 flex-col border-r border-border bg-card shadow-sm">
+      <aside className="glass-surface fixed left-0 top-0 z-30 flex h-screen w-60 flex-col border-r border-border">
         {/* Logo */}
         <div className="border-b border-border px-5 py-4">
           <Link href="/" className="flex items-center gap-2.5 text-base font-bold text-foreground">
@@ -153,9 +146,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-[background-color,color,box-shadow] duration-150 ${
+                      className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-[background-color,color,box-shadow,transform] duration-150 active:scale-[0.98] ${
                         isActive
-                          ? "bg-emerald-100 dark:bg-emerald-900/30 text-primary ring-1 ring-emerald-200"
+                          ? "bg-primary/10 text-primary ring-1 ring-primary/20"
                           : "text-muted-fg hover:bg-background hover:text-foreground"
                       }`}
                     >
@@ -189,21 +182,16 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <button
               onClick={() => void auth.logout()}
               title="Abmelden"
-              className="ml-auto flex-shrink-0 rounded-lg p-1.5 text-muted-fg transition hover:bg-red-50 hover:text-red-500"
+              className="ml-auto flex-shrink-0 rounded-lg p-1.5 text-muted-fg transition active:scale-[0.98] hover:bg-rose-500/10 hover:text-rose-400"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
-                <path fillRule="evenodd" d="M3 4.25A2.25 2.25 0 0 1 5.25 2h5.5A2.25 2.25 0 0 1 13 4.25v2a.75.75 0 0 1-1.5 0v-2a.75.75 0 0 0-.75-.75h-5.5a.75.75 0 0 0-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 0 0 .75-.75v-2a.75.75 0 0 1 1.5 0v2A2.25 2.25 0 0 1 10.75 18h-5.5A2.25 2.25 0 0 1 3 15.75V4.25Z" clipRule="evenodd" />
-                <path fillRule="evenodd" d="M19 10a.75.75 0 0 0-.75-.75H8.704l1.048-1.083a.75.75 0 1 0-1.004-1.116l-2.5 2.25a.75.75 0 0 0 0 1.116l2.5 2.25a.75.75 0 1 0 1.004-1.116L8.704 10.75H18.25A.75.75 0 0 0 19 10Z" clipRule="evenodd" />
-              </svg>
+              <LogOut className="h-4 w-4" strokeWidth={2} />
             </button>
           </div>
           <Link
             href="/dashboard"
-            className="mt-1 flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs text-muted-fg transition hover:bg-background hover:text-foreground"
+            className="mt-1 flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs text-muted-fg transition active:scale-[0.98] hover:bg-background hover:text-foreground"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3.5 w-3.5">
-              <path fillRule="evenodd" d="M14 8a.75.75 0 0 1-.75.75H4.56l1.22 1.22a.75.75 0 1 1-1.06 1.06l-2.5-2.5a.75.75 0 0 1 0-1.06l2.5-2.5a.75.75 0 0 1 1.06 1.06L4.56 7.25h8.69A.75.75 0 0 1 14 8Z" clipRule="evenodd" />
-            </svg>
+            <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
             Zurück zum Dashboard
           </Link>
         </div>

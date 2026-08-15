@@ -90,8 +90,6 @@ type AdminAction =
   | "engine-reprocess"
   | "engine-logs"
   | "analytics"
-  | "settings-get"
-  | "settings-update"
   | "users-list"
   | "user-update-role"
   | "user-delete"
@@ -99,6 +97,7 @@ type AdminAction =
   | "algorithm-get"
   | "algorithm-update"
   | "algorithm-reset"
+  | "weights-history"
   | "ai-assist";
 
 export async function POST(req: Request) {
@@ -459,50 +458,6 @@ export async function POST(req: Request) {
         });
       }
 
-      // ── SETTINGS GET ──────────────────────────────────────────────────
-      case "settings-get": {
-        // Current adaptive weights
-        const { data: latestWeights } = await supabase
-          .from("scoring_weights_history")
-          .select("weights, reason, based_on_studies, computed_at")
-          .order("computed_at", { ascending: false })
-          .limit(1)
-          .maybeSingle();
-
-        // Env-based config (read-only display)
-        const lookbackDays = Number(process.env.STUDY_SYNC_LOOKBACK_DAYS) || 3;
-        const maxAttempts = Number(process.env.STUDY_SYNC_MAX_ATTEMPTS) || 5;
-        const studyLimit = Number(process.env.STUDY_LIMIT) || 80;
-
-        return Response.json({
-          adaptiveWeights: latestWeights ?? null,
-          envConfig: {
-            lookbackDays,
-            maxAttempts,
-            studyLimit,
-          },
-        });
-      }
-
-      // ── SETTINGS UPDATE ───────────────────────────────────────────────
-      case "settings-update": {
-        // Store custom weights override
-        if (body.weights) {
-          const { error } = await supabase.from("scoring_weights_history").insert({
-            weights: body.weights,
-            reason: `Manual override by admin ${adminOrResponse.email ?? adminOrResponse.userId}`,
-            based_on_studies: 0,
-            computed_at: new Date().toISOString(),
-          });
-          if (error) return Response.json({ error: error.message }, { status: 500 });
-
-          logInfo("admin.settings-update", { by: adminOrResponse.userId, weights: body.weights });
-          return Response.json({ saved: true });
-        }
-
-        return Response.json({ error: "No settings provided" }, { status: 400 });
-      }
-
       // ── USERS LIST ────────────────────────────────────────────────────
       case "users-list": {
         const page = Math.max(1, Number(body.page) || 1);
@@ -774,6 +729,22 @@ export async function POST(req: Request) {
 
         logInfo("admin.algorithm-reset", { section: "all", by: adminOrResponse.userId });
         return Response.json({ reset: true, section: "all" });
+      }
+
+      // ── WEIGHTS HISTORY (read-only) ─────────────────────────────────────
+      // Latest engine-adapt cron run — audit/history only. The weights it
+      // computed are auto-applied into engine_config.scoring_params.weights
+      // by the cron itself (see api/automation/engine-adapt/route.ts); this
+      // action never writes anything, it just shows what last happened.
+      case "weights-history": {
+        const { data: latestWeights } = await supabase
+          .from("scoring_weights_history")
+          .select("weights, reason, based_on_studies, computed_at")
+          .order("computed_at", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+
+        return Response.json({ latest: latestWeights ?? null });
       }
 
       // ── AI ASSIST (Claude) ───────────────────────────────────────────

@@ -31,12 +31,7 @@ import { scoreStudies } from "./score";
 import type { ScoreOverrides } from "./score";
 import { fetchExistingFingerprints, persistStudies } from "./storage";
 import { shouldPipelineRun } from "./monitor";
-import {
-  loadFullConfig,
-  buildCannabisAnchorRegex,
-  buildCustomExclusionRules,
-  buildRequiredKeywordsTest,
-} from "./configLoader";
+import { loadFullConfig, buildDynamicOverrides } from "./configLoader";
 
 // ── Assembly ────────────────────────────────────────────────────────────────
 
@@ -209,6 +204,7 @@ export async function runPipeline(
     // Load dynamic engine config from DB (if available)
     let classifyOverrides: ClassifyOverrides | undefined;
     let scoreOverrides: ScoreOverrides | undefined;
+    let extraClusterQueries: Array<{ key: string; queries: string[] }> | undefined;
     if (supabase) {
       const configLog = logs.createLogger("dynamic-config");
       try {
@@ -216,78 +212,23 @@ export async function runPipeline(
         configLog.info(`Dynamic config loaded (from DB: ${fromDatabase})`);
 
         if (fromDatabase) {
-          // Apply scoring params overrides
-          if (dynConfig.scoring_params) {
-            const sp = dynConfig.scoring_params;
-            if (sp.minAcceptScore != null) config.minAcceptScore = sp.minAcceptScore;
-            if (sp.crossrefRowsPerQuery != null) config.crossrefRowsPerQuery = sp.crossrefRowsPerQuery;
-            if (sp.fuzzyThreshold != null) config.fuzzyThreshold = sp.fuzzyThreshold;
-          }
+          const overrides = buildDynamicOverrides(dynConfig);
 
-          // Build classify overrides
-          classifyOverrides = {};
+          const sp = overrides.scoringParamOverrides;
+          if (sp.minAcceptScore != null) config.minAcceptScore = sp.minAcceptScore;
+          if (sp.crossrefRowsPerQuery != null) config.crossrefRowsPerQuery = sp.crossrefRowsPerQuery;
+          if (sp.fuzzyThreshold != null) config.fuzzyThreshold = sp.fuzzyThreshold;
 
-          // Required keywords
-          const keywords = dynConfig.required_keywords?.keywords;
-          if (keywords && keywords.length > 0) {
-            classifyOverrides.requiredKeywordsTest = buildRequiredKeywordsTest(keywords);
-          }
-
-          // Custom exclusions
-          const exclusions = dynConfig.custom_exclusions?.rules;
-          if (exclusions && exclusions.length > 0) {
-            classifyOverrides.extraExclusions = buildCustomExclusionRules(exclusions);
-          }
-
-          // Blocked sources — reuse the exclusion mechanism (a blocked
-          // publisher rejects the study outright, not just a lower score).
-          const blockedSources = dynConfig.blocked_sources?.sources;
-          if (blockedSources && blockedSources.length > 0) {
-            const blockRules = blockedSources.map((b) => ({
-              pattern: new RegExp(
-                b.pattern || b.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-                "i",
-              ),
-              reason: b.reason || `blocked-source:${b.name}`,
-            }));
-            classifyOverrides.extraExclusions = [
-              ...(classifyOverrides.extraExclusions ?? []),
-              ...blockRules,
-            ];
-          }
-
-          // Preferred sources + scoring weights
-          scoreOverrides = {};
-          const preferredSources = dynConfig.preferred_sources?.sources;
-          if (preferredSources && preferredSources.length > 0) {
-            scoreOverrides.preferredSources = preferredSources;
-          }
-          if (dynConfig.scoring_params?.weights) {
-            scoreOverrides.weights = dynConfig.scoring_params.weights;
-          }
-
-          // Cannabis anchor override
-          const anchorTerms = dynConfig.cannabis_anchor?.terms;
-          if (anchorTerms && anchorTerms.length > 0) {
-            classifyOverrides.cannabisAnchorOverride = buildCannabisAnchorRegex(anchorTerms);
-          }
-
-          // Extra topic clusters
-          const customClusters = dynConfig.topic_clusters?.customClusters;
-          if (customClusters && customClusters.length > 0) {
-            classifyOverrides.extraClusters = customClusters
-              .filter((c) => c.enabled)
-              .map((c) => ({
-                key: c.key,
-                include: c.includePatterns.map((p) => new RegExp(p, "i")),
-              }));
-          }
+          classifyOverrides = overrides.classifyOverrides;
+          scoreOverrides = overrides.scoreOverrides;
+          extraClusterQueries = overrides.extraClusterQueries;
 
           configLog.info("Classify overrides built", {
             hasRequiredKeywords: !!classifyOverrides.requiredKeywordsTest,
             extraExclusions: classifyOverrides.extraExclusions?.length ?? 0,
             hasAnchorOverride: !!classifyOverrides.cannabisAnchorOverride,
             extraClusters: classifyOverrides.extraClusters?.length ?? 0,
+            extraClusterQueries: extraClusterQueries.length,
           });
         }
       } catch (err) {
@@ -296,7 +237,7 @@ export async function runPipeline(
       }
     }
 
-    const fetchResult = await fetchAllSources(config, fetchLog);
+    const fetchResult = await fetchAllSources(config, fetchLog, extraClusterQueries);
     metrics.fetched = fetchResult.items.length;
     metrics.errors.push(...fetchResult.queryStats.filter((q) => q.error).map((q) => q.error!));
 

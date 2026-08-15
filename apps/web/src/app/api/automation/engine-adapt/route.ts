@@ -15,6 +15,7 @@
 
 import { computeFeedbackAggregates } from "@/lib/engine/feedback";
 import { buildStudyProfiles, computeAdaptiveWeights, saveWeightAdjustment } from "@/lib/engine/adaptive";
+import { loadConfigSection, saveConfigSection, resetConfigCache } from "@/lib/engine/configLoader";
 import { isAutomationCronAuthorized } from "@/lib/automationCron";
 import { recordAutomationRun } from "@/lib/automationRuns";
 import { getCronSecret } from "@/lib/env";
@@ -70,18 +71,44 @@ export async function GET(req: Request) {
     // 3. Compute adaptive weights
     const adjustment = computeAdaptiveWeights(profiles, adaptLog);
 
-    // 4. Persist
+    // 4. Persist to the audit history (scoring_weights_history)
     const saved = await saveWeightAdjustment(supabase, adjustment, adaptLog);
+
+    // 5. Auto-apply the 5 core weights to the live scoring config. This is
+    // the single source of truth pipeline.ts/reprocess.ts actually read —
+    // scoring_weights_history is audit-only. `feedbackBoost` is dropped:
+    // ScoreWeights (engine_config.scoring_params.weights) has no such field
+    // and scoreStudy() doesn't consume it.
+    let appliedToEngineConfig = false;
+    try {
+      const currentScoringParams = await loadConfigSection(supabase, "scoring_params");
+      const { topicFit, evidenceLevel, publisherQuality, freshness, editorialUtility } =
+        adjustment.weights;
+      const result = await saveConfigSection(supabase, "scoring_params", {
+        ...currentScoringParams,
+        weights: { topicFit, evidenceLevel, publisherQuality, freshness, editorialUtility },
+      });
+      resetConfigCache();
+      appliedToEngineConfig = result.success;
+      if (!result.success) {
+        adaptLog.warn(`Failed to apply adaptive weights to engine_config: ${result.error}`);
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      adaptLog.warn(`Failed to apply adaptive weights to engine_config: ${msg}`);
+    }
 
     logInfo("automation.engine-adapt.complete", {
       basedOnStudies: adjustment.basedOnStudies,
       reason: adjustment.reason,
       saved,
+      appliedToEngineConfig,
     });
 
     await safeRecordRun(startedAt, true, adjustment.basedOnStudies, null, {
       reason: adjustment.reason,
       saved,
+      appliedToEngineConfig,
       weights: adjustment.weights,
     });
 
@@ -94,6 +121,7 @@ export async function GET(req: Request) {
         computedAt: adjustment.computedAt,
       },
       saved,
+      appliedToEngineConfig,
       generatedAt: new Date().toISOString(),
     });
   } catch (error) {

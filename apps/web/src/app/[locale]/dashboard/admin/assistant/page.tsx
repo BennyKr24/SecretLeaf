@@ -3,16 +3,41 @@
 import { useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import { CTAButton } from "@/components/ui/CTAButton";
 
 type HistoryEntry = {
   prompt: string;
   reply: string;
 };
 
+// Chat history previously lived only in React state and vanished on reload
+// or navigation — despite the page's own copy promising "auch von unterwegs
+// Notizen erfassen". localStorage makes that promise actually true. Same
+// read/write-at-mutation-point pattern as hooks/useReadingHistory.ts.
+const HISTORY_STORAGE_KEY = "sl-admin-assistant-history";
+
+function readHistory(): HistoryEntry[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(HISTORY_STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as HistoryEntry[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeHistory(entries: HistoryEntry[]): void {
+  try {
+    window.localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(entries));
+  } catch {
+    // storage full or unavailable — not fatal, just won't persist
+  }
+}
+
 export default function AdminAssistantPage() {
   const auth = useAdminAuth();
   const [prompt, setPrompt] = useState("");
-  const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [history, setHistory] = useState<HistoryEntry[]>(() => readHistory());
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,28 +48,50 @@ export default function AdminAssistantPage() {
     if (!trimmed || sending) return;
     setSending(true);
     setError(null);
+    setPrompt("");
     try {
       const result = await adminApi<{ reply: string }>(auth.session, "ai-assist", { prompt: trimmed });
-      setHistory((prev) => [...prev, { prompt: trimmed, reply: result.reply }]);
-      setPrompt("");
+      setHistory((prev) => {
+        const next = [...prev, { prompt: trimmed, reply: result.reply }];
+        writeHistory(next);
+        return next;
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Anfrage fehlgeschlagen");
+      setPrompt(trimmed);
     } finally {
       setSending(false);
     }
   };
 
+  const clearHistory = () => {
+    writeHistory([]);
+    setHistory([]);
+  };
+
   return (
     <div>
-      <div className="mb-7">
-        <div className="flex items-center gap-2 text-xs text-muted-fg">
-          <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">KI-Assistent</span>
+      <div className="mb-7 flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 text-xs text-muted-fg">
+            <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">KI-Assistent</span>
+          </div>
+          <h1 className="mt-2 text-2xl font-bold text-foreground">KI-Assistent</h1>
+          <p className="mt-1 text-sm text-muted-fg">
+            Notizen erfassen, Content-Entwürfe generieren oder Ideen festhalten — auch von unterwegs (Handy/iPad),
+            einfach diese Seite im Browser öffnen. Bleibt zwischen Besuchen erhalten. Nur für Admins sichtbar,
+            keine Kosten für normale Nutzer.
+          </p>
         </div>
-        <h1 className="mt-2 text-2xl font-bold text-foreground">KI-Assistent</h1>
-        <p className="mt-1 text-sm text-muted-fg">
-          Notizen erfassen, Content-Entwürfe generieren oder Ideen festhalten — auch von unterwegs (Handy/iPad),
-          einfach diese Seite im Browser öffnen. Nur für Admins sichtbar, keine Kosten für normale Nutzer.
-        </p>
+        {history.length > 0 && (
+          <button
+            type="button"
+            onClick={clearHistory}
+            className="flex-shrink-0 text-xs text-muted-fg transition hover:text-rose-500 dark:hover:text-rose-400"
+          >
+            Verlauf löschen
+          </button>
+        )}
       </div>
 
       {error && (
@@ -60,7 +107,7 @@ export default function AdminAssistantPage() {
 
       <div className="space-y-4">
         {history.map((entry, i) => (
-          <div key={i} className="space-y-2">
+          <div key={i} className="tool-pop space-y-2">
             <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-sm bg-primary/10 px-4 py-2.5 text-sm text-foreground">
               {entry.prompt}
             </div>
@@ -96,14 +143,14 @@ export default function AdminAssistantPage() {
           rows={2}
           className="flex-1 resize-none rounded-xl border-0 bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted-fg focus:outline-none"
         />
-        <button
-          type="button"
+        <CTAButton
+          variant="primary"
           onClick={() => void handleSend()}
           disabled={sending || !prompt.trim()}
-          className="flex-shrink-0 self-end rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white transition hover:bg-primary-dark disabled:opacity-40"
+          className="flex-shrink-0 self-end"
         >
           Senden
-        </button>
+        </CTAButton>
       </div>
     </div>
   );

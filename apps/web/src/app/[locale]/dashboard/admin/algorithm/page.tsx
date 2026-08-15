@@ -2,12 +2,15 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
-import { AdminShell } from "@/components/admin/AdminShell";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { CTAButton } from "@/components/ui/CTAButton";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import { TOPIC_CLUSTERS, HARD_EXCLUSIONS } from "@/lib/engine/config";
 import {
   Key, BookOpen, Ban, Dna, Scale, Leaf, AlertTriangle, Clipboard,
-  Check, X, Lock, CheckCircle2, type LucideIcon,
+  Check, X, Lock, CheckCircle2, Sparkles, History, type LucideIcon,
 } from "lucide-react";
 
 // ── Types ───────────────────────────────────────────────────────────────────
@@ -66,20 +69,30 @@ const TABS: { key: Tab; label: string; icon: LucideIcon }[] = [
   { key: "anchor", label: "Cannabis-Anker", icon: Leaf },
 ];
 
+// Display labels for the hardcoded TOPIC_CLUSTERS (config.ts only carries
+// key/queries/include, no display label) — falls back to a title-cased key
+// for anything not explicitly mapped, so a future cluster can't render blank.
+const CLUSTER_LABELS: Record<string, string> = {
+  "qualitaet-labor": "Qualität & Labor",
+  "anbau-postharvest": "Anbau & Post-Harvest",
+};
+
+function clusterLabel(key: string): string {
+  return CLUSTER_LABELS[key] ?? key.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+// Stagger helper: entrance delay capped so long lists don't crawl in.
+function staggerStyle(idx: number): React.CSSProperties {
+  return { animationDelay: `${Math.min(idx * 40, 320)}ms`, animationFillMode: "backwards" };
+}
+
+const FIELD_CLASS =
+  "rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-fg focus:border-primary focus:outline-none focus:ring-1 focus:ring-[var(--ring)]";
+
 // ── Helper Components ───────────────────────────────────────────────────────
 
 function StatusBadge({ ok }: { ok: boolean }) {
-  return (
-    <span
-      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-        ok
-          ? "bg-green-100 text-green-700"
-          : "bg-amber-100 text-amber-700"
-      }`}
-    >
-      {ok ? "● Aktiv" : "○ Deaktiviert"}
-    </span>
-  );
+  return <Badge tone={ok ? "primary" : "muted"}>{ok ? "Aktiv" : "Inaktiv"}</Badge>;
 }
 
 function SaveButton({
@@ -92,13 +105,9 @@ function SaveButton({
   label?: string;
 }) {
   return (
-    <button
-      onClick={onClick}
-      disabled={saving}
-      className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 active:scale-[0.97] disabled:opacity-50"
-    >
+    <CTAButton variant="primary" onClick={onClick} disabled={saving}>
       {saving ? "Wird gespeichert..." : label}
-    </button>
+    </CTAButton>
   );
 }
 
@@ -112,12 +121,23 @@ function SectionCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+    <Card padding="lg">
       <h3 className="text-lg font-bold text-foreground">{title}</h3>
       {description && (
         <p className="mt-1 text-sm text-muted-fg">{description}</p>
       )}
       <div className="mt-4">{children}</div>
+    </Card>
+  );
+}
+
+// Fades/scales the active tab's content in on every switch — materialize,
+// not a plain cut (apple-design §12), reuses the app's existing .tool-pop
+// entrance rather than inventing a new one.
+function TabContent({ tabKey, children }: { tabKey: string; children: React.ReactNode }) {
+  return (
+    <div key={tabKey} className="tool-pop">
+      {children}
     </div>
   );
 }
@@ -128,39 +148,39 @@ function SetupRequired() {
   const [showSql, setShowSql] = useState(false);
 
   return (
-    <div className="rounded-2xl border border-amber-300 bg-amber-50 p-6">
+    <div className="rounded-2xl border border-amber-300 bg-amber-50 p-6 dark:border-amber-900/40 dark:bg-amber-950/30">
       <div className="flex items-start gap-3">
         <AlertTriangle className="h-8 w-8 flex-shrink-0 text-amber-500" strokeWidth={2} />
         <div className="flex-1">
-          <h3 className="text-lg font-bold text-amber-900">
+          <h3 className="text-lg font-bold text-amber-900 dark:text-amber-200">
             Datenbank-Setup erforderlich
           </h3>
-          <p className="mt-1 text-sm text-amber-800">
-            Die Tabelle <code className="rounded bg-amber-100 px-1">engine_config</code>{" "}
+          <p className="mt-1 text-sm text-amber-800 dark:text-amber-300">
+            Die Tabelle <code className="rounded bg-amber-100 px-1 dark:bg-amber-900/40">engine_config</code>{" "}
             existiert noch nicht in Supabase. Die Algorithmus-Konfiguration nutzt
             derzeit die hardcoded Standardwerte.
           </p>
-          <p className="mt-2 text-sm text-amber-800">
+          <p className="mt-2 text-sm text-amber-800 dark:text-amber-300">
             Öffne das{" "}
             <strong>Supabase Dashboard → SQL Editor</strong> und führe die
             Migration aus:
           </p>
           <button
             onClick={() => setShowSql(!showSql)}
-            className="mt-3 rounded-lg border border-amber-300 bg-card px-4 py-1.5 text-sm font-medium text-amber-900 transition-transform duration-150 active:scale-[0.97] hover:bg-amber-50"
+            className="mt-3 rounded-lg border border-amber-300 bg-card px-4 py-1.5 text-sm font-medium text-amber-900 transition-transform duration-150 active:scale-[0.97] hover:bg-amber-50 dark:border-amber-800 dark:text-amber-200 dark:hover:bg-amber-950/50"
           >
             {showSql ? "SQL ausblenden" : "Migration-SQL anzeigen"}
           </button>
           {showSql && (
-            <div className="mt-3 max-h-64 overflow-auto rounded-lg bg-[#10281e] p-4">
-              <pre className="text-xs text-green-300 whitespace-pre-wrap">
+            <div className="mt-3 max-h-64 overflow-auto rounded-lg bg-[var(--primary-deep)] p-4">
+              <pre className="text-xs text-primary whitespace-pre-wrap">
                 {MIGRATION_SQL}
               </pre>
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(MIGRATION_SQL);
                 }}
-                className="mt-2 flex items-center gap-1.5 rounded bg-green-700 px-3 py-1 text-xs text-white transition-transform duration-150 active:scale-[0.97] hover:bg-green-600"
+                className="mt-2 flex items-center gap-1.5 rounded bg-primary px-3 py-1 text-xs text-white transition-transform duration-150 active:scale-[0.97] hover:bg-[var(--primary-dark)]"
               >
                 <Clipboard className="h-3.5 w-3.5" strokeWidth={2} /> SQL kopieren
               </button>
@@ -272,132 +292,124 @@ export default function AlgorithmPage() {
   );
 
   return (
-    <AdminShell>
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-xs text-muted-fg">
-              <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Algorithmus</span>
-            </div>
-            <div className="mt-1 flex items-center gap-3">
-              <Dna className="h-6 w-6 text-primary" strokeWidth={2} />
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">Algorithmus-Konfiguration</h1>
-                <p className="text-sm text-muted-fg">Keywords, Quellen, Ausschlüsse, Scoring-Parameter und mehr.</p>
-              </div>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 text-xs text-muted-fg">
+            <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Algorithmus</span>
+          </div>
+          <div className="mt-1 flex items-center gap-3">
+            <Dna className="h-6 w-6 text-primary" strokeWidth={2} />
+            <div>
+              <h1 className="text-2xl font-bold text-foreground">Algorithmus-Konfiguration</h1>
+              <p className="text-sm text-muted-fg">Keywords, Quellen, Ausschlüsse, Scoring-Parameter und mehr.</p>
             </div>
           </div>
-          <span
-            className={`mt-1 rounded-full px-3 py-1 text-xs font-semibold ${
-              fromDatabase
-                ? "bg-green-100 text-green-700"
-                : "bg-amber-100 text-amber-700"
-            }`}
-          >
-            {fromDatabase ? "● Aus Datenbank geladen" : "○ Standardwerte (hardcoded)"}
-          </span>
         </div>
-
-        {/* Toast */}
-        {toast && (
-          <div
-            className={`rounded-xl border px-4 py-2.5 text-sm font-medium ${
-              toast.type === "success"
-                ? "border-green-300 bg-green-50 text-green-800"
-                : "border-red-300 bg-red-50 text-red-800"
-            }`}
-          >
-            {toast.msg}
-          </div>
-        )}
-
-        {/* Setup Required */}
-        {!tableExists && <SetupRequired />}
-
-        {/* Tabs */}
-        <div className="flex flex-wrap gap-1.5 rounded-xl border border-border bg-card p-1.5">
-          {TABS.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition active:scale-[0.97] ${
-                activeTab === tab.key
-                  ? "bg-emerald-600 dark:bg-emerald-500 text-white"
-                  : "text-muted-fg hover:bg-background"
-              }`}
-            >
-              <tab.icon className="h-4 w-4" strokeWidth={2} />
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Content */}
-        {loading ? (
-          <div className="flex items-center justify-center py-12">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
-          </div>
-        ) : config ? (
-          <div>
-            {activeTab === "keywords" && (
-              <KeywordsTab
-                config={config}
-                setConfig={setConfig}
-                save={saveSection}
-                reset={resetSection}
-                saving={saving}
-              />
-            )}
-            {activeTab === "sources" && (
-              <SourcesTab
-                config={config}
-                setConfig={setConfig}
-                save={saveSection}
-                reset={resetSection}
-                saving={saving}
-              />
-            )}
-            {activeTab === "exclusions" && (
-              <ExclusionsTab
-                config={config}
-                setConfig={setConfig}
-                save={saveSection}
-                reset={resetSection}
-                saving={saving}
-              />
-            )}
-            {activeTab === "clusters" && (
-              <ClustersTab
-                config={config}
-                setConfig={setConfig}
-                save={saveSection}
-                reset={resetSection}
-                saving={saving}
-              />
-            )}
-            {activeTab === "scoring" && (
-              <ScoringTab
-                config={config}
-                setConfig={setConfig}
-                save={saveSection}
-                reset={resetSection}
-                saving={saving}
-              />
-            )}
-            {activeTab === "anchor" && (
-              <AnchorTab
-                config={config}
-                setConfig={setConfig}
-                save={saveSection}
-                reset={resetSection}
-                saving={saving}
-              />
-            )}
-          </div>
-        ) : null}
+        <Badge tone={fromDatabase ? "primary" : "amber"} className="mt-1">
+          {fromDatabase ? "Aus Datenbank geladen" : "Standardwerte (hardcoded)"}
+        </Badge>
       </div>
-    </AdminShell>
+
+      {/* Toast */}
+      {toast && (
+        <div
+          className={`tool-pop rounded-xl border px-4 py-2.5 text-sm font-medium ${
+            toast.type === "success"
+              ? "border-emerald-300 bg-emerald-50 text-emerald-800 dark:border-emerald-900/40 dark:bg-emerald-950/30 dark:text-emerald-300"
+              : "border-rose-300 bg-rose-50 text-rose-800 dark:border-rose-900/40 dark:bg-rose-950/30 dark:text-rose-300"
+          }`}
+        >
+          {toast.msg}
+        </div>
+      )}
+
+      {/* Setup Required */}
+      {!tableExists && <SetupRequired />}
+
+      {/* Tabs */}
+      <div className="flex flex-wrap gap-1.5 rounded-xl border border-border bg-card p-1.5">
+        {TABS.map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition active:scale-[0.97] ${
+              activeTab === tab.key
+                ? "bg-primary text-white"
+                : "text-muted-fg hover:bg-background"
+            }`}
+          >
+            <tab.icon className="h-4 w-4" strokeWidth={2} />
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Content */}
+      {loading ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        </div>
+      ) : config ? (
+        <TabContent tabKey={activeTab}>
+          {activeTab === "keywords" && (
+            <KeywordsTab
+              config={config}
+              setConfig={setConfig}
+              save={saveSection}
+              reset={resetSection}
+              saving={saving}
+            />
+          )}
+          {activeTab === "sources" && (
+            <SourcesTab
+              config={config}
+              setConfig={setConfig}
+              save={saveSection}
+              reset={resetSection}
+              saving={saving}
+            />
+          )}
+          {activeTab === "exclusions" && (
+            <ExclusionsTab
+              config={config}
+              setConfig={setConfig}
+              save={saveSection}
+              reset={resetSection}
+              saving={saving}
+            />
+          )}
+          {activeTab === "clusters" && (
+            <ClustersTab
+              config={config}
+              setConfig={setConfig}
+              save={saveSection}
+              reset={resetSection}
+              saving={saving}
+            />
+          )}
+          {activeTab === "scoring" && (
+            <ScoringTab
+              config={config}
+              setConfig={setConfig}
+              save={saveSection}
+              reset={resetSection}
+              saving={saving}
+            />
+          )}
+          {activeTab === "anchor" && (
+            <AnchorTab
+              config={config}
+              setConfig={setConfig}
+              save={saveSection}
+              reset={resetSection}
+              saving={saving}
+            />
+          )}
+        </TabContent>
+      ) : null}
+    </div>
   );
 }
 
@@ -454,13 +466,14 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
           {keywords.map((kw, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
+              style={staggerStyle(idx)}
+              className="tool-pop flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
             >
               <button
                 onClick={() => toggleKeyword(idx)}
                 className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                   kw.enabled
-                    ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                    ? "border-primary bg-primary text-white"
                     : "border-border bg-card text-transparent"
                 }`}
               >
@@ -470,7 +483,7 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
               <StatusBadge ok={kw.enabled} />
               <button
                 onClick={() => removeKeyword(idx)}
-                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
+                className="text-xs text-rose-400 transition-transform duration-150 active:scale-90 hover:text-rose-600 dark:hover:text-rose-300"
               >
                 <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
@@ -486,14 +499,9 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
             onChange={(e) => setNewTerm(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addKeyword()}
             placeholder="Neues Keyword..."
-            className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-fg focus:border-emerald-600 dark:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-[#1f7a4f]"
+            className={`flex-1 ${FIELD_CLASS}`}
           />
-          <button
-            onClick={addKeyword}
-            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
-          >
-            + Hinzufügen
-          </button>
+          <CTAButton variant="primary" onClick={addKeyword}>+ Hinzufügen</CTAButton>
         </div>
 
         <div className="mt-4 flex gap-2">
@@ -501,12 +509,9 @@ function KeywordsTab({ config, setConfig, save, reset, saving }: TabProps) {
             saving={saving}
             onClick={() => save("required_keywords", config.required_keywords)}
           />
-          <button
-            onClick={() => reset("required_keywords")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
-          >
+          <CTAButton variant="secondary" onClick={() => reset("required_keywords")}>
             Zurücksetzen
-          </button>
+          </CTAButton>
         </div>
       </SectionCard>
     </div>
@@ -584,13 +589,14 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
           {sources.map((src, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
+              style={staggerStyle(idx)}
+              className="tool-pop flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
             >
               <button
                 onClick={() => toggleSource(idx)}
                 className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                   src.enabled
-                    ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                    ? "border-primary bg-primary text-white"
                     : "border-border bg-card text-transparent"
                 }`}
               >
@@ -599,18 +605,12 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
               <span className="flex-1 text-sm font-medium text-foreground">
                 {src.name}
               </span>
-              <span
-                className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-                  src.quality === "high"
-                    ? "bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400"
-                    : "bg-border text-foreground/80"
-                }`}
-              >
-                {src.quality.toUpperCase()}
-              </span>
+              <Badge tone={src.quality === "high" ? "primary" : "muted"}>
+                {src.quality}
+              </Badge>
               <button
                 onClick={() => removeSource(idx)}
-                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
+                className="text-xs text-rose-400 transition-transform duration-150 active:scale-90 hover:text-rose-600 dark:hover:text-rose-300"
               >
                 <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
@@ -625,18 +625,13 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
             onChange={(e) => setNewSource(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addSource()}
             placeholder="Publisher-Name..."
-            className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+            className={`flex-1 ${FIELD_CLASS}`}
           />
           <Dropdown value={newQuality} onChange={(v) => setNewQuality(v as "high" | "mid")}>
             <DropdownOption value="high">High</DropdownOption>
             <DropdownOption value="mid">Mid</DropdownOption>
           </Dropdown>
-          <button
-            onClick={addSource}
-            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
-          >
-            +
-          </button>
+          <CTAButton variant="primary" onClick={addSource}>+</CTAButton>
         </div>
 
         <div className="mt-4 flex gap-2">
@@ -644,12 +639,9 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
             saving={saving}
             onClick={() => save("preferred_sources", config.preferred_sources)}
           />
-          <button
-            onClick={() => reset("preferred_sources")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
-          >
+          <CTAButton variant="secondary" onClick={() => reset("preferred_sources")}>
             Zurücksetzen
-          </button>
+          </CTAButton>
         </div>
       </SectionCard>
 
@@ -667,16 +659,17 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
           {blocked.map((b, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2"
+              style={staggerStyle(idx)}
+              className="tool-pop flex items-center gap-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 dark:border-rose-900/40 dark:bg-rose-950/30"
             >
-              <Ban className="h-4 w-4 flex-shrink-0 text-red-500" strokeWidth={2} />
-              <span className="flex-1 text-sm font-medium text-red-800">
+              <Ban className="h-4 w-4 flex-shrink-0 text-rose-500 dark:text-rose-400" strokeWidth={2} />
+              <span className="flex-1 text-sm font-medium text-rose-800 dark:text-rose-300">
                 {b.name}
               </span>
-              <code className="text-xs text-red-600">{b.pattern}</code>
+              <code className="text-xs text-rose-600 dark:text-rose-400">{b.pattern}</code>
               <button
                 onClick={() => removeBlocked(idx)}
-                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
+                className="text-xs text-rose-400 transition-transform duration-150 active:scale-90 hover:text-rose-600 dark:hover:text-rose-300"
               >
                 <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
@@ -692,7 +685,7 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
               setNewBlocked((b) => ({ ...b, name: e.target.value }))
             }
             placeholder="Name..."
-            className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+            className={FIELD_CLASS}
           />
           <input
             type="text"
@@ -701,14 +694,9 @@ function SourcesTab({ config, setConfig, save, reset, saving }: TabProps) {
               setNewBlocked((b) => ({ ...b, pattern: e.target.value }))
             }
             placeholder="Pattern (regex)..."
-            className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+            className={FIELD_CLASS}
           />
-          <button
-            onClick={addBlocked}
-            className="rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-red-600"
-          >
-            + Blockieren
-          </button>
+          <CTAButton variant="danger" onClick={addBlocked}>+ Blockieren</CTAButton>
         </div>
 
         <div className="mt-4 flex gap-2">
@@ -731,17 +719,6 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
   });
 
   const rules = config.custom_exclusions.rules;
-
-  // Hardcoded exclusions (read-only display)
-  const hardcoded = [
-    { pattern: "corrigendum|erratum", reason: "erratum-corrigendum" },
-    { pattern: "canine|dog|dogs|feline|cat|cats", reason: "non-human-veterinary" },
-    { pattern: "laying hens|broiler|poultry|hens|hen", reason: "poultry-feed" },
-    { pattern: "marine organism|marine pollution|aquatic|fish|shrimp", reason: "marine-topic" },
-    { pattern: "hempseed meal|egg quality|dairy cow|ruminant", reason: "agriculture-feed" },
-    { pattern: "industrial hemp breeding lines", reason: "industrial-hemp-low-fit" },
-    { pattern: "nigella sativa", reason: "non-cannabis-sativa" },
-  ];
 
   const toggleRule = (idx: number) => {
     const updated = rules.map((rule, i) =>
@@ -777,24 +754,24 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
 
   return (
     <div className="space-y-6">
-      {/* Hardcoded Exclusions (Read-only) */}
+      {/* Hardcoded Exclusions (Read-only) — sourced live from
+          lib/engine/config.ts HARD_EXCLUSIONS, never a stale copy. */}
       <SectionCard
         title="System-Ausschlüsse (fest)"
         description="Diese Regeln sind im Code hartcodiert und können nicht geändert werden."
       >
         <div className="space-y-1.5">
-          {hardcoded.map((rule, idx) => (
+          {HARD_EXCLUSIONS.map((rule, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg bg-background px-3 py-2"
+              style={staggerStyle(idx)}
+              className="tool-pop flex items-center gap-3 rounded-lg bg-background px-3 py-2"
             >
               <Lock className="h-3 w-3 flex-shrink-0 text-muted-fg" strokeWidth={2} />
               <code className="flex-1 text-xs text-foreground">
-                {rule.pattern}
+                {rule.pattern.source}
               </code>
-              <span className="rounded-full bg-border px-2 py-0.5 text-[10px] text-muted-fg">
-                {rule.reason}
-              </span>
+              <Badge tone="muted">{rule.reason}</Badge>
             </div>
           ))}
         </div>
@@ -814,13 +791,14 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
           {rules.map((rule, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
+              style={staggerStyle(idx)}
+              className="tool-pop flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
             >
               <button
                 onClick={() => toggleRule(idx)}
                 className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                   rule.enabled
-                    ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                    ? "border-primary bg-primary text-white"
                     : "border-border bg-card text-transparent"
                 }`}
               >
@@ -829,12 +807,10 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
               <code className="flex-1 text-sm text-foreground">
                 {rule.pattern}
               </code>
-              <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] text-amber-700">
-                {rule.reason}
-              </span>
+              <Badge tone="amber">{rule.reason}</Badge>
               <button
                 onClick={() => removeRule(idx)}
-                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
+                className="text-xs text-rose-400 transition-transform duration-150 active:scale-90 hover:text-rose-600 dark:hover:text-rose-300"
               >
                 <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
@@ -850,7 +826,7 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
               setNewExclusion((ex) => ({ ...ex, pattern: e.target.value }))
             }
             placeholder="Regex-Pattern (z.B. aquaculture|fish farm)"
-            className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+            className={FIELD_CLASS}
           />
           <div className="flex gap-2">
             <input
@@ -860,14 +836,9 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
                 setNewExclusion((ex) => ({ ...ex, reason: e.target.value }))
               }
               placeholder="Grund (z.B. off-topic)"
-              className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+              className={`flex-1 ${FIELD_CLASS}`}
             />
-            <button
-              onClick={addRule}
-              className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
-            >
-              +
-            </button>
+            <CTAButton variant="primary" onClick={addRule}>+</CTAButton>
           </div>
         </div>
 
@@ -878,12 +849,9 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
               save("custom_exclusions", config.custom_exclusions)
             }
           />
-          <button
-            onClick={() => reset("custom_exclusions")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
-          >
+          <CTAButton variant="secondary" onClick={() => reset("custom_exclusions")}>
             Zurücksetzen
-          </button>
+          </CTAButton>
         </div>
       </SectionCard>
     </div>
@@ -892,30 +860,19 @@ function ExclusionsTab({ config, setConfig, save, reset, saving }: TabProps) {
 
 // ── Clusters Tab ────────────────────────────────────────────────────────────
 
+const MAX_CLUSTER_QUERIES = 4;
+
 function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
+  const auth = useAdminAuth();
   const [newCluster, setNewCluster] = useState({
     key: "",
     label: "",
     queries: "",
     includePatterns: "",
   });
-
-  // Hardcoded clusters (read-only display). Kept in sync with
-  // apps/web/src/lib/engine/config.ts TOPIC_CLUSTERS — medizin-evidenz,
-  // pharmakologie and markt-regulierung were dropped, they don't match
-  // SecretLeaf's grow-focused Wissenssystem scope.
-  const hardcoded = [
-    {
-      key: "qualitaet-labor",
-      label: "Qualität & Labor",
-      queries: ["cannabis laboratory", "cannabis contaminants", "cannabis heavy metals", "cannabis pesticides"],
-    },
-    {
-      key: "anbau-postharvest",
-      label: "Anbau & Post-Harvest",
-      queries: ["cannabis cultivation thc cbd terpene profile", "cannabis curing drying storage", "cannabis postharvest terpene retention", "cannabis greenhouse indoor environmental control"],
-    },
-  ];
+  const [aiTopic, setAiTopic] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
 
   const customClusters = config.topic_clusters.customClusters;
 
@@ -955,7 +912,8 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
         queries: newCluster.queries
           .split("\n")
           .map((q) => q.trim())
-          .filter(Boolean),
+          .filter(Boolean)
+          .slice(0, MAX_CLUSTER_QUERIES),
         includePatterns: newCluster.includePatterns
           .split("\n")
           .map((p) => p.trim())
@@ -972,25 +930,56 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
         : c,
     );
     setNewCluster({ key: "", label: "", queries: "", includePatterns: "" });
+    setAiTopic("");
+  };
+
+  // "Bei Bedarf" — nur auf Klick, kein Auto-Trigger. Nutzt die bestehende
+  // admin-gated ai-assist-Action, kein neuer Backend-Code nötig.
+  const suggestWithAi = async () => {
+    if (auth.status !== "authenticated" || !aiTopic.trim() || aiLoading) return;
+    setAiLoading(true);
+    setAiError(null);
+    try {
+      const prompt =
+        `Schlage ${MAX_CLUSTER_QUERIES} enge, mehrwortige Crossref-Suchphrasen ` +
+        `für das Cannabis-Grow-Zusatzthema "${aiTopic.trim()}" vor, im Stil dieser ` +
+        `Beispiele:\n- "cannabis cultivation thc cbd terpene profile"\n- "cannabis curing drying storage"\n- ` +
+        `"cannabis postharvest terpene retention"\nKeine Einzelwörter, keine breiten Oberbegriffe. ` +
+        `Antworte NUR mit den Suchphrasen, eine pro Zeile, ohne Nummerierung oder Erklärung.`;
+      const result = await adminApi<{ reply: string }>(auth.session, "ai-assist", { prompt });
+      const suggested = result.reply
+        .split("\n")
+        .map((l) => l.replace(/^[-*\d.)\s]+/, "").trim())
+        .filter(Boolean)
+        .slice(0, MAX_CLUSTER_QUERIES)
+        .join("\n");
+      setNewCluster((c) => ({ ...c, queries: suggested }));
+    } catch (err) {
+      setAiError(err instanceof Error ? err.message : "Vorschlag fehlgeschlagen");
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   return (
     <div className="space-y-6">
-      {/* Hardcoded Clusters */}
+      {/* Hardcoded Clusters — sourced live from lib/engine/config.ts
+          TOPIC_CLUSTERS, never a stale copy. */}
       <SectionCard
         title="System-Cluster (fest)"
-        description="Die 5 Basis-Cluster für die Crossref-Suche. Können nicht deaktiviert werden."
+        description={`Die ${TOPIC_CLUSTERS.length} Basis-Cluster für die Crossref-Suche. Können nicht deaktiviert werden.`}
       >
         <div className="space-y-3">
-          {hardcoded.map((c) => (
+          {TOPIC_CLUSTERS.map((c, idx) => (
             <div
               key={c.key}
-              className="rounded-lg border border-border bg-background p-3"
+              style={staggerStyle(idx)}
+              className="tool-pop rounded-lg border border-border bg-background p-3"
             >
               <div className="flex items-center gap-2">
                 <Lock className="h-3 w-3 text-muted-fg" strokeWidth={2} />
                 <span className="font-semibold text-sm text-foreground">
-                  {c.label}
+                  {clusterLabel(c.key)}
                 </span>
                 <code className="rounded bg-border px-1.5 py-0.5 text-[10px] text-muted-fg">
                   {c.key}
@@ -1025,14 +1014,15 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
           {customClusters.map((cluster, idx) => (
             <div
               key={idx}
-              className="rounded-lg border border-border bg-background p-3"
+              style={staggerStyle(idx)}
+              className="tool-pop rounded-lg border border-border bg-background p-3"
             >
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => toggleCluster(idx)}
                   className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                     cluster.enabled
-                      ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                      ? "border-primary bg-primary text-white"
                       : "border-border bg-card text-transparent"
                   }`}
                 >
@@ -1047,14 +1037,14 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
                 <StatusBadge ok={cluster.enabled} />
                 <button
                   onClick={() => removeCluster(idx)}
-                  className="ml-auto flex items-center gap-1 text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
+                  className="ml-auto flex items-center gap-1 text-xs text-rose-400 transition-transform duration-150 active:scale-90 hover:text-rose-600 dark:hover:text-rose-300"
                 >
                   <X className="h-3 w-3" strokeWidth={2} /> Entfernen
                 </button>
               </div>
               <div className="mt-2">
                 <span className="text-[10px] font-semibold uppercase text-muted-fg">
-                  Queries:
+                  Queries (max. {MAX_CLUSTER_QUERIES}, treibt die Crossref-Suche):
                 </span>
                 <div className="mt-1 flex flex-wrap gap-1">
                   {cluster.queries.map((q, i) => (
@@ -1088,9 +1078,37 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
 
         {/* Add new cluster */}
         <div className="mt-4 rounded-lg border border-dashed border-border p-4">
-          <p className="mb-3 text-sm font-semibold text-foreground">
+          <p className="mb-1 text-sm font-semibold text-foreground">
             Neuen Cluster erstellen
           </p>
+          <p className="mb-3 text-xs text-muted-fg">
+            Ein Cluster = ein konkretes Zusatzthema. 3–4 enge Mehrwort-Phrasen
+            wie bei den System-Clustern oben — keine Einzelwörter, kein
+            Versuch alles auf einmal abzudecken.
+          </p>
+
+          <div className="mb-3 flex flex-wrap items-center gap-2 rounded-lg border border-border bg-background p-2.5">
+            <Sparkles className="h-4 w-4 flex-shrink-0 text-primary" strokeWidth={2} />
+            <input
+              type="text"
+              value={aiTopic}
+              onChange={(e) => setAiTopic(e.target.value)}
+              placeholder="Thema, z.B. LED-Beleuchtungsspektren"
+              className={`min-w-[180px] flex-1 ${FIELD_CLASS}`}
+            />
+            <CTAButton
+              variant="secondary"
+              size="sm"
+              onClick={() => void suggestWithAi()}
+              disabled={aiLoading || !aiTopic.trim()}
+            >
+              {aiLoading ? "Denkt nach…" : "Mit Claude vorschlagen"}
+            </CTAButton>
+          </div>
+          {aiError && (
+            <p className="mb-3 text-xs text-rose-600 dark:text-rose-400">{aiError}</p>
+          )}
+
           <div className="grid grid-cols-2 gap-3">
             <input
               type="text"
@@ -1098,8 +1116,8 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
               onChange={(e) =>
                 setNewCluster((c) => ({ ...c, key: e.target.value }))
               }
-              placeholder="Cluster-Key (z.B. genetik)"
-              className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+              placeholder="Cluster-Key (z.B. beleuchtung)"
+              className={FIELD_CLASS}
             />
             <input
               type="text"
@@ -1107,17 +1125,17 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
               onChange={(e) =>
                 setNewCluster((c) => ({ ...c, label: e.target.value }))
               }
-              placeholder="Anzeige-Name (z.B. Genetik & Züchtung)"
-              className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+              placeholder="Anzeige-Name (z.B. Beleuchtung & Spektren)"
+              className={FIELD_CLASS}
             />
             <textarea
               value={newCluster.queries}
               onChange={(e) =>
                 setNewCluster((c) => ({ ...c, queries: e.target.value }))
               }
-              placeholder={"Suchbegriffe (einer pro Zeile)\nz.B. cannabis genetics\ncannabis breeding"}
+              placeholder={"Suchbegriffe (max. 4, eine pro Zeile)\nz.B. cannabis led spectrum flowering\ncannabis light intensity yield"}
               rows={3}
-              className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+              className={FIELD_CLASS}
             />
             <textarea
               value={newCluster.includePatterns}
@@ -1127,17 +1145,14 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
                   includePatterns: e.target.value,
                 }))
               }
-              placeholder={"Include-Patterns (einer pro Zeile)\nz.B. genetic\nbreeding\ngenome"}
+              placeholder={"Include-Patterns (einer pro Zeile)\nz.B. led spectrum\nphotoperiod"}
               rows={3}
-              className="rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+              className={FIELD_CLASS}
             />
           </div>
-          <button
-            onClick={addCluster}
-            className="mt-3 rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
-          >
+          <CTAButton variant="primary" onClick={addCluster} className="mt-3">
             + Cluster erstellen
-          </button>
+          </CTAButton>
         </div>
 
         <div className="mt-4 flex gap-2">
@@ -1145,12 +1160,9 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
             saving={saving}
             onClick={() => save("topic_clusters", config.topic_clusters)}
           />
-          <button
-            onClick={() => reset("topic_clusters")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
-          >
+          <CTAButton variant="secondary" onClick={() => reset("topic_clusters")}>
             Zurücksetzen
-          </button>
+          </CTAButton>
         </div>
       </SectionCard>
     </div>
@@ -1158,6 +1170,63 @@ function ClustersTab({ config, setConfig, save, reset, saving }: TabProps) {
 }
 
 // ── Scoring Tab ─────────────────────────────────────────────────────────────
+
+type WeightsHistoryEntry = {
+  weights: Record<string, number>;
+  reason: string;
+  based_on_studies: number;
+  computed_at: string;
+};
+
+function WeightsHistorySection() {
+  const auth = useAdminAuth();
+  const [entry, setEntry] = useState<WeightsHistoryEntry | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (auth.status !== "authenticated") return;
+    adminApi<{ latest: WeightsHistoryEntry | null }>(auth.session, "weights-history")
+      .then((data) => setEntry(data.latest))
+      .catch(() => setEntry(null))
+      .finally(() => setLoading(false));
+  }, [auth.status]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <SectionCard
+      title="Adaptive Gewichte — Verlauf"
+      description="Der wöchentliche Anpassungslauf berechnet Gewichte aus Nutzer-Feedback und übernimmt sie automatisch oben in die Score-Gewichtung. Nur Anzeige, kein Formular."
+    >
+      {loading ? (
+        <p className="text-sm text-muted-fg">Lädt…</p>
+      ) : !entry ? (
+        <p className="text-sm italic text-muted-fg">
+          Noch kein automatischer Anpassungslauf durchgeführt.
+        </p>
+      ) : (
+        <div className="flex items-start gap-3 rounded-lg border border-border bg-background p-3">
+          <History className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" strokeWidth={2} />
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2 text-xs text-muted-fg">
+              <span>{new Date(entry.computed_at).toLocaleString("de-DE")}</span>
+              <Badge tone="muted">{entry.based_on_studies} Studien</Badge>
+            </div>
+            <p className="mt-1 text-sm text-foreground">{entry.reason}</p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {Object.entries(entry.weights).map(([key, value]) => (
+                <span
+                  key={key}
+                  className="rounded-full border border-border bg-card px-2 py-0.5 text-[11px] text-muted-fg"
+                >
+                  {key}: {Math.round(value * 100)}%
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </SectionCard>
+  );
+}
 
 function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
   const sp = config.scoring_params;
@@ -1210,7 +1279,7 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
                 onChange={(e) =>
                   updateParam("minAcceptScore", Number(e.target.value))
                 }
-                className="flex-1 accent-[#1f7a4f]"
+                className="flex-1 accent-primary"
               />
               <span className="w-10 text-right text-sm font-bold text-foreground">
                 {sp.minAcceptScore}
@@ -1236,7 +1305,7 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
                 onChange={(e) =>
                   updateParam("crossrefRowsPerQuery", Number(e.target.value))
                 }
-                className="flex-1 accent-[#1f7a4f]"
+                className="flex-1 accent-primary"
               />
               <span className="w-10 text-right text-sm font-bold text-foreground">
                 {sp.crossrefRowsPerQuery}
@@ -1261,7 +1330,7 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
                 onChange={(e) =>
                   updateParam("fuzzyThreshold", Number(e.target.value) / 100)
                 }
-                className="flex-1 accent-[#1f7a4f]"
+                className="flex-1 accent-primary"
               />
               <span className="w-10 text-right text-sm font-bold text-foreground">
                 {Math.round(sp.fuzzyThreshold * 100)}%
@@ -1280,11 +1349,11 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
           <>
             Die 5 Scoring-Faktoren und ihre Gewichtung. Summe: {(totalWeight * 100).toFixed(0)}%{" "}
             {Math.abs(totalWeight - 1) > 0.01 ? (
-              <span className="inline-flex items-center gap-1 text-amber-600">
+              <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
                 <AlertTriangle className="inline h-3.5 w-3.5" strokeWidth={2} /> sollte 100% sein!
               </span>
             ) : (
-              <CheckCircle2 className="inline h-3.5 w-3.5 text-emerald-600" strokeWidth={2} />
+              <CheckCircle2 className="inline h-3.5 w-3.5 text-primary" strokeWidth={2} />
             )}
           </>
         }
@@ -1307,7 +1376,7 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
                   </span>
                   <span className="ml-2 text-xs text-muted-fg">{desc}</span>
                 </div>
-                <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
+                <span className="text-sm font-bold text-primary">
                   {Math.round(sp.weights[key] * 100)}%
                 </span>
               </div>
@@ -1319,7 +1388,7 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
                 onChange={(e) =>
                   updateWeight(key, Number(e.target.value) / 100)
                 }
-                className="mt-1 w-full accent-[#1f7a4f]"
+                className="mt-1 w-full accent-primary"
               />
             </div>
           ))}
@@ -1330,14 +1399,13 @@ function ScoringTab({ config, setConfig, save, reset, saving }: TabProps) {
             saving={saving}
             onClick={() => save("scoring_params", config.scoring_params)}
           />
-          <button
-            onClick={() => reset("scoring_params")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
-          >
+          <CTAButton variant="secondary" onClick={() => reset("scoring_params")}>
             Zurücksetzen
-          </button>
+          </CTAButton>
         </div>
       </SectionCard>
+
+      <WeightsHistorySection />
     </div>
   );
 }
@@ -1408,13 +1476,14 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
           {terms.map((term, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
+              style={staggerStyle(idx)}
+              className="tool-pop flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2"
             >
               <button
                 onClick={() => toggleTerm(idx)}
                 className={`h-5 w-5 flex-shrink-0 rounded-md border text-xs font-bold transition active:scale-90 ${
                   term.enabled
-                    ? "border-emerald-600 dark:border-emerald-500 bg-emerald-600 dark:bg-emerald-500 text-white"
+                    ? "border-primary bg-primary text-white"
                     : "border-border bg-card text-transparent"
                 }`}
               >
@@ -1428,7 +1497,7 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
                 title="Word Boundary (\\b)"
                 className={`rounded-md border px-2 py-0.5 text-[10px] font-mono transition active:scale-90 ${
                   term.wordBoundary
-                    ? "border-blue-300 bg-blue-100 text-blue-700"
+                    ? "border-primary/30 bg-primary/10 text-primary"
                     : "border-border bg-card text-muted-fg"
                 }`}
               >
@@ -1437,7 +1506,7 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
               <StatusBadge ok={term.enabled} />
               <button
                 onClick={() => removeTerm(idx)}
-                className="text-xs text-red-400 transition-transform duration-150 active:scale-90 hover:text-red-600"
+                className="text-xs text-rose-400 transition-transform duration-150 active:scale-90 hover:text-rose-600 dark:hover:text-rose-300"
               >
                 <X className="h-3.5 w-3.5" strokeWidth={2} />
               </button>
@@ -1453,31 +1522,26 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
             onChange={(e) => setNewTerm(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && addTerm()}
             placeholder="Neuer Anker-Begriff..."
-            className="flex-1 rounded-lg border border-border bg-card px-3 py-2 text-sm focus:border-emerald-600 dark:border-emerald-500 focus:outline-none"
+            className={`flex-1 ${FIELD_CLASS}`}
           />
           <label className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-sm">
             <input
               type="checkbox"
               checked={newWordBoundary}
               onChange={(e) => setNewWordBoundary(e.target.checked)}
-              className="accent-[#1f7a4f]"
+              className="accent-primary"
             />
             <span className="text-xs text-muted-fg">\\b</span>
           </label>
-          <button
-            onClick={addTerm}
-            className="rounded-lg bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition-transform duration-150 active:scale-[0.97] hover:bg-emerald-700"
-          >
-            + Hinzufügen
-          </button>
+          <CTAButton variant="primary" onClick={addTerm}>+ Hinzufügen</CTAButton>
         </div>
 
         {/* Regex Preview */}
-        <div className="mt-4 rounded-lg bg-[#10281e] p-3">
-          <p className="text-[10px] font-semibold uppercase text-green-400">
+        <div className="mt-4 rounded-lg bg-[var(--primary-deep)] p-3">
+          <p className="text-[10px] font-semibold uppercase text-primary">
             Regex-Vorschau (Live)
           </p>
-          <code className="mt-1 block text-xs text-green-300 break-all">
+          <code className="mt-1 block text-xs text-primary break-all">
             /{regexPreview || "..."}/i
           </code>
         </div>
@@ -1487,12 +1551,9 @@ function AnchorTab({ config, setConfig, save, reset, saving }: TabProps) {
             saving={saving}
             onClick={() => save("cannabis_anchor", config.cannabis_anchor)}
           />
-          <button
-            onClick={() => reset("cannabis_anchor")}
-            className="rounded-xl border border-border px-4 py-2 text-sm text-muted-fg transition-transform duration-150 active:scale-[0.97] hover:bg-background"
-          >
+          <CTAButton variant="secondary" onClick={() => reset("cannabis_anchor")}>
             Zurücksetzen
-          </button>
+          </CTAButton>
         </div>
       </SectionCard>
     </div>

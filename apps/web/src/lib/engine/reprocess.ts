@@ -23,9 +23,11 @@ import type {
   ScoringResult,
 } from "./types";
 import { classifyStudy } from "./classify";
+import type { ClassifyOverrides } from "./classify";
 import { scoreStudy } from "./score";
+import type { ScoreOverrides } from "./score";
 import { STUDIES_TABLE } from "./config";
-import { loadConfigSection } from "./configLoader";
+import { loadFullConfig, buildDynamicOverrides } from "./configLoader";
 import type { PipelineLogger } from "./logger";
 
 // ── Default Config ──────────────────────────────────────────────────────────
@@ -133,6 +135,8 @@ async function fetchReprocessCandidates(
 function reprocessStudy(
   row: StoredStudyRow,
   minAcceptScore: number,
+  classifyOverrides?: ClassifyOverrides,
+  scoreOverrides?: ScoreOverrides,
 ): {
   classification: ClassificationResult;
   scoring: ScoringResult;
@@ -141,8 +145,8 @@ function reprocessStudy(
   delta: number;
 } {
   const normalized = rowToNormalizedStudy(row);
-  const classification = classifyStudy(normalized);
-  const scoring = scoreStudy(normalized, classification, minAcceptScore);
+  const classification = classifyStudy(normalized, classifyOverrides);
+  const scoring = scoreStudy(normalized, classification, minAcceptScore, scoreOverrides);
 
   return {
     classification,
@@ -211,9 +215,21 @@ export async function runReprocessLoop(
   };
 
   let effectiveMinAcceptScore = minAcceptScore;
+  let classifyOverrides: ClassifyOverrides | undefined;
+  let scoreOverrides: ScoreOverrides | undefined;
+
+  // Load the same admin engine_config that fresh ingestion (pipeline.ts)
+  // applies, so reprocessing can't silently drift from configured keywords/
+  // exclusions/anchors/clusters/sources/weights — previously only
+  // minAcceptScore was honored here.
+  const { config: dynConfig, fromDatabase } = await loadFullConfig(supabase);
+  if (fromDatabase) {
+    const overrides = buildDynamicOverrides(dynConfig);
+    classifyOverrides = overrides.classifyOverrides;
+    scoreOverrides = overrides.scoreOverrides;
+  }
   if (effectiveMinAcceptScore == null) {
-    const scoringParams = await loadConfigSection(supabase, "scoring_params");
-    effectiveMinAcceptScore = scoringParams.minAcceptScore;
+    effectiveMinAcceptScore = dynConfig.scoring_params.minAcceptScore;
   }
 
   const result: ReprocessResult = {
@@ -249,6 +265,8 @@ export async function runReprocessLoop(
       const { classification, scoring, oldScore, newScore, delta } = reprocessStudy(
         row,
         effectiveMinAcceptScore,
+        classifyOverrides,
+        scoreOverrides,
       );
 
       result.processed++;

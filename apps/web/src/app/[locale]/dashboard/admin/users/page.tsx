@@ -192,7 +192,7 @@ export default function AdminUsersPage() {
             placeholder="Suche nach E-Mail oder ID..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full max-w-sm rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
+            className="w-full max-w-sm rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-[var(--ring)]"
           />
         </div>
         <Dropdown value={roleFilter} onChange={(v) => { setRoleFilter(v); setPage(1); }}>
@@ -350,7 +350,7 @@ export default function AdminUsersPage() {
                       value={role}
                       checked={editRole === role}
                       onChange={() => setEditRole(role)}
-                      className="accent-[#1f7a4f]"
+                      className="accent-primary"
                     />
                     <div>
                       <p className="text-sm font-semibold text-foreground">{role}</p>

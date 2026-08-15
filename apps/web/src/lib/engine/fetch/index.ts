@@ -30,13 +30,69 @@ function daysAgoIso(days: number): string {
   return d.toISOString();
 }
 
+/** Run every query for one cluster against Crossref, tagging + logging as it goes. */
+async function fetchCluster(
+  cluster: { key: string; queries: string[] },
+  config: PipelineConfig,
+  fromDate: string,
+  logger: PipelineLogger,
+  allItems: RawStudy[],
+  queryStats: FetchResult["queryStats"],
+): Promise<number> {
+  let errors = 0;
+  for (const query of cluster.queries) {
+    try {
+      const { items } = await fetchFromCrossref({
+        query,
+        fromDate,
+        rows: config.crossrefRowsPerQuery,
+        maxRetries: config.maxFetchRetries,
+        logger,
+      });
+
+      // Tag each item with the cluster it came from
+      for (const item of items) {
+        (item.meta as Record<string, unknown>).cluster = cluster.key;
+      }
+
+      allItems.push(...items);
+      queryStats.push({
+        source: "crossref",
+        cluster: cluster.key,
+        query,
+        fetched: items.length,
+        error: null,
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      errors++;
+      logger.error(`Fetch failed for cluster "${cluster.key}" query "${query}"`, {
+        error: message,
+      });
+      queryStats.push({
+        source: "crossref",
+        cluster: cluster.key,
+        query,
+        fetched: 0,
+        error: message,
+      });
+    }
+  }
+  return errors;
+}
+
 /**
  * Multi-source fetch orchestrator.
  * Iterates over all topic clusters and fetches from each configured adapter.
+ *
+ * @param extraClusters - Admin-defined custom clusters (engine_config
+ *   `topic_clusters.customClusters`) with their own narrow search queries,
+ *   fetched in addition to the hardcoded TOPIC_CLUSTERS.
  */
 export async function fetchAllSources(
   config: PipelineConfig,
   logger: PipelineLogger,
+  extraClusters?: Array<{ key: string; queries: string[] }>,
 ): Promise<FetchResult> {
   const fromDate = daysAgoIso(config.lookbackDays);
   const allItems: RawStudy[] = [];
@@ -46,49 +102,16 @@ export async function fetchAllSources(
   logger.info("Fetch layer starting", {
     lookbackDays: config.lookbackDays,
     clusters: TOPIC_CLUSTERS.length,
+    extraClusters: extraClusters?.length ?? 0,
     fromDate: fromDate.slice(0, 10),
   });
 
   for (const cluster of TOPIC_CLUSTERS) {
-    for (const query of cluster.queries) {
-      try {
-        const { items } = await fetchFromCrossref({
-          query,
-          fromDate,
-          rows: config.crossrefRowsPerQuery,
-          maxRetries: config.maxFetchRetries,
-          logger,
-        });
+    totalErrors += await fetchCluster(cluster, config, fromDate, logger, allItems, queryStats);
+  }
 
-        // Tag each item with the cluster it came from
-        for (const item of items) {
-          (item.meta as Record<string, unknown>).cluster = cluster.key;
-        }
-
-        allItems.push(...items);
-        queryStats.push({
-          source: "crossref",
-          cluster: cluster.key,
-          query,
-          fetched: items.length,
-          error: null,
-        });
-      } catch (error) {
-        const message =
-          error instanceof Error ? error.message : String(error);
-        totalErrors++;
-        logger.error(`Fetch failed for cluster "${cluster.key}" query "${query}"`, {
-          error: message,
-        });
-        queryStats.push({
-          source: "crossref",
-          cluster: cluster.key,
-          query,
-          fetched: 0,
-          error: message,
-        });
-      }
-    }
+  for (const cluster of extraClusters ?? []) {
+    totalErrors += await fetchCluster(cluster, config, fromDate, logger, allItems, queryStats);
   }
 
   logger.info("Fetch layer complete", {

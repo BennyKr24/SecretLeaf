@@ -77,10 +77,10 @@ INSERT INTO engine_config (config_key, config_value) VALUES
 }'::jsonb)
 ON CONFLICT (config_key) DO NOTHING;
 
--- Topic cluster overrides (custom queries & patterns per cluster)
+-- Topic clusters: admin-defined custom clusters (own queries & patterns),
+-- additive on top of the hardcoded TOPIC_CLUSTERS in lib/engine/config.ts
 INSERT INTO engine_config (config_key, config_value) VALUES
 ('topic_clusters', '{
-  "overrides": {},
   "customClusters": []
 }'::jsonb)
 ON CONFLICT (config_key) DO NOTHING;

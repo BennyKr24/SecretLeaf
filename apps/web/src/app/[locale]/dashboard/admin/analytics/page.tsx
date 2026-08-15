@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
+import { Card } from "@/components/ui/Card";
 import { BarChart3 } from "lucide-react";
 
 type AnalyticsData = {
@@ -31,7 +32,7 @@ function BarChart({ data, maxValue }: { data: Array<{ label: string; value: numb
           <div className="flex-1">
             <div className="h-5 rounded-full bg-border">
               <div
-                className="h-5 rounded-full bg-emerald-600 dark:bg-emerald-500 transition-[width] duration-300"
+                className="h-5 rounded-full bg-primary transition-[width] duration-300"
                 style={{ width: maxValue > 0 ? `${Math.max(2, (d.value / maxValue) * 100)}%` : "2%" }}
               />
             </div>
@@ -81,7 +82,7 @@ export default function AdminAnalyticsPage() {
           <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Analytics</span>
         </div>
         <div className="mt-1 flex items-center gap-3">
-          <BarChart3 className="h-6 w-6 text-emerald-600" strokeWidth={2} />
+          <BarChart3 className="h-6 w-6 text-primary" strokeWidth={2} />
           <div>
             <h1 className="text-2xl font-bold text-foreground">Analytics</h1>
             <p className="text-sm text-muted-fg">Studienperformance, Quellen und Engagement-Metriken.</p>
@@ -91,13 +92,15 @@ export default function AdminAnalyticsPage() {
 
       {loading && (
         <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-8">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
           <span className="text-sm text-muted-fg">Analytics werden geladen...</span>
         </div>
       )}
 
       {error && (
-        <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">{error}</div>
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700 dark:border-rose-900/40 dark:bg-rose-950/30 dark:text-rose-300">
+          {error}
+        </div>
       )}
 
       {data && (
@@ -119,25 +122,25 @@ export default function AdminAnalyticsPage() {
 
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Score Distribution */}
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <Card padding="md">
               <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">Score-Verteilung</h2>
               <BarChart
                 data={Object.entries(data.scoreDistribution).map(([label, value]) => ({ label, value }))}
                 maxValue={Math.max(...Object.values(data.scoreDistribution), 1)}
               />
-            </div>
+            </Card>
 
             {/* Top Sources */}
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <Card padding="md">
               <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">Beste Quellen</h2>
               <BarChart
                 data={data.topSources.slice(0, 10).map((s) => ({ label: s.source.length > 20 ? s.source.slice(0, 18) + "…" : s.source, value: s.count }))}
                 maxValue={Math.max(...data.topSources.map((s) => s.count), 1)}
               />
-            </div>
+            </Card>
 
             {/* Study Types */}
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <Card padding="md">
               <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">Studientypen</h2>
               <BarChart
                 data={Object.entries(data.typeCounts)
@@ -145,10 +148,10 @@ export default function AdminAnalyticsPage() {
                   .map(([label, value]) => ({ label, value }))}
                 maxValue={Math.max(...Object.values(data.typeCounts), 1)}
               />
-            </div>
+            </Card>
 
             {/* Priority Distribution */}
-            <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <Card padding="md">
               <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">Prioritäts-Verteilung</h2>
               <div className="flex gap-4">
                 {Object.entries(data.priorityCounts)
@@ -158,8 +161,8 @@ export default function AdminAnalyticsPage() {
                   })
                   .map(([prio, count]) => {
                     const colors: Record<string, string> = {
-                      high: "border-emerald-200 bg-emerald-50 text-emerald-700",
-                      medium: "border-blue-200 bg-blue-50 text-blue-700",
+                      high: "border-primary/20 bg-primary/10 text-primary",
+                      medium: "border-amber-500/20 bg-amber-500/10 text-amber-700 dark:text-amber-400",
                       low: "border-border bg-background text-foreground/80",
                     };
                     return (
@@ -170,11 +173,11 @@ export default function AdminAnalyticsPage() {
                     );
                   })}
               </div>
-            </div>
+            </Card>
           </div>
 
           {/* Top Performing Studies */}
-          <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <Card padding="md" className="mt-6">
             <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">Top Studien nach Score</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
@@ -193,12 +196,12 @@ export default function AdminAnalyticsPage() {
                     <tr key={study.id} className="border-b border-border">
                       <td className="py-2 pr-4 text-xs text-muted-fg">{i + 1}</td>
                       <td className="max-w-xs truncate py-2 pr-4 font-medium text-foreground" title={study.title}>{study.title}</td>
-                      <td className="py-2 pr-4 font-mono font-semibold text-emerald-700 dark:text-emerald-400">{study.relevance_score}</td>
+                      <td className="py-2 pr-4 font-mono font-semibold text-primary">{study.relevance_score}</td>
                       <td className="py-2 pr-4 text-xs text-muted-fg">{study.study_type ?? "—"}</td>
                       <td className="py-2 pr-4">
                         <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
-                          study.editorial_priority === "high" ? "bg-emerald-100 text-emerald-700"
-                            : study.editorial_priority === "medium" ? "bg-blue-100 text-blue-700"
+                          study.editorial_priority === "high" ? "bg-primary/15 text-primary"
+                            : study.editorial_priority === "medium" ? "bg-amber-500/15 text-amber-700 dark:text-amber-400"
                             : "bg-border text-foreground/80"
                         }`}>
                           {study.editorial_priority ?? "—"}
@@ -210,7 +213,7 @@ export default function AdminAnalyticsPage() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </Card>
         </>
       )}
     </div>

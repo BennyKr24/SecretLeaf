@@ -244,7 +244,7 @@ export default function AdminStudiesPage() {
             value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(1); }}
             placeholder="Titel suchen..."
-            className="rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
+            className="rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-[var(--ring)]"
           />
           <Dropdown value={quality} onChange={(v) => { setQuality(v); setPage(1); }}>
             {QUALITY_OPTIONS.map((o) => <DropdownOption key={o.value} value={o.value}>{o.label}</DropdownOption>)}
@@ -257,7 +257,7 @@ export default function AdminStudiesPage() {
             value={source}
             onChange={(e) => { setSource(e.target.value); setPage(1); }}
             placeholder="Quelle filtern..."
-            className="rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-emerald-400 dark:border-emerald-600 focus:ring-2 focus:ring-[#cfe8d6]"
+            className="rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-[var(--ring)]"
           />
         </div>
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">

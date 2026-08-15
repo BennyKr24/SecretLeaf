@@ -16,6 +16,8 @@
 // ──────────────────────────────────────────────────────────────────────────────
 
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { ClassifyOverrides } from "./classify";
+import type { ScoreOverrides } from "./score";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -328,4 +330,102 @@ export function buildRequiredKeywordsTest(
   });
 
   return (text: string) => patterns.some((p) => p.test(text));
+}
+
+// ── Dynamic Overrides ───────────────────────────────────────────────────────
+
+/** Cap on Crossref search queries a single custom cluster can contribute —
+ * mirrors the hardcoded TOPIC_CLUSTERS' own 3-4-query shape, so a custom
+ * cluster stays a narrow, well-targeted addition rather than a mass fetch. */
+const MAX_CUSTOM_CLUSTER_QUERIES = 4;
+
+export type DynamicOverrides = {
+  classifyOverrides: ClassifyOverrides;
+  scoreOverrides: ScoreOverrides;
+  extraClusterQueries: Array<{ key: string; queries: string[] }>;
+  scoringParamOverrides: {
+    minAcceptScore?: number;
+    crossrefRowsPerQuery?: number;
+    fuzzyThreshold?: number;
+  };
+};
+
+/**
+ * Turn a loaded EngineConfigData into the override objects consumed by
+ * classifyStudy()/scoreStudy()/fetchAllSources(). Pure, no I/O — shared by
+ * pipeline.ts (fresh ingestion) and reprocess.ts (reprocessing loop) so
+ * admin config applies identically to both paths instead of only to fresh
+ * ingestion.
+ */
+export function buildDynamicOverrides(dynConfig: EngineConfigData): DynamicOverrides {
+  const scoringParamOverrides: DynamicOverrides["scoringParamOverrides"] = {};
+  const sp = dynConfig.scoring_params;
+  if (sp) {
+    if (sp.minAcceptScore != null) scoringParamOverrides.minAcceptScore = sp.minAcceptScore;
+    if (sp.crossrefRowsPerQuery != null) scoringParamOverrides.crossrefRowsPerQuery = sp.crossrefRowsPerQuery;
+    if (sp.fuzzyThreshold != null) scoringParamOverrides.fuzzyThreshold = sp.fuzzyThreshold;
+  }
+
+  const classifyOverrides: ClassifyOverrides = {};
+
+  const keywords = dynConfig.required_keywords?.keywords;
+  if (keywords && keywords.length > 0) {
+    classifyOverrides.requiredKeywordsTest = buildRequiredKeywordsTest(keywords);
+  }
+
+  const exclusions = dynConfig.custom_exclusions?.rules;
+  if (exclusions && exclusions.length > 0) {
+    classifyOverrides.extraExclusions = buildCustomExclusionRules(exclusions);
+  }
+
+  // Blocked sources — reuse the exclusion mechanism (a blocked publisher
+  // rejects the study outright, not just a lower score).
+  const blockedSources = dynConfig.blocked_sources?.sources;
+  if (blockedSources && blockedSources.length > 0) {
+    const blockRules = blockedSources.map((b) => ({
+      pattern: new RegExp(
+        b.pattern || b.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+        "i",
+      ),
+      reason: b.reason || `blocked-source:${b.name}`,
+    }));
+    classifyOverrides.extraExclusions = [
+      ...(classifyOverrides.extraExclusions ?? []),
+      ...blockRules,
+    ];
+  }
+
+  const scoreOverrides: ScoreOverrides = {};
+  const preferredSources = dynConfig.preferred_sources?.sources;
+  if (preferredSources && preferredSources.length > 0) {
+    scoreOverrides.preferredSources = preferredSources;
+  }
+  if (sp?.weights) {
+    scoreOverrides.weights = sp.weights;
+  }
+
+  const anchorTerms = dynConfig.cannabis_anchor?.terms;
+  if (anchorTerms && anchorTerms.length > 0) {
+    classifyOverrides.cannabisAnchorOverride = buildCannabisAnchorRegex(anchorTerms);
+  }
+
+  const enabledClusters = (dynConfig.topic_clusters?.customClusters ?? []).filter(
+    (c) => c.enabled,
+  );
+
+  if (enabledClusters.length > 0) {
+    classifyOverrides.extraClusters = enabledClusters.map((c) => ({
+      key: c.key,
+      include: c.includePatterns.map((p) => new RegExp(p, "i")),
+    }));
+  }
+
+  const extraClusterQueries = enabledClusters
+    .filter((c) => c.queries.length > 0)
+    .map((c) => ({
+      key: c.key,
+      queries: c.queries.slice(0, MAX_CUSTOM_CLUSTER_QUERIES),
+    }));
+
+  return { classifyOverrides, scoreOverrides, extraClusterQueries, scoringParamOverrides };
 }

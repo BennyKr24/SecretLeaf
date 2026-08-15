@@ -72,6 +72,26 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   und nicht mehr als Ankündigung geführt werden. Prüfen, ob der Banner weg
   kann oder durch aktuellere Inhalte ersetzt werden sollte.
 
+## 📊 Studien-Engine (`lib/engine`)
+
+- 🔍 **Regex-False-Positives in der Topic-Klassifizierung.**
+  `TOPIC_CLUSTERS['anbau-postharvest'].include` in `lib/engine/config.ts`
+  enthält bare-word-Patterns (`/thc/i`, `/cbd/i`, `/terpene/i`,
+  `/terpenoid/i`) ohne Cannabis-Kontext-Anforderung — anders als die
+  Anchor-Validierung in `classify.ts`, die ambige Kürzel erst akzeptiert,
+  wenn zusätzlich ein eindeutiger Cannabis-Begriff im Corpus steht (siehe
+  `CANNABIS_ANCHOR_AMBIGUOUS`-Kommentar). Bei der Backlog-Triage am
+  2026-08-02 gegen echte Prod-Daten bestätigt: "Understanding tourists'
+  travel health concern (**THC**)", "...thermo-hydro-chemical (**THC**)
+  coupled reactions..." (Geologie), "...**CBD**-CdS thin films"
+  (Materialwissenschaft, CBD = Chemical Bath Deposition), sowie mehrere
+  Terpen-Synthase-Papers zu nicht-Cannabis-Pflanzen (Ginkgo biloba, Styrax
+  officinalis u. a.). Diese Treffer fließen über `topicFit` (`+18 + hits*8`
+  pro Cluster, `classify.ts` `matchTopics()`) in den Score ein, der über
+  Aufnahme in den Studien-Bereich entscheidet — kein reines Tagging-Problem.
+  Fix: Wortgrenzen + Nähe-Check zu einem eindeutigen Cannabis-Anker statt
+  bare-word-Match. Noch nicht angegangen.
+
 ## 🔒 Security
 
 - 💤 **`api/automation/engine-feedback/route.ts`** akzeptiert ein
