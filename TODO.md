@@ -16,13 +16,7 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
-## 📐 Grow-Rechner — Folge-Recherchen (aus dem 2026-08-14-Konstanten-Abgleich)
-
-Die fünf Rechner (`lib/tools/{vpd,nutrients,yield,ventilation,lighting}.ts`)
-wurden gegen aktuelle Anbau-Literatur abgeglichen und korrigiert (VPD-Offset-
-Vorzeichen-Bug, VPD-Zielbereiche, substrat-abhängige EC-Ampel, PPFD/DLI-
-Schwellen). Dabei blieben einzelne Werte bewusst unverändert, weil die
-Recherche dafür keine belastbare Quelle lieferte:
+## 📐 Grow-Rechner — offene Werte ohne belastbare Quelle
 
 - 🔍 **Hydro-EC-Zielwerte in `nutrients.ts`** (`EC_THRESHOLDS.*.hydro`) sind
   1:1 von den alten Einheitswerten übernommen, nicht gegen eine eigene
@@ -42,13 +36,25 @@ Recherche dafür keine belastbare Quelle lieferte:
   produktinterne Heuristiken ohne externe Quelle bzw. stark sorten-/setup-
   abhängig — nicht gegen Literatur prüfbar, absichtlich nicht angefasst.
 
-## 🔒 Security-Audit 2026-08-14 — ein Rest-Item
+## 🌐 Übersetzung / i18n
 
-Vier parallele Security-Agents haben Auth/Autorisierung, Injection/Rendering,
-Secrets/Datenexposure und IDOR auf Grow-Daten geprüft. Zwei konkrete Funde
-(CRON_SECRET im URL-Query-String; PostgREST-Filter-Injection über den
-`q`-Parameter in `/api/studies`) sind bereits gefixt. Ein Punkt blieb bewusst
-unten der Aufgriffsschwelle:
+- ⏸️ **Englisch-Übersetzer (`TranslateButton` → `/api/translate` → MyMemory)
+  ist für den echten Content ungeeignet, bräuchte einen anderen Anbieter.**
+  Root Cause gefunden (2026-08-15): `apps/web/src/app/api/translate/route.ts`
+  nutzt die kostenlose MyMemory-API mit harten Limits — 500 Zeichen pro
+  Request (`text.slice(0, 500)`) und ~5.000 Zeichen/Tag/IP, geteilt über
+  **alle** Nutzer, die von derselben Vercel-Server-IP übersetzen. Studien-
+  Artikel sind oft mehrere tausend Zeichen lang, das Tageslimit ist damit
+  praktisch sofort aufgebraucht — deckt sich mit dem Nutzer-Report "geht bei
+  Studien nicht, eigentlich überall nicht". Betroffen: `TranslateButton.tsx`
+  (überall verwendet, nicht nur Studien) + `lib/translate.ts`. Fix braucht
+  eine Entscheidung für einen echten Übersetzungs-Backend (z. B. DeepL-API,
+  oder über den bereits integrierten Anthropic-Client aus dem Admin-AI-
+  Assist-Feature laufen lassen, oder Studien-Content einmalig statisch
+  vorübersetzen statt live on-demand) — daher noch kein Code-Fix, erstmal
+  Anbieter-Entscheidung nötig.
+
+## 🔒 Security
 
 - 💤 **`api/automation/engine-feedback/route.ts`** akzeptiert ein
   client-geliefertes `userId`-Feld im Event-Body, ohne es gegen die
