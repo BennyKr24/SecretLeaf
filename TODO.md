@@ -54,6 +54,24 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   vorübersetzen statt live on-demand) — daher noch kein Code-Fix, erstmal
   Anbieter-Entscheidung nötig.
 
+## 📚 Quellenregister (`/studies/sources`)
+
+- 🔍 **Design nie durch die Dark-Token-Migration gelaufen.** `studies/sources/page.tsx`
+  nutzt durchgehend hardcodierte helle Pastell-Hexwerte (`#fbfefc`, `#f7fbf8`,
+  `#123024`, `#1f7a4f`, `#e2eee6`, `#d8e8dd` usw.) statt der Design-Tokens
+  (`bg-card`, `text-foreground`, `border-border`) sowie rohe Tailwind-
+  `-50`-Pastellfarben (`bg-blue-50`, `bg-emerald-50`, `bg-cyan-50`,
+  `bg-rose-50`) für die Stat-Kacheln und Badges. Die App hat kein echtes
+  Light-Theme (siehe [[secretleaf-ux-punchlist-2026-08-03]]) — diese Seite
+  müsste als helle Karte inmitten des sonst durchgehend dunklen Designs
+  auffallen. Gleiches Muster wie bei Dashboard/Tools/Grow-Seite vor deren
+  Migration — selbe Fix-Richtung anwendbar.
+- 🔍 **Inhalt: "Neuer Bereich"-Banner zum Schädlings-Lexikon wirkt stale.**
+  Der rosa Hinweis-Kasten oben auf der Seite bewirbt das Schädlings-Lexikon
+  noch als brandneu ("Jetzt verfügbar") — dürfte inzwischen etabliert sein
+  und nicht mehr als Ankündigung geführt werden. Prüfen, ob der Banner weg
+  kann oder durch aktuellere Inhalte ersetzt werden sollte.
+
 ## 🔒 Security
 
 - 💤 **`api/automation/engine-feedback/route.ts`** akzeptiert ein
