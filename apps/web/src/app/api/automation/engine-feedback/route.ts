@@ -44,11 +44,14 @@ function isValidEvent(obj: unknown): obj is { studyId: string; eventType: Feedba
 export async function POST(req: Request) {
   try {
     // ── Auth: Only authenticated users may submit feedback ──────────────
-    const user = await getAuthenticatedUser(req);
-    if (!user) {
+    const auth = await getAuthenticatedUser(req);
+    if (!auth) {
       logWarn("engine-feedback.unauthorized");
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
+    // Always the verified caller's id — never trust a client-supplied
+    // userId, or any logged-in user could attribute events to someone else.
+    const verifiedUserId = auth.user.id;
 
     const body = await req.json();
 
@@ -71,7 +74,7 @@ export async function POST(req: Request) {
         events.push({
           studyId: item.studyId,
           eventType: item.eventType,
-          userId: item.userId ?? null,
+          userId: verifiedUserId,
         });
       }
 
@@ -103,7 +106,7 @@ export async function POST(req: Request) {
     const event: FeedbackEvent = {
       studyId: body.studyId,
       eventType: body.eventType,
-      userId: body.userId ?? null,
+      userId: verifiedUserId,
     };
 
     const success = await recordFeedback(supabase, event, logger);
