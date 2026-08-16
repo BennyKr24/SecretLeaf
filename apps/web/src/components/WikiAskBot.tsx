@@ -346,7 +346,8 @@ export default function WikiAskBot() {
         onClick={() => setOpen(true)}
         aria-label="Studien-Assistent öffnen"
         className={`
-          fixed bottom-6 right-6 z-50 flex items-center gap-2
+          fixed bottom-[calc(60px+env(safe-area-inset-bottom)+1rem)] right-6 z-50 flex items-center gap-2
+          md:bottom-6
           rounded-full px-4 py-3 shadow-xl transition-[transform,background-color,box-shadow,opacity] duration-200
           bg-primary text-white hover:bg-primary-dark hover:shadow-2xl
           [@media(hover:hover)]:hover:scale-105 active:scale-95

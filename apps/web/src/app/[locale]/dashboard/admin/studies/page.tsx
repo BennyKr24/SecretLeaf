@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
+import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
 import {
@@ -304,55 +305,50 @@ export default function AdminStudiesPage() {
       {!loading && data && (
         <>
           <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-border bg-background">
-                    <th className="px-4 py-3 font-semibold text-muted-fg">Titel</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Score</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Qualität</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Priorität</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Typ</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Quelle</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Datum</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Aktionen</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.studies.map((study) => (
-                    <tr key={study.id} className="border-b border-border transition hover:bg-background">
-                      <td className="max-w-xs px-4 py-3">
+            {data.studies.length === 0 ? (
+              <div className="px-4 py-12 text-center text-sm text-muted-fg">Keine Studien für die aktuellen Filter gefunden.</div>
+            ) : (
+              <ResponsiveTable
+                rows={data.studies}
+                rowKey={(study) => study.id}
+                cellPadding="px-3 py-3"
+                columns={[
+                  {
+                    header: "Titel",
+                    isTitle: true,
+                    tdClassName: "max-w-xs font-medium text-foreground",
+                    cell: (study) => (
+                      <>
                         <p className="truncate font-medium text-foreground" title={study.title}>{study.title}</p>
                         {study.first_author && <p className="truncate text-xs text-muted-fg">{study.first_author}</p>}
-                      </td>
-                      <td className="px-3 py-3">
-                        <span className="font-mono font-semibold text-foreground">{study.relevance_score ?? "—"}</span>
-                      </td>
-                      <td className="px-3 py-3"><QualityBadge status={study.quality_status} /></td>
-                      <td className="px-3 py-3"><PriorityBadge priority={study.editorial_priority} /></td>
-                      <td className="px-3 py-3 text-xs text-muted-fg">{study.study_type ?? "—"}</td>
-                      <td className="max-w-[120px] truncate px-3 py-3 text-xs text-muted-fg" title={study.origin_label ?? ""}>{study.origin_label ?? "—"}</td>
-                      <td className="px-3 py-3 text-xs text-muted-fg">{formatDate(study.created_at)}</td>
-                      <td className="px-3 py-3">
-                        <div className="flex gap-1">
-                          <button onClick={() => void handleQuickAction(study.id, "good")} className="rounded-lg bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 transition-transform duration-150 active:scale-90 hover:bg-emerald-100" title="Genehmigen"><CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} /></button>
-                          <button onClick={() => void handleQuickAction(study.id, "bad")} className="rounded-lg bg-red-50 px-2 py-1 text-xs font-medium text-red-700 transition-transform duration-150 active:scale-90 hover:bg-red-100" title="Ablehnen"><XCircle className="h-3.5 w-3.5" strokeWidth={2} /></button>
-                          <button onClick={() => openEdit(study)} className="rounded-lg bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 transition-transform duration-150 active:scale-90 hover:bg-blue-100" title="Bearbeiten"><Pencil className="h-3.5 w-3.5" strokeWidth={2} /></button>
-                          <button onClick={() => setDeletingId(study.id)} className="rounded-lg bg-background px-2 py-1 text-xs font-medium text-foreground/80 transition-transform duration-150 active:scale-90 hover:bg-border" title="Löschen"><Trash2 className="h-3.5 w-3.5" strokeWidth={2} /></button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                  {data.studies.length === 0 && (
-                    <tr>
-                      <td colSpan={8} className="px-4 py-12 text-center text-sm text-muted-fg">
-                        Keine Studien für die aktuellen Filter gefunden.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                      </>
+                    ),
+                  },
+                  { header: "Score", cell: (study) => <span className="font-mono font-semibold text-foreground">{study.relevance_score ?? "—"}</span> },
+                  { header: "Qualität", cell: (study) => <QualityBadge status={study.quality_status} /> },
+                  { header: "Priorität", cell: (study) => <PriorityBadge priority={study.editorial_priority} /> },
+                  { header: "Typ", cell: (study) => study.study_type ?? "—" },
+                  {
+                    header: "Quelle",
+                    tdClassName: "max-w-[120px] truncate text-foreground/80",
+                    cell: (study) => <span title={study.origin_label ?? ""}>{study.origin_label ?? "—"}</span>,
+                  },
+                  { header: "Datum", cell: (study) => formatDate(study.created_at) },
+                  {
+                    header: "Aktionen",
+                    fullWidthOnMobile: true,
+                    cell: (study) => (
+                      <div className="flex gap-1">
+                        <button onClick={() => void handleQuickAction(study.id, "good")} className="rounded-lg bg-emerald-50 px-2 py-1 text-xs font-medium text-emerald-700 transition-transform duration-150 active:scale-90 hover:bg-emerald-100" title="Genehmigen"><CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} /></button>
+                        <button onClick={() => void handleQuickAction(study.id, "bad")} className="rounded-lg bg-red-50 px-2 py-1 text-xs font-medium text-red-700 transition-transform duration-150 active:scale-90 hover:bg-red-100" title="Ablehnen"><XCircle className="h-3.5 w-3.5" strokeWidth={2} /></button>
+                        <button onClick={() => openEdit(study)} className="rounded-lg bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 transition-transform duration-150 active:scale-90 hover:bg-blue-100" title="Bearbeiten"><Pencil className="h-3.5 w-3.5" strokeWidth={2} /></button>
+                        <button onClick={() => setDeletingId(study.id)} className="rounded-lg bg-background px-2 py-1 text-xs font-medium text-foreground/80 transition-transform duration-150 active:scale-90 hover:bg-border" title="Löschen"><Trash2 className="h-3.5 w-3.5" strokeWidth={2} /></button>
+                      </div>
+                    ),
+                  },
+                ]}
+              />
+            )}
           </div>
 
           {/* Pagination */}
@@ -388,13 +384,13 @@ export default function AdminStudiesPage() {
           opaque + centered (.modal-surface, DESIGN_SYSTEM.md §16) — the
           glass/blur treatment is reserved for trigger-anchored dropdowns. */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:items-center ${
           editing ? "opacity-100" : "invisible pointer-events-none opacity-0"
         }`}
       >
         <div
-          className={`modal-surface w-full max-w-lg rounded-2xl border border-border p-6 shadow-xl transition-[opacity,transform] duration-300 ${
-            editing ? "scale-100 opacity-100" : "scale-[0.96] opacity-0"
+          className={`modal-surface w-full max-w-lg rounded-t-2xl border border-border px-6 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-xl transition-[opacity,transform] duration-300 [transition-timing-function:var(--ease-drawer)] max-h-[85vh] overflow-y-auto md:mx-4 md:rounded-2xl md:pb-6 ${
+            editing ? "translate-y-0 opacity-100 md:scale-100" : "translate-y-full opacity-0 md:translate-y-0 md:scale-[0.96]"
           }`}
         >
           {editing && (
@@ -447,13 +443,13 @@ export default function AdminStudiesPage() {
 
       {/* Delete Confirm Modal — same always-mounted pattern as the edit modal. */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:items-center ${
           deletingId ? "opacity-100" : "invisible pointer-events-none opacity-0"
         }`}
       >
         <div
-          className={`modal-surface w-full max-w-sm rounded-2xl border border-border p-6 shadow-xl transition-[opacity,transform] duration-300 ${
-            deletingId ? "scale-100 opacity-100" : "scale-[0.96] opacity-0"
+          className={`modal-surface w-full max-w-sm rounded-t-2xl border border-border px-6 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-xl transition-[opacity,transform] duration-300 [transition-timing-function:var(--ease-drawer)] md:mx-4 md:rounded-2xl md:pb-6 ${
+            deletingId ? "translate-y-0 opacity-100 md:scale-100" : "translate-y-full opacity-0 md:translate-y-0 md:scale-[0.96]"
           }`}
         >
           {deletingId && (

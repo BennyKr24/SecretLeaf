@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
+import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
 import { Users, Pencil } from "lucide-react";
@@ -216,76 +217,73 @@ export default function AdminUsersPage() {
             <div className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
             <span className="text-sm text-muted-fg">Benutzer werden geladen...</span>
           </div>
+        ) : users.length === 0 ? (
+          <div className="px-4 py-12 text-center text-sm text-muted-fg">Keine Benutzer gefunden.</div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead>
-                <tr className="border-b border-border bg-background">
-                  <th className="px-4 py-3 font-semibold text-muted-fg">E-Mail</th>
-                  <th className="px-3 py-3 font-semibold text-muted-fg">Rolle</th>
-                  <th className="px-3 py-3 font-semibold text-muted-fg">Provider</th>
-                  <th className="px-3 py-3 font-semibold text-muted-fg">Bestätigt</th>
-                  <th className="px-3 py-3 font-semibold text-muted-fg">Registriert</th>
-                  <th className="px-3 py-3 font-semibold text-muted-fg">Letzter Login</th>
-                  <th className="px-3 py-3 font-semibold text-muted-fg">Aktionen</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id} className="border-b border-border transition hover:bg-background">
-                    <td className="px-4 py-3">
-                      <div className="font-medium text-foreground">{user.email ?? "—"}</div>
-                      <div className="text-[10px] font-mono text-muted-fg">{user.id.slice(0, 8)}…</div>
-                    </td>
-                    <td className="px-3 py-3">
-                      <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${ROLE_COLORS[user.role] ?? "bg-border text-foreground/80"}`}>
-                        {user.role}
-                      </span>
-                    </td>
-                    <td className="px-3 py-3 text-xs text-muted-fg capitalize">{user.provider}</td>
-                    <td className="px-3 py-3">
-                      {user.emailConfirmed ? (
-                        <span className="inline-flex items-center gap-1 text-xs text-emerald-600">
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Ja
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 text-xs text-amber-600">
-                          <span className="h-1.5 w-1.5 rounded-full bg-amber-500" /> Nein
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-3 py-3 text-xs text-muted-fg">{formatDate(user.createdAt)}</td>
-                    <td className="px-3 py-3 text-xs text-muted-fg">{formatDate(user.lastSignIn)}</td>
-                    <td className="px-3 py-3">
-                      <div className="flex items-center gap-1">
-                        <button
-                          onClick={() => { setEditingUser(user); setEditRole(user.role); }}
-                          className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 transition active:scale-90 hover:bg-emerald-100 dark:bg-emerald-950/40"
-                          title="Rolle bearbeiten"
-                        >
-                          <Pencil className="h-3 w-3" strokeWidth={2} /> Rolle
-                        </button>
-                        <button
-                          onClick={() => setDeletingUser(user)}
-                          className="rounded-lg px-2 py-1 text-xs font-medium text-red-600 transition active:scale-90 hover:bg-red-50"
-                          title="Benutzer löschen"
-                        >
-                          ⌫
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-                {users.length === 0 && (
-                  <tr>
-                    <td colSpan={7} className="px-4 py-12 text-center text-sm text-muted-fg">
-                      Keine Benutzer gefunden.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+          <ResponsiveTable
+            rows={users}
+            rowKey={(user) => user.id}
+            cellPadding="px-3 py-3"
+            columns={[
+              {
+                header: "E-Mail",
+                isTitle: true,
+                tdClassName: "font-medium text-foreground",
+                cell: (user) => (
+                  <>
+                    <div className="font-medium text-foreground">{user.email ?? "—"}</div>
+                    <div className="text-[10px] font-mono text-muted-fg">{user.id.slice(0, 8)}…</div>
+                  </>
+                ),
+              },
+              {
+                header: "Rolle",
+                cell: (user) => (
+                  <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${ROLE_COLORS[user.role] ?? "bg-border text-foreground/80"}`}>
+                    {user.role}
+                  </span>
+                ),
+              },
+              { header: "Provider", cell: (user) => <span className="capitalize">{user.provider}</span> },
+              {
+                header: "Bestätigt",
+                cell: (user) =>
+                  user.emailConfirmed ? (
+                    <span className="inline-flex items-center gap-1 text-xs text-emerald-600">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Ja
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 text-xs text-amber-600">
+                      <span className="h-1.5 w-1.5 rounded-full bg-amber-500" /> Nein
+                    </span>
+                  ),
+              },
+              { header: "Registriert", cell: (user) => formatDate(user.createdAt) },
+              { header: "Letzter Login", cell: (user) => formatDate(user.lastSignIn) },
+              {
+                header: "Aktionen",
+                fullWidthOnMobile: true,
+                cell: (user) => (
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => { setEditingUser(user); setEditRole(user.role); }}
+                      className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 transition active:scale-90 hover:bg-emerald-100 dark:bg-emerald-950/40"
+                      title="Rolle bearbeiten"
+                    >
+                      <Pencil className="h-3 w-3" strokeWidth={2} /> Rolle
+                    </button>
+                    <button
+                      onClick={() => setDeletingUser(user)}
+                      className="rounded-lg px-2 py-1 text-xs font-medium text-red-600 transition active:scale-90 hover:bg-red-50"
+                      title="Benutzer löschen"
+                    >
+                      ⌫
+                    </button>
+                  </div>
+                ),
+              },
+            ]}
+          />
         )}
       </div>
 
@@ -318,13 +316,13 @@ export default function AdminUsersPage() {
           opaque + centered (.modal-surface, DESIGN_SYSTEM.md §16) — the
           glass/blur treatment is reserved for trigger-anchored dropdowns. */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:items-center ${
           editingUser ? "opacity-100" : "invisible pointer-events-none opacity-0"
         }`}
       >
         <div
-          className={`modal-surface mx-4 w-full max-w-md rounded-2xl border border-border p-6 shadow-xl transition-[opacity,transform] duration-300 ${
-            editingUser ? "scale-100 opacity-100" : "scale-[0.96] opacity-0"
+          className={`modal-surface w-full max-w-md rounded-t-2xl border border-border px-6 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-xl transition-[opacity,transform] duration-300 [transition-timing-function:var(--ease-drawer)] md:mx-4 md:rounded-2xl md:pb-6 ${
+            editingUser ? "translate-y-0 opacity-100 md:scale-100" : "translate-y-full opacity-0 md:translate-y-0 md:scale-[0.96]"
           }`}
         >
           {editingUser && (
@@ -386,13 +384,13 @@ export default function AdminUsersPage() {
 
       {/* Delete Confirmation Modal — same always-mounted pattern as above. */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:items-center ${
           deletingUser ? "opacity-100" : "invisible pointer-events-none opacity-0"
         }`}
       >
         <div
-          className={`modal-surface mx-4 w-full max-w-md rounded-2xl border border-red-200 p-6 shadow-xl transition-[opacity,transform] duration-300 ${
-            deletingUser ? "scale-100 opacity-100" : "scale-[0.96] opacity-0"
+          className={`modal-surface w-full max-w-md rounded-t-2xl border border-red-200 px-6 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-xl transition-[opacity,transform] duration-300 [transition-timing-function:var(--ease-drawer)] md:mx-4 md:rounded-2xl md:pb-6 ${
+            deletingUser ? "translate-y-0 opacity-100 md:scale-100" : "translate-y-full opacity-0 md:translate-y-0 md:scale-[0.96]"
           }`}
         >
           {deletingUser && (

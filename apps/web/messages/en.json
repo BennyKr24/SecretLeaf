@@ -7,7 +7,14 @@
     "diagnose": "Diagnose",
     "studies": "Studies",
     "status": "Status",
-    "login": "Sign In"
+    "login": "Sign In",
+    "more": "More",
+    "menu": "Menu",
+    "mobileNav": "Main navigation",
+    "search": "Search",
+    "database": "Database",
+    "growHistory": "Grow History",
+    "admin": "Admin"
   },
   "footer": {
     "studies": "Studies",

@@ -24,7 +24,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(next)}
       title={t(theme)}
       aria-label={t(theme)}
-      className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100 transition-colors duration-150"
+      className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100 transition-colors duration-150 md:h-8 md:w-8"
     >
       <Icon className="h-4 w-4" strokeWidth={2} />
     </button>

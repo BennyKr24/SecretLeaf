@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
+import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
 import { areaLabel, riskClass, riskLabel, stageLabel, type GrowArea, type PlantStage, type RiskLevel } from "@/lib/terpira/lexicon";
 
 type PestCategory = "saugend" | "blattfresser" | "substrat" | "wurzel";
@@ -1443,27 +1444,18 @@ export default function PestLexiconPage() {
           <article id="Nützlinge" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
             <h2 className="text-xl font-bold text-foreground">Nützlinge pro Schädling</h2>
             <p className="mt-1 text-sm text-foreground/80">Schnellmatrix für Auswahl und Ausbringungszeitpunkt.</p>
-            <div className="mt-3 overflow-x-auto">
-              <table className="w-full min-w-[640px] text-sm">
-                <thead className="bg-background text-foreground/80">
-                  <tr>
-                    <th className="px-3 py-2 text-left">Schädling</th>
-                    <th className="px-3 py-2 text-left">Nützling</th>
-                    <th className="px-3 py-2 text-left">Zielstadium</th>
-                    <th className="px-3 py-2 text-left">Einsatzfenster</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {beneficialMatrix.map((row) => (
-                    <tr key={`${row.pest}-${row.beneficial}`} className="border-t border-border">
-                      <td className="px-3 py-2 font-semibold text-foreground">{row.pest}</td>
-                      <td className="px-3 py-2 text-foreground/80">{row.beneficial}</td>
-                      <td className="px-3 py-2 text-foreground/80">{row.targetStage}</td>
-                      <td className="px-3 py-2 text-foreground/80">{row.deploymentWindow}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="mt-3">
+              <ResponsiveTable
+                rows={beneficialMatrix}
+                rowKey={(row) => `${row.pest}-${row.beneficial}`}
+                minWidthClassName="min-w-[640px]"
+                columns={[
+                  { header: "Schädling", cell: (row) => row.pest, isTitle: true, tdClassName: "font-semibold text-foreground" },
+                  { header: "Nützling", cell: (row) => row.beneficial },
+                  { header: "Zielstadium", cell: (row) => row.targetStage },
+                  { header: "Einsatzfenster", cell: (row) => row.deploymentWindow },
+                ]}
+              />
             </div>
           </article>
 

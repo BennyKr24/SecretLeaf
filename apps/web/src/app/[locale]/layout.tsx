@@ -4,6 +4,7 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { NavigationBar } from "@/components/NavigationBar";
+import { BottomNav, BottomNavSpacer } from "@/components/BottomNav";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LocaleBanner } from "@/components/LocaleBanner";
 import { routing } from "@/i18n/routing";
@@ -24,16 +25,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
 
   const canonicalUrl = locale === "de" ? BASE_URL : `${BASE_URL}/en`;
+  const title =
+    locale === "en"
+      ? "SecretLeaf – Grow Operating System for Cannabis"
+      : "SecretLeaf – Grow Operating System für Cannabis";
+  const description =
+    locale === "en"
+      ? "The platform that tells you what to do next in your cannabis grow — tracking, diagnosis and tools in one system."
+      : "Die Plattform, die dir sagt, was du bei deinem Cannabis-Grow als Nächstes tun musst — Tracking, Diagnose und Tools in einem System.";
 
   return {
-    title:
-      locale === "en"
-        ? "SecretLeaf – Grow Operating System for Cannabis"
-        : "SecretLeaf – Grow Operating System für Cannabis",
-    description:
-      locale === "en"
-        ? "The platform that tells you what to do next in your cannabis grow — tracking, diagnosis and tools in one system."
-        : "Die Plattform, die dir sagt, was du bei deinem Cannabis-Grow als Nächstes tun musst — Tracking, Diagnose und Tools in einem System.",
+    title,
+    description,
     alternates: {
       canonical: canonicalUrl,
       languages: {
@@ -41,6 +44,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         en: `${BASE_URL}/en`,
         "x-default": BASE_URL,
       },
+    },
+    // og:image / twitter:image come from the colocated opengraph-image.tsx
+    // (auto-picked-up by Next) — this block fills in the surrounding
+    // fields so link unfurls in Discord/WhatsApp/Slack/X show a proper
+    // site name and locale instead of just a bare title.
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "SecretLeaf",
+      locale: locale === "en" ? "en_US" : "de_DE",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
@@ -62,7 +82,9 @@ export default async function LocaleLayout({ children, params }: Props) {
         <LocaleBanner />
 
         <NavigationBar />
+        <BottomNav />
         {children}
+        <BottomNavSpacer />
 
         {/* Footer */}
         <footer className="border-t border-border bg-card">

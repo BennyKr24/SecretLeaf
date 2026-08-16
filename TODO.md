@@ -100,3 +100,22 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   Feedback-Events (`review_good`/`review_bad`/`click`) fälschlich einem
   anderen User zuordnen. Kein Datenzugriff, keine Account-Aktion betroffen —
   reines Analytics-Integritätsproblem, daher niedrige Priorität.
+
+## 📱 Mobile UX (nach dem Nav/PWA-Umbau vom 2026-08-16)
+
+- 💤 **`SearchBar.tsx`s Such-Pill hat `min-w-[200px]`, unabhängig vom
+  Viewport.** Auf sehr schmalen Phones (320–360px) kann das zusammen mit
+  Logo + UserMenu/ThemeToggle/LanguageSwitcher in der 60px-Topnav eng
+  werden. Noch nicht als echtes Problem beobachtet (kein Overflow in den
+  SSR-Checks), nur als Risiko erkannt — Fix wäre ein kompaktes Icon-only
+  `SearchBar` unterhalb von `sm`, analog zum Diagnose-Kategorien-Pattern.
+- 💤 **`.tool-slider`-Thumb (Range-Input, `globals.css`) bleibt bei 20px** —
+  unter der 44px-Touch-Empfehlung. Nicht angefasst, weil native
+  `<input type="range">`-Thumbs sich nicht wie Buttons per Padding
+  vergrößern lassen, ohne Track/Thumb-Proportion (6px Track) neu zu
+  gestalten — eher eine Redesign- als eine Ein-Zeilen-Frage.
+- 💤 **`studies/pests/page.tsx`-Lightbox bewusst nicht auf Bottom-Sheet
+  umgestellt** (anders als die übrigen Dialoge) — ist ein Bildbetrachter,
+  kein Formular; zentriert/fade-scale bleibt dort die bessere UX als ein
+  Sheet. Kein offener Bug, nur Doku, warum diese eine Stelle vom sonst
+  einheitlichen Modal→Sheet-Muster abweicht.

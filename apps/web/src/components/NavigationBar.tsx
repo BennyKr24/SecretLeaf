@@ -17,7 +17,7 @@ export function NavigationBar() {
     // Translucent glass material (DESIGN_SYSTEM.md §15.6 / apple-design §12):
     // low enough opacity that content actually shows through the blur —
     // bg-card/95 was so opaque the backdrop-blur had nothing to blur.
-    <nav className="sticky top-0 z-40 w-full border-b border-border/60 bg-card/70 backdrop-blur-xl backdrop-saturate-150">
+    <nav className="pt-safe sticky top-0 z-40 w-full border-b border-border/60 bg-card/70 backdrop-blur-xl backdrop-saturate-150">
       <div className="max-w-6xl mx-auto px-5 h-[60px] flex items-center gap-6">
         {/* Logo */}
         <Link

@@ -26,7 +26,7 @@ export function LanguageSwitcher() {
       disabled={isPending}
       title={t("switchTo")}
       aria-label={t("switchTo")}
-      className="flex items-center gap-0.5 h-8 rounded-lg border border-border bg-transparent px-2 text-[12px] font-semibold text-muted-fg hover:bg-background hover:text-foreground transition-colors duration-150 disabled:opacity-50"
+      className="flex items-center gap-0.5 h-9 md:h-8 rounded-lg border border-border bg-transparent px-2 text-[12px] font-semibold text-muted-fg hover:bg-background hover:text-foreground transition-colors duration-150 disabled:opacity-50"
     >
       <span className={locale === "de" ? "text-emerald-600 dark:text-emerald-400" : ""}>{t("de")}</span>
       <span className="mx-0.5 text-muted-fg">/</span>

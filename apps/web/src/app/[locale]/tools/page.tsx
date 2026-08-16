@@ -121,7 +121,9 @@ export default async function ToolsHubPage() {
                       <p className="mt-1.5 text-sm leading-relaxed text-muted-fg">
                         {tool.shortDescription}
                       </p>
-                      <p className="mt-4 text-xs font-semibold text-emerald-600 opacity-0 transition-opacity group-hover:opacity-100">
+                      {/* Always visible on touch (no hover to reveal it) —
+                          reveal-on-hover only kicks in where hover exists. */}
+                      <p className="mt-4 text-xs font-semibold text-emerald-600 opacity-100 transition-opacity [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:opacity-100">
                         {t('calculateBtn')}
                       </p>
                     </div>

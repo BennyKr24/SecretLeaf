@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
 import type { ReactNode } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { IconChip } from "@/components/ui/IconChip";
+import { Sheet } from "@/components/ui/Sheet";
 import {
   Home,
   Bot,
@@ -17,6 +19,7 @@ import {
   Leaf,
   LogOut,
   ArrowLeft,
+  Menu,
   type LucideIcon,
 } from "lucide-react";
 
@@ -53,9 +56,119 @@ const NAV_GROUPS: Array<{
   },
 ];
 
+/** Sidebar content shared by the persistent desktop `<aside>` and the
+ * mobile drawer (rendered inside `Sheet`) — identical markup, just a
+ * different container. `onNavigate` closes the mobile drawer on tap; it's
+ * undefined (no-op) on desktop where there's nothing to close. */
+function AdminSidebarContent({
+  pathname,
+  username,
+  initials,
+  onLogout,
+  onNavigate,
+}: {
+  pathname: string;
+  username: string;
+  initials: string;
+  onLogout: () => void;
+  onNavigate?: () => void;
+}) {
+  return (
+    <>
+      {/* Logo */}
+      <div className="border-b border-border px-5 py-4">
+        <Link
+          href="/"
+          onClick={onNavigate}
+          className="flex items-center gap-2.5 text-base font-bold text-foreground"
+        >
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-sm">
+            <Leaf className="h-3.5 w-3.5 text-white" strokeWidth={2} />
+          </span>
+          <span>SecretLeaf</span>
+        </Link>
+        <div className="mt-2 flex items-center gap-1.5">
+          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">
+            Admin-Bereich
+          </p>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto px-3 py-3">
+        {NAV_GROUPS.map((group) => (
+          <div key={group.label} className="mb-4">
+            <p className="mb-1 px-3 text-[9px] font-bold uppercase tracking-[0.25em] text-muted-fg">
+              {group.label}
+            </p>
+            <div className="space-y-0.5">
+              {group.items.map((item) => {
+                const isActive = item.exact
+                  ? pathname === item.href
+                  : pathname.startsWith(item.href);
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onNavigate}
+                    className={`flex min-h-[44px] items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-[background-color,color,box-shadow,transform] duration-150 active:scale-[0.98] ${
+                      isActive
+                        ? "bg-primary/10 text-primary ring-1 ring-primary/20"
+                        : "text-muted-fg hover:bg-background hover:text-foreground"
+                    }`}
+                  >
+                    <span className="flex w-5 items-center justify-center">
+                      <Icon className="h-4 w-4" strokeWidth={2} />
+                    </span>
+                    <span>{item.label}</span>
+                    {isActive && (
+                      <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary" />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </nav>
+
+      {/* User footer */}
+      <div className="border-t border-border p-3">
+        <div className="flex items-center gap-2.5 rounded-xl px-2 py-2">
+          <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary text-xs font-bold text-white">
+            {initials}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs font-semibold text-foreground">@{username}</p>
+            <p className="text-[10px] text-muted-fg">Administrator</p>
+          </div>
+          <button
+            onClick={onLogout}
+            title="Abmelden"
+            className="ml-auto flex-shrink-0 rounded-lg p-1.5 text-muted-fg transition active:scale-[0.98] hover:bg-rose-500/10 hover:text-rose-400"
+          >
+            <LogOut className="h-4 w-4" strokeWidth={2} />
+          </button>
+        </div>
+        <Link
+          href="/dashboard"
+          onClick={onNavigate}
+          className="mt-1 flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs text-muted-fg transition active:scale-[0.98] hover:bg-background hover:text-foreground"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
+          Zurück zum Dashboard
+        </Link>
+      </div>
+    </>
+  );
+}
+
 export function AdminShell({ children }: { children: ReactNode }) {
   const auth = useAdminAuth();
   const pathname = usePathname();
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   if (auth.status === "loading") {
     return (
@@ -108,97 +221,50 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const initials = session.user.username
     ? session.user.username.slice(0, 2).toUpperCase()
     : "AD";
+  const activeItem = NAV_GROUPS.flatMap((g) => g.items).find((item) =>
+    item.exact ? pathname === item.href : pathname.startsWith(item.href)
+  );
+  const activeLabel = activeItem?.label ?? "Admin";
 
   return (
     <div className="flex min-h-screen bg-background">
-      {/* Sidebar */}
-      <aside className="glass-surface fixed left-0 top-0 z-30 flex h-screen w-60 flex-col border-r border-border">
-        {/* Logo */}
-        <div className="border-b border-border px-5 py-4">
-          <Link href="/" className="flex items-center gap-2.5 text-base font-bold text-foreground">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-sm">
-              <Leaf className="h-3.5 w-3.5 text-white" strokeWidth={2} />
-            </span>
-            <span>SecretLeaf</span>
-          </Link>
-          <div className="mt-2 flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary">
-              Admin-Bereich
-            </p>
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto px-3 py-3">
-          {NAV_GROUPS.map((group) => (
-            <div key={group.label} className="mb-4">
-              <p className="mb-1 px-3 text-[9px] font-bold uppercase tracking-[0.25em] text-muted-fg">
-                {group.label}
-              </p>
-              <div className="space-y-0.5">
-                {group.items.map((item) => {
-                  const isActive = item.exact
-                    ? pathname === item.href
-                    : pathname.startsWith(item.href);
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-[background-color,color,box-shadow,transform] duration-150 active:scale-[0.98] ${
-                        isActive
-                          ? "bg-primary/10 text-primary ring-1 ring-primary/20"
-                          : "text-muted-fg hover:bg-background hover:text-foreground"
-                      }`}
-                    >
-                      <span className="flex w-5 items-center justify-center">
-                        <Icon className="h-4 w-4" strokeWidth={2} />
-                      </span>
-                      <span>{item.label}</span>
-                      {isActive && (
-                        <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary" />
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </nav>
-
-        {/* User footer */}
-        <div className="border-t border-border p-3">
-          <div className="flex items-center gap-2.5 rounded-xl px-2 py-2">
-            <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary text-xs font-bold text-white">
-              {initials}
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-xs font-semibold text-foreground">
-                @{session.user.username}
-              </p>
-              <p className="text-[10px] text-muted-fg">Administrator</p>
-            </div>
-            <button
-              onClick={() => void auth.logout()}
-              title="Abmelden"
-              className="ml-auto flex-shrink-0 rounded-lg p-1.5 text-muted-fg transition active:scale-[0.98] hover:bg-rose-500/10 hover:text-rose-400"
-            >
-              <LogOut className="h-4 w-4" strokeWidth={2} />
-            </button>
-          </div>
-          <Link
-            href="/dashboard"
-            className="mt-1 flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs text-muted-fg transition active:scale-[0.98] hover:bg-background hover:text-foreground"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
-            Zurück zum Dashboard
-          </Link>
-        </div>
+      {/* Sidebar — desktop only; below md it's the drawer below instead */}
+      <aside className="glass-surface fixed left-0 top-0 z-30 hidden h-screen w-60 flex-col border-r border-border md:flex">
+        <AdminSidebarContent
+          pathname={pathname}
+          username={session.user.username}
+          initials={initials}
+          onLogout={() => void auth.logout()}
+        />
       </aside>
 
+      {/* Sidebar — mobile drawer, same content, opened via the hamburger
+          in the mobile header below */}
+      <Sheet open={drawerOpen} onClose={() => setDrawerOpen(false)} label="Admin-Navigation">
+        <AdminSidebarContent
+          pathname={pathname}
+          username={session.user.username}
+          initials={initials}
+          onLogout={() => void auth.logout()}
+          onNavigate={() => setDrawerOpen(false)}
+        />
+      </Sheet>
+
       {/* Main content */}
-      <main className="ml-60 flex-1 min-h-screen">
+      <main className="min-h-screen flex-1 md:ml-60">
+        {/* Mobile-only header: hamburger + current section, replaces the
+            persistent sidebar's role below md */}
+        <div className="flex items-center gap-3 border-b border-border bg-card px-4 py-3 md:hidden">
+          <button
+            onClick={() => setDrawerOpen(true)}
+            aria-label="Admin-Menü öffnen"
+            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg text-muted-fg transition-colors hover:bg-background hover:text-foreground active:scale-90"
+          >
+            <Menu className="h-5 w-5" strokeWidth={2} />
+          </button>
+          <p className="truncate text-sm font-semibold text-foreground">{activeLabel}</p>
+        </div>
+
         <div className="mx-auto max-w-6xl px-6 py-7">{children}</div>
       </main>
     </div>

@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { useMemo, useState } from "react";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
+import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
 import { fertilizerCatalog, type FertilizerProfile } from "@/data/terpira/fertilizers";
 
 type PlanCategory = "starter" | "stabilitaet" | "budget" | "qualitaet" | "leistung";
@@ -475,39 +476,33 @@ export default function FertilizerPlansPage() {
             <h2 className="text-lg font-bold text-foreground">Vergleich auf einen Blick</h2>
             <p className="text-sm text-muted-fg">Welcher Plan passt zu Setup, Budget und Steuerungsgrad.</p>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[760px] text-sm">
-              <thead className="bg-background text-foreground/80">
-                <tr>
-                  <th className="px-4 py-3 text-left">Plan</th>
-                  <th className="px-4 py-3 text-left">Setup</th>
-                  <th className="px-4 py-3 text-left">Budget</th>
-                  <th className="px-4 py-3 text-left">pH-Ziel</th>
-                  <th className="px-4 py-3 text-left">Stufen</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredPlans.map((plan) => (
-                  <tr key={`row-${plan.id}`} className="border-t border-border">
-                    <td className="px-4 py-3 font-semibold text-foreground">
-                      <a href={`#${plan.id}`} className="hover:text-emerald-700 hover:underline">
-                        {plan.title}
-                      </a>
-                    </td>
-                    <td className="px-4 py-3 text-foreground/80">{plan.cultivation}</td>
-                    <td className="px-4 py-3 text-foreground/80">{levelLabel[plan.level]}</td>
-                    <td className="px-4 py-3">
-                      <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${budgetBadge[plan.budget]}`}>
-                        {budgetLabel[plan.budget]}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-foreground/80">{plan.phRange}</td>
-                    <td className="px-4 py-3 text-foreground/80">{plan.stages.length} Stufen / {plan.durationWeeks} Wochen</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <ResponsiveTable
+            rows={filteredPlans}
+            rowKey={(plan) => `row-${plan.id}`}
+            minWidthClassName="min-w-[760px]"
+            cellPadding="px-4 py-3"
+            columns={[
+              {
+                header: "Plan",
+                isTitle: true,
+                tdClassName: "font-semibold text-foreground",
+                cell: (plan) => (
+                  <a href={`#${plan.id}`} className="hover:text-emerald-700 hover:underline">
+                    {plan.title}
+                  </a>
+                ),
+              },
+              { header: "Setup", cell: (plan) => plan.cultivation },
+              { header: "Budget", cell: (plan) => (
+                <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${budgetBadge[plan.budget]}`}>
+                  {budgetLabel[plan.budget]}
+                </span>
+              ) },
+              { header: "pH-Ziel", cell: (plan) => plan.phRange },
+              { header: "Level", cell: (plan) => levelLabel[plan.level] },
+              { header: "Stufen", cell: (plan) => `${plan.stages.length} Stufen / ${plan.durationWeeks} Wochen` },
+            ]}
+          />
         </section>
 
         <section className="space-y-6">

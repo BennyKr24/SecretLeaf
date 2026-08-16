@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
+import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
 import { areaLabel, riskClass, riskLabel, stageLabel, type GrowArea, type PlantStage, type RiskLevel } from "@/lib/terpira/lexicon";
 
 type DefCategory = "makro" | "sekundär" | "mikro" | "stress";
@@ -988,27 +989,18 @@ export default function DeficiencyLexiconPage() {
           <article id="matrix" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
             <h2 className="text-xl font-bold text-foreground">Korrektur-Matrix</h2>
             <p className="mt-1 text-sm text-foreground/80">Kompakter Leitfaden von der ersten Maßnahme bis zur Nachkontrolle.</p>
-            <div className="mt-3 overflow-x-auto">
-              <table className="w-full min-w-[640px] text-sm">
-                <thead className="bg-background text-foreground/80">
-                  <tr>
-                    <th className="px-3 py-2 text-left">Mangelbild</th>
-                    <th className="px-3 py-2 text-left">Erster Schritt</th>
-                    <th className="px-3 py-2 text-left">Follow-up</th>
-                    <th className="px-3 py-2 text-left">Zeitfenster</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {correctionMatrix.map((row) => (
-                    <tr key={`${row.deficiency}-${row.firstStep}`} className="border-t border-border">
-                      <td className="px-3 py-2 font-semibold text-foreground">{row.deficiency}</td>
-                      <td className="px-3 py-2 text-foreground/80">{row.firstStep}</td>
-                      <td className="px-3 py-2 text-foreground/80">{row.followUp}</td>
-                      <td className="px-3 py-2 text-foreground/80">{row.window}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div className="mt-3">
+              <ResponsiveTable
+                rows={correctionMatrix}
+                rowKey={(row) => `${row.deficiency}-${row.firstStep}`}
+                minWidthClassName="min-w-[640px]"
+                columns={[
+                  { header: "Mangelbild", cell: (row) => row.deficiency, isTitle: true, tdClassName: "font-semibold text-foreground" },
+                  { header: "Erster Schritt", cell: (row) => row.firstStep },
+                  { header: "Follow-up", cell: (row) => row.followUp },
+                  { header: "Zeitfenster", cell: (row) => row.window },
+                ]}
+              />
             </div>
           </article>
 

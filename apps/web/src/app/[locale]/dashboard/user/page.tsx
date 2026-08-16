@@ -713,16 +713,16 @@ export default function UserDashboardPage() {
 
             <div className="mt-3 border-t border-border pt-3">
               <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-muted-fg">{t('quickAccessTitle')}</p>
-              <div className="grid grid-cols-4 gap-1.5">
+              <div className="grid grid-cols-4 gap-2">
                 {[
                   { href: '/studies' as Route, icon: Library, label: t('allStudies') },
                   { href: '/database' as Route, icon: Database, label: t('database') },
                   { href: '/tools' as Route, icon: Wrench, label: t('tools') },
                   { href: '/status' as Route, icon: Activity, label: t('status') },
                 ].map((item) => (
-                  <Link key={item.href} href={item.href} className="group flex flex-col items-center gap-1 rounded-lg border border-border bg-background px-1 py-2.5 text-center transition-colors hover:border-emerald-500/30">
-                    <item.icon className="h-4 w-4 text-muted-fg transition-colors group-hover:text-emerald-600" strokeWidth={1.75} />
-                    <span className="text-[9.5px] font-semibold leading-tight text-foreground/70 group-hover:text-emerald-600">{item.label}</span>
+                  <Link key={item.href} href={item.href} className="group flex min-h-[44px] flex-col items-center justify-center gap-1 rounded-lg border border-border bg-background px-1.5 py-3 text-center transition-colors hover:border-emerald-500/30">
+                    <item.icon className="h-[18px] w-[18px] text-muted-fg transition-colors group-hover:text-emerald-600" strokeWidth={1.75} />
+                    <span className="text-[10.5px] font-semibold leading-tight text-foreground/70 group-hover:text-emerald-600">{item.label}</span>
                   </Link>
                 ))}
               </div>

@@ -5,6 +5,7 @@ import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
 import { Card } from "@/components/ui/Card";
 import { CTAButton } from "@/components/ui/CTAButton";
+import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
 import { Settings } from "lucide-react";
 
 type RunLog = {
@@ -268,49 +269,35 @@ export default function AdminEnginePage() {
               <div className="h-5 w-5 animate-spin rounded-full border-2 border-primary border-t-transparent" />
               <span className="text-sm text-muted-fg">Logs werden geladen...</span>
             </div>
+          ) : logs.length === 0 ? (
+            <div className="px-4 py-12 text-center text-sm text-muted-fg">Keine Logs vorhanden.</div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-border bg-background">
-                    <th className="px-4 py-3 font-semibold text-muted-fg">Job</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Status</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Zeitpunkt</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Fetched</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Inserted</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Updated</th>
-                    <th className="px-3 py-3 font-semibold text-muted-fg">Fehler</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {logs.map((run) => (
-                    <tr key={run.id} className="border-b border-border transition hover:bg-background">
-                      <td className="px-4 py-3 font-medium text-foreground">{run.job_name}</td>
-                      <td className="px-3 py-3">
-                        <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-semibold ${run.success ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400" : "bg-rose-500/15 text-rose-700 dark:text-rose-400"}`}>
-                          <span className={`h-1.5 w-1.5 rounded-full ${run.success ? "bg-emerald-500" : "bg-rose-500"}`} />
-                          {run.success ? "OK" : "Fehler"}
-                        </span>
-                      </td>
-                      <td className="px-3 py-3 text-xs text-muted-fg">{formatDate(run.finished_at)}</td>
-                      <td className="px-3 py-3 text-xs font-mono">{run.fetched}</td>
-                      <td className="px-3 py-3 text-xs font-mono">{run.inserted}</td>
-                      <td className="px-3 py-3 text-xs font-mono">{run.updated}</td>
-                      <td className="max-w-[200px] truncate px-3 py-3 text-xs text-rose-600 dark:text-rose-400" title={run.error_details ?? ""}>
-                        {run.error_details ?? "—"}
-                      </td>
-                    </tr>
-                  ))}
-                  {logs.length === 0 && (
-                    <tr>
-                      <td colSpan={7} className="px-4 py-12 text-center text-sm text-muted-fg">
-                        Keine Logs vorhanden.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+            <ResponsiveTable
+              rows={logs}
+              rowKey={(run) => run.id}
+              cellPadding="px-3 py-3"
+              columns={[
+                { header: "Job", isTitle: true, tdClassName: "font-medium text-foreground", cell: (run) => run.job_name },
+                {
+                  header: "Status",
+                  cell: (run) => (
+                    <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-semibold ${run.success ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400" : "bg-rose-500/15 text-rose-700 dark:text-rose-400"}`}>
+                      <span className={`h-1.5 w-1.5 rounded-full ${run.success ? "bg-emerald-500" : "bg-rose-500"}`} />
+                      {run.success ? "OK" : "Fehler"}
+                    </span>
+                  ),
+                },
+                { header: "Zeitpunkt", cell: (run) => formatDate(run.finished_at) },
+                { header: "Fetched", tdClassName: "font-mono text-foreground/80", cell: (run) => run.fetched },
+                { header: "Inserted", tdClassName: "font-mono text-foreground/80", cell: (run) => run.inserted },
+                { header: "Updated", tdClassName: "font-mono text-foreground/80", cell: (run) => run.updated },
+                {
+                  header: "Fehler",
+                  tdClassName: "max-w-[200px] truncate text-rose-600 dark:text-rose-400",
+                  cell: (run) => <span title={run.error_details ?? ""}>{run.error_details ?? "—"}</span>,
+                },
+              ]}
+            />
           )}
         </div>
       </div>

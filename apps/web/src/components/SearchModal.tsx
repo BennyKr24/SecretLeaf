@@ -210,8 +210,12 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
       vimBindings={false}
       label="Suche"
       overlayClassName="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-250 ease-out data-[state=closed]:opacity-0 data-[state=open]:opacity-100"
-      contentClassName="fixed left-1/2 top-[8vh] z-50 w-full max-w-2xl -translate-x-1/2 px-4 transition-[opacity,transform] duration-250 ease-out data-[state=closed]:opacity-0 data-[state=closed]:scale-96 data-[state=open]:opacity-100 data-[state=open]:scale-100"
-      className="modal-surface w-full rounded-2xl shadow-2xl ring-1 ring-border overflow-hidden flex flex-col max-h-[80vh]"
+      // Bottom sheet below md (slide up on --ease-drawer, edge-to-edge,
+      // top corners only), unchanged centered palette from md up (scale
+      // transition) — both transform states are reset at md: so the two
+      // don't fight over the shared `transform` property at the breakpoint.
+      contentClassName="fixed inset-x-0 bottom-0 z-50 w-full px-0 transition-[opacity,transform] duration-300 [transition-timing-function:var(--ease-drawer)] data-[state=closed]:opacity-0 data-[state=closed]:translate-y-full data-[state=open]:opacity-100 data-[state=open]:translate-y-0 md:inset-x-auto md:bottom-auto md:left-1/2 md:top-[8vh] md:w-full md:max-w-2xl md:-translate-x-1/2 md:px-4 md:duration-250 md:ease-out md:data-[state=closed]:translate-y-0 md:data-[state=closed]:scale-96 md:data-[state=open]:translate-y-0 md:data-[state=open]:scale-100"
+      className="modal-surface pb-safe w-full rounded-t-2xl md:rounded-2xl shadow-2xl ring-1 ring-border overflow-hidden flex flex-col max-h-[80vh]"
     >
       {/* Eingabefeld */}
       <div className="flex items-center gap-3 px-4 py-3 border-b border-border">
@@ -221,7 +225,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
         <Command.Input
           value={query}
           onValueChange={setQuery}
-          placeholder="Studien, Dünger, Begriffe… (↑↓ Navigation · Enter öffnen · Esc schließen)"
+          placeholder="Studien, Dünger, Begriffe…"
           autoComplete="off"
           spellCheck={false}
           className="flex-1 bg-transparent text-foreground placeholder-muted-fg outline-none text-base"
@@ -236,7 +240,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
             </svg>
           </button>
         )}
-        <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 border border-border rounded text-xs text-muted-fg font-mono bg-background">
+        <kbd className="hidden md:inline-flex items-center gap-1 px-2 py-1 border border-border rounded text-xs text-muted-fg font-mono bg-background">
           Esc
         </kbd>
       </div>
@@ -289,8 +293,8 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
         )}
       </Command.List>
 
-      {/* Footer */}
-      <div className="border-t border-border px-4 py-2 flex items-center gap-4 text-xs text-muted-fg bg-background/80">
+      {/* Footer — keyboard hints only make sense with a physical keyboard */}
+      <div className="hidden border-t border-border px-4 py-2 md:flex items-center gap-4 text-xs text-muted-fg bg-background/80">
         <span className="flex items-center gap-1">
           <kbd className="font-mono px-1 py-0.5 bg-card border border-border rounded text-[10px]">↑↓</kbd> navigieren
         </span>

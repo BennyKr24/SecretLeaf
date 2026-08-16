@@ -70,7 +70,7 @@ function MenuItem({
   danger?: boolean;
 }) {
   const base =
-    "flex w-full items-center gap-2.5 px-3 py-2 text-[13.5px] font-medium rounded-lg transition-colors duration-100 ";
+    "flex min-h-[44px] w-full items-center gap-2.5 px-3 py-2 text-[13.5px] font-medium rounded-lg transition-colors duration-100 ";
   const safe =
     "text-foreground/80 hover:bg-background hover:text-foreground";
   const dangerCls =
@@ -172,7 +172,7 @@ export function UserMenu() {
         aria-expanded={open}
         aria-haspopup="true"
         aria-label={t("openMenu")}
-        className="flex items-center gap-2 rounded-xl p-1 hover:bg-background transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+        className="flex items-center gap-2 rounded-xl p-1.5 md:p-1 hover:bg-background transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
       >
         <Avatar user={user} />
       </button>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { adminApi } from "@/lib/adminApi";
 import { Card } from "@/components/ui/Card";
+import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
 import { BarChart3 } from "lucide-react";
 
 type AnalyticsData = {
@@ -179,40 +180,35 @@ export default function AdminAnalyticsPage() {
           {/* Top Performing Studies */}
           <Card padding="md" className="mt-6">
             <h2 className="mb-4 text-sm font-semibold uppercase tracking-[0.15em] text-muted-fg">Top Studien nach Score</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="pb-2 pr-4 font-semibold text-muted-fg">#</th>
-                    <th className="pb-2 pr-4 font-semibold text-muted-fg">Titel</th>
-                    <th className="pb-2 pr-4 font-semibold text-muted-fg">Score</th>
-                    <th className="pb-2 pr-4 font-semibold text-muted-fg">Typ</th>
-                    <th className="pb-2 pr-4 font-semibold text-muted-fg">Priorität</th>
-                    <th className="pb-2 font-semibold text-muted-fg">Quelle</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.topStudies.slice(0, 15).map((study, i) => (
-                    <tr key={study.id} className="border-b border-border">
-                      <td className="py-2 pr-4 text-xs text-muted-fg">{i + 1}</td>
-                      <td className="max-w-xs truncate py-2 pr-4 font-medium text-foreground" title={study.title}>{study.title}</td>
-                      <td className="py-2 pr-4 font-mono font-semibold text-primary">{study.relevance_score}</td>
-                      <td className="py-2 pr-4 text-xs text-muted-fg">{study.study_type ?? "—"}</td>
-                      <td className="py-2 pr-4">
-                        <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
-                          study.editorial_priority === "high" ? "bg-primary/15 text-primary"
-                            : study.editorial_priority === "medium" ? "bg-amber-500/15 text-amber-700 dark:text-amber-400"
-                            : "bg-border text-foreground/80"
-                        }`}>
-                          {study.editorial_priority ?? "—"}
-                        </span>
-                      </td>
-                      <td className="max-w-[150px] truncate py-2 text-xs text-muted-fg">{study.origin_label ?? "—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <ResponsiveTable
+              rows={data.topStudies.slice(0, 15).map((study, i) => ({ study, rank: i + 1 }))}
+              rowKey={(r) => r.study.id}
+              cellPadding="py-2 pr-4"
+              columns={[
+                { header: "#", cell: (r) => r.rank },
+                {
+                  header: "Titel",
+                  isTitle: true,
+                  tdClassName: "max-w-xs font-medium text-foreground",
+                  cell: (r) => <span title={r.study.title}>{r.study.title}</span>,
+                },
+                { header: "Score", cell: (r) => <span className="font-mono font-semibold text-primary">{r.study.relevance_score}</span> },
+                { header: "Typ", cell: (r) => r.study.study_type ?? "—" },
+                {
+                  header: "Priorität",
+                  cell: (r) => (
+                    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
+                      r.study.editorial_priority === "high" ? "bg-primary/15 text-primary"
+                        : r.study.editorial_priority === "medium" ? "bg-amber-500/15 text-amber-700 dark:text-amber-400"
+                        : "bg-border text-foreground/80"
+                    }`}>
+                      {r.study.editorial_priority ?? "—"}
+                    </span>
+                  ),
+                },
+                { header: "Quelle", tdClassName: "max-w-[150px] truncate text-foreground/80", cell: (r) => r.study.origin_label ?? "—" },
+              ]}
+            />
           </Card>
         </>
       )}

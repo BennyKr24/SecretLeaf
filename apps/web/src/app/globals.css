@@ -172,6 +172,19 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--card);
 }
 
+/* ── Safe-area insets — for the sticky top nav and fixed bottom nav, so
+   fixed chrome doesn't sit under a notch/status bar or behind the iOS
+   home indicator when the site runs without browser chrome (installed to
+   the home screen). Requires viewport-fit=cover (see app/layout.tsx) —
+   without it these resolve to 0, which is a harmless no-op on browsers/
+   devices that don't need them. ── */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 main {
   animation: pageEnter 320ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -223,8 +236,13 @@ main {
   transition: transform var(--transition-base), box-shadow var(--transition-base),
               border-color var(--transition-base);
 }
-.card-lift:hover {
-  transform: translateY(-2px);
+/* hover: hover excludes touch — without it, a tap "sticks" the lifted
+   state until the next unrelated tap clears :hover, which reads as a
+   stuck/broken card rather than a lift. */
+@media (hover: hover) {
+  .card-lift:hover {
+    transform: translateY(-2px);
+  }
 }
 
 /* ── Stat number counter animation ───────────────────────────────── */
@@ -289,9 +307,13 @@ main {
   transform: scaleX(0);
   transition: transform var(--transition-fast);
 }
-.nav-link:hover::after,
 .nav-link[data-active="true"]::after {
   transform: scaleX(1);
+}
+@media (hover: hover) {
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
 }
 
 html {
@@ -527,9 +549,11 @@ a:focus-visible {
   cursor: pointer;
   transition: box-shadow 150ms, transform 150ms;
 }
-.tool-slider::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
-  transform: scale(1.1);
+@media (hover: hover) {
+  .tool-slider::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    transform: scale(1.1);
+  }
 }
 .tool-slider::-moz-range-thumb {
   width: 20px;
@@ -562,7 +586,9 @@ a:focus-visible {
 .tool-card-lift {
   transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
 }
-.tool-card-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+@media (hover: hover) {
+  .tool-card-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  }
 }
