@@ -112,6 +112,12 @@ export default async function LocaleLayout({ children, params }: Props) {
                 <Link href="/studies/sources" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
                   {t("sources")}
                 </Link>
+                <Link href="/impressum" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  {t("impressum")}
+                </Link>
+                <Link href="/datenschutz" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                  {t("privacy")}
+                </Link>
               </div>
               <p className="text-[11px] text-muted-fg">
                 © {new Date().getFullYear()} SecretLeaf · {t("rights")}
