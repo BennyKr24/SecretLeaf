@@ -13,7 +13,6 @@ import {
   Bug,
   FlaskConical,
   Microscope,
-  RefreshCw,
   Check,
   Ruler,
   type LucideIcon,
@@ -212,8 +211,8 @@ export default function DatabaseHubPage() {
             <span className="text-emerald-400">Auf einen Blick.</span>
           </h1>
           <p className="mt-4 max-w-2xl text-base text-slate-300">
-            {total} Produkte von {brandCount} Marken – mit NPK-Werten, EC-Bereichen,
-            Anwendungsphasen und Live-Preisvergleich.
+            {total} Produkte von {brandCount} Marken – mit NPK-Werten, EC-Bereichen
+            und Anwendungsphasen.
           </p>
 
           {/* Stats strip */}
@@ -353,10 +352,8 @@ export default function DatabaseHubPage() {
         <div className="mx-auto max-w-5xl">
           <div className="flex flex-wrap gap-6 sm:gap-10">
             {[
-              { icon: RefreshCw, text: "Preise täglich aktualisiert" },
-              { icon: Check, text: "Redaktionell geprüfte Daten" },
               { icon: Ruler, text: "NPK + EC + PPFD je Produkt" },
-              { icon: Microscope, text: "Wissenschaftlich fundiert" },
+              { icon: Check, text: "Basierend auf Herstellerangaben" },
             ].map(({ icon: Icon, text }) => (
               <div key={text} className="flex items-center gap-2 text-sm text-muted-fg">
                 <Icon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" strokeWidth={2} />

@@ -39,6 +39,7 @@ import type { GrowTask, Grow, Plant, LogEntry, HarvestData, GrowPhaseId, GrowSta
 import SmartInsights from '@/components/SmartInsights';
 import GrowKnowledgePanel from '@/components/grow/GrowKnowledgePanel';
 import RecommendationsPanel from '@/components/grow/RecommendationsPanel';
+import SaveGrowBanner from '@/components/grow/SaveGrowBanner';
 import { PremiumScrollFx } from '@/components/scroll/PremiumScrollFx';
 import { Analytics } from '@/lib/analytics';
 import {
@@ -1410,6 +1411,8 @@ export default function GrowPage({}: Props) {
           healthStatus={healthStatus}
           advancePhase={advancePhase}
         />
+
+        <SaveGrowBanner />
 
         {showTodayCard && (
           <TodayCard

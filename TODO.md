@@ -16,6 +16,18 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
+## 🖼️ Bilder-Nachprüfung (Pests + Deficiencies, 2026-08-19)
+
+- ⏸️ **Nochmal kritisch über die Fotos in beiden Lexika drüberschauen.**
+  Heute alle Bilder in `studies/pests` (16 Arten) und `studies/deficiencies`
+  (7 Mangelbilder) neu besorgt/geprüft, dabei mehrfach falsch zugeordnete
+  Bilder erst im zweiten/dritten Anlauf gefunden (Erdfloh-Eier statt Käfer,
+  falsche Pflanze bei Gallmücken, Diagramm statt Foto bei Schildläusen,
+  unklare Milben-Fotos). Mit frischem Blick nochmal alle durchgehen, ob noch
+  was Falsches/Unklares übersehen wurde. Siehe `apps/web/public/terpira/
+  pests/ATTRIBUTION.md` und `.../deficiencies/ATTRIBUTION.md` für die
+  aktuelle Quellenliste.
+
 ## 📐 Grow-Rechner — offene Werte ohne belastbare Quelle
 
 - 🔍 **Hydro-EC-Zielwerte in `nutrients.ts`** (`EC_THRESHOLDS.*.hydro`) sind
@@ -53,6 +65,27 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   Assist-Feature laufen lassen, oder Studien-Content einmalig statisch
   vorübersetzen statt live on-demand) — daher noch kein Code-Fix, erstmal
   Anbieter-Entscheidung nötig.
+
+## 🧪 Dünger-Katalog (`/database`, `/database/fertilizers`) — Restructure Phase 2/3
+
+Phase 1 (Preis-/Shop-Schicht mit fabrizierten Daten entfernen) ist erledigt
+(2026-08-19) — siehe Audit-Artifact und `duenger_katalog_audit.html` im
+Scratchpad der Session. Offen:
+
+- ⏸️ **Phase 2 — Fachdaten andocken.** 242 Produktprofile (NPK/EC/pH/
+  Verdünnung aus `data/terpira/fertilizers.ts`) als auswählbare Presets in
+  `tools/naehrstoff-rechner` integrieren. Restliche Katalog-Ansicht zur
+  reinen Nachschlagetabelle ohne Preise umbauen, im Wissenssystem verankert
+  (analog "Sortendatenbank"/"Extraktdatenbank" aus
+  `02_Produkt/01_Produktübersicht.md`). `/database`-Hub-Framing
+  "Produkt-Katalog" auflösen; Nav-Eintrag in `components/MoreSheet.tsx:94`
+  entsprechend anpassen/umbenennen.
+- ⏸️ **Phase 3 — Entscheidung, nicht Code.** Ob später eine echte
+  Preis-Pipeline (SerpAPI + produktiver Vercel-Cron statt dem aktuell
+  lokalen `crontab`-Setup, siehe TD-07 im Technical Debt Register) gebaut
+  wird, ist eine eigene Infra-/Budget-Entscheidung, losgelöst von Phase 1/2.
+  `scripts/sync-fertilizer-prices.mjs` bleibt als möglicher Ausgangspunkt
+  liegen.
 
 ## 📚 Quellenregister (`/studies/sources`)
 

@@ -115,6 +115,8 @@ export const STORAGE_KEYS = {
    * Key preserved for backward compatibility with `useToolState`.
    */
   TOOLS: "secretleaf.tools.v1",
+  /** boolean — user dismissed the "save your grow" account nudge. */
+  SAVE_GROW_BANNER_DISMISSED: "secretleaf.saveGrowBannerDismissed.v1",
 } as const;
 
 /** Derived type of all valid storage key strings. */
