@@ -54,6 +54,27 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   vorübersetzen statt live on-demand) — daher noch kein Code-Fix, erstmal
   Anbieter-Entscheidung nötig.
 
+## 🧪 Dünger-Katalog (`/database`, `/database/fertilizers`) — Restructure Phase 2/3
+
+Phase 1 (Preis-/Shop-Schicht mit fabrizierten Daten entfernen) ist erledigt
+(2026-08-19) — siehe Audit-Artifact und `duenger_katalog_audit.html` im
+Scratchpad der Session. Offen:
+
+- ⏸️ **Phase 2 — Fachdaten andocken.** 242 Produktprofile (NPK/EC/pH/
+  Verdünnung aus `data/terpira/fertilizers.ts`) als auswählbare Presets in
+  `tools/naehrstoff-rechner` integrieren. Restliche Katalog-Ansicht zur
+  reinen Nachschlagetabelle ohne Preise umbauen, im Wissenssystem verankert
+  (analog "Sortendatenbank"/"Extraktdatenbank" aus
+  `02_Produkt/01_Produktübersicht.md`). `/database`-Hub-Framing
+  "Produkt-Katalog" auflösen; Nav-Eintrag in `components/MoreSheet.tsx:94`
+  entsprechend anpassen/umbenennen.
+- ⏸️ **Phase 3 — Entscheidung, nicht Code.** Ob später eine echte
+  Preis-Pipeline (SerpAPI + produktiver Vercel-Cron statt dem aktuell
+  lokalen `crontab`-Setup, siehe TD-07 im Technical Debt Register) gebaut
+  wird, ist eine eigene Infra-/Budget-Entscheidung, losgelöst von Phase 1/2.
+  `scripts/sync-fertilizer-prices.mjs` bleibt als möglicher Ausgangspunkt
+  liegen.
+
 ## 📚 Quellenregister (`/studies/sources`)
 
 - 🔍 **Design nie durch die Dark-Token-Migration gelaufen.** `studies/sources/page.tsx`
