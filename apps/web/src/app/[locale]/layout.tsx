@@ -7,6 +7,7 @@ import { NavigationBar } from "@/components/NavigationBar";
 import { BottomNav, BottomNavSpacer } from "@/components/BottomNav";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LocaleBanner } from "@/components/LocaleBanner";
+import { CookieConsentBanner } from "@/components/cookie/CookieConsentBanner";
 import { routing } from "@/i18n/routing";
 import { Leaf } from "lucide-react";
 
@@ -85,6 +86,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <BottomNav />
         {children}
         <BottomNavSpacer />
+        <CookieConsentBanner />
 
         {/* Footer */}
         <footer className="border-t border-border bg-card">

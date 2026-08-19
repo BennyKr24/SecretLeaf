@@ -26,6 +26,13 @@
     "tagline": "Grow Operating System für Cannabis",
     "rights": "Alle Rechte vorbehalten"
   },
+  "cookieConsent": {
+    "ariaLabel": "Cookie-Einstellungen",
+    "message": "Wir nutzen Analyse-Tools, um zu verstehen, wie SecretLeaf genutzt wird. Das ist nur mit deiner Einwilligung aktiv.",
+    "learnMore": "Mehr in der Datenschutzerklärung",
+    "essentialOnly": "Nur notwendige",
+    "acceptAll": "Alle akzeptieren"
+  },
   "home": {
     "heroHeadline": "Dein Grow.\nDein Wissen.",
     "heroSub": "Grow-Tracker und Profi-Tools für deinen Anbau, plus eine geprüfte Wissensbasis mit {count}+ wissenschaftlichen Quellen — auch wenn du gar nicht growst.",

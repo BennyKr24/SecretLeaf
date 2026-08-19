@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 import { getLocale } from "next-intl/server";
-import Script from "next/script";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
+import { CookieConsentProvider } from "@/components/cookie/CookieConsentProvider";
+import { AnalyticsScripts } from "@/components/cookie/AnalyticsScripts";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-body" });
@@ -56,20 +55,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     <html lang={locale} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        {/* Plausible Analytics — set NEXT_PUBLIC_PLAUSIBLE_DOMAIN to activate */}
-        {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN && (
-          <Script
-            defer
-            data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
-            src="https://plausible.io/js/script.js"
-            strategy="afterInteractive"
-          />
-        )}
       </head>
       <body className={`${manrope.variable} ${spaceGrotesk.variable}`}>
-        {children}
-        <SpeedInsights />
-        <Analytics />
+        <CookieConsentProvider>
+          {children}
+          {/* Plausible + Vercel Analytics/Speed Insights — only load after cookie consent (see CookieConsentBanner) */}
+          <AnalyticsScripts />
+        </CookieConsentProvider>
       </body>
     </html>
   );
