@@ -16,29 +16,30 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
-## 💳 Pro-Plan / Stripe — manuelle Schritte vor Go-Live (2026-08-19)
+## 💳 Pro-Plan / Stripe — Live-Modus fehlt noch (Stand 2026-08-19)
 
-- ⏸️ **Code ist fertig, aber nicht live-scharf.** `subscriptions`-Tabelle,
-  `/api/billing/checkout`, `/api/billing/webhook`, `/pricing`-Seite und die
-  echte Entitlement-Prüfung (`isPro` in `grow/[id]/page.tsx`) sind gebaut und
-  typecheck/build-grün. Was nur manuell im Stripe-Dashboard geht:
-  1. Stripe-Account anlegen (falls noch nicht vorhanden), Produkt "SecretLeaf Pro"
-     mit zwei Preisen anlegen: 4,99 €/Monat und 59 €/Jahr
-  2. `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID_PRO_MONTHLY`, `STRIPE_PRICE_ID_PRO_YEARLY`
-     in `.env.local` (und in Vercel als Env-Vars) eintragen
-  3. Webhook-Endpoint in Stripe registrieren: `<domain>/api/billing/webhook`,
-     Events `checkout.session.completed`, `customer.subscription.updated`,
-     `customer.subscription.deleted` — Signing Secret in `STRIPE_WEBHOOK_SECRET`
-  4. Lokal testen mit `stripe listen --forward-to localhost:3000/api/billing/webhook`
-  5. Einmal Test-Checkout durchspielen (Stripe-Testkarte `4242 4242 4242 4242`),
-     prüfen dass in `subscriptions` eine Zeile mit `plan=pro` landet und
-     `/grow/[id]` die echten Pro-Insights zeigt statt des Upsells
-  6. Preis in `apps/web/src/app/[locale]/pricing/page.tsx` (`PRICE_*_DISPLAY`-Konstanten)
-     nochmal gegen die tatsächlichen Stripe-Preise gegenchecken
-  7. Customer Portal aktivieren: Stripe-Dashboard → Settings → Billing →
-     Customer portal → einmal konfigurieren (mind. "Cancel subscriptions"
-     und "Update payment method" erlauben). Ohne das schlägt der neue
-     "Abo verwalten"-Button auf der Profilseite (`/api/billing/portal`) fehl
+- ✅ **Test-Modus vollständig eingerichtet und Ende-zu-Ende verifiziert.**
+  Stripe Sandbox-Account (`SecretLeaf Sandbox`, `acct_1U6HpRH5zm2C1ryD`):
+  Produkt "SecretLeaf Pro" (`prod_V6UsY1toNoD36j`) mit zwei Preisen
+  (4,99 €/Monat `price_1U6HsqH5zm2C1ryDGfauWbZr`, 59 €/Jahr
+  `price_1U6HsqH5zm2C1ryDmCUPIt4N`), Webhook-Endpoint →
+  `https://secretleaf.vercel.app/api/billing/webhook` (3 Events), Customer
+  Portal aktiviert (Kündigen + Zahlungsmethode ändern). Alle vier
+  `STRIPE_*`-Werte stehen in `apps/web/.env.local`. Kompletter Testlauf lokal
+  durchgespielt: Login → `/pricing` → echte Checkout Session → Testkarte
+  `4242 4242 4242 4242` bezahlt → `subscriptions`-Zeile mit `plan=pro`
+  landet korrekt → `/pricing` und `/profile` zeigen Pro → Customer Portal
+  öffnet echte Stripe-Seite mit Abo/Rechnung/Kündigen-Option. Dabei nebenbei
+  gefixt: die lokale `subscriptions`-Migration war nie gegen die lokale DB
+  gefahren worden (nur als Datei vorhanden) — jetzt angewendet.
+- ⏸️ **Für echten Go-Live fehlt nur noch, was ausschließlich manuell geht:**
+  1. Dieselbe Produkt-/Preis-/Webhook-/Portal-Konfiguration im Stripe
+     **Live-Modus** wiederholen (Sandbox-Werte gelten nur für Tests)
+  2. Die vier Live-`STRIPE_*`-Werte (Secret Key, Webhook Secret, beide
+     Price-IDs) in **Vercel → Settings → Environment Variables** eintragen —
+     `.env.local` gilt nur lokal
+  3. Preis in `apps/web/src/app/[locale]/pricing/page.tsx`
+     (`PRICE_*_DISPLAY`-Konstanten) einmal gegen die Live-Preise gegenchecken
 
 ---
 
