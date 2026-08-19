@@ -20,7 +20,11 @@ type DeficiencyEntry = {
   mobility: Mobility;
   growArea: GrowArea;
   stage: PlantStage;
-  /** Generisches Beispielfoto (keine Cannabis-Aufnahme verfügbar) + Pflanzenart für die Bildunterschrift. */
+  /**
+   * Symptomfoto. `examplePlant` ist entweder "Cannabis" (echtes Cannabis-Foto)
+   * oder eine andere Pflanzenart, falls kein lizenzfreies Cannabis-Foto für
+   * dieses Mangelbild existierte — dann klar als Beispielpflanze beschriftet.
+   */
   image?: { src: string; examplePlant: string };
   symptoms: string[];
   causes: string[];
@@ -72,7 +76,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     mobility: "mobil",
     growArea: "beides",
     stage: "veg",
-    image: { src: "/terpira/deficiencies/nitrogen.jpg", examplePlant: "Gartenbohne" },
+    image: { src: "/terpira/deficiencies/nitrogen.jpg", examplePlant: "Cannabis" },
     symptoms: [
       "Helle bis gelbe ältere Fächerblätter",
       "Reduziertes Längenwachstum",
@@ -631,9 +635,9 @@ export default function DeficiencyLexiconPage() {
             <span className="rounded-full border border-border bg-card px-3 py-1 font-semibold text-foreground/80">Filterbar</span>
           </div>
           <p className="mt-3 text-xs text-foreground/80">
-            Alle Inhalte sind evidenzbasiert und auf Cannabispflanzen bezogen. Für Cannabis-spezifische Symptomfotos
-            gibt es keine sauber lizenzierte Quelle — die gezeigten Fotos stammen von anderen Pflanzenarten mit
-            vergleichbarer Symptommechanik und sind jeweils als Beispielpflanze gekennzeichnet.
+            Alle Inhalte sind evidenzbasiert und auf Cannabispflanzen bezogen. Für die meisten Mangelbilder gibt es
+            keine sauber lizenzierten Cannabis-Fotos — dort zeigen wir stattdessen Beispielpflanzen mit
+            vergleichbarer Symptommechanik, klar gekennzeichnet im Bild.
             Bildnachweise:{' '}
             <a href="/terpira/deficiencies/ATTRIBUTION.md" target="_blank" rel="noreferrer" className="font-semibold text-emerald-700 dark:text-emerald-400 underline">
               Attribution ansehen
@@ -789,7 +793,9 @@ export default function DeficiencyLexiconPage() {
                       className="h-full w-full object-cover"
                     />
                     <span className="absolute inset-x-0 bottom-0 bg-black/55 px-2 py-1 text-[10px] font-semibold text-white">
-                      Beispielpflanze: {entry.image.examplePlant} (nicht Cannabis — Symptomatik vergleichbar)
+                      {entry.image.examplePlant === "Cannabis"
+                        ? "Cannabis-Foto"
+                        : `Beispielpflanze: ${entry.image.examplePlant} (nicht Cannabis — Symptomatik vergleichbar)`}
                     </span>
                   </div>
                 ) : (
