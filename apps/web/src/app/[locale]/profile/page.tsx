@@ -6,6 +6,7 @@ import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
 import { CheckCircle2 } from "lucide-react";
+import { CTAButton } from "@/components/ui/CTAButton";
 
 // ── Plan helpers ──────────────────────────────────────────────────────────────
 
@@ -204,9 +205,14 @@ export default function ProfilePage() {
             >
               {planLabel[plan]}
             </span>
-            <p className="text-[12px] text-muted-fg">
-              {t("planUpgradeHint")}
-            </p>
+            {plan === "free" && (
+              <>
+                <p className="text-[12px] text-muted-fg">{t("planUpgradeHint")}</p>
+                <CTAButton href="/pricing" variant="secondary" size="sm">
+                  {t("upgradeCta")}
+                </CTAButton>
+              </>
+            )}
           </div>
         </Section>
       </div>

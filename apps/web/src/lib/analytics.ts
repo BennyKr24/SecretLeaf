@@ -56,4 +56,10 @@ export const Analytics = {
 
   updateCategoryViewed: (category: string) =>
     track('update_category_viewed', { category }),
+
+  upgradeCtaClicked: (source: string) =>
+    track('upgrade_cta_clicked', { source }),
+
+  checkoutStarted: (interval: 'monthly' | 'yearly') =>
+    track('checkout_started', { interval }),
 } as const;

@@ -16,6 +16,28 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
+## 💳 Pro-Plan / Stripe — manuelle Schritte vor Go-Live (2026-08-19)
+
+- ⏸️ **Code ist fertig, aber nicht live-scharf.** `subscriptions`-Tabelle,
+  `/api/billing/checkout`, `/api/billing/webhook`, `/pricing`-Seite und die
+  echte Entitlement-Prüfung (`isPro` in `grow/[id]/page.tsx`) sind gebaut und
+  typecheck/build-grün. Was nur manuell im Stripe-Dashboard geht:
+  1. Stripe-Account anlegen (falls noch nicht vorhanden), Produkt "SecretLeaf Pro"
+     mit zwei Preisen anlegen: 7,99 €/Monat und 59 €/Jahr
+  2. `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID_PRO_MONTHLY`, `STRIPE_PRICE_ID_PRO_YEARLY`
+     in `.env.local` (und in Vercel als Env-Vars) eintragen
+  3. Webhook-Endpoint in Stripe registrieren: `<domain>/api/billing/webhook`,
+     Events `checkout.session.completed`, `customer.subscription.updated`,
+     `customer.subscription.deleted` — Signing Secret in `STRIPE_WEBHOOK_SECRET`
+  4. Lokal testen mit `stripe listen --forward-to localhost:3000/api/billing/webhook`
+  5. Einmal Test-Checkout durchspielen (Stripe-Testkarte `4242 4242 4242 4242`),
+     prüfen dass in `subscriptions` eine Zeile mit `plan=pro` landet und
+     `/grow/[id]` die echten Pro-Insights zeigt statt des Upsells
+  6. Preis in `apps/web/src/app/[locale]/pricing/page.tsx` (`PRICE_*_DISPLAY`-Konstanten)
+     nochmal gegen die tatsächlichen Stripe-Preise gegenchecken
+
+---
+
 ## 🖼️ Bilder-Nachprüfung (Pests + Deficiencies, 2026-08-19)
 
 - ⏸️ **Nochmal kritisch über die Fotos in beiden Lexika drüberschauen.**

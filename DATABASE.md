@@ -437,7 +437,7 @@ Beispiele:
 
 # 12. Subscription Model
 
-Vorbereitung für Monetarisierung.
+Live seit 2026-08-19 (Migration `20260819200137_subscriptions.sql`).
 
 ---
 
@@ -454,13 +454,17 @@ Pflichtfelder:
 * status
 * current_period_end
 
+Zusätzlich: stripe_customer_id, stripe_subscription_id (zur Zuordnung von Stripe-Webhook-Events).
+
 ---
 
-Pläne:
+Pläne (lowercase — deckungsgleich mit dem UserPlan-TS-Type in apps/web):
 
-* FREE
-* PRO
-* TEAM
+* free
+* pro
+* team
+
+Fehlende Zeile = free. Eine Zeile entsteht erst beim ersten Checkout.
 
 ---
 

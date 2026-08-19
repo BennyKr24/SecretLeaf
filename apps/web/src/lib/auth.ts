@@ -1,6 +1,6 @@
 "use client";
 
-import { SessionData, UserRole } from "./types";
+import { SessionData, UserPlan, UserRole } from "./types";
 import { getSupabaseBrowserClient } from "./supabaseBrowser";
 
 const SESSION_KEY = "secretleaf.session";
@@ -15,6 +15,7 @@ type CurrentUserResponse = {
     id: string;
     email: string | null;
     role: UserRole;
+    plan: UserPlan;
   };
 };
 
@@ -28,6 +29,7 @@ const toSessionData = (params: {
   userId: string;
   email?: string | null | undefined;
   role: UserRole;
+  plan: UserPlan;
 }): SessionData => ({
   token: params.accessToken,
   user: {
@@ -35,10 +37,12 @@ const toSessionData = (params: {
     username: params.email ? usernameFromEmail(params.email) : "user",
     ...(params.email ? { email: params.email } : {}),
     role: params.role,
+    plan: params.plan,
   },
 });
 
-const fetchRoleFromApi = async (accessToken: string): Promise<UserRole> => {
+/** Fetches server-authoritative role + plan for the current user in one call. */
+const fetchUserFromApi = async (accessToken: string): Promise<{ role: UserRole; plan: UserPlan }> => {
   const response = await fetch("/api/auth/me", {
     method: "GET",
     headers: {
@@ -49,14 +53,17 @@ const fetchRoleFromApi = async (accessToken: string): Promise<UserRole> => {
   });
 
   if (!response.ok) {
-    return "CONSUMER";
+    return { role: "CONSUMER", plan: "free" };
   }
 
   const body = (await response.json()) as CurrentUserResponse;
   const role = body.user?.role;
-  if (role === "ADMIN") return "ADMIN";
-  if (role === "TEAM") return "TEAM";
-  return role === "PROVIDER" ? "PROVIDER" : "CONSUMER";
+  const normalizedRole: UserRole =
+    role === "ADMIN" ? "ADMIN" : role === "TEAM" ? "TEAM" : role === "PROVIDER" ? "PROVIDER" : "CONSUMER";
+  const plan = body.user?.plan;
+  const normalizedPlan: UserPlan = plan === "pro" || plan === "team" ? plan : "free";
+
+  return { role: normalizedRole, plan: normalizedPlan };
 };
 
 export const getSession = (): SessionData | null => {
@@ -102,13 +109,14 @@ export const registerWithSupabase = async (input: SupabaseAuthInput): Promise<Se
     return null;
   }
 
-  const role = await fetchRoleFromApi(accessToken);
+  const { role, plan } = await fetchUserFromApi(accessToken);
 
   const session = toSessionData({
     accessToken,
     userId: user.id,
     email: user.email,
     role,
+    plan,
   });
   saveSession(session);
   return session;
@@ -129,13 +137,14 @@ export const loginWithSupabase = async (input: SupabaseAuthInput): Promise<Sessi
     throw new Error(error?.message || "Login fehlgeschlagen");
   }
 
-  const role = await fetchRoleFromApi(data.session.access_token);
+  const { role, plan } = await fetchUserFromApi(data.session.access_token);
 
   const session = toSessionData({
     accessToken: data.session.access_token,
     userId: data.user.id,
     email: data.user.email,
     role,
+    plan,
   });
   saveSession(session);
   return session;
@@ -155,14 +164,15 @@ export const restoreSessionFromSupabase = async (): Promise<SessionData | null> 
     return null;
   }
 
-  // Always refresh role from API to keep it in sync
-  const role = await fetchRoleFromApi(data.session.access_token);
+  // Always refresh role + plan from API to keep them in sync
+  const { role, plan } = await fetchUserFromApi(data.session.access_token);
 
   const session = toSessionData({
     accessToken: data.session.access_token,
     userId: data.session.user.id,
     email: data.session.user.email,
     role,
+    plan,
   });
   saveSession(session);
   return session;
