@@ -13,7 +13,7 @@ import { Analytics } from "@/lib/analytics";
 
 // ── Pricing (must match the Price objects configured in the Stripe Dashboard) ──
 
-const PRICE_MONTHLY_DISPLAY = "7,99 €";
+const PRICE_MONTHLY_DISPLAY = "4,99 €";
 const PRICE_YEARLY_DISPLAY = "59 €";
 const PRICE_YEARLY_PER_MONTH_DISPLAY = "4,92 €";
 

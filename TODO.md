@@ -23,7 +23,7 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   echte Entitlement-Prüfung (`isPro` in `grow/[id]/page.tsx`) sind gebaut und
   typecheck/build-grün. Was nur manuell im Stripe-Dashboard geht:
   1. Stripe-Account anlegen (falls noch nicht vorhanden), Produkt "SecretLeaf Pro"
-     mit zwei Preisen anlegen: 7,99 €/Monat und 59 €/Jahr
+     mit zwei Preisen anlegen: 4,99 €/Monat und 59 €/Jahr
   2. `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID_PRO_MONTHLY`, `STRIPE_PRICE_ID_PRO_YEARLY`
      in `.env.local` (und in Vercel als Env-Vars) eintragen
   3. Webhook-Endpoint in Stripe registrieren: `<domain>/api/billing/webhook`,
