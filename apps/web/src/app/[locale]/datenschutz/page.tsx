@@ -84,15 +84,18 @@ export default async function DatenschutzPage({
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-foreground">5. Reichweitenmessung (Plausible Analytics)</h2>
+            <h2 className="text-lg font-bold text-foreground">5. Reichweitenmessung (Plausible Analytics, Vercel Analytics &amp; Speed Insights)</h2>
             <p className="mt-2">
-              Wir nutzen den datenschutzfreundlichen Webanalysedienst <strong>Plausible
-              Analytics</strong> zur anonymen, aggregierten Auswertung der Seitenaufrufe. Plausible
-              verzichtet auf Cookies, speichert keine IP-Adressen dauerhaft und erstellt keine
-              individuellen Nutzerprofile. Eine Einwilligung ist daher nach herrschender Auffassung
-              nicht erforderlich; die Verarbeitung erfolgt auf Grundlage unseres berechtigten
-              Interesses an der bedarfsgerechten Gestaltung unserer Website (Art. 6 Abs. 1 lit. f
-              DSGVO).
+              Wenn du dem zustimmst, nutzen wir den datenschutzfreundlichen Webanalysedienst{" "}
+              <strong>Plausible Analytics</strong> sowie <strong>Vercel Analytics</strong> und{" "}
+              <strong>Vercel Speed Insights</strong> zur anonymen, aggregierten Auswertung der
+              Seitenaufrufe und Ladezeiten. Diese Dienste verzichten auf Cookies, speichern keine
+              IP-Adressen dauerhaft und erstellen keine individuellen Nutzerprofile. Sie werden erst
+              geladen, nachdem du im Cookie-Hinweis auf „Alle akzeptieren&quot; geklickt hast (Art. 6
+              Abs. 1 lit. a DSGVO); wählst du „Nur notwendige&quot;, werden sie nicht geladen. Deine
+              Auswahl speichern wir lokal in deinem Browser (localStorage), damit du nicht bei jedem
+              Besuch erneut gefragt wirst — das ist zur Funktion des Hinweises selbst technisch
+              notwendig und erfordert keine gesonderte Einwilligung.
             </p>
           </section>
 
