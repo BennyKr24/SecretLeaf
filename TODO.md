@@ -16,6 +16,18 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
+## 🖼️ Bilder-Nachprüfung (Pests + Deficiencies, 2026-08-19)
+
+- ⏸️ **Nochmal kritisch über die Fotos in beiden Lexika drüberschauen.**
+  Heute alle Bilder in `studies/pests` (16 Arten) und `studies/deficiencies`
+  (7 Mangelbilder) neu besorgt/geprüft, dabei mehrfach falsch zugeordnete
+  Bilder erst im zweiten/dritten Anlauf gefunden (Erdfloh-Eier statt Käfer,
+  falsche Pflanze bei Gallmücken, Diagramm statt Foto bei Schildläusen,
+  unklare Milben-Fotos). Mit frischem Blick nochmal alle durchgehen, ob noch
+  was Falsches/Unklares übersehen wurde. Siehe `apps/web/public/terpira/
+  pests/ATTRIBUTION.md` und `.../deficiencies/ATTRIBUTION.md` für die
+  aktuelle Quellenliste.
+
 ## 📐 Grow-Rechner — offene Werte ohne belastbare Quelle
 
 - 🔍 **Hydro-EC-Zielwerte in `nutrients.ts`** (`EC_THRESHOLDS.*.hydro`) sind
