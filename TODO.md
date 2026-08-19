@@ -16,6 +16,45 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
+## 💳 Pro-Plan / Stripe — Live-Modus fehlt noch (Stand 2026-08-19)
+
+- ✅ **Test-Modus vollständig eingerichtet und Ende-zu-Ende verifiziert.**
+  Stripe Sandbox-Account (`SecretLeaf Sandbox`, `acct_1U6HpRH5zm2C1ryD`):
+  Produkt "SecretLeaf Pro" (`prod_V6UsY1toNoD36j`) mit zwei Preisen
+  (4,99 €/Monat `price_1U6HsqH5zm2C1ryDGfauWbZr`, 59 €/Jahr
+  `price_1U6HsqH5zm2C1ryDmCUPIt4N`), Webhook-Endpoint →
+  `https://secretleaf.vercel.app/api/billing/webhook` (3 Events), Customer
+  Portal aktiviert (Kündigen + Zahlungsmethode ändern). Alle vier
+  `STRIPE_*`-Werte stehen in `apps/web/.env.local`. Kompletter Testlauf lokal
+  durchgespielt: Login → `/pricing` → echte Checkout Session → Testkarte
+  `4242 4242 4242 4242` bezahlt → `subscriptions`-Zeile mit `plan=pro`
+  landet korrekt → `/pricing` und `/profile` zeigen Pro → Customer Portal
+  öffnet echte Stripe-Seite mit Abo/Rechnung/Kündigen-Option. Dabei nebenbei
+  gefixt: die lokale `subscriptions`-Migration war nie gegen die lokale DB
+  gefahren worden (nur als Datei vorhanden) — jetzt angewendet.
+- ⏸️ **Für echten Go-Live fehlt nur noch, was ausschließlich manuell geht:**
+  1. Dieselbe Produkt-/Preis-/Webhook-/Portal-Konfiguration im Stripe
+     **Live-Modus** wiederholen (Sandbox-Werte gelten nur für Tests)
+  2. Die vier Live-`STRIPE_*`-Werte (Secret Key, Webhook Secret, beide
+     Price-IDs) in **Vercel → Settings → Environment Variables** eintragen —
+     `.env.local` gilt nur lokal
+  3. Preis in `apps/web/src/app/[locale]/pricing/page.tsx`
+     (`PRICE_*_DISPLAY`-Konstanten) einmal gegen die Live-Preise gegenchecken
+
+---
+
+## 🖼️ Bilder-Nachprüfung (Pests + Deficiencies, 2026-08-19)
+
+- ⏸️ **Nochmal kritisch über die Fotos in beiden Lexika drüberschauen.**
+  Heute alle Bilder in `studies/pests` (16 Arten) und `studies/deficiencies`
+  (7 Mangelbilder) neu besorgt/geprüft, dabei mehrfach falsch zugeordnete
+  Bilder erst im zweiten/dritten Anlauf gefunden (Erdfloh-Eier statt Käfer,
+  falsche Pflanze bei Gallmücken, Diagramm statt Foto bei Schildläusen,
+  unklare Milben-Fotos). Mit frischem Blick nochmal alle durchgehen, ob noch
+  was Falsches/Unklares übersehen wurde. Siehe `apps/web/public/terpira/
+  pests/ATTRIBUTION.md` und `.../deficiencies/ATTRIBUTION.md` für die
+  aktuelle Quellenliste.
+
 ## 📐 Grow-Rechner — offene Werte ohne belastbare Quelle
 
 - 🔍 **Hydro-EC-Zielwerte in `nutrients.ts`** (`EC_THRESHOLDS.*.hydro`) sind
@@ -53,6 +92,27 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   Assist-Feature laufen lassen, oder Studien-Content einmalig statisch
   vorübersetzen statt live on-demand) — daher noch kein Code-Fix, erstmal
   Anbieter-Entscheidung nötig.
+
+## 🧪 Dünger-Katalog (`/database`, `/database/fertilizers`) — Restructure Phase 2/3
+
+Phase 1 (Preis-/Shop-Schicht mit fabrizierten Daten entfernen) ist erledigt
+(2026-08-19) — siehe Audit-Artifact und `duenger_katalog_audit.html` im
+Scratchpad der Session. Offen:
+
+- ⏸️ **Phase 2 — Fachdaten andocken.** 242 Produktprofile (NPK/EC/pH/
+  Verdünnung aus `data/terpira/fertilizers.ts`) als auswählbare Presets in
+  `tools/naehrstoff-rechner` integrieren. Restliche Katalog-Ansicht zur
+  reinen Nachschlagetabelle ohne Preise umbauen, im Wissenssystem verankert
+  (analog "Sortendatenbank"/"Extraktdatenbank" aus
+  `02_Produkt/01_Produktübersicht.md`). `/database`-Hub-Framing
+  "Produkt-Katalog" auflösen; Nav-Eintrag in `components/MoreSheet.tsx:94`
+  entsprechend anpassen/umbenennen.
+- ⏸️ **Phase 3 — Entscheidung, nicht Code.** Ob später eine echte
+  Preis-Pipeline (SerpAPI + produktiver Vercel-Cron statt dem aktuell
+  lokalen `crontab`-Setup, siehe TD-07 im Technical Debt Register) gebaut
+  wird, ist eine eigene Infra-/Budget-Entscheidung, losgelöst von Phase 1/2.
+  `scripts/sync-fertilizer-prices.mjs` bleibt als möglicher Ausgangspunkt
+  liegen.
 
 ## 📚 Quellenregister (`/studies/sources`)
 

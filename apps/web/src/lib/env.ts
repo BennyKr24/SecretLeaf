@@ -1,4 +1,12 @@
-type RequiredEnvName = "SUPABASE_URL" | "SUPABASE_SERVICE_ROLE_KEY" | "CRON_SECRET";
+type RequiredEnvName =
+  | "SUPABASE_URL"
+  | "SUPABASE_SERVICE_ROLE_KEY"
+  | "CRON_SECRET"
+  | "STRIPE_SECRET_KEY"
+  | "STRIPE_WEBHOOK_SECRET"
+  | "STRIPE_PRICE_ID_PRO_MONTHLY"
+  | "STRIPE_PRICE_ID_PRO_YEARLY"
+  | "NEXT_PUBLIC_SITE_URL";
 
 function requireEnv(name: RequiredEnvName): string {
   const value = process.env[name];
@@ -17,4 +25,20 @@ export function getSupabaseServerEnv(): { supabaseUrl: string; serviceRoleKey: s
 
 export function getCronSecret(): string {
   return requireEnv("CRON_SECRET");
+}
+
+export function getStripeServerEnv(): {
+  secretKey: string;
+  webhookSecret: string;
+  priceIdMonthly: string;
+  priceIdYearly: string;
+  siteUrl: string;
+} {
+  return {
+    secretKey: requireEnv("STRIPE_SECRET_KEY"),
+    webhookSecret: requireEnv("STRIPE_WEBHOOK_SECRET"),
+    priceIdMonthly: requireEnv("STRIPE_PRICE_ID_PRO_MONTHLY"),
+    priceIdYearly: requireEnv("STRIPE_PRICE_ID_PRO_YEARLY"),
+    siteUrl: requireEnv("NEXT_PUBLIC_SITE_URL"),
+  };
 }

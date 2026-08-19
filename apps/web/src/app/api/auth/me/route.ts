@@ -14,6 +14,7 @@ export async function GET(request: Request) {
         id: authUser.userId,
         email: authUser.email,
         role: authUser.role,
+        plan: authUser.plan,
       },
     });
   } catch (error) {

@@ -5,7 +5,10 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { getSession } from "@/lib/auth";
 import { CheckCircle2 } from "lucide-react";
+import { CTAButton } from "@/components/ui/CTAButton";
+import { Analytics } from "@/lib/analytics";
 
 // ── Plan helpers ──────────────────────────────────────────────────────────────
 
@@ -58,6 +61,9 @@ export default function ProfilePage() {
   const [touched, setTouched] = useState(false);
   const effectiveNameInput = touched ? nameInput : name;
 
+  const [isOpeningPortal, setIsOpeningPortal] = useState(false);
+  const [portalError, setPortalError] = useState<string | null>(null);
+
   // Redirect to /auth if not logged in
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
@@ -83,6 +89,25 @@ export default function ProfilePage() {
     setTouched(true);
     if (effectiveNameInput.trim().length < 2) return;
     await updateName(effectiveNameInput.trim());
+  };
+
+  const handleManageSubscription = async () => {
+    setPortalError(null);
+    setIsOpeningPortal(true);
+    try {
+      const token = getSession()?.token ?? "";
+      const response = await fetch("/api/billing/portal", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) throw new Error("Portal request failed");
+      const body = (await response.json()) as { url?: string };
+      if (!body.url) throw new Error("No portal URL returned");
+      window.location.href = body.url;
+    } catch {
+      setPortalError(t("managePortalError"));
+      setIsOpeningPortal(false);
+    }
   };
 
   const plan = effectivePlan(user.role, user.plan);
@@ -204,10 +229,33 @@ export default function ProfilePage() {
             >
               {planLabel[plan]}
             </span>
-            <p className="text-[12px] text-muted-fg">
-              {t("planUpgradeHint")}
-            </p>
+            {plan === "free" && (
+              <>
+                <p className="text-[12px] text-muted-fg">{t("planUpgradeHint")}</p>
+                <CTAButton
+                  href="/pricing"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => Analytics.upgradeCtaClicked("profile_page")}
+                >
+                  {t("upgradeCta")}
+                </CTAButton>
+              </>
+            )}
+            {plan === "pro" && (
+              <CTAButton
+                variant="secondary"
+                size="sm"
+                onClick={handleManageSubscription}
+                disabled={isOpeningPortal}
+              >
+                {isOpeningPortal ? t("managePortalLoading") : t("manageSubscriptionCta")}
+              </CTAButton>
+            )}
           </div>
+          {portalError && (
+            <p className="mt-2 text-[12px] text-rose-600 dark:text-rose-400">{portalError}</p>
+          )}
         </Section>
       </div>
     </main>

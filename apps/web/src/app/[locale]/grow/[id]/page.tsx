@@ -39,6 +39,7 @@ import type { GrowTask, Grow, Plant, LogEntry, HarvestData, GrowPhaseId, GrowSta
 import SmartInsights from '@/components/SmartInsights';
 import GrowKnowledgePanel from '@/components/grow/GrowKnowledgePanel';
 import RecommendationsPanel from '@/components/grow/RecommendationsPanel';
+import SaveGrowBanner from '@/components/grow/SaveGrowBanner';
 import { PremiumScrollFx } from '@/components/scroll/PremiumScrollFx';
 import { Analytics } from '@/lib/analytics';
 import {
@@ -582,6 +583,7 @@ function PerformanceSection({
   return (
     <Link
       href={'/pricing' as Route}
+      onClick={() => Analytics.upgradeCtaClicked('grow_performance_upsell')}
       className="block rounded-xl border border-border bg-background p-4 transition-colors duration-150 hover:border-primary/30"
     >
       <div className="flex items-start justify-between gap-3">
@@ -1224,7 +1226,7 @@ export default function GrowPage({}: Props) {
   const { grows, loaded, completeTask, updateGrow, advancePhase } = useGrowState();
   const { entries, currentStreak } = useGrowLog(id);
   const { user } = useAuth();
-  const isPro = user?.plan === 'pro' || user?.plan === 'team' || user?.role === 'TEAM';
+  const isPro = user?.isPro ?? false;
   const { enabled: assistantEnabled, setEnabled: setAssistantEnabled } = useAssistantPreference();
 
   const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null);
@@ -1410,6 +1412,8 @@ export default function GrowPage({}: Props) {
           healthStatus={healthStatus}
           advancePhase={advancePhase}
         />
+
+        <SaveGrowBanner />
 
         {showTodayCard && (
           <TodayCard

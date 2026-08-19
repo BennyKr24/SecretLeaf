@@ -21,6 +21,14 @@ import { needsMigration, runMigration } from "@/lib/grow/migration";
 export type AuthUser = SessionUser & {
   /** Resolved plan — always present, defaults to "free". */
   plan: UserPlan;
+  /**
+   * True for pro/team plans or TEAM role — the single source of truth for
+   * Pro-gated UI. Compute it once here rather than re-deriving
+   * `plan === "pro" || ...` ad hoc at each call site (that drifted once
+   * already: the grow page checked `role === "TEAM"` too, the pricing page
+   * didn't, so a TEAM-role user saw the free upsell on /pricing).
+   */
+  isPro: boolean;
   /** Display name from profile, or username fallback. */
   displayName: string;
   /** First two characters of displayName, uppercased — for avatar initials. */
@@ -63,9 +71,11 @@ function readProfileName(userId: string): string | null {
 
 function toAuthUser(user: SessionUser): AuthUser {
   const displayName = readProfileName(user.id) ?? user.username;
+  const plan = user.plan ?? "free";
   return {
     ...user,
-    plan: user.plan ?? "free",
+    plan,
+    isPro: plan === "pro" || plan === "team" || user.role === "TEAM",
     displayName,
     initials: getInitials(displayName),
   };

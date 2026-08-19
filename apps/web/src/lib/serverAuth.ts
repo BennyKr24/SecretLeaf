@@ -1,12 +1,19 @@
 import type { User } from "@supabase/supabase-js";
-import type { UserRole } from "@/lib/types";
+import type { UserPlan, UserRole } from "@/lib/types";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 
 const USER_ROLES_TABLE = "user_roles";
+const SUBSCRIPTIONS_TABLE = "subscriptions";
+const ENTITLED_STATUSES = new Set(["active", "trialing"]);
 
 type UserRoleRow = {
   user_id: string;
   role: UserRole;
+};
+
+type SubscriptionRow = {
+  plan: UserPlan;
+  status: string;
 };
 
 function normalizeRole(value: string | null | undefined): UserRole {
@@ -66,19 +73,46 @@ export async function getUserRole(userId: string): Promise<UserRole> {
   return normalizeRole((inserted as UserRoleRow).role);
 }
 
+/**
+ * Resolves the user's effective plan from `subscriptions`. Absence of a row
+ * (never checked out) or a non-entitled status (past_due, canceled, ...)
+ * both resolve to "free" — there is no upsert-on-missing here, unlike
+ * getUserRole, because most users will never have a subscriptions row.
+ */
+export async function getUserPlan(userId: string): Promise<UserPlan> {
+  const supabase = getSupabaseServerClient();
+  const { data, error } = await supabase
+    .from(SUBSCRIPTIONS_TABLE)
+    .select("plan, status")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error || !data) {
+    return "free";
+  }
+
+  const row = data as SubscriptionRow;
+  return ENTITLED_STATUSES.has(row.status) ? row.plan : "free";
+}
+
 export async function getAuthenticatedUserWithRole(
   request: Request
-): Promise<{ userId: string; email: string | null; role: UserRole } | null> {
+): Promise<{ userId: string; email: string | null; role: UserRole; plan: UserPlan } | null> {
   const auth = await getAuthenticatedUser(request);
   if (!auth) {
     return null;
   }
 
-  const role = await getUserRole(auth.user.id);
+  const [role, plan] = await Promise.all([
+    getUserRole(auth.user.id),
+    getUserPlan(auth.user.id),
+  ]);
+
   return {
     userId: auth.user.id,
     email: auth.user.email ?? null,
     role,
+    plan,
   };
 }
 

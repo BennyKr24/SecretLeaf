@@ -11,13 +11,6 @@ import {
   FertilizerFormat,
   FertilizerApplication
 } from '@/data/terpira/fertilizers';
-import {
-  filterOffers,
-  fertilizerPriceSnapshot,
-  formatEuro,
-  getEffectivePrice,
-  getOffersForProduct
-} from '@/data/terpira/fertilizerPrices';
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
@@ -193,11 +186,6 @@ function FertilizersPageInner() {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [showDetails, setShowDetails] = useState<Set<string>>(new Set());
-  const [priceRegion, setPriceRegion] = useState<'all' | 'DE' | 'AT' | 'CH' | 'EU' | 'OTHER'>('all');
-  const [priceOnlyAvailable, setPriceOnlyAvailable] = useState(false);
-  const [priceOnlyWithShipping] = useState(false);
-  const [excludedShops] = useState<string[]>([]);
-  const [sortByCheapestEffective] = useState(false);
   const [profiles, setProfiles] = useState<FilterProfile[]>([]);
   const deferredSearch = useDeferredValue(searchQuery);
 
@@ -581,45 +569,11 @@ function FertilizersPageInner() {
     localStorage.setItem(FILTER_PROFILE_STORAGE_KEY, JSON.stringify(profiles));
   }, [profiles]);
 
-  const getVisibleOffers = useCallback((productId: string, limit?: number) => {
-    const offers = getOffersForProduct(productId, 20);
-    const visible = filterOffers(offers, {
-      region: priceRegion,
-      onlyAvailable: priceOnlyAvailable,
-      onlyWithShipping: priceOnlyWithShipping
-    })
-      .filter((offer) => !excludedShops.includes(offer.shop));
-
-    if (typeof limit === 'number') return visible.slice(0, limit);
-    return visible;
-  }, [priceRegion, priceOnlyAvailable, priceOnlyWithShipping, excludedShops]);
-
-  const bestEffectiveById = useMemo(() => {
-    const map = new Map<string, number | null>();
-    for (const item of filtered) {
-      const offers = getVisibleOffers(item.id, 1);
-      map.set(item.id, offers[0] ? getEffectivePrice(offers[0]) : null);
-    }
-    return map;
-  }, [filtered, getVisibleOffers]);
-
-  const sortedVisible = useMemo(() => {
-    if (!sortByCheapestEffective) return filtered;
-    return [...filtered].sort((a, b) => {
-      const pa = bestEffectiveById.get(a.id);
-      const pb = bestEffectiveById.get(b.id);
-      if (pa == null && pb == null) return 0;
-      if (pa == null) return 1;
-      if (pb == null) return -1;
-      return pa - pb;
-    });
-  }, [filtered, sortByCheapestEffective, bestEffectiveById]);
-
-  const totalVisible = sortedVisible.length;
+  const totalVisible = filtered.length;
   const totalPagesVisible = Math.max(1, Math.ceil(totalVisible / pageSize));
   const safePage = Math.min(currentPage, totalPagesVisible);
   const startIndex = (safePage - 1) * pageSize;
-  const paged = sortedVisible.slice(startIndex, startIndex + pageSize);
+  const paged = filtered.slice(startIndex, startIndex + pageSize);
 
   const toggleDetails = (id: string) => {
     const next = new Set(showDetails);
@@ -777,22 +731,6 @@ function FertilizersPageInner() {
               <DropdownOption value="npk-total">NPK-Gesamt</DropdownOption>
               <DropdownOption value="ec-min">EC-Min</DropdownOption>
             </Dropdown>
-            <Dropdown value={priceRegion} onChange={(v) => setPriceRegion(v as 'all' | 'DE' | 'AT' | 'CH' | 'EU' | 'OTHER')}>
-              <DropdownOption value="all">Preise: Alle Länder</DropdownOption>
-              <DropdownOption value="DE">Deutschland</DropdownOption>
-              <DropdownOption value="AT">Österreich</DropdownOption>
-              <DropdownOption value="CH">Schweiz</DropdownOption>
-              <DropdownOption value="EU">EU</DropdownOption>
-            </Dropdown>
-            <label className="inline-flex items-center gap-1.5 text-xs text-muted-fg cursor-pointer">
-              <input
-                type="checkbox"
-                checked={priceOnlyAvailable}
-                onChange={(e) => setPriceOnlyAvailable(e.target.checked)}
-                className="h-3.5 w-3.5 rounded border-border"
-              />
-              Nur verfügbar
-            </label>
           </div>
 
           {/* Active filter chips */}
@@ -872,8 +810,6 @@ function FertilizersPageInner() {
             {/* Product grid/list */}
             <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4' : 'space-y-3'}>
               {paged.map((fert) => {
-                const offers = getVisibleOffers(fert.id);
-                const bestPrice = offers[0] ? getEffectivePrice(offers[0]) : null;
                 const isOpen = showDetails.has(fert.id);
                 return (
                   <article
@@ -895,15 +831,6 @@ function FertilizersPageInner() {
                           <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${costColorMap[fert.cost]}`}>
                             {costLabelMap[fert.cost]}
                           </span>
-                          {bestPrice != null ? (
-                            <span className="rounded-full border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 px-2 py-0.5 text-xs font-bold text-cyan-800 dark:text-cyan-400">
-                              ab {formatEuro(bestPrice)}
-                            </span>
-                          ) : (
-                            <span className="rounded-full border border-border bg-background px-2 py-0.5 text-xs text-muted-fg">
-                              Kein Preis
-                            </span>
-                          )}
                         </div>
                       </div>
 
@@ -973,7 +900,7 @@ function FertilizersPageInner() {
                         onClick={() => toggleDetails(fert.id)}
                         className="flex w-full items-center justify-between px-4 py-2.5 text-xs font-semibold text-muted-fg hover:bg-background hover:text-emerald-700 dark:text-emerald-400 transition-[background-color,color,transform] duration-150 active:scale-[0.97]"
                       >
-                        <span>{isOpen ? 'Details schließen' : 'Details & Preisvergleich'}</span>
+                        <span>{isOpen ? 'Details schließen' : 'Details anzeigen'}</span>
                         <span className="text-base leading-none">{isOpen ? '▲' : '▼'}</span>
                       </button>
 
@@ -993,37 +920,6 @@ function FertilizersPageInner() {
                               isOpen ? 'opacity-100 scale-100' : 'pointer-events-none opacity-0 scale-95'
                             }`}
                           >
-
-                          {/* Prices */}
-                          <div>
-                            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-fg">Preisvergleich</p>
-                            {offers.length > 0 ? (
-                              <div className="space-y-2">
-                                {offers.map((offer) => (
-                                  <a
-                                    key={`${offer.shop}-${offer.productUrl}`}
-                                    href={offer.productUrl}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-3 py-2 hover:border-emerald-200 dark:border-emerald-900/40 hover:bg-emerald-50 dark:bg-emerald-950/30"
-                                  >
-                                    <div className="min-w-0 flex-1">
-                                      <p className="truncate text-xs font-semibold text-foreground/80">{offer.shop}</p>
-                                      <p className="truncate text-[11px] text-muted-fg">{offer.title}</p>
-                                    </div>
-                                    <div className="shrink-0 text-right">
-                                      <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">{formatEuro(getEffectivePrice(offer))}</p>
-                                      {offer.shipping != null && (
-                                        <p className="text-[11px] text-muted-fg">+{formatEuro(offer.shipping)} Versand</p>
-                                      )}
-                                    </div>
-                                  </a>
-                                ))}
-                              </div>
-                            ) : (
-                              <p className="text-xs text-muted-fg">Keine Preise für den gewählten Filter.</p>
-                            )}
-                          </div>
 
                           {/* Nutrient detail */}
                           <div>
@@ -1110,11 +1006,7 @@ function FertilizersPageInner() {
 
         {/* Footer note */}
         <p className="mt-10 text-center text-[11px] text-muted-fg">
-          Preisquelle: {fertilizerPriceSnapshot.source} · zuletzt aktualisiert:{' '}
-          {fertilizerPriceSnapshot.updatedAt
-            ? new Date(fertilizerPriceSnapshot.updatedAt).toLocaleDateString('de-DE')
-            : 'ausstehend'}{' '}
-          · Werte sind Richtwerte, keine medizinische oder rechtliche Beratung.
+          Werte sind Richtwerte auf Basis von Herstellerangaben, keine medizinische oder rechtliche Beratung.
         </p>
       </div>
     </main>

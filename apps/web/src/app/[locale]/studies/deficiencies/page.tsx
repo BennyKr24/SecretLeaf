@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
@@ -19,6 +20,12 @@ type DeficiencyEntry = {
   mobility: Mobility;
   growArea: GrowArea;
   stage: PlantStage;
+  /**
+   * Symptomfoto. `examplePlant` ist entweder "Cannabis" (echtes Cannabis-Foto)
+   * oder eine andere Pflanzenart, falls kein lizenzfreies Cannabis-Foto für
+   * dieses Mangelbild existierte — dann klar als Beispielpflanze beschriftet.
+   */
+  image?: { src: string; examplePlant: string };
   symptoms: string[];
   causes: string[];
   monitoring: string[];
@@ -46,81 +53,6 @@ type ExternalSource = {
   kind: string;
 };
 
-// ── Wiki-Links für Studienbasis ──────────────────────────────────
-const wikiLinks: { slug: string; title: string; tag: string; tagColor: string; desc: string }[] = [
-  {
-    slug: "naehrstoffbedarf-cannabis-lebenszyklus",
-    title: "Nährstoffbedarf im Cannabis-Lebenszyklus",
-    tag: "Nährstoffe · NPK",
-    tagColor: "border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400",
-    desc: "Phasenweise NPK-, Ca- und Mg-Übersicht für Photo- und Autoflower-Pflanzen in Erde und Coco – basierend auf peer-reviewten Studien.",
-  },
-  {
-    slug: "substrat-vergleich-coco-erde-hydro",
-    title: "Substratvergleich: Coco, Erde und Hydro",
-    tag: "Substrat · EC · pH",
-    tagColor: "border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400",
-    desc: "Was Studien über Ertrag, EC-Toleranz und Pflegeaufwand bei den drei Hauptsubstraten sagen – mit praktischen Empfehlungen.",
-  },
-  {
-    slug: "indoor-outdoor-anbau-vergleich",
-    title: "Indoor vs. Outdoor: Anbauvergleich Cannabis",
-    tag: "Licht · Ertrag · Terpene",
-    tagColor: "border-sky-200 dark:border-sky-900/40 bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400",
-    desc: "Licht, Ertrag, Terpenprofil und Risikofaktoren im direkten Vergleich – was Forschung und Praxis über beide Anbausysteme sagen.",
-  },
-  {
-    slug: "naehrstoffblockaden-und-antagonismen",
-    title: "Nährstoffblockaden und Antagonismen",
-    tag: "Diagnostik · pH",
-    tagColor: "border-violet-200 dark:border-violet-900/40 bg-violet-50 dark:bg-violet-950/30 text-violet-700 dark:text-violet-400",
-    desc: "Warum trotz ausreichender Düngewerte Mangelbilder auftreten können – und wie Blockaden sauber eingeordnet werden.",
-  },
-  {
-    slug: "cannabis-substrat-und-wurzelzone",
-    title: "Substrat und Wurzelzone",
-    tag: "Substrat · Wurzel",
-    tagColor: "border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400",
-    desc: "Alles über Pufferwirkung, Wasserhaltekapazität und Wurzelgesundheit – Grundlage für optimale Nährstoffverfügbarkeit.",
-  },
-  {
-    slug: "feminisiert-vs-regular-vs-autoflower",
-    title: "Feminisiert, Regular und Autoflower im Vergleich",
-    tag: "Genetik · Sortenwahl",
-    tagColor: "border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-700 dark:text-cyan-400",
-    desc: "Wie sich Wachstumsphasen, Nährstoffbedarf und Reaktion auf Stressfaktoren je Saatguttyp unterscheiden.",
-  },
-];
-const lifecycleHubCards = [
-  {
-    title: "Lebenszyklus und NPK-Bedarf",
-    slug: "naehrstoffbedarf-cannabis-lebenszyklus",
-    points: [
-      "Photoperiodische und autoflowering Sorten getrennt erklärt",
-      "Phasenweise Orientierung für N, P, K, Ca und Mg",
-      "Mit Studienbasis statt pauschaler Düngeschemata"
-    ]
-  },
-  {
-    title: "Substrat und Wurzelraum-Kontext",
-    slug: "substrat-vergleich-coco-erde-hydro",
-    points: [
-      "Erde, Coco und Hydro sauber gegeneinander abgegrenzt",
-      "EC-, pH- und Pufferlogik im Vergleich",
-      "Hilft bei der Einordnung von Mangel vs. Kulturfehler"
-    ]
-  },
-  {
-    title: "Blockaden statt echter Mangel",
-    slug: "naehrstoffblockaden-und-antagonismen",
-    points: [
-      "Warum genug Dünger nicht automatisch genug Verfügbarkeit bedeutet",
-      "pH, Salzstress und Antagonismen getrennt betrachtet",
-      "Passender Einstieg vor jeder harten Nachdüngung"
-    ]
-  }
-] as const;
-
 const categoryLabel: Record<DefCategory, string> = {
   makro: "Makronährstoffe",
   sekundär: "Sekundäre Nährstoffe",
@@ -144,6 +76,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     mobility: "mobil",
     growArea: "beides",
     stage: "veg",
+    image: { src: "/terpira/deficiencies/nitrogen.jpg", examplePlant: "Cannabis" },
     symptoms: [
       "Helle bis gelbe ältere Fächerblätter",
       "Reduziertes Längenwachstum",
@@ -179,6 +112,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     mobility: "mobil",
     growArea: "beides",
     stage: "alle",
+    image: { src: "/terpira/deficiencies/phosphorus.jpg", examplePlant: "Kanadisches Berufkraut" },
     symptoms: [
       "Matt-dunkelgrüne Blätter",
       "Verzögerte Wurzel- und Blütenentwicklung",
@@ -214,6 +148,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     mobility: "mobil",
     growArea: "beides",
     stage: "bluete",
+    image: { src: "/terpira/deficiencies/potassium.jpg", examplePlant: "Mais" },
     symptoms: [
       "Randchlorosen an älteren Blättern",
       "Braune, verbrannt wirkende Blattränder",
@@ -284,6 +219,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     mobility: "mobil",
     growArea: "beides",
     stage: "bluete",
+    image: { src: "/terpira/deficiencies/magnesium.jpg", examplePlant: "Mais" },
     symptoms: [
       "Aufhellungen zwischen Blattadern",
       "Adern bleiben anfangs grün",
@@ -354,6 +290,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     mobility: "immobil",
     growArea: "beides",
     stage: "alle",
+    image: { src: "/terpira/deficiencies/iron.jpg", examplePlant: "Bitterorange" },
     symptoms: [
       "Limonengrüner bis gelber Neuwuchs",
       "Adern bleiben lange sichtbar grün",
@@ -389,6 +326,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     mobility: "immobil",
     growArea: "beides",
     stage: "veg",
+    image: { src: "/terpira/deficiencies/zinc.jpg", examplePlant: "Macadamia" },
     symptoms: [
       "Verkleinerte neue Blätter",
       "Kurze Internodien (Rosetteneffekt)",
@@ -424,6 +362,7 @@ const deficiencyLexicon: DeficiencyEntry[] = [
     mobility: "immobil",
     growArea: "beides",
     stage: "alle",
+    image: { src: "/terpira/deficiencies/manganese.jpg", examplePlant: "Rose" },
     symptoms: [
       "Aufhellungen zwischen Blattadern",
       "Feine graubraune Punktnekrosen",
@@ -578,21 +517,6 @@ const externalSources: ExternalSource[] = [
   }
 ];
 
-const protocolDownloads = [
-  {
-    title: "Protokoll: Makronährstoff-Mängel",
-    href: "/terpira/deficiencies/protocols/makro-naehrstoffe.txt"
-  },
-  {
-    title: "Protokoll: Sekundär- und Mikronährstoffe",
-    href: "/terpira/deficiencies/protocols/mikro-sekundaer.txt"
-  },
-  {
-    title: "Protokoll: Nährstoffblockade und Wurzelraum-Reset",
-    href: "/terpira/deficiencies/protocols/lockout-reset.txt"
-  }
-];
-
 const symptomOptions: SymptomOption[] = [
   {
     id: "untere-gelb",
@@ -711,7 +635,13 @@ export default function DeficiencyLexiconPage() {
             <span className="rounded-full border border-border bg-card px-3 py-1 font-semibold text-foreground/80">Filterbar</span>
           </div>
           <p className="mt-3 text-xs text-foreground/80">
-            Alle Inhalte sind evidenzbasiert und auf Cannabispflanzen bezogen. Fotos werden ergänzt, sobald verifizierte Cannabis-Symptomfotos mit sauberer Lizenzzuordnung verfügbar sind.
+            Alle Inhalte sind evidenzbasiert und auf Cannabispflanzen bezogen. Für die meisten Mangelbilder gibt es
+            keine sauber lizenzierten Cannabis-Fotos — dort zeigen wir stattdessen Beispielpflanzen mit
+            vergleichbarer Symptommechanik, klar gekennzeichnet im Bild.
+            Bildnachweise:{' '}
+            <a href="/terpira/deficiencies/ATTRIBUTION.md" target="_blank" rel="noreferrer" className="font-semibold text-emerald-700 dark:text-emerald-400 underline">
+              Attribution ansehen
+            </a>
           </p>
         </div>
 
@@ -720,11 +650,8 @@ export default function DeficiencyLexiconPage() {
           <div className="mt-3 flex flex-wrap gap-2">
             <a href="#filter" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Filter</a>
             <a href="#lexikon" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Lexikon</a>
-            <a href="#lebenszyklus" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Nährstoffbedarf-Hub</a>
-            <a href="#wiki-artikel" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Fachartikel</a>
             <a href="#matrix" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Korrektur-Matrix</a>
             <a href="#ampel" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">24h-Ampel</a>
-            <a href="#downloads" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Downloads</a>
             <a href="#quellen" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Quellen</a>
           </div>
         </section>
@@ -856,6 +783,26 @@ export default function DeficiencyLexiconPage() {
           {filtered.map((entry) => {
             return (
               <article key={entry.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                {entry.image ? (
+                  <div className="relative h-40 w-full bg-background">
+                    <Image
+                      src={entry.image.src}
+                      alt={`${entry.image.examplePlant} mit Symptomen: ${entry.name}`}
+                      width={640}
+                      height={320}
+                      className="h-full w-full object-cover"
+                    />
+                    <span className="absolute inset-x-0 bottom-0 bg-black/55 px-2 py-1 text-[10px] font-semibold text-white">
+                      {entry.image.examplePlant === "Cannabis"
+                        ? "Cannabis-Foto"
+                        : `Beispielpflanze: ${entry.image.examplePlant} (nicht Cannabis — Symptomatik vergleichbar)`}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex h-16 items-center justify-center bg-background text-xs text-muted-fg">
+                    Kein eindeutiges Symptombild verfügbar
+                  </div>
+                )}
                 <div className="p-4">
                   <div className="mb-2 flex flex-wrap items-center gap-2">
                     <span className="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-foreground/80">{categoryLabel[entry.category]}</span>
@@ -921,70 +868,6 @@ export default function DeficiencyLexiconPage() {
           })}
         </section>
 
-        {/* ── Hub statt Dublette ───────────────────────────────── */}
-        <section id="lebenszyklus" className="mt-6 rounded-2xl border border-violet-200 dark:border-violet-900/40 bg-violet-50/40 dark:bg-violet-950/40 p-5 shadow-sm scroll-mt-24">
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-violet-700 dark:text-violet-400">Hub statt Parallelpflege</p>
-              <h2 className="mt-1 text-xl font-bold text-foreground">Nährstoffbedarf und Kulturkontext</h2>
-              <p className="mt-1 max-w-2xl text-sm text-foreground/80">
-                Diese Lexikon-Seite bleibt bei Diagnose, Ursachen und Korrektur. Die phasenweise Nährstofflogik,
-                Substratunterschiede und Antagonismen liegen in eigenen Fachartikeln, damit Evidenz nicht an zwei Stellen parallel gepflegt wird.
-              </p>
-            </div>
-          </div>
-          <div className="mt-4 grid gap-3 lg:grid-cols-3">
-            {lifecycleHubCards.map((card) => (
-              <Link
-                key={card.slug}
-                href={`/studies/${card.slug}` as Route}
-                className="group rounded-xl border border-border bg-card p-4 transition hover:border-violet-300 hover:bg-violet-50 dark:bg-violet-950/30"
-              >
-                <p className="text-sm font-bold text-foreground group-hover:text-violet-900">{card.title}</p>
-                <ul className="mt-3 space-y-1 text-xs text-foreground/80">
-                  {card.points.map((point) => (
-                    <li key={point} className="flex gap-2">
-                      <span className="font-bold text-violet-500">•</span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-                <span className="mt-4 inline-flex text-xs font-semibold text-violet-700 dark:text-violet-400 group-hover:underline">Zum Artikel →</span>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-4 rounded-xl border border-violet-200 dark:border-violet-900/40 bg-card/80 px-4 py-3 text-sm text-foreground/80">
-            <strong className="text-foreground">Warum hier nur der Hub?</strong> Lebenszyklus, Substratlogik und Antagonismen werden bereits in eigenen
-            Artikeln gepflegt. So bleibt das Lexikon auf Diagnose und Korrektur fokussiert und dieselbe Evidenz wird nicht an zwei Stellen parallel aktualisiert.
-          </div>
-        </section>
-
-        {/* ── Weiterführende Wiki-Artikel ───────────────────────── */}
-        <section id="wiki-artikel" className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Vertiefung · Studienbasis</p>
-          <h2 className="mt-1 text-xl font-bold text-foreground">Weiterführende Fachartikel</h2>
-          <p className="mt-1 max-w-2xl text-sm text-foreground/80">
-            Vertiefende Artikel zu Nährstoffen, Substraten und Anbausystemen mit nachvollziehbarer Studienbasis.
-          </p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {wikiLinks.map((link) => (
-              <Link
-                key={link.slug}
-                href={`/studies/${link.slug}` as Route}
-                className="group flex flex-col gap-1.5 rounded-xl border border-border bg-background p-4 transition hover:border-emerald-300 hover:bg-emerald-50 dark:bg-emerald-950/30"
-              >
-                <span className={`self-start rounded-full border px-2 py-0.5 text-[10px] font-semibold ${link.tagColor}`}>
-                  {link.tag}
-                </span>
-                <p className="text-sm font-bold text-foreground group-hover:text-emerald-800 dark:text-emerald-400 leading-snug">{link.title}</p>
-                <p className="text-xs text-foreground/80 leading-relaxed">{link.desc}</p>
-                <span className="mt-auto text-xs font-semibold text-emerald-600 dark:text-emerald-400 group-hover:underline">Artikel lesen →</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
         <section className="mt-6 grid gap-5 lg:grid-cols-2">
           <article id="matrix" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
             <h2 className="text-xl font-bold text-foreground">Korrektur-Matrix</h2>
@@ -1022,11 +905,11 @@ export default function DeficiencyLexiconPage() {
           </article>
         </section>
 
-        <section className="mt-6 grid gap-5 lg:grid-cols-2">
+        <section className="mt-6">
           <article id="quellen" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
             <h2 className="text-xl font-bold text-foreground">Externe Internetquellen</h2>
             <p className="mt-1 text-sm text-foreground/80">Direkte Referenzen für Nährstoffdiagnostik und Management.</p>
-            <div className="mt-3 space-y-2">
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {externalSources.map((source) => (
                 <a
                   key={source.url}
@@ -1037,24 +920,6 @@ export default function DeficiencyLexiconPage() {
                 >
                   <p className="text-sm font-semibold text-foreground">{source.title}</p>
                   <p className="text-xs text-muted-fg">Typ: {source.kind}</p>
-                </a>
-              ))}
-            </div>
-          </article>
-
-          <article id="downloads" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
-            <h2 className="text-xl font-bold text-foreground">Protokolle herunterladen</h2>
-            <p className="mt-1 text-sm text-foreground/80">Sofort einsetzbare Text-Protokolle für Teams und Grow-Räume.</p>
-            <div className="mt-3 space-y-2">
-              {protocolDownloads.map((file) => (
-                <a
-                  key={file.href}
-                  href={file.href}
-                  download
-                  className="block rounded-lg border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 px-3 py-2 hover:border-cyan-300 hover:bg-cyan-100"
-                >
-                  <p className="text-sm font-semibold text-cyan-900">{file.title}</p>
-                  <p className="text-xs text-cyan-700 dark:text-cyan-400">TXT-Download</p>
                 </a>
               ))}
             </div>
