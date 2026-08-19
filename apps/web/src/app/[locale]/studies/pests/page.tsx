@@ -352,7 +352,7 @@ const pestLexicon: PestEntry[] = [
     risk: "kritisch",
     growArea: "indoor",
     stage: "veg",
-    images: ["/terpira/pests/root-aphids-real.jpg"],
+    images: [],
     sizeMm: "1,0–2,5 mm (wachsig-weiß, leicht mit Perlite verwechselbar)",
     lifecycleDays: "14–21 Tage je Generation (asexuell, 30–60 Nymphen/Weibchen)",
     optimalConditions: "Warmes Substrat > 22 °C, stehende Feuchtigkeit, organische Substrate",
@@ -518,7 +518,7 @@ const pestLexicon: PestEntry[] = [
     risk: "kritisch",
     growArea: "beides",
     stage: "alle",
-    images: ["/terpira/pests/russet-mites.jpg"],
+    images: [],
     sizeMm: "0,15–0,20 mm (nur unter Mikroskop sichtbar, wurmförmig)",
     lifecycleDays: "21–30 Tage je Generation bei 25 °C",
     optimalConditions: "Temp. 22–30 °C, trockenes Klima, besiedelt Trichomzonen",
@@ -978,21 +978,6 @@ const externalSources: ExternalSource[] = [
   }
 ];
 
-const protocolDownloads = [
-  {
-    title: "IPM-Protokoll: Saugende Schädlinge",
-    href: "/terpira/pests/protocols/ipm-saugende-schaedlinge.txt"
-  },
-  {
-    title: "IPM-Protokoll: Substrat- und Wurzel-Schädlinge",
-    href: "/terpira/pests/protocols/ipm-substrat-wurzel.txt"
-  },
-  {
-    title: "IPM-Protokoll: Blatt- und Blütenfresser",
-    href: "/terpira/pests/protocols/ipm-blatt-bluetenfresser.txt"
-  }
-];
-
 const symptomOptions: SymptomOption[] = [
   {
     id: "silbrige-flecken",
@@ -1157,7 +1142,7 @@ export default function PestLexiconPage() {
           ← Zurück zu Studien
         </Link>
 
-        <div className="mt-4 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 bg-gradient-to-r from-emerald-50 to-cyan-50 p-6 shadow-sm">
+        <div className="mt-4 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 bg-gradient-to-r from-emerald-50 to-cyan-50 dark:from-emerald-950/30 dark:to-cyan-950/30 p-6 shadow-sm">
           <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Register</p>
           <h1 className="mt-1 text-4xl font-bold text-foreground">Schädlings-Lexikon Cannabis</h1>
           <p className="mt-2 max-w-3xl text-sm text-foreground/80">
@@ -1166,11 +1151,10 @@ export default function PestLexiconPage() {
           </p>
           <div className="mt-4 flex flex-wrap gap-2 text-xs">
             <span className="rounded-full border border-emerald-200 dark:border-emerald-900/40 bg-card px-3 py-1 font-semibold text-emerald-800 dark:text-emerald-400">{pestLexicon.length} Einträge</span>
-            <span className="rounded-full border border-cyan-200 dark:border-cyan-900/40 bg-card px-3 py-1 font-semibold text-cyan-800 dark:text-cyan-400">Mit Bildmaterial</span>
             <span className="rounded-full border border-border bg-card px-3 py-1 font-semibold text-foreground/80">Filterbar</span>
           </div>
           <p className="mt-3 text-xs text-foreground/80">
-            Bildmaterial aus frei lizenzierten Referenzfotos (Wikimedia Commons), je Eintrag eindeutig zugeordnet.
+            Fotos aus frei lizenzierten Referenzaufnahmen (Wikimedia Commons), wo ein eindeutiges Foto verfügbar war.
             Bildnachweise:
             <a href="/terpira/pests/ATTRIBUTION.md" target="_blank" rel="noreferrer" className="ml-1 font-semibold text-emerald-700 dark:text-emerald-400 underline">
               Attribution ansehen
@@ -1185,21 +1169,19 @@ export default function PestLexiconPage() {
             <a href="#lexikon" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Lexikon</a>
             <a href="#Nützlinge" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Nützlings-Matrix</a>
             <a href="#ampel" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">24h-Ampel</a>
-            <a href="#downloads" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Downloads</a>
             <a href="#quellen" className="rounded-full border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400">Quellen</a>
           </div>
 
           <div className="mt-4 grid gap-3 lg:grid-cols-3">
             <article className="rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 p-4">
-              <p className="text-sm font-bold text-emerald-900">Modus 1: Schnellhilfe</p>
-              <p className="mt-1 text-xs text-emerald-800 dark:text-emerald-400">Bei akutem Befall direkt mit 24h-Ampel und Protokollen starten.</p>
+              <p className="text-sm font-bold text-emerald-900 dark:text-emerald-300">Modus 1: Schnellhilfe</p>
+              <p className="mt-1 text-xs text-emerald-800 dark:text-emerald-400">Bei akutem Befall direkt mit der 24h-Ampel starten.</p>
               <div className="mt-2 flex gap-2 text-xs">
                 <a href="#ampel" className="rounded-full border border-emerald-300 bg-card px-2.5 py-1 font-semibold text-emerald-700 dark:text-emerald-400">Zur Ampel</a>
-                <a href="#downloads" className="rounded-full border border-emerald-300 bg-card px-2.5 py-1 font-semibold text-emerald-700 dark:text-emerald-400">Zu Protokollen</a>
               </div>
             </article>
             <article className="rounded-xl border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 p-4">
-              <p className="text-sm font-bold text-cyan-900">Modus 2: Analyse</p>
+              <p className="text-sm font-bold text-cyan-900 dark:text-cyan-300">Modus 2: Analyse</p>
               <p className="mt-1 text-xs text-cyan-800 dark:text-cyan-400">Symptome filtern und Arten sauber eingrenzen.</p>
               <div className="mt-2 flex gap-2 text-xs">
                 <a href="#filter" className="rounded-full border border-cyan-300 bg-card px-2.5 py-1 font-semibold text-cyan-700 dark:text-cyan-400">Zu Filtern</a>
@@ -1207,7 +1189,7 @@ export default function PestLexiconPage() {
               </div>
             </article>
             <article className="rounded-xl border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 p-4">
-              <p className="text-sm font-bold text-amber-900">Modus 3: Prävention</p>
+              <p className="text-sm font-bold text-amber-900 dark:text-amber-300">Modus 3: Prävention</p>
               <p className="mt-1 text-xs text-amber-800 dark:text-amber-400">Nützlingsstrategie und Referenzen für belastbare Standardabläufe nutzen.</p>
               <div className="mt-2 flex gap-2 text-xs">
                 <a href="#Nützlinge" className="rounded-full border border-amber-300 bg-card px-2.5 py-1 font-semibold text-amber-700 dark:text-amber-400">Zur Matrix</a>
@@ -1344,32 +1326,32 @@ export default function PestLexiconPage() {
         <section id="lexikon" className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3 scroll-mt-24">
           {filtered.map((entry) => (
             <article key={entry.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-              <div className="grid h-48 grid-cols-3 gap-1 bg-background p-1">
-                {entry.images.map((src, index) => (
-                  <button
-                    key={src}
-                    type="button"
-                    onClick={() => openLightbox(entry.name, entry.images, index)}
-                    className="group relative overflow-hidden rounded-md transition-transform duration-150 active:scale-[0.97]"
-                  >
-                    <Image
-                      src={src}
-                      alt={`${entry.name} Foto ${index + 1}`}
-                      width={320}
-                      height={210}
-                      className="h-full w-full object-cover transition-transform duration-200 [@media(hover:hover)]:group-hover:scale-[1.04]"
-                    />
-                    <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-black/45 px-2 py-1 text-[10px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
-                      Vergrößern
-                    </span>
-                  </button>
-                ))}
-              </div>
+              {entry.images.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => openLightbox(entry.name, entry.images, 0)}
+                  className="group relative block h-48 w-full overflow-hidden bg-background"
+                >
+                  <Image
+                    src={entry.images[0] as string}
+                    alt={`${entry.name} Foto`}
+                    width={640}
+                    height={384}
+                    className="h-full w-full object-cover transition-transform duration-200 [@media(hover:hover)]:group-hover:scale-[1.04]"
+                  />
+                  <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-black/45 px-2 py-1 text-[10px] font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    Vergrößern
+                  </span>
+                </button>
+              ) : (
+                <div className="flex h-24 items-center justify-center bg-background text-xs text-muted-fg">
+                  Kein lizenzfreies Foto verfügbar
+                </div>
+              )}
               <div className="p-4">
                 <div className="mb-2 flex flex-wrap items-center gap-2">
                   <span className="rounded-full border border-border bg-background px-2 py-0.5 text-xs font-semibold text-foreground/80">{categoryLabel[entry.category]}</span>
                   <span className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${riskClass[entry.risk]}`}>{riskLabel[entry.risk]}</span>
-                  <span className="rounded-full border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 px-2 py-0.5 text-xs font-semibold text-cyan-700 dark:text-cyan-400">{entry.images.length} Fotos</span>
                 </div>
                 <h2 className="text-xl font-bold text-foreground">{entry.name}</h2>
                 <p className="text-xs italic text-muted-fg">{entry.latinName}</p>
@@ -1478,40 +1460,11 @@ export default function PestLexiconPage() {
         </section>
 
         {/* ── Weiterführende Wiki-Artikel ─────────────────────── */}
-        <section id="wiki-artikel" className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Vertiefung · Hintergrundartikel</p>
-          <h2 className="mt-1 text-xl font-bold text-foreground">Weiterführende Fachartikel</h2>
-          <p className="mt-1 max-w-2xl text-sm text-foreground/80">
-            Hintergrundartikel zu Prävention, Hygiene und Umweltfaktoren im professionellen Schädlingsmanagement.
-          </p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {([
-              { slug: "integrierte-schaedlingspraevention-grow", title: "Integrierte Schädlingsprävention im Grow", tag: "IPM · Prävention", tagColor: "border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400", desc: "Systematischer Ansatz zur Vorbeugung statt Bekämpfung – Monitoring, Schwellenwerte und Nützlingseinsatz." },
-              { slug: "mutterpflanzen-und-clone-hygiene", title: "Mutterpflanzen und Clone-Hygiene", tag: "Hygiene · Klone", tagColor: "border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400", desc: "Wie Schädlinge und Pathogene über Klone eingeschleppt werden – und wie konsequente Hygiene das verhindert." },
-              { slug: "schimmel-und-mykotoxine-bei-cannabis", title: "Schimmel und Mykotoxine bei Cannabis", tag: "Schimmel · Sicherheit", tagColor: "border-rose-200 dark:border-rose-900/40 bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400", desc: "Botrytis, Aspergillus und Co.: Erkennungsmerkmale, Risikofaktoren und Maßnahmen bei Pilzbefall." },
-              { slug: "cannabis-substrat-und-wurzelzone", title: "Substrat und Wurzelzone", tag: "Substrat · Wurzel", tagColor: "border-sky-200 dark:border-sky-900/40 bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400", desc: "Wie Substratfeuchte und Wurzelgesundheit Schädlingsdruck und Pathogenbefall direkt beeinflussen." },
-            ] as { slug: string; title: string; tag: string; tagColor: string; desc: string }[]).map((link) => (
-              <Link
-                key={link.slug}
-                href={`/studies/${link.slug}` as Route}
-                className="group flex flex-col gap-1.5 rounded-xl border border-border bg-background p-4 transition hover:border-emerald-300 hover:bg-emerald-50 dark:bg-emerald-950/30"
-              >
-                <span className={`self-start rounded-full border px-2 py-0.5 text-[10px] font-semibold ${link.tagColor}`}>
-                  {link.tag}
-                </span>
-                <p className="text-sm font-bold text-foreground group-hover:text-emerald-800 dark:text-emerald-400 leading-snug">{link.title}</p>
-                <p className="text-xs text-foreground/80 leading-relaxed">{link.desc}</p>
-                <span className="mt-auto text-xs font-semibold text-emerald-600 dark:text-emerald-400 group-hover:underline">Artikel lesen →</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section className="mt-6 grid gap-5 lg:grid-cols-2">
+        <section className="mt-6">
           <article id="quellen" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
             <h2 className="text-xl font-bold text-foreground">Externe Internetquellen</h2>
             <p className="mt-1 text-sm text-foreground/80">Direkte Referenzen für vertiefende IPM- und Artenrecherche.</p>
-            <div className="mt-3 space-y-2">
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
               {externalSources.map((source) => (
                 <a
                   key={source.url}
@@ -1522,24 +1475,6 @@ export default function PestLexiconPage() {
                 >
                   <p className="text-sm font-semibold text-foreground">{source.title}</p>
                   <p className="text-xs text-muted-fg">Typ: {source.kind}</p>
-                </a>
-              ))}
-            </div>
-          </article>
-
-          <article id="downloads" className="rounded-2xl border border-border bg-card p-5 shadow-sm scroll-mt-24">
-            <h2 className="text-xl font-bold text-foreground">IPM-Protokolle herunterladen</h2>
-            <p className="mt-1 text-sm text-foreground/80">Sofort einsetzbare Text-Protokolle für Teams und Grow-Räume.</p>
-            <div className="mt-3 space-y-2">
-              {protocolDownloads.map((file) => (
-                <a
-                  key={file.href}
-                  href={file.href}
-                  download
-                  className="block rounded-lg border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 px-3 py-2 hover:border-cyan-300 hover:bg-cyan-100"
-                >
-                  <p className="text-sm font-semibold text-cyan-900">{file.title}</p>
-                  <p className="text-xs text-cyan-700 dark:text-cyan-400">TXT-Download</p>
                 </a>
               ))}
             </div>
