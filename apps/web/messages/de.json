@@ -356,6 +356,7 @@
     "loginRequired": "Zum Upgraden erst anmelden",
     "checkoutError": "Checkout konnte nicht gestartet werden. Bitte sp\u00e4ter erneut versuchen.",
     "redirecting": "Weiterleitung zu Stripe...",
+    "checkoutSuccess": "Willkommen bei Pro! Dein Upgrade ist aktiv.",
     "checkoutCancelled": "Checkout abgebrochen \u2014 kein Problem, du kannst es jederzeit erneut versuchen.",
     "faqTitle": "H\u00e4ufige Fragen",
     "faqCancelQ": "Kann ich jederzeit k\u00fcndigen?",

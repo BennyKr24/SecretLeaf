@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/navigation";
@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { useAuth } from "@/hooks/useAuth";
-import { getSession } from "@/lib/auth";
+import { getSession, restoreSessionFromSupabase } from "@/lib/auth";
 import { Analytics } from "@/lib/analytics";
 
 // ── Pricing (must match the Price objects configured in the Stripe Dashboard) ──
@@ -35,12 +35,25 @@ export default function PricingPage() {
   const { user, isLoggedIn } = useAuth();
   const searchParams = useSearchParams();
   const cancelled = searchParams.get("checkout") === "cancelled";
+  const succeeded = searchParams.get("checkout") === "success";
 
   const [interval, setInterval] = useState<Interval>("yearly");
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const isPro = user?.plan === "pro" || user?.plan === "team";
+
+  // Coming back from a successful Stripe Checkout: the webhook has (or is
+  // about to have) written the subscription row, but the cached session
+  // still says "free" until we re-fetch — without this, isPro stays false
+  // and the user sees the upsell right after paying. Track once per landing.
+  const trackedSuccessRef = useRef(false);
+  useEffect(() => {
+    if (!succeeded || trackedSuccessRef.current) return;
+    trackedSuccessRef.current = true;
+    Analytics.checkoutCompleted();
+    void restoreSessionFromSupabase();
+  }, [succeeded]);
 
   const handleUpgrade = useCallback(async () => {
     if (!isLoggedIn || !user) return;
@@ -87,6 +100,11 @@ export default function PricingPage() {
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-muted-fg">{t("subtitle")}</p>
         </div>
 
+        {succeeded && (
+          <p className="mx-auto mt-6 max-w-md rounded-xl border border-primary/30 bg-primary/5 px-4 py-3 text-center text-sm font-semibold text-primary">
+            {t("checkoutSuccess")}
+          </p>
+        )}
         {cancelled && (
           <p className="mx-auto mt-6 max-w-md rounded-xl border border-border bg-card px-4 py-3 text-center text-sm text-muted-fg">
             {t("checkoutCancelled")}

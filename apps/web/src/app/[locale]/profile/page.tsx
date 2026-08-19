@@ -8,6 +8,7 @@ import { useProfile } from "@/hooks/useProfile";
 import { getSession } from "@/lib/auth";
 import { CheckCircle2 } from "lucide-react";
 import { CTAButton } from "@/components/ui/CTAButton";
+import { Analytics } from "@/lib/analytics";
 
 // ── Plan helpers ──────────────────────────────────────────────────────────────
 
@@ -231,7 +232,12 @@ export default function ProfilePage() {
             {plan === "free" && (
               <>
                 <p className="text-[12px] text-muted-fg">{t("planUpgradeHint")}</p>
-                <CTAButton href="/pricing" variant="secondary" size="sm">
+                <CTAButton
+                  href="/pricing"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => Analytics.upgradeCtaClicked("profile_page")}
+                >
                   {t("upgradeCta")}
                 </CTAButton>
               </>

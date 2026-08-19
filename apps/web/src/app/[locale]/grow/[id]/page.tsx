@@ -583,6 +583,7 @@ function PerformanceSection({
   return (
     <Link
       href={'/pricing' as Route}
+      onClick={() => Analytics.upgradeCtaClicked('grow_performance_upsell')}
       className="block rounded-xl border border-border bg-background p-4 transition-colors duration-150 hover:border-primary/30"
     >
       <div className="flex items-start justify-between gap-3">

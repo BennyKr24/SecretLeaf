@@ -356,6 +356,7 @@
     "loginRequired": "Sign in first to upgrade",
     "checkoutError": "Couldn't start checkout. Please try again later.",
     "redirecting": "Redirecting to Stripe...",
+    "checkoutSuccess": "Welcome to Pro! Your upgrade is active.",
     "checkoutCancelled": "Checkout cancelled — no problem, you can try again any time.",
     "faqTitle": "Frequently asked questions",
     "faqCancelQ": "Can I cancel any time?",

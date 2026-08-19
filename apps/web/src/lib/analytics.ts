@@ -62,4 +62,7 @@ export const Analytics = {
 
   checkoutStarted: (interval: 'monthly' | 'yearly') =>
     track('checkout_started', { interval }),
+
+  checkoutCompleted: () =>
+    track('checkout_completed'),
 } as const;
