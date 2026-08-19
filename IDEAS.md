@@ -48,7 +48,7 @@ Status:
 
 | Initiative | Impact | Effort | Confidence | Score | Status | Abhaengigkeiten |
 |---|---:|---:|---:|---:|---|---|
-| AI-Diagnose produktionsreif | 4 | 3 | 3 | 4.0 | Discovery | Billing, Rate Limits, Safety-Rails |
+| AI-Diagnose produktionsreif (Foto statt Klick-Baum) | 4 | 3 | 3 | 4.0 | Discovery | ~~Billing~~ erledigt (2026-08-19); offen: Rate-Limits, Foto-Upload-Infra, eigene Bild-Konfidenz. Details: AFFiNE → Backlog-Ideen |
 | Engine Scoring kontinuierlich kalibrieren | 4 | 2 | 4 | 8.0 | Planned | Analytics und Review-Daten |
 | AI Translation Layer fuer dynamische Inhalte | 3 | 3 | 3 | 3.0 | Parked | i18n-Basis und Kostenmodell |
 | Studies Quality Workflow mit SLA | 4 | 2 | 4 | 8.0 | Planned | Admin-Betriebskapazitaet |
