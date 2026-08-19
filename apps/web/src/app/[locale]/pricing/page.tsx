@@ -41,7 +41,7 @@ export default function PricingPage() {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const isPro = user?.plan === "pro" || user?.plan === "team";
+  const isPro = user?.isPro ?? false;
 
   // Coming back from a successful Stripe Checkout: the webhook has (or is
   // about to have) written the subscription row, but the cached session

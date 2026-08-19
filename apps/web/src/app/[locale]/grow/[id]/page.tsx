@@ -1226,7 +1226,7 @@ export default function GrowPage({}: Props) {
   const { grows, loaded, completeTask, updateGrow, advancePhase } = useGrowState();
   const { entries, currentStreak } = useGrowLog(id);
   const { user } = useAuth();
-  const isPro = user?.plan === 'pro' || user?.plan === 'team' || user?.role === 'TEAM';
+  const isPro = user?.isPro ?? false;
   const { enabled: assistantEnabled, setEnabled: setAssistantEnabled } = useAssistantPreference();
 
   const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null);
