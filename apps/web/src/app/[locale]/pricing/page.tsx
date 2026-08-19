@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { useAuth } from "@/hooks/useAuth";
+import { getSession } from "@/lib/auth";
 import { Analytics } from "@/lib/analytics";
 
 // ── Pricing (must match the Price objects configured in the Stripe Dashboard) ──
@@ -50,11 +51,12 @@ export default function PricingPage() {
     Analytics.checkoutStarted(interval);
 
     try {
+      const token = getSession()?.token ?? "";
       const response = await fetch("/api/billing/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("secretleaf.session") ?? "{}").token ?? ""}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ interval }),
       });

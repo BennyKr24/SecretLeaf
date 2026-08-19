@@ -35,6 +35,10 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
      `/grow/[id]` die echten Pro-Insights zeigt statt des Upsells
   6. Preis in `apps/web/src/app/[locale]/pricing/page.tsx` (`PRICE_*_DISPLAY`-Konstanten)
      nochmal gegen die tatsächlichen Stripe-Preise gegenchecken
+  7. Customer Portal aktivieren: Stripe-Dashboard → Settings → Billing →
+     Customer portal → einmal konfigurieren (mind. "Cancel subscriptions"
+     und "Update payment method" erlauben). Ohne das schlägt der neue
+     "Abo verwalten"-Button auf der Profilseite (`/api/billing/portal`) fehl
 
 ---
 
