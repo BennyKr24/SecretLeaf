@@ -5,7 +5,7 @@
 // the exact same mapping without importing a "use client" hook file.
 // ────────────────────────────────────────────────────────────────────────────
 
-import type { Grow, GrowPhaseId, GrowUmgebung, GrowMedium, LichtTyp, Erfahrung, GrowStatus } from "@/lib/grow/types";
+import type { Grow, GrowPhaseId, GrowUmgebung, GrowMedium, LichtTyp, Erfahrung, GenetikTyp, GrowStatus } from "@/lib/grow/types";
 import type { GrowRow } from "@/lib/grow/db";
 import { computeCurrentDay } from "@/lib/grow/utils";
 
@@ -18,6 +18,7 @@ export function rowToGrow(row: GrowRow): Grow {
     lichtTyp: row.licht_typ as LichtTyp,
     ...(row.licht_leistung !== null && { lichtLeistung: row.licht_leistung }),
     erfahrung: row.erfahrung as Erfahrung,
+    ...(row.genetik_typ !== null && { genetikTyp: row.genetik_typ as GenetikTyp }),
     pflanzenAnzahl: row.pflanzen_anzahl,
     plants: row.plants,
     ...(row.flaeche !== null && { flaeche: row.flaeche }),

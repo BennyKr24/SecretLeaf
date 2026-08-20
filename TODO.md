@@ -67,24 +67,20 @@ Lüfter-Datenblättern), Ertrags-Ampelschwellen Indoor (400/200 → 500/300
 g/m²), Sämling-PPFD (200–400 → 100–300 µmol/m²/s), Einweichwasser-Temperatur
 (30°C → 20–25°C). Offen:
 
-- ⏸️ **Blütedauer in `phases.ts` (`getPhaseDurations`) hängt am
-  Erfahrungslevel (49 vs. 63 Tage für profi), nicht an der Sorte.** Recherche
-  bestätigt: Blütedauer ist genetisch fixiert (Indica ~7–9, Hybrid ~8–10,
-  Sativa ~10–13+ Wochen), keine Frage der Grower-Erfahrung — fachlich
-  unbegründete Modellierung. Richtiger Hebel wäre ein Genetik-/Sorten-Input
-  statt `erfahrung`. Redesign-Frage wie beim Outdoor-Ertrag unten, braucht
-  UI-Entscheidung.
-- ⏸️ **Outdoor-Ertrag `GPP_OUTDOOR` in `yield.ts`** (200/400/600 g/Pflanze) —
-  Recherche (2026-08-20) bestätigt: echte Redesign-Frage, kein Zahlendreher.
-  Dominanter Einzelfaktor laut mehreren Quellen ist Topfgröße/Wurzelraum
-  (Faustregel ~25 g Trockenertrag/Gallone bis ~10 gal, danach abnehmender
-  Grenzertrag), zweitwichtigster Faktor die Vegetationsdauer vor der Blüte.
-  Vorschlag: `GPP_OUTDOOR` durch Topfgrößen-Input (Lookup-Tabelle statt
-  linearer Formel, da die Kurve ab ~10 gal abflacht) ersetzen, Vegdauer als
-  zweiten Modifikator (×0.7 kurz / ×1.0 standard / ×1.3 verlängert)
-  ergänzen; bestehende Genetik-/Substrat-/Dünger-Faktoren multiplikativ
-  draufrechnen. Braucht UI-Entscheidung (neuer Input im Rechner), daher
-  nicht selbstständig umgesetzt.
+- ✅ **Outdoor-Ertrag redesignt (2026-08-21).** `GPP_OUTDOOR` (erfahrungs-
+  gekoppelt) ersetzt durch Topfgrößen-Input (`topfgroesseLiter`, 3.7 g/L,
+  Soft-Cap oberhalb 80L) + Vegetationsdauer-Modifikator (`vegDauer`: kurz
+  ×0.7 / standard ×1.0 / verlängert ×1.3) in `lib/tools/yield.ts` und
+  `tools/ertrags-schaetzer/page.tsx`. Kein DB-Impact (reiner Client-Rechner).
+- ✅ **Blütedauer an Genetik gekoppelt (2026-08-21).** `getPhaseDurations`
+  nimmt jetzt `genetikTyp` (Indica 42/Hybrid 49/Sativa 70 Tage Kernblüte)
+  statt `erfahrung`; neuer Wizard-Schritt in `GrowSetupWizard.tsx`. Fehlende
+  Migration `supabase/migrations/202608210000_grow_genetik_typ.sql`
+  (nullable `genetik_typ`-Spalte auf `grows`) **noch nicht angewendet** —
+  Docker/lokale Supabase lief nicht in der Session. **Vor dem nächsten
+  Deploy unbedingt anwenden**, sonst schlägt `createGrow` für eingeloggte
+  Nutzer fehl (INSERT auf nicht-existente Spalte). Bestehende Grows/Pläne
+  sind nicht betroffen (Dauer wird nur bei Erstellung neu berechnet).
 - 💤 **PPFD-Untergrenze Blüte in `lighting.ts`** (aktuell 600) liegt am
   unteren Rand des 2026er-Konsens (mehrere Quellen nennen eher 700–900 ohne
   CO2-Anreicherung) — optionale Anhebung auf 700, kein Fehler.

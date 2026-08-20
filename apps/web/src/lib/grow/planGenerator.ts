@@ -27,9 +27,9 @@ import {
  * @returns     A fully populated GrowPlan ready to be stored on a Grow.
  */
 export function generateGrowPlan(
-  input: Pick<CreateGrowInput, "umgebung" | "medium" | "erfahrung">
+  input: Pick<CreateGrowInput, "umgebung" | "medium" | "erfahrung" | "genetikTyp">
 ): GrowPlan {
-  const durations = getPhaseDurations(input.umgebung, input.medium, input.erfahrung);
+  const durations = getPhaseDurations(input.umgebung, input.medium, input.genetikTyp);
 
   let currentDay = 1;
 

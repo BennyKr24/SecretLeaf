@@ -21,6 +21,8 @@ const DEFAULTS: YieldInputs = {
   erfahrung: 'einsteiger',
   genetik: 'feminisiert',
   lichtLeistung: 400,
+  topfgroesseLiter: 20,
+  vegDauer: 'standard',
   pflanzenAnzahl: 4,
   substrat: 'erde',
   duengerIntensitaet: 'mittel',
@@ -77,16 +79,30 @@ export default function ErtragSchaetzerPage() {
                 { value: 'outdoor', label: 'Outdoor' },
               ]}
             />
-            <ToolSelect
-              label="Erfahrung"
-              value={inputs.erfahrung}
-              onChange={(v) => setInput('erfahrung', v as TerpiraDifficulty)}
-              options={[
-                { value: 'einsteiger', label: 'Einsteiger' },
-                { value: 'fortgeschritten', label: 'Fortgeschritten' },
-                { value: 'profi', label: 'Profi' },
-              ]}
-            />
+            {inputs.anbauMethode === 'indoor' && (
+              <ToolSelect
+                label="Erfahrung"
+                value={inputs.erfahrung}
+                onChange={(v) => setInput('erfahrung', v as TerpiraDifficulty)}
+                options={[
+                  { value: 'einsteiger', label: 'Einsteiger' },
+                  { value: 'fortgeschritten', label: 'Fortgeschritten' },
+                  { value: 'profi', label: 'Profi' },
+                ]}
+              />
+            )}
+            {inputs.anbauMethode === 'outdoor' && (
+              <ToolSelect
+                label="Vegetationsdauer vor der Blüte"
+                value={inputs.vegDauer}
+                onChange={(v) => setInput('vegDauer', v as YieldInputs['vegDauer'])}
+                options={[
+                  { value: 'kurz', label: 'Kurz (< 4 Wochen)' },
+                  { value: 'standard', label: 'Standard (4–8 Wochen)' },
+                  { value: 'verlaengert', label: 'Verlängert (> 8 Wochen)' },
+                ]}
+              />
+            )}
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -148,6 +164,29 @@ export default function ErtragSchaetzerPage() {
                 { value: 2000, label: '2.000W' },
               ]}
             />
+          )}
+
+          {inputs.anbauMethode === 'outdoor' && (
+            <div>
+              <ToolSlider
+                label="Topfgröße pro Pflanze"
+                value={inputs.topfgroesseLiter}
+                onChange={(v) => setInput('topfgroesseLiter', v)}
+                min={5}
+                max={120}
+                step={5}
+                unit="L"
+                marks={[
+                  { value: 5, label: '5L' },
+                  { value: 20, label: '20L' },
+                  { value: 50, label: '50L' },
+                  { value: 120, label: '120L' },
+                ]}
+              />
+              <p className="mt-1.5 text-xs text-muted-fg">
+                Wurzelraum ist der wichtigste Einzelfaktor für Outdoor-Ertrag — größerer Topf schlägt Erfahrung.
+              </p>
+            </div>
           )}
 
           <ToolSelect
