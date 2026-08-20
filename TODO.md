@@ -76,11 +76,17 @@ g/m²), Sämling-PPFD (200–400 → 100–300 µmol/m²/s), Einweichwasser-Temp
   nimmt jetzt `genetikTyp` (Indica 42/Hybrid 49/Sativa 70 Tage Kernblüte)
   statt `erfahrung`; neuer Wizard-Schritt in `GrowSetupWizard.tsx`. Fehlende
   Migration `supabase/migrations/202608210000_grow_genetik_typ.sql`
-  (nullable `genetik_typ`-Spalte auf `grows`) **noch nicht angewendet** —
-  Docker/lokale Supabase lief nicht in der Session. **Vor dem nächsten
-  Deploy unbedingt anwenden**, sonst schlägt `createGrow` für eingeloggte
-  Nutzer fehl (INSERT auf nicht-existente Spalte). Bestehende Grows/Pläne
-  sind nicht betroffen (Dauer wird nur bei Erstellung neu berechnet).
+  (nullable `genetik_typ`-Spalte auf `grows`) **lokal angewendet** (direkt
+  per `docker exec ... psql`, da `supabase migration up` wegen der
+  bekannten Migrationshistorie-Drift — siehe
+  [[secretleaf-security-migration-gap-2026-08-19]] — mit
+  `LegacyMigrationMissingLocalError` abbrach; die CLI-eigene
+  Migrations-Buchführung weiß davon also nichts, das Schema stimmt aber).
+  **Production noch nicht angefasst — vor dem nächsten Deploy unbedingt
+  die Migration gegen Prod fahren**, sonst schlägt `createGrow` für
+  eingeloggte Nutzer fehl (INSERT auf nicht-existente Spalte). Bestehende
+  Grows/Pläne sind nicht betroffen (Dauer wird nur bei Erstellung neu
+  berechnet).
 - 💤 **PPFD-Untergrenze Blüte in `lighting.ts`** (aktuell 600) liegt am
   unteren Rand des 2026er-Konsens (mehrere Quellen nennen eher 700–900 ohne
   CO2-Anreicherung) — optionale Anhebung auf 700, kein Fehler.
