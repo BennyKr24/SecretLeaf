@@ -5,7 +5,6 @@ import type { Route } from "next";
 import { useMemo, useState } from "react";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
-import { fertilizerCatalog, type FertilizerProfile } from "@/data/terpira/fertilizers";
 
 type PlanCategory = "starter" | "stabilitaet" | "budget" | "qualitaet" | "leistung";
 type PlanSetup = "soil" | "hydro" | "hybrid";
@@ -275,10 +274,6 @@ const categoryLabel: Record<PlanCategory, string> = {
   leistung: "Leistung"
 };
 
-function byId(id: string): FertilizerProfile | undefined {
-  return fertilizerCatalog.find((item) => item.id === id);
-}
-
 export default function FertilizerPlansPage() {
   const [query, setQuery] = useState("");
   const [activeSetup, setActiveSetup] = useState<PlanSetup | "all">("all");
@@ -287,8 +282,6 @@ export default function FertilizerPlansPage() {
   const [activeGoal, setActiveGoal] = useState<PlanGoal | "all">("all");
   const [activeCategory, setActiveCategory] = useState<PlanCategory | "all">("all");
   const [sortBy, setSortBy] = useState<"recommended" | "durationAsc" | "durationDesc">("recommended");
-
-  const uniqueProductCount = new Set(plans.flatMap((p) => p.stages.flatMap((s) => s.productIds))).size;
 
   const categoryCounts = useMemo(() => {
     const map: Record<PlanCategory, number> = {
@@ -368,10 +361,11 @@ export default function FertilizerPlansPage() {
             <p className="mt-1 text-2xl font-bold text-foreground">{plans.length}</p>
             <p className="text-sm text-muted-fg">kuratierte Düngepläne</p>
           </article>
-          <article className="rounded-xl border border-border bg-card p-5 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Produkte referenziert</p>
-            <p className="mt-1 text-2xl font-bold text-foreground">{uniqueProductCount}</p>
-            <p className="text-sm text-muted-fg">aus dem Katalog</p>
+          <article className="rounded-xl border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 p-5 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-400">Produktempfehlungen</p>
+            <p className="mt-1 text-sm font-medium text-amber-900 dark:text-amber-200">
+              Vorübergehend nicht verfügbar – der Dünger-Katalog wird überarbeitet.
+            </p>
           </article>
           <article className="rounded-xl border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 p-5 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-wide text-cyan-700 dark:text-cyan-400">Hinweis</p>
@@ -553,22 +547,9 @@ export default function FertilizerPlansPage() {
                       </div>
                       <p className="text-xs text-foreground/80">{stage.notes}</p>
 
-                      <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                        {stage.productIds.map((id) => {
-                          const product = byId(id);
-                          if (!product) return null;
-                          return (
-                            <Link
-                              key={`${stage.label}-${id}`}
-                              href={`/database/fertilizers?q=${encodeURIComponent(product.name)}` as Route}
-                              className="block rounded-lg border border-border bg-background px-3 py-2 hover:border-emerald-300 hover:bg-emerald-50"
-                            >
-                              <p className="text-sm font-semibold text-foreground">{product.name}</p>
-                              <p className="text-xs text-muted-fg">{product.brand} · NPK {product.npk.n}-{product.npk.p}-{product.npk.k}</p>
-                            </Link>
-                          );
-                        })}
-                      </div>
+                      <p className="mt-3 rounded-lg border border-dashed border-border bg-background px-3 py-2 text-xs text-muted-fg">
+                        Konkrete Produktempfehlungen für diese Stufe sind vorübergehend nicht verfügbar, während der Dünger-Katalog überarbeitet wird.
+                      </p>
                     </section>
                   ))}
                 </div>

@@ -139,14 +139,21 @@ ergab:
   Nährstoffverbrennungs-Risiko, nicht nur ein Trivia-Fehler. Zwei Einträge
   trugen erfundene Produktnamen unter echten Marken (Fox Farm "Flower
   Kiss", BioBizz "Growth-C" statt "Bio-Grow").
-- **Läuft aktuell live unter `/database/fertilizers`, mit echten
-  Markennamen.** Vor Phase 2 (Presets im Nährstoffrechner) muss geklärt
-  werden: Datenbank vom Netz nehmen / mit deutlichem
-  Unverifiziert-Disclaimer versehen / komplett neu aus echten
-  Herstellerdatenblättern quellen (klein & handverlesen statt 1.210
-  Einträge). Reine Entscheidung, kein Code-Fix ohne vorherige Klärung.
+- ✅ **Vom Netz genommen (2026-08-21).** `/database/fertilizers` zeigt jetzt
+  einen "vorübergehend nicht verfügbar"-Hinweis, `/api/fertilizers`
+  antwortet mit 503, die personalisierte Produktempfehlung mit Dosierung in
+  `tools/plans` ist deaktiviert, der Katalog ist aus dem Suchindex entfernt,
+  Hub- und Status-Seite verlinken nicht mehr dorthin. Dabei zusätzlich
+  gefunden und mitentfernt: die "Dünger-Marktabdeckung im Zeitverlauf"-Sektion
+  auf `/status` zeigte ebenfalls fiktive Coverage-Snapshots
+  (`data/fertilizerCoverageHistory.json`) als wachsenden Prozentwert.
+  `data/terpira/fertilizers.ts` selbst bleibt unverändert als Ausgangsbasis
+  für eine spätere Neuquellung liegen. Offen bleibt nur noch die
+  Grundsatzfrage, **ob/wie neu gequellt wird** (klein & handverlesen aus
+  echten Herstellerdatenblättern statt 1.210 algorithmisch erzeugten
+  Einträgen) — reine Entscheidung, kein Code-Fix.
 
-Ursprüngliche Phase-2/3-Planung (jetzt abhängig von obiger Entscheidung):
+Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheidung):
 
 - ⏸️ **Phase 2 — Fachdaten andocken** (nur mit verifizierten Daten sinnvoll).
   Produktprofile (NPK/EC/pH/Verdünnung) als auswählbare Presets in
