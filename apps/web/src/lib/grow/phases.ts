@@ -125,7 +125,7 @@ export function buildPhaseTasks(
           `keim-soak-${startDay}`,
           "keimung",
           "Samen einweichen (12–24 h)",
-          "In 30 °C warmem Wasser einlegen. Wenn der Samen aufplatzt oder sinkt — bereit zum Keimen.",
+          "In 20–25 °C warmem Wasser einlegen (Zimmertemperatur — wärmeres Wasser riskiert Hitzeschock). Wenn der Samen aufplatzt oder sinkt — bereit zum Keimen.",
           d(0),
           "allgemein"
         ),
@@ -153,7 +153,7 @@ export function buildPhaseTasks(
           `sae-light-${startDay}`,
           "saemling",
           "Licht auf 18/6 einstellen",
-          "18 h Licht, 6 h Dunkel. Schwache Intensität für zarte Sämlinge (200–400 µmol/m²/s).",
+          "18 h Licht, 6 h Dunkel. Schwache Intensität für zarte Sämlinge (100–300 µmol/m²/s, in den ersten Tagen eher am unteren Ende).",
           d(0),
           "kontrolle"
         ),

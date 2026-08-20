@@ -28,13 +28,18 @@ export type VentilationOutput = {
   results: ToolResultData[];
 };
 
+// maxFlow kalibriert an realen Rohrlüfter-Datenblättern (Systemair RVK-Serie,
+// Standard- bis Hochleistungsvariante) statt an theoretischer Rohr-Kapazität
+// bei hoher Luftgeschwindigkeit — die alten Werte lagen bei 250mm z. B. 59%
+// über dem stärksten real erhältlichen Consumer-Lüfter dieser Größe und
+// hätten bei hohem Bedarf ein zu kleines Rohr empfohlen. Recherche 2026-08-21.
 const ROHR_KLASSEN = [
-  { durchmesser: 100, maxFlow: 250 },
-  { durchmesser: 125, maxFlow: 400 },
-  { durchmesser: 150, maxFlow: 600 },
-  { durchmesser: 160, maxFlow: 700 },
-  { durchmesser: 200, maxFlow: 1100 },
-  { durchmesser: 250, maxFlow: 1800 },
+  { durchmesser: 100, maxFlow: 175 },
+  { durchmesser: 125, maxFlow: 280 },
+  { durchmesser: 150, maxFlow: 420 },
+  { durchmesser: 160, maxFlow: 490 },
+  { durchmesser: 200, maxFlow: 770 },
+  { durchmesser: 250, maxFlow: 1150 },
 ];
 
 function getLevel(empfohlen: number): ResultLevel {

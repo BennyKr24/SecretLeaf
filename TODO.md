@@ -55,8 +55,25 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   pests/ATTRIBUTION.md` und `.../deficiencies/ATTRIBUTION.md` für die
   aktuelle Quellenliste.
 
-## 📐 Grow-Rechner — offene Werte ohne belastbare Quelle
+## 📐 Grow-Rechner — Kalibrierungsaudit (2026-08-21)
 
+Vollständige Faktenprüfung aller Rechen-Konstanten in `lib/tools/*` und
+`lib/grow/phases.ts` gegen Herstellerangaben/HVAC-Normen/aktuelle
+Kultivierungsliteratur. Ergebnis-Artifact (Tabellen + Quellen pro Wert) unter
+`kalibrierungsaudit.html` im Scratchpad der Session. Direkt umgesetzt: Licht-
+Höhenkorrektur (Formel/Kommentar-Widerspruch behoben, neu kalibriert),
+Belüftungs-Rohrdurchmesser-Tabelle (war bis zu 59% über realen
+Lüfter-Datenblättern), Ertrags-Ampelschwellen Indoor (400/200 → 500/300
+g/m²), Sämling-PPFD (200–400 → 100–300 µmol/m²/s), Einweichwasser-Temperatur
+(30°C → 20–25°C). Offen:
+
+- ⏸️ **Blütedauer in `phases.ts` (`getPhaseDurations`) hängt am
+  Erfahrungslevel (49 vs. 63 Tage für profi), nicht an der Sorte.** Recherche
+  bestätigt: Blütedauer ist genetisch fixiert (Indica ~7–9, Hybrid ~8–10,
+  Sativa ~10–13+ Wochen), keine Frage der Grower-Erfahrung — fachlich
+  unbegründete Modellierung. Richtiger Hebel wäre ein Genetik-/Sorten-Input
+  statt `erfahrung`. Redesign-Frage wie beim Outdoor-Ertrag unten, braucht
+  UI-Entscheidung.
 - ⏸️ **Outdoor-Ertrag `GPP_OUTDOOR` in `yield.ts`** (200/400/600 g/Pflanze) —
   Recherche (2026-08-20) bestätigt: echte Redesign-Frage, kein Zahlendreher.
   Dominanter Einzelfaktor laut mehreren Quellen ist Topfgröße/Wurzelraum
@@ -68,10 +85,19 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   ergänzen; bestehende Genetik-/Substrat-/Dünger-Faktoren multiplikativ
   draufrechnen. Braucht UI-Entscheidung (neuer Input im Rechner), daher
   nicht selbstständig umgesetzt.
+- 💤 **PPFD-Untergrenze Blüte in `lighting.ts`** (aktuell 600) liegt am
+  unteren Rand des 2026er-Konsens (mehrere Quellen nennen eher 700–900 ohne
+  CO2-Anreicherung) — optionale Anhebung auf 700, kein Fehler.
+- 💤 **Trocknung/Curing-Parameter in `phases.ts`** (18–21°C/50–60% RH, festes
+  10–15-Min.-Burping über 2–4 Wochen) sind nicht falsch, aber aktuelle Praxis
+  tendiert zu 55–65% RH und gestaffeltem Burping (täglich → alle 2–3 Tage)
+  für bessere Terpenerhaltung — optionales Update, kein Bug.
+- 💤 **Genetik-Faktor `regular: 0.85` in `yield.ts`** ist irreführend
+  benannt — bildet vermutlich implizit Männchen-Ausfall im Bestand ab, ohne
+  das im Code zu benennen. Kein Zahlenfehler, Kommentar würde helfen.
 - 💤 **`intelligence.ts` Ertragsverlust-/-gewinn-Gramm-Heuristiken** (z. B.
-  "−35g bei fehlendem Log") und **`phases.ts` Phasen-Dauern** sind
-  produktinterne Heuristiken ohne externe Quelle bzw. stark sorten-/setup-
-  abhängig — nicht gegen Literatur prüfbar, absichtlich nicht angefasst.
+  "−35g bei fehlendem Log") sind produktinterne Heuristiken ohne externe
+  Quelle — nicht gegen Literatur prüfbar, absichtlich nicht angefasst.
 
 ## 🌐 Übersetzung / i18n
 
@@ -94,11 +120,36 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 ## 🧪 Dünger-Katalog (`/database`, `/database/fertilizers`) — Restructure Phase 2/3
 
 Phase 1 (Preis-/Shop-Schicht mit fabrizierten Daten entfernen) ist erledigt
-(2026-08-19) — siehe Audit-Artifact und `duenger_katalog_audit.html` im
-Scratchpad der Session. Offen:
+(2026-08-19). **Aber:** die Annahme aus Phase 1, die verbleibenden 242
+Produktprofile seien "real NPK/EC/pH specs, curated data", war falsch und
+wurde nie geprüft — Stichproben-Verifikation (2026-08-21, siehe
+`kalibrierungsaudit.html` im Scratchpad) gegen echte Herstellerdatenblätter
+ergab:
 
-- ⏸️ **Phase 2 — Fachdaten andocken.** 242 Produktprofile (NPK/EC/pH/
-  Verdünnung aus `data/terpira/fertilizers.ts`) als auswählbare Presets in
+- ⚠️ **Von den 1.210 tatsächlich ausgespielten Profilen sind nur 50 (4%)
+  überhaupt handkuratiert** — die übrigen 1.160 werden aus 16 Marken × 12
+  generischen Linien-Namen per Zeichen-Hash (`createSyntheticNpk()` in
+  `buildMarketExpansionCatalog()`) erfunden, plus eine Ver­vier­fachung des
+  gesamten Bestands (`buildExtendedCatalog()`) mit "Lite/Pro/Max/Elite"-
+  Varianten, die vermutlich nicht existieren.
+- ⚠️ **Selbst die 50 "echten" Kern-Einträge stimmten in der Stichprobe (14
+  geprüft) nur zu 21% mit echten Herstellerangaben überein.** Drei Fälle
+  (AN Sensi Grow/Bloom, Atami Bloombastic) empfahlen eine Dosierung 2–4×
+  über der realen Herstellerangabe — bei echter Anwendung ein
+  Nährstoffverbrennungs-Risiko, nicht nur ein Trivia-Fehler. Zwei Einträge
+  trugen erfundene Produktnamen unter echten Marken (Fox Farm "Flower
+  Kiss", BioBizz "Growth-C" statt "Bio-Grow").
+- **Läuft aktuell live unter `/database/fertilizers`, mit echten
+  Markennamen.** Vor Phase 2 (Presets im Nährstoffrechner) muss geklärt
+  werden: Datenbank vom Netz nehmen / mit deutlichem
+  Unverifiziert-Disclaimer versehen / komplett neu aus echten
+  Herstellerdatenblättern quellen (klein & handverlesen statt 1.210
+  Einträge). Reine Entscheidung, kein Code-Fix ohne vorherige Klärung.
+
+Ursprüngliche Phase-2/3-Planung (jetzt abhängig von obiger Entscheidung):
+
+- ⏸️ **Phase 2 — Fachdaten andocken** (nur mit verifizierten Daten sinnvoll).
+  Produktprofile (NPK/EC/pH/Verdünnung) als auswählbare Presets in
   `tools/naehrstoff-rechner` integrieren. Restliche Katalog-Ansicht zur
   reinen Nachschlagetabelle ohne Preise umbauen, im Wissenssystem verankert
   (analog "Sortendatenbank"/"Extraktdatenbank" aus

@@ -66,8 +66,11 @@ function densityFactor(pflanzen: number, flaeche: number): number {
 
 function yieldLevel(ertragProQm: number, methode: 'indoor' | 'outdoor'): ResultLevel {
   if (methode === 'indoor') {
-    if (ertragProQm >= 400) return 'gruen';
-    if (ertragProQm >= 200) return 'gelb';
+    // Schwellen 2026-08-21 angehoben (waren 400/200): aktuelle LED-Benchmarks
+    // setzen "solide" bei ≥500 g/m², "sehr gut" bei 600-800 g/m² — 400 war
+    // nach heutigem Stand nur noch Mittelklasse, nicht "gut".
+    if (ertragProQm >= 500) return 'gruen';
+    if (ertragProQm >= 300) return 'gelb';
     return 'rot';
   }
   if (ertragProQm >= 300) return 'gruen';
