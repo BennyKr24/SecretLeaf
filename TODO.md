@@ -30,8 +30,9 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   `4242 4242 4242 4242` bezahlt → `subscriptions`-Zeile mit `plan=pro`
   landet korrekt → `/pricing` und `/profile` zeigen Pro → Customer Portal
   öffnet echte Stripe-Seite mit Abo/Rechnung/Kündigen-Option. Dabei nebenbei
-  gefixt: die lokale `subscriptions`-Migration war nie gegen die lokale DB
-  gefahren worden (nur als Datei vorhanden) — jetzt angewendet.
+  gefixt: die `subscriptions`-Migration war nie gegen lokale DB *oder* Prod
+  gefahren worden (nur als Datei vorhanden) — beides am 2026-08-21
+  nachgeholt (`supabase db push --linked`).
 - ⏸️ **Für echten Go-Live fehlt nur noch, was ausschließlich manuell geht:**
   1. Dieselbe Produkt-/Preis-/Webhook-/Portal-Konfiguration im Stripe
      **Live-Modus** wiederholen (Sandbox-Werte gelten nur für Tests)
@@ -65,28 +66,11 @@ Höhenkorrektur (Formel/Kommentar-Widerspruch behoben, neu kalibriert),
 Belüftungs-Rohrdurchmesser-Tabelle (war bis zu 59% über realen
 Lüfter-Datenblättern), Ertrags-Ampelschwellen Indoor (400/200 → 500/300
 g/m²), Sämling-PPFD (200–400 → 100–300 µmol/m²/s), Einweichwasser-Temperatur
-(30°C → 20–25°C). Offen:
+(30°C → 20–25°C), Outdoor-Ertrag (Topfgrößen-/Vegdauer-Input statt
+Erfahrungslevel) und Blütedauer (an Genetik statt Erfahrung gekoppelt,
+Migration `202608210000_grow_genetik_typ.sql` lokal + Prod angewendet).
+Offen:
 
-- ✅ **Outdoor-Ertrag redesignt (2026-08-21).** `GPP_OUTDOOR` (erfahrungs-
-  gekoppelt) ersetzt durch Topfgrößen-Input (`topfgroesseLiter`, 3.7 g/L,
-  Soft-Cap oberhalb 80L) + Vegetationsdauer-Modifikator (`vegDauer`: kurz
-  ×0.7 / standard ×1.0 / verlängert ×1.3) in `lib/tools/yield.ts` und
-  `tools/ertrags-schaetzer/page.tsx`. Kein DB-Impact (reiner Client-Rechner).
-- ✅ **Blütedauer an Genetik gekoppelt (2026-08-21).** `getPhaseDurations`
-  nimmt jetzt `genetikTyp` (Indica 42/Hybrid 49/Sativa 70 Tage Kernblüte)
-  statt `erfahrung`; neuer Wizard-Schritt in `GrowSetupWizard.tsx`. Fehlende
-  Migration `supabase/migrations/202608210000_grow_genetik_typ.sql`
-  (nullable `genetik_typ`-Spalte auf `grows`) **lokal angewendet** (direkt
-  per `docker exec ... psql`, da `supabase migration up` wegen der
-  bekannten Migrationshistorie-Drift — siehe
-  [[secretleaf-security-migration-gap-2026-08-19]] — mit
-  `LegacyMigrationMissingLocalError` abbrach; die CLI-eigene
-  Migrations-Buchführung weiß davon also nichts, das Schema stimmt aber).
-  **Production noch nicht angefasst — vor dem nächsten Deploy unbedingt
-  die Migration gegen Prod fahren**, sonst schlägt `createGrow` für
-  eingeloggte Nutzer fehl (INSERT auf nicht-existente Spalte). Bestehende
-  Grows/Pläne sind nicht betroffen (Dauer wird nur bei Erstellung neu
-  berechnet).
 - 💤 **PPFD-Untergrenze Blüte in `lighting.ts`** (aktuell 600) liegt am
   unteren Rand des 2026er-Konsens (mehrere Quellen nennen eher 700–900 ohne
   CO2-Anreicherung) — optionale Anhebung auf 700, kein Fehler.

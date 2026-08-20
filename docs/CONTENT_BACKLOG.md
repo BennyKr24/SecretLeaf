@@ -171,7 +171,44 @@ cross-link cleanly (see workflow §8).
 
 ---
 
-## 5. Notes
+## 5. Proposed: Grow-Phasen-Tutorial-Reihe (2026-08-21, noch nicht priorisiert)
+
+Idee (User-Vorschlag, noch nicht in der Ranked-Backlog-Tabelle oben
+eingepreist/gescort — braucht eigene Priorisierungsrunde, bevor Artikel
+gebaut werden): statt einzelner Fach-Artikel eine **zusammenhängende
+Tutorial-Reihe, eine pro Grow-OS-Phase** (`keimung`, `saemling`, `veg`,
+`bluete`, `spaetbluete`, `ernte` — siehe `PHASE_ORDER` in
+`lib/grow/phases.ts`), die extrem konkret und handlungsleitend erklärt, wie
+man genau *diese* Phase optimal durchbekommt — nicht "was ist die
+Keimphase", sondern z. B. "wie genau bringe ich den Samen zum Springen"
+(Wassertemperatur, Papiertuch- vs. Direktsaat-Methode, wann umsetzen) oder
+in der Spätblüte "wie sehe ich zweifelsfrei, wann die Pflanze fertig ist"
+(Trichom-Ampel mit Lupenbildern, Stempelfärbung, Sorten-abhängige
+Varianz). Massiver Mehrwert-Hebel, weil direkt aus den Grow-Plan-Tasks in
+der App verlinkbar — ein Nutzer, der gerade in "Spätblüte" steckt, bekommt
+nicht nur einen Task-Text, sondern einen tiefen, gut belegten Artikel exakt
+für seine aktuelle Phase.
+
+**Anspruch laut User explizit "auf krassem Level"** — das heißt: volle
+Erfüllung der [`SOURCE_REQUIREMENTS.md`](./content-factory/SOURCE_REQUIREMENTS.md)
+(evidence_level, zitierte Quellen pro Claim, confidence_score,
+last_review_date), keine oberflächliche Zusammenfassung. Mehrere der
+ranked-Backlog-Items oben decken Teile davon bereits ab und sollten als
+Kern der jeweiligen Phasen-Tutorials dienen statt doppelt neu geschrieben zu
+werden: `samenkeimung-troubleshooting` (#49) + `keimung-und-anzucht` (#54)
+→ Keimung/Sämling; `fuetterungsplan-nach-phase` (#20) +
+`naehrstoffbedarf-cannabis-lebenszyklus` (#21) → Veg/Blüte-Nährstoffseite;
+`erntefenster-trichomreife` (#19) + `trichom-reifegrad-bilddiagnose` (#30)
+→ Spätblüte/Erntezeitpunkt; `trocknung-protokoll` (#29) → Ernte. Lücken
+ohne existierendes Backlog-Item: ein dediziertes Veg-Phasen-Tutorial
+(Topping/LST-Timing, Kronendach-Aufbau) und ein Blüte-Phasen-Tutorial
+(Lichtumstellung, Stretch-Phase, Nährstoffwechsel N→P/K).
+
+Nächster Schritt vor Umsetzung: durch den Scoring-Prozess aus §1 laufen
+lassen und entscheiden, ob es als eigener sechsteiliger Track oder als
+Uplift/Umstrukturierung der genannten Einzelartikel gebaut wird.
+
+## 6. Notes
 
 - **Slugs are proposed** (German, kebab-case) to match existing conventions in
   `apps/web/src/data/terpira/wiki.ts`; finalize at draft time.
