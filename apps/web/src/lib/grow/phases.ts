@@ -239,8 +239,8 @@ export function buildPhaseTasks(
             `veg-lst-${startDay}`,
             "veg",
             "LST beginnen",
-            "Seitentriebe vorsichtig mit Bindedraht nach außen biegen. Ziel: flaches, gleichmäßiges Kronendach.",
-            d(7),
+            "Seitentriebe vorsichtig mit Bindedraht nach außen biegen. Ziel: flaches, gleichmäßiges Kronendach. Erst ab 3-6 entwickelten Knoten mit tragfähigem Hauptstängel — früher riskiert Schäden am noch fragilen Gewebe.",
+            d(18),
             "training"
           )
         );
