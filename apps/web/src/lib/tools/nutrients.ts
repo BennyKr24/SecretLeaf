@@ -36,18 +36,22 @@ const SUBSTRAT_FACTOR: Record<Substrat, number> = {
 
 // EC-Zielbereiche sind mediumabhängig: Coco hat keine Puffer-Kapazität und
 // verträgt/braucht spürbar höhere EC als Erde, die Salzspitzen abpuffert.
-// Hydro-Werte sind unverändert von Erde übernommen (keine belastbare Quelle
-// gefunden) — konservativer Mittelweg, kein bestätigter Zielwert.
+// Hydro (aktive Systeme mit Wurzelbelüftung, z. B. DWC) hat aus demselben
+// Grund keinen Puffer und toleriert wegen der Sauerstoffversorgung am
+// Wurzelballen tendenziell sogar höhere EC als Coco, nicht niedriger —
+// Werte 2026-08-20 recherchiert (Lucas-Formula-/DWC-Feedchart-Konsens,
+// kein peer-reviewter Beleg) und von den zuvor 1:1 kopierten Erde-Werten
+// angehoben; Blüte war schon zuvor eigenständig kalibriert.
 const EC_THRESHOLDS: Record<NutrientInputs['phase'], Record<Substrat, { gruen: number; gelb: number }>> = {
   veg: {
     erde:  { gruen: 1.6, gelb: 2.0 },
     coco:  { gruen: 2.0, gelb: 2.4 },
-    hydro: { gruen: 1.6, gelb: 2.0 },
+    hydro: { gruen: 1.8, gelb: 2.2 },
   },
   uebergang: {
     erde:  { gruen: 1.8, gelb: 2.2 },
     coco:  { gruen: 2.2, gelb: 2.6 },
-    hydro: { gruen: 1.8, gelb: 2.2 },
+    hydro: { gruen: 2.0, gelb: 2.4 },
   },
   bluete: {
     erde:  { gruen: 2.0, gelb: 2.4 },

@@ -46,6 +46,34 @@ function countAnchorMatches(text: string): number {
   return matches?.length ?? 0;
 }
 
+// How close (in characters) an ambiguous acronym/term match must be to an
+// unambiguous cannabis anchor to count as a real topic hit — roughly a
+// sentence's width on either side. Prevents e.g. a paper's own "cannabis"
+// mention in an unrelated section from vouching for a stray "THC" acronym
+// used elsewhere for something else entirely.
+const AMBIGUOUS_MATCH_PROXIMITY_CHARS = 120;
+
+/**
+ * True if `pattern` matches `text` AND at least one match sits within
+ * AMBIGUOUS_MATCH_PROXIMITY_CHARS of an unambiguous cannabis anchor —
+ * used to gate ambiguous topic-cluster keywords (thc/cbd/terpene/...)
+ * that otherwise collide with unrelated fields when matched bare.
+ */
+function hasNearbyUnambiguousAnchor(text: string, pattern: RegExp): boolean {
+  const flags = pattern.flags.includes("g") ? pattern.flags : `${pattern.flags}g`;
+  const matchPattern = new RegExp(pattern.source, flags);
+  const anchorPattern = new RegExp(CANNABIS_ANCHOR_UNAMBIGUOUS.source, "i");
+
+  let match: RegExpExecArray | null;
+  while ((match = matchPattern.exec(text)) !== null) {
+    const start = Math.max(0, match.index - AMBIGUOUS_MATCH_PROXIMITY_CHARS);
+    const end = Math.min(text.length, match.index + match[0].length + AMBIGUOUS_MATCH_PROXIMITY_CHARS);
+    if (anchorPattern.test(text.slice(start, end))) return true;
+    if (match.index === matchPattern.lastIndex) matchPattern.lastIndex++;
+  }
+  return false;
+}
+
 /** Build the combined text corpus for classification. */
 function buildCorpus(study: NormalizedStudy): string {
   return `${study.title} ${study.publisher} ${study.abstract ?? ""}`.toLowerCase();
@@ -132,7 +160,10 @@ function matchTopics(
   let topicFit = 0;
 
   for (const cluster of TOPIC_CLUSTERS) {
-    const hits = cluster.include.filter((pattern) => pattern.test(text)).length;
+    let hits = cluster.include.filter((pattern) => pattern.test(text)).length;
+    if (cluster.includeNearAnchor) {
+      hits += cluster.includeNearAnchor.filter((pattern) => hasNearbyUnambiguousAnchor(text, pattern)).length;
+    }
     if (hits > 0) {
       matchedTopics.push(cluster.key);
       topicFit += 18 + hits * 8;

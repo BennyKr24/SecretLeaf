@@ -3263,7 +3263,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
       { label: "Leitgröße", value: "VPD statt RH allein (Temp + RH zusammen)" },
       { label: "Zu hoch (Risiko)", value: "Schimmel/Botrytis/Mehltau, langsame Transpiration" },
       { label: "Zu niedrig (Risiko)", value: "Stomataschluss, Ca-/Welkesymptome" },
-      { label: "VPD-Korridor", value: "Veg ~0.8–1.1, Blüte ~1.2–1.5 kPa" },
+      { label: "VPD-Korridor", value: "Veg ~0.8–1.2, Blüte ~1.2–1.5 kPa" },
       { label: "Schnellkorrektur", value: "Be-/Entfeuchter + Luftbewegung, phasengerecht" },
     ],
     sections: [
@@ -4692,7 +4692,7 @@ export const DIAGNOSTIC_GROW_KNOWLEDGE: Record<
   },
   "luftfeuchte-management": {
     growValue:
-      "Steuere VPD, nicht die nackte RH-Zahl: Veg ~0.8–1.1, Blüte ~1.2–1.5 kPa; in der späten Blüte RH auf 40–50 % drücken (auch nachts), um Bud Rot und Mehltau zu vermeiden.",
+      "Steuere VPD, nicht die nackte RH-Zahl: Veg ~0.8–1.2, Blüte ~1.2–1.5 kPa; in der späten Blüte RH auf 40–50 % drücken (auch nachts), um Bud Rot und Mehltau zu vermeiden.",
     qualityScore: 5,
     growCategory: "climate",
   },

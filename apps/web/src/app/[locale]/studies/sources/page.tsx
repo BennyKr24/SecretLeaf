@@ -73,20 +73,20 @@ export default function WikiSourcesPage() {
 
   return (
     <main className="min-h-screen px-6 py-12">
-      <section className="mx-auto max-w-6xl rounded-2xl border border-[#d8e8dd] bg-card/90 p-8 shadow-sm">
-        <Link href={"/studies" as Route} className="text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
+      <section className="mx-auto max-w-6xl rounded-2xl border border-border bg-card/90 p-8 shadow-sm">
+        <Link href={"/studies" as Route} className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800">
           ← Zurück zu Studien
         </Link>
 
-        <h1 className="mt-4 text-4xl font-bold text-[#10281e]">Quellenregister</h1>
-        <p className="mt-3 text-[#4d685a]">
+        <h1 className="mt-4 text-4xl font-bold text-foreground">Quellenregister</h1>
+        <p className="mt-3 text-muted-fg">
           Alle wissenschaftlichen Quellen, auf die unsere Fachartikel verweisen – nach Herausgeber gruppiert.
         </p>
 
         <div className="mt-5 rounded-xl border border-rose-200 dark:border-rose-900/40 bg-rose-50 dark:bg-rose-950/30 p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-rose-700 dark:text-rose-400">Neuer Bereich</p>
           <div className="mt-1 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm text-rose-900">
+            <p className="text-sm text-rose-900 dark:text-rose-300">
               Jetzt verfügbar: das Schädlings-Lexikon mit Bildkarten, Kategorien, Risikobewertungen und Gegenmaßnahmen.
             </p>
             <Link
@@ -106,22 +106,22 @@ export default function WikiSourcesPage() {
           </div>
           <div className="rounded-xl border border-blue-200 dark:border-blue-900/40 bg-blue-50 dark:bg-blue-950/30 p-4">
             <p className="text-xs uppercase tracking-wide text-blue-700 dark:text-blue-400 font-semibold">Automatisch synchronisiert</p>
-            <p className="mt-1 text-2xl font-bold text-blue-900">{autoCount}</p>
+            <p className="mt-1 text-2xl font-bold text-blue-900 dark:text-blue-300">{autoCount}</p>
             <p className="text-xs text-blue-700 dark:text-blue-400">synchronisiert</p>
           </div>
           <div className="rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 p-4">
             <p className="text-xs uppercase tracking-wide text-emerald-700 dark:text-emerald-400 font-semibold">Redaktionell geprüft</p>
-            <p className="mt-1 text-2xl font-bold text-emerald-900">{manualCount}</p>
+            <p className="mt-1 text-2xl font-bold text-emerald-900 dark:text-emerald-300">{manualCount}</p>
             <p className="text-xs text-emerald-700 dark:text-emerald-400">geprüfte Einträge</p>
           </div>
           <div className="rounded-xl border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 p-4">
             <p className="text-xs uppercase tracking-wide text-cyan-700 dark:text-cyan-400 font-semibold">Publisher</p>
-            <p className="mt-1 text-2xl font-bold text-cyan-900">{publisherCounts.length}</p>
+            <p className="mt-1 text-2xl font-bold text-cyan-900 dark:text-cyan-300">{publisherCounts.length}</p>
             <p className="text-xs text-cyan-700 dark:text-cyan-400">verteilt</p>
           </div>
         </div>
 
-        <div className="mt-6 rounded-xl border border-[#e2eee6] bg-[#f7fbf8] p-4 text-sm text-[#355b49]">
+        <div className="mt-6 rounded-xl border border-border bg-background p-4 text-sm text-foreground/80">
           Redaktioneller Hinweis: Dieses Register dient als strukturierte Orientierung für die evidenzbasierte
           Vertiefung. Vor operativen oder regulatorischen Entscheidungen sollten stets die aktuellen Originaldokumente geprüft werden.
         </div>
@@ -149,7 +149,7 @@ export default function WikiSourcesPage() {
                 onClick={() => setSourceType(value)}
                 className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                   sourceType === value
-                    ? "bg-[#1f7a4f] text-white"
+                    ? "bg-primary text-white"
                     : "border border-border bg-card text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400"
                 }`}
               >
@@ -179,17 +179,17 @@ export default function WikiSourcesPage() {
           {groupedByPublisher.map(([publisher, sources]) => (
             <section key={publisher} className="rounded-2xl border border-border bg-card p-5">
               <div className="flex items-center justify-between gap-3">
-                <h2 className="text-lg font-bold text-[#123024]">{publisher}</h2>
+                <h2 className="text-lg font-bold text-foreground">{publisher}</h2>
                 <span className="rounded-full bg-background px-2.5 py-1 text-xs font-semibold text-foreground/80">
                   {sources.length} Quellen
                 </span>
               </div>
 
-              <ol className="mt-3 list-decimal space-y-3 pl-5 text-sm text-[#355b49]">
+              <ol className="mt-3 list-decimal space-y-3 pl-5 text-sm text-foreground/80">
                 {sources.map((source) => (
-                  <li key={source.id} className="rounded-xl border border-[#e2eee6] bg-[#fbfefc] p-4">
-                    <p className="text-base font-semibold text-[#123024]">{source.title}</p>
-                    <p className="mt-1 text-sm text-[#4d685a]">
+                  <li key={source.id} className="rounded-xl border border-border bg-background p-4">
+                    <p className="text-base font-semibold text-foreground">{source.title}</p>
+                    <p className="mt-1 text-sm text-muted-fg">
                       {source.publisher} ({source.year})
                     </p>
                     <div className="mt-1 flex flex-wrap gap-2">
@@ -204,10 +204,10 @@ export default function WikiSourcesPage() {
                         </p>
                       )}
                     </div>
-                    <p className="mt-2 text-xs text-[#6a8376]">ID: {source.id}</p>
+                    <p className="mt-2 text-xs text-muted-fg">ID: {source.id}</p>
                     {source.doi && (
                       <div className="mt-1 flex flex-wrap items-center gap-2">
-                        <p className="text-xs text-[#6a8376]">DOI: {source.doi}</p>
+                        <p className="text-xs text-muted-fg">DOI: {source.doi}</p>
                         <button
                           type="button"
                           onClick={() => copyDoi(source.doi as string)}
@@ -217,7 +217,7 @@ export default function WikiSourcesPage() {
                         </button>
                       </div>
                     )}
-                    <a href={source.url} target="_blank" rel="noreferrer" className="mt-2 inline-flex text-sm font-semibold text-[#1f7a4f] hover:text-[#17613f]">
+                    <a href={source.url} target="_blank" rel="noreferrer" className="mt-2 inline-flex text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800">
                       Zur Quelle
                     </a>
                   </li>

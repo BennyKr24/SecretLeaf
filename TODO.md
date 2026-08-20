@@ -57,19 +57,17 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ## 📐 Grow-Rechner — offene Werte ohne belastbare Quelle
 
-- 🔍 **Hydro-EC-Zielwerte in `nutrients.ts`** (`EC_THRESHOLDS.*.hydro`) sind
-  1:1 von den alten Einheitswerten übernommen, nicht gegen eine eigene
-  Hydro/DWC-Quelle geprüft. Gezielte Recherche zu Hydro-EC-Zielbereichen pro
-  Phase nachholen, dann Tabelle ggf. anpassen.
-- 🔍 **Outdoor-Ertrag `GPP_OUTDOOR` in `yield.ts`** (200/400/600 g/Pflanze) —
-  Recherche zeigt extreme Bandbreite (56g bis 3600g/Pflanze je nach Quelle),
-  kein Konsenswert. Sauberer Fix wäre ein zusätzlicher Topfgrößen-/
-  Pflanzengrößen-Input statt eines flachen Erfahrungs-Faktors — echte
-  Redesign-Frage, kein reiner Zahlendreher.
-- 🔍 **VPD-Wert-Mismatch in `data/terpira/diagnostics.ts`** (268-KB-Wiki-
-  Prosa) — enthält noch "veg ~0.8–1.1 kPa", während `vpd.ts` und
-  `diagnose/tree.ts` jetzt korrigiert bei 0.8–1.2 kPa liegen. Textstelle in
-  der großen Datei noch nicht lokalisiert/gefixt.
+- ⏸️ **Outdoor-Ertrag `GPP_OUTDOOR` in `yield.ts`** (200/400/600 g/Pflanze) —
+  Recherche (2026-08-20) bestätigt: echte Redesign-Frage, kein Zahlendreher.
+  Dominanter Einzelfaktor laut mehreren Quellen ist Topfgröße/Wurzelraum
+  (Faustregel ~25 g Trockenertrag/Gallone bis ~10 gal, danach abnehmender
+  Grenzertrag), zweitwichtigster Faktor die Vegetationsdauer vor der Blüte.
+  Vorschlag: `GPP_OUTDOOR` durch Topfgrößen-Input (Lookup-Tabelle statt
+  linearer Formel, da die Kurve ab ~10 gal abflacht) ersetzen, Vegdauer als
+  zweiten Modifikator (×0.7 kurz / ×1.0 standard / ×1.3 verlängert)
+  ergänzen; bestehende Genetik-/Substrat-/Dünger-Faktoren multiplikativ
+  draufrechnen. Braucht UI-Entscheidung (neuer Input im Rechner), daher
+  nicht selbstständig umgesetzt.
 - 💤 **`intelligence.ts` Ertragsverlust-/-gewinn-Gramm-Heuristiken** (z. B.
   "−35g bei fehlendem Log") und **`phases.ts` Phasen-Dauern** sind
   produktinterne Heuristiken ohne externe Quelle bzw. stark sorten-/setup-
@@ -116,50 +114,11 @@ Scratchpad der Session. Offen:
 
 ## 📚 Quellenregister (`/studies/sources`)
 
-- 🔍 **Design nie durch die Dark-Token-Migration gelaufen.** `studies/sources/page.tsx`
-  nutzt durchgehend hardcodierte helle Pastell-Hexwerte (`#fbfefc`, `#f7fbf8`,
-  `#123024`, `#1f7a4f`, `#e2eee6`, `#d8e8dd` usw.) statt der Design-Tokens
-  (`bg-card`, `text-foreground`, `border-border`) sowie rohe Tailwind-
-  `-50`-Pastellfarben (`bg-blue-50`, `bg-emerald-50`, `bg-cyan-50`,
-  `bg-rose-50`) für die Stat-Kacheln und Badges. Die App hat kein echtes
-  Light-Theme (siehe [[secretleaf-ux-punchlist-2026-08-03]]) — diese Seite
-  müsste als helle Karte inmitten des sonst durchgehend dunklen Designs
-  auffallen. Gleiches Muster wie bei Dashboard/Tools/Grow-Seite vor deren
-  Migration — selbe Fix-Richtung anwendbar.
 - 🔍 **Inhalt: "Neuer Bereich"-Banner zum Schädlings-Lexikon wirkt stale.**
   Der rosa Hinweis-Kasten oben auf der Seite bewirbt das Schädlings-Lexikon
   noch als brandneu ("Jetzt verfügbar") — dürfte inzwischen etabliert sein
   und nicht mehr als Ankündigung geführt werden. Prüfen, ob der Banner weg
   kann oder durch aktuellere Inhalte ersetzt werden sollte.
-
-## 📊 Studien-Engine (`lib/engine`)
-
-- 🔍 **Regex-False-Positives in der Topic-Klassifizierung.**
-  `TOPIC_CLUSTERS['anbau-postharvest'].include` in `lib/engine/config.ts`
-  enthält bare-word-Patterns (`/thc/i`, `/cbd/i`, `/terpene/i`,
-  `/terpenoid/i`) ohne Cannabis-Kontext-Anforderung — anders als die
-  Anchor-Validierung in `classify.ts`, die ambige Kürzel erst akzeptiert,
-  wenn zusätzlich ein eindeutiger Cannabis-Begriff im Corpus steht (siehe
-  `CANNABIS_ANCHOR_AMBIGUOUS`-Kommentar). Bei der Backlog-Triage am
-  2026-08-02 gegen echte Prod-Daten bestätigt: "Understanding tourists'
-  travel health concern (**THC**)", "...thermo-hydro-chemical (**THC**)
-  coupled reactions..." (Geologie), "...**CBD**-CdS thin films"
-  (Materialwissenschaft, CBD = Chemical Bath Deposition), sowie mehrere
-  Terpen-Synthase-Papers zu nicht-Cannabis-Pflanzen (Ginkgo biloba, Styrax
-  officinalis u. a.). Diese Treffer fließen über `topicFit` (`+18 + hits*8`
-  pro Cluster, `classify.ts` `matchTopics()`) in den Score ein, der über
-  Aufnahme in den Studien-Bereich entscheidet — kein reines Tagging-Problem.
-  Fix: Wortgrenzen + Nähe-Check zu einem eindeutigen Cannabis-Anker statt
-  bare-word-Match. Noch nicht angegangen.
-
-## 🔒 Security
-
-- 💤 **`api/automation/engine-feedback/route.ts`** akzeptiert ein
-  client-geliefertes `userId`-Feld im Event-Body, ohne es gegen die
-  authentifizierte Session zu prüfen — ein eingeloggter Nutzer könnte
-  Feedback-Events (`review_good`/`review_bad`/`click`) fälschlich einem
-  anderen User zuordnen. Kein Datenzugriff, keine Account-Aktion betroffen —
-  reines Analytics-Integritätsproblem, daher niedrige Priorität.
 
 ## 📱 Mobile UX (nach dem Nav/PWA-Umbau vom 2026-08-16)
 
