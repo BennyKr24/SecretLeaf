@@ -293,6 +293,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Interveinale Chlorose an älteren Blättern ist das Leitsymptom. So unterscheidest du echten Mangel von pH-bedingter Blockade und korrigierst gezielt über Substrat-pH und Mg-Zufuhr.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "fortgeschritten",
     readMinutes: 10,
     lastUpdated: "2026-06-02",
@@ -458,6 +459,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Gleichmäßiges Vergilben der unteren Blätter ist das Leitsymptom. So trennst du echten N-Mangel von der natürlichen Seneszenz in der Spätblüte und dosierst phasengerecht nach.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -618,6 +620,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Verkrüppelte, fleckige neue Triebe und braune Blattränder verraten Ca-Mangel. So erkennst du, dass das Problem fast immer in pH und Wasserqualität liegt — nicht in der Ca-Dosis.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -773,6 +776,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Verbrannte, nekrotische Blattränder an älteren Blättern bei sonst grüner Blattfläche sind das Leitsymptom. So unterscheidest du K-Mangel von Salzverbrennung (Nährstoff-Burn).",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -928,6 +932,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Leuchtend gelbe junge Blätter mit scharf abgegrenzten grünen Adern sind das Leitsymptom. Fast immer ist nicht zu wenig Eisen, sondern ein zu hoher pH die wahre Ursache.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -1086,6 +1091,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Feine Sprenkel auf der Blattoberseite und Gespinste auf der Unterseite verraten Spinnmilben. So erkennst du den Befall früh und stoppst die explosive Vermehrung mit gestaffeltem IPM.",
     category: "diagnose",
+    diagnoseAreas: ["schaedlinge"],
     difficulty: "fortgeschritten",
     readMinutes: 10,
     lastUpdated: "2026-06-02",
@@ -1226,6 +1232,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Silbrige Schlieren mit schwarzen Kotpünktchen sind das Leitsymptom. So unterscheidest du Thripse von Spinnmilben und bekämpfst die fliegenden Larven mit Blautafeln und Nützlingen.",
     category: "diagnose",
+    diagnoseAreas: ["schaedlinge"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -1365,6 +1372,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Kleine schwarze Fliegen über dem Substrat und glänzende Larven in feuchter Erde sind die Leitsymptome. So bekämpfst du sie an der Wurzel des Problems: über das Gießregime.",
     category: "diagnose",
+    diagnoseAreas: ["schaedlinge", "wachstum"],
     difficulty: "einsteiger",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -1507,6 +1515,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Graue, watteartige Fäule im Knospeninneren bei welken Einzelblättchen ist das Alarmsignal. Bud Rot ist nicht heilbar — diese Klimastrategie verhindert sie, bevor sie ausbricht.",
     category: "diagnose",
+    diagnoseAreas: ["klima", "schaedlinge"],
     difficulty: "fortgeschritten",
     readMinutes: 10,
     lastUpdated: "2026-06-02",
@@ -1651,6 +1660,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Weiße, mehlige Flecken auf der Blattoberseite sind das Leitsymptom. Anders als die meisten Pilze braucht Mehltau keine Nässe — diese Klima- und Hygienestrategie stoppt ihn.",
     category: "diagnose",
+    diagnoseAreas: ["klima"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -1790,6 +1800,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Braune, schleimige Wurzeln und welke Pflanzen trotz feuchten Substrats sind die Leitsymptome. So unterscheidest du Wurzelfäule von Trockenstress und rettest die Wurzelzone.",
     category: "diagnose",
+    diagnoseAreas: ["wachstum"],
     difficulty: "profi",
     readMinutes: 10,
     lastUpdated: "2026-06-02",
@@ -1935,6 +1946,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Dunkelgrüne, klauenförmig nach unten gebogene Blätter ('The Claw') sind das Leitsymptom. So unterscheidest du echte N-Toxizität von Überwässerung und drosselst die Stickstoffzufuhr gezielt.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -2099,6 +2111,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Kaliumüberschuss ist selten direkt toxisch, blockiert aber über Kationen-Antagonismus die Aufnahme von Mg, Ca und N. So erkennst du die ausgelösten Sekundärmängel und stellst das Verhältnis neu ein.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "profi",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -2263,6 +2276,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Zu viel Calcium ist selten direkt giftig, hebt aber den pH an und verdrängt Magnesium und Kalium. So erkennst du den hartwasser- bzw. überdosierten Cal-Mag-Fall und korrigierst Verhältnis und pH.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "profi",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -2427,6 +2441,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Eine zu hohe Salzkonzentration im Wurzelraum erzeugt osmotischen Stress: Die Pflanze welkt trotz Feuchte und verbrennt an den Blatträndern. So misst du die EC richtig und spülst gezielt aus.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -2591,6 +2606,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Verbrannte, braune Blattspitzen, die sich nach innen fressen, sind das Leitsymptom der Überdüngung. So grenzt du Nutrient-Burn von Mangel und Lichtstress ab und korrigierst die Dosis.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "einsteiger",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -2758,6 +2774,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Nach oben gerollte Blattränder (Tacoing), aufrechte 'Beten'-Haltung und randständige Verbrennungen sind die Leitsymptome. So unterscheidest du Hitzestress von echtem Nährstoffmangel und korrigierst über Blatttemperatur, VPD und Luftbewegung.",
     category: "diagnose",
+    diagnoseAreas: ["klima", "wachstum"],
     difficulty: "profi",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -2922,6 +2939,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Violett-purpurne Stängel und Blattunterseiten, langsames Wachstum und nach unten gewölbte Blätter sind die Leitsymptome. So trennst du Kältestress von echtem Phosphormangel und stabilisierst Luft- und vor allem Wurzeltemperatur.",
     category: "diagnose",
+    diagnoseAreas: ["klima", "wachstum"],
     difficulty: "profi",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -3086,6 +3104,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Verkrümmte, klauenartig nach unten gebogene Blätter direkt im Luftstrom eines Ventilators — ohne Schädlinge und ohne Farbmuster eines Mangels. So erkennst du Windbrand und stellst die Luftbewegung richtig ein.",
     category: "diagnose",
+    diagnoseAreas: ["klima"],
     difficulty: "fortgeschritten",
     readMinutes: 7,
     lastUpdated: "2026-06-02",
@@ -3250,6 +3269,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Zu hohe RH öffnet Schimmel- und Mehltaufenster, zu niedrige RH erzwingt Stomataschluss und transpirationsbedingte Mängel. So liest du die relative Luftfeuchte über das VPD-Fenster der jeweiligen Phase und korrigierst gezielt.",
     category: "diagnose",
+    diagnoseAreas: ["klima"],
     difficulty: "profi",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -3414,6 +3434,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Unter starker Beleuchtung wird CO₂ zum limitierenden Faktor: Stagnierende Photosynthese trotz optimalem Licht, Klima und Dünger deutet auf CO₂-Mangel. So erkennst du das Limit und setzt Anreicherung sicher und sinnvoll ein.",
     category: "diagnose",
+    diagnoseAreas: ["klima"],
     difficulty: "profi",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -3581,6 +3602,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Mehrere scheinbar unabhängige Mangelsymptome gleichzeitig sind das Leitsignal für pH-Lockout, nicht für einen echten Nährstoffmangel. So erkennst du die Blockade und korrigierst sie, ohne blind nachzudüngen.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter", "wachstum"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -3712,6 +3734,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Hängende Blätter trotz nassem Substrat und ausbleibende Erholung nach dem Gießen sind die Leitsymptome. So trennst du Staunässe von Trockenstress und rettest die Wurzelzone rechtzeitig.",
     category: "diagnose",
+    diagnoseAreas: ["wachstum"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -3841,6 +3864,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Weiche, oft grüne Insekten in Kolonien an Triebspitzen sowie klebriger Honigtau verraten Blattlausbefall. So erkennst du die Symbiose mit Ameisen und stoppst die Vermehrung frühzeitig.",
     category: "diagnose",
+    diagnoseAreas: ["schaedlinge"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -3963,6 +3987,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Kleine weiße Insekten, die beim Berühren der Pflanze wolkenartig auffliegen, sind das Leitsymptom. So erkennst du den Befall früh und verhinderst die Ausbreitung über Honigtau und Rußtaupilz.",
     category: "diagnose",
+    diagnoseAreas: ["schaedlinge"],
     difficulty: "fortgeschritten",
     readMinutes: 8,
     lastUpdated: "2026-08-03",
@@ -4084,6 +4109,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Dunkelgrüne bis bläuliche Blätter mit rötlich-violetten Blattstielen und verlangsamtem Wachstum sind die Leitsymptome. So unterscheidest du echten P-Mangel von Kältestress und korrigierst gezielt über pH und Phosphorzufuhr.",
     category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -4219,6 +4245,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Vergilbte, nach unten gerollte Blätter und ein mattes, staubiges Erscheinungsbild der oberen Canopy verraten Rostmilbenbefall. So erkennst du die winzigen Schädlinge, bevor der Befall irreversibel wird.",
     category: "diagnose",
+    diagnoseAreas: ["schaedlinge"],
     difficulty: "profi",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -4340,6 +4367,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     summary:
       "Plötzliches, einseitiges Welken trotz feuchtem Substrat und bräunlich verfärbtes Leitgewebe im Stängelquerschnitt sind die Leitsymptome. So unterscheidest du Fusarium von Wurzelfäule und begrenzt den Schaden.",
     category: "diagnose",
+    diagnoseAreas: ["wachstum"],
     difficulty: "profi",
     readMinutes: 9,
     lastUpdated: "2026-08-03",

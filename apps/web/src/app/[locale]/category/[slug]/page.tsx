@@ -1,28 +1,12 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { categoryLabels, wikiArticles } from "@/data/terpira/wiki";
 import StudiesListView from "@/components/StudiesListView";
 import type { TerpiraCategory } from "@/lib/terpira/types";
-import { CATEGORY_ICONS } from "@/lib/terpira/categoryIcons";
+import { CATEGORY_ICONS, CATEGORY_DESCRIPTIONS } from "@/lib/terpira/categoryIcons";
 import { FileText } from "lucide-react";
-
-const CATEGORY_DESCRIPTIONS: Partial<Record<TerpiraCategory, string>> = {
-  anbau:         'Anbau-Technik und Referenz: Substrat, Bewässerung, Nährstoffe, Licht und Ernte im Detail.',
-  diagnose:      'Symptom erkannt, jetzt Ursache finden – Mangelerscheinungen, Krankheiten, Schädlinge und Umweltstress diagnostizieren und beheben.',
-  tutorials:     'Schritt-für-Schritt-Guides für einen ganzen Grow – vom ersten Setup bis zur Ernte, für jedes Erfahrungslevel.',
-  genetik:       'Genetik, Züchtung und Sortenwahl – für gezielte Ergebnisse bei Ertrag und Wirkstoffprofil.',
-  chemie:        'Nährstoffe, Substrate und chemische Grundlagen für gesundes Pflanzenwachstum.',
-  terpene:       'Terpenprofile, Aromastoffe und deren Einfluss auf Wirkung und Geschmack.',
-  medizin:       'Wissenschaftliche Erkenntnisse zu medizinischen Cannabis-Anwendungen.',
-  konsumformen:  'Verschiedene Konsumformen und Anwendungsmethoden im Überblick.',
-  konzentrate:   'Extraktion, Verarbeitung und Qualitätsbewertung von Konzentraten.',
-  recht:         'Rechtliche Rahmenbedingungen, Regulierung und Compliance.',
-  sicherheit:    'Sicherheitshinweise, Risikobewertung und verantwortungsvoller Umgang.',
-  qualitaet:     'Laboranalysen, Qualitätskontrolle und Reinheitsprüfungen.',
-  markt:         'Marktanalysen, Beschaffung und aktuelle Preisentwicklungen.',
-  werkzeuge:     'Praktische Rechner, Kalkulatoren und Werkzeuge für den Alltag.',
-};
 
 const validCategories = Object.keys(categoryLabels) as TerpiraCategory[];
 
@@ -105,12 +89,13 @@ export default async function CategoryPage({ params }: PageProps) {
       {/* ── List ──────────────────────────────────────────────── */}
       <section className="px-5 py-10">
         <div className="mx-auto max-w-6xl">
-          <StudiesListView
-            articles={articles}
-            categoryLabels={categoryLabels}
-            initialCategory={cat}
-            hideCategoryFilter
-          />
+          <Suspense fallback={null}>
+            <StudiesListView
+              articles={articles}
+              categoryLabel={label}
+              showDiagnoseAreaFacet={cat === "diagnose"}
+            />
+          </Suspense>
         </div>
       </section>
 

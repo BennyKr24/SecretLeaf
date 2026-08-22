@@ -6,6 +6,11 @@ import dynamic from 'next/dynamic';
 
 const SearchModal = dynamic(() => import('./SearchModal'), { ssr: false });
 
+/** Event name any component can dispatch to open the global search modal
+ *  without duplicating its state/listener (there's exactly one SearchBar
+ *  instance, rendered in NavigationBar). Used by e.g. the /studies hub. */
+export const OPEN_SEARCH_EVENT = 'secretleaf:open-search';
+
 export default function SearchBar() {
   const [open, setOpen] = useState(false);
   const t = useTranslations('search');
@@ -20,6 +25,14 @@ export default function SearchBar() {
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  useEffect(() => {
+    function onOpenEvent() {
+      setOpen(true);
+    }
+    window.addEventListener(OPEN_SEARCH_EVENT, onOpenEvent);
+    return () => window.removeEventListener(OPEN_SEARCH_EVENT, onOpenEvent);
   }, []);
 
   const handleClose = useCallback(() => setOpen(false), []);
