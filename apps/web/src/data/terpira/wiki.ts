@@ -7649,7 +7649,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
         heading: "Standort und Topf",
         content: [
           "Wähle den sonnigsten verfügbaren Platz – mindestens 6 Stunden direkte Sonne, mehr ist besser. Wenig Sonne bedeutet nicht 'kein Wachstum', aber deutlich weniger Ertrag.",
-          "Ein großer Topf (mindestens 30–50 Liter) oder direkt der Gartenboden gibt den Wurzeln genug Raum – Topfgröße ist outdoor einer der größten Ertragshebel, weil die Pflanze über Monate ungebremst wachsen kann. Sorge für gute Drainage, damit der Wurzelballen nach starkem Regen nicht dauerhaft im Wasser steht. Ein windgeschützter, aber nicht komplett abgeschirmter Standort schützt vor Astbruch."
+          "Ein großer Topf (mindestens 30–50 Liter als Untergrenze für einen entspannten Sommer-Run, gerne größer) oder direkt der Gartenboden gibt den Wurzeln genug Raum – Topfgröße ist outdoor einer der größten Ertragshebel, weil die Pflanze über Monate ungebremst wachsen kann und im Boden oder großen Kübeln outdoor deutlich größer wird als eine Indoor-Pflanze im begrenzten Zelt. Sorge für gute Drainage, damit der Wurzelballen nach starkem Regen nicht dauerhaft im Wasser steht. Ein windgeschützter, aber nicht komplett abgeschirmter Standort schützt vor Astbruch."
         ]
       },
       {
@@ -8071,7 +8071,7 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     growCategory: "yield",
   },
   "outdoor-anbau-fuer-einsteiger": {
-    growValue: "Ein großer Topf (30–50 L) oder direkt der Gartenboden ist outdoor der größte Ertragshebel – und behalte kurz vor der Ernte die Regen-Wettervorhersage im Blick, lieber etwas früher ernten als eine mehrtägige Regenperiode über fast reifen Blüten riskieren.",
+    growValue: "Ein großer Topf (mind. 30–50 L, gerne mehr) oder direkt der Gartenboden ist outdoor der größte Ertragshebel – und behalte kurz vor der Ernte die Regen-Wettervorhersage im Blick, lieber etwas früher ernten als eine mehrtägige Regenperiode über fast reifen Blüten riskieren.",
     qualityScore: 4,
     growCategory: "yield",
   },
