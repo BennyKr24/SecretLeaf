@@ -20,7 +20,7 @@ entity_type: HowTo
 language: de
 meta:
   evidence_level: 1
-  confidence_score: 0.64
+  confidence_score: 0.67
   last_review_date: 2026-08-22
   review_horizon_months: 18
 relations:
@@ -35,7 +35,9 @@ tool_links:
   - { kind: calculator, slug: licht-rechner,     label: "Licht-Rechner",     href: "/tools/licht-rechner" }
 ```
 
-**Hinweis zu `evidence_level: 1` trotz vier kontrollierter/beobachtender Cannabis-relevanter Studien:** Dieses Dossier hat die zweitstärkste Studienlage der bisherigen Reihe nach Veg — zwei akademisch rigorose kontrollierte Studien zu NPK-Optimierung (B8, B9), eine industriefinanzierte kontrollierte Studie zu PK-Zusatzprodukten (B7) und eine Beobachtungsstudie zu Lichtdichtigkeit/Hermaphroditismus (B32), dazu eine peer-reviewte PPFD-Intensitätsstudie (B37). Trotzdem bleibt der Artikel-Gesamtwert bei Level 1, weil mehrere praktisch zentrale Aussagen — NPK-Übergangsverhältnis, Defoliation-Zeitfenster, Stützsystem-Timing — ausschließlich auf Praxis-Konsens beruhen, und `meta.evidence_level` per Definition der **schwächsten tragenden Quelle** folgt (`SOURCE_REQUIREMENTS.md` §2), nicht dem Durchschnitt. `confidence_score = 0.64` liegt trotzdem über der 0.60-Schwelle für Technique-Artikel.
+**Hinweis zu `evidence_level: 1` trotz vier kontrollierter/beobachtender Cannabis-relevanter Studien:** Dieses Dossier hat die zweitstärkste Studienlage der bisherigen Reihe nach Veg — zwei akademisch rigorose kontrollierte Studien zu NPK-Optimierung (B8, B9), eine industriefinanzierte kontrollierte Studie zu PK-Zusatzprodukten (B7) und eine Beobachtungsstudie zu Lichtdichtigkeit/Hermaphroditismus (B32), dazu eine peer-reviewte PPFD-Intensitätsstudie (B37). Trotzdem bleibt der Artikel-Gesamtwert bei Level 1, weil mehrere praktisch zentrale Aussagen — NPK-Übergangsverhältnis, Defoliation-Zeitfenster, Stützsystem-Timing — ausschließlich auf Praxis-Konsens beruhen, und `meta.evidence_level` per Definition der **schwächsten tragenden Quelle** folgt (`SOURCE_REQUIREMENTS.md` §2), nicht dem Durchschnitt. `confidence_score = 0.67` liegt trotzdem über der 0.60-Schwelle für Technique-Artikel.
+
+**Stage-3-Fact-Check (2026-08-22, KI-gestützt) bestanden:** Alle 15 geprüften Zahlenaussagen stimmen mit den zitierten Dossier-Quellen überein, beide Konflikte (P/K-Bloom-Booster, Lichtdichtigkeit/Hermaphroditismus) sind im Fließtext benannt statt verschwiegen, `confidence_score` wurde von der Stage-1-Schnellschätzung (0,64) auf den formelbasierten Wert 0,67 korrigiert. Details, Claim-für-Claim-Verifikation und die vier ausstehenden menschlichen Sign-offs (Stage 4): `docs/content-factory/fact-checks/bluetephase-ernaehrung-und-pflege-fact-check.md`. Artikel-Status: `in_review`, nicht `published`.
 
 ---
 
@@ -185,4 +187,4 @@ Der größte, am häufigsten falsch eingeschätzte Hebel dieser Phase ist nicht 
 
 ---
 
-*Ende Draft. Bereit für Stage 3 (Fact-Check, menschliches Pflicht-Gate) gemäß `ARTICLE_WORKFLOW.md` §4.*
+*Ende Draft. Stage 3 (Fact-Check) bestanden — siehe `docs/content-factory/fact-checks/bluetephase-ernaehrung-und-pflege-fact-check.md`. Bereit für Stage 4 (Editorial Review, vier menschliche Pflicht-Sign-offs) gemäß `ARTICLE_WORKFLOW.md` §5.*
