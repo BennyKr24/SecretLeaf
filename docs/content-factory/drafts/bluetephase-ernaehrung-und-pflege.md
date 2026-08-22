@@ -24,11 +24,14 @@ meta:
   last_review_date: 2026-08-22
   review_horizon_months: 18
 relations:
-  - { type: prerequisite, to: vegetationsphase-training-und-pflege }
-  - { type: see_also,     to: fuetterungsplan-nach-phase }
-  - { type: see_also,     to: lichtspektrum-und-bluete }
-  - { type: see_also,     to: defoliation-entlauben }
-  - { type: see_also,     to: bud-rot-botrytis }
+  - { type: prerequisite,   to: vegetationsphase-training-und-pflege }
+  - { type: see_also,       to: fuetterungsplan-nach-phase }
+  - { type: see_also,       to: lichtspektrum-und-bluete }
+  - { type: see_also,       to: defoliation-entlauben }
+  - { type: see_also,       to: bud-rot-botrytis }
+  - { type: antagonist_of,  to: calciummangel }
+  - { type: antagonist_of,  to: magnesiummangel }
+  - { type: interacts_with, to: ph-lockout }
 tool_links:
   - { kind: calculator, slug: naehrstoff-rechner, label: "Nährstoff-Rechner", href: "/tools/naehrstoff-rechner" }
   - { kind: calculator, slug: vpd,               label: "VPD-Rechner",       href: "/tools/vpd" }
@@ -37,7 +40,9 @@ tool_links:
 
 **Hinweis zu `evidence_level: 1` trotz vier kontrollierter/beobachtender Cannabis-relevanter Studien:** Dieses Dossier hat die zweitstärkste Studienlage der bisherigen Reihe nach Veg — zwei akademisch rigorose kontrollierte Studien zu NPK-Optimierung (B8, B9), eine industriefinanzierte kontrollierte Studie zu PK-Zusatzprodukten (B7) und eine Beobachtungsstudie zu Lichtdichtigkeit/Hermaphroditismus (B32), dazu eine peer-reviewte PPFD-Intensitätsstudie (B37). Trotzdem bleibt der Artikel-Gesamtwert bei Level 1, weil mehrere praktisch zentrale Aussagen — NPK-Übergangsverhältnis, Defoliation-Zeitfenster, Stützsystem-Timing — ausschließlich auf Praxis-Konsens beruhen, und `meta.evidence_level` per Definition der **schwächsten tragenden Quelle** folgt (`SOURCE_REQUIREMENTS.md` §2), nicht dem Durchschnitt. `confidence_score = 0.67` liegt trotzdem über der 0.60-Schwelle für Technique-Artikel.
 
-**Stage-3-Fact-Check (2026-08-22, KI-gestützt) bestanden:** Alle 15 geprüften Zahlenaussagen stimmen mit den zitierten Dossier-Quellen überein, beide Konflikte (P/K-Bloom-Booster, Lichtdichtigkeit/Hermaphroditismus) sind im Fließtext benannt statt verschwiegen, `confidence_score` wurde von der Stage-1-Schnellschätzung (0,64) auf den formelbasierten Wert 0,67 korrigiert. Details, Claim-für-Claim-Verifikation und die vier ausstehenden menschlichen Sign-offs (Stage 4): `docs/content-factory/fact-checks/bluetephase-ernaehrung-und-pflege-fact-check.md`. Artikel-Status: `in_review`, nicht `published`.
+**Stage-3-Fact-Check (2026-08-22, KI-gestützt) bestanden:** Alle 15 geprüften Zahlenaussagen stimmen mit den zitierten Dossier-Quellen überein, beide Konflikte (P/K-Bloom-Booster, Lichtdichtigkeit/Hermaphroditismus) sind im Fließtext benannt statt verschwiegen, `confidence_score` wurde von der Stage-1-Schnellschätzung (0,64) auf den formelbasierten Wert 0,67 korrigiert. Details: `docs/content-factory/fact-checks/bluetephase-ernaehrung-und-pflege-fact-check.md`.
+
+**Stage-4-Editorial-Review (2026-08-22, KI-gestützt, vom Editorial-Lead autorisiert) — alle vier Sign-offs erteilt:** Agronomisch, Quellen und Sprache ohne Korrekturbedarf; Verlinkung mit einer angewendeten Korrektur (drei typisierte Relationen `antagonist_of`/`interacts_with` ergänzt, siehe Front-Matter oben). Details: `docs/content-factory/fact-checks/bluetephase-ernaehrung-und-pflege-editorial-review.md`. Artikel-Status: `in_review`, bereit für Stage 5 (Publish) — nicht automatisch ausgeführt, da dieser Schritt Inhalte in den Live-Produkt-Datensatz schreibt.
 
 ---
 
@@ -187,4 +192,4 @@ Der größte, am häufigsten falsch eingeschätzte Hebel dieser Phase ist nicht 
 
 ---
 
-*Ende Draft. Stage 3 (Fact-Check) bestanden — siehe `docs/content-factory/fact-checks/bluetephase-ernaehrung-und-pflege-fact-check.md`. Bereit für Stage 4 (Editorial Review, vier menschliche Pflicht-Sign-offs) gemäß `ARTICLE_WORKFLOW.md` §5.*
+*Ende Draft. Stage 3 (Fact-Check) und Stage 4 (Editorial Review, vier Sign-offs) bestanden — siehe `docs/content-factory/fact-checks/`. Bereit für Stage 5 (Publish) gemäß `ARTICLE_WORKFLOW.md` §6, nach Rückfrage (schreibt in den Live-Produkt-Datensatz).*
