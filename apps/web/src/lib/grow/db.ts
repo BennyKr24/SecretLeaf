@@ -19,6 +19,7 @@ export type GrowRow = {
   licht_typ: string;
   licht_leistung: number | null;
   erfahrung: string;
+  genetik_typ: string | null;
   pflanzen_anzahl: number;
   flaeche: number | null;
   start_date: string;
@@ -93,6 +94,7 @@ export async function createGrow(
       licht_typ: grow.lichtTyp,
       licht_leistung: grow.lichtLeistung ?? null,
       erfahrung: grow.erfahrung,
+      genetik_typ: grow.genetikTyp ?? null,
       pflanzen_anzahl: grow.pflanzenAnzahl,
       flaeche: grow.flaeche ?? null,
       start_date: grow.startDate,
@@ -167,6 +169,7 @@ export async function updateGrow(
   if (updates.lichtTyp !== undefined)      payload.licht_typ        = updates.lichtTyp;
   if (updates.lichtLeistung !== undefined) payload.licht_leistung   = updates.lichtLeistung;
   if (updates.erfahrung !== undefined)     payload.erfahrung        = updates.erfahrung;
+  if (updates.genetikTyp !== undefined)    payload.genetik_typ      = updates.genetikTyp ?? null;
   if (updates.pflanzenAnzahl !== undefined) payload.pflanzen_anzahl = updates.pflanzenAnzahl;
   if (updates.flaeche !== undefined)       payload.flaeche          = updates.flaeche;
   if (updates.startDate !== undefined)     payload.start_date       = updates.startDate;

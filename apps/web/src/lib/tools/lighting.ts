@@ -26,9 +26,14 @@ export type LightingOutput = {
 
 // Simple height correction factor (inverse-square approximation for panel LEDs)
 function heightFactor(heightCm: number): number {
-  // Calibrated for typical LED panels: at 30cm ≈0.95, at 60cm ≈0.78, at 100cm ≈0.55
+  // Coefficient 1.0 (was 0.6, which the comment here never actually matched —
+  // the old formula gave 0.82/0.63 at 60/100cm against a claimed 0.78/0.55).
+  // Recalibrated 2026-08-21 against published PPFD-vs-height charts for large
+  // LED panels (e.g. HLG600 Rspec), which show closer to 30-45% of near-field
+  // intensity remaining at 90-100cm — the old formula was too optimistic.
+  // At this coefficient: 30cm≈0.92, 60cm≈0.74, 100cm≈0.50.
   const h = heightCm / 100;
-  return Math.max(0.2, 1.0 / (1 + 0.6 * h * h));
+  return Math.max(0.2, 1.0 / (1 + 1.0 * h * h));
 }
 
 function ppfdLevel(ppfd: number, phase: 'veg' | 'bluete'): ResultLevel {

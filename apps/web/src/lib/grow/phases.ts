@@ -11,6 +11,7 @@ import type {
   GrowMedium,
   Erfahrung,
   GrowUmgebung,
+  GenetikTyp,
   TaskCategory,
 } from "./types";
 import { Egg, Sprout, Leaf, Flower2, Gem, Scissors, type LucideIcon } from "lucide-react";
@@ -58,29 +59,41 @@ export const PHASE_ORDER: GrowPhaseId[] = [
 
 export type PhaseDurations = Record<GrowPhaseId, number>;
 
+// Bloom-phase length (days, excluding the 14-day spaetbluete/flush that
+// follows every genetics type) — flowering time is genetically fixed
+// (Indica ~7-9, Hybrid ~8-10, Sativa ~10-13+ weeks per strain literature),
+// not a function of grower experience. Replaced the old erfahrung-keyed
+// 49/63-day split 2026-08-21 — see TODO.md for the research behind this.
+const BLUETE_TAGE: Record<GenetikTyp, number> = {
+  indica: 42,  // ~6 Wochen Kernblüte + 2 Wochen spaetbluete = ~8 Wochen gesamt
+  hybrid: 49,  // ~7 Wochen Kernblüte + 2 Wochen spaetbluete = ~9 Wochen gesamt
+  sativa: 70,  // ~10 Wochen Kernblüte + 2 Wochen spaetbluete = ~12 Wochen gesamt
+};
+
 /**
  * Returns the duration (in days) for each phase based on the grow's setup.
  *
  * Rules:
  * - Outdoor: vegetative phase is season-driven (~8 weeks)
  * - Hydro: vegetative phase is faster (~3 weeks)
- * - Profi: longer bloom for heavier maturation (9 weeks vs. standard 7)
+ * - Bloom length follows genetics (Indica < Hybrid < Sativa), defaulting to
+ *   Hybrid when genetics aren't known (e.g. grows created before this field
+ *   existed)
  * - Ernte: always 1 day (a marker, not a duration)
  */
 export function getPhaseDurations(
   umgebung: GrowUmgebung,
   medium: GrowMedium,
-  erfahrung: Erfahrung
+  genetikTyp: GenetikTyp = "hybrid"
 ): PhaseDurations {
   const isOutdoor = umgebung === "outdoor";
   const isHydro = medium === "hydro";
-  const isProfi = erfahrung === "profi";
 
   return {
     keimung: 7,
     saemling: 14,
     veg: isOutdoor ? 56 : isHydro ? 21 : 28,
-    bluete: isProfi ? 63 : 49,
+    bluete: BLUETE_TAGE[genetikTyp],
     spaetbluete: 14,
     ernte: 1,
   };
@@ -125,7 +138,7 @@ export function buildPhaseTasks(
           `keim-soak-${startDay}`,
           "keimung",
           "Samen einweichen (12–24 h)",
-          "In 30 °C warmem Wasser einlegen. Wenn der Samen aufplatzt oder sinkt — bereit zum Keimen.",
+          "In 20–25 °C warmem Wasser einlegen (Zimmertemperatur — wärmeres Wasser riskiert Hitzeschock). Wenn der Samen aufplatzt oder sinkt — bereit zum Keimen.",
           d(0),
           "allgemein"
         ),
@@ -153,7 +166,7 @@ export function buildPhaseTasks(
           `sae-light-${startDay}`,
           "saemling",
           "Licht auf 18/6 einstellen",
-          "18 h Licht, 6 h Dunkel. Schwache Intensität für zarte Sämlinge (200–400 µmol/m²/s).",
+          "18 h Licht, 6 h Dunkel. Schwache Intensität für zarte Sämlinge (100–300 µmol/m²/s, in den ersten Tagen eher am unteren Ende).",
           d(0),
           "kontrolle"
         ),
@@ -226,8 +239,8 @@ export function buildPhaseTasks(
             `veg-lst-${startDay}`,
             "veg",
             "LST beginnen",
-            "Seitentriebe vorsichtig mit Bindedraht nach außen biegen. Ziel: flaches, gleichmäßiges Kronendach.",
-            d(7),
+            "Seitentriebe vorsichtig mit Bindedraht nach außen biegen. Ziel: flaches, gleichmäßiges Kronendach. Erst ab 3-6 entwickelten Knoten mit tragfähigem Hauptstängel — früher riskiert Schäden am noch fragilen Gewebe.",
+            d(18),
             "training"
           )
         );

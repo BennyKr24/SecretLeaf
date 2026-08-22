@@ -4,6 +4,8 @@ import { diagnosticSources, diagnosticArticles, DIAGNOSTIC_GROW_KNOWLEDGE } from
 
 export const categoryLabels: Record<TerpiraCategory, string> = {
   anbau: "Anbau & Ernte",
+  diagnose: "Diagnose & Problemlösung",
+  tutorials: "Tutorials & Guides",
   genetik: "Genetik & Selektion",
   chemie: "Chemie & Nährstoffe",
   terpene: "Terpene & Aromen",
@@ -398,6 +400,43 @@ const sourceRegisterCore: TerpiraSource[] = [
     publisher: "Phytobiomes Journal",
     year: "2019",
     url: "https://apsjournals.apsnet.org/doi/10.1094/PBIOMES-02-19-0010-R"
+  },
+
+  // === BLÜTEPHASE-ERNÄHRUNG (kontrollierte Studien, permanent kuratiert) ===
+  {
+    id: "npk-response-surface-flowering-cannabis",
+    title: "Optimisation of Nitrogen, Phosphorus, and Potassium for Soilless Production of Cannabis sativa in the Flowering Stage Using Response Surface Analysis",
+    publisher: "Frontiers in Plant Science",
+    year: "2021",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8635921/"
+  },
+  {
+    id: "elevated-root-zone-phosphorus-hemp-leachate",
+    title: "Sustainable Cannabis Nutrition: Elevated Root-Zone Phosphorus Significantly Increases Leachate P and Does Not Improve Yield or Quality",
+    publisher: "Frontiers in Plant Science",
+    year: "2022",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC9724152/"
+  },
+  {
+    id: "rxgreen-bulk-pk-booster-trial",
+    title: "Bulk PK Booster Cannabis Research Study",
+    publisher: "RX Green Technologies",
+    year: "2020",
+    url: "https://www.rxgreentechnologies.com/rxgt_trials/bulk-trial/"
+  },
+  {
+    id: "dark-period-light-exposure-sex-expression-cannabis",
+    title: "Investigating the Effects of Dark Period Light Exposure on Sex Expression in Female Cannabis sativa",
+    publisher: "SURG Journal, University of Guelph",
+    year: "2024",
+    url: "https://journal.lib.uoguelph.ca/index.php/surg/article/view/7697"
+  },
+  {
+    id: "high-light-intensity-cannabinoid-biosynthesis-hemp",
+    title: "High Light Intensity Enhances Cannabinoid Biosynthesis Through Concerted Gene Expression in Hemp (Cannabis sativa) Flowers",
+    publisher: "Frontiers in Plant Science",
+    year: "2025",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12583074/"
   }
 ].map((s) => ({ ...s, sourceType: "manual" as const }));
 
@@ -438,6 +477,8 @@ export const sourceRegister: TerpiraSource[] = Array.from(sourceById.values());
 
 const defaultSourceIdsByCategory: Record<TerpiraCategory, string[]> = {
   anbau: ["horticulture-research-cannabis-cultivation", "plant-physiology-vpd-transpiration", "astm-d37-cannabis", "postharvest-biology-technology-curing"],
+  diagnose: ["punja-cannabis-pathogens", "botrytis-grey-mold-review", "horticulture-research-cannabis-cultivation", "marschner-mineral-nutrition"],
+  tutorials: ["horticulture-research-cannabis-cultivation", "plant-physiology-vpd-transpiration", "astm-d37-cannabis"],
   genetik: ["genetics-heritable-traits-cannabis", "astm-d37-cannabis", "horticulture-research-cannabis-cultivation"],
   chemie: ["journal-chromatography-cannabinoids", "analytical-chemistry-terpen-profiling", "aoac-lab-methods-2024", "iso17025-testing-labs"],
   terpene: ["phytochemistry-cannabinoid-terpen-profile", "nature-postharvest-terpenes", "flavour-fragrance-journal-cannabis-aroma", "analytical-chemistry-terpen-profiling"],
@@ -1522,13 +1563,14 @@ const baseWikiArticles: TerpiraArticle[] = [
       { term: "Flush", definition: "Ein Spülgang mit pH-korrigiertem Wasser ohne Dünger, um akkumulierte Salze aus dem Substrat auszuwaschen." }
     ],
     sourceIds: ["bernal-cannabis-nutrient-requirements", "marschner-mineral-nutrition", "caplan-cannabis-fertility-rate", "bugbee-electrical-conductivity"],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "naehrstoffblockaden-und-antagonismen", "cannabis-substrat-und-wurzelzone", "feminisiert-vs-regular-vs-autoflower", "substrat-vergleich-coco-erde-hydro"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "naehrstoffblockaden-und-antagonismen", "cannabis-substrat-und-wurzelzone", "feminisiert-vs-regular-vs-autoflower", "substrat-vergleich-coco-erde-hydro", "bluetephase-ernaehrung-und-pflege"]
   },
   {
     slug: "stressmarker-frueh-erkennen",
     title: "Stressmarker früh erkennen",
     summary: "Frühe Hinweise auf Klima-, Licht- und Wurzelstress erkennen, bevor Ertrag und Qualität kippen.",
-    category: "anbau",
+    category: "diagnose",
+    diagnoseAreas: ["wachstum"],
     difficulty: "einsteiger",
     readMinutes: 6,
     lastUpdated: "2026-08-03",
@@ -1783,7 +1825,7 @@ const baseWikiArticles: TerpiraArticle[] = [
     slug: "indoor-outdoor-anbau-vergleich",
     title: "Indoor vs. Outdoor: Anbauvergleich Cannabis",
     summary: "Licht, Ertrag, Terpenprofil und Risikofaktoren im direkten Vergleich – was Forschung und Praxis über beide Anbausysteme sagen.",
-    category: "anbau",
+    category: "tutorials",
     difficulty: "einsteiger",
     readMinutes: 8,
     lastUpdated: "2026-08-03",
@@ -1898,7 +1940,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       { term: "Lichtdeprivation", definition: "Kontrollierte Verdunkelung eines Gewächshauses, um bei natürlichem Tageslicht eine kürzere Photoperiode zu simulieren und die Blüte gezielt auszulösen." }
     ],
     sourceIds: ["horticulture-research-cannabis-cultivation", "chandra-cannabis-photosynthesis-temperature-co2", "botrytis-grey-mold-review"],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "lichtstress-und-canopy-management", "schimmel-und-mykotoxine-bei-cannabis", "vpd-und-ec-kombi-rechner-guide"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "lichtstress-und-canopy-management", "schimmel-und-mykotoxine-bei-cannabis", "vpd-und-ec-kombi-rechner-guide", "outdoor-anbau-fuer-einsteiger"]
   },
   {
     slug: "naehrstoffblockaden-und-antagonismen",
@@ -2023,13 +2065,14 @@ const baseWikiArticles: TerpiraArticle[] = [
       { term: "Blockade", definition: "Situation, in der ein Nährstoff im Substrat vorhanden, aber für die Pflanze aufgrund von pH oder Antagonismus nicht aufnehmbar ist." }
     ],
     sourceIds: ["marschner-mineral-nutrition", "bryson-plant-nutrition-manual", "bernal-cannabis-nutrient-requirements", "bugbee-electrical-conductivity"],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-und-ec-kombi-rechner-guide", "naehrstoffbedarf-cannabis-lebenszyklus"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-und-ec-kombi-rechner-guide", "naehrstoffbedarf-cannabis-lebenszyklus", "bluetephase-ernaehrung-und-pflege"]
   },
   {
     slug: "blattsymptom-troubleshooter",
     title: "Blattsymptom-Troubleshooter: Vom Symptom zur Diagnose",
     summary: "Ausgangspunkt für jede Fehlersuche: ordne ein beobachtetes Blatt- oder Pflanzensymptom systematisch einer möglichen Ursache zu und springe direkt zur passenden Diagnose.",
-    category: "anbau",
+    category: "diagnose",
+    diagnoseAreas: ["blaetter"],
     difficulty: "einsteiger",
     readMinutes: 11,
     lastUpdated: "2026-08-03",
@@ -2373,7 +2416,8 @@ const baseWikiArticles: TerpiraArticle[] = [
     slug: "ec-und-runoff-interpretation",
     title: "EC und Runoff richtig interpretieren",
     summary: "Warum die Drainage-EC im Verhältnis zur Zulauf-EC aussagekräftiger ist als jeder Einzelwert für sich und wie du daraus die richtige Korrektur ableitest.",
-    category: "anbau",
+    category: "diagnose",
+    diagnoseAreas: ["wachstum"],
     difficulty: "fortgeschritten",
     readMinutes: 8,
     lastUpdated: "2026-08-03",
@@ -2483,7 +2527,8 @@ const baseWikiArticles: TerpiraArticle[] = [
     slug: "wurzelgesundheit-diagnose",
     title: "Wurzelgesundheit beurteilen und diagnostizieren",
     summary: "Farbe, Konsistenz und Geruch der Wurzel verraten mehr über den Zustand einer Pflanze als jedes oberirdische Symptom. So beurteilst du Wurzeln systematisch bei Umtopfen und Ernte.",
-    category: "anbau",
+    category: "diagnose",
+    diagnoseAreas: ["wachstum"],
     difficulty: "fortgeschritten",
     readMinutes: 8,
     lastUpdated: "2026-08-03",
@@ -3007,7 +3052,8 @@ const baseWikiArticles: TerpiraArticle[] = [
     slug: "hop-latent-viroid-hlvd",
     title: "Hop Latent Viroid (HLVd) bei Cannabis erkennen und vorbeugen",
     summary: "Gestauchtes, kraftloses Wachstum ohne eindeutige Einzelursache kann auf HLVd hindeuten — ein Viroid ohne Heilung, das nur durch Hygiene und Labortests kontrollierbar ist.",
-    category: "anbau",
+    category: "diagnose",
+    diagnoseAreas: ["wachstum"],
     difficulty: "profi",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -6065,88 +6111,90 @@ const expansionWikiArticles: TerpiraArticle[] = [
     slug: "how-to-grow-cannabis-anfaenger-tutorial",
     title: "How to Grow Cannabis: Schritt-für-Schritt für Anfänger",
     summary: "Ein klarer Einstieg in Setup, Klima, Bewässerung und Erntefenster - aufgebaut auf belastbaren Grundlagen aus Forschung und bewährten Profi-Routinen.",
-    category: "anbau",
+    category: "tutorials",
     difficulty: "einsteiger",
     readMinutes: 14,
     tags: ["How to Grow", "Anbau", "Anfänger", "Step by Step", "Setup", "Klima"],
     keyTakeaways: [
-      "Starte mit einem kleinen, stabilen Setup statt mit maximaler Leistung.",
-      "Miss Klima, pH und Bewässerung konsistent, bevor du Dünger oder Licht weiter aufdrehst.",
-      "Ein sauberer Wochenrhythmus mit festen Checks verhindert die meisten typischen Einsteigerfehler."
+      "Starte mit einem kleinen, einfachen Setup statt gleich alles auf Maximum zu stellen – so siehst du schneller, welche Änderung wirklich etwas bewirkt.",
+      "Miss zuerst Klima (Temperatur, Luftfeuchte), pH-Wert und Wassergaben zuverlässig, bevor du an Dünger oder Licht mehr Leistung gibst.",
+      "Ein fester Wochenrhythmus mit klaren Checks verhindert die häufigsten Anfängerfehler."
     ],
     quickFacts: [
-      { label: "Zielgruppe", value: "Erster bis dritter Run" },
-      { label: "Fokus", value: "Stabilität vor Performance" },
+      { label: "Zielgruppe", value: "Erster bis dritter Grow" },
+      { label: "Fokus", value: "Stabilität vor Höchstleistung" },
       { label: "Routine", value: "Täglicher 10-Minuten-Check" }
     ],
     sections: [
       {
-        heading: "Schritt 1: Setup klein und reproduzierbar halten",
+        heading: "Schritt 1: Klein und einfach starten",
         content: [
-          "Wähle ein überschaubares Setup mit klar kontrollierbaren Variablen: Licht, Abluft, Umluft, Temperatur, RH und ein einfaches Substrat. Forschung zu Cannabis-Kultivierung und die Erfahrung erfahrener Grower zeigen übereinstimmend, dass Stabilität den größten Hebel hat.",
-          "Für den Einstieg ist ein verzeihendes Medium mit dokumentierbarem Giessrhythmus wichtiger als ein aggressives High-Performance-System. Erde oder ein gut vorbereiteter Mix mit klarer Trocknungsdynamik ist meist einfacher als sofortige Hydro-Steuerung."
+          "Wähle für den ersten Grow ein überschaubares Setup: Licht, Abluft (die Luft, die aus dem Zelt raus geht), Umluft (ein kleiner Ventilator, der die Luft im Zelt bewegt), Temperatur, Luftfeuchte und ein einfaches Substrat – alles Dinge, die du leicht kontrollieren kannst. Je einfacher das Setup, desto leichter erkennst du später, welche Änderung wirklich etwas bewirkt hat.",
+          "Für den Einstieg ist normale, gute Blumenerde meist einfacher als ein Hydro-System, das täglich exakte Steuerung braucht – kleinere Fehler verzeiht Erde eher. Wichtig ist vor allem, dass du einen festen Gießrhythmus einhältst und dir notierst, wann und wie viel du gießt."
         ],
         checklist: [
-          "Lichtleistung konservativ starten und Höhe dokumentieren",
-          "Temperatur und RH am Canopy messen",
-          "Substrat, Topfvolumen und Ziel-Giessrhythmus vor dem Start festlegen"
+          "Lampenleistung am Anfang eher niedrig einstellen und den Abstand zur Pflanze notieren",
+          "Temperatur und Luftfeuchte direkt über der Pflanze (Canopy) messen, nicht nur irgendwo im Raum",
+          "Vor dem Start festlegen: welches Substrat, welche Topfgröße, wie oft gegossen wird"
         ]
       },
       {
-        heading: "Schritt 2: Klima und Bewässerung zuerst stabilisieren",
+        heading: "Schritt 2: Klima und Gießen zuerst in den Griff bekommen",
         content: [
-          "Halte in der Vegetationsphase keine extremen Werte, sondern stabile Korridore. VPD-orientiertes Arbeiten und regelmässige Topfgewicht-Kontrolle sind für Anfänger deutlich wertvoller als hektische EC-Optimierung.",
-          "Viele Probleme im ersten Run entstehen durch zu häufiges Giessen und zu viele Korrekturen gleichzeitig. Arbeite mit einem festen Beobachtungsfenster: Blätter, Topfgewicht, Drain, Temperatur und Luftfeuchte."
+          "Halte Temperatur und Luftfeuchte in der Wachstumsphase in einem stabilen Bereich, statt sie stark schwanken zu lassen. Für Anfänger ist das wichtiger, als die Düngerstärke bis ins Detail zu optimieren – prüfe stattdessen regelmäßig, ob die Pflanze wirklich Wasser braucht, zum Beispiel indem du den Topf hochhebst: Fühlt er sich deutlich leichter an als kurz nach dem letzten Gießen, ist es Zeit für die nächste Gabe.",
+          "Die meisten Probleme im ersten Grow entstehen durch zu häufiges Gießen und zu viele gleichzeitige Änderungen. Beobachte stattdessen regelmäßig: die Blätter, das Topfgewicht, das Wasser, das unten aus dem Topf rausläuft (Drain), Temperatur und Luftfeuchte."
         ],
         checklist: [
-          "Vor jedem Giessen Topfgewicht oder Trocknungsgrad prüfen",
-          "Nur einen Parameter pro Tag ändern",
-          "Klimaabweichungen mit Datum und Uhrzeit ins Grow-Log schreiben"
+          "Vor jedem Gießen prüfen, ob das Substrat wirklich trocken genug ist (z. B. am Topfgewicht)",
+          "Immer nur eine Sache pro Tag ändern, nie mehrere gleichzeitig",
+          "Auffälligkeiten mit Datum und Uhrzeit ins Grow-Log schreiben"
         ]
       },
       {
-        heading: "Schritt 2b: Wochenplan für einen einfachen ersten Run",
+        heading: "Schritt 2b: Wochenplan für einen einfachen ersten Grow",
         content: [
-          "Woche 1-2: Keimung und Jungpflanze. Licht moderat halten, RH höher fahren, Medium nur leicht feucht und keine harten Düngeimpulse setzen. Fokus: stabile Entwicklung statt Tempo.",
-          "Woche 3-4: Frühe Vegetation. Gleichmässigen Rhythmus aus Giessen, Klima-Check und leichter Nährstoffzufuhr etablieren. Jetzt zeigt sich, ob Topf, Medium und Trocknungsdauer zusammenpassen.",
-          "Woche 5-6: Späte Vegetation bis Stretch. Pflanzenhöhe, Lichtabstand und Blattgesundheit eng beobachten. Nur dann auf Blüte umstellen, wenn Pflanzen vital und der Raum klimatisch stabil ist.",
-          "Woche 7-9: Hauptblüte. Stickstoff nicht aggressiv pushen, Giessrhythmus eng führen und Klima trocken genug halten, damit keine dichten, feuchten Problemzonen entstehen.",
-          "Woche 10+: Reife, Ernte und Trocknung. Trichome beobachten, letzte grobe Korrekturen vermeiden und Trocknungsraum vor dem Schnitt komplett vorbereiten."
+          "Woche 1–2: Keimung und Jungpflanze. Licht nicht zu stark, Luftfeuchte eher hoch halten, Substrat nur leicht feucht halten und noch nicht kräftig düngen. Ziel: ruhiges, stabiles Wachstum statt Tempo.",
+          "Woche 3–4: Frühe Wachstumsphase. Einen gleichmäßigen Rhythmus aus Gießen, Klima-Check und leichter Düngung einspielen. Hier zeigt sich, ob Topf, Substrat und Trocknungszeit zwischen den Gießgängen zusammenpassen.",
+          "Woche 5–6: Späte Wachstumsphase bis zum 'Stretch' (die Pflanze wächst nach der Umstellung auf Blüte nochmal deutlich in die Höhe). Pflanzenhöhe, Lichtabstand und Blattgesundheit genau beobachten. Erst auf Blüte umstellen, wenn die Pflanze gesund ist und das Klima im Raum stabil läuft.",
+          "Woche 7–9: Hauptblüte. Nicht zu viel Stickstoff geben, Gießrhythmus konstant halten und die Luftfeuchte trocken genug, damit sich keine dichten, feuchten Problemzonen in den Blüten bilden.",
+          "Woche 10+: Reife, Ernte und Trocknung. Trichome beobachten (siehe Schritt 4), keine großen Änderungen mehr vornehmen und den Trocknungsraum vorbereiten, bevor geschnitten wird."
         ],
         checklist: [
-          "Jede Woche nur ein klares Lernziel definieren",
-          "Vor der Blüte kein ungelostes Giess- oder Klima-Problem mitnehmen",
-          "Trocknung mindestens so genau planen wie die Veg-Phase"
+          "Jede Woche ein klares, einzelnes Lernziel setzen",
+          "Kein ungelöstes Gieß- oder Klimaproblem mit in die Blüte nehmen",
+          "Die Trocknung genauso sorgfältig planen wie die Wachstumsphase"
         ]
       },
       {
-        heading: "Schritt 3: Düngung defensiv und phasenbezogen steuern",
+        heading: "Schritt 3: Vorsichtig und passend zur Phase düngen",
         content: [
-          "Studien zu NPK-Fertigation bei Cannabis zeigen, dass Überversorgung - besonders mit Stickstoff in späteren Phasen - Ertrag und Qualität eher verschlechtern kann. Beginne deshalb unterhalb der Hersteller-Maximalangaben und steigere nur bei klarer Pflanzenreaktion.",
-          "Achte darauf, dass Lichtintensität, Klima und Wurzelzone zur Nährstoffstärke passen. Ohne diese Basis bringt mehr EC kaum Nutzen und erhöht das Risiko für Blockaden oder Stressmarker."
+          "Zu viel Dünger – vor allem zu viel Stickstoff in der späteren Blüte – verschlechtert Ertrag und Qualität eher, als dass er hilft. Starte deshalb unterhalb der auf der Düngerflasche angegebenen Maximalmenge und steigere nur, wenn die Pflanze sichtbar gut reagiert: kräftiges, sattgrünes Wachstum statt verbrannter, dunkler Blattspitzen.",
+          "Dünger bringt nur etwas, wenn Licht, Klima und die Wurzelzone insgesamt passen. Ohne diese Basis nützt eine höhere Düngerstärke (EC) kaum etwas und erhöht nur das Risiko, dass die Pflanze den Dünger gar nicht mehr richtig aufnehmen kann (eine sogenannte Nährstoffsperre)."
         ],
         checklist: [
-          "pH und EC der Lösung in fixer Reihenfolge messen",
-          "Keine Booster einsetzen, solange Basisprozesse noch schwanken",
-          "Ab Blüteeinleitung Stickstoff nicht weiter aggressiv steigern"
+          "pH-Wert erst messen, nachdem sich der Dünger im Wasser vollständig aufgelöst hat, danach die EC (Düngerstärke) prüfen",
+          "Keine teuren Blüte-Zusatzprodukte (Booster) verwenden, solange Gießen und Klima noch nicht stabil laufen",
+          "Ab Beginn der Blüte den Stickstoffanteil nicht weiter erhöhen"
         ]
       },
       {
         heading: "Schritt 4: Ernte nicht raten, sondern beobachten",
         content: [
-          "Einsteiger profitieren von klaren Reifeindikatoren statt Kalenderdenken. Beobachte Trichome, Pflanzenvitalität, Klima und Trocknungsplanung als zusammenhängenden Prozess.",
-          "Direkt nach der Ernte entscheidet sauberes Trocknen über Aroma, Schimmelrisiko und Konsistenz. Erfahrene Grower behandeln die Nacherntephase als Teil des Grows und nicht als letzten Nebenjob."
+          "Das wichtigste Signal sind die Trichome – die winzigen, pilzförmigen Harzköpfchen auf den Blüten. Mit einer günstigen 60–100-fachen Lupe oder der Makro-/Zoomfunktion einer Handykamera erkennst du ihre Farbe: klar/durchsichtig heißt zu früh, milchig-weiß/undurchsichtig zeigt den Wirkstoff-Höhepunkt an, bernsteinfarben (amber) bedeutet, dass sich THC bereits weiter abbaut und die Wirkung eher entspannend statt aktivierend wird.",
+          "Faustregel: Ernte, wenn die meisten Trichome milchig sind – wer eine eher aktivierende Wirkung mag, erntet bei überwiegend milchig und kaum Bernstein, wer es entspannter mag, wartet auf etwas mehr Bernsteinanteil. Braune, eingerollte Blütenhaare (Pistillen) und leicht vergilbende untere Blätter bestätigen dieses Bild, ersetzen die Trichomkontrolle aber nicht.",
+          "Direkt nach der Ernte entscheidet sauberes Trocknen über Aroma, Schimmelrisiko und Konsistenz: Ziel sind 18–21 °C und 55–65 % relative Luftfeuchte über etwa 7–14 Tage, in einem komplett verdunkelten Raum mit sanfter, indirekter Luftbewegung statt direktem Luftstrom auf die Blüten. Fertig ist die Trocknung nicht nach einer festen Anzahl Tage, sondern wenn der Snap Test klappt: Ein dünner Stängel bricht beim Biegen, statt sich nur zu verformen."
         ],
         checklist: [
-          "Vor der Ernte Trocknungsraum auf Temperatur und RH vorbereiten",
-          "Trichomkontrolle mit Lupe oder Mikroskop durchführen",
-          "Nach dem Run drei Dinge notieren: Fehler, Korrektur, Ergebnis"
+          "Trichome mit Lupe (60–100x) oder Handy-Makrolinse prüfen, nicht mit bloßem Auge",
+          "Mehrere Blüten aus unterschiedlichen Pflanzenbereichen checken, nicht nur eine",
+          "Trocknungsraum vorab auf 18–21 °C, 55–65 % RH und Verdunkelung einstellen",
+          "Ab Tag 5–6 täglich den Snap Test machen: Stängel bricht = fertig"
         ]
       }
     ],
     warnings: [
-      "Mehr Dünger, mehr Licht und mehr Wasser gleichzeitig zu erhöhen ist der schnellste Weg in unklare Fehlerbilder.",
-      "Ohne funktionierende Klimakontrolle wird selbst ein guter Nährstoffplan instabil."
+      "Mehr Dünger, mehr Licht und mehr Wasser gleichzeitig zu erhöhen ist der schnellste Weg zu Problemen, die du hinterher nicht mehr auseinanderhalten kannst.",
+      "Ohne stabiles Klima wirkt selbst ein guter Düngeplan nicht zuverlässig."
     ],
     simpleExplainers: [
       {
@@ -6156,30 +6204,40 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         title: "Kurz erklärt: Was ist ein reproduzierbarer Run?",
         text: "Ein Grow, dessen Klima, Giessverhalten und Inputs dokumentiert und beim nächsten Zyklus sauber wiederholbar sind."
+      },
+      {
+        title: "Kurz erklärt: Woran erkenne ich, dass geerntet werden sollte?",
+        text: "Schau dir die Trichome mit einer Lupe an. Klar = zu früh, milchig-weiß = Wirkstoff-Höhepunkt, bernsteinfarben = die Pflanze baut THC schon wieder ab. Die meisten ernten, wenn überwiegend milchige Trichome mit nur wenig Bernstein zu sehen sind."
       }
     ],
     faq: [
       {
         question: "Soll ich im ersten Run toppen, trainieren und boostern?",
-        answer: "Nur wenn die Basis stabil ist. Für den Einstieg ist ein sauberer, einfacher Pflanzenlauf wertvoller als zu viele parallele Eingriffe."
+        answer: "Nur wenn die Basis stabil ist. Für den Einstieg ist ein sauberer, einfacher Pflanzenlauf wertvoller als zu viele parallele Eingriffe. Toppen heißt, die Haupttriebspitze zu kappen, um die Pflanze buschiger wachsen zu lassen – ein irreversibler Schnitt, der für den allerersten Run meist noch nicht nötig ist. Boostern meint zusätzliche Blüte-Dünger; für den Einstieg reicht ein normales, phasenangepasstes Düngeprogramm."
       },
       {
         question: "Was ist für Anfänger wichtiger: EC oder Klima?",
-        answer: "Klima und Bewässerung zuerst. Eine Pflanze in schlechtem Klima kann selbst mit sauberem EC nicht stabil performen."
+        answer: "Klima und Bewässerung zuerst. EC (die gemessene Salzkonzentration der Nährlösung, ein Maß für die Düngerstärke) bringt wenig, wenn Temperatur und Luftfeuchte nicht stimmen – eine Pflanze in schlechtem Klima kann selbst mit sauber eingestelltem EC-Wert nicht stabil wachsen."
       }
     ],
     glossary: [
       { term: "Grow-Log", definition: "Laufende Dokumentation von Klima, Giessen, Düngung und Auffälligkeiten pro Tag." },
       { term: "Canopy", definition: "Oberer Pflanzenbereich, in dem Licht und Klima besonders relevant gemessen werden." },
-      { term: "Drain", definition: "Abflusswasser nach der Bewässerung, nutzbar für EC- und pH-Kontrolle." }
+      { term: "Drain", definition: "Abflusswasser nach der Bewässerung, nutzbar für EC- und pH-Kontrolle." },
+      { term: "Trichom", definition: "Winziges, pilzförmiges Harzköpfchen auf Blüten und Blättern. Seine Farbe – klar, milchig oder bernsteinfarben – zeigt an, wie reif die Blüte ist und ob der Wirkstoffgehalt schon wieder abnimmt." },
+      { term: "Snap Test", definition: "Einfache Prüfung, ob die Trocknung fertig ist: Ein dünner Stängel bricht beim Biegen, statt sich nur zu verformen." },
+      { term: "EC", definition: "Electrical Conductivity – misst, wie stark die Nährlösung mit Dünger angereichert ist. Je höher der EC-Wert, desto mehr Dünger ist im Wasser." },
+      { term: "pH-Wert", definition: "Zeigt, wie sauer oder basisch Nährlösung bzw. Substrat sind. Ein falscher pH-Wert blockiert die Nährstoffaufnahme, selbst wenn genug Dünger vorhanden ist." },
+      { term: "Nährstoffsperre", definition: "Zustand, in dem die Pflanze vorhandenen Dünger nicht mehr aufnehmen kann – meist durch falschen pH-Wert oder Salzansammlung im Substrat verursacht, nicht durch echten Nährstoffmangel." },
+      { term: "Stretch", definition: "Die deutliche Höhenzunahme der Pflanze in den ersten Wochen nach der Umstellung auf den Blüte-Lichtzyklus." }
     ],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-einfach-erklaert", "cannabis-substrat-und-wurzelzone"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-einfach-erklaert", "cannabis-substrat-und-wurzelzone", "outdoor-anbau-fuer-einsteiger"]
   }),
   createArticle({
     slug: "how-to-grow-cannabis-fortgeschritten-tutorial",
     title: "How to Grow Cannabis: Schritt-für-Schritt für Fortgeschrittene",
     summary: "Wie du ein stabiles Setup in ein datengestütztes Produktionssystem verwandelst - mit sauberer Klima-, Feed- und Canopy-Steuerung.",
-    category: "anbau",
+    category: "tutorials",
     difficulty: "fortgeschritten",
     readMinutes: 16,
     tags: ["How to Grow", "Anbau", "Fortgeschritten", "Step by Step", "Canopy", "Nährstoffe", "VPD"],
@@ -6293,7 +6351,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
     slug: "how-to-grow-cannabis-profi-tutorial",
     title: "How to Grow Cannabis: Schritt-für-Schritt für Profis",
     summary: "Wie du als erfahrener Grower über mehrere Zonen oder Durchläufe hinweg konstant gute Ergebnisse erzielst, statt bei jedem Run wieder von vorne zu lernen.",
-    category: "anbau",
+    category: "tutorials",
     difficulty: "profi",
     readMinutes: 18,
     tags: ["How to Grow", "Anbau", "Profi", "Step by Step", "Konsistenz", "Datenlog", "Multi-Zone"],
@@ -7441,6 +7499,225 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Shatter", definition: "Glasartige, durchscheinende, brüchige Textur - entsteht durch minimale Bewegung des Materials während des Purge." }
     ],
     relatedSlugs: ["hash-typen-vergleichen", "full-melt-und-marketingsprache", "rosin-einordnung-ohne-hype"]
+  },
+  {
+    slug: "bluetephase-ernaehrung-und-pflege",
+    title: "Blütephase: Ernährung, Support und der Weg zur Ernte",
+    summary: "Wie sich der Nährstoffbedarf in der Blüte verschiebt, was kontrollierte Studien zum PK-Bloom-Booster-Versprechen wirklich zeigen, und wie Defoliation, Support und Lichtdichtigkeit richtig getimt werden.",
+    category: "tutorials",
+    difficulty: "fortgeschritten",
+    readMinutes: 11,
+    lastUpdated: "2026-08-22",
+    tags: ["Blüte", "Blütephase", "NPK", "Nährstoffe", "Defoliation", "Trellis", "Support", "Calcium", "Lichtdichtigkeit", "PPFD"],
+    keyTakeaways: [
+      "Drei unabhängige kontrollierte Studien widersprechen dem Marketing-Versprechen 'mehr PK-Booster = mehr Ertrag und Potenz': Kalium zeigte im Bereich 60–340 mg/L keinen Ertragseffekt, überschüssiges Phosphor wurde nur ausgewaschen statt genutzt, und keine der drei Studien fand eine Cannabinoid-Steigerung durch mehr P/K.",
+      "Die verbreitete Regel 'jeder Lichtspalt in der Dunkelphase löst Zwitterbildung aus' ist durch die einzige verfügbare Studie weder bestätigt noch widerlegt – die Vorsicht bleibt trotzdem sinnvoll, weil die Kosten der Prävention niedrig und der potenzielle Schaden hoch sind.",
+      "Defoliation hat zwei sichere Zeitfenster (vor beziehungsweise in den ersten zwei Wochen 12/12, dann wieder Woche 3–4) und eine klare Sperrzeit während des aktiven Stretch (Tag 1–21) – Trellis-Netting wirkt am besten, wenn es vor dem Stretch statt reaktiv in Woche 5 installiert wird."
+    ],
+    quickFacts: [
+      { label: "NPK-Übergang", value: "≈1-3-2 früh/mittel Blüte → 0-3-3 spät Blüte, über 2–3 Wochen" },
+      { label: "Defoliation-Fenster", value: "vor/erste 2 Wochen 12/12 + Woche 3–4 (Tag 21–25), Sperre Tag 1–21" },
+      { label: "Support-Bedarf", value: "ab Woche 4–5, Trellis idealerweise vor dem Stretch installiert" },
+      { label: "K-Ertragswirkung laut Studienlage", value: "keine im Bereich 60–340 mg/L (kontrollierte DWC-Studie)" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Phasenlänge",
+        content: [
+          "Die Blütephase beginnt mit der Umstellung auf einen 12/12-Lichtzyklus (photoperiodisch) beziehungsweise setzt genetisch fixiert ein (Autoflower) und endet mit der Ernte. Sie umfasst die Kernblüte – Lichtumstellung bis zum Einsetzen der Reifung – und schließt mit einer separat geführten Spätblüte-/Flush-Phase ab.",
+          "Die Kernblütendauer ist genetikabhängig: rund 42 Tage bei Indica-, 49 Tage bei Hybrid- und 70 Tage bei Sativa-dominanten Sorten, jeweils zuzüglich rund 14 Tagen Spätblüte."
+        ]
+      },
+      {
+        heading: "Warum sich das Nährstoffverhältnis verschiebt",
+        content: [
+          "Phosphor treibt als Baustein von ATP und Nukleinsäuren Zellteilung und Energietransfer bei der Knospenbildung an, Kalium reguliert Stomataöffnung, osmotischen Druck und den Zuckertransport ins Blütengewebe – während der Stickstoffbedarf mit dem Rückgang des vegetativen Blattwachstums sinkt. Der verbreitete Praxis-Richtwert liegt bei einem NPK-Verhältnis von etwa 1-3-2 in früher bis mittlerer Blüte, graduell weiter Richtung 0-3-3 in später Blüte, mit der Umstellung über die ersten zwei bis drei Wochen statt eines abrupten Wechsels.",
+          "Parallel steigt der Calcium- und Magnesiumbedarf: Calcium ist am Protein- und Energiestoffwechsel beteiligt, Magnesium erhöht die Phosphor-Mobilität in der Pflanze. Hochdosierte P/K-Blütedünger können die Ca/Mg-Aufnahme hemmen, besonders früh in der Blüte (Woche 3–6)."
+        ]
+      },
+      {
+        heading: "Was kontrollierte Studien zum PK-Bloom-Booster-Versprechen wirklich zeigen",
+        content: [
+          "Drei unabhängige kontrollierte Studien widersprechen dem verbreiteten 'mehr PK-Zusatzprodukt = mehr Ertrag und Potenz'-Narrativ. Eine rigorose Studie an Gelato-Klonen in Hydrokultur (Response-Surface-Design, mindestens fünf Wiederholungen je Behandlung) fand die optimale Konzentration für maximalen Ertrag bei Stickstoff 194 mg/L und Phosphor 59 mg/L – Kalium zeigte im getesteten Bereich von 60 bis 340 mg/L keine Ertragswirkung, kommerzielle Empfehlungen von 300–400 mg/L Kalium wurden von den Studienautoren als wahrscheinlich exzessiv eingeordnet, und keine Cannabinoid-Wirkung durch NPK-Variation wurde gefunden.",
+          "Eine zweite, unabhängige Studie an einem Hemp-Kultivar testete Wurzelzonen-Phosphor bei 25, 50 und 75 mg/L und fand keinen signifikanten Unterschied in Ertrag oder Cannabinoid-Konzentration zwischen den Stufen – der Phosphorgehalt im Drainagewasser stieg dagegen zwölffach bei nur dreifacher Erhöhung des Phosphor-Inputs, überschüssiges Phosphor wird schlicht ausgewaschen statt genutzt.",
+          "Eine dritte, herstellerfinanzierte Studie an zwei Sorten fand für ein PK-Zusatzprodukt einen Ertragseffekt bei einer von zwei Sorten, aber keine statistischen Unterschiede bei THC-Gehalt oder Gesamtterpenen. Für die Praxis heißt das: Moderate Phosphor-Werte reichen bereits aus, Kalium zeigt in der stärksten verfügbaren Studie gar keinen Ertragseffekt, und keine der drei Studien fand eine Cannabinoid-Steigerung durch mehr P/K – die bereits im Nährstoff-Rechner hinterlegten EC-Zielwerte sind damit der verlässlichere Hebel als teure Zusatzprodukte."
+        ]
+      },
+      {
+        heading: "Stretch, pH-Drift und Runoff-Strategie in Woche 1",
+        content: [
+          "In den ersten ein bis drei Wochen nach der Lichtumstellung setzt der aus der Vegetationsphase bekannte Stretch ein – Pflanzen verdoppeln bis verdreifachen ihre Höhe, sortenabhängig. Der Stretch hat eine direkte Konsequenz für die Nährstoffversorgung: Der Wasserverbrauch steigt sprunghaft an, was den Substrat-pH in der Wurzelzone verschieben kann (Ziel-pH 5,8–6,3 je nach Medium).",
+          "Als Gegenmaßnahme werden bis zu 15–20 % Runoff beim Gießen empfohlen, um Salzaufbau und pH-Drift zu vermeiden. In Coco dagegen zunächst kleine Gaben ohne Runoff, um in den ersten ein bis zwei Tagen die Substrat-EC aufzubauen, danach gezielt höhere Runoff-EC anstreben, um den Stretch zu bremsen."
+        ],
+        checklist: [
+          "Ablauf-EC und Runoff-pH in Woche 1 täglich messen",
+          "Bei Drift außerhalb 5,8–6,3: Runoff-Strategie anpassen statt nur nachzudüngen",
+          "In Coco: erst EC-Aufbau ohne Runoff, dann gezielter Runoff"
+        ]
+      },
+      {
+        heading: "Defoliation und Support richtig timen",
+        content: [
+          "Defoliation hat zwei belegte Zeitfenster: kurz vor bis in den ersten zwei Wochen 12/12 (untere, nicht-produktive Triebe entfernen, Energie nach oben lenken) und Woche 3–4 beziehungsweise Tag 21–25 (große, blütenlichtblockierende Fächerblätter, maximal 20–30 % der Blattmasse). Während des aktiven Stretch (Tag 1–21) sollte nicht defoliiert werden, nach Tag 25–28 nur noch sanitär (gelbe, tote oder schimmlige Blätter) – echte Spätblüte-Defoliation in Woche 6–7 wird von mehreren Quellen aktiv abgeraten, weil die Pflanze die Blattmasse für die finale Reifung nicht mehr ersetzen kann.",
+          "Support-Bedarf entsteht typischerweise ab Woche 4–5, wenn Blüten sichtbar schwer werden. Trellis-Netting idealerweise bereits vor dem Stretch installieren statt erst reaktiv in Woche 5 – eine zweite Netzlage 8–12 Zoll über der ersten gibt schweren Kolas zusätzlichen Halt. Alternativ Jo-Jo-Seile oder Bambusstäbe, sobald Äste ohne Unterstützung abzuknicken drohen."
+        ]
+      },
+      {
+        heading: "Lichtdichtigkeit und Hermaphroditismus: Vorsicht ja, Beweis nein",
+        content: [
+          "Der verbreitete Grower-Konsens, jede minimale Lichteinstrahlung während der Dunkelphase löse Zwitterbildung aus, wird durch die einzige auffindbare Studie zu diesem Thema weder bestätigt noch widerlegt. Eine Beobachtungsstudie an 403 Indoor-Pflanzen nutzte die Distanz zur Raumtür als Näherungswert für die Lichtexposition während der Dunkelphase und fand keinen praktisch relevanten Zusammenhang mit der Hermaphroditismus-Rate – das Modell erklärte nur 1,6 % der Varianz. Die Studienautoren selbst räumen ein, dass die tatsächlichen Lichtintensitäten in der Studie vermutlich zu niedrig waren, um schwache Lichtreaktionen sauber zu testen.",
+          "Praktische Konsequenz: Die Vorsichtsmaßnahme – den Grow-Raum lichtdicht abdunkeln – bleibt sinnvoll, weil der potenzielle Schaden (verlorene Ernte durch Samenbildung) hoch und die Kosten der Prävention niedrig sind. Die Kausalität sollte aber nicht als wissenschaftlich bewiesen dargestellt werden."
+        ]
+      },
+      {
+        heading: "Nährstoffsperre und Calcium-Mangel unterscheiden",
+        content: [
+          "Eine Nährstoffsperre durch hohe EC äußert sich ähnlich wie ein Mangel – Vergilbung, Blattrand-Verbrennung, gebogene Ränder, gestauchtes Wachstum, reduzierte Blütenentwicklung. Ursache ist Salzansammlung in der Wurzelzone, die die Nährstoffaufnahme trotz ausreichender oder überschüssiger Düngung blockiert. Die Diagnose läuft über Runoff-pH (außerhalb 6,0–6,8 in Erde beziehungsweise 5,5–6,5 in Hydro) und Runoff-EC, nicht über die Symptomoptik allein.",
+          "Rostfarbene, unregelmäßige Flecken auf jungen Blättern mit eingerollten Rändern, aber ohne Vergilbung und mit weiterhin grünen Adern, deuten auf Calcium-Mangel hin – ein Symptombild, das häufig mit Kaliummangel oder generellem Blüte-Stress verwechselt wird. Die Ursache ist oft nicht reiner Nährstoffmangel, sondern falscher pH, hohe EC, Überwässerung oder Wurzelschaden, die den Calcium-Transport blockieren – deshalb erst den pH-/EC-Runoff-Check durchführen, bevor nachgedüngt wird."
+        ]
+      },
+      {
+        heading: "Lichtintensität in der Blüte: Was die PPFD-Progression zeigt",
+        content: [
+          "Der bereits verifizierte PPFD-Zielbereich für die Blüte liegt bei 600–1000 µmol/m²/s. Eine kontrollierte Studie an einem Hemp-Kultivar in vertikalen Anbausystemen testete PPFD-Stufen von 200, 400 und 600 µmol/m²/s über 35 Tage Blüte: Der Gesamt-Cannabinoidgehalt stieg linear im gesamten Bereich, mit rund 37 % mehr Gesamt-CBD bei 600 gegenüber 200 µmol/m²/s. Ob der lineare Zuwachs oberhalb von 600 µmol/m²/s anhält, ist unerforscht – die Studie liefert dem bereits verifizierten Zielbereich damit erstmals einen konkreten Wirkmechanismus statt nur eines Praxis-Richtwerts."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "PK-Bloom-Booster als garantierten Ertrags- oder Potenz-Hebel behandeln – die stärkste verfügbare Studienlage zeigt für Kalium im moderaten bis hohen Bereich keine Ertragswirkung und für keine der drei Studien eine Cannabinoid-Steigerung.",
+          "Während des aktiven Stretch (Tag 1–21) defoliieren – die Pflanze braucht die Blattmasse in dieser Phase für den Struktur- und Höhenaufbau.",
+          "Ca-Mangel-Symptome ungeprüft nachdüngen, statt erst Runoff-pH und -EC zu checken – viele Ca-Symptome sind Wurzelzonen-, keine Dosierungsprobleme.",
+          "Stützsysteme erst installieren, wenn Äste bereits abknicken, statt Trellis-Netting vor dem Stretch aufzubauen."
+        ]
+      },
+      {
+        heading: "Autoflower-Besonderheiten",
+        content: [
+          "Der Übergang in die Blüte ist bei Autoflower genetisch fixiert, nicht photoperiodenausgelöst – der Lichtzyklus kann während der gesamten Lebensspanne unverändert bleiben (18/6 als verbreiteter Standard, 20/4 und 24/0 ebenfalls gängig). Eine Lichtumstellung wie bei photoperiodischen Pflanzen entfällt entsprechend."
+        ]
+      }
+    ],
+    warnings: [
+      "Die Lichtdichtigkeits-Vorsichtsmaßnahme gilt trotz dünner Studienlage weiter als sinnvoll – ein Lichtleck sollte nicht als 'wahrscheinlich harmlos' unterschätzt werden, nur weil die Kausalität wissenschaftlich nicht streng bewiesen ist.",
+      "Aggressive Defoliation in Woche 6–7 wird von mehreren Quellen aktiv abgeraten – anders als die gut belegte Mid-Flower-Defoliation kann die Pflanze die Blattmasse für die finale Reifung nicht mehr ersetzen."
+    ],
+    simpleExplainers: [
+      { title: "Kurz erklärt: Warum bringen PK-Booster oft weniger als versprochen?", text: "Kontrollierte Studien zeigen, dass moderate Phosphor-Werte für maximalen Ertrag bereits ausreichen und zusätzliches Kalium im getesteten Bereich keine messbare Ertrags- oder Potenzwirkung hat. Überschüssiges Phosphor wird größtenteils ausgewaschen statt von der Pflanze genutzt." }
+    ],
+    faq: [
+      { question: "Bringen PK-Bloom-Booster wirklich mehr Ertrag und Potenz?", answer: "Differenzierter als das Marketing suggeriert: Die stärkste verfügbare Studie fand für Kalium im getesteten Bereich (60–340 mg/L) keine Ertragswirkung, und keine der drei kontrollierten Studien fand eine Cannabinoid-Steigerung durch mehr P/K. Ein Ertragseffekt zeigte sich nur bei einer von zwei Sorten in der herstellerfinanzierten Studie – bei unveränderter Potenz." },
+      { question: "Ist jeder Lichtspalt während der Dunkelphase wirklich gefährlich?", answer: "Der weitverbreitete Konsens ist durch die einzige auffindbare Studie weder bestätigt noch widerlegt – die Studie war zu schwach angelegt für eine klare Antwort. Die Vorsichtsmaßnahme bleibt trotzdem sinnvoll, weil der potenzielle Schaden hoch und die Kosten der Prävention niedrig sind." },
+      { question: "Wann sollte ich in der Blüte defoliieren?", answer: "Zwei Fenster: kurz vor bis in den ersten zwei Wochen 12/12 und Woche 3–4 beziehungsweise Tag 21–25. Nicht während des aktiven Stretch (Tag 1–21), nach Tag 25–28 nur noch sanitär." },
+      { question: "Meine Blätter zeigen rostfarbene Flecken – soll ich Calcium nachdüngen?", answer: "Erst Runoff-pH und -EC prüfen. Viele Ca-Symptome entstehen durch falschen pH, hohe EC oder Wurzelschaden, nicht durch reinen Nährstoffmangel – Nachdüngen ohne diesen Check behebt die eigentliche Ursache nicht." }
+    ],
+    glossary: [
+      { term: "Stretch", definition: "Die deutliche Höhenzunahme in den ersten ein bis drei Wochen nach der Umstellung auf 12/12, bevor sich das Wachstum zugunsten der Blütenbildung verlangsamt." },
+      { term: "Runoff", definition: "Die beim Gießen aus dem Substrat ablaufende Nährlösung; ihr pH- und EC-Wert zeigt den tatsächlichen Zustand der Wurzelzone an, nicht nur den Zulaufwert." },
+      { term: "Trellis-Netting", definition: "Ein Stütznetz, das über oder durch das Kronendach gespannt wird, um schwere Blütenstände zu tragen und ein flaches Kronendach zu erhalten." }
+    ],
+    sourceIds: ["npk-response-surface-flowering-cannabis", "elevated-root-zone-phosphorus-hemp-leachate", "rxgreen-bulk-pk-booster-trial", "dark-period-light-exposure-sex-expression-cannabis", "high-light-intensity-cannabinoid-biosynthesis-hemp", "marschner-mineral-nutrition", "bugbee-electrical-conductivity"],
+    relatedSlugs: ["naehrstoffbedarf-cannabis-lebenszyklus", "naehrstoffblockaden-und-antagonismen", "cannabis-anbau-grundlagen", "ec-und-runoff-interpretation", "lichtstress-und-canopy-management"]
+  },
+  {
+    slug: "outdoor-anbau-fuer-einsteiger",
+    title: "Outdoor-Grow für Einsteiger: Eine Pflanze, ein Sommer",
+    summary: "Für alle, die nur einmal im Jahr eine einzelne Pflanze im Garten oder auf dem Balkon ziehen wollen, ohne Zelt, Lampen oder tägliche Messungen – was wirklich wichtig ist und was du getrost weglassen kannst.",
+    category: "tutorials",
+    difficulty: "einsteiger",
+    readMinutes: 9,
+    lastUpdated: "2026-08-22",
+    tags: ["Outdoor", "Anfänger", "Sommer", "Balkon", "Garten", "Einzelpflanze"],
+    keyTakeaways: [
+      "Ein Outdoor-Sommer-Grow braucht kein Zelt, keine Lampen und keine täglichen EC-/pH-Messungen – Sonne und Regen übernehmen den Großteil der Arbeit.",
+      "Die wichtigsten Entscheidungen fallen vor dem Start: eine früh reifende Sorte wählen und der Pflanze genug Topf- oder Bodenvolumen geben – beides lässt sich später nicht mehr nachholen.",
+      "Das größte Risiko ist nicht zu wenig Aufmerksamkeit, sondern zu viel Geduld kurz vor der Ernte: Bei fast reifen Blüten lieber vor einer mehrtägigen Regenperiode ernten als auf die letzten Prozent Reife zu warten."
+    ],
+    quickFacts: [
+      { label: "Start", value: "nach den letzten Frösten (Mitte/Ende Mai in D/A/CH)" },
+      { label: "Ernte", value: "September/Oktober, sortenabhängig" },
+      { label: "Aufwand", value: "Gießen + gelegentlich Düngen – kein Klimasystem nötig" },
+      { label: "Hauptrisiko", value: "Regen/Schimmel kurz vor der Ernte" }
+    ],
+    sections: [
+      {
+        heading: "Für wen dieser Guide ist",
+        content: [
+          "Dieser Guide richtet sich an alle, die nicht das ganze Jahr über mehrere Durchgänge in einem Zelt ziehen wollen, sondern einmal im Jahr eine einzelne Pflanze im Garten, auf dem Balkon oder der Terrasse – mit deutlich weniger Aufwand als beim Indoor-Anbau (siehe Indoor vs. Outdoor im Vergleich), aber bei guter Sommersaison genauso guten Ergebnissen.",
+          "Informiere dich vorab über die an deinem Wohnort geltenden rechtlichen Vorgaben (z. B. erlaubte Pflanzenanzahl pro Haushalt) – das ist regional unterschiedlich geregelt und nicht Teil dieses Guides."
+        ]
+      },
+      {
+        heading: "Sorte und Startzeitpunkt wählen",
+        content: [
+          "Wähle eine Sorte, die in deiner Klimazone rechtzeitig vor dem Herbstregen fertig wird – späte, ursprünglich für wärmere Regionen gezüchtete Sorten riskieren in gemäßigten Klimazonen Regen und Schimmel genau in der empfindlichen Reifephase. Autoflower-Sorten blühen unabhängig von der Tageslänge nach einer festen Zeit und sind dadurch für einen einzelnen Sommer-Run oft die planbarere Wahl als photoperiodische Sorten.",
+          "Start nach den letzten Frösten, in Mitteleuropa meist Mitte bis Ende Mai. Junge Pflanzen lassen sich auch drinnen auf der Fensterbank vorziehen und erst nach den letzten Frösten nach draußen umziehen."
+        ]
+      },
+      {
+        heading: "Standort und Topf",
+        content: [
+          "Wähle den sonnigsten verfügbaren Platz – mindestens 6 Stunden direkte Sonne, mehr ist besser. Wenig Sonne bedeutet nicht 'kein Wachstum', aber deutlich weniger Ertrag.",
+          "Ein großer Topf (mindestens 30–50 Liter als Untergrenze für einen entspannten Sommer-Run, gerne größer) oder direkt der Gartenboden gibt den Wurzeln genug Raum – Topfgröße ist outdoor einer der größten Ertragshebel, weil die Pflanze über Monate ungebremst wachsen kann und im Boden oder großen Kübeln outdoor deutlich größer wird als eine Indoor-Pflanze im begrenzten Zelt. Sorge für gute Drainage, damit der Wurzelballen nach starkem Regen nicht dauerhaft im Wasser steht. Ein windgeschützter, aber nicht komplett abgeschirmter Standort schützt vor Astbruch."
+        ]
+      },
+      {
+        heading: "Gießen und Düngen mit wenig Aufwand",
+        content: [
+          "Anders als indoor übernimmt Regen outdoor einen Teil des Gießens – trotzdem regelmäßig prüfen, ob die obere Substratschicht bereits trocken ist, besonders an heißen, trockenen Tagen und bei Topfpflanzen (die deutlich schneller austrocknen als Pflanzen im Boden).",
+          "Ein normaler, phasenangepasster Flüssigdünger nach Herstellerangabe reicht für einen einzelnen Sommer-Run völlig aus – tägliche EC- oder pH-Messungen wie beim Indoor-Grow sind hier nicht nötig, solange die Pflanze gesund aussieht (kräftiges Grün, keine verbrannten Blattspitzen)."
+        ]
+      },
+      {
+        heading: "Typische Sommerprobleme",
+        content: [
+          "Schnecken und Raupen sind outdoor-typische Schädlinge, die es indoor kaum gibt – regelmäßig Blätter und junge Triebe auf Fraßspuren checken, besonders nach Regen.",
+          "Starker Wind kann Äste brechen, besonders sobald die Blüten schwerer werden – ein einfacher Stock oder eine Schnur als Stütze reicht meist aus.",
+          "Starker Regen auf offener Erde kann Nährstoffe auswaschen – eine Mulchschicht (z. B. Stroh) auf der Erdoberfläche hilft, Feuchtigkeit und Nährstoffe zu halten."
+        ]
+      },
+      {
+        heading: "Ernte im Herbst",
+        content: [
+          "Das Reifesignal ist dasselbe wie beim Indoor-Grow: Trichome mit einer Lupe checken – klar heißt zu früh, milchig-weiß zeigt den Wirkstoff-Höhepunkt, bernsteinfarben bedeutet, dass THC sich bereits wieder abbaut (Details in der Anfänger-Anleitung, Schritt 4).",
+          "Der größte Outdoor-spezifische Unterschied: Regen kurz vor der Ernte ist das Hauptrisiko, weil Feuchtigkeit in dichten Blüten Schimmel (Botrytis-Knospenfäule) begünstigt. Behalte die Wettervorhersage im Blick – bei fast reifen Blüten lieber ein paar Tage früher ernten, statt eine mehrtägige Regenperiode abzuwarten."
+        ]
+      }
+    ],
+    warnings: [
+      "Regen und hohe Luftfeuchte kurz vor der Ernte sind das größte Outdoor-Risiko – bei dichten, großen Blüten kann sich Schimmel (Botrytis) sehr schnell ausbreiten, oft zuerst unbemerkt im Inneren der Blüte.",
+      "Informiere dich über die an deinem Wohnort geltenden rechtlichen Vorgaben, bevor du eine Pflanze im Freien anbaust – dieser Guide behandelt nur die gärtnerische Seite."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum ist ein großer Topf so wichtig?",
+        text: "Je mehr Platz die Wurzeln haben, desto mehr kann die Pflanze über den ganzen Sommer wachsen. Ein zu kleiner Topf bremst das Wachstum spürbar, egal wie gut sonst alles läuft."
+      },
+      {
+        title: "Kurz erklärt: Autoflower oder photoperiodisch für den ersten Outdoor-Run?",
+        text: "Autoflower blühen nach einer festen Zeit unabhängig vom Tageslicht – dadurch ist der Erntezeitpunkt planbarer. Photoperiodische Sorten blühen erst, wenn die Tage im Spätsommer kürzer werden, und brauchen entsprechend länger bis zur Ernte."
+      }
+    ],
+    faq: [
+      {
+        question: "Brauche ich für einen einzelnen Outdoor-Sommer-Run ein Zelt oder Lampen?",
+        answer: "Nein. Die Sonne übernimmt Licht und einen Teil der Wärme, Regen einen Teil des Gießens. Wichtig sind vor allem ein sonniger Standort, ein ausreichend großer Topf oder Boden, und etwas mehr Aufmerksamkeit in der letzten Reifephase."
+      },
+      {
+        question: "Wie oft muss ich mich um eine Outdoor-Pflanze kümmern?",
+        answer: "Deutlich seltener als indoor – meist reicht es, alle paar Tage nach dem Substrat zu schauen und gelegentlich zu düngen. Nur in der letzten Reifephase vor der Ernte lohnt sich engmaschigere Aufmerksamkeit, wegen des Regen-/Schimmelrisikos."
+      },
+      {
+        question: "Wann genau sollte ich ernten?",
+        answer: "Wenn die Trichome überwiegend milchig sind (siehe Anfänger-Anleitung, Schritt 4) – und outdoor zusätzlich: eher etwas früher ernten, statt eine angekündigte, mehrtägige Regenperiode über fast reifen Blüten abzuwarten."
+      }
+    ],
+    glossary: [
+      { term: "Autoflower", definition: "Sorte, die unabhängig von der Tageslänge nach einer festen Zeit von der Wachstums- in die Blütephase wechselt – dadurch besonders planbar für einen einzelnen Sommer-Run." },
+      { term: "Mulch", definition: "Eine Schicht (z. B. Stroh) auf der Erdoberfläche, die Feuchtigkeit hält und Nährstoffe vor Auswaschung durch Regen schützt." }
+    ],
+    sourceIds: ["botrytis-grey-mold-review"],
+    relatedSlugs: ["cannabis-anbau-grundlagen", "indoor-outdoor-anbau-vergleich", "how-to-grow-cannabis-anfaenger-tutorial", "feminisiert-vs-regular-vs-autoflower", "erntefenster-trichomreife"]
   }
 ];
 
@@ -7639,6 +7916,11 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     qualityScore: 4,
     growCategory: "nutrients",
   },
+  "bluetephase-ernaehrung-und-pflege": {
+    growValue: "Kontrollierte Studien zeigen: Kalium bringt im Bereich 60–340 mg/L keinen messbaren Ertragsvorteil – investiere das Budget für teure PK-Booster lieber in Trellis-Netting, das vor dem Stretch statt reaktiv in Woche 5 installiert wird.",
+    qualityScore: 4,
+    growCategory: "nutrients",
+  },
   "substrat-vergleich-coco-erde-hydro": {
     growValue: "Wähle Coco für Kontrolle und Wuchsgeschwindigkeit, Erde für Fehlertoleranz, Hydro nur mit etablierter System-Routine.",
     qualityScore: 4,
@@ -7795,6 +8077,11 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
   "how-to-grow-cannabis-anfaenger-tutorial": {
     growValue: "Starte mit einer Pflanze, stabilem Setup und täglichem Log – drei dokumentierte Runs machen dich besser als beliebig viele undokumentierte.",
     qualityScore: 5,
+    growCategory: "yield",
+  },
+  "outdoor-anbau-fuer-einsteiger": {
+    growValue: "Ein großer Topf (mind. 30–50 L, gerne mehr) oder direkt der Gartenboden ist outdoor der größte Ertragshebel – und behalte kurz vor der Ernte die Regen-Wettervorhersage im Blick, lieber etwas früher ernten als eine mehrtägige Regenperiode über fast reifen Blüten riskieren.",
+    qualityScore: 4,
     growCategory: "yield",
   },
   "how-to-grow-cannabis-fortgeschritten-tutorial": {

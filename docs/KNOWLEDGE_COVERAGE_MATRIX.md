@@ -43,11 +43,16 @@ Coverage is measured per **domain area** against a canonical target topic set
 | Diseases (fungal/bacterial/viral) | 12 | 1 | 1 | 0 | **0%** | 🔴 Critical |
 | Pests | 12 | 1 | 1 | 0 | **0%** | 🔴 Critical |
 | Environmental stress | 12 | 5 | 5 | 3 | **25%** | 🟠 Weak |
-| Cultivation technique | 16 | 9 | 8 | 4 | **25%** | 🟠 Weak |
+| Cultivation technique | 16 | 10 | 9 | 4 | **25%†** | 🟠 Weak |
 | Harvest & post-harvest | 8 | 5 | 5 | 3 | **38%** | 🟠 Weak |
 | Genetics & propagation | 8 | 5 | 4 | 1 | **13%** | 🟠 Weak |
 | Chemistry & analytics | 8 | 6 | 2 | 1 | **13%** | 🟠 Weak |
 | **Diagnostic core (def. + disease + pest)** | **36** | **3** | **3** | **0** | **0%** | 🔴 Critical |
+
+† `bluetephase-ernaehrung-und-pflege` (2026-08-22) is counted in Exists/Published
+but not in Handbook-grade — this matrix's 0–100 Phase 16 `quality_score` was
+never computed for it (no rubric available in this session), so Coverage %
+is left unchanged rather than assuming a passing grade. See §8.
 
 **Headline:** the entire **diagnostic core** — the deficiencies, diseases, and
 pests growers actually search for and that future diagnosis/AI tools depend on —
@@ -193,7 +198,8 @@ or treatable from the corpus.
 | Defoliation | `defoliation-entlauben` | ❌ Missing |
 | Supercropping | `supercropping` | ❌ Missing |
 | Transplanting | `umtopfen` | ❌ Missing |
-| Feeding schedules by stage | `fuetterungsplan-nach-phase` | 🟡 Partial — lite stub exists |
+| Feeding schedules by stage | `fuetterungsplan-nach-phase` | 🟡 Partial — bloom-stage feeding now covered by `bluetephase-ernaehrung-und-pflege` (below); the generic cross-phase slug itself doesn't exist in `wiki.ts` despite this row's earlier "lite stub exists" note — flagged, not corrected here (out of scope for this update). |
+| Blüte-phase tutorial (nutrition, PK-booster evidence, defoliation/support/light-tightness timing) | `bluetephase-ernaehrung-und-pflege` | ✅ Published 2026-08-22 — first article through the full Phase 17 Content-Factory pipeline (`docs/content-factory/`: Stage 1 dossier → Stage 4 editorial review, all AI-assisted, user spot-check pending before merge to `main`). `confidence_score` 0.67 (SOURCE_REQUIREMENTS.md formula); the 0–100 Phase 16 `quality_score` used elsewhere in this matrix is **not** computed here — no rubric for it was available, so it is left unrated rather than guessed. |
 
 ---
 

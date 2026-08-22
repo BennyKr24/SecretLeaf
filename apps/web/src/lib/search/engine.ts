@@ -11,7 +11,6 @@
  */
 
 import { wikiArticles, sourceRegister, categoryLabels } from "@/data/terpira/wiki";
-import { fertilizerCatalog } from "@/data/terpira/fertilizers";
 
 // ─── Typen ───────────────────────────────────────────────────────────────────
 
@@ -376,49 +375,8 @@ export function buildSearchIndex(): IndexedDoc[] {
     }
   }
 
-  // 2. Dünger
-  const costLabels: Record<string, string> = {
-    budget: "Budget", mid: "Mittel", premium: "Premium",
-  };
-  const costColors: Record<string, string> = {
-    budget: "text-green-700 bg-green-100",
-    mid: "text-amber-700 bg-amber-100",
-    premium: "text-rose-700 bg-rose-100",
-  };
-  const phaseLabels: Record<string, string> = {
-    veg: "Veg", flower: "Blüte", universal: "Universal",
-  };
-
-  for (const f of fertilizerCatalog) {
-    const phasesStr = f.phase.map((p) => phaseLabels[p] ?? p).join(", ");
-    const descFull = [
-      f.description,
-      `NPK ${f.npk.n}-${f.npk.p}-${f.npk.k}`,
-      `EC ${f.ec_range.min}–${f.ec_range.max} ${f.ec_range.unit}`,
-      phasesStr,
-      f.base,
-      f.format,
-      ...(f.micronutrients ?? []),
-      ...f.tags,
-    ].join(" ");
-
-    docs.push({
-      id: `fertilizer:${f.id}`,
-      kind: "fertilizer",
-      title: `${f.name}`,
-      subtitle: `${f.brand} · ${phasesStr} · ${f.format}`,
-      description: f.description,
-      url: `/database/fertilizers#${f.id}`,
-      tags: f.tags,
-      badge: costLabels[f.cost],
-      badgeColor: costColors[f.cost],
-      _titleTokens: tokenize(f.name),
-      _tagTokens: tokenize([...f.tags, f.brand, f.base, f.format, phasesStr].join(" ")),
-      _descTokens: tokenize(descFull),
-      _subtitleTokens: tokenize(f.brand),
-      _normalizedTitle: normalize(f.name),
-    });
-  }
+  // 2. Dünger — Katalog wird überarbeitet, Einträge werden bewusst nicht indexiert
+  // (siehe TODO.md: fertilizerCatalog-Daten sind großteils unverifiziert / synthetisch).
 
   // 3. Quellen
   for (const src of sourceRegister) {
@@ -610,8 +568,6 @@ export function getTrendingTopics(): Array<{ label: string; query: string; kind:
     { label: "PPFD & Licht", query: "PPFD Licht", kind: "wiki" },
     { label: "EC Dosierung", query: "EC Nährstoffe", kind: "wiki" },
     { label: "VPD verstehen", query: "VPD", kind: "wiki" },
-    { label: "Blüte Dünger", query: "Blüte", kind: "fertilizer" },
-    { label: "Budget Mineral", query: "Budget Mineral", kind: "fertilizer" },
     { label: "Haschisch Typen", query: "Haschisch", kind: "wiki" },
     { label: "CBD Wirkung", query: "CBD Medizin", kind: "wiki" },
     { label: "Terpene Aroma", query: "Terpene", kind: "wiki" },
@@ -630,7 +586,7 @@ function emptyResponse(query: string): SearchResponse {
     facets: { byKind: { wiki: 0, fertilizer: 0, source: 0, glossary: 0 }, byTag: [] },
     duration_ms: 0,
     isEmpty: true,
-    suggestions: ["VPD", "EC", "PPFD", "Haschisch", "Blüte", "Budget"],
+    suggestions: ["VPD", "EC", "PPFD", "Haschisch", "Blüte", "Terpene"],
   };
 }
 

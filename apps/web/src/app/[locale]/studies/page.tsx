@@ -1,6 +1,7 @@
 import type { Route } from "next";
 import { categoryLabels, wikiArticles, sourceRegister } from "@/data/terpira/wiki";
-import StudiesListView from "@/components/StudiesListView";
+import CategoryHubGrid from "@/components/CategoryHubGrid";
+import OpenSearchButton from "@/components/OpenSearchButton";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { Microscope, Bug, FlaskConical } from "lucide-react";
@@ -60,6 +61,11 @@ export default function StudiesPage() {
 
           {/* Sub-links */}
           <div className="mt-6 flex flex-wrap gap-2">
+            <OpenSearchButton
+              label="Artikel durchsuchen"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-400/30 bg-emerald-500/10
+                px-3 py-1.5 text-xs font-medium text-emerald-300 hover:bg-emerald-500/20 hover:text-emerald-200 transition-colors duration-150"
+            />
             <Link href={"/studies/sources" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
                 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors duration-150">
@@ -79,13 +85,14 @@ export default function StudiesPage() {
         </div>
       </section>
 
-      {/* ── Studies List ──────────────────────────────────────── */}
+      {/* ── Category hub ─────────────────────────────────────── */}
       <section className="px-5 py-10">
         <div className="mx-auto max-w-6xl">
-          <StudiesListView
-            articles={wikiArticles}
-            categoryLabels={categoryLabels}
-          />
+          <div className="mb-5">
+            <h2 className="text-lg font-semibold text-foreground">Fachgebiete</h2>
+            <p className="mt-1 text-sm text-muted-fg">Wähle ein Fachgebiet, um gezielt zu stöbern und zu filtern.</p>
+          </div>
+          <CategoryHubGrid articles={wikiArticles} categoryLabels={categoryLabels} />
         </div>
       </section>
 

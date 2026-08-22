@@ -23,6 +23,14 @@ export type TopicCluster = {
   key: TopicKey;
   queries: string[];
   include: RegExp[];
+  /**
+   * Patterns that collide with unrelated fields when matched as bare words
+   * (THC/CBD as unrelated acronyms, "terpene" in non-cannabis botany papers —
+   * see CANNABIS_ANCHOR_AMBIGUOUS below). Only count as a topic hit when an
+   * unambiguous cannabis anchor appears near the match, not anywhere in the
+   * whole corpus.
+   */
+  includeNearAnchor?: RegExp[];
 };
 
 // Only clusters that match SecretLeaf's documented Wissenssystem philosophy
@@ -78,18 +86,24 @@ export const TOPIC_CLUSTERS: TopicCluster[] = [
       /nutrient/i,
       /vpd/i,
       /flower yield/i,
-      /terpene/i,
-      /terpenoid/i,
       /cannabinoid profile/i,
       /cannabinoid composition/i,
-      /thc/i,
-      /thca/i,
-      /cbd/i,
-      /cbda/i,
       /trichome/i,
       /chemotype/i,
-      /cannabinoid composition/i,
       /breeding/i,
+    ],
+    // thc/cbd collide with unrelated acronyms ("travel health concern (THC)",
+    // "thermo-hydro-chemical (THC)", "CBD-CdS thin films"); terpene/terpenoid
+    // are real botanical terms used on non-cannabis plants (Ginkgo biloba,
+    // Styrax officinalis terpene-synthase papers). Confirmed false positives
+    // during the 2026-08-02 backlog triage — see TODO.md.
+    includeNearAnchor: [
+      /\bthc\b/i,
+      /\bthca\b/i,
+      /\bcbd\b/i,
+      /\bcbda\b/i,
+      /terpene/i,
+      /terpenoid/i,
     ],
   },
 ];

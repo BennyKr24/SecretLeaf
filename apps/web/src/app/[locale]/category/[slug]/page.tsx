@@ -1,44 +1,36 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { categoryLabels, wikiArticles } from "@/data/terpira/wiki";
 import StudiesListView from "@/components/StudiesListView";
 import type { TerpiraCategory } from "@/lib/terpira/types";
-import { CATEGORY_ICONS } from "@/lib/terpira/categoryIcons";
+import { CATEGORY_ICONS, CATEGORY_DESCRIPTIONS } from "@/lib/terpira/categoryIcons";
 import { FileText } from "lucide-react";
 
-const CATEGORY_DESCRIPTIONS: Partial<Record<TerpiraCategory, string>> = {
-  anbau:         'Alles zu Anbau, Pflege und Ernte – von der Keimung bis zur Trocknung und zum Curing.',
-  genetik:       'Genetik, Züchtung und Sortenwahl – für gezielte Ergebnisse bei Ertrag und Wirkstoffprofil.',
-  chemie:        'Nährstoffe, Substrate und chemische Grundlagen für gesundes Pflanzenwachstum.',
-  terpene:       'Terpenprofile, Aromastoffe und deren Einfluss auf Wirkung und Geschmack.',
-  medizin:       'Wissenschaftliche Erkenntnisse zu medizinischen Cannabis-Anwendungen.',
-  konsumformen:  'Verschiedene Konsumformen und Anwendungsmethoden im Überblick.',
-  konzentrate:   'Extraktion, Verarbeitung und Qualitätsbewertung von Konzentraten.',
-  recht:         'Rechtliche Rahmenbedingungen, Regulierung und Compliance.',
-  sicherheit:    'Sicherheitshinweise, Risikobewertung und verantwortungsvoller Umgang.',
-  qualitaet:     'Laboranalysen, Qualitätskontrolle und Reinheitsprüfungen.',
-  markt:         'Marktanalysen, Beschaffung und aktuelle Preisentwicklungen.',
-  werkzeuge:     'Praktische Rechner, Kalkulatoren und Werkzeuge für den Alltag.',
-};
-
 const validCategories = Object.keys(categoryLabels) as TerpiraCategory[];
+
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
 
 export function generateStaticParams() {
   return validCategories.map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const label = categoryLabels[params.slug as TerpiraCategory];
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  const label = categoryLabels[slug as TerpiraCategory];
   if (!label) return { title: "Kategorie – SecretLeaf" };
   return {
     title: `${label} – Studien – SecretLeaf`,
-    description: CATEGORY_DESCRIPTIONS[params.slug as TerpiraCategory] ?? `Alle Fachartikel zum Thema ${label} auf SecretLeaf.`,
+    description: CATEGORY_DESCRIPTIONS[slug as TerpiraCategory] ?? `Alle Fachartikel zum Thema ${label} auf SecretLeaf.`,
   };
 }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
-  const cat = params.slug as TerpiraCategory;
+export default async function CategoryPage({ params }: PageProps) {
+  const { slug } = await params;
+  const cat = slug as TerpiraCategory;
   if (!validCategories.includes(cat)) notFound();
 
   const label = categoryLabels[cat];
@@ -97,12 +89,13 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
       {/* ── List ──────────────────────────────────────────────── */}
       <section className="px-5 py-10">
         <div className="mx-auto max-w-6xl">
-          <StudiesListView
-            articles={articles}
-            categoryLabels={categoryLabels}
-            initialCategory={cat}
-            hideCategoryFilter
-          />
+          <Suspense fallback={null}>
+            <StudiesListView
+              articles={articles}
+              categoryLabel={label}
+              showDiagnoseAreaFacet={cat === "diagnose"}
+            />
+          </Suspense>
         </div>
       </section>
 

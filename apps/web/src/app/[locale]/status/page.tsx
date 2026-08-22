@@ -2,8 +2,6 @@ import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { getApiHealth, getPublicOverview, getPublicStatusReport } from "@/lib/publicApi";
 import changelogData from "@/data/changelog.json";
-import fertilizerCoverageHistoryData from "@/data/fertilizerCoverageHistory.json";
-import { fertilizerCoverageStats } from "@/data/terpira/fertilizers";
 import type { StatusEvent } from "@/lib/types";
 
 const levelClasses: Record<string, string> = {
@@ -228,19 +226,10 @@ export default async function StatusPage() {
   const generatedAt = statusReport ? new Date(statusReport.generatedAt).toLocaleString("de-DE") : "Kein Report verfügbar";
   const historyDays = buildStatusHistory(statusReport?.windowDays ?? 30, overallStatus, statusReport?.events ?? []);
   const impactModel = getImpactModel(overallStatus);
-  const coverageSnapshots = [...(fertilizerCoverageHistoryData.snapshots ?? [])].sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-  );
-  const coverageHistory = coverageSnapshots.slice(-6);
-  const latestCoverageSnapshot = coverageSnapshots.at(-1) ?? null;
-  const previousCoverageSnapshot = coverageSnapshots.length > 1 ? coverageSnapshots.at(-2) : null;
-  const coverageDelta = latestCoverageSnapshot && previousCoverageSnapshot
-    ? Number((latestCoverageSnapshot.coverage - previousCoverageSnapshot.coverage).toFixed(1))
-    : null;
   const statusFreshness = getFreshnessMeta(statusReport?.generatedAt ?? null);
-  const liveStudyCoveragePercent = overview?.stats.studyCoveragePercent ?? fertilizerCoverageStats.coveragePercent;
+  const liveStudyCoveragePercent = overview?.stats.studyCoveragePercent ?? 0;
   const newStudiesLast24h = (statusReport?.events ?? []).find((event: StatusEvent) => event.key === "NEW_STUDIES_24H")?.count ?? 0;
-  const coverageFreshness = getFreshnessMeta(overview?.stats.latestStudyAt ?? latestCoverageSnapshot?.date ?? null);
+  const coverageFreshness = getFreshnessMeta(overview?.stats.latestStudyAt ?? null);
   const priorityCards = getPriorityCards();
 
   const operationalChangelog = (statusReport?.events ?? [])
@@ -312,9 +301,9 @@ export default async function StatusPage() {
               </div>
               <div className="rounded-2xl border border-border bg-background p-4">
                 <div className="text-sm font-semibold text-foreground">
-                  {latestCoverageSnapshot ? new Date(latestCoverageSnapshot.date).toLocaleString("de-DE") : "n/a"}
+                  {overview?.stats.latestStudyAt ? new Date(overview.stats.latestStudyAt).toLocaleString("de-DE") : "n/a"}
                 </div>
-                <div className="mt-1 text-xs text-muted-fg">Daten zuletzt aktualisiert</div>
+                <div className="mt-1 text-xs text-muted-fg">Studien-Daten zuletzt aktualisiert</div>
                 <span className={`mt-2 inline-flex rounded-full border px-2 py-0.5 text-[11px] font-semibold ${coverageFreshness.className}`}>
                   {coverageFreshness.label}
                 </span>
@@ -402,7 +391,7 @@ export default async function StatusPage() {
             ))}
           </div>
 
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <Link href="/status" className="rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground hover:bg-background">
               Status Fokus
             </Link>
@@ -412,20 +401,17 @@ export default async function StatusPage() {
             <Link href={"/studies/sources" as Route} className="rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground hover:bg-background">
               Quellenregister
             </Link>
-            <Link href={"/database/fertilizers" as Route} className="rounded-xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground hover:bg-background">
-              Dünger-Katalog
-            </Link>
           </div>
         </section>
 
         <section className="mt-8 rounded-[28px] border border-border bg-card p-6 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Coverage Verlauf</p>
-          <h2 className="mt-2 text-2xl font-bold text-foreground">Dünger-Marktabdeckung im Zeitverlauf</h2>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Coverage</p>
+          <h2 className="mt-2 text-2xl font-bold text-foreground">Studien-Coverage</h2>
           <p className="mt-2 text-sm text-muted-fg">
             Live Studien-Coverage: {overview?.stats.goodStudies ?? 0} von {overview?.stats.totalStudies ?? 0} als good markiert ({liveStudyCoveragePercent}%).
           </p>
 
-          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <div className="rounded-xl border border-border bg-background p-4">
               <p className="text-xs text-muted-fg">Datenfrische</p>
               <div className={`mt-2 inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${coverageFreshness.className}`}>
@@ -433,29 +419,9 @@ export default async function StatusPage() {
               </div>
             </div>
             <div className="rounded-xl border border-border bg-background p-4">
-              <p className="text-xs text-muted-fg">Trend vs. letzter Snapshot</p>
-              <p className="mt-2 text-2xl font-bold text-foreground">
-                {coverageDelta == null ? "n/a" : `${coverageDelta > 0 ? "+" : ""}${coverageDelta}%`}
-              </p>
-            </div>
-            <div className="rounded-xl border border-border bg-background p-4">
               <p className="text-xs text-muted-fg">Neue Studien (24h)</p>
               <p className="mt-2 text-2xl font-bold text-foreground">{newStudiesLast24h}</p>
             </div>
-          </div>
-
-          <div className="mt-5 grid gap-3 md:grid-cols-5">
-            {coverageHistory.map((point) => (
-              <article key={point.date} className="rounded-xl border border-border bg-background p-4">
-                <time className="text-xs text-muted-fg">{new Date(point.date).toLocaleDateString("de-DE")}</time>
-                <div className="mt-2 text-2xl font-bold text-foreground">{point.coverage}%</div>
-                <div className="mt-1 h-2 rounded bg-emerald-100 dark:bg-emerald-950/40 overflow-hidden">
-                  <div className="h-full bg-emerald-600 dark:bg-emerald-500" style={{ width: `${Math.min(point.coverage, 100)}%` }} />
-                </div>
-                <p className="mt-2 text-xs text-muted-fg">{point.coveredProducts}/{point.marketEstimate}</p>
-                <p className="mt-1 text-xs text-muted-fg">{point.note}</p>
-              </article>
-            ))}
           </div>
         </section>
 

@@ -8,6 +8,8 @@ export type GrowCategory =
 
 export type TerpiraCategory =
   | "anbau"
+  | "diagnose"
+  | "tutorials"
   | "genetik"
   | "chemie"
   | "terpene"
@@ -21,6 +23,16 @@ export type TerpiraCategory =
   | "werkzeuge";
 
 export type TerpiraDifficulty = "einsteiger" | "fortgeschritten" | "profi";
+
+/**
+ * Symptom-first areas for the "diagnose" category, matching the ids used by
+ * the existing /diagnose decision-tree tool (lib/diagnose/tree.ts) 1:1, so
+ * the same mental model applies whether a user is in the interactive tool
+ * or browsing the studies library. An article can belong to more than one
+ * area (the tree itself reaches several diagnoses from multiple branches,
+ * e.g. Botrytis under both "klima" and "schaedlinge").
+ */
+export type DiagnoseArea = "blaetter" | "wachstum" | "klima" | "schaedlinge";
 
 export type TerpiraQuickFact = {
   label: string;
@@ -101,4 +113,6 @@ export type TerpiraArticle = {
   growValue?: string;
   qualityScore?: number;
   growCategory?: GrowCategory;
+  /** Only meaningful for category "diagnose" — see DiagnoseArea. */
+  diagnoseAreas?: DiagnoseArea[];
 };

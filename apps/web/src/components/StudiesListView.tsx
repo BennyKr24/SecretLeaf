@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import type { TerpiraArticle, TerpiraCategory, TerpiraDifficulty } from '@/lib/terpira/types';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import type { TerpiraArticle, TerpiraDifficulty, DiagnoseArea } from '@/lib/terpira/types';
+import { DIAGNOSE_AREA_LABELS, DIAGNOSE_AREA_ICONS, DIAGNOSE_AREA_ORDER } from '@/lib/terpira/categoryIcons';
 import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 import StudyListItem from './StudyListItem';
 
@@ -10,17 +12,22 @@ import StudyListItem from './StudyListItem';
 type SortMode = 'relevanz' | 'neueste' | 'kurz' | 'lang' | 'qualitaet';
 
 type Props = {
+  /** Articles already scoped to one category by the caller (a /category/[slug] page). */
   articles: TerpiraArticle[];
-  categoryLabels: Record<string, string>;
-  /** Preset category filter (for category pages) */
-  initialCategory?: TerpiraCategory;
-  /** Hide category filter (for category pages) */
-  hideCategoryFilter?: boolean;
-  /** Preset tag filter */
-  initialTag?: string;
-  /** Visible items per category section before "Mehr anzeigen" */
-  sectionLimit?: number;
+  /** Human label of that category, used in empty-state copy. */
+  categoryLabel: string;
+  /** Show the symptom-area facet (Blätter/Wachstum & Wurzeln/Klima & Umgebung/Schädlinge) — only meaningful for "diagnose". */
+  showDiagnoseAreaFacet?: boolean;
 };
+
+const DIFFICULTIES: TerpiraDifficulty[] = ['einsteiger', 'fortgeschritten', 'profi'];
+const DIFFICULTY_LABELS: Record<TerpiraDifficulty, string> = {
+  einsteiger: 'Einsteiger',
+  fortgeschritten: 'Fortgeschritten',
+  profi: 'Profi',
+};
+
+const INITIAL_VISIBLE = 12;
 
 // ─── Search helpers ─────────────────────────────────────────────────────────
 
@@ -59,40 +66,64 @@ function searchSnippet(article: TerpiraArticle, query: string): string | null {
   return article.summary;
 }
 
-// ─── Category order ────────────────────────────────────────────────────────
+// ─── URL <-> filter state helpers ───────────────────────────────────────────
 
-const ORDERED_CATEGORIES: TerpiraCategory[] = [
-  'anbau', 'genetik', 'chemie', 'terpene',
-  'konsumformen', 'konzentrate', 'qualitaet',
-  'sicherheit', 'medizin', 'recht', 'markt', 'werkzeuge',
-];
+function parseCsv(value: string | null): Set<string> {
+  return new Set((value ?? '').split(',').filter(Boolean));
+}
+function toCsv(set: Set<string>): string {
+  return [...set].join(',');
+}
 
 // ─── Component ──────────────────────────────────────────────────────────────
 
-export default function StudiesListView({
-  articles,
-  categoryLabels,
-  initialCategory,
-  hideCategoryFilter = false,
-  initialTag,
-  sectionLimit = 6,
-}: Props) {
-  const [category, setCategory] = useState<TerpiraCategory | 'alle'>(initialCategory ?? 'alle');
-  const [difficulty, setDifficulty] = useState<TerpiraDifficulty | 'alle'>('alle');
-  const [sort, setSort] = useState<SortMode>('qualitaet');
-  const [search, setSearch] = useState('');
-  const [activeTag, setActiveTag] = useState<string>(initialTag ?? '');
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+export default function StudiesListView({ articles, categoryLabel, showDiagnoseAreaFacet = false }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const [search, setSearch] = useState(() => searchParams.get('q') ?? '');
+  const [difficulties, setDifficulties] = useState<Set<TerpiraDifficulty>>(
+    () => parseCsv(searchParams.get('diff')) as Set<TerpiraDifficulty>
+  );
+  const [tags, setTags] = useState<Set<string>>(() => parseCsv(searchParams.get('tags')));
+  const [areas, setAreas] = useState<Set<DiagnoseArea>>(
+    () => parseCsv(searchParams.get('areas')) as Set<DiagnoseArea>
+  );
+  const [sort, setSort] = useState<SortMode>((searchParams.get('sort') as SortMode) ?? 'qualitaet');
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
   const searchRef = useRef<HTMLInputElement>(null);
 
+  // Reset the "show more" pagination whenever the active filters change.
+  // Adjusted during render (React's documented pattern for this) rather
+  // than in an Effect, which would cause an extra cascading render.
+  const filterKey = `${search}|${toCsv(difficulties)}|${toCsv(tags)}|${toCsv(areas)}|${sort}`;
+  const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
+  if (filterKey !== prevFilterKey) {
+    setPrevFilterKey(filterKey);
+    setVisibleCount(INITIAL_VISIBLE);
+  }
+
+  // Reflect filter state into the URL (shareable, bookmarkable, back-button friendly)
+  // without a hard navigation. Debounced on `search` to avoid a history entry per keystroke.
   useEffect(() => {
-    const t = setTimeout(() => setExpandedSections({}), 0);
+    const t = setTimeout(() => {
+      const params = new URLSearchParams();
+      if (search.trim()) params.set('q', search.trim());
+      if (difficulties.size) params.set('diff', toCsv(difficulties));
+      if (tags.size) params.set('tags', toCsv(tags));
+      if (areas.size) params.set('areas', toCsv(areas));
+      if (sort !== 'qualitaet') params.set('sort', sort);
+      const qs = params.toString();
+      router.replace(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+    }, search ? 300 : 0);
     return () => clearTimeout(t);
-  }, [category, difficulty, sort, search, activeTag]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, difficulties, tags, areas, sort]);
 
   type Result = { article: TerpiraArticle; score: number; snippet: string | null };
 
-  // Derive the top tags from all articles for the tag cloud
+  // Derive the top tags from all articles in this category for the tag facet
   const topTags = useMemo(() => {
     const counts = new Map<string, number>();
     for (const a of articles) {
@@ -102,19 +133,45 @@ export default function StudiesListView({
     }
     return [...counts.entries()]
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
-      .map(([tag]) => tag);
+      .slice(0, 12)
+      .map(([tag, count]) => ({ tag, count }));
   }, [articles]);
 
+  // Live counts per difficulty and area, computed against the *other* active
+  // filters (not itself) so a facet always shows what selecting it would add.
+  const baseFiltered = useMemo(() => {
+    let list = articles.filter(a => a.qualityScore === undefined || a.qualityScore >= 2);
+    if (tags.size) list = list.filter(a => a.tags.some(t => tags.has(t)));
+    return list;
+  }, [articles, tags]);
+
+  const difficultyCounts = useMemo(() => {
+    const map: Partial<Record<TerpiraDifficulty, number>> = {};
+    for (const a of baseFiltered) {
+      if (areas.size && showDiagnoseAreaFacet && !(a.diagnoseAreas ?? []).some(ar => areas.has(ar))) continue;
+      map[a.difficulty] = (map[a.difficulty] ?? 0) + 1;
+    }
+    return map;
+  }, [baseFiltered, areas, showDiagnoseAreaFacet]);
+
+  const areaCounts = useMemo(() => {
+    const map: Partial<Record<DiagnoseArea, number>> = {};
+    if (!showDiagnoseAreaFacet) return map;
+    for (const a of baseFiltered) {
+      if (difficulties.size && !difficulties.has(a.difficulty)) continue;
+      for (const ar of a.diagnoseAreas ?? []) {
+        map[ar] = (map[ar] ?? 0) + 1;
+      }
+    }
+    return map;
+  }, [baseFiltered, difficulties, showDiagnoseAreaFacet]);
+
   const filtered = useMemo((): Result[] => {
-    let list = [...articles];
-
-    // Hide articles that have a qualityScore defined but below the minimum threshold
-    list = list.filter(a => a.qualityScore === undefined || a.qualityScore >= 2);
-
-    if (category !== 'alle') list = list.filter(a => a.category === category);
-    if (difficulty !== 'alle') list = list.filter(a => a.difficulty === difficulty);
-    if (activeTag) list = list.filter(a => a.tags.some(t => t.toLowerCase() === activeTag.toLowerCase()));
+    let list = baseFiltered;
+    if (difficulties.size) list = list.filter(a => difficulties.has(a.difficulty));
+    if (showDiagnoseAreaFacet && areas.size) {
+      list = list.filter(a => (a.diagnoseAreas ?? []).some(ar => areas.has(ar)));
+    }
 
     if (search.trim()) {
       return list
@@ -123,54 +180,38 @@ export default function StudiesListView({
         .sort((a, b) => b.score - a.score);
     }
 
+    const sorted = [...list];
     switch (sort) {
-      case 'neueste': list.sort((a, b) => b.lastUpdated.localeCompare(a.lastUpdated)); break;
-      case 'kurz': list.sort((a, b) => a.readMinutes - b.readMinutes); break;
-      case 'lang': list.sort((a, b) => b.readMinutes - a.readMinutes); break;
-      case 'qualitaet': list.sort((a, b) => (b.qualityScore ?? 0) - (a.qualityScore ?? 0)); break;
-      default: list.sort((a, b) =>
-        ORDERED_CATEGORIES.indexOf(a.category) - ORDERED_CATEGORIES.indexOf(b.category)
-      );
+      case 'neueste': sorted.sort((a, b) => b.lastUpdated.localeCompare(a.lastUpdated)); break;
+      case 'kurz': sorted.sort((a, b) => a.readMinutes - b.readMinutes); break;
+      case 'lang': sorted.sort((a, b) => b.readMinutes - a.readMinutes); break;
+      default: sorted.sort((a, b) => (b.qualityScore ?? 0) - (a.qualityScore ?? 0));
     }
+    return sorted.map(article => ({ article, score: 0, snippet: null }));
+  }, [baseFiltered, difficulties, areas, showDiagnoseAreaFacet, search, sort]);
 
-    return list.map(article => ({ article, score: 0, snippet: null }));
-  }, [articles, category, difficulty, sort, search, activeTag]);
+  const hasFilters = difficulties.size > 0 || tags.size > 0 || areas.size > 0 || search.trim() !== '';
+  const visible = filtered.slice(0, visibleCount);
+  const hiddenCount = Math.max(filtered.length - visible.length, 0);
 
-  const categoryCounts = useMemo(() => {
-    const map: Record<string, number> = {};
-    for (const a of articles) map[a.category] = (map[a.category] ?? 0) + 1;
-    return map;
-  }, [articles]);
+  const toggleInSet = useCallback(<T,>(set: Set<T>, value: T, setter: (s: Set<T>) => void) => {
+    const next = new Set(set);
+    if (next.has(value)) next.delete(value); else next.add(value);
+    setter(next);
+  }, []);
 
-  const groupedResults = useMemo(() => {
-    const grouped = new Map<TerpiraCategory, Result[]>();
-
-    for (const result of filtered) {
-      const cat = result.article.category;
-      const list = grouped.get(cat) ?? [];
-      list.push(result);
-      grouped.set(cat, list);
-    }
-
-    return ORDERED_CATEGORIES
-      .filter((cat) => (grouped.get(cat)?.length ?? 0) > 0)
-      .map((cat) => ({
-        category: cat,
-        label: categoryLabels[cat] ?? cat,
-        items: grouped.get(cat) ?? [],
-      }));
-  }, [filtered, categoryLabels]);
-
-  const hasFilters = category !== 'alle' || difficulty !== 'alle' || search.trim() !== '' || activeTag !== '';
-  const toggleSection = useCallback((key: string) => {
-    setExpandedSections((prev) => ({ ...prev, [key]: !prev[key] }));
+  const resetFilters = useCallback(() => {
+    setSearch('');
+    setDifficulties(new Set());
+    setTags(new Set());
+    setAreas(new Set());
+    setSort('qualitaet');
   }, []);
 
   return (
     <div className="space-y-6">
-      {/* ── Filter bar ───────────────────────────────────────── */}
+      {/* ── Search + sort ────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-2.5">
-        {/* Search */}
         <div className="relative flex-1 min-w-[220px]">
           <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-fg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -179,7 +220,7 @@ export default function StudiesListView({
             ref={searchRef}
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="Artikel suchen…"
+            placeholder={`In ${categoryLabel} suchen…`}
             className="w-full rounded-lg border border-border bg-card py-2.5 pl-9 pr-8 text-[13.5px]
               text-foreground placeholder:text-muted-fg outline-none shadow-sm
               focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-[border-color,box-shadow]"
@@ -193,44 +234,18 @@ export default function StudiesListView({
           )}
         </div>
 
-        {/* Category */}
-        {!hideCategoryFilter && (
-          <Dropdown value={category} onChange={(v) => setCategory(v as TerpiraCategory | 'alle')}>
-            <DropdownOption value="alle">Alle Kategorien</DropdownOption>
-            {ORDERED_CATEGORIES.filter(c => categoryCounts[c]).map(cat => (
-              <DropdownOption key={cat} value={cat}>{categoryLabels[cat] ?? cat} ({categoryCounts[cat]})</DropdownOption>
-            ))}
-          </Dropdown>
-        )}
-
-        {/* Difficulty */}
-        <Dropdown value={difficulty} onChange={(v) => setDifficulty(v as TerpiraDifficulty | 'alle')}>
-          <DropdownOption value="alle">Alle Schwierigkeitsstufen</DropdownOption>
-          <DropdownOption value="einsteiger">Einsteiger</DropdownOption>
-          <DropdownOption value="fortgeschritten">Fortgeschritten</DropdownOption>
-          <DropdownOption value="profi">Profi</DropdownOption>
-        </Dropdown>
-
-        {/* Sort */}
         {!search.trim() && (
           <Dropdown value={sort} onChange={(v) => setSort(v as SortMode)}>
-            <DropdownOption value="relevanz">Relevanz</DropdownOption>
+            <DropdownOption value="qualitaet">Nach Qualität</DropdownOption>
             <DropdownOption value="neueste">Neueste zuerst</DropdownOption>
             <DropdownOption value="kurz">Kürzeste zuerst</DropdownOption>
             <DropdownOption value="lang">Längste zuerst</DropdownOption>
-            <DropdownOption value="qualitaet">Nach Qualität</DropdownOption>
           </Dropdown>
         )}
 
         {hasFilters && (
           <button
-            onClick={() => {
-              setCategory(initialCategory ?? 'alle');
-              setDifficulty('alle');
-              setSearch('');
-              setSort('qualitaet');
-              setActiveTag(initialTag ?? '');
-            }}
+            onClick={resetFilters}
             className="rounded-lg border border-border bg-card px-3 py-2.5 text-[13.5px] font-medium text-muted-fg
               hover:text-red-500 hover:border-red-300 shadow-sm transition-[color,border-color,transform] duration-150 active:scale-[0.97]"
           >
@@ -239,20 +254,69 @@ export default function StudiesListView({
         )}
       </div>
 
-      {/* ── Tag cloud ────────────────────────────────────────── */}
-      {topTags.length > 0 && !search.trim() && (
+      {/* ── Symptom-area facet (diagnose only) ──────────────────── */}
+      {showDiagnoseAreaFacet && (
         <div className="flex flex-wrap gap-1.5">
-          {topTags.map((tag) => (
+          {DIAGNOSE_AREA_ORDER.map((area) => {
+            const Icon = DIAGNOSE_AREA_ICONS[area];
+            const count = areaCounts[area] ?? 0;
+            const active = areas.has(area);
+            return (
+              <button
+                key={area}
+                onClick={() => toggleInSet(areas, area, setAreas)}
+                disabled={count === 0 && !active}
+                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition-[border-color,background-color,color,box-shadow,transform] duration-150 active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed ${
+                  active
+                    ? 'border-red-400 bg-red-500 text-white shadow-sm'
+                    : 'border-border bg-card text-muted-fg hover:border-red-300 hover:text-foreground'
+                }`}
+              >
+                <Icon className="h-3.5 w-3.5" strokeWidth={2} />
+                {DIAGNOSE_AREA_LABELS[area]}
+                <span className={active ? 'text-white/80' : 'text-muted-fg'}>({count})</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* ── Difficulty facet ─────────────────────────────────── */}
+      <div className="flex flex-wrap gap-1.5">
+        {DIFFICULTIES.map((diff) => {
+          const count = difficultyCounts[diff] ?? 0;
+          const active = difficulties.has(diff);
+          return (
             <button
-              key={tag}
-              onClick={() => setActiveTag(activeTag === tag ? '' : tag)}
-              className={`rounded-full border px-2.5 py-1 text-[11px] font-medium transition-[border-color,background-color,color,box-shadow,transform] duration-150 active:scale-[0.97] ${
-                activeTag === tag
+              key={diff}
+              onClick={() => toggleInSet(difficulties, diff, setDifficulties)}
+              disabled={count === 0 && !active}
+              className={`rounded-full border px-2.5 py-1 text-[11px] font-medium transition-[border-color,background-color,color,box-shadow,transform] duration-150 active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed ${
+                active
                   ? 'border-emerald-400 bg-emerald-500 text-white shadow-sm'
                   : 'border-border bg-card text-muted-fg hover:border-emerald-300 hover:text-foreground'
               }`}
             >
-              {tag}
+              {DIFFICULTY_LABELS[diff]} <span className={active ? 'text-white/80' : 'text-muted-fg'}>({count})</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ── Tag facet ────────────────────────────────────────── */}
+      {topTags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5">
+          {topTags.map(({ tag, count }) => (
+            <button
+              key={tag}
+              onClick={() => toggleInSet(tags, tag, setTags)}
+              className={`rounded-full border px-2.5 py-1 text-[11px] font-medium transition-[border-color,background-color,color,box-shadow,transform] duration-150 active:scale-[0.97] ${
+                tags.has(tag)
+                  ? 'border-sky-400 bg-sky-500 text-white shadow-sm'
+                  : 'border-border bg-card text-muted-fg hover:border-sky-300 hover:text-foreground'
+              }`}
+            >
+              {tag} <span className={tags.has(tag) ? 'text-white/80' : 'text-muted-fg'}>({count})</span>
             </button>
           ))}
         </div>
@@ -264,57 +328,37 @@ export default function StudiesListView({
           <span className="font-semibold text-foreground">{filtered.length}</span>
           {' '}Artikel{hasFilters && ' gefunden'}
         </span>
-        <span className="text-muted-fg">{groupedResults.length} Kategorien</span>
       </div>
 
-      {/* ── Grouped sections ─────────────────────────────────── */}
-      {groupedResults.length === 0 ? (
+      {/* ── Flat result list ─────────────────────────────────── */}
+      {filtered.length === 0 ? (
         <div className="rounded-xl border-2 border-dashed border-border bg-background py-16 text-center">
           <p className="text-sm font-medium text-muted-fg">Keine Artikel gefunden.</p>
           <p className="mt-1 text-xs text-muted-fg">Passe deine Filter oder Suche an.</p>
         </div>
       ) : (
-        <div className="space-y-5">
-          {groupedResults.map((group) => {
-            const isExpanded = Boolean(expandedSections[group.category]);
-            const visibleItems = isExpanded ? group.items : group.items.slice(0, sectionLimit);
-            const hiddenCount = Math.max(group.items.length - visibleItems.length, 0);
+        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+          <div className="divide-y divide-border">
+            {visible.map(({ article, snippet }) => (
+              <StudyListItem
+                key={article.slug}
+                article={article}
+                categoryLabel={categoryLabel}
+                snippet={snippet}
+              />
+            ))}
+          </div>
 
-            return (
-              <section key={group.category} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-                <header className="border-b border-border bg-background px-4 py-3 sm:px-5">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <h3 className="text-sm font-semibold text-foreground">{group.label}</h3>
-                    <span className="rounded-full border border-border bg-card px-2.5 py-1 text-[11px] font-semibold text-muted-fg">
-                      {group.items.length} Artikel
-                    </span>
-                  </div>
-                </header>
-
-                <div className="divide-y divide-border">
-                  {visibleItems.map(({ article, snippet }) => (
-                    <StudyListItem
-                      key={article.slug}
-                      article={article}
-                      categoryLabel={categoryLabels[article.category] ?? article.category}
-                      snippet={snippet}
-                    />
-                  ))}
-                </div>
-
-                {group.items.length > sectionLimit && (
-                  <div className="border-t border-border bg-card px-4 py-3 sm:px-5">
-                    <button
-                      onClick={() => toggleSection(group.category)}
-                      className="inline-flex items-center rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition-[background-color,transform] duration-150 active:scale-[0.97]"
-                    >
-                      {isExpanded ? 'Weniger anzeigen' : `${hiddenCount} weitere anzeigen`}
-                    </button>
-                  </div>
-                )}
-              </section>
-            );
-          })}
+          {hiddenCount > 0 && (
+            <div className="border-t border-border bg-background px-4 py-3 sm:px-5">
+              <button
+                onClick={() => setVisibleCount(c => c + 12)}
+                className="inline-flex items-center rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition-[background-color,transform] duration-150 active:scale-[0.97]"
+              >
+                {hiddenCount} weitere anzeigen
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

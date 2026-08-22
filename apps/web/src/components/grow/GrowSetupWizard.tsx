@@ -19,16 +19,18 @@ import type {
   GrowMedium,
   LichtTyp,
   Erfahrung,
+  GenetikTyp,
 } from '@/lib/grow/types';
 import {
   GROW_UMGEBUNG_LABELS,
   GROW_MEDIUM_LABELS,
   LICHT_TYP_LABELS,
   ERFAHRUNG_LABELS,
+  GENETIK_TYP_LABELS,
 } from '@/lib/grow/types';
 import {
   Home, Sun, Leaf, Sprout, Package, Droplet, Lightbulb, Zap, Aperture,
-  Sparkles, TreePine, MapPin, Layers, Target, Check, CheckCircle2,
+  Sparkles, TreePine, MapPin, Layers, Target, Check, CheckCircle2, Flower2,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -40,6 +42,7 @@ type WizardData = {
   medium: GrowMedium;
   lichtTyp: LichtTyp;
   erfahrung: Erfahrung;
+  genetikTyp: GenetikTyp;
   pflanzenAnzahl: number;
 };
 
@@ -49,6 +52,7 @@ const DEFAULTS: WizardData = {
   medium: 'erde',
   lichtTyp: 'led',
   erfahrung: 'einsteiger',
+  genetikTyp: 'hybrid',
   pflanzenAnzahl: 2,
 };
 
@@ -325,6 +329,12 @@ const ERFAHRUNG_META: Record<Erfahrung, { icon: LucideIcon; desc: string }> = {
   profi:          { icon: TreePine, desc: 'Optimierter Grow, maximaler Output' },
 };
 
+const GENETIK_META: Record<GenetikTyp, { icon: LucideIcon; desc: string }> = {
+  indica: { icon: Leaf, desc: 'Kürzere Blüte, ~7–9 Wochen' },
+  hybrid: { icon: Flower2, desc: 'Ausgewogen, ~8–10 Wochen' },
+  sativa: { icon: TreePine, desc: 'Längere Blüte, ~10–13+ Wochen' },
+};
+
 type Step3Props = {
   data: WizardData;
   update: <K extends keyof WizardData>(k: K, v: WizardData[K]) => void;
@@ -337,8 +347,8 @@ function Step3({ data, update, onNext, onBack }: Step3Props) {
     <div>
       <StepHeader
         step={3}
-        title="Erfahrung & Pflanzen"
-        subtitle="Dein Level bestimmt die Komplexität des Grow-Plans."
+        title="Erfahrung, Genetik & Pflanzen"
+        subtitle="Dein Level bestimmt die Komplexität des Plans, die Genetik die Blütedauer."
       />
 
       <p className="mb-3 text-sm font-semibold text-foreground/80">Dein Erfahrungslevel</p>
@@ -351,6 +361,20 @@ function Step3({ data, update, onNext, onBack }: Step3Props) {
             icon={ERFAHRUNG_META[e].icon}
             selected={data.erfahrung === e}
             onSelect={() => update('erfahrung', e)}
+          />
+        ))}
+      </div>
+
+      <p className="mb-3 text-sm font-semibold text-foreground/80">Genetik-Typ</p>
+      <div className="mb-6 space-y-2">
+        {(Object.keys(GENETIK_META) as GenetikTyp[]).map((g) => (
+          <OptionCard
+            key={g}
+            label={GENETIK_TYP_LABELS[g]}
+            description={GENETIK_META[g].desc}
+            icon={GENETIK_META[g].icon}
+            selected={data.genetikTyp === g}
+            onSelect={() => update('genetikTyp', g)}
           />
         ))}
       </div>
@@ -429,6 +453,7 @@ function Step4({ data, onBack, onSubmit, submitting }: Step4Props) {
         <SummaryRow label="Substrat"  value={GROW_MEDIUM_LABELS[data.medium]}     icon={Layers} />
         <SummaryRow label="Licht"     value={LICHT_TYP_LABELS[data.lichtTyp]}     icon={Lightbulb} />
         <SummaryRow label="Level"     value={ERFAHRUNG_LABELS[data.erfahrung]}    icon={Target} />
+        <SummaryRow label="Genetik"   value={GENETIK_TYP_LABELS[data.genetikTyp]} icon={Flower2} />
         <SummaryRow label="Pflanzen"  value={`${data.pflanzenAnzahl}`}            icon={Leaf} />
       </div>
 
@@ -505,6 +530,7 @@ export default function GrowSetupWizard() {
         medium: data.medium,
         lichtTyp: data.lichtTyp,
         erfahrung: data.erfahrung,
+        genetikTyp: data.genetikTyp,
         pflanzenAnzahl: data.pflanzenAnzahl,
         startDate: new Date().toISOString(),
         currentPhaseId: 'keimung',

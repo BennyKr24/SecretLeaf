@@ -33,6 +33,18 @@ export const ERFAHRUNG_LABELS: Record<Erfahrung, string> = {
   profi: "Profi",
 };
 
+// ── Genetics Type ─────────────────────────────────────────────────────────────
+// Determines bloom-phase duration (see getPhaseDurations in lib/grow/phases.ts)
+// — flowering time is a strain property, not a function of grower experience.
+
+export type GenetikTyp = "indica" | "hybrid" | "sativa";
+
+export const GENETIK_TYP_LABELS: Record<GenetikTyp, string> = {
+  indica: "Indica",
+  hybrid: "Hybrid",
+  sativa: "Sativa",
+};
+
 // ── Light Type ────────────────────────────────────────────────────────────────
 
 export type LichtTyp = "led" | "hps" | "cmh" | "cfl" | "sonne";
@@ -147,6 +159,9 @@ export type Grow = {
   /** Lamp wattage in Watts. */
   lichtLeistung?: number;
   erfahrung: Erfahrung;
+  /** Strain genetics type — drives bloom-phase duration. Optional: older
+   *  grows created before this field existed fall back to 'hybrid'. */
+  genetikTyp?: GenetikTyp;
   pflanzenAnzahl: number;
   plants: Plant[];
   /** Grow canopy area in m². */

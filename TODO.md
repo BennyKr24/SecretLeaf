@@ -30,8 +30,9 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   `4242 4242 4242 4242` bezahlt → `subscriptions`-Zeile mit `plan=pro`
   landet korrekt → `/pricing` und `/profile` zeigen Pro → Customer Portal
   öffnet echte Stripe-Seite mit Abo/Rechnung/Kündigen-Option. Dabei nebenbei
-  gefixt: die lokale `subscriptions`-Migration war nie gegen die lokale DB
-  gefahren worden (nur als Datei vorhanden) — jetzt angewendet.
+  gefixt: die `subscriptions`-Migration war nie gegen lokale DB *oder* Prod
+  gefahren worden (nur als Datei vorhanden) — beides am 2026-08-21
+  nachgeholt (`supabase db push --linked`).
 - ⏸️ **Für echten Go-Live fehlt nur noch, was ausschließlich manuell geht:**
   1. Dieselbe Produkt-/Preis-/Webhook-/Portal-Konfiguration im Stripe
      **Live-Modus** wiederholen (Sandbox-Werte gelten nur für Tests)
@@ -55,25 +56,34 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   pests/ATTRIBUTION.md` und `.../deficiencies/ATTRIBUTION.md` für die
   aktuelle Quellenliste.
 
-## 📐 Grow-Rechner — offene Werte ohne belastbare Quelle
+## 📐 Grow-Rechner — Kalibrierungsaudit (2026-08-21)
 
-- 🔍 **Hydro-EC-Zielwerte in `nutrients.ts`** (`EC_THRESHOLDS.*.hydro`) sind
-  1:1 von den alten Einheitswerten übernommen, nicht gegen eine eigene
-  Hydro/DWC-Quelle geprüft. Gezielte Recherche zu Hydro-EC-Zielbereichen pro
-  Phase nachholen, dann Tabelle ggf. anpassen.
-- 🔍 **Outdoor-Ertrag `GPP_OUTDOOR` in `yield.ts`** (200/400/600 g/Pflanze) —
-  Recherche zeigt extreme Bandbreite (56g bis 3600g/Pflanze je nach Quelle),
-  kein Konsenswert. Sauberer Fix wäre ein zusätzlicher Topfgrößen-/
-  Pflanzengrößen-Input statt eines flachen Erfahrungs-Faktors — echte
-  Redesign-Frage, kein reiner Zahlendreher.
-- 🔍 **VPD-Wert-Mismatch in `data/terpira/diagnostics.ts`** (268-KB-Wiki-
-  Prosa) — enthält noch "veg ~0.8–1.1 kPa", während `vpd.ts` und
-  `diagnose/tree.ts` jetzt korrigiert bei 0.8–1.2 kPa liegen. Textstelle in
-  der großen Datei noch nicht lokalisiert/gefixt.
+Vollständige Faktenprüfung aller Rechen-Konstanten in `lib/tools/*` und
+`lib/grow/phases.ts` gegen Herstellerangaben/HVAC-Normen/aktuelle
+Kultivierungsliteratur. Ergebnis-Artifact (Tabellen + Quellen pro Wert) unter
+`kalibrierungsaudit.html` im Scratchpad der Session. Direkt umgesetzt: Licht-
+Höhenkorrektur (Formel/Kommentar-Widerspruch behoben, neu kalibriert),
+Belüftungs-Rohrdurchmesser-Tabelle (war bis zu 59% über realen
+Lüfter-Datenblättern), Ertrags-Ampelschwellen Indoor (400/200 → 500/300
+g/m²), Sämling-PPFD (200–400 → 100–300 µmol/m²/s), Einweichwasser-Temperatur
+(30°C → 20–25°C), Outdoor-Ertrag (Topfgrößen-/Vegdauer-Input statt
+Erfahrungslevel) und Blütedauer (an Genetik statt Erfahrung gekoppelt,
+Migration `202608210000_grow_genetik_typ.sql` lokal + Prod angewendet).
+Offen:
+
+- 💤 **PPFD-Untergrenze Blüte in `lighting.ts`** (aktuell 600) liegt am
+  unteren Rand des 2026er-Konsens (mehrere Quellen nennen eher 700–900 ohne
+  CO2-Anreicherung) — optionale Anhebung auf 700, kein Fehler.
+- 💤 **Trocknung/Curing-Parameter in `phases.ts`** (18–21°C/50–60% RH, festes
+  10–15-Min.-Burping über 2–4 Wochen) sind nicht falsch, aber aktuelle Praxis
+  tendiert zu 55–65% RH und gestaffeltem Burping (täglich → alle 2–3 Tage)
+  für bessere Terpenerhaltung — optionales Update, kein Bug.
+- 💤 **Genetik-Faktor `regular: 0.85` in `yield.ts`** ist irreführend
+  benannt — bildet vermutlich implizit Männchen-Ausfall im Bestand ab, ohne
+  das im Code zu benennen. Kein Zahlenfehler, Kommentar würde helfen.
 - 💤 **`intelligence.ts` Ertragsverlust-/-gewinn-Gramm-Heuristiken** (z. B.
-  "−35g bei fehlendem Log") und **`phases.ts` Phasen-Dauern** sind
-  produktinterne Heuristiken ohne externe Quelle bzw. stark sorten-/setup-
-  abhängig — nicht gegen Literatur prüfbar, absichtlich nicht angefasst.
+  "−35g bei fehlendem Log") sind produktinterne Heuristiken ohne externe
+  Quelle — nicht gegen Literatur prüfbar, absichtlich nicht angefasst.
 
 ## 🌐 Übersetzung / i18n
 
@@ -96,11 +106,43 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 ## 🧪 Dünger-Katalog (`/database`, `/database/fertilizers`) — Restructure Phase 2/3
 
 Phase 1 (Preis-/Shop-Schicht mit fabrizierten Daten entfernen) ist erledigt
-(2026-08-19) — siehe Audit-Artifact und `duenger_katalog_audit.html` im
-Scratchpad der Session. Offen:
+(2026-08-19). **Aber:** die Annahme aus Phase 1, die verbleibenden 242
+Produktprofile seien "real NPK/EC/pH specs, curated data", war falsch und
+wurde nie geprüft — Stichproben-Verifikation (2026-08-21, siehe
+`kalibrierungsaudit.html` im Scratchpad) gegen echte Herstellerdatenblätter
+ergab:
 
-- ⏸️ **Phase 2 — Fachdaten andocken.** 242 Produktprofile (NPK/EC/pH/
-  Verdünnung aus `data/terpira/fertilizers.ts`) als auswählbare Presets in
+- ⚠️ **Von den 1.210 tatsächlich ausgespielten Profilen sind nur 50 (4%)
+  überhaupt handkuratiert** — die übrigen 1.160 werden aus 16 Marken × 12
+  generischen Linien-Namen per Zeichen-Hash (`createSyntheticNpk()` in
+  `buildMarketExpansionCatalog()`) erfunden, plus eine Ver­vier­fachung des
+  gesamten Bestands (`buildExtendedCatalog()`) mit "Lite/Pro/Max/Elite"-
+  Varianten, die vermutlich nicht existieren.
+- ⚠️ **Selbst die 50 "echten" Kern-Einträge stimmten in der Stichprobe (14
+  geprüft) nur zu 21% mit echten Herstellerangaben überein.** Drei Fälle
+  (AN Sensi Grow/Bloom, Atami Bloombastic) empfahlen eine Dosierung 2–4×
+  über der realen Herstellerangabe — bei echter Anwendung ein
+  Nährstoffverbrennungs-Risiko, nicht nur ein Trivia-Fehler. Zwei Einträge
+  trugen erfundene Produktnamen unter echten Marken (Fox Farm "Flower
+  Kiss", BioBizz "Growth-C" statt "Bio-Grow").
+- ✅ **Vom Netz genommen (2026-08-21).** `/database/fertilizers` zeigt jetzt
+  einen "vorübergehend nicht verfügbar"-Hinweis, `/api/fertilizers`
+  antwortet mit 503, die personalisierte Produktempfehlung mit Dosierung in
+  `tools/plans` ist deaktiviert, der Katalog ist aus dem Suchindex entfernt,
+  Hub- und Status-Seite verlinken nicht mehr dorthin. Dabei zusätzlich
+  gefunden und mitentfernt: die "Dünger-Marktabdeckung im Zeitverlauf"-Sektion
+  auf `/status` zeigte ebenfalls fiktive Coverage-Snapshots
+  (`data/fertilizerCoverageHistory.json`) als wachsenden Prozentwert.
+  `data/terpira/fertilizers.ts` selbst bleibt unverändert als Ausgangsbasis
+  für eine spätere Neuquellung liegen. Offen bleibt nur noch die
+  Grundsatzfrage, **ob/wie neu gequellt wird** (klein & handverlesen aus
+  echten Herstellerdatenblättern statt 1.210 algorithmisch erzeugten
+  Einträgen) — reine Entscheidung, kein Code-Fix.
+
+Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheidung):
+
+- ⏸️ **Phase 2 — Fachdaten andocken** (nur mit verifizierten Daten sinnvoll).
+  Produktprofile (NPK/EC/pH/Verdünnung) als auswählbare Presets in
   `tools/naehrstoff-rechner` integrieren. Restliche Katalog-Ansicht zur
   reinen Nachschlagetabelle ohne Preise umbauen, im Wissenssystem verankert
   (analog "Sortendatenbank"/"Extraktdatenbank" aus
@@ -116,50 +158,29 @@ Scratchpad der Session. Offen:
 
 ## 📚 Quellenregister (`/studies/sources`)
 
-- 🔍 **Design nie durch die Dark-Token-Migration gelaufen.** `studies/sources/page.tsx`
-  nutzt durchgehend hardcodierte helle Pastell-Hexwerte (`#fbfefc`, `#f7fbf8`,
-  `#123024`, `#1f7a4f`, `#e2eee6`, `#d8e8dd` usw.) statt der Design-Tokens
-  (`bg-card`, `text-foreground`, `border-border`) sowie rohe Tailwind-
-  `-50`-Pastellfarben (`bg-blue-50`, `bg-emerald-50`, `bg-cyan-50`,
-  `bg-rose-50`) für die Stat-Kacheln und Badges. Die App hat kein echtes
-  Light-Theme (siehe [[secretleaf-ux-punchlist-2026-08-03]]) — diese Seite
-  müsste als helle Karte inmitten des sonst durchgehend dunklen Designs
-  auffallen. Gleiches Muster wie bei Dashboard/Tools/Grow-Seite vor deren
-  Migration — selbe Fix-Richtung anwendbar.
 - 🔍 **Inhalt: "Neuer Bereich"-Banner zum Schädlings-Lexikon wirkt stale.**
   Der rosa Hinweis-Kasten oben auf der Seite bewirbt das Schädlings-Lexikon
   noch als brandneu ("Jetzt verfügbar") — dürfte inzwischen etabliert sein
   und nicht mehr als Ankündigung geführt werden. Prüfen, ob der Banner weg
   kann oder durch aktuellere Inhalte ersetzt werden sollte.
 
-## 📊 Studien-Engine (`lib/engine`)
+## 🗂️ Studies-Kategorisierung — `anbau` überladen, Plan steht (2026-08-22)
 
-- 🔍 **Regex-False-Positives in der Topic-Klassifizierung.**
-  `TOPIC_CLUSTERS['anbau-postharvest'].include` in `lib/engine/config.ts`
-  enthält bare-word-Patterns (`/thc/i`, `/cbd/i`, `/terpene/i`,
-  `/terpenoid/i`) ohne Cannabis-Kontext-Anforderung — anders als die
-  Anchor-Validierung in `classify.ts`, die ambige Kürzel erst akzeptiert,
-  wenn zusätzlich ein eindeutiger Cannabis-Begriff im Corpus steht (siehe
-  `CANNABIS_ANCHOR_AMBIGUOUS`-Kommentar). Bei der Backlog-Triage am
-  2026-08-02 gegen echte Prod-Daten bestätigt: "Understanding tourists'
-  travel health concern (**THC**)", "...thermo-hydro-chemical (**THC**)
-  coupled reactions..." (Geologie), "...**CBD**-CdS thin films"
-  (Materialwissenschaft, CBD = Chemical Bath Deposition), sowie mehrere
-  Terpen-Synthase-Papers zu nicht-Cannabis-Pflanzen (Ginkgo biloba, Styrax
-  officinalis u. a.). Diese Treffer fließen über `topicFit` (`+18 + hits*8`
-  pro Cluster, `classify.ts` `matchTopics()`) in den Score ein, der über
-  Aufnahme in den Studien-Bereich entscheidet — kein reines Tagging-Problem.
-  Fix: Wortgrenzen + Nähe-Check zu einem eindeutigen Cannabis-Anker statt
-  bare-word-Match. Noch nicht angegangen.
-
-## 🔒 Security
-
-- 💤 **`api/automation/engine-feedback/route.ts`** akzeptiert ein
-  client-geliefertes `userId`-Feld im Event-Body, ohne es gegen die
-  authentifizierte Session zu prüfen — ein eingeloggter Nutzer könnte
-  Feedback-Events (`review_good`/`review_bad`/`click`) fälschlich einem
-  anderen User zuordnen. Kein Datenzugriff, keine Account-Aktion betroffen —
-  reines Analytics-Integritätsproblem, daher niedrige Priorität.
+- ⏸️ **Plan fertig, noch nicht umgesetzt — Entscheidung steht aus.** Voller
+  Plan mit Datenbasis, Cluster-Aufschlüsselung, Optionsvergleich und
+  Migrationsaufwand: `docs/CONTENT_CATEGORY_RESTRUCTURE_PLAN.md`.
+  Kurzfassung: **54 von 97 live sichtbaren Artikeln (56 %) liegen in
+  `anbau`**, davon 33 (61 % von `anbau`) inhaltlich reine Diagnose-Artikel
+  (Mangel/Überschuss/Krankheit/Schädling/Umweltstress) statt Technik/
+  Tutorial — zwei komplett unterschiedliche Nutzerintentionen in einer
+  Kategorie. Das bestehende `/diagnose`-Tool (`lib/diagnose/tree.ts`)
+  gruppiert genau diesen Themenbereich schon symptomgetrieben (Blätter ·
+  Wachstum & Wurzeln · Klima & Umgebung · Schädlinge) — Empfehlung im Plan
+  ist, dieses bereits bewährte Muster für eine neue `diagnose`-Kategorie
+  wiederzuverwenden statt eine zweite, konkurrierende Taxonomie zu
+  erfinden. Dringlich vor der nächsten Content-Factory-Welle (12 weitere
+  Mängel + 12 Krankheiten + 12 Schädlinge laut Backlog), sonst wächst die
+  Schieflage weiter, bevor migriert wird.
 
 ## 📱 Mobile UX (nach dem Nav/PWA-Umbau vom 2026-08-16)
 
