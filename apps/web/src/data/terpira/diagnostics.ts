@@ -292,7 +292,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Magnesiummangel bei Cannabis erkennen und beheben",
     summary:
       "Interveinale Chlorose an älteren Blättern ist das Leitsymptom. So unterscheidest du echten Mangel von pH-bedingter Blockade und korrigierst gezielt über Substrat-pH und Mg-Zufuhr.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 10,
     lastUpdated: "2026-06-02",
@@ -457,7 +457,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Stickstoffmangel bei Cannabis erkennen und beheben",
     summary:
       "Gleichmäßiges Vergilben der unteren Blätter ist das Leitsymptom. So trennst du echten N-Mangel von der natürlichen Seneszenz in der Spätblüte und dosierst phasengerecht nach.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -617,7 +617,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Calciummangel bei Cannabis erkennen und beheben",
     summary:
       "Verkrüppelte, fleckige neue Triebe und braune Blattränder verraten Ca-Mangel. So erkennst du, dass das Problem fast immer in pH und Wasserqualität liegt — nicht in der Ca-Dosis.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -772,7 +772,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Kaliummangel bei Cannabis erkennen und beheben",
     summary:
       "Verbrannte, nekrotische Blattränder an älteren Blättern bei sonst grüner Blattfläche sind das Leitsymptom. So unterscheidest du K-Mangel von Salzverbrennung (Nährstoff-Burn).",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -927,7 +927,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Eisenmangel bei Cannabis erkennen und beheben",
     summary:
       "Leuchtend gelbe junge Blätter mit scharf abgegrenzten grünen Adern sind das Leitsymptom. Fast immer ist nicht zu wenig Eisen, sondern ein zu hoher pH die wahre Ursache.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -1085,7 +1085,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Spinnmilben bei Cannabis erkennen und bekämpfen",
     summary:
       "Feine Sprenkel auf der Blattoberseite und Gespinste auf der Unterseite verraten Spinnmilben. So erkennst du den Befall früh und stoppst die explosive Vermehrung mit gestaffeltem IPM.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 10,
     lastUpdated: "2026-06-02",
@@ -1225,7 +1225,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Thripse bei Cannabis erkennen und bekämpfen",
     summary:
       "Silbrige Schlieren mit schwarzen Kotpünktchen sind das Leitsymptom. So unterscheidest du Thripse von Spinnmilben und bekämpfst die fliegenden Larven mit Blautafeln und Nützlingen.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -1364,7 +1364,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Trauermücken bei Cannabis erkennen und bekämpfen",
     summary:
       "Kleine schwarze Fliegen über dem Substrat und glänzende Larven in feuchter Erde sind die Leitsymptome. So bekämpfst du sie an der Wurzel des Problems: über das Gießregime.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "einsteiger",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -1506,7 +1506,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Bud Rot (Botrytis) bei Cannabis erkennen und verhindern",
     summary:
       "Graue, watteartige Fäule im Knospeninneren bei welken Einzelblättchen ist das Alarmsignal. Bud Rot ist nicht heilbar — diese Klimastrategie verhindert sie, bevor sie ausbricht.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 10,
     lastUpdated: "2026-06-02",
@@ -1650,7 +1650,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Echter Mehltau bei Cannabis erkennen und bekämpfen",
     summary:
       "Weiße, mehlige Flecken auf der Blattoberseite sind das Leitsymptom. Anders als die meisten Pilze braucht Mehltau keine Nässe — diese Klima- und Hygienestrategie stoppt ihn.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -1789,7 +1789,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Wurzelfäule (Pythium) bei Cannabis erkennen und beheben",
     summary:
       "Braune, schleimige Wurzeln und welke Pflanzen trotz feuchten Substrats sind die Leitsymptome. So unterscheidest du Wurzelfäule von Trockenstress und rettest die Wurzelzone.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "profi",
     readMinutes: 10,
     lastUpdated: "2026-06-02",
@@ -1934,7 +1934,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Stickstoffüberschuss bei Cannabis erkennen und beheben",
     summary:
       "Dunkelgrüne, klauenförmig nach unten gebogene Blätter ('The Claw') sind das Leitsymptom. So unterscheidest du echte N-Toxizität von Überwässerung und drosselst die Stickstoffzufuhr gezielt.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -2098,7 +2098,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Kaliumüberschuss bei Cannabis erkennen und beheben",
     summary:
       "Kaliumüberschuss ist selten direkt toxisch, blockiert aber über Kationen-Antagonismus die Aufnahme von Mg, Ca und N. So erkennst du die ausgelösten Sekundärmängel und stellst das Verhältnis neu ein.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "profi",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -2262,7 +2262,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Calciumüberschuss bei Cannabis erkennen und beheben",
     summary:
       "Zu viel Calcium ist selten direkt giftig, hebt aber den pH an und verdrängt Magnesium und Kalium. So erkennst du den hartwasser- bzw. überdosierten Cal-Mag-Fall und korrigierst Verhältnis und pH.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "profi",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -2426,7 +2426,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Salzstress und hohe EC bei Cannabis erkennen und beheben",
     summary:
       "Eine zu hohe Salzkonzentration im Wurzelraum erzeugt osmotischen Stress: Die Pflanze welkt trotz Feuchte und verbrennt an den Blatträndern. So misst du die EC richtig und spülst gezielt aus.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -2590,7 +2590,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Überdüngung und Nährstoffverbrennung (Nutrient Burn) erkennen und beheben",
     summary:
       "Verbrannte, braune Blattspitzen, die sich nach innen fressen, sind das Leitsymptom der Überdüngung. So grenzt du Nutrient-Burn von Mangel und Lichtstress ab und korrigierst die Dosis.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "einsteiger",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -2757,7 +2757,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Hitzestress bei Cannabis erkennen und beheben",
     summary:
       "Nach oben gerollte Blattränder (Tacoing), aufrechte 'Beten'-Haltung und randständige Verbrennungen sind die Leitsymptome. So unterscheidest du Hitzestress von echtem Nährstoffmangel und korrigierst über Blatttemperatur, VPD und Luftbewegung.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "profi",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -2921,7 +2921,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Kältestress bei Cannabis erkennen und beheben",
     summary:
       "Violett-purpurne Stängel und Blattunterseiten, langsames Wachstum und nach unten gewölbte Blätter sind die Leitsymptome. So trennst du Kältestress von echtem Phosphormangel und stabilisierst Luft- und vor allem Wurzeltemperatur.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "profi",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -3085,7 +3085,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Windbrand bei Cannabis erkennen und beheben",
     summary:
       "Verkrümmte, klauenartig nach unten gebogene Blätter direkt im Luftstrom eines Ventilators — ohne Schädlinge und ohne Farbmuster eines Mangels. So erkennst du Windbrand und stellst die Luftbewegung richtig ein.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 7,
     lastUpdated: "2026-06-02",
@@ -3249,7 +3249,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Luftfeuchte-Probleme bei Cannabis: zu hoch und zu niedrig diagnostizieren",
     summary:
       "Zu hohe RH öffnet Schimmel- und Mehltaufenster, zu niedrige RH erzwingt Stomataschluss und transpirationsbedingte Mängel. So liest du die relative Luftfeuchte über das VPD-Fenster der jeweiligen Phase und korrigierst gezielt.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "profi",
     readMinutes: 9,
     lastUpdated: "2026-06-02",
@@ -3413,7 +3413,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "CO₂-Mangel und -Überschuss bei Cannabis erkennen und steuern",
     summary:
       "Unter starker Beleuchtung wird CO₂ zum limitierenden Faktor: Stagnierende Photosynthese trotz optimalem Licht, Klima und Dünger deutet auf CO₂-Mangel. So erkennst du das Limit und setzt Anreicherung sicher und sinnvoll ein.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "profi",
     readMinutes: 8,
     lastUpdated: "2026-06-02",
@@ -3580,7 +3580,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "pH-Lockout bei Cannabis erkennen und beheben",
     summary:
       "Mehrere scheinbar unabhängige Mangelsymptome gleichzeitig sind das Leitsignal für pH-Lockout, nicht für einen echten Nährstoffmangel. So erkennst du die Blockade und korrigierst sie, ohne blind nachzudüngen.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -3711,7 +3711,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Überwässerung und Staunässe bei Cannabis erkennen und beheben",
     summary:
       "Hängende Blätter trotz nassem Substrat und ausbleibende Erholung nach dem Gießen sind die Leitsymptome. So trennst du Staunässe von Trockenstress und rettest die Wurzelzone rechtzeitig.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -3840,7 +3840,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Blattläuse bei Cannabis erkennen und bekämpfen",
     summary:
       "Weiche, oft grüne Insekten in Kolonien an Triebspitzen sowie klebriger Honigtau verraten Blattlausbefall. So erkennst du die Symbiose mit Ameisen und stoppst die Vermehrung frühzeitig.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -3962,7 +3962,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Weiße Fliege bei Cannabis erkennen und bekämpfen",
     summary:
       "Kleine weiße Insekten, die beim Berühren der Pflanze wolkenartig auffliegen, sind das Leitsymptom. So erkennst du den Befall früh und verhinderst die Ausbreitung über Honigtau und Rußtaupilz.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 8,
     lastUpdated: "2026-08-03",
@@ -4083,7 +4083,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Phosphormangel bei Cannabis erkennen und beheben",
     summary:
       "Dunkelgrüne bis bläuliche Blätter mit rötlich-violetten Blattstielen und verlangsamtem Wachstum sind die Leitsymptome. So unterscheidest du echten P-Mangel von Kältestress und korrigierst gezielt über pH und Phosphorzufuhr.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "fortgeschritten",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -4218,7 +4218,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Hanf-Rostmilben bei Cannabis erkennen und bekämpfen",
     summary:
       "Vergilbte, nach unten gerollte Blätter und ein mattes, staubiges Erscheinungsbild der oberen Canopy verraten Rostmilbenbefall. So erkennst du die winzigen Schädlinge, bevor der Befall irreversibel wird.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "profi",
     readMinutes: 9,
     lastUpdated: "2026-08-03",
@@ -4339,7 +4339,7 @@ export const diagnosticArticles: TerpiraArticle[] = [
     title: "Fusarium bei Cannabis erkennen und beheben",
     summary:
       "Plötzliches, einseitiges Welken trotz feuchtem Substrat und bräunlich verfärbtes Leitgewebe im Stängelquerschnitt sind die Leitsymptome. So unterscheidest du Fusarium von Wurzelfäule und begrenzt den Schaden.",
-    category: "anbau",
+    category: "diagnose",
     difficulty: "profi",
     readMinutes: 9,
     lastUpdated: "2026-08-03",

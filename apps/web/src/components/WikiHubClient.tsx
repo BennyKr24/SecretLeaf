@@ -31,7 +31,7 @@ const DIFFICULTY_META: Record<TerpiraDifficulty, { label: string; color: string;
 };
 
 const ORDERED_CATEGORIES: TerpiraCategory[] = [
-  'anbau', 'genetik', 'chemie', 'terpene',
+  'anbau', 'diagnose', 'tutorials', 'genetik', 'chemie', 'terpene',
   'konsumformen', 'konzentrate', 'qualitaet',
   'sicherheit', 'medizin', 'recht', 'markt', 'werkzeuge',
 ];

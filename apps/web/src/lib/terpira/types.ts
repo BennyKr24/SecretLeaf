@@ -8,6 +8,8 @@ export type GrowCategory =
 
 export type TerpiraCategory =
   | "anbau"
+  | "diagnose"
+  | "tutorials"
   | "genetik"
   | "chemie"
   | "terpene"

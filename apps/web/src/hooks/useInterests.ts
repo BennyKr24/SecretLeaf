@@ -11,7 +11,7 @@ export const INTEREST_META: Record<Interest, { label: string; icon: LucideIcon; 
   grow: {
     label: 'Grow',
     icon: Sprout,
-    categories: ['anbau', 'chemie', 'genetik', 'werkzeuge'],
+    categories: ['anbau', 'diagnose', 'tutorials', 'chemie', 'genetik', 'werkzeuge'],
   },
   medizin: {
     label: 'Medizin',
@@ -26,7 +26,7 @@ export const INTEREST_META: Record<Interest, { label: string; icon: LucideIcon; 
   anfaenger: {
     label: 'Anfänger',
     icon: BookOpen,
-    categories: ['sicherheit', 'anbau', 'recht', 'konsumformen'],
+    categories: ['sicherheit', 'anbau', 'tutorials', 'diagnose', 'recht', 'konsumformen'],
   },
   fortgeschritten: {
     label: 'Fortgeschritten',

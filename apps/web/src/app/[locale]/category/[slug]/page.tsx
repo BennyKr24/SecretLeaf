@@ -8,7 +8,9 @@ import { CATEGORY_ICONS } from "@/lib/terpira/categoryIcons";
 import { FileText } from "lucide-react";
 
 const CATEGORY_DESCRIPTIONS: Partial<Record<TerpiraCategory, string>> = {
-  anbau:         'Alles zu Anbau, Pflege und Ernte – von der Keimung bis zur Trocknung und zum Curing.',
+  anbau:         'Anbau-Technik und Referenz: Substrat, Bewässerung, Nährstoffe, Licht und Ernte im Detail.',
+  diagnose:      'Symptom erkannt, jetzt Ursache finden – Mangelerscheinungen, Krankheiten, Schädlinge und Umweltstress diagnostizieren und beheben.',
+  tutorials:     'Schritt-für-Schritt-Guides für einen ganzen Grow – vom ersten Setup bis zur Ernte, für jedes Erfahrungslevel.',
   genetik:       'Genetik, Züchtung und Sortenwahl – für gezielte Ergebnisse bei Ertrag und Wirkstoffprofil.',
   chemie:        'Nährstoffe, Substrate und chemische Grundlagen für gesundes Pflanzenwachstum.',
   terpene:       'Terpenprofile, Aromastoffe und deren Einfluss auf Wirkung und Geschmack.',
@@ -24,21 +26,27 @@ const CATEGORY_DESCRIPTIONS: Partial<Record<TerpiraCategory, string>> = {
 
 const validCategories = Object.keys(categoryLabels) as TerpiraCategory[];
 
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
 export function generateStaticParams() {
   return validCategories.map((slug) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const label = categoryLabels[params.slug as TerpiraCategory];
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  const label = categoryLabels[slug as TerpiraCategory];
   if (!label) return { title: "Kategorie – SecretLeaf" };
   return {
     title: `${label} – Studien – SecretLeaf`,
-    description: CATEGORY_DESCRIPTIONS[params.slug as TerpiraCategory] ?? `Alle Fachartikel zum Thema ${label} auf SecretLeaf.`,
+    description: CATEGORY_DESCRIPTIONS[slug as TerpiraCategory] ?? `Alle Fachartikel zum Thema ${label} auf SecretLeaf.`,
   };
 }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
-  const cat = params.slug as TerpiraCategory;
+export default async function CategoryPage({ params }: PageProps) {
+  const { slug } = await params;
+  const cat = slug as TerpiraCategory;
   if (!validCategories.includes(cat)) notFound();
 
   const label = categoryLabels[cat];

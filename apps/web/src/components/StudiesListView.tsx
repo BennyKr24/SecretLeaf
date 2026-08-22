@@ -62,7 +62,7 @@ function searchSnippet(article: TerpiraArticle, query: string): string | null {
 // ─── Category order ────────────────────────────────────────────────────────
 
 const ORDERED_CATEGORIES: TerpiraCategory[] = [
-  'anbau', 'genetik', 'chemie', 'terpene',
+  'anbau', 'diagnose', 'tutorials', 'genetik', 'chemie', 'terpene',
   'konsumformen', 'konzentrate', 'qualitaet',
   'sicherheit', 'medizin', 'recht', 'markt', 'werkzeuge',
 ];
