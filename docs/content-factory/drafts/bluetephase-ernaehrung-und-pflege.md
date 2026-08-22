@@ -42,7 +42,9 @@ tool_links:
 
 **Stage-3-Fact-Check (2026-08-22, KI-gestützt) bestanden:** Alle 15 geprüften Zahlenaussagen stimmen mit den zitierten Dossier-Quellen überein, beide Konflikte (P/K-Bloom-Booster, Lichtdichtigkeit/Hermaphroditismus) sind im Fließtext benannt statt verschwiegen, `confidence_score` wurde von der Stage-1-Schnellschätzung (0,64) auf den formelbasierten Wert 0,67 korrigiert. Details: `docs/content-factory/fact-checks/bluetephase-ernaehrung-und-pflege-fact-check.md`.
 
-**Stage-4-Editorial-Review (2026-08-22, KI-gestützt, vom Editorial-Lead autorisiert) — alle vier Sign-offs erteilt:** Agronomisch, Quellen und Sprache ohne Korrekturbedarf; Verlinkung mit einer angewendeten Korrektur (drei typisierte Relationen `antagonist_of`/`interacts_with` ergänzt, siehe Front-Matter oben). Details: `docs/content-factory/fact-checks/bluetephase-ernaehrung-und-pflege-editorial-review.md`. Artikel-Status: `in_review`, bereit für Stage 5 (Publish) — nicht automatisch ausgeführt, da dieser Schritt Inhalte in den Live-Produkt-Datensatz schreibt.
+**Stage-4-Editorial-Review (2026-08-22, KI-gestützt, vom Editorial-Lead autorisiert) — alle vier Sign-offs erteilt:** Agronomisch, Quellen und Sprache ohne Korrekturbedarf; Verlinkung mit einer angewendeten Korrektur (drei typisierte Relationen `antagonist_of`/`interacts_with` ergänzt, siehe Front-Matter oben). Details: `docs/content-factory/fact-checks/bluetephase-ernaehrung-und-pflege-editorial-review.md`.
+
+**Stage-5-Publish (2026-08-22, auf Wunsch des Editorial-Leads ausgeführt, Review vor Merge nach `main` steht noch aus):** Artikel als `TerpiraArticle` in `apps/web/src/data/terpira/wiki.ts` (`expansionWikiArticles`) plus `GROW_KNOWLEDGE["bluetephase-ernaehrung-und-pflege"]` (qualityScore 4, growCategory "nutrients") ergänzt; fünf neue Quellen (B7/B8/B9/B32/B37) in `sourceRegisterCore` aufgenommen (Jahr von B7 und B37 per WebFetch verifiziert, nicht geschätzt); Cross-Links zu `naehrstoffbedarf-cannabis-lebenszyklus` und `naehrstoffblockaden-und-antagonismen` beidseitig ergänzt; `docs/KNOWLEDGE_COVERAGE_MATRIX.md` §8 aktualisiert (neue Zeile, Exists/Published +1, Handbook-grade bewusst nicht erhöht — kein 0–100-`quality_score`-Rubrik verfügbar). `npm run typecheck` und `eslint` auf der geänderten Datei sauber; die Auto-Migration `scripts/migrate-wiki-to-knowledge.mjs` (wiki.ts → `knowledge_articles`-DB-Seed) ist unabhängig von dieser Änderung bereits vorher kaputt (`Cannot find module './diagnostics'`, auf `main` reproduziert) — nicht neu eingeführt, aber auch nicht behoben. Diese Änderungen liegen lokal auf dem Branch, **noch nicht auf `main` gemerged** — der Nutzer prüft vor dem Merge gegen.
 
 ---
 
@@ -192,4 +194,4 @@ Der größte, am häufigsten falsch eingeschätzte Hebel dieser Phase ist nicht 
 
 ---
 
-*Ende Draft. Stage 3 (Fact-Check) und Stage 4 (Editorial Review, vier Sign-offs) bestanden — siehe `docs/content-factory/fact-checks/`. Bereit für Stage 5 (Publish) gemäß `ARTICLE_WORKFLOW.md` §6, nach Rückfrage (schreibt in den Live-Produkt-Datensatz).*
+*Ende Draft. Stage 1–5 vollständig durchlaufen — Artikel lebt in `apps/web/src/data/terpira/wiki.ts`, lokal auf dem Branch, noch nicht auf `main`. Wartet auf die Prüfung durch den Editorial-Lead vor dem Merge.*

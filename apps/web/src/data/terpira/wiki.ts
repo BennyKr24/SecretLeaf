@@ -398,6 +398,43 @@ const sourceRegisterCore: TerpiraSource[] = [
     publisher: "Phytobiomes Journal",
     year: "2019",
     url: "https://apsjournals.apsnet.org/doi/10.1094/PBIOMES-02-19-0010-R"
+  },
+
+  // === BLÜTEPHASE-ERNÄHRUNG (kontrollierte Studien, permanent kuratiert) ===
+  {
+    id: "npk-response-surface-flowering-cannabis",
+    title: "Optimisation of Nitrogen, Phosphorus, and Potassium for Soilless Production of Cannabis sativa in the Flowering Stage Using Response Surface Analysis",
+    publisher: "Frontiers in Plant Science",
+    year: "2021",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8635921/"
+  },
+  {
+    id: "elevated-root-zone-phosphorus-hemp-leachate",
+    title: "Sustainable Cannabis Nutrition: Elevated Root-Zone Phosphorus Significantly Increases Leachate P and Does Not Improve Yield or Quality",
+    publisher: "Frontiers in Plant Science",
+    year: "2022",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC9724152/"
+  },
+  {
+    id: "rxgreen-bulk-pk-booster-trial",
+    title: "Bulk PK Booster Cannabis Research Study",
+    publisher: "RX Green Technologies",
+    year: "2020",
+    url: "https://www.rxgreentechnologies.com/rxgt_trials/bulk-trial/"
+  },
+  {
+    id: "dark-period-light-exposure-sex-expression-cannabis",
+    title: "Investigating the Effects of Dark Period Light Exposure on Sex Expression in Female Cannabis sativa",
+    publisher: "SURG Journal, University of Guelph",
+    year: "2024",
+    url: "https://journal.lib.uoguelph.ca/index.php/surg/article/view/7697"
+  },
+  {
+    id: "high-light-intensity-cannabinoid-biosynthesis-hemp",
+    title: "High Light Intensity Enhances Cannabinoid Biosynthesis Through Concerted Gene Expression in Hemp (Cannabis sativa) Flowers",
+    publisher: "Frontiers in Plant Science",
+    year: "2025",
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12583074/"
   }
 ].map((s) => ({ ...s, sourceType: "manual" as const }));
 
@@ -1522,7 +1559,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       { term: "Flush", definition: "Ein Spülgang mit pH-korrigiertem Wasser ohne Dünger, um akkumulierte Salze aus dem Substrat auszuwaschen." }
     ],
     sourceIds: ["bernal-cannabis-nutrient-requirements", "marschner-mineral-nutrition", "caplan-cannabis-fertility-rate", "bugbee-electrical-conductivity"],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "naehrstoffblockaden-und-antagonismen", "cannabis-substrat-und-wurzelzone", "feminisiert-vs-regular-vs-autoflower", "substrat-vergleich-coco-erde-hydro"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "naehrstoffblockaden-und-antagonismen", "cannabis-substrat-und-wurzelzone", "feminisiert-vs-regular-vs-autoflower", "substrat-vergleich-coco-erde-hydro", "bluetephase-ernaehrung-und-pflege"]
   },
   {
     slug: "stressmarker-frueh-erkennen",
@@ -2023,7 +2060,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       { term: "Blockade", definition: "Situation, in der ein Nährstoff im Substrat vorhanden, aber für die Pflanze aufgrund von pH oder Antagonismus nicht aufnehmbar ist." }
     ],
     sourceIds: ["marschner-mineral-nutrition", "bryson-plant-nutrition-manual", "bernal-cannabis-nutrient-requirements", "bugbee-electrical-conductivity"],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-und-ec-kombi-rechner-guide", "naehrstoffbedarf-cannabis-lebenszyklus"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-und-ec-kombi-rechner-guide", "naehrstoffbedarf-cannabis-lebenszyklus", "bluetephase-ernaehrung-und-pflege"]
   },
   {
     slug: "blattsymptom-troubleshooter",
@@ -7441,6 +7478,125 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Shatter", definition: "Glasartige, durchscheinende, brüchige Textur - entsteht durch minimale Bewegung des Materials während des Purge." }
     ],
     relatedSlugs: ["hash-typen-vergleichen", "full-melt-und-marketingsprache", "rosin-einordnung-ohne-hype"]
+  },
+  {
+    slug: "bluetephase-ernaehrung-und-pflege",
+    title: "Blütephase: Ernährung, Support und der Weg zur Ernte",
+    summary: "Wie sich der Nährstoffbedarf in der Blüte verschiebt, was kontrollierte Studien zum PK-Bloom-Booster-Versprechen wirklich zeigen, und wie Defoliation, Support und Lichtdichtigkeit richtig getimt werden.",
+    category: "anbau",
+    difficulty: "fortgeschritten",
+    readMinutes: 11,
+    lastUpdated: "2026-08-22",
+    tags: ["Blüte", "Blütephase", "NPK", "Nährstoffe", "Defoliation", "Trellis", "Support", "Calcium", "Lichtdichtigkeit", "PPFD"],
+    keyTakeaways: [
+      "Drei unabhängige kontrollierte Studien widersprechen dem Marketing-Versprechen 'mehr PK-Booster = mehr Ertrag und Potenz': Kalium zeigte im Bereich 60–340 mg/L keinen Ertragseffekt, überschüssiges Phosphor wurde nur ausgewaschen statt genutzt, und keine der drei Studien fand eine Cannabinoid-Steigerung durch mehr P/K.",
+      "Die verbreitete Regel 'jeder Lichtspalt in der Dunkelphase löst Zwitterbildung aus' ist durch die einzige verfügbare Studie weder bestätigt noch widerlegt – die Vorsicht bleibt trotzdem sinnvoll, weil die Kosten der Prävention niedrig und der potenzielle Schaden hoch sind.",
+      "Defoliation hat zwei sichere Zeitfenster (vor beziehungsweise in den ersten zwei Wochen 12/12, dann wieder Woche 3–4) und eine klare Sperrzeit während des aktiven Stretch (Tag 1–21) – Trellis-Netting wirkt am besten, wenn es vor dem Stretch statt reaktiv in Woche 5 installiert wird."
+    ],
+    quickFacts: [
+      { label: "NPK-Übergang", value: "≈1-3-2 früh/mittel Blüte → 0-3-3 spät Blüte, über 2–3 Wochen" },
+      { label: "Defoliation-Fenster", value: "vor/erste 2 Wochen 12/12 + Woche 3–4 (Tag 21–25), Sperre Tag 1–21" },
+      { label: "Support-Bedarf", value: "ab Woche 4–5, Trellis idealerweise vor dem Stretch installiert" },
+      { label: "K-Ertragswirkung laut Studienlage", value: "keine im Bereich 60–340 mg/L (kontrollierte DWC-Studie)" }
+    ],
+    sections: [
+      {
+        heading: "Definition und Phasenlänge",
+        content: [
+          "Die Blütephase beginnt mit der Umstellung auf einen 12/12-Lichtzyklus (photoperiodisch) beziehungsweise setzt genetisch fixiert ein (Autoflower) und endet mit der Ernte. Sie umfasst die Kernblüte – Lichtumstellung bis zum Einsetzen der Reifung – und schließt mit einer separat geführten Spätblüte-/Flush-Phase ab.",
+          "Die Kernblütendauer ist genetikabhängig: rund 42 Tage bei Indica-, 49 Tage bei Hybrid- und 70 Tage bei Sativa-dominanten Sorten, jeweils zuzüglich rund 14 Tagen Spätblüte."
+        ]
+      },
+      {
+        heading: "Warum sich das Nährstoffverhältnis verschiebt",
+        content: [
+          "Phosphor treibt als Baustein von ATP und Nukleinsäuren Zellteilung und Energietransfer bei der Knospenbildung an, Kalium reguliert Stomataöffnung, osmotischen Druck und den Zuckertransport ins Blütengewebe – während der Stickstoffbedarf mit dem Rückgang des vegetativen Blattwachstums sinkt. Der verbreitete Praxis-Richtwert liegt bei einem NPK-Verhältnis von etwa 1-3-2 in früher bis mittlerer Blüte, graduell weiter Richtung 0-3-3 in später Blüte, mit der Umstellung über die ersten zwei bis drei Wochen statt eines abrupten Wechsels.",
+          "Parallel steigt der Calcium- und Magnesiumbedarf: Calcium ist am Protein- und Energiestoffwechsel beteiligt, Magnesium erhöht die Phosphor-Mobilität in der Pflanze. Hochdosierte P/K-Blütedünger können die Ca/Mg-Aufnahme hemmen, besonders früh in der Blüte (Woche 3–6)."
+        ]
+      },
+      {
+        heading: "Was kontrollierte Studien zum PK-Bloom-Booster-Versprechen wirklich zeigen",
+        content: [
+          "Drei unabhängige kontrollierte Studien widersprechen dem verbreiteten 'mehr PK-Zusatzprodukt = mehr Ertrag und Potenz'-Narrativ. Eine rigorose Studie an Gelato-Klonen in Hydrokultur (Response-Surface-Design, mindestens fünf Wiederholungen je Behandlung) fand die optimale Konzentration für maximalen Ertrag bei Stickstoff 194 mg/L und Phosphor 59 mg/L – Kalium zeigte im getesteten Bereich von 60 bis 340 mg/L keine Ertragswirkung, kommerzielle Empfehlungen von 300–400 mg/L Kalium wurden von den Studienautoren als wahrscheinlich exzessiv eingeordnet, und keine Cannabinoid-Wirkung durch NPK-Variation wurde gefunden.",
+          "Eine zweite, unabhängige Studie an einem Hemp-Kultivar testete Wurzelzonen-Phosphor bei 25, 50 und 75 mg/L und fand keinen signifikanten Unterschied in Ertrag oder Cannabinoid-Konzentration zwischen den Stufen – der Phosphorgehalt im Drainagewasser stieg dagegen zwölffach bei nur dreifacher Erhöhung des Phosphor-Inputs, überschüssiges Phosphor wird schlicht ausgewaschen statt genutzt.",
+          "Eine dritte, herstellerfinanzierte Studie an zwei Sorten fand für ein PK-Zusatzprodukt einen Ertragseffekt bei einer von zwei Sorten, aber keine statistischen Unterschiede bei THC-Gehalt oder Gesamtterpenen. Für die Praxis heißt das: Moderate Phosphor-Werte reichen bereits aus, Kalium zeigt in der stärksten verfügbaren Studie gar keinen Ertragseffekt, und keine der drei Studien fand eine Cannabinoid-Steigerung durch mehr P/K – die bereits im Nährstoff-Rechner hinterlegten EC-Zielwerte sind damit der verlässlichere Hebel als teure Zusatzprodukte."
+        ]
+      },
+      {
+        heading: "Stretch, pH-Drift und Runoff-Strategie in Woche 1",
+        content: [
+          "In den ersten ein bis drei Wochen nach der Lichtumstellung setzt der aus der Vegetationsphase bekannte Stretch ein – Pflanzen verdoppeln bis verdreifachen ihre Höhe, sortenabhängig. Der Stretch hat eine direkte Konsequenz für die Nährstoffversorgung: Der Wasserverbrauch steigt sprunghaft an, was den Substrat-pH in der Wurzelzone verschieben kann (Ziel-pH 5,8–6,3 je nach Medium).",
+          "Als Gegenmaßnahme werden bis zu 15–20 % Runoff beim Gießen empfohlen, um Salzaufbau und pH-Drift zu vermeiden. In Coco dagegen zunächst kleine Gaben ohne Runoff, um in den ersten ein bis zwei Tagen die Substrat-EC aufzubauen, danach gezielt höhere Runoff-EC anstreben, um den Stretch zu bremsen."
+        ],
+        checklist: [
+          "Ablauf-EC und Runoff-pH in Woche 1 täglich messen",
+          "Bei Drift außerhalb 5,8–6,3: Runoff-Strategie anpassen statt nur nachzudüngen",
+          "In Coco: erst EC-Aufbau ohne Runoff, dann gezielter Runoff"
+        ]
+      },
+      {
+        heading: "Defoliation und Support richtig timen",
+        content: [
+          "Defoliation hat zwei belegte Zeitfenster: kurz vor bis in den ersten zwei Wochen 12/12 (untere, nicht-produktive Triebe entfernen, Energie nach oben lenken) und Woche 3–4 beziehungsweise Tag 21–25 (große, blütenlichtblockierende Fächerblätter, maximal 20–30 % der Blattmasse). Während des aktiven Stretch (Tag 1–21) sollte nicht defoliiert werden, nach Tag 25–28 nur noch sanitär (gelbe, tote oder schimmlige Blätter) – echte Spätblüte-Defoliation in Woche 6–7 wird von mehreren Quellen aktiv abgeraten, weil die Pflanze die Blattmasse für die finale Reifung nicht mehr ersetzen kann.",
+          "Support-Bedarf entsteht typischerweise ab Woche 4–5, wenn Blüten sichtbar schwer werden. Trellis-Netting idealerweise bereits vor dem Stretch installieren statt erst reaktiv in Woche 5 – eine zweite Netzlage 8–12 Zoll über der ersten gibt schweren Kolas zusätzlichen Halt. Alternativ Jo-Jo-Seile oder Bambusstäbe, sobald Äste ohne Unterstützung abzuknicken drohen."
+        ]
+      },
+      {
+        heading: "Lichtdichtigkeit und Hermaphroditismus: Vorsicht ja, Beweis nein",
+        content: [
+          "Der verbreitete Grower-Konsens, jede minimale Lichteinstrahlung während der Dunkelphase löse Zwitterbildung aus, wird durch die einzige auffindbare Studie zu diesem Thema weder bestätigt noch widerlegt. Eine Beobachtungsstudie an 403 Indoor-Pflanzen nutzte die Distanz zur Raumtür als Näherungswert für die Lichtexposition während der Dunkelphase und fand keinen praktisch relevanten Zusammenhang mit der Hermaphroditismus-Rate – das Modell erklärte nur 1,6 % der Varianz. Die Studienautoren selbst räumen ein, dass die tatsächlichen Lichtintensitäten in der Studie vermutlich zu niedrig waren, um schwache Lichtreaktionen sauber zu testen.",
+          "Praktische Konsequenz: Die Vorsichtsmaßnahme – den Grow-Raum lichtdicht abdunkeln – bleibt sinnvoll, weil der potenzielle Schaden (verlorene Ernte durch Samenbildung) hoch und die Kosten der Prävention niedrig sind. Die Kausalität sollte aber nicht als wissenschaftlich bewiesen dargestellt werden."
+        ]
+      },
+      {
+        heading: "Nährstoffsperre und Calcium-Mangel unterscheiden",
+        content: [
+          "Eine Nährstoffsperre durch hohe EC äußert sich ähnlich wie ein Mangel – Vergilbung, Blattrand-Verbrennung, gebogene Ränder, gestauchtes Wachstum, reduzierte Blütenentwicklung. Ursache ist Salzansammlung in der Wurzelzone, die die Nährstoffaufnahme trotz ausreichender oder überschüssiger Düngung blockiert. Die Diagnose läuft über Runoff-pH (außerhalb 6,0–6,8 in Erde beziehungsweise 5,5–6,5 in Hydro) und Runoff-EC, nicht über die Symptomoptik allein.",
+          "Rostfarbene, unregelmäßige Flecken auf jungen Blättern mit eingerollten Rändern, aber ohne Vergilbung und mit weiterhin grünen Adern, deuten auf Calcium-Mangel hin – ein Symptombild, das häufig mit Kaliummangel oder generellem Blüte-Stress verwechselt wird. Die Ursache ist oft nicht reiner Nährstoffmangel, sondern falscher pH, hohe EC, Überwässerung oder Wurzelschaden, die den Calcium-Transport blockieren – deshalb erst den pH-/EC-Runoff-Check durchführen, bevor nachgedüngt wird."
+        ]
+      },
+      {
+        heading: "Lichtintensität in der Blüte: Was die PPFD-Progression zeigt",
+        content: [
+          "Der bereits verifizierte PPFD-Zielbereich für die Blüte liegt bei 600–1000 µmol/m²/s. Eine kontrollierte Studie an einem Hemp-Kultivar in vertikalen Anbausystemen testete PPFD-Stufen von 200, 400 und 600 µmol/m²/s über 35 Tage Blüte: Der Gesamt-Cannabinoidgehalt stieg linear im gesamten Bereich, mit rund 37 % mehr Gesamt-CBD bei 600 gegenüber 200 µmol/m²/s. Ob der lineare Zuwachs oberhalb von 600 µmol/m²/s anhält, ist unerforscht – die Studie liefert dem bereits verifizierten Zielbereich damit erstmals einen konkreten Wirkmechanismus statt nur eines Praxis-Richtwerts."
+        ]
+      },
+      {
+        heading: "Häufige Fehler",
+        content: [
+          "PK-Bloom-Booster als garantierten Ertrags- oder Potenz-Hebel behandeln – die stärkste verfügbare Studienlage zeigt für Kalium im moderaten bis hohen Bereich keine Ertragswirkung und für keine der drei Studien eine Cannabinoid-Steigerung.",
+          "Während des aktiven Stretch (Tag 1–21) defoliieren – die Pflanze braucht die Blattmasse in dieser Phase für den Struktur- und Höhenaufbau.",
+          "Ca-Mangel-Symptome ungeprüft nachdüngen, statt erst Runoff-pH und -EC zu checken – viele Ca-Symptome sind Wurzelzonen-, keine Dosierungsprobleme.",
+          "Stützsysteme erst installieren, wenn Äste bereits abknicken, statt Trellis-Netting vor dem Stretch aufzubauen."
+        ]
+      },
+      {
+        heading: "Autoflower-Besonderheiten",
+        content: [
+          "Der Übergang in die Blüte ist bei Autoflower genetisch fixiert, nicht photoperiodenausgelöst – der Lichtzyklus kann während der gesamten Lebensspanne unverändert bleiben (18/6 als verbreiteter Standard, 20/4 und 24/0 ebenfalls gängig). Eine Lichtumstellung wie bei photoperiodischen Pflanzen entfällt entsprechend."
+        ]
+      }
+    ],
+    warnings: [
+      "Die Lichtdichtigkeits-Vorsichtsmaßnahme gilt trotz dünner Studienlage weiter als sinnvoll – ein Lichtleck sollte nicht als 'wahrscheinlich harmlos' unterschätzt werden, nur weil die Kausalität wissenschaftlich nicht streng bewiesen ist.",
+      "Aggressive Defoliation in Woche 6–7 wird von mehreren Quellen aktiv abgeraten – anders als die gut belegte Mid-Flower-Defoliation kann die Pflanze die Blattmasse für die finale Reifung nicht mehr ersetzen."
+    ],
+    simpleExplainers: [
+      { title: "Kurz erklärt: Warum bringen PK-Booster oft weniger als versprochen?", text: "Kontrollierte Studien zeigen, dass moderate Phosphor-Werte für maximalen Ertrag bereits ausreichen und zusätzliches Kalium im getesteten Bereich keine messbare Ertrags- oder Potenzwirkung hat. Überschüssiges Phosphor wird größtenteils ausgewaschen statt von der Pflanze genutzt." }
+    ],
+    faq: [
+      { question: "Bringen PK-Bloom-Booster wirklich mehr Ertrag und Potenz?", answer: "Differenzierter als das Marketing suggeriert: Die stärkste verfügbare Studie fand für Kalium im getesteten Bereich (60–340 mg/L) keine Ertragswirkung, und keine der drei kontrollierten Studien fand eine Cannabinoid-Steigerung durch mehr P/K. Ein Ertragseffekt zeigte sich nur bei einer von zwei Sorten in der herstellerfinanzierten Studie – bei unveränderter Potenz." },
+      { question: "Ist jeder Lichtspalt während der Dunkelphase wirklich gefährlich?", answer: "Der weitverbreitete Konsens ist durch die einzige auffindbare Studie weder bestätigt noch widerlegt – die Studie war zu schwach angelegt für eine klare Antwort. Die Vorsichtsmaßnahme bleibt trotzdem sinnvoll, weil der potenzielle Schaden hoch und die Kosten der Prävention niedrig sind." },
+      { question: "Wann sollte ich in der Blüte defoliieren?", answer: "Zwei Fenster: kurz vor bis in den ersten zwei Wochen 12/12 und Woche 3–4 beziehungsweise Tag 21–25. Nicht während des aktiven Stretch (Tag 1–21), nach Tag 25–28 nur noch sanitär." },
+      { question: "Meine Blätter zeigen rostfarbene Flecken – soll ich Calcium nachdüngen?", answer: "Erst Runoff-pH und -EC prüfen. Viele Ca-Symptome entstehen durch falschen pH, hohe EC oder Wurzelschaden, nicht durch reinen Nährstoffmangel – Nachdüngen ohne diesen Check behebt die eigentliche Ursache nicht." }
+    ],
+    glossary: [
+      { term: "Stretch", definition: "Die deutliche Höhenzunahme in den ersten ein bis drei Wochen nach der Umstellung auf 12/12, bevor sich das Wachstum zugunsten der Blütenbildung verlangsamt." },
+      { term: "Runoff", definition: "Die beim Gießen aus dem Substrat ablaufende Nährlösung; ihr pH- und EC-Wert zeigt den tatsächlichen Zustand der Wurzelzone an, nicht nur den Zulaufwert." },
+      { term: "Trellis-Netting", definition: "Ein Stütznetz, das über oder durch das Kronendach gespannt wird, um schwere Blütenstände zu tragen und ein flaches Kronendach zu erhalten." }
+    ],
+    sourceIds: ["npk-response-surface-flowering-cannabis", "elevated-root-zone-phosphorus-hemp-leachate", "rxgreen-bulk-pk-booster-trial", "dark-period-light-exposure-sex-expression-cannabis", "high-light-intensity-cannabinoid-biosynthesis-hemp", "marschner-mineral-nutrition", "bugbee-electrical-conductivity"],
+    relatedSlugs: ["naehrstoffbedarf-cannabis-lebenszyklus", "naehrstoffblockaden-und-antagonismen", "cannabis-anbau-grundlagen", "ec-und-runoff-interpretation", "lichtstress-und-canopy-management"]
   }
 ];
 
@@ -7636,6 +7792,11 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
   },
   "naehrstoffbedarf-cannabis-lebenszyklus": {
     growValue: "Wechsle ab Blütewoche 3 von NPK 2:1:2 auf 1:3:3 – phasengerechte Ernährung verhindert Stickstoffüberschuss in der Spätblüte.",
+    qualityScore: 4,
+    growCategory: "nutrients",
+  },
+  "bluetephase-ernaehrung-und-pflege": {
+    growValue: "Kontrollierte Studien zeigen: Kalium bringt im Bereich 60–340 mg/L keinen messbaren Ertragsvorteil – investiere das Budget für teure PK-Booster lieber in Trellis-Netting, das vor dem Stretch statt reaktiv in Woche 5 installiert wird.",
     qualityScore: 4,
     growCategory: "nutrients",
   },
