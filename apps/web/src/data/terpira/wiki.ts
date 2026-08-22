@@ -1935,7 +1935,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       { term: "Lichtdeprivation", definition: "Kontrollierte Verdunkelung eines Gewächshauses, um bei natürlichem Tageslicht eine kürzere Photoperiode zu simulieren und die Blüte gezielt auszulösen." }
     ],
     sourceIds: ["horticulture-research-cannabis-cultivation", "chandra-cannabis-photosynthesis-temperature-co2", "botrytis-grey-mold-review"],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "lichtstress-und-canopy-management", "schimmel-und-mykotoxine-bei-cannabis", "vpd-und-ec-kombi-rechner-guide"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "lichtstress-und-canopy-management", "schimmel-und-mykotoxine-bei-cannabis", "vpd-und-ec-kombi-rechner-guide", "outdoor-anbau-fuer-einsteiger"]
   },
   {
     slug: "naehrstoffblockaden-und-antagonismen",
@@ -6222,7 +6222,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
       { term: "Nährstoffsperre", definition: "Zustand, in dem die Pflanze vorhandenen Dünger nicht mehr aufnehmen kann – meist durch falschen pH-Wert oder Salzansammlung im Substrat verursacht, nicht durch echten Nährstoffmangel." },
       { term: "Stretch", definition: "Die deutliche Höhenzunahme der Pflanze in den ersten Wochen nach der Umstellung auf den Blüte-Lichtzyklus." }
     ],
-    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-einfach-erklaert", "cannabis-substrat-und-wurzelzone"]
+    relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-einfach-erklaert", "cannabis-substrat-und-wurzelzone", "outdoor-anbau-fuer-einsteiger"]
   }),
   createArticle({
     slug: "how-to-grow-cannabis-fortgeschritten-tutorial",
@@ -7609,6 +7609,106 @@ const expansionWikiArticles: TerpiraArticle[] = [
     ],
     sourceIds: ["npk-response-surface-flowering-cannabis", "elevated-root-zone-phosphorus-hemp-leachate", "rxgreen-bulk-pk-booster-trial", "dark-period-light-exposure-sex-expression-cannabis", "high-light-intensity-cannabinoid-biosynthesis-hemp", "marschner-mineral-nutrition", "bugbee-electrical-conductivity"],
     relatedSlugs: ["naehrstoffbedarf-cannabis-lebenszyklus", "naehrstoffblockaden-und-antagonismen", "cannabis-anbau-grundlagen", "ec-und-runoff-interpretation", "lichtstress-und-canopy-management"]
+  },
+  {
+    slug: "outdoor-anbau-fuer-einsteiger",
+    title: "Outdoor-Grow für Einsteiger: Eine Pflanze, ein Sommer",
+    summary: "Für alle, die nur einmal im Jahr eine einzelne Pflanze im Garten oder auf dem Balkon ziehen wollen, ohne Zelt, Lampen oder tägliche Messungen – was wirklich wichtig ist und was du getrost weglassen kannst.",
+    category: "anbau",
+    difficulty: "einsteiger",
+    readMinutes: 9,
+    lastUpdated: "2026-08-22",
+    tags: ["Outdoor", "Anfänger", "Sommer", "Balkon", "Garten", "Einzelpflanze"],
+    keyTakeaways: [
+      "Ein Outdoor-Sommer-Grow braucht kein Zelt, keine Lampen und keine täglichen EC-/pH-Messungen – Sonne und Regen übernehmen den Großteil der Arbeit.",
+      "Die wichtigsten Entscheidungen fallen vor dem Start: eine früh reifende Sorte wählen und der Pflanze genug Topf- oder Bodenvolumen geben – beides lässt sich später nicht mehr nachholen.",
+      "Das größte Risiko ist nicht zu wenig Aufmerksamkeit, sondern zu viel Geduld kurz vor der Ernte: Bei fast reifen Blüten lieber vor einer mehrtägigen Regenperiode ernten als auf die letzten Prozent Reife zu warten."
+    ],
+    quickFacts: [
+      { label: "Start", value: "nach den letzten Frösten (Mitte/Ende Mai in D/A/CH)" },
+      { label: "Ernte", value: "September/Oktober, sortenabhängig" },
+      { label: "Aufwand", value: "Gießen + gelegentlich Düngen – kein Klimasystem nötig" },
+      { label: "Hauptrisiko", value: "Regen/Schimmel kurz vor der Ernte" }
+    ],
+    sections: [
+      {
+        heading: "Für wen dieser Guide ist",
+        content: [
+          "Dieser Guide richtet sich an alle, die nicht das ganze Jahr über mehrere Durchgänge in einem Zelt ziehen wollen, sondern einmal im Jahr eine einzelne Pflanze im Garten, auf dem Balkon oder der Terrasse – mit deutlich weniger Aufwand als beim Indoor-Anbau (siehe Indoor vs. Outdoor im Vergleich), aber bei guter Sommersaison genauso guten Ergebnissen.",
+          "Informiere dich vorab über die an deinem Wohnort geltenden rechtlichen Vorgaben (z. B. erlaubte Pflanzenanzahl pro Haushalt) – das ist regional unterschiedlich geregelt und nicht Teil dieses Guides."
+        ]
+      },
+      {
+        heading: "Sorte und Startzeitpunkt wählen",
+        content: [
+          "Wähle eine Sorte, die in deiner Klimazone rechtzeitig vor dem Herbstregen fertig wird – späte, ursprünglich für wärmere Regionen gezüchtete Sorten riskieren in gemäßigten Klimazonen Regen und Schimmel genau in der empfindlichen Reifephase. Autoflower-Sorten blühen unabhängig von der Tageslänge nach einer festen Zeit und sind dadurch für einen einzelnen Sommer-Run oft die planbarere Wahl als photoperiodische Sorten.",
+          "Start nach den letzten Frösten, in Mitteleuropa meist Mitte bis Ende Mai. Junge Pflanzen lassen sich auch drinnen auf der Fensterbank vorziehen und erst nach den letzten Frösten nach draußen umziehen."
+        ]
+      },
+      {
+        heading: "Standort und Topf",
+        content: [
+          "Wähle den sonnigsten verfügbaren Platz – mindestens 6 Stunden direkte Sonne, mehr ist besser. Wenig Sonne bedeutet nicht 'kein Wachstum', aber deutlich weniger Ertrag.",
+          "Ein großer Topf (mindestens 30–50 Liter) oder direkt der Gartenboden gibt den Wurzeln genug Raum – Topfgröße ist outdoor einer der größten Ertragshebel, weil die Pflanze über Monate ungebremst wachsen kann. Sorge für gute Drainage, damit der Wurzelballen nach starkem Regen nicht dauerhaft im Wasser steht. Ein windgeschützter, aber nicht komplett abgeschirmter Standort schützt vor Astbruch."
+        ]
+      },
+      {
+        heading: "Gießen und Düngen mit wenig Aufwand",
+        content: [
+          "Anders als indoor übernimmt Regen outdoor einen Teil des Gießens – trotzdem regelmäßig prüfen, ob die obere Substratschicht bereits trocken ist, besonders an heißen, trockenen Tagen und bei Topfpflanzen (die deutlich schneller austrocknen als Pflanzen im Boden).",
+          "Ein normaler, phasenangepasster Flüssigdünger nach Herstellerangabe reicht für einen einzelnen Sommer-Run völlig aus – tägliche EC- oder pH-Messungen wie beim Indoor-Grow sind hier nicht nötig, solange die Pflanze gesund aussieht (kräftiges Grün, keine verbrannten Blattspitzen)."
+        ]
+      },
+      {
+        heading: "Typische Sommerprobleme",
+        content: [
+          "Schnecken und Raupen sind outdoor-typische Schädlinge, die es indoor kaum gibt – regelmäßig Blätter und junge Triebe auf Fraßspuren checken, besonders nach Regen.",
+          "Starker Wind kann Äste brechen, besonders sobald die Blüten schwerer werden – ein einfacher Stock oder eine Schnur als Stütze reicht meist aus.",
+          "Starker Regen auf offener Erde kann Nährstoffe auswaschen – eine Mulchschicht (z. B. Stroh) auf der Erdoberfläche hilft, Feuchtigkeit und Nährstoffe zu halten."
+        ]
+      },
+      {
+        heading: "Ernte im Herbst",
+        content: [
+          "Das Reifesignal ist dasselbe wie beim Indoor-Grow: Trichome mit einer Lupe checken – klar heißt zu früh, milchig-weiß zeigt den Wirkstoff-Höhepunkt, bernsteinfarben bedeutet, dass THC sich bereits wieder abbaut (Details in der Anfänger-Anleitung, Schritt 4).",
+          "Der größte Outdoor-spezifische Unterschied: Regen kurz vor der Ernte ist das Hauptrisiko, weil Feuchtigkeit in dichten Blüten Schimmel (Botrytis-Knospenfäule) begünstigt. Behalte die Wettervorhersage im Blick – bei fast reifen Blüten lieber ein paar Tage früher ernten, statt eine mehrtägige Regenperiode abzuwarten."
+        ]
+      }
+    ],
+    warnings: [
+      "Regen und hohe Luftfeuchte kurz vor der Ernte sind das größte Outdoor-Risiko – bei dichten, großen Blüten kann sich Schimmel (Botrytis) sehr schnell ausbreiten, oft zuerst unbemerkt im Inneren der Blüte.",
+      "Informiere dich über die an deinem Wohnort geltenden rechtlichen Vorgaben, bevor du eine Pflanze im Freien anbaust – dieser Guide behandelt nur die gärtnerische Seite."
+    ],
+    simpleExplainers: [
+      {
+        title: "Kurz erklärt: Warum ist ein großer Topf so wichtig?",
+        text: "Je mehr Platz die Wurzeln haben, desto mehr kann die Pflanze über den ganzen Sommer wachsen. Ein zu kleiner Topf bremst das Wachstum spürbar, egal wie gut sonst alles läuft."
+      },
+      {
+        title: "Kurz erklärt: Autoflower oder photoperiodisch für den ersten Outdoor-Run?",
+        text: "Autoflower blühen nach einer festen Zeit unabhängig vom Tageslicht – dadurch ist der Erntezeitpunkt planbarer. Photoperiodische Sorten blühen erst, wenn die Tage im Spätsommer kürzer werden, und brauchen entsprechend länger bis zur Ernte."
+      }
+    ],
+    faq: [
+      {
+        question: "Brauche ich für einen einzelnen Outdoor-Sommer-Run ein Zelt oder Lampen?",
+        answer: "Nein. Die Sonne übernimmt Licht und einen Teil der Wärme, Regen einen Teil des Gießens. Wichtig sind vor allem ein sonniger Standort, ein ausreichend großer Topf oder Boden, und etwas mehr Aufmerksamkeit in der letzten Reifephase."
+      },
+      {
+        question: "Wie oft muss ich mich um eine Outdoor-Pflanze kümmern?",
+        answer: "Deutlich seltener als indoor – meist reicht es, alle paar Tage nach dem Substrat zu schauen und gelegentlich zu düngen. Nur in der letzten Reifephase vor der Ernte lohnt sich engmaschigere Aufmerksamkeit, wegen des Regen-/Schimmelrisikos."
+      },
+      {
+        question: "Wann genau sollte ich ernten?",
+        answer: "Wenn die Trichome überwiegend milchig sind (siehe Anfänger-Anleitung, Schritt 4) – und outdoor zusätzlich: eher etwas früher ernten, statt eine angekündigte, mehrtägige Regenperiode über fast reifen Blüten abzuwarten."
+      }
+    ],
+    glossary: [
+      { term: "Autoflower", definition: "Sorte, die unabhängig von der Tageslänge nach einer festen Zeit von der Wachstums- in die Blütephase wechselt – dadurch besonders planbar für einen einzelnen Sommer-Run." },
+      { term: "Mulch", definition: "Eine Schicht (z. B. Stroh) auf der Erdoberfläche, die Feuchtigkeit hält und Nährstoffe vor Auswaschung durch Regen schützt." }
+    ],
+    sourceIds: ["botrytis-grey-mold-review"],
+    relatedSlugs: ["cannabis-anbau-grundlagen", "indoor-outdoor-anbau-vergleich", "how-to-grow-cannabis-anfaenger-tutorial", "feminisiert-vs-regular-vs-autoflower", "erntefenster-trichomreife"]
   }
 ];
 
@@ -7968,6 +8068,11 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
   "how-to-grow-cannabis-anfaenger-tutorial": {
     growValue: "Starte mit einer Pflanze, stabilem Setup und täglichem Log – drei dokumentierte Runs machen dich besser als beliebig viele undokumentierte.",
     qualityScore: 5,
+    growCategory: "yield",
+  },
+  "outdoor-anbau-fuer-einsteiger": {
+    growValue: "Ein großer Topf (30–50 L) oder direkt der Gartenboden ist outdoor der größte Ertragshebel – und behalte kurz vor der Ernte die Regen-Wettervorhersage im Blick, lieber etwas früher ernten als eine mehrtägige Regenperiode über fast reifen Blüten riskieren.",
+    qualityScore: 4,
     growCategory: "yield",
   },
   "how-to-grow-cannabis-fortgeschritten-tutorial": {
