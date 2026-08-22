@@ -6107,83 +6107,85 @@ const expansionWikiArticles: TerpiraArticle[] = [
     readMinutes: 14,
     tags: ["How to Grow", "Anbau", "Anfänger", "Step by Step", "Setup", "Klima"],
     keyTakeaways: [
-      "Starte mit einem kleinen, stabilen Setup statt mit maximaler Leistung.",
-      "Miss Klima, pH und Bewässerung konsistent, bevor du Dünger oder Licht weiter aufdrehst.",
-      "Ein sauberer Wochenrhythmus mit festen Checks verhindert die meisten typischen Einsteigerfehler."
+      "Starte mit einem kleinen, einfachen Setup statt gleich alles auf Maximum zu stellen – so siehst du schneller, welche Änderung wirklich etwas bewirkt.",
+      "Miss zuerst Klima (Temperatur, Luftfeuchte), pH-Wert und Wassergaben zuverlässig, bevor du an Dünger oder Licht mehr Leistung gibst.",
+      "Ein fester Wochenrhythmus mit klaren Checks verhindert die häufigsten Anfängerfehler."
     ],
     quickFacts: [
-      { label: "Zielgruppe", value: "Erster bis dritter Run" },
-      { label: "Fokus", value: "Stabilität vor Performance" },
+      { label: "Zielgruppe", value: "Erster bis dritter Grow" },
+      { label: "Fokus", value: "Stabilität vor Höchstleistung" },
       { label: "Routine", value: "Täglicher 10-Minuten-Check" }
     ],
     sections: [
       {
-        heading: "Schritt 1: Setup klein und reproduzierbar halten",
+        heading: "Schritt 1: Klein und einfach starten",
         content: [
-          "Wähle ein überschaubares Setup mit klar kontrollierbaren Variablen: Licht, Abluft, Umluft, Temperatur, RH und ein einfaches Substrat. Forschung zu Cannabis-Kultivierung und die Erfahrung erfahrener Grower zeigen übereinstimmend, dass Stabilität den größten Hebel hat.",
-          "Für den Einstieg ist ein verzeihendes Medium mit dokumentierbarem Giessrhythmus wichtiger als ein aggressives High-Performance-System. Erde oder ein gut vorbereiteter Mix mit klarer Trocknungsdynamik ist meist einfacher als sofortige Hydro-Steuerung."
+          "Wähle für den ersten Grow ein überschaubares Setup: Licht, Abluft (die Luft, die aus dem Zelt raus geht), Umluft (ein kleiner Ventilator, der die Luft im Zelt bewegt), Temperatur, Luftfeuchte und ein einfaches Substrat – alles Dinge, die du leicht kontrollieren kannst. Je einfacher das Setup, desto leichter erkennst du später, welche Änderung wirklich etwas bewirkt hat.",
+          "Für den Einstieg ist normale, gute Blumenerde meist einfacher als ein Hydro-System, das täglich exakte Steuerung braucht – kleinere Fehler verzeiht Erde eher. Wichtig ist vor allem, dass du einen festen Gießrhythmus einhältst und dir notierst, wann und wie viel du gießt."
         ],
         checklist: [
-          "Lichtleistung konservativ starten und Höhe dokumentieren",
-          "Temperatur und RH am Canopy messen",
-          "Substrat, Topfvolumen und Ziel-Giessrhythmus vor dem Start festlegen"
+          "Lampenleistung am Anfang eher niedrig einstellen und den Abstand zur Pflanze notieren",
+          "Temperatur und Luftfeuchte direkt über der Pflanze (Canopy) messen, nicht nur irgendwo im Raum",
+          "Vor dem Start festlegen: welches Substrat, welche Topfgröße, wie oft gegossen wird"
         ]
       },
       {
-        heading: "Schritt 2: Klima und Bewässerung zuerst stabilisieren",
+        heading: "Schritt 2: Klima und Gießen zuerst in den Griff bekommen",
         content: [
-          "Halte in der Vegetationsphase keine extremen Werte, sondern stabile Korridore. VPD-orientiertes Arbeiten und regelmässige Topfgewicht-Kontrolle sind für Anfänger deutlich wertvoller als hektische EC-Optimierung.",
-          "Viele Probleme im ersten Run entstehen durch zu häufiges Giessen und zu viele Korrekturen gleichzeitig. Arbeite mit einem festen Beobachtungsfenster: Blätter, Topfgewicht, Drain, Temperatur und Luftfeuchte."
+          "Halte Temperatur und Luftfeuchte in der Wachstumsphase in einem stabilen Bereich, statt sie stark schwanken zu lassen. Für Anfänger ist das wichtiger, als die Düngerstärke bis ins Detail zu optimieren – prüfe stattdessen regelmäßig, ob die Pflanze wirklich Wasser braucht, zum Beispiel indem du den Topf hochhebst: Fühlt er sich deutlich leichter an als kurz nach dem letzten Gießen, ist es Zeit für die nächste Gabe.",
+          "Die meisten Probleme im ersten Grow entstehen durch zu häufiges Gießen und zu viele gleichzeitige Änderungen. Beobachte stattdessen regelmäßig: die Blätter, das Topfgewicht, das Wasser, das unten aus dem Topf rausläuft (Drain), Temperatur und Luftfeuchte."
         ],
         checklist: [
-          "Vor jedem Giessen Topfgewicht oder Trocknungsgrad prüfen",
-          "Nur einen Parameter pro Tag ändern",
-          "Klimaabweichungen mit Datum und Uhrzeit ins Grow-Log schreiben"
+          "Vor jedem Gießen prüfen, ob das Substrat wirklich trocken genug ist (z. B. am Topfgewicht)",
+          "Immer nur eine Sache pro Tag ändern, nie mehrere gleichzeitig",
+          "Auffälligkeiten mit Datum und Uhrzeit ins Grow-Log schreiben"
         ]
       },
       {
-        heading: "Schritt 2b: Wochenplan für einen einfachen ersten Run",
+        heading: "Schritt 2b: Wochenplan für einen einfachen ersten Grow",
         content: [
-          "Woche 1-2: Keimung und Jungpflanze. Licht moderat halten, RH höher fahren, Medium nur leicht feucht und keine harten Düngeimpulse setzen. Fokus: stabile Entwicklung statt Tempo.",
-          "Woche 3-4: Frühe Vegetation. Gleichmässigen Rhythmus aus Giessen, Klima-Check und leichter Nährstoffzufuhr etablieren. Jetzt zeigt sich, ob Topf, Medium und Trocknungsdauer zusammenpassen.",
-          "Woche 5-6: Späte Vegetation bis Stretch. Pflanzenhöhe, Lichtabstand und Blattgesundheit eng beobachten. Nur dann auf Blüte umstellen, wenn Pflanzen vital und der Raum klimatisch stabil ist.",
-          "Woche 7-9: Hauptblüte. Stickstoff nicht aggressiv pushen, Giessrhythmus eng führen und Klima trocken genug halten, damit keine dichten, feuchten Problemzonen entstehen.",
-          "Woche 10+: Reife, Ernte und Trocknung. Trichome beobachten, letzte grobe Korrekturen vermeiden und Trocknungsraum vor dem Schnitt komplett vorbereiten."
+          "Woche 1–2: Keimung und Jungpflanze. Licht nicht zu stark, Luftfeuchte eher hoch halten, Substrat nur leicht feucht halten und noch nicht kräftig düngen. Ziel: ruhiges, stabiles Wachstum statt Tempo.",
+          "Woche 3–4: Frühe Wachstumsphase. Einen gleichmäßigen Rhythmus aus Gießen, Klima-Check und leichter Düngung einspielen. Hier zeigt sich, ob Topf, Substrat und Trocknungszeit zwischen den Gießgängen zusammenpassen.",
+          "Woche 5–6: Späte Wachstumsphase bis zum 'Stretch' (die Pflanze wächst nach der Umstellung auf Blüte nochmal deutlich in die Höhe). Pflanzenhöhe, Lichtabstand und Blattgesundheit genau beobachten. Erst auf Blüte umstellen, wenn die Pflanze gesund ist und das Klima im Raum stabil läuft.",
+          "Woche 7–9: Hauptblüte. Nicht zu viel Stickstoff geben, Gießrhythmus konstant halten und die Luftfeuchte trocken genug, damit sich keine dichten, feuchten Problemzonen in den Blüten bilden.",
+          "Woche 10+: Reife, Ernte und Trocknung. Trichome beobachten (siehe Schritt 4), keine großen Änderungen mehr vornehmen und den Trocknungsraum vorbereiten, bevor geschnitten wird."
         ],
         checklist: [
-          "Jede Woche nur ein klares Lernziel definieren",
-          "Vor der Blüte kein ungelostes Giess- oder Klima-Problem mitnehmen",
-          "Trocknung mindestens so genau planen wie die Veg-Phase"
+          "Jede Woche ein klares, einzelnes Lernziel setzen",
+          "Kein ungelöstes Gieß- oder Klimaproblem mit in die Blüte nehmen",
+          "Die Trocknung genauso sorgfältig planen wie die Wachstumsphase"
         ]
       },
       {
-        heading: "Schritt 3: Düngung defensiv und phasenbezogen steuern",
+        heading: "Schritt 3: Vorsichtig und passend zur Phase düngen",
         content: [
-          "Studien zu NPK-Fertigation bei Cannabis zeigen, dass Überversorgung - besonders mit Stickstoff in späteren Phasen - Ertrag und Qualität eher verschlechtern kann. Beginne deshalb unterhalb der Hersteller-Maximalangaben und steigere nur bei klarer Pflanzenreaktion.",
-          "Achte darauf, dass Lichtintensität, Klima und Wurzelzone zur Nährstoffstärke passen. Ohne diese Basis bringt mehr EC kaum Nutzen und erhöht das Risiko für Blockaden oder Stressmarker."
+          "Zu viel Dünger – vor allem zu viel Stickstoff in der späteren Blüte – verschlechtert Ertrag und Qualität eher, als dass er hilft. Starte deshalb unterhalb der auf der Düngerflasche angegebenen Maximalmenge und steigere nur, wenn die Pflanze sichtbar gut reagiert: kräftiges, sattgrünes Wachstum statt verbrannter, dunkler Blattspitzen.",
+          "Dünger bringt nur etwas, wenn Licht, Klima und die Wurzelzone insgesamt passen. Ohne diese Basis nützt eine höhere Düngerstärke (EC) kaum etwas und erhöht nur das Risiko, dass die Pflanze den Dünger gar nicht mehr richtig aufnehmen kann (eine sogenannte Nährstoffsperre)."
         ],
         checklist: [
-          "pH und EC der Lösung in fixer Reihenfolge messen",
-          "Keine Booster einsetzen, solange Basisprozesse noch schwanken",
-          "Ab Blüteeinleitung Stickstoff nicht weiter aggressiv steigern"
+          "pH-Wert erst messen, nachdem sich der Dünger im Wasser vollständig aufgelöst hat, danach die EC (Düngerstärke) prüfen",
+          "Keine teuren Blüte-Zusatzprodukte (Booster) verwenden, solange Gießen und Klima noch nicht stabil laufen",
+          "Ab Beginn der Blüte den Stickstoffanteil nicht weiter erhöhen"
         ]
       },
       {
         heading: "Schritt 4: Ernte nicht raten, sondern beobachten",
         content: [
-          "Einsteiger profitieren von klaren Reifeindikatoren statt Kalenderdenken. Beobachte Trichome, Pflanzenvitalität, Klima und Trocknungsplanung als zusammenhängenden Prozess.",
-          "Direkt nach der Ernte entscheidet sauberes Trocknen über Aroma, Schimmelrisiko und Konsistenz. Erfahrene Grower behandeln die Nacherntephase als Teil des Grows und nicht als letzten Nebenjob."
+          "Das wichtigste Signal sind die Trichome – die winzigen, pilzförmigen Harzköpfchen auf den Blüten. Mit einer günstigen 60–100-fachen Lupe oder der Makro-/Zoomfunktion einer Handykamera erkennst du ihre Farbe: klar/durchsichtig heißt zu früh, milchig-weiß/undurchsichtig zeigt den Wirkstoff-Höhepunkt an, bernsteinfarben (amber) bedeutet, dass sich THC bereits weiter abbaut und die Wirkung eher entspannend statt aktivierend wird.",
+          "Faustregel: Ernte, wenn die meisten Trichome milchig sind – wer eine eher aktivierende Wirkung mag, erntet bei überwiegend milchig und kaum Bernstein, wer es entspannter mag, wartet auf etwas mehr Bernsteinanteil. Braune, eingerollte Blütenhaare (Pistillen) und leicht vergilbende untere Blätter bestätigen dieses Bild, ersetzen die Trichomkontrolle aber nicht.",
+          "Direkt nach der Ernte entscheidet sauberes Trocknen über Aroma, Schimmelrisiko und Konsistenz: Ziel sind 18–21 °C und 55–65 % relative Luftfeuchte über etwa 7–14 Tage, in einem komplett verdunkelten Raum mit sanfter, indirekter Luftbewegung statt direktem Luftstrom auf die Blüten. Fertig ist die Trocknung nicht nach einer festen Anzahl Tage, sondern wenn der Snap Test klappt: Ein dünner Stängel bricht beim Biegen, statt sich nur zu verformen."
         ],
         checklist: [
-          "Vor der Ernte Trocknungsraum auf Temperatur und RH vorbereiten",
-          "Trichomkontrolle mit Lupe oder Mikroskop durchführen",
-          "Nach dem Run drei Dinge notieren: Fehler, Korrektur, Ergebnis"
+          "Trichome mit Lupe (60–100x) oder Handy-Makrolinse prüfen, nicht mit bloßem Auge",
+          "Mehrere Blüten aus unterschiedlichen Pflanzenbereichen checken, nicht nur eine",
+          "Trocknungsraum vorab auf 18–21 °C, 55–65 % RH und Verdunkelung einstellen",
+          "Ab Tag 5–6 täglich den Snap Test machen: Stängel bricht = fertig"
         ]
       }
     ],
     warnings: [
-      "Mehr Dünger, mehr Licht und mehr Wasser gleichzeitig zu erhöhen ist der schnellste Weg in unklare Fehlerbilder.",
-      "Ohne funktionierende Klimakontrolle wird selbst ein guter Nährstoffplan instabil."
+      "Mehr Dünger, mehr Licht und mehr Wasser gleichzeitig zu erhöhen ist der schnellste Weg zu Problemen, die du hinterher nicht mehr auseinanderhalten kannst.",
+      "Ohne stabiles Klima wirkt selbst ein guter Düngeplan nicht zuverlässig."
     ],
     simpleExplainers: [
       {
@@ -6193,22 +6195,32 @@ const expansionWikiArticles: TerpiraArticle[] = [
       {
         title: "Kurz erklärt: Was ist ein reproduzierbarer Run?",
         text: "Ein Grow, dessen Klima, Giessverhalten und Inputs dokumentiert und beim nächsten Zyklus sauber wiederholbar sind."
+      },
+      {
+        title: "Kurz erklärt: Woran erkenne ich, dass geerntet werden sollte?",
+        text: "Schau dir die Trichome mit einer Lupe an. Klar = zu früh, milchig-weiß = Wirkstoff-Höhepunkt, bernsteinfarben = die Pflanze baut THC schon wieder ab. Die meisten ernten, wenn überwiegend milchige Trichome mit nur wenig Bernstein zu sehen sind."
       }
     ],
     faq: [
       {
         question: "Soll ich im ersten Run toppen, trainieren und boostern?",
-        answer: "Nur wenn die Basis stabil ist. Für den Einstieg ist ein sauberer, einfacher Pflanzenlauf wertvoller als zu viele parallele Eingriffe."
+        answer: "Nur wenn die Basis stabil ist. Für den Einstieg ist ein sauberer, einfacher Pflanzenlauf wertvoller als zu viele parallele Eingriffe. Toppen heißt, die Haupttriebspitze zu kappen, um die Pflanze buschiger wachsen zu lassen – ein irreversibler Schnitt, der für den allerersten Run meist noch nicht nötig ist. Boostern meint zusätzliche Blüte-Dünger; für den Einstieg reicht ein normales, phasenangepasstes Düngeprogramm."
       },
       {
         question: "Was ist für Anfänger wichtiger: EC oder Klima?",
-        answer: "Klima und Bewässerung zuerst. Eine Pflanze in schlechtem Klima kann selbst mit sauberem EC nicht stabil performen."
+        answer: "Klima und Bewässerung zuerst. EC (die gemessene Salzkonzentration der Nährlösung, ein Maß für die Düngerstärke) bringt wenig, wenn Temperatur und Luftfeuchte nicht stimmen – eine Pflanze in schlechtem Klima kann selbst mit sauber eingestelltem EC-Wert nicht stabil wachsen."
       }
     ],
     glossary: [
       { term: "Grow-Log", definition: "Laufende Dokumentation von Klima, Giessen, Düngung und Auffälligkeiten pro Tag." },
       { term: "Canopy", definition: "Oberer Pflanzenbereich, in dem Licht und Klima besonders relevant gemessen werden." },
-      { term: "Drain", definition: "Abflusswasser nach der Bewässerung, nutzbar für EC- und pH-Kontrolle." }
+      { term: "Drain", definition: "Abflusswasser nach der Bewässerung, nutzbar für EC- und pH-Kontrolle." },
+      { term: "Trichom", definition: "Winziges, pilzförmiges Harzköpfchen auf Blüten und Blättern. Seine Farbe – klar, milchig oder bernsteinfarben – zeigt an, wie reif die Blüte ist und ob der Wirkstoffgehalt schon wieder abnimmt." },
+      { term: "Snap Test", definition: "Einfache Prüfung, ob die Trocknung fertig ist: Ein dünner Stängel bricht beim Biegen, statt sich nur zu verformen." },
+      { term: "EC", definition: "Electrical Conductivity – misst, wie stark die Nährlösung mit Dünger angereichert ist. Je höher der EC-Wert, desto mehr Dünger ist im Wasser." },
+      { term: "pH-Wert", definition: "Zeigt, wie sauer oder basisch Nährlösung bzw. Substrat sind. Ein falscher pH-Wert blockiert die Nährstoffaufnahme, selbst wenn genug Dünger vorhanden ist." },
+      { term: "Nährstoffsperre", definition: "Zustand, in dem die Pflanze vorhandenen Dünger nicht mehr aufnehmen kann – meist durch falschen pH-Wert oder Salzansammlung im Substrat verursacht, nicht durch echten Nährstoffmangel." },
+      { term: "Stretch", definition: "Die deutliche Höhenzunahme der Pflanze in den ersten Wochen nach der Umstellung auf den Blüte-Lichtzyklus." }
     ],
     relatedSlugs: ["cannabis-anbau-grundlagen", "bewaesserung-ohne-uebergiessen", "vpd-einfach-erklaert", "cannabis-substrat-und-wurzelzone"]
   }),
