@@ -164,32 +164,23 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   und nicht mehr als Ankündigung geführt werden. Prüfen, ob der Banner weg
   kann oder durch aktuellere Inhalte ersetzt werden sollte.
 
-## 🗂️ Studies-Kategorisierung — `anbau` ist überladen, braucht einen Plan (2026-08-22)
+## 🗂️ Studies-Kategorisierung — `anbau` überladen, Plan steht (2026-08-22)
 
-- ⏸️ **`category: "anbau"` hat mit Abstand zu viel Gewicht.** Nachgezählt über
-  `wiki.ts` + `diagnostics.ts`: **53 von 101 Artikeln (52 %) liegen in
-  `anbau`** — die nächstgrößeren Kategorien (`sicherheit`, `qualitaet`) haben
-  je nur 7. `medizin`, `recht`, `markt` haben **0** publizierte Artikel,
-  obwohl sie in `categoryLabels`/`TerpiraCategory`
-  (`apps/web/src/lib/terpira/types.ts`) als eigene Kategorien existieren.
-  Für Nutzer heißt das: Die Kategorie-Seite `/category/anbau` (aktuell
-  ohnehin durch einen separaten, ungefixten Bug 404 — Next-15/16-`params`
-  nicht awaited) müsste über 50 sehr unterschiedliche Themen (Phasen-
-  Tutorials, einzelne Techniken, Mangel-/Schädlings-/Krankheits-Diagnosen,
-  Ernte/Trocknung) in einer flachen Liste zeigen — nicht mehr durchsuchbar.
-  Wird schlimmer: Der neue Phase-17-Content-Factory-Pipeline
-  (`docs/content-factory/`) soll laut `docs/CONTENT_BACKLOG.md` u. a. **12
-  Nährstoffmängel + 12 Krankheiten + 12 Schädlinge** liefern — praktisch
-  alle davon würden aktuell ebenfalls in `anbau` landen.
-  **Noch kein Plan, nur die Zahlen** — bevor die nächsten Content-Factory-
-  Wellen (Diagnostic Core, siehe Coverage Matrix) weiter in `anbau` stapeln,
-  sollte entschieden werden, ob z. B. Unterkategorien/Tags innerhalb von
-  `anbau` reichen (`TerpiraCategory` bleibt unverändert, neue Filter-Ebene
-  in der UI) oder ob die Kategorie selbst aufgespalten wird (z. B. eigene
-  Top-Level-Kategorie für Diagnostik/Troubleshooting getrennt von
-  Anbau-Technik/Phasen-Tutorials) — beides hat Implikationen für
-  `getArticlesByCategory`, die Kategorie-Seiten und die Coverage-Matrix-
-  Struktur, deshalb hier als Planungsaufgabe und nicht als Ein-Zeilen-Fix.
+- ⏸️ **Plan fertig, noch nicht umgesetzt — Entscheidung steht aus.** Voller
+  Plan mit Datenbasis, Cluster-Aufschlüsselung, Optionsvergleich und
+  Migrationsaufwand: `docs/CONTENT_CATEGORY_RESTRUCTURE_PLAN.md`.
+  Kurzfassung: **54 von 97 live sichtbaren Artikeln (56 %) liegen in
+  `anbau`**, davon 33 (61 % von `anbau`) inhaltlich reine Diagnose-Artikel
+  (Mangel/Überschuss/Krankheit/Schädling/Umweltstress) statt Technik/
+  Tutorial — zwei komplett unterschiedliche Nutzerintentionen in einer
+  Kategorie. Das bestehende `/diagnose`-Tool (`lib/diagnose/tree.ts`)
+  gruppiert genau diesen Themenbereich schon symptomgetrieben (Blätter ·
+  Wachstum & Wurzeln · Klima & Umgebung · Schädlinge) — Empfehlung im Plan
+  ist, dieses bereits bewährte Muster für eine neue `diagnose`-Kategorie
+  wiederzuverwenden statt eine zweite, konkurrierende Taxonomie zu
+  erfinden. Dringlich vor der nächsten Content-Factory-Welle (12 weitere
+  Mängel + 12 Krankheiten + 12 Schädlinge laut Backlog), sonst wächst die
+  Schieflage weiter, bevor migriert wird.
 
 ## 📱 Mobile UX (nach dem Nav/PWA-Umbau vom 2026-08-16)
 
