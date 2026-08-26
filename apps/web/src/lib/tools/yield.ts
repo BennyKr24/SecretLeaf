@@ -60,6 +60,13 @@ const VEGDAUER_FAKTOR: Record<VegDauer, number> = {
   verlaengert: 1.3,  // > 8 Wochen
 };
 
+// Faktor relativ zu einer stabilisierten feminisierten Linie (= 1,0).
+// - autoflower 0,7: genetisch kleinere Pflanzen / kürzerer Lebenszyklus.
+// - regular 0,85: breitere Phänotyp-Streuung und im Schnitt weniger
+//   zucht-optimierte Vigor eines regulären Saatgut-Loses — KEIN Abzug für
+//   Männchen. Der Rechner behandelt `pflanzenAnzahl` als die Zahl der bis
+//   zur Ernte gebrachten (weiblichen) Pflanzen; Aussortieren der Männchen
+//   passiert vor diesem Input, nicht in diesem Faktor.
 const GENETIK_FAKTOR: Record<YieldInputs['genetik'], number> = {
   autoflower: 0.7,
   feminisiert: 1.0,
