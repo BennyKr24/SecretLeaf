@@ -33,14 +33,35 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   gefixt: die `subscriptions`-Migration war nie gegen lokale DB *oder* Prod
   gefahren worden (nur als Datei vorhanden) — beides am 2026-08-21
   nachgeholt (`supabase db push --linked`).
+- ✅ **Code-Audit auf Live-Tauglichkeit (2026-08-27): nichts zu ändern.**
+  `lib/stripe.ts`, `lib/env.ts`, `api/billing/{checkout,portal,webhook}` lesen
+  alles aus Env-Vars, keine test-mode-Annahmen, kein hartcodierter Key/
+  Price. Entitlement ausschließlich über den Webhook
+  (`checkout.session.completed`). `PRICE_*_DISPLAY` in `pricing/page.tsx`
+  steht schon auf `4,99 €` / `59 €` / `4,92 €`-pro-Monat — deckt sich mit den
+  geplanten Live-Preisen, d. h. Schritt 3 ist nur „Live-Prices mit exakt
+  diesen Beträgen anlegen", kein Code-Change. `.env.example` ist vollständig
+  und korrekt.
 - ⏸️ **Für echten Go-Live fehlt nur noch, was ausschließlich manuell geht:**
-  1. Dieselbe Produkt-/Preis-/Webhook-/Portal-Konfiguration im Stripe
-     **Live-Modus** wiederholen (Sandbox-Werte gelten nur für Tests)
-  2. Die vier Live-`STRIPE_*`-Werte (Secret Key, Webhook Secret, beide
-     Price-IDs) in **Vercel → Settings → Environment Variables** eintragen —
-     `.env.local` gilt nur lokal
-  3. Preis in `apps/web/src/app/[locale]/pricing/page.tsx`
-     (`PRICE_*_DISPLAY`-Konstanten) einmal gegen die Live-Preise gegenchecken
+  1. Im Stripe **Live-Modus** neu anlegen (Sandbox-Objekte gelten nicht):
+     Produkt „SecretLeaf Pro" + zwei Preise (4,99 €/Monat, 59 €/Jahr,
+     beide EUR, recurring) · Webhook-Endpoint auf
+     `https://secretleaf.vercel.app/api/billing/webhook` mit den Events
+     `checkout.session.completed`, `customer.subscription.updated`,
+     `customer.subscription.deleted` · Customer Portal aktivieren
+     (Kündigen + Zahlungsmethode ändern, Business-Infos/Rechtstexte setzen)
+  2. In **Vercel → Settings → Environment Variables** (Scope: Production)
+     die vier Werte setzen — aktuell hat Prod **keine** `STRIPE_*`-Vars,
+     d. h. `/api/billing/*` läuft dort bis dahin in 500:
+     `STRIPE_SECRET_KEY` (`sk_live_…`), `STRIPE_WEBHOOK_SECRET`
+     (`whsec_…` vom Live-Endpoint), `STRIPE_PRICE_ID_PRO_MONTHLY`,
+     `STRIPE_PRICE_ID_PRO_YEARLY` (beide Live-`price_…`) → danach
+     Production neu deployen. `NEXT_PUBLIC_SITE_URL` steht auf Prod schon
+     korrekt (wird anderswo genutzt).
+  3. Smoke-Test auf Prod mit echter Karte: Login → `/pricing` → Checkout →
+     Zahlung → `subscriptions`-Zeile `plan=pro` → `/pricing`+`/profile`
+     zeigen Pro → Customer Portal öffnet. Danach ggf. Test-Abo in Stripe
+     stornieren/refunden.
 
 ---
 
