@@ -11,7 +11,7 @@ import { CTAButton } from "@/components/ui/CTAButton";
 import {
   Settings, AlertTriangle, AlertCircle, Info, Inbox, Calendar, Microscope,
   Search, User, ShoppingCart, Store, ShieldCheck, Users, Dna,
-  Bot, type LucideIcon,
+  Bot, Ticket, type LucideIcon,
 } from "lucide-react";
 
 type OverviewData = {
@@ -347,6 +347,12 @@ export default function AdminOverviewPage() {
                       icon: Bot,
                       title: "KI-Assistent",
                       sub: "Notizen & Content-Entwürfe (Claude)",
+                    },
+                    {
+                      href: "/dashboard/admin/codes" as const,
+                      icon: Ticket,
+                      title: "Pro-Codes",
+                      sub: "Zugangscodes generieren",
                     },
                   ]).map((item, idx) => (
                     <Link
