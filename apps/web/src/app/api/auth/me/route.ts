@@ -15,6 +15,9 @@ export async function GET(request: Request) {
         email: authUser.email,
         role: authUser.role,
         plan: authUser.plan,
+        planSource: authUser.planSource,
+        trialRedeemed: authUser.trialRedeemed,
+        currentPeriodEnd: authUser.currentPeriodEnd,
       },
     });
   } catch (error) {
