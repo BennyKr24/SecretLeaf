@@ -12,6 +12,7 @@
 import { requireAdmin } from "@/lib/serverAuth";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
 import { AUTOMATION_RUNS_TABLE } from "@/lib/automationRuns";
+import { PRO_CODES_TABLE, generateCode } from "@/lib/billing";
 import { logError, logInfo } from "@/lib/log";
 
 export const dynamic = "force-dynamic";
@@ -98,7 +99,10 @@ type AdminAction =
   | "algorithm-update"
   | "algorithm-reset"
   | "weights-history"
-  | "ai-assist";
+  | "ai-assist"
+  | "pro-codes-list"
+  | "pro-codes-create"
+  | "pro-codes-deactivate";
 
 export async function POST(req: Request) {
   const adminOrResponse = await requireAdmin(req);
@@ -772,6 +776,98 @@ export async function POST(req: Request) {
           logError("admin.ai-assist.exception", { message });
           return Response.json({ error: message }, { status: 502 });
         }
+      }
+
+      // ── PRO CODES LIST ────────────────────────────────────────────────
+      case "pro-codes-list": {
+        const { data, error } = await supabase
+          .from(PRO_CODES_TABLE)
+          .select("*")
+          .order("created_at", { ascending: false })
+          .limit(200);
+
+        if (error) return Response.json({ error: error.message }, { status: 500 });
+        return Response.json({ codes: data ?? [] });
+      }
+
+      // ── PRO CODES CREATE ──────────────────────────────────────────────
+      case "pro-codes-create": {
+        const durationDays = Number(body.durationDays);
+        if (!Number.isInteger(durationDays) || durationDays < 1 || durationDays > 3650) {
+          return Response.json(
+            { error: "durationDays must be an integer between 1 and 3650" },
+            { status: 400 },
+          );
+        }
+
+        const maxRedemptions = body.maxRedemptions === undefined ? 1 : Number(body.maxRedemptions);
+        if (!Number.isInteger(maxRedemptions) || maxRedemptions < 1) {
+          return Response.json({ error: "maxRedemptions must be an integer >= 1" }, { status: 400 });
+        }
+
+        const note = typeof body.note === "string" ? body.note : undefined;
+        const expiresAt = typeof body.expiresAt === "string" ? body.expiresAt : undefined;
+        if (expiresAt !== undefined && Number.isNaN(Date.parse(expiresAt))) {
+          return Response.json({ error: "expiresAt must be an ISO date string" }, { status: 400 });
+        }
+
+        let insertedCode: Record<string, unknown> | null = null;
+        let lastError: string | null = null;
+        for (let attempt = 0; attempt < 5; attempt += 1) {
+          const code = generateCode();
+          const { data, error } = await supabase
+            .from(PRO_CODES_TABLE)
+            .insert({
+              code,
+              duration_days: durationDays,
+              max_redemptions: maxRedemptions,
+              note: note || null,
+              expires_at: expiresAt || null,
+              created_by: adminOrResponse.userId,
+            })
+            .select()
+            .single();
+
+          if (!error) {
+            insertedCode = data as Record<string, unknown>;
+            break;
+          }
+          if (error.code === "23505") {
+            lastError = error.message;
+            continue;
+          }
+          return Response.json({ error: error.message }, { status: 500 });
+        }
+
+        if (!insertedCode) {
+          return Response.json(
+            { error: lastError || "Failed to generate a unique code" },
+            { status: 500 },
+          );
+        }
+
+        logInfo("admin.pro-codes-create", {
+          by: adminOrResponse.userId,
+          durationDays,
+          maxRedemptions,
+        });
+        return Response.json({ code: insertedCode });
+      }
+
+      // ── PRO CODES DEACTIVATE ──────────────────────────────────────────
+      case "pro-codes-deactivate": {
+        const id = body.id as string;
+        if (!id) return Response.json({ error: "id required" }, { status: 400 });
+
+        const { error } = await supabase
+          .from(PRO_CODES_TABLE)
+          .update({ active: false })
+          .eq("id", id);
+
+        if (error) return Response.json({ error: error.message }, { status: 500 });
+
+        logInfo("admin.pro-codes-deactivate", { id, by: adminOrResponse.userId });
+        return Response.json({ ok: true });
       }
 
       default:
