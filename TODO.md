@@ -29,11 +29,14 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
   `SecretLeaf` (`acct_1U6Hp8HmbWy555oe`) ist **nicht aktiviert** (KYC:
   Unternehmensdaten, Ausweis, IBAN, Einreichung zur Prüfung) — Stripe sperrt
   den Live-Modus komplett bis dahin, das muss Benny selbst machen.
-- ⚠️ **Solange zurückgestellt: `/pricing` prüfen.** Die Seite bewirbt aktuell
-  bezahlte Pläne mit „Jetzt upgraden"-CTA. Wenn Pro erstmal nur Trial/Codes
-  ist, sollte die Seite das widerspiegeln (Trial-Framing statt Kauf, oder
-  „bald verfügbar") — sonst führt der Button auf Prod ohnehin ins Leere
-  (`/api/billing/*` hat auf Prod keine `STRIPE_*`-Vars → 500).
+- ✅ **Trial + Codes gebaut (2026-08-27).** `/pricing` läuft jetzt als
+  Trial-/Code-State-Machine hinter `PAID_LAUNCH_ENABLED = false`
+  (bezahlter Pfad geparkt, 1 Flag zum Reaktivieren). Self-serve 30-Tage-Trial
+  (`/api/billing/trial`, einmalig via `trial_redeemed_at`), einlösbare Codes
+  (`/api/billing/redeem`, Admin-Panel `/dashboard/admin/codes`), Ablauf per
+  Read-Time-Check in `getUserSubscription()` ohne Cron. Migration
+  `202608270000_pro_trial_and_codes.sql` lokal + Prod angewendet. Liegt auf
+  `benny/pro-plan-monetization`, greift nach dem Deploy.
 
 - ✅ **Test-Modus vollständig eingerichtet und Ende-zu-Ende verifiziert.**
   Stripe Sandbox-Account (`SecretLeaf Sandbox`, `acct_1U6HpRH5zm2C1ryD`):
