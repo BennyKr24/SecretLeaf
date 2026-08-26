@@ -83,17 +83,20 @@ export default function WikiSourcesPage() {
           Alle wissenschaftlichen Quellen, auf die unsere Fachartikel verweisen – nach Herausgeber gruppiert.
         </p>
 
-        <div className="mt-5 rounded-xl border border-rose-200 dark:border-rose-900/40 bg-rose-50 dark:bg-rose-950/30 p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-rose-700 dark:text-rose-400">Neuer Bereich</p>
-          <div className="mt-1 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm text-rose-900 dark:text-rose-300">
-              Jetzt verfügbar: das Schädlings-Lexikon mit Bildkarten, Kategorien, Risikobewertungen und Gegenmaßnahmen.
-            </p>
+        <div className="mt-5 rounded-xl border border-border bg-card p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Bildbasierte Lexika</p>
+          <div className="mt-2 flex flex-wrap gap-2">
             <Link
               href={"/studies/pests" as Route}
-              className="inline-flex rounded-lg border border-rose-300 bg-card px-3 py-1.5 text-sm font-semibold text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:bg-rose-950/40"
+              className="inline-flex rounded-lg border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground hover:bg-card"
             >
-              Schädlings-Lexikon öffnen
+              Schädlings-Lexikon
+            </Link>
+            <Link
+              href={"/studies/deficiencies" as Route}
+              className="inline-flex rounded-lg border border-border bg-background px-3 py-1.5 text-sm font-semibold text-foreground hover:bg-card"
+            >
+              Mangel-Lexikon
             </Link>
           </div>
         </div>

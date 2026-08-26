@@ -348,7 +348,7 @@ export function buildPhaseTasks(
           `ernte-dry-${startDay}`,
           "ernte",
           "Trocknung einrichten",
-          "18–21 °C, 50–60 % RH, kein direktes Licht, gute Luftzirkulation. Knospen locker aufhängen.",
+          "16–20 °C, 55–62 % RH, kein direktes Licht, indirekte Luftzirkulation (nicht auf die Knospen). Knospen locker aufhängen, 7–14 Tage.",
           d(0),
           "ernte"
         ),
@@ -356,7 +356,7 @@ export function buildPhaseTasks(
           `ernte-cure-${startDay}`,
           "ernte",
           "Curing starten (nach 7–14 Tagen Trocknung)",
-          "In luftdichte Gläser füllen. Täglich 10–15 Min. öffnen (Burpen) für 2–4 Wochen.",
+          "In luftdichte Gläser füllen (~62 % RH anpeilen, Hygrometer rein). Woche 1: täglich 5–10 Min. öffnen (Burpen), Woche 2: alle 2–3 Tage, ab Woche 3: wöchentlich. Mindestens 2, besser 4 Wochen.",
           d(7),
           "ernte"
         ),

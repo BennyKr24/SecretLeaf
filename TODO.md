@@ -97,16 +97,6 @@ Erfahrungslevel) und Blütedauer (an Genetik statt Erfahrung gekoppelt,
 Migration `202608210000_grow_genetik_typ.sql` lokal + Prod angewendet).
 Offen:
 
-- 💤 **PPFD-Untergrenze Blüte in `lighting.ts`** (aktuell 600) liegt am
-  unteren Rand des 2026er-Konsens (mehrere Quellen nennen eher 700–900 ohne
-  CO2-Anreicherung) — optionale Anhebung auf 700, kein Fehler.
-- 💤 **Trocknung/Curing-Parameter in `phases.ts`** (18–21°C/50–60% RH, festes
-  10–15-Min.-Burping über 2–4 Wochen) sind nicht falsch, aber aktuelle Praxis
-  tendiert zu 55–65% RH und gestaffeltem Burping (täglich → alle 2–3 Tage)
-  für bessere Terpenerhaltung — optionales Update, kein Bug.
-- 💤 **Genetik-Faktor `regular: 0.85` in `yield.ts`** ist irreführend
-  benannt — bildet vermutlich implizit Männchen-Ausfall im Bestand ab, ohne
-  das im Code zu benennen. Kein Zahlenfehler, Kommentar würde helfen.
 - 💤 **`intelligence.ts` Ertragsverlust-/-gewinn-Gramm-Heuristiken** (z. B.
   "−35g bei fehlendem Log") sind produktinterne Heuristiken ohne externe
   Quelle — nicht gegen Literatur prüfbar, absichtlich nicht angefasst.
@@ -181,14 +171,6 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   wird, ist eine eigene Infra-/Budget-Entscheidung, losgelöst von Phase 1/2.
   `scripts/sync-fertilizer-prices.mjs` bleibt als möglicher Ausgangspunkt
   liegen.
-
-## 📚 Quellenregister (`/studies/sources`)
-
-- 🔍 **Inhalt: "Neuer Bereich"-Banner zum Schädlings-Lexikon wirkt stale.**
-  Der rosa Hinweis-Kasten oben auf der Seite bewirbt das Schädlings-Lexikon
-  noch als brandneu ("Jetzt verfügbar") — dürfte inzwischen etabliert sein
-  und nicht mehr als Ankündigung geführt werden. Prüfen, ob der Banner weg
-  kann oder durch aktuellere Inhalte ersetzt werden sollte.
 
 ## 📱 Mobile UX (nach dem Nav/PWA-Umbau vom 2026-08-16)
 

@@ -36,6 +36,13 @@ function heightFactor(heightCm: number): number {
   return Math.max(0.2, 1.0 / (1 + 1.0 * h * h));
 }
 
+// Blüte-Schwellen recherchiert/neu kalibriert 2026-08-27 (Konsens 2023–2026,
+// growithjane, Thrive Agritech, WeedInsight u. a.): OHNE CO2-Anreicherung
+// liegt der nutzbare Bereich bei 600–900 µmol/m²/s, das Optimum bei 700–900;
+// oberhalb ~900–1000 ohne CO2 Lichtsättigung/Bleaching, deutlich >1000 sinkt
+// die Photosyntheserate. Der Rechner hat keinen CO2-Input → ohne CO2 ist die
+// richtige Default-Annahme. (Vorher war der grüne Bereich 600–1000, was den
+// CO2-losen Fall zu optimistisch bewertete.)
 function ppfdLevel(ppfd: number, phase: 'veg' | 'bluete'): ResultLevel {
   if (phase === 'veg') {
     if (ppfd >= 400 && ppfd <= 600) return 'gruen';
@@ -43,20 +50,20 @@ function ppfdLevel(ppfd: number, phase: 'veg' | 'bluete'): ResultLevel {
     if (ppfd > 600 && ppfd <= 800) return 'gelb';
     return 'rot';
   }
-  // Blüte
-  if (ppfd >= 600 && ppfd <= 1000) return 'gruen';
-  if (ppfd >= 400 && ppfd < 600) return 'gelb';
-  if (ppfd > 1000 && ppfd <= 1300) return 'gelb';
+  // Blüte (ohne CO2)
+  if (ppfd >= 700 && ppfd <= 900) return 'gruen';
+  if (ppfd >= 550 && ppfd < 700) return 'gelb';
+  if (ppfd > 900 && ppfd <= 1050) return 'gelb';
   return 'rot';
 }
 
 function ppfdExplanation(ppfd: number, phase: 'veg' | 'bluete'): string {
-  const ziel = phase === 'veg' ? '400–600 µmol/m²/s' : '600–1.000 µmol/m²/s';
-  if (ppfd < (phase === 'veg' ? 250 : 400)) {
+  const ziel = phase === 'veg' ? '400–600 µmol/m²/s' : '700–900 µmol/m²/s (ohne CO₂)';
+  if (ppfd < (phase === 'veg' ? 250 : 550)) {
     return `Deutlich unter dem Zielbereich (${ziel}). Lampe näher positionieren oder stärkeres Modell einsetzen.`;
   }
-  if (ppfd > (phase === 'veg' ? 800 : 1300)) {
-    return `Über dem empfohlenen Bereich (${ziel}). Lichtstress wahrscheinlich — Abstand erhöhen oder dimmen.`;
+  if (ppfd > (phase === 'veg' ? 800 : 1050)) {
+    return `Über dem empfohlenen Bereich (${ziel}). Ohne CO₂ ab ~900–1.000 Lichtsättigung, darüber Bleaching-Risiko — Abstand erhöhen oder dimmen.`;
   }
   return `Im empfohlenen Bereich für ${phase === 'veg' ? 'vegetative Phase' : 'Blütephase'} (${ziel}).`;
 }
