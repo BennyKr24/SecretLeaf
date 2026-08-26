@@ -14,6 +14,26 @@ type UserRoleRow = {
 type SubscriptionRow = {
   plan: UserPlan;
   status: string;
+  current_period_end: string | null;
+  source: "stripe" | "trial" | "code" | null;
+  trial_redeemed_at: string | null;
+};
+
+export type UserSubscription = {
+  plan: UserPlan;
+  /** Where the current entitlement came from. "stripe" also when there is no row. */
+  source: "stripe" | "trial" | "code";
+  /** Whether the user has ever activated the one-time self-serve trial. */
+  trialRedeemed: boolean;
+  /** ISO end of the current entitled period, if any (trial / code / paid-cycle end). */
+  currentPeriodEnd: string | null;
+};
+
+const FREE_SUBSCRIPTION: UserSubscription = {
+  plan: "free",
+  source: "stripe",
+  trialRedeemed: false,
+  currentPeriodEnd: null,
 };
 
 function normalizeRole(value: string | null | undefined): UserRole {
@@ -74,45 +94,77 @@ export async function getUserRole(userId: string): Promise<UserRole> {
 }
 
 /**
- * Resolves the user's effective plan from `subscriptions`. Absence of a row
- * (never checked out) or a non-entitled status (past_due, canceled, ...)
- * both resolve to "free" — there is no upsert-on-missing here, unlike
- * getUserRole, because most users will never have a subscriptions row.
+ * Resolves the user's effective subscription from `subscriptions`. Absence of
+ * a row (never checked out / trialed) resolves to free — there is no
+ * upsert-on-missing here, unlike getUserRole, because most users will never
+ * have a subscriptions row.
+ *
+ * An entitled status ("active" | "trialing") only grants Pro while
+ * `current_period_end` is still in the future (or null). This is what makes
+ * self-serve trials and redeemed codes expire with NO cron — a healthy Stripe
+ * `active` sub always carries a future period end, so paid users are
+ * unaffected. `trialRedeemed` is reported independently of the current status
+ * so the pricing page can hide the trial CTA even after a trial has lapsed.
  */
-export async function getUserPlan(userId: string): Promise<UserPlan> {
+export async function getUserSubscription(userId: string): Promise<UserSubscription> {
   const supabase = getSupabaseServerClient();
   const { data, error } = await supabase
     .from(SUBSCRIPTIONS_TABLE)
-    .select("plan, status")
+    .select("plan, status, current_period_end, source, trial_redeemed_at")
     .eq("user_id", userId)
     .maybeSingle();
 
   if (error || !data) {
-    return "free";
+    return FREE_SUBSCRIPTION;
   }
 
   const row = data as SubscriptionRow;
-  return ENTITLED_STATUSES.has(row.status) ? row.plan : "free";
+  const notExpired =
+    row.current_period_end == null || new Date(row.current_period_end).getTime() > Date.now();
+  const entitled = ENTITLED_STATUSES.has(row.status) && notExpired;
+
+  return {
+    plan: entitled ? row.plan : "free",
+    source: row.source ?? "stripe",
+    trialRedeemed: row.trial_redeemed_at != null,
+    currentPeriodEnd: row.current_period_end,
+  };
+}
+
+/** Back-compat thin wrapper: just the effective plan. */
+export async function getUserPlan(userId: string): Promise<UserPlan> {
+  return (await getUserSubscription(userId)).plan;
 }
 
 export async function getAuthenticatedUserWithRole(
   request: Request
-): Promise<{ userId: string; email: string | null; role: UserRole; plan: UserPlan } | null> {
+): Promise<{
+  userId: string;
+  email: string | null;
+  role: UserRole;
+  plan: UserPlan;
+  planSource: "stripe" | "trial" | "code";
+  trialRedeemed: boolean;
+  currentPeriodEnd: string | null;
+} | null> {
   const auth = await getAuthenticatedUser(request);
   if (!auth) {
     return null;
   }
 
-  const [role, plan] = await Promise.all([
+  const [role, subscription] = await Promise.all([
     getUserRole(auth.user.id),
-    getUserPlan(auth.user.id),
+    getUserSubscription(auth.user.id),
   ]);
 
   return {
     userId: auth.user.id,
     email: auth.user.email ?? null,
     role,
-    plan,
+    plan: subscription.plan,
+    planSource: subscription.source,
+    trialRedeemed: subscription.trialRedeemed,
+    currentPeriodEnd: subscription.currentPeriodEnd,
   };
 }
 
