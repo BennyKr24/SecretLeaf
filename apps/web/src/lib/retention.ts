@@ -83,7 +83,7 @@ export function buildWeeklyDigestPayload(articles: TerpiraArticle[], now = new D
     .slice(0, 4);
 
   const newGrowStudies = [...articles]
-    .filter((article) => ['anbau', 'chemie', 'genetik', 'qualitaet'].includes(article.category))
+    .filter((article) => ['anbau', 'diagnose', 'tutorials', 'chemie', 'genetik', 'qualitaet'].includes(article.category))
     .sort((left, right) => right.lastUpdated.localeCompare(left.lastUpdated))
     .slice(0, 4);
 

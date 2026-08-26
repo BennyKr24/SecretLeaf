@@ -1,9 +1,16 @@
 # Studies-Kategorisierung — Restructure-Plan (2026-08-22)
 
-> **Status: Planungsdokument. Nichts hiervon ist implementiert.** Folgt aus
-> dem TODO-Eintrag "🗂️ Studies-Kategorisierung" in `TODO.md`. Auf
-> ausdrücklichen Wunsch nur geplant, nicht umgesetzt — Entscheidung liegt
-> beim Nutzer.
+> **Status: UMGESETZT (2026-08-22).** Empfehlung Option C wurde vom Nutzer
+> bestätigt und ausgeführt — verfeinert zu einem 3-Wege-Split
+> `anbau` / `diagnose` / `tutorials` (statt nur `anbau` / `diagnose`), damit
+> auch die Phasen-Tutorials einen eindeutigen Platz haben. Commits:
+> `6d6fbf5` (Datenmodell + Kategorie-Migration der 33 Diagnose- und 6
+> Tutorial-Artikel, `params`-not-awaited-404-Bug auf `/category/[slug]`
+> mitgefixt) und `b86b541` (Studies-Hub + Faceted Browse: `diagnoseAreas`-
+> Facette nach dem `/diagnose`-Tool-Muster, `CategoryHubGrid`, URL-synced
+> Multi-Select-Filter). Live-Zählung: `anbau` 15 · `diagnose` 33 ·
+> `tutorials` 6. Dokument bleibt als Entscheidungs-/Umsetzungsnachweis
+> liegen; der zugehörige `TODO.md`-Eintrag wurde entfernt.
 
 ---
 
