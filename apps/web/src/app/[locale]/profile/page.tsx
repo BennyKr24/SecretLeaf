@@ -111,6 +111,14 @@ export default function ProfilePage() {
   };
 
   const plan = effectivePlan(user.role, user.plan);
+  const planSource = user.planSource ?? "stripe";
+  const periodEnd = user.currentPeriodEnd
+    ? new Date(user.currentPeriodEnd).toLocaleDateString(undefined, {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      })
+    : null;
 
   const planLabel: Record<EffectivePlan, string> = {
     team: t("planTeam"),
@@ -242,7 +250,7 @@ export default function ProfilePage() {
                 </CTAButton>
               </>
             )}
-            {plan === "pro" && (
+            {plan === "pro" && planSource === "stripe" && (
               <CTAButton
                 variant="secondary"
                 size="sm"
@@ -252,7 +260,24 @@ export default function ProfilePage() {
                 {isOpeningPortal ? t("managePortalLoading") : t("manageSubscriptionCta")}
               </CTAButton>
             )}
+            {plan === "pro" && planSource !== "stripe" && (
+              <CTAButton
+                href="/pricing"
+                variant="secondary"
+                size="sm"
+                onClick={() => Analytics.upgradeCtaClicked("profile_page")}
+              >
+                {t("planExtendCta")}
+              </CTAButton>
+            )}
           </div>
+          {plan === "pro" && planSource !== "stripe" && periodEnd && (
+            <p className="mt-2 text-[12px] text-muted-fg">
+              {planSource === "trial"
+                ? t("planTrialNote", { date: periodEnd })
+                : t("planCodeNote", { date: periodEnd })}
+            </p>
+          )}
           {portalError && (
             <p className="mt-2 text-[12px] text-rose-600 dark:text-rose-400">{portalError}</p>
           )}
