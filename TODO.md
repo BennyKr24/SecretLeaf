@@ -16,7 +16,24 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
-## 💳 Pro-Plan / Stripe — Live-Modus fehlt noch (Stand 2026-08-19)
+## 💳 Pro-Plan / Stripe — ZURÜCKGESTELLT bis frühestens ~Feb 2027
+
+- 🅿️ **Entscheidung 2026-08-27: bezahltes Pro kommt in den ersten ~6 Monaten
+  nicht.** Zuerst wird Pro inhaltlich so ausgebaut, dass es das Geld wert ist,
+  und mehr Nutzungsdaten gesammelt. Übergangsweise höchstens Free-Codes oder
+  ein 1-Monats-Trial — kein Live-Checkout. Der komplette Live-Go-Live
+  (Stripe-Account-Aktivierung → Produkt/Preise/Webhook/Portal im Live-Modus →
+  4 Vercel-Env-Vars → Prod-Smoke-Test) bleibt hier als fertiger Runbook
+  liegen, wird aber erst wieder aufgegriffen, wenn die Ausbau-Entscheidung
+  gefallen ist. Blocker bei einem Anlauf am 2026-08-27: der Live-Account
+  `SecretLeaf` (`acct_1U6Hp8HmbWy555oe`) ist **nicht aktiviert** (KYC:
+  Unternehmensdaten, Ausweis, IBAN, Einreichung zur Prüfung) — Stripe sperrt
+  den Live-Modus komplett bis dahin, das muss Benny selbst machen.
+- ⚠️ **Solange zurückgestellt: `/pricing` prüfen.** Die Seite bewirbt aktuell
+  bezahlte Pläne mit „Jetzt upgraden"-CTA. Wenn Pro erstmal nur Trial/Codes
+  ist, sollte die Seite das widerspiegeln (Trial-Framing statt Kauf, oder
+  „bald verfügbar") — sonst führt der Button auf Prod ohnehin ins Leere
+  (`/api/billing/*` hat auf Prod keine `STRIPE_*`-Vars → 500).
 
 - ✅ **Test-Modus vollständig eingerichtet und Ende-zu-Ende verifiziert.**
   Stripe Sandbox-Account (`SecretLeaf Sandbox`, `acct_1U6HpRH5zm2C1ryD`):
