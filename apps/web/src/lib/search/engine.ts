@@ -106,10 +106,10 @@ const SYNONYM_MAP: Record<string, string[]> = {
   co2: ["klima", "co2", "anbau"],
   // Nährstoffe
   naehrstoffe: ["naehrstoffmaengel", "duengen", "naehrstoffe", "mangel"],
-  mangel: ["naehrstoffmaengel", "mangel", "fehler"],
-  gelb: ["naehrstoffmaengel", "mangel", "stickstoff"],
-  braun: ["naehrstoffmaengel", "mangel", "kali"],
-  flecken: ["naehrstoffmaengel", "mangel", "pilz"],
+  mangel: ["naehrstoffmaengel", "mangel", "fehler", "diagnose"],
+  gelb: ["naehrstoffmaengel", "mangel", "stickstoff", "diagnose"],
+  braun: ["naehrstoffmaengel", "mangel", "kali", "diagnose"],
+  flecken: ["naehrstoffmaengel", "mangel", "pilz", "diagnose"],
   stickstoff: ["stickstoff", "naehrstoffe", "npk"],
   kalium: ["kalium", "naehrstoffe", "kali", "npk"],
   kali: ["kalium", "naehrstoffe", "npk"],
@@ -151,10 +151,19 @@ const SYNONYM_MAP: Record<string, string[]> = {
   coa: ["laborwerte", "qualitaet", "zertifikat"],
   qualitaet: ["qualitaet", "labor", "coa"],
   // Schädlinge
-  schaedlinge: ["schaedlinge", "pilz", "spinnmilben"],
-  spinnmilben: ["schaedlinge", "milben"],
-  milben: ["schaedlinge", "spinnmilben"],
-  pilz: ["schaedlinge", "mykose", "pilz"],
+  schaedlinge: ["schaedlinge", "pilz", "spinnmilben", "diagnose"],
+  spinnmilben: ["schaedlinge", "milben", "diagnose"],
+  milben: ["schaedlinge", "spinnmilben", "diagnose"],
+  pilz: ["schaedlinge", "mykose", "pilz", "diagnose"],
+  // Diagnose / Pflanzenprobleme
+  diagnose: ["diagnose", "problem", "symptom"],
+  problem: ["diagnose", "problem"],
+  krankheit: ["diagnose", "krankheit", "pilz"],
+  symptom: ["diagnose", "symptom"],
+  // Tutorials / Schritt-für-Schritt
+  tutorial: ["tutorials", "anleitung", "grundlagen"],
+  anleitung: ["tutorials", "anleitung"],
+  howto: ["tutorials", "anleitung"],
   // Markt / Recht
   recht: ["recht", "gesetz", "legal"],
   legal: ["recht", "gesetz"],
@@ -198,6 +207,7 @@ const WIKI_SIGNALS = new Set([
   "grundlagen", "guide", "leitfaden", "artikel", "wissen",
   "recht", "gesetz", "medizin", "therapie", "genetik",
   "terpene", "konzentrate", "haschisch", "konsumformen",
+  "tutorial", "anleitung", "diagnose", "problem", "symptom",
 ]);
 
 function detectIntent(tokens: string[], rawQuery: string): SearchIntent {

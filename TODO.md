@@ -164,24 +164,6 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   und nicht mehr als Ankündigung geführt werden. Prüfen, ob der Banner weg
   kann oder durch aktuellere Inhalte ersetzt werden sollte.
 
-## 🗂️ Studies-Kategorisierung — `anbau` überladen, Plan steht (2026-08-22)
-
-- ⏸️ **Plan fertig, noch nicht umgesetzt — Entscheidung steht aus.** Voller
-  Plan mit Datenbasis, Cluster-Aufschlüsselung, Optionsvergleich und
-  Migrationsaufwand: `docs/CONTENT_CATEGORY_RESTRUCTURE_PLAN.md`.
-  Kurzfassung: **54 von 97 live sichtbaren Artikeln (56 %) liegen in
-  `anbau`**, davon 33 (61 % von `anbau`) inhaltlich reine Diagnose-Artikel
-  (Mangel/Überschuss/Krankheit/Schädling/Umweltstress) statt Technik/
-  Tutorial — zwei komplett unterschiedliche Nutzerintentionen in einer
-  Kategorie. Das bestehende `/diagnose`-Tool (`lib/diagnose/tree.ts`)
-  gruppiert genau diesen Themenbereich schon symptomgetrieben (Blätter ·
-  Wachstum & Wurzeln · Klima & Umgebung · Schädlinge) — Empfehlung im Plan
-  ist, dieses bereits bewährte Muster für eine neue `diagnose`-Kategorie
-  wiederzuverwenden statt eine zweite, konkurrierende Taxonomie zu
-  erfinden. Dringlich vor der nächsten Content-Factory-Welle (12 weitere
-  Mängel + 12 Krankheiten + 12 Schädlinge laut Backlog), sonst wächst die
-  Schieflage weiter, bevor migriert wird.
-
 ## 📱 Mobile UX (nach dem Nav/PWA-Umbau vom 2026-08-16)
 
 - 💤 **`SearchBar.tsx`s Such-Pill hat `min-w-[200px]`, unabhängig vom
