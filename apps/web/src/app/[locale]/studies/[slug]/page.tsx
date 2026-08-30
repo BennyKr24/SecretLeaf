@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import type { Route } from "next";
 import { categoryLabels, getArticleBySlug, getArticleSources, wikiArticles } from "@/data/terpira/wiki";
 import { localizeArticle, localizeCategoryLabel, isArticleTranslated } from "@/lib/i18n/localizeContent";
+import { pageAlternates } from "@/lib/i18n/metadata";
 import WikiReadingProgress from "@/components/WikiReadingProgress";
 import WikiAskBot from "@/components/WikiAskBot";
 import WikiArticleToc from "@/components/WikiArticleToc";
@@ -27,6 +28,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${article.title} – ${t("metaTitleSuffix")}`,
     description: article.summary,
+    alternates: pageAlternates(`/studies/${slug}`, locale),
   };
 }
 

@@ -190,17 +190,21 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
 
 ## 🔎 SEO — Unterseiten erben falschen Canonical (2026-08-30)
 
-- 🔍 **Nur `app/[locale]/layout.tsx` setzt `alternates` (canonical +
-  `languages` de/en/x-default).** `updates/`-Seiten setzen einen eigenen
-  Canonical, alle anderen dynamischen Routes (`studies/[slug]`,
-  `category/[slug]`, `studies`, `tools/*`, `diagnose` …) setzen kein
-  eigenes `alternates` → Next mergt feldweise, also erben sie den
-  Layout-Wert und melden **`canonical = <BASE_URL>/` bzw. `/en`** (die
-  Startseite) statt ihrer echten URL. Ebenso fehlt pro Seite das
-  `languages`-Mapping auf das jeweilige DE/EN-Gegenstück. Fix: kleiner
-  Helfer, der pro Seite `alternates: { canonical, languages: { de, en,
-  "x-default" } }` aus dem realen Pfad baut, in alle `generateMetadata`
-  der Wiki-/Tool-/Diagnose-Routes einhängen. Aufgefallen beim i18n-Pass.
+- 🔧 **Helfer gebaut + Studies-Routes verdrahtet, Rest offen.**
+  `lib/i18n/metadata.ts` `pageAlternates(path, locale)` → `{ canonical,
+  languages: { de, en, "x-default" } }` (DE = bare Pfad, EN = `/en`-Prefix,
+  Konvention aus `i18n/routing.ts`). Eingehängt in `generateMetadata` von
+  `studies/[slug]`, `category/[slug]`, `studies`. **Noch offen:**
+  - `tools/*` und `diagnose/page.tsx` haben *gar kein* `generateMetadata`/
+    `metadata` → erben Titel+Description+alternates komplett vom Layout
+    (Startseite). Brauchen einen eigenen Metadata-Block, nicht nur
+    `alternates`.
+  - `updates/page.tsx` (static `metadata`, kein `locale`) + `updates/[slug]`
+    (`generateMetadata`-`params` ohne `locale`): haben `canonical`, aber
+    hardcodiert und ohne `languages`; locale müsste erst durchgereicht
+    werden.
+  - `studies/sources/page.tsx` ist `'use client'` → kein Metadata-Export
+    möglich; ggf. in eine Server-Wrapper-Page auslagern.
 
 ## ✉️ Professionelle E-Mail-Templates (2026-08-30)
 

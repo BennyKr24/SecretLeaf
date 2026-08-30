@@ -11,6 +11,7 @@ import {
   localizeCategoryLabel,
   localizeCategoryDescription,
 } from "@/lib/i18n/localizeContent";
+import { pageAlternates } from "@/lib/i18n/metadata";
 import { FileText } from "lucide-react";
 
 const validCategories = Object.keys(categoryLabels) as TerpiraCategory[];
@@ -38,6 +39,7 @@ export async function generateMetadata({ params }: PageProps) {
       (en
         ? `All in-depth articles on ${label} at SecretLeaf.`
         : `Alle Fachartikel zum Thema ${label} auf SecretLeaf.`),
+    alternates: pageAlternates(`/category/${slug}`, locale),
   };
 }
 

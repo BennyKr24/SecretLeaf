@@ -6,6 +6,7 @@ import {
   localizeCategoryLabelMap,
   localizeCategoryDescriptionMap,
 } from "@/lib/i18n/localizeContent";
+import { pageAlternates } from "@/lib/i18n/metadata";
 import CategoryHubGrid from "@/components/CategoryHubGrid";
 import OpenSearchButton from "@/components/OpenSearchButton";
 import { Link } from "@/i18n/navigation";
@@ -18,16 +19,19 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale } = await params;
+  const alternates = pageAlternates("/studies", locale);
   return locale === "en"
     ? {
         title: "Studies – SecretLeaf",
         description:
           "Science-based content on cultivation, terpenes, medicine, law and quality.",
+        alternates,
       }
     : {
         title: "Studien – SecretLeaf",
         description:
           "Wissenschaftlich fundierte Inhalte zu Anbau, Terpenen, Medizin, Recht und Qualität.",
+        alternates,
       };
 }
 
