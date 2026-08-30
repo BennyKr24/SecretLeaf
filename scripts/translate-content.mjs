@@ -45,7 +45,9 @@ const MODE = has("--translate")
       ? "sync"
       : has("--stats")
         ? "stats"
-        : "check";
+        : has("--glossary-lint")
+          ? "glossary-lint"
+          : "check";
 const WRITES = MODE === "translate" || MODE === "prune" || MODE === "sync";
 const ONLY = opt("--only", null);
 const PILOT = Number(opt("--pilot", "0")) || 0;
@@ -281,8 +283,64 @@ async function translateBatch(items, client) {
   }
 }
 
+// ── glossary lint ──────────────────────────────────────────────────────────
+// Heuristic, advisory: flags translated EN strings whose German source used a
+// glossary term but whose EN output lacks the canonical rendering. Exit 0 by
+// default (warnings only); --strict makes findings fail (CI). --terms also
+// runs the noisier `terms` map on top of the near-zero-FP `doNotTranslate`.
+const reEscape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+function hasTerm(haystack, term) {
+  // \b works for ASCII acronyms (EC, VPD); for words with letters we also
+  // accept a compound boundary (German has no space in "Blütephase").
+  const b = new RegExp(`(^|[^\\p{L}])${reEscape(term)}([^\\p{L}]|$)`, "iu");
+  return b.test(haystack) || haystack.toLowerCase().includes(term.toLowerCase());
+}
+function glossaryLint() {
+  const g = JSON.parse(fs.readFileSync(GLOSSARY_PATH, "utf8"));
+  const dnt = g.doNotTranslate || [];
+  const terms = has("--terms") ? Object.entries(g.terms || {}) : [];
+  const strict = has("--strict");
+  const canon = (s) => s.replace(/₂/g, "2").replace(/ /g, " ");
+  let findings = 0;
+
+  for (const id of SOURCES.map((s) => s.id)) {
+    const tm = readTM(id);
+    for (const entry of Object.values(tm)) {
+      if (!entry || typeof entry.en !== "string" || !entry.en.trim()) continue;
+      const de = canon(entry.de);
+      const en = canon(entry.en);
+      for (const term of dnt) {
+        // \b-anchored so "EC" doesn't match inside "Technik"/"recht".
+        const re = new RegExp(`(^|[^\\p{L}\\p{N}])${reEscape(term)}([^\\p{L}\\p{N}]|$)`, "u");
+        if (re.test(de) && !re.test(en)) {
+          console.warn(`[${id}] do-not-translate "${term}" missing from EN`);
+          console.warn(`   de: ${entry.de}`);
+          console.warn(`   en: ${entry.en}\n`);
+          findings++;
+        }
+      }
+      for (const [deT, enT] of terms) {
+        if (hasTerm(de, deT) && !hasTerm(en, enT)) {
+          console.warn(`[${id}] "${deT}" → expected "${enT}"`);
+          console.warn(`   de: ${entry.de}`);
+          console.warn(`   en: ${entry.en}\n`);
+          findings++;
+        }
+      }
+    }
+  }
+  console.log(
+    findings
+      ? `${findings} possible glossary deviation(s). Heuristic — expect some false positives; review and fix the real ones in the TM.`
+      : "✓ no glossary deviations",
+  );
+  process.exit(strict && findings ? 1 : 0);
+}
+
 // ── run ────────────────────────────────────────────────────────────────────
 async function main() {
+  if (MODE === "glossary-lint") return glossaryLint();
+
   const targets = SOURCES.filter((s) => !ONLY || s.id === ONLY);
   if (ONLY && targets.length === 0) {
     console.error(`unknown --only=${ONLY}. known: ${SOURCES.map((s) => s.id).join(", ")}`);

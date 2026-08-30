@@ -39,6 +39,7 @@
     "i18n:prune": "node scripts/translate-content.mjs --prune",
     "i18n:translate": "node scripts/translate-content.mjs --translate",
     "i18n:translate:pilot": "node scripts/translate-content.mjs --translate --only=diagnostics --pilot=15",
+    "i18n:glossary-lint": "node scripts/translate-content.mjs --glossary-lint",
     "prebuild": "npm run changelog:generate && npm run coverage:snapshot"
   },
   "overrides": {

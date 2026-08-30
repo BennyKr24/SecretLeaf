@@ -145,52 +145,66 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit · `[x]` fertig & verifiziert
 
 ---
 
-## Track B — Tools (ICU-Templates)
+## Track B — Tools (ICU-Templates)  ✅ (Result-Card-Umfang)
 
-- [ ] Erklärungs-Strings in `lib/tools/{lighting,nutrients,ventilation,vpd,yield}.ts`
-      inventarisieren (inkl. Helfer `ppfdExplanation`, `vpdExplanation`)
-- [ ] Jede Erklärung in `messages/de.json` unter `toolResult.*` als
-      ICU-Message mit benannten Platzhaltern (`{hoehe}`, `{pct}`, …)
-- [ ] Tool-Funktionen geben `{ key, values }` statt fertigem String zurück
-      (oder `t()` im Component-Layer, wo `explanation` gerendert wird)
-- [ ] `messages/en.json`: dieselben Keys übersetzt (Glossar beachten:
-      VPD, PPFD, EC, DLI bleiben; „Aufhänghöhe" → „mounting height" etc.)
-- [ ] `ToolResult.tsx`: `TranslateButton` entfernen, `explanation` direkt rendern
-- [ ] Kalibrierungs-/Ampel-Texte („Guter Bereich für aktives Wachstum.")
-      mit abdecken
-
----
-
-## Track C — Cleanup
-
-- [ ] `TranslateButton` aus `DiagnoseResult.tsx` + `ToolResult.tsx` entfernen
-- [ ] `components/TranslateButton.tsx` löschen (oder auf dünnen
-      Claude-Fallback für echte Laufzeit-nur-Strings reduzieren — nur falls
-      nach A/B noch welche übrig sind)
-- [ ] `lib/translate.ts` + `api/translate/route.ts` löschen (kein Caller mehr)
-      bzw. auf `askClaude` + Cache umstellen
-- [ ] `messages/{de,en}.json` `translate.*`-Keys aufräumen
-- [ ] CSP / `connect-src`: `api.mymemory.translated.net` war nie drin — nichts
-      zu tun; nur prüfen, dass nichts anderes auf den alten Endpoint zeigt
+Ansatz **A** gewählt: `t`-Injektion, Contract `explanation: string` bleibt.
+- [x] Neuer Typ `ToolT` in `lib/tools/types.ts`; alle 5 `calculate*(inputs, t)`.
+- [x] Alle `explanation`-/Ampel-/Zone-/Phase-Strings + Helfer
+      (`ppfdExplanation`, `vpdExplanation`, `vpdZone`, `substratTipp`) →
+      `toolResult`-Namespace (de+en) mit benannten ICU-Platzhaltern.
+- [x] Die 5 Tool-Pages reichen `useTranslations('toolResult')` in `calculate*`.
+- [x] `ToolResult.tsx`: `explanation` direkt gerendert, Ampel-Pills
+      (Optimal/Grenzwertig/Kritisch) lokalisiert.
+- [ ] **Noch DE (eigener Folge-Pass):** restliches Tool-Page-Chrome
+      (Input-Labels, Überschriften, `ToolRangeBar`-Zonen-Labels,
+      Seiten-Summaries) + die `formatted`-Aufschlüsselungszeilen
+      („Basiskalkulation", „Korrekturfaktoren") in `yield.ts`/`nutrients.ts`.
+- Snapshot-Persistenz: `ToolSnapshot.results` speichert den String in der
+  beim Rechnen aktiven Sprache (wie bei der Diagnose-Persistenz) — kein
+  Shape-Change, alte Snapshots bleiben lesbar.
 
 ---
 
-## Track D — Mitpflegen automatisieren
+## Track C — Cleanup  ✅
 
-- [ ] `npm run i18n:check` in die CI-Lint-Stufe hängen (PR #23 fügt gerade
-      Lint-in-CI hinzu — dort andocken)
-- [ ] Glossar-Lint: EN-String, der einen Glossarbegriff abweichend übersetzt
-      → Warnung (einfache Wortliste, kein NLP)
-- [ ] `docs/CONTENT_BACKLOG.md` / Content-Factory-Doku: Hinweis „nach dem
-      Mergen neuer DE-Artikel `npm run i18n:translate` laufen lassen"
+- [x] `TranslateButton` aus `DiagnoseResult.tsx` (A5b) + `ToolResult.tsx` (B) raus.
+- [x] `components/TranslateButton.tsx`, `lib/translate.ts`,
+      `app/api/translate/route.ts` gelöscht (0 Caller).
+- [x] `messages/{de,en}.json` `translate.*`-Keys entfernt.
+- [x] CSP / `connect-src`: mymemory war nie eingetragen (Server-Fetch),
+      nichts zu tun; keine anderen Referenzen auf den alten Endpoint.
+
+---
+
+## Track D — Mitpflegen automatisieren  ✅ (bis auf die optionale Action)
+
+- [x] `npm run i18n:check` als eigener CI-Step in `.github/workflows/ci.yml`
+      (vor typecheck/build). Rot bei unübersetztem Content-String.
+- [x] Glossar-Lint: `node scripts/translate-content.mjs --glossary-lint`
+      (npm `i18n:glossary-lint`) — flaggt EN-Strings, die einen
+      `doNotTranslate`-Begriff (THC, VPD, Genus-Namen …) verlieren;
+      `--terms` zusätzlich die fuzzy `terms`-Map, `--strict` = exit 1.
+      Als **advisory** CI-Step drin (failt nie). Erstlauf fand 31 EN-Strings
+      mit klein geschriebenen Genus-Namen (pythium/fusarium/botrytis) →
+      im `en.wiki.json` korrigiert.
+- [x] Content-Factory-Doku (`content-factory/ARTICLE_WORKFLOW.md`): Publish-
+      Stage + Definition-of-Done um „`npm run i18n:translate` + `en.*.json`
+      committen, `i18n:check` grün" ergänzt.
 - [ ] optional GitHub Action: bei Diff an den Content-Dateien Pipeline laufen
-      lassen, Übersetzungen als Commit an den PR hängen
+      lassen, Übersetzungen als Commit an den PR hängen (nicht gebaut —
+      braucht `ANTHROPIC_API_KEY` als Repo-Secret + Bot-Push-Rechte; der
+      manuelle Schritt in der DoD reicht vorerst).
 
 ---
 
 ## Reihenfolge
 
-A1 → A2 → **A3 (Pilot, Benny startet)** → A4 → B → A5 → C → D
+A1 ✅ → A2 ✅ → A3 ✅ → A4 (wiki 5180/5404, Rest ab 2026-09-01) →
+A5a ✅ → A5b ✅ (Kern) → B ✅ (Result-Cards) → C ✅ → D ✅ (bis auf opt. Action)
+
+**Offen:** 224 Wiki-Strings (API-Cap, ab 2026-09-01 `npm run i18n:translate -- --only=wiki`);
+A5b-Kleinreste (`WikiArticleToc`/`WikiAskBot`/`CommunitySignals`, `StudyListItem`-Tags);
+Tool-Page-Chrome außerhalb der Result-Cards; per-Page Canonical (TODO.md).
 
 ## Nicht in Scope
 
