@@ -195,3 +195,36 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   kein Formular; zentriert/fade-scale bleibt dort die bessere UX als ein
   Sheet. Kein offener Bug, nur Doku, warum diese eine Stelle vom sonst
   einheitlichen Modal→Sheet-Muster abweicht.
+
+## ✉️ Professionelle E-Mail-Templates (2026-08-30)
+
+- 🔍 **Alle ausgehenden Mails brauchen ein einheitliches, hochwertiges
+  Layout — kein 0815.** Aktueller Stand: es gibt *keinen* eigenen Mailer.
+  Die einzigen Mails, die Nutzer bekommen, sind die Supabase-Auth-Mails
+  (Signup-Bestätigung, Magic Link, Passwort-Reset — ausgelöst in
+  `apps/web/src/app/[locale]/auth/page.tsx`), und die laufen mit dem
+  Supabase-Default-Text. Ziel:
+  - **Gemeinsames HTML-Grundgerüst** (table-based, Dark-Mode-tauglich,
+    ~600px, Inline-CSS — E-Mail-Clients können kein `<style>`): Header mit
+    Logo/Banner, klarer Textkörper, Footer mit vollständiger Anschrift +
+    Impressumsdaten (Betreiber, Adresse, Kontakt, USt-Falls-vorhanden),
+    Abmelde-/Rechtshinweis wo nötig. Optisch an `DESIGN_SYSTEM.md` +
+    Marken-Palette angelehnt, nicht der generische SaaS-Purple-Gradient.
+  - **Supabase-Auth-Templates** im Dashboard (Auth → Email Templates) mit
+    diesem Gerüst ersetzen — DE + EN Variante, da die App zweisprachig ist
+    (Supabase kann nur *ein* Template pro Typ → entweder zweisprachig im
+    selben Body oder Redirect-Locale-Logik prüfen).
+  - **Mailer-Entscheidung für app-eigene Mails** (alles außerhalb Auth:
+    z. B. künftige Benachrichtigungen, Kontaktformular-Antworten). Resend
+    passt zum Stack (React-Email für die Templates, ein API-Key, kein
+    SMTP-Setup); Alternative wäre Supabase-SMTP-Custom mit eigenem
+    Provider. Kein Vendor-Zwang, solange nur Auth-Mails rausgehen.
+  - **Absender-Domain**: aktuell verschicken Supabase-Mails von deren
+    Shared-Domain → landen eher im Spam. Eigene Versand-Subdomain
+    (`mail.secretleaf.*`) mit SPF/DKIM/DMARC einrichten, sobald ein Mailer
+    steht.
+  - Nicht in Scope: Newsletter/Marketing-Mails (eigenes Thema, eigenes
+    Consent).
+  - **Am Ende: Test-Versand aller Template-Typen an eine echte Inbox
+    gegenchecken** (Rendering in Gmail-App, Apple Mail, Outlook-Web;
+    Dark-Mode; Spam-Score z. B. via mail-tester.com).
