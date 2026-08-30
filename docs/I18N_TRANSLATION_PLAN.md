@@ -215,14 +215,18 @@ A5a ✅ → A5b ✅ (Kern) → B ✅ (Result-Cards) → C ✅ → D ✅ (bis auf
 **Offen (2026-08-30):**
 - **224 Wiki-Strings** — API-Cap, ab 2026-09-01 00:00 UTC
   `npm run i18n:translate -- --only=wiki`, dann `i18n:check` grün.
-- `/diagnose`-Landing + Tool-Rechner-Seiten sind `'use client'` → kein
-  eigenes `generateMetadata` (Canonical erbt vom Layout). Studies-Routes,
-  `/tools`-Hub und `/updates/[slug]` sind verdrahtet.
-- Tool-Hub-*Body* (Kategorie-Beschreibungen, `ToolsHubClient`) + die
-  `/diagnose`-Landing-Chrome noch DE.
-- `StudyListItem`-Tags nicht im TM.
-- Branch `benny/i18n-content-translation` (~27 Commits vor `main`) noch
+- Per-Page-Canonical: studies-Routes, `/tools`-Hub, `/updates/[slug]`
+  verdrahtet. `/diagnose`-Landing + Tool-Rechner sind `'use client'` →
+  Canonical erbt vom Layout (bräuchte Server-Wrapper).
+- Winzige DE-Reste: `StudyListItem`-Tags (nicht im TM, kurze Keywords),
+  `produktName`-Default-Seed („Allgemein"), die `formatted`-
+  Aufschlüsselungszeilen in `yield.ts`/`nutrients.ts` (`×0.85 · …`).
+- Branch `benny/i18n-content-translation` (~30 Commits vor `main`) noch
   nicht als PR offen.
+
+Sonst ist auf `/en` alles Nutzer-sichtbare übersetzt: Studies (Hub,
+Kategorien, Listen, Artikel-Detail, Quellen, TOC, Signals, AskBot),
+Diagnose (Landing + Flow + Result), alle 5 Tools + Hub, Chrome/Nav.
 
 ## Nicht in Scope
 
