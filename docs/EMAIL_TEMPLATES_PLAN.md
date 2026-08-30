@@ -157,22 +157,38 @@ die einzige Variante, bei der die Templates versioniert im Repo liegen,
 lokal previewbar sind und „auf Profi-Niveau" review-/testbar. B wäre ein
 Dashboard-Textfeld-Bastel; A ist qualitativ raus.
 
-### 1.7 Deliverability — Domain & DNS
-- **Eigene Versand-Subdomain**, nicht die Root: Resend & alle Guides
-  empfehlen z. B. `mail.secretleaf.net` (oder `send.` / `notifications.`).
-  Trennt Reputation der Transaktions-Mails von evtl. späterem Newsletter und
-  von manuell aus Postfächern gesendeten Mails.
-- **DNS auf der Subdomain** (Resend generiert die Werte):
-  - **SPF**: `TXT` `mail.secretleaf.net` → `v=spf1 include:_spf.resend.com ~all`
-  - **DKIM**: `TXT` `resend._domainkey.mail.secretleaf.net` → Public Key
-  - **MX** (für Bounce-Handling / Return-Path): `feedback-smtp…` MX-Record
-  - **DMARC**: `TXT` `_dmarc.secretleaf.net` (auf der *Root*, gilt für
-    Subdomains mit) → Start `p=none; rua=mailto:dmarc@secretleaf.net`, nach
-    2–4 Wochen sauberer Reports auf `p=quarantine`, dann `p=reject`.
-- **Absender**: `SecretLeaf <noreply@mail.secretleaf.net>`, `Reply-To:
-  contact@secretleaf.net` (Antworten sollen bei einem echten Postfach landen).
-  → Quelle: Resend Docs (getting-started-with-supabase, configure-supabase),
-  Supabase auth-smtp.
+### 1.7 Deliverability — Domain & DNS  ✅ **bereits eingerichtet**
+
+DNS-Check der Live-Zone (2026-08-31):
+
+| Fund | Bedeutung |
+|---|---|
+| NS = `kristin/edward.ns.cloudflare.com` | **DNS-Zone liegt auf Cloudflare** — Records werden dort im Dashboard gesetzt |
+| MX = `mx.zoho.eu` / `mx2` / `mx3` | Eingehende Mail via **Zoho** → `contact@secretleaf.net` ist ein echtes Postfach |
+| TXT `brevo-code:ab8c8496…` | Es gibt bereits ein **Brevo**-Konto, das für die Domain begonnen wurde |
+| CNAME `brevo1._domainkey` → `b1.secretleaf-net.dkim.brevo.com` (löst auf gültigen RSA-DKIM auf) | **Brevo-DKIM ist auf der Root-Domain live und gültig** |
+| CNAME `brevo2._domainkey` → `b2.secretleaf-net.dkim.brevo.com` | dito (2. DKIM-Selector) |
+| TXT root SPF = `v=spf1 include:zohomail.eu ~all` | autorisiert nur Zoho; Brevo fehlt (auf Shared-IP nicht zwingend — DKIM-Alignment trägt DMARC) |
+| TXT `_dmarc` = `v=DMARC1; p=none; rua=mailto:rua@dmarc.brevo.com` | **DMARC existiert**, Monitoring-Modus, Reports laufen ins Brevo-Aggregator-Dashboard |
+| `www` → Vercel | Web-Hosting Vercel, DNS Cloudflare |
+
+**→ `secretleaf.net` ist bereits eine bei Brevo verifizierte Versand-Domain
+(Root).** Keine neue DNS-Arbeit nötig, um loszusenden.
+
+- **Absender: von der Root** — `SecretLeaf <noreply@secretleaf.net>`,
+  `Reply-To: contact@secretleaf.net`. Eine eigene Versand-Subdomain
+  (`send.`/`mail.`) wäre Reputations-Hygiene für Mischbetrieb mit Newsletter
+  — für einen reinen Auth-Transaktions-Sender in diesem Volumen Over-
+  Engineering und ein zusätzlicher manueller Brevo-Verifikationslauf. Später
+  nachrüstbar, wenn Marketing-Mail dazukommt.
+- **Optional, nicht blockierend:**
+  - Root-SPF um `include:spf.brevo.com` erweitern:
+    `v=spf1 include:zohomail.eu include:spf.brevo.com ~all` (ein Cloudflare-
+    Record-Edit; sauberer, aber DKIM-Alignment reicht Brevo schon).
+  - DMARC nach 2–4 Wochen sauberer Reports von `p=none` → `p=quarantine` →
+    `p=reject` ziehen (Report-Adresse bleibt `rua@dmarc.brevo.com`).
+  → Quelle: DNS-Live-Check; Brevo Help (Authenticate your domain),
+  captaindns (Brevo Technical Guide), Supabase auth-smtp.
 
 ### 1.8 Rechtliches (DE) — Footer
 - **Jetzt (nicht-gewerblich):** *keine* gesetzliche Impressumspflicht in der
@@ -231,13 +247,25 @@ POST https://secretleaf.net/api/auth/send-email       ← Next Route Handler in 
   **Custom SMTP trotzdem einrichten** (Resend als SMTP), auch wenn der Hook
   aktiv ist — es ist das Sicherheitsnetz.
 
-### Vendor
-- **Resend**: React-Email-Integration, ein API-Key, kein SMTP-Frickel, DNS-
-  Assistent, kostenloses Kontingent deckt Auth-Volumen locker. Keine
-  Lock-in-Sorge — die Templates sind reines React/HTML, der Versand ist ein
-  3-Zeilen-Adapter.
-- Alternative wäre „Custom SMTP mit eigenem Provider" ohne Hook (nur Supabase-
-  Dashboard-Templates) — verworfen wegen §1.6/B.
+### Vendor  → **Brevo** (weil bereits domain-authentifiziert)
+
+Der DNS-Check (§1.7) zeigt: `secretleaf.net` ist bereits eine bei **Brevo**
+verifizierte Sending-Domain (DKIM live, Brevo-Code gesetzt, DMARC-Reports
+laufen zu Brevo). Damit ist Brevo die pragmatische Wahl — kein neuer Vendor,
+keine neue DNS-Runde.
+
+- **Hook-Endpoint → Brevo Transactional API**: `POST https://api.brevo.com/v3/smtp/email`
+  mit Header `api-key: <BREVO_API_KEY>`, JSON-Body
+  `{ sender:{email,name}, to:[{email}], replyTo:{email}, subject, htmlContent, textContent }`.
+  Kein SDK — ein `fetch`. React Email erzeugt nur den HTML-String, ist
+  vendor-neutral; ein Wechsel zu Resend/SES wäre ein 1-Datei-Adapter.
+- **Supabase Custom SMTP → Brevo SMTP-Relay** als Sicherheitsnetz (falls der
+  Hook mal aus ist): Host `smtp-relay.brevo.com`, Port 587 STARTTLS, User =
+  Brevo-Account-Mail, Pass = **SMTP-Key** (nicht der API-Key! häufigster
+  Fehler), Sender `noreply@secretleaf.net`.
+- Verworfen: „nur Dashboard-Templates" (§1.6/B). Resend bleibt als Fallback-
+  Option dokumentiert, falls das Brevo-Konto tot/ungewollt ist — dann DKIM-
+  Records tauschen und den Adapter umstellen.
 
 ---
 
@@ -338,36 +366,46 @@ POST https://secretleaf.net/api/auth/send-email       ← Next Route Handler in 
 
 ## 5. Umsetzungsplan (Phasen)
 
-### Phase 0 — Entscheidungen (Benny) `[ ]`
-- [ ] Vendor **Resend** ok? (kostenloses Kontingent reicht; Alternative wäre
-      SES/Postmark — mehr Setup, kein React-Email-Komfort)
-- [ ] Versand-Subdomain-Name: **`mail.secretleaf.net`** ok?
-- [ ] Absender-Anzeigename: **„SecretLeaf"**, Adresse
-      **`noreply@mail.secretleaf.net`**, `Reply-To` **`contact@secretleaf.net`** ok?
-- [ ] DNS von `secretleaf.net`: wo liegt die Zone (Registrar / Vercel DNS /
-      Cloudflare)? Wer trägt die 4 Records ein — du, oder ich gebe dir die
-      exakten Zeilen?
-- [ ] DMARC-Report-Adresse (`dmarc@secretleaf.net` anlegen?)
+### Phase 0 — Entscheidungen  ✅ **durch DNS-Recherche geklärt**
+- [x] **Vendor: Brevo** — Domain ist bereits Brevo-DKIM-verifiziert (§1.7/§2).
+- [x] **Absender: `SecretLeaf <noreply@secretleaf.net>`** von der Root
+      (keine Subdomain nötig), **`Reply-To: contact@secretleaf.net`** (echtes
+      Zoho-Postfach).
+- [x] **DNS-Zone: Cloudflare.** Brevo-Records sind schon live. Nur optionale,
+      nicht blockierende Nachbesserungen (SPF-`include:spf.brevo.com`,
+      DMARC später schärfen).
+- [x] **DMARC-Reports** laufen schon zu `rua@dmarc.brevo.com` — kein neues
+      Postfach.
 
-### Phase 1 — Fundament & Design-Grundgerüst `[ ]`
-- [ ] `apps/web`: `resend`, `@react-email/components`, `@react-email/render`,
-      dev: `react-email` (Preview-Server) als deps.
-- [ ] `apps/web/emails/` — Verzeichnis für Templates:
-  - `_components/BaseLayout.tsx` (Head+color-scheme, Canvas, Card, Header-
-    Wordmark, Footer-mit-Anschrift, Preheader, Button, Fallback-Link-Zeile)
-  - `_components/tokens.ts` (die Farb-Tokens aus §3, an DESIGN_SYSTEM
-    gepinnt + Kommentar „gespiegelt aus globals.css")
-  - `_i18n.ts` (DE/EN-Strings pro Template; **eigene** kleine Map, *nicht*
-    `next-intl` — E-Mails laufen außerhalb des Request-Context)
-  - `confirm-signup.tsx`, `reset-password.tsx`, `change-email.tsx`,
-    `magic-link.tsx`
-  - `_legal.ts` (Betreiber/Anschrift/USt-ID-Slot als eine Config-Konstante,
-    die der Footer rendert — §1.8 zukunftssicher)
-- [ ] `react-email dev` lokal: alle 4 Templates in beiden Sprachen visuell
-      abnehmen.
+**Verbleibt an Konto-Schritten** (kein Entscheiden, nur „Wert-hier-einfügen",
+Details in Phase 4): Brevo-API-Key + SMTP-Key erzeugen, `noreply@secretleaf.net`
+als Sender in Brevo bestätigen; Supabase-Hook aktivieren + Custom-SMTP setzen;
+Env-Vars in Vercel.
 
-### Phase 2 — Hook-Endpoint `[ ]`
-- [ ] `apps/web/src/app/api/auth/send-email/route.ts`:
+### Phase 1 — Fundament & Design-Grundgerüst  ✅ (`benny/email-templates`)
+- [x] `apps/web`: `@react-email/components`, `@react-email/render` als deps.
+      **Kein** `react-email`-CLI (zog eine dev-esbuild-Advisory rein) und
+      **kein** Brevo-SDK — Versand = ein `fetch`, Preview = `npx tsx`-
+      One-Liner (in `src/emails/README.md`).
+- [x] `apps/web/src/emails/`:
+  - `_theme.ts` (Farb-Tokens light-first, an DESIGN_SYSTEM §5 angelehnt),
+    `_legal.ts` (Betreiber/Anschrift + `commercial`/`vatId`-Slot für § 5 DDG),
+    `_strings.ts` (DE/EN-Copy pro Template — eigene Map, nicht next-intl)
+  - `BaseLayout.tsx` (Head+`color-scheme`, Canvas, Card, Header-Wordmark +
+    Marken-Streifen, Footer mit Anschrift + Impressum/Datenschutz-Links +
+    Empfänger-Transparenzzeile, `@media prefers-color-scheme: dark`-Block)
+  - `ActionEmail.tsx` (gemeinsames Muster: Heading, Absätze, bulletproof
+    CTA, roher Fallback-Link, Sicherheits-/Ablaufhinweis)
+  - `render.ts` (`email_action_type`→Template, Locale-Auflösung aus
+    `user_metadata.locale` bzw. `/en/`-Pfad, Verify-URL-Bau,
+    `render()`→`{ subject, html, text }`)
+  - `Preview{ConfirmSignup,ResetPassword,ChangeEmail,MagicLink}.tsx`
+  - `README.md`
+- [x] Sanity-Render geprüft (`npx tsx`): valides `<html>`, `color-scheme`,
+      Dark-`@media`, sauberer Plaintext; ~7,7 KB HTML/Mail.
+
+### Phase 2 — Hook-Endpoint  ✅
+- [x] `apps/web/src/app/api/auth/send-email/route.ts`:
   - `POST`, `standardwebhooks`-Verify mit `SEND_EMAIL_HOOK_SECRET`
     (Prefix `v1,whsec_` abschneiden), 401 bei Fehler, 405 bei non-POST
   - Payload parsen (`user`, `email_data`)
@@ -376,43 +414,45 @@ POST https://secretleaf.net/api/auth/send-email       ← Next Route Handler in 
   - `locale = user.user_metadata?.locale === "en" ? "en" : "de"`
   - `switch (email_action_type)` → Template + Betreff wählen; default → `200 {}`
     + `console.warn` (nie werfen)
-  - `renderAsync(<Template …/>)` → html; Plaintext-Variante
-  - `resend.emails.send({ from, to, replyTo, subject, html, text })`
+  - `render(<Template …/>)` → html; Plaintext-Variante (`render(..., { plainText: true })`)
+  - `fetch("https://api.brevo.com/v3/smtp/email", { method:"POST",
+    headers:{ "api-key": BREVO_API_KEY, "content-type":"application/json" },
+    body: JSON.stringify({ sender:{email,name}, to:[{email:user.email}],
+    replyTo:{email:EMAIL_REPLY_TO}, subject, htmlContent, textContent }) })`
   - try/catch um den Send: bei Fehler `500` (Supabase retryt / loggt), Fehler
     strukturiert loggen (Sentry ist im Repo, aber opt-in-gated → hier
-    `console.error` mit `request_id`)
+    `console.error` mit einer `request_id`)
   - `return Response.json({}, { status: 200 })`
-- [ ] Env: `RESEND_API_KEY`, `SEND_EMAIL_HOOK_SECRET`, `EMAIL_FROM`,
-      `EMAIL_REPLY_TO`, `NEXT_PUBLIC_SITE_URL` (existiert). In
-      `apps/web/.env.local` + Vercel.
-- [ ] **CSP** (`next.config.mjs`): der Endpoint macht einen Server→Resend-
-      `fetch` → `connect-src` ist irrelevant (Server-Fetch). Nichts zu tun,
-      nur gegenprüfen, dass keine `img-src`/`connect-src`-Regel Resend-Assets
-      bräuchte (nein).
+- [x] Env-Getter `getEmailEnv()` in `src/lib/env.ts`; Platzhalter in
+      `apps/web/.env.example`. `NEXT_PUBLIC_SITE_URL` existiert schon.
+      **In `.env.local` + Vercel eintragen → Phase 4.**
+- [x] **CSP**: nichts zu tun (Server→Brevo-`fetch`, keine Browser-Anfrage).
+- [x] esbuild/postcss-`npm audit`-Advisories: durch das Weglassen des
+      `react-email`-CLI **null** neue; die verbleibenden 2 stammen aus
+      `tsx`/`autoprefixer` und waren schon vor diesem Branch da.
 
-### Phase 3 — `locale` in `user_metadata` `[ ]`
-- [ ] `registerWithSupabase` (`apps/web/src/lib/auth.ts`): `signUp` um
-      `options.data.locale` erweitern — den aktuellen `useLocale()`/Pfad-Locale
-      mitgeben. Damit hat der Hook bei **Confirm** die Sprache.
-- [ ] **Reset-Password**: `resetPasswordForEmail` schreibt kein
-      `user_metadata`. Der Hook bekommt aber `user.user_metadata` des
-      **bestehenden** Users → wenn der bei Registrierung gesetzt wurde, passt's.
-      Für Alt-User ohne `locale`: Fallback `de`. Optional: `redirect_to`
-      enthält den Locale-Pfad (`/en/auth/reset`) → daraus die Sprache ableiten
-      als zweite Quelle. **Im Hook beide Quellen prüfen** (metadata → sonst
-      redirect_to-Pfadsegment → sonst `de`).
+### Phase 3 — `locale` in `user_metadata`  ✅
+- [x] `SupabaseAuthInput` + `registerWithSupabase` (`src/lib/auth.ts`):
+      `signUp` bekommt `options.data.locale`.
+- [x] `auth/page.tsx`: `useLocale()` → `locale` an `registerWithSupabase`.
+- [x] Reset-Password: der Hook liest `user.user_metadata.locale` des
+      bestehenden Users, sonst das `/en/`-Segment aus `redirect_to`, sonst
+      `de` (`resolveLocale()` in `render.ts`). Alt-User ohne `locale` → `de`.
 
-### Phase 4 — Supabase-Konfiguration (Dashboard, Benny + ich Anleitung) `[ ]`
-- [ ] Resend-Account, Domain `mail.secretleaf.net` hinzufügen, DNS-Records
-      setzen, Verifikation abwarten.
-- [ ] Supabase → Auth → **Custom SMTP** = Resend (Sicherheitsnetz, s. §2):
-      Host `smtp.resend.com`, Port 465, User `resend`, Pass = API-Key, Sender
-      = `noreply@mail.secretleaf.net`, Sender-Name „SecretLeaf".
-- [ ] Supabase → Auth → **Rate Limits**: E-Mail von 30/h auf einen sinnvollen
-      Wert (z. B. 100/h) — je nach erwartetem Signup-Volumen.
-- [ ] Supabase → Auth → Hooks → **Send Email Hook** aktivieren, URL
+### Phase 4 — Konto-Konfiguration (Dashboards) `[ ]`
+- [ ] **Brevo:** Konto-Zugang prüfen (Domain ist schon verifiziert).
+      Settings → SMTP & API → **API-Key** erzeugen (`xkeysib-…`, für den Hook)
+      **und** **SMTP-Key** erzeugen (für Supabase Custom SMTP). Settings →
+      Senders → `noreply@secretleaf.net` als Sender hinzufügen/bestätigen.
+- [ ] **Supabase → Auth → Custom SMTP** = Brevo-Relay (Sicherheitsnetz, §2):
+      Host `smtp-relay.brevo.com`, Port 587, User = Brevo-Account-Mail,
+      Pass = **SMTP-Key**, Sender `noreply@secretleaf.net`, Name „SecretLeaf".
+- [ ] **Supabase → Auth → Rate Limits**: E-Mail von 30/h hochsetzen
+      (z. B. 100/h) — je nach erwartetem Signup-Volumen.
+- [ ] **Supabase → Auth → Hooks → Send Email Hook** aktivieren, URL
       `https://secretleaf.net/api/auth/send-email`, Secret generieren →
-      in Vercel als `SEND_EMAIL_HOOK_SECRET`.
+      in Vercel als `SEND_EMAIL_HOOK_SECRET`. Env `BREVO_API_KEY` +
+      `EMAIL_*` ebenfalls in Vercel.
 - [ ] Die Dashboard-Templates (Confirm/Reset) auf ein **schlichtes,
       korrektes Minimal-HTML** setzen (nicht der Supabase-Default) — sie
       greifen nur, wenn der Hook mal aus ist. Gleicher Absender, gleiche
@@ -455,6 +495,10 @@ POST https://secretleaf.net/api/auth/send-email       ← Next Route Handler in 
 ---
 
 ## 7. Risiken / offene Punkte
+- **Brevo-Konto-Status unklar** — die Domain ist verifiziert, aber ob das
+  Konto aktiv/gewollt ist, weiß nur Benny. Wenn tot: Konto reaktivieren
+  **oder** auf Resend wechseln (DKIM-Records tauschen, Adapter umstellen —
+  ~30 Min).
 - **Alt-User ohne `user_metadata.locale`** bekommen DE (bzw. den
   `redirect_to`-Fallback). Akzeptabel, Nutzerbasis ist klein.
 - **Hook = Single Point of Failure für alle Auth-Mails.** Mitigation: Custom
@@ -476,8 +520,11 @@ POST https://secretleaf.net/api/auth/send-email       ← Next Route Handler in 
 - Supabase — Custom Auth Emails mit React Email + Resend: https://supabase.com/docs/guides/functions/examples/auth-send-email-hook-react-email-resend
 - Supabase — Custom SMTP (2 Mails/h Limit, 30/h nach Custom SMTP): https://supabase.com/docs/guides/auth/auth-smtp
 - Supabase Blog — 7 neue Auth-Templates: https://supabase.com/blog/introducing-seven-new-email-templates-for-auth
-- Resend — Getting started mit Supabase: https://resend.com/docs/knowledge-base/getting-started-with-resend-and-supabase
-- Resend — Supabase von eigener Domain senden: https://resend.com/blog/how-to-configure-supabase-to-send-emails-from-your-domain
+- Brevo — Authenticate your domain (Brevo code, DKIM, DMARC): https://help.brevo.com/hc/en-us/articles/12163873383186-Authenticate-your-domain-with-Brevo-Brevo-code-DKIM-DMARC
+- Brevo — Send transactional emails via SMTP: https://help.brevo.com/hc/en-us/articles/7924908994450-Send-transactional-emails-using-Brevo-SMTP
+- Brevo — Technical guide for transactional email + DKIM (captaindns): https://www.captaindns.com/en/blog/brevo-transactional-email-technical-guide
+- Brevo Transactional API: https://developers.brevo.com/docs/smtp-integration
+- Resend (Fallback-Option) — Getting started mit Supabase: https://resend.com/docs/knowledge-base/getting-started-with-resend-and-supabase
 - HTML-E-Mail Best Practices 2026: https://www.mailgenius.com/email-html-best-practices/
 - Transactional Emails Best Practices: https://mailtrap.io/blog/transactional-emails-best-practices/
 - HTML Email Best Practices (Clients): https://markaplugin.com/blog/html-email-best-practices-2026

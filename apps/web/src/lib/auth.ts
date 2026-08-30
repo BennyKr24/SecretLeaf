@@ -8,6 +8,9 @@ const SESSION_KEY = "secretleaf.session";
 type SupabaseAuthInput = {
   email: string;
   password: string;
+  /** UI-Sprache — landet in user_metadata, damit der Send-Email-Hook die
+   *  Bestätigungs-/Reset-Mail in der richtigen Sprache rendert. */
+  locale?: "de" | "en";
 };
 
 type CurrentUserResponse = {
@@ -96,6 +99,7 @@ export const registerWithSupabase = async (input: SupabaseAuthInput): Promise<Se
   const { data, error } = await supabase.auth.signUp({
     email: input.email,
     password: input.password,
+    ...(input.locale ? { options: { data: { locale: input.locale } } } : {}),
   });
 
   if (error) {
