@@ -134,8 +134,12 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit · `[x]` fertig & verifiziert
       `alternates` → erben `canonical` vom Layout (= Startseite). Das ist
       ein bestehender SEO-Bug über alle dynamischen Routes, nicht i18n-
       spezifisch → eigener TODO-Punkt, nicht in diesem Pass.
-- [ ] Rest-Komponenten: `WikiArticleToc`, `WikiAskBot`, `CommunitySignals`,
-      `StudyListItem`-Tags (nicht im TM) — noch DE.
+- [x] `WikiArticleToc` + `CommunitySignals` → `article`-Namespace (`d4d58b4`).
+- [x] `WikiAskBot` (`858e17b`): Chrome → `askBot`-Namespace; auf `/en`
+      wird die EN-TM per **dynamischem Import** in `ask()` über die
+      Artikel-Daten gelegt (nur wenn ein EN-Nutzer fragt → nicht im
+      Initial-Bundle).
+- [ ] `StudyListItem`-Tags (nicht im TM) — noch DE (kurze Keywords).
 - [ ] `categoryLabels` / `difficultyLabels` sauber über `messages` statt der
       kleinen Map in `localizeContent.ts` (optional; funktioniert aktuell)
 - Hinweis: EN-Maps (Kategorie-Label/-Beschreibung, Symptomarea) leben in
@@ -208,9 +212,17 @@ Ansatz **A** gewählt: `t`-Injektion, Contract `explanation: string` bleibt.
 A1 ✅ → A2 ✅ → A3 ✅ → A4 (wiki 5180/5404, Rest ab 2026-09-01) →
 A5a ✅ → A5b ✅ (Kern) → B ✅ (Result-Cards) → C ✅ → D ✅ (bis auf opt. Action)
 
-**Offen:** 224 Wiki-Strings (API-Cap, ab 2026-09-01 `npm run i18n:translate -- --only=wiki`);
-A5b-Kleinreste (`WikiArticleToc`/`WikiAskBot`/`CommunitySignals`, `StudyListItem`-Tags);
-Tool-Page-Chrome außerhalb der Result-Cards; per-Page Canonical (TODO.md).
+**Offen (2026-08-30):**
+- **224 Wiki-Strings** — API-Cap, ab 2026-09-01 00:00 UTC
+  `npm run i18n:translate -- --only=wiki`, dann `i18n:check` grün.
+- `/diagnose`-Landing + Tool-Rechner-Seiten sind `'use client'` → kein
+  eigenes `generateMetadata` (Canonical erbt vom Layout). Studies-Routes,
+  `/tools`-Hub und `/updates/[slug]` sind verdrahtet.
+- Tool-Hub-*Body* (Kategorie-Beschreibungen, `ToolsHubClient`) + die
+  `/diagnose`-Landing-Chrome noch DE.
+- `StudyListItem`-Tags nicht im TM.
+- Branch `benny/i18n-content-translation` (~27 Commits vor `main`) noch
+  nicht als PR offen.
 
 ## Nicht in Scope
 
