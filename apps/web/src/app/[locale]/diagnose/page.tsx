@@ -4,14 +4,16 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Stethoscope } from "lucide-react";
 import { diagnoseCategories } from "@/lib/diagnose/tree";
 import type { DiagnoseCategory } from "@/lib/diagnose/tree";
+import { localizeDiagnoseTreeString } from "@/lib/i18n/localizeDiagnoseTree";
 import { DiagnoseFlow } from "@/components/diagnose/DiagnoseFlow";
 
 export default function DiagnosePage() {
   const t = useTranslations("diagnosePage");
+  const locale = useLocale();
   const [selected, setSelected] = useState<DiagnoseCategory | null>(null);
   const searchParams = useSearchParams();
   const growId = searchParams.get('growId') ?? undefined;
@@ -64,7 +66,7 @@ export default function DiagnosePage() {
                 <category.icon className="h-5 w-5" strokeWidth={2} />
               </span>
               <span className="text-sm font-semibold text-foreground leading-snug">
-                {category.label}
+                {localizeDiagnoseTreeString(category.label, locale)}
               </span>
             </button>
           ))}
