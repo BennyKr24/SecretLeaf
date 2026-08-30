@@ -10,7 +10,6 @@ import { useToolState } from '@/hooks/useToolState';
 import { getToolBySlug } from '@/lib/tools/registry';
 import {
   calculateVPD,
-  VPD_PHASE_LABELS,
   type VPDInputs,
   type VPDPhase,
   type VPDOutput,
@@ -28,13 +27,11 @@ const DEFAULTS: VPDInputs = {
   phase: 'veg',
 };
 
-const TIPS = [
-  'Blatttemperatur ist entscheidend — LED-Lampen machen Blätter ca. 1–3 °C kühler als die Raumluft.',
-  'Hohe VPD-Werte in der Blüte (0.8–1.5 kPa) verstärken Terpenproduktion und härten Knospen.',
-  'VPD unter 0.4 kPa erhöht das Botrytis-Risiko massiv — besonders in dichten Canopies.',
-  'Wechsle beim Phasenübergang schrittweise: nicht sofort von Sämlings-VPD auf Blüten-VPD.',
-  'Gute Luftzirkulation senkt effektiv die Blatttemperatur und damit den VPD.',
-];
+const PHASE_KEY: Record<VPDPhase, string> = {
+  saemling: 'phaseSaemling',
+  veg: 'phaseVeg',
+  bluete: 'phaseBluete',
+};
 
 // ── Zone Band ────────────────────────────────────────────────────────────────
 
@@ -47,6 +44,7 @@ type ZoneBandProps = {
 };
 
 function ZoneBand({ vpd, optimalMin, optimalMax }: ZoneBandProps) {
+  const t = useTranslations('tool');
   const clamped = Math.min(Math.max(vpd, 0), MAX_BAND);
   const pct     = (clamped / MAX_BAND) * 100;
 
@@ -95,15 +93,15 @@ function ZoneBand({ vpd, optimalMin, optimalMax }: ZoneBandProps) {
       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
         <span className="flex items-center gap-1.5 text-[11px] text-muted-fg">
           <span className="h-2.5 w-2.5 rounded-sm bg-rose-500" />
-          Kritisch
+          {t('zoneCritical')}
         </span>
         <span className="flex items-center gap-1.5 text-[11px] text-muted-fg">
           <span className="h-2.5 w-2.5 rounded-sm bg-amber-400" />
-          Grenzwertig
+          {t('zoneBorderline')}
         </span>
         <span className="flex items-center gap-1.5 text-[11px] text-muted-fg">
           <span className="h-2.5 w-2.5 rounded-sm bg-emerald-400" />
-          Optimal (phasenabhängig)
+          {t('zoneOptimalPhase')}
         </span>
       </div>
     </div>
@@ -120,9 +118,11 @@ type PhasePillsProps = {
 };
 
 function PhasePills({ value, onChange }: PhasePillsProps) {
+  const t = useTranslations('tool');
+  const tr = useTranslations('toolResult');
   return (
     <div>
-      <p className="mb-2 text-sm font-semibold text-foreground">Wachstumsphase</p>
+      <p className="mb-2 text-sm font-semibold text-foreground">{t('vpd.growthStage')}</p>
       <div className="flex gap-2">
         {PHASES.map((p) => (
           <button
@@ -135,7 +135,7 @@ function PhasePills({ value, onChange }: PhasePillsProps) {
                 : 'border-border bg-card text-muted-fg hover:border-emerald-200 hover:text-foreground'
             }`}
           >
-            {VPD_PHASE_LABELS[p]}
+            {tr(`vpd.${PHASE_KEY[p]}`)}
           </button>
         ))}
       </div>
@@ -145,25 +145,27 @@ function PhasePills({ value, onChange }: PhasePillsProps) {
 
 // ── Interpretation helper ────────────────────────────────────────────────────
 
-function getInterpretation(out: VPDOutput, phase: VPDPhase): string {
+type TFn = (key: string, values?: Record<string, string | number>) => string;
+
+function getInterpretation(out: VPDOutput, phase: VPDPhase, t: TFn, tr: TFn): string {
   const { vpd, level, optimalMin, optimalMax } = out;
   if (level === 'gruen') {
-    return `Perfekte Bedingungen für die ${VPD_PHASE_LABELS[phase]}. Stomata sind offen, Transpiration und Nährstoffaufnahme laufen optimal.`;
+    return t('vpd.interpGreen', { phase: tr(`vpd.${PHASE_KEY[phase]}`) });
   }
   if (vpd < optimalMin) {
-    const diff = (optimalMin - vpd).toFixed(2);
-    return `VPD ${diff} kPa unter dem Zielbereich — Luftfeuchte ${vpd < 0.3 ? 'sofort' : 'etwas'} senken oder Temperatur erhöhen.`;
+    return t('vpd.interpBelow', {
+      diff: (optimalMin - vpd).toFixed(2),
+      urgency: vpd < 0.3 ? t('vpd.urgencyNow') : t('vpd.urgencySlight'),
+    });
   }
-  const diff = (vpd - optimalMax).toFixed(2);
-  return `VPD ${diff} kPa über dem Zielbereich — Luftfeuchte erhöhen oder Temperatur senken, um Trockenstress zu vermeiden.`;
+  return t('vpd.interpAbove', { diff: (vpd - optimalMax).toFixed(2) });
 }
 
-function getRecommendation(out: VPDOutput): string | undefined {
+function getRecommendation(out: VPDOutput, t: TFn): string | undefined {
   if (out.level === 'gruen') return undefined;
-  if (out.vpd < out.optimalMin) {
-    return `Ziel-Luftfeuchte: ${out.targetRH} % (bei aktueller Temperatur).`;
-  }
-  return `Ziel-Luftfeuchte: ${out.targetRH} %.`;
+  return out.vpd < out.optimalMin
+    ? t('vpd.recBelow', { rh: out.targetRH })
+    : t('vpd.recAbove', { rh: out.targetRH });
 }
 
 // ── Page ─────────────────────────────────────────────────────────────────────
@@ -174,8 +176,10 @@ export default function VpdPage() {
     defaults: DEFAULTS,
   });
 
-  const t = useTranslations('toolResult');
-  const output = useMemo(() => calculateVPD(inputs, t), [inputs, t]);
+  const tr = useTranslations('toolResult');
+  const t = useTranslations('tool');
+  const output = useMemo(() => calculateVPD(inputs, tr), [inputs, tr]);
+  const TIPS = [t('vpd.tip1'), t('vpd.tip2'), t('vpd.tip3'), t('vpd.tip4'), t('vpd.tip5')];
 
   useMemo(() => {
     if (loaded) saveSnapshot(inputs, output.results);
@@ -199,9 +203,9 @@ export default function VpdPage() {
         {/* ── Inputs ─────────────────────────────────── */}
         <div className="space-y-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div>
-            <h2 className="text-base font-bold text-foreground">Dein Klima</h2>
+            <h2 className="text-base font-bold text-foreground">{t('vpd.climateTitle')}</h2>
             <p className="mt-0.5 text-xs text-muted-fg">
-              Passe Temperatur und Feuchte an — der VPD aktualisiert sich sofort.
+              {t('vpd.climateHint')}
             </p>
           </div>
 
@@ -211,7 +215,7 @@ export default function VpdPage() {
           />
 
           <ToolSlider
-            label="Raumtemperatur"
+            label={t('vpd.roomTemp')}
             value={inputs.lufttemperatur}
             onChange={(v) => setInput('lufttemperatur', v)}
             min={15}
@@ -226,7 +230,7 @@ export default function VpdPage() {
           />
 
           <ToolSlider
-            label="Luftfeuchtigkeit"
+            label={t('vpd.humidity')}
             value={inputs.luftfeuchtigkeit}
             onChange={(v) => setInput('luftfeuchtigkeit', v)}
             min={20}
@@ -241,15 +245,15 @@ export default function VpdPage() {
           />
 
           <ToolToggle
-            label="Blatttemperatur manuell einstellen"
+            label={t('vpd.manualLeafTemp')}
             checked={inputs.blattOffsetManuell}
             onChange={(v) => setInput('blattOffsetManuell', v)}
-            {...(!inputs.blattOffsetManuell && { hint: `Standard: −2 °C Offset (Blatt bei ${(inputs.lufttemperatur - 2).toFixed(1)} °C).` })}
+            {...(!inputs.blattOffsetManuell && { hint: t('vpd.offsetHint', { temp: (inputs.lufttemperatur - 2).toFixed(1) }) })}
           />
 
           {inputs.blattOffsetManuell && (
             <ToolSlider
-              label="Blatttemperatur-Offset"
+              label={t('vpd.offsetLabel')}
               value={inputs.blattOffset}
               onChange={(v) => setInput('blattOffset', v)}
               min={-3}
@@ -268,7 +272,7 @@ export default function VpdPage() {
           {/* Zone band */}
           <div className="rounded-xl border border-border bg-background p-4">
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-fg">
-              VPD Zone
+              {t('vpd.zoneTitle')}
             </p>
             <ZoneBand
               vpd={output.vpd}
@@ -281,12 +285,12 @@ export default function VpdPage() {
         {/* ── Results ────────────────────────────────── */}
         <div className="space-y-5">
           <ToolResultCard
-            title="VPD deines Grows"
-            interpretation={getInterpretation(output, inputs.phase)}
-            recommendation={getRecommendation(output)}
+            title={t('vpd.cardTitle')}
+            interpretation={getInterpretation(output, inputs.phase, t, tr)}
+            recommendation={getRecommendation(output, t)}
           >
             <ToolResult
-              label="VPD (Blatttemperatur)"
+              label={t('vpd.labelVpd')}
               value={`${output.vpd}`}
               unit="kPa"
               level={output.results[0]?.level}
@@ -296,28 +300,32 @@ export default function VpdPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <ToolResult
-                label="Empfohlene Luftfeuchte"
+                label={t('vpd.labelTargetRh')}
                 value={`${output.targetRH}`}
                 unit="% RH"
                 explanation={output.results[1]?.explanation}
               />
               <ToolResult
-                label="Blatttemperatur"
+                label={t('vpd.labelLeafTemp')}
                 value={`${output.leafTemp}`}
                 unit="°C"
-                explanation={`${inputs.blattOffsetManuell ? `Manueller Offset ${inputs.blattOffset >= 0 ? '+' : ''}${inputs.blattOffset} °C.` : 'Standard LED-Offset −2 °C.'}`}
+                explanation={
+                  inputs.blattOffsetManuell
+                    ? t('vpd.leafExplManual', { offset: `${inputs.blattOffset >= 0 ? '+' : ''}${inputs.blattOffset}` })
+                    : t('vpd.leafExplDefault')
+                }
               />
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <ToolResult
-                label="SVP Luft"
+                label={t('vpd.labelSvpAir')}
                 value={`${output.svpAir}`}
                 unit="kPa"
                 explanation={output.results[2]?.explanation}
               />
               <ToolResult
-                label="SVP Blatt"
+                label={t('vpd.labelSvpLeaf')}
                 value={`${output.svpLeaf}`}
                 unit="kPa"
                 explanation={output.results[3]?.explanation}
@@ -328,7 +336,7 @@ export default function VpdPage() {
           {/* Phase reference card */}
           <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <h3 className="mb-3 flex items-center gap-1.5 text-sm font-bold text-foreground">
-              <BarChart3 className="h-4 w-4" strokeWidth={2} /> VPD-Zielbereiche
+              <BarChart3 className="h-4 w-4" strokeWidth={2} /> {t('vpd.targetRangesTitle')}
             </h3>
             <div className="space-y-2">
               {(['saemling', 'veg', 'bluete'] as const).map((p) => {
@@ -342,7 +350,7 @@ export default function VpdPage() {
                         : 'text-muted-fg'
                     }`}
                   >
-                    <span>{VPD_PHASE_LABELS[p]}</span>
+                    <span>{tr(`vpd.${PHASE_KEY[p]}`)}</span>
                     <span className="tabular-nums">
                       {p === 'saemling' ? '0.40 – 0.80' : p === 'veg' ? '0.80 – 1.20' : '1.00 – 1.50'} kPa
                     </span>
@@ -354,7 +362,7 @@ export default function VpdPage() {
           {/* Save to Grow (prep) */}
           <SaveToGrowButton
             toolSlug="vpd"
-            toolTitle="VPD-Rechner"
+            toolTitle={t('registry.vpd.title')}
             summary={`VPD ${output.vpd} kPa — ${output.zone}`}
             results={output.results}
           />
