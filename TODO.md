@@ -188,6 +188,20 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   Sheet. Kein offener Bug, nur Doku, warum diese eine Stelle vom sonst
   einheitlichen Modal→Sheet-Muster abweicht.
 
+## 🔎 SEO — Unterseiten erben falschen Canonical (2026-08-30)
+
+- 🔍 **Nur `app/[locale]/layout.tsx` setzt `alternates` (canonical +
+  `languages` de/en/x-default).** `updates/`-Seiten setzen einen eigenen
+  Canonical, alle anderen dynamischen Routes (`studies/[slug]`,
+  `category/[slug]`, `studies`, `tools/*`, `diagnose` …) setzen kein
+  eigenes `alternates` → Next mergt feldweise, also erben sie den
+  Layout-Wert und melden **`canonical = <BASE_URL>/` bzw. `/en`** (die
+  Startseite) statt ihrer echten URL. Ebenso fehlt pro Seite das
+  `languages`-Mapping auf das jeweilige DE/EN-Gegenstück. Fix: kleiner
+  Helfer, der pro Seite `alternates: { canonical, languages: { de, en,
+  "x-default" } }` aus dem realen Pfad baut, in alle `generateMetadata`
+  der Wiki-/Tool-/Diagnose-Routes einhängen. Aufgefallen beim i18n-Pass.
+
 ## ✉️ Professionelle E-Mail-Templates (2026-08-30)
 
 - 🔍 **Alle ausgehenden Mails brauchen ein einheitliches, hochwertiges

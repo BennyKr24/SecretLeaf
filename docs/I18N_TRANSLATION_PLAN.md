@@ -120,15 +120,28 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit · `[x]` fertig & verifiziert
       Label-/Beschreibungs-Maps, `generateMetadata`, Hero + Sub-Links.
 - [x] `studies/sources/page.tsx` → neuer `sourcesPage`-Namespace (de+en);
       stale „Neuer Bereich"-Banner entfernt.
-- [ ] Diagnose-Ergebnis-Komponente (`DiagnoseResult.tsx`)
-- [ ] Restliche hartkodierte Chrome-Strings auf der **Artikel-Detailseite**
-      („Kernpunkte", „Hinweis", „Checkliste", „Einfach erklärt", „Glossar",
-      „Downloads", „Häufige Fragen", „Verwandte Artikel", „Quellen",
-      „Öffnen ↗", „Redaktioneller Hinweis" …) nach `messages`
-- [ ] `hreflang`/Canonical prüfen — jetzt ehrlich zweisprachig
+- [x] Diagnose-Flow (`DiagnoseFlow.tsx` + `DiagnoseResult.tsx`): neuer
+      lean `lib/i18n/localizeDiagnoseTree.ts` (nur `en.diagnose-tree.json`,
+      client-safe), Frage/Optionen/Kategorie-Label/Result overlaid,
+      `TranslateButton` auf Titel/Erklärung/Begründung raus, Chrome →
+      `diagnoseResult`-Namespace. `deepLocalizeStrings` gehärtet (lässt
+      React-Elemente/forwardRef wie Lucide-`icon` in Ruhe).
+- [x] Artikel-Detailseite (`studies/[slug]/page.tsx`): restliche Chrome →
+      `article`-Namespace (via `getTranslations`).
+- [x] `hreflang`/Canonical geprüft: Site-Level `alternates.languages`
+      (de/en/x-default) in `app/[locale]/layout.tsx` **korrekt** und jetzt
+      auch inhaltlich ehrlich. **Aber**: Unterseiten setzen kein eigenes
+      `alternates` → erben `canonical` vom Layout (= Startseite). Das ist
+      ein bestehender SEO-Bug über alle dynamischen Routes, nicht i18n-
+      spezifisch → eigener TODO-Punkt, nicht in diesem Pass.
+- [ ] Rest-Komponenten: `WikiArticleToc`, `WikiAskBot`, `CommunitySignals`,
+      `StudyListItem`-Tags (nicht im TM) — noch DE.
+- [ ] `categoryLabels` / `difficultyLabels` sauber über `messages` statt der
+      kleinen Map in `localizeContent.ts` (optional; funktioniert aktuell)
 - Hinweis: EN-Maps (Kategorie-Label/-Beschreibung, Symptomarea) leben in
-  `localizeContent.ts`; `studiesList`/`sourcesPage` in `messages`. Bewusst
-  gemischt — die großen TM-JSONs dürfen nicht in den Client-Bundle.
+  `localizeContent.ts`; `studiesList`/`sourcesPage`/`diagnoseResult`/
+  `article` in `messages`. Bewusst gemischt — die großen TM-JSONs dürfen
+  nicht in den Client-Bundle.
 
 ---
 
