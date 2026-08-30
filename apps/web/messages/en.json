@@ -206,7 +206,11 @@
     "relatedArticles": "Related articles",
     "editorialNoteLabel": "Editorial note:",
     "editorialNoteText": "The content is for knowledge and education. Regional law, medical questions and regulatory requirements must always be checked separately by qualified professionals.",
-    "notTranslated": "This article has not been translated to English yet — it is shown in German."
+    "notTranslated": "This article has not been translated to English yet — it is shown in German.",
+    "toc": "Contents",
+    "signalSaved": "often saved",
+    "signalPopular": "popular",
+    "signalDiscovered": "newly discovered"
   },
   "diagnoseResult": {
     "back": "← Back",

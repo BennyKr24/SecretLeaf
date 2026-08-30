@@ -206,7 +206,11 @@
     "relatedArticles": "Verwandte Artikel",
     "editorialNoteLabel": "Redaktioneller Hinweis:",
     "editorialNoteText": "Die Inhalte dienen der Wissensvermittlung und Aufklärung. Regionale Rechtslage, medizinische Fragen und regulatorische Anforderungen müssen stets separat durch Fachpersonal geprüft werden.",
-    "notTranslated": "Dieser Artikel wurde noch nicht ins Englische übersetzt – er wird auf Deutsch angezeigt."
+    "notTranslated": "Dieser Artikel wurde noch nicht ins Englische übersetzt – er wird auf Deutsch angezeigt.",
+    "toc": "Inhaltsverzeichnis",
+    "signalSaved": "oft gespeichert",
+    "signalPopular": "beliebt",
+    "signalDiscovered": "neu entdeckt"
   },
   "diagnoseResult": {
     "back": "← Zurück",
