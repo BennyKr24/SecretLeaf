@@ -178,6 +178,26 @@
     "back": "Zurück",
     "result": "Diagnose-Ergebnis"
   },
+  "diagnoseResult": {
+    "back": "← Zurück",
+    "newDiagnosis": "← Neue Diagnose",
+    "nodeNotFound": "Fehler: Knoten „{id}“ nicht gefunden.",
+    "unknownResult": "Unbekanntes Ergebnis: {id}",
+    "confidenceHigh": "Hohe Sicherheit",
+    "confidenceMedium": "Mittlere Sicherheit",
+    "confidenceLow": "Niedrige Sicherheit",
+    "confidenceScore": "Confidence: {score}/100",
+    "evidence": "Evidenz: {level}",
+    "whyThis": "Warum diese Diagnose?",
+    "cause": "Ursache: ",
+    "nextSteps": "Nächste Schritte",
+    "matchingTools": "Passende Tools",
+    "relatedKnowledge": "Passendes Wissen",
+    "saveToLog": "Im Grow-Log speichern",
+    "savedToLog": "Im Grow-Log gespeichert",
+    "noActiveGrow": "Kein aktiver Grow – Ergebnis kann nicht gespeichert werden.",
+    "startNew": "Neue Diagnose starten"
+  },
   "dashboard": {
     "title": "Dashboard",
     "myGrows": "Meine Grows",

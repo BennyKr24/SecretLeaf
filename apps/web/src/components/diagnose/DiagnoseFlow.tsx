@@ -1,8 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { diagnoseNodes, diagnoseResults } from "@/lib/diagnose/tree";
-import type { DiagnoseCategory } from "@/lib/diagnose/tree";
+import type { DiagnoseCategory, DiagnoseNode } from "@/lib/diagnose/tree";
+import {
+  localizeDiagnoseTreeObject,
+  localizeDiagnoseTreeString,
+} from "@/lib/i18n/localizeDiagnoseTree";
 import { DiagnoseResult } from "./DiagnoseResult";
 
 type Props = {
@@ -17,6 +22,9 @@ type FlowState =
   | { kind: "result"; resultId: string };
 
 export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
+  const locale = useLocale();
+  const t = useTranslations("diagnoseResult");
+  const categoryLabel = localizeDiagnoseTreeString(category.label, locale);
   const [state, setState] = useState<FlowState>({
     kind: "question",
     nodeId: category.startNodeId,
@@ -84,20 +92,21 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
 
   // Result screen
   if (state.kind === "result") {
-    const result = diagnoseResults[state.resultId];
-    if (!result) {
+    const rawResult = diagnoseResults[state.resultId];
+    if (!rawResult) {
       return (
         <div className="flex flex-col gap-4">
           <button
             onClick={handleReset}
             className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition active:scale-[0.97]"
           >
-            ← Zurück
+            {t("back")}
           </button>
-          <p className="text-sm text-muted-fg">Unbekanntes Ergebnis: {state.resultId}</p>
+          <p className="text-sm text-muted-fg">{t("unknownResult", { id: state.resultId })}</p>
         </div>
       );
     }
+    const result = localizeDiagnoseTreeObject(rawResult, locale);
     return (
       <div className={`flex flex-col gap-4 ${stepFadeClass}`}>
         {/* Back button */}
@@ -105,7 +114,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
           onClick={handleReset}
           className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition active:scale-[0.97] self-start"
         >
-          ← Neue Diagnose
+          {t("newDiagnosis")}
         </button>
         <DiagnoseResult result={result} category={category.id} onReset={handleReset} growId={growId} plantId={plantId} />
       </div>
@@ -113,20 +122,21 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
   }
 
   // Question screen
-  const node = diagnoseNodes[state.nodeId];
-  if (!node) {
+  const rawNode = diagnoseNodes[state.nodeId];
+  if (!rawNode) {
     return (
       <div className="flex flex-col gap-4">
         <button
           onClick={handleBack}
           className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition active:scale-[0.97] self-start"
         >
-          ← Zurück
+          {t("back")}
         </button>
-        <p className="text-sm text-red-500">Fehler: Knoten „{state.nodeId}“ nicht gefunden.</p>
+        <p className="text-sm text-red-500">{t("nodeNotFound", { id: state.nodeId })}</p>
       </div>
     );
   }
+  const node: DiagnoseNode = localizeDiagnoseTreeObject(rawNode, locale);
 
   const stepCount = state.history.length + 1;
 
@@ -138,7 +148,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
           onClick={handleBack}
           className="flex items-center gap-1 text-sm text-muted-fg hover:text-foreground transition active:scale-[0.97] shrink-0"
         >
-          ← Zurück
+          {t("back")}
         </button>
         <div className="flex gap-1.5 items-center">
           {Array.from({ length: stepCount }).map((_, i) => (
@@ -156,7 +166,7 @@ export function DiagnoseFlow({ category, onBack, growId, plantId }: Props) {
       <div className="flex items-center gap-2">
         <category.icon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" strokeWidth={2} />
         <span className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
-          {category.label}
+          {categoryLabel}
         </span>
       </div>
 

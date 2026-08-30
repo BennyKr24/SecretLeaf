@@ -13,8 +13,8 @@
 
 import enWiki from "@/data/i18n/en.wiki.json";
 import enDiagnostics from "@/data/i18n/en.diagnostics.json";
-import enTree from "@/data/i18n/en.diagnose-tree.json";
 import type { TerpiraCategory, DiagnoseArea } from "@/lib/terpira/types";
+import { localizeDiagnoseTreeObject, deepLocalizeStrings } from "./localizeDiagnoseTree";
 
 type TMEntry = { de: string; en: string | null; paths: string[] };
 type TMFile = Record<string, TMEntry>;
@@ -31,33 +31,21 @@ function buildMap(...files: TMFile[]): Map<string, string> {
 
 /** Wiki + diagnostic articles share one map — identical German strings translate identically. */
 const ARTICLE_EN = buildMap(enWiki as TMFile, enDiagnostics as TMFile);
-const TREE_EN = buildMap(enTree as TMFile);
-
-function deepLocalize<T>(node: T, map: Map<string, string>): T {
-  if (typeof node === "string") {
-    return (map.get(node) ?? node) as unknown as T;
-  }
-  if (Array.isArray(node)) {
-    return node.map((child) => deepLocalize(child, map)) as unknown as T;
-  }
-  if (node && typeof node === "object") {
-    const out: Record<string, unknown> = {};
-    for (const [key, value] of Object.entries(node)) out[key] = deepLocalize(value, map);
-    return out as T;
-  }
-  return node;
-}
 
 const isEn = (locale: string) => locale === "en";
 
 /** Return an EN-overlaid copy of an article (or the original for any other locale). */
 export function localizeArticle<T extends object>(article: T, locale: string): T {
-  return isEn(locale) ? deepLocalize(article, ARTICLE_EN) : article;
+  return isEn(locale) ? deepLocalizeStrings(article, ARTICLE_EN) : article;
 }
 
-/** Return an EN-overlaid copy of a diagnose decision-tree result. */
+/**
+ * Return an EN-overlaid copy of a diagnose decision-tree result.
+ * Delegates to the lean localizeDiagnoseTree module (client-safe: it does not
+ * pull the wiki/diagnostics TMs into the bundle).
+ */
 export function localizeDiagnoseResult<T extends object>(result: T, locale: string): T {
-  return isEn(locale) ? deepLocalize(result, TREE_EN) : result;
+  return localizeDiagnoseTreeObject(result, locale);
 }
 
 /**

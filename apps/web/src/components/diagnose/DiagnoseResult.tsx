@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import type { DiagnoseResult as DiagnoseResultType, Confidence } from "@/lib/diagnose/tree";
@@ -9,7 +10,6 @@ import { useGrowLog } from "@/hooks/useGrowLog";
 import { useAuth } from "@/hooks/useAuth";
 import { getSupabaseBrowserClient } from "@/lib/supabaseBrowser";
 import { createDiagnosis, createRecommendation } from "@/lib/diagnose/db";
-import { TranslateButton } from "@/components/TranslateButton";
 import { getDiagnoseKnowledgeContext } from "@/lib/diagnose/knowledge";
 import { Brain, Zap, ClipboardList, CheckCircle2, RotateCcw } from "lucide-react";
 
@@ -17,29 +17,32 @@ import { Brain, Zap, ClipboardList, CheckCircle2, RotateCcw } from "lucide-react
 
 const CONFIDENCE_CONFIG: Record<
   Confidence,
-  { label: string; bg: string; text: string; dot: string; barWidth: string }
+  { bg: string; text: string; dot: string; barWidth: string }
 > = {
   high: {
-    label: "Hohe Sicherheit",
     bg: "bg-primary/15 border-primary/40",
     text: "text-primary",
     dot: "bg-primary",
     barWidth: "w-full",
   },
   medium: {
-    label: "Mittlere Sicherheit",
     bg: "bg-background border-border",
     text: "text-foreground",
     dot: "bg-primary/70",
     barWidth: "w-2/3",
   },
   low: {
-    label: "Niedrige Sicherheit",
     bg: "bg-border border-border",
     text: "text-muted-fg",
     dot: "bg-muted-fg",
     barWidth: "w-1/3",
   },
+};
+
+const CONFIDENCE_LABEL_KEY: Record<Confidence, string> = {
+  high: "confidenceHigh",
+  medium: "confidenceMedium",
+  low: "confidenceLow",
 };
 
 type Props = {
@@ -51,6 +54,7 @@ type Props = {
 };
 
 export function DiagnoseResult({ result, category, onReset, growId, plantId }: Props) {
+  const t = useTranslations("diagnoseResult");
   const { user } = useAuth();
   const [saved, setSaved] = useState(false);
   const activeGrow = getActiveGrow();
@@ -119,7 +123,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
               <result.icon className="h-7 w-7 shrink-0 text-foreground/80" strokeWidth={2} />
             ) : null}
             <h2 className="text-lg font-bold text-foreground leading-snug">
-              <TranslateButton text={result.title} />
+              {result.title}
             </h2>
           </div>
           {/* Confidence badge */}
@@ -127,7 +131,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
             className={`shrink-0 mt-0.5 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-semibold ${conf.bg} ${conf.text}`}
           >
             <span className={`h-1.5 w-1.5 rounded-full ${conf.dot}`} />
-            {conf.label}
+            {t(CONFIDENCE_LABEL_KEY[result.confidence])}
           </span>
         </div>
 
@@ -138,16 +142,14 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
 
         <div className="flex flex-wrap gap-2 text-[11px] font-semibold text-muted-fg">
           <span className="rounded-full border border-border bg-background px-2.5 py-1">
-            Confidence: {knowledge.confidenceScore}/100
+            {t("confidenceScore", { score: knowledge.confidenceScore })}
           </span>
           <span className="rounded-full border border-border bg-background px-2.5 py-1">
-            Evidenz: {knowledge.evidenceLevel}
+            {t("evidence", { level: knowledge.evidenceLevel })}
           </span>
         </div>
 
-        <p className="text-sm text-muted-fg leading-relaxed">
-          <TranslateButton text={result.explanation} />
-        </p>
+        <p className="text-sm text-muted-fg leading-relaxed">{result.explanation}</p>
       </div>
 
       {/* ── Why this result ── */}
@@ -155,11 +157,9 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
         <Brain className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2} />
         <div className="flex flex-col gap-1">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
-            Warum diese Diagnose?
+            {t("whyThis")}
           </p>
-          <p className="text-sm text-foreground/80 leading-relaxed">
-            <TranslateButton text={result.reasoning} />
-          </p>
+          <p className="text-sm text-foreground/80 leading-relaxed">{result.reasoning}</p>
         </div>
       </div>
 
@@ -167,7 +167,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
       <div className="flex items-start gap-2 rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground">
         <Zap className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2} />
         <span>
-          <span className="font-semibold">Ursache: </span>
+          <span className="font-semibold">{t("cause")}</span>
           {result.cause}
         </span>
       </div>
@@ -175,7 +175,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
       {/* ── Solution steps ── */}
       <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-3">
         <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
-          Nächste Schritte
+          {t("nextSteps")}
         </h3>
         <ol className="flex flex-col gap-2.5">
           {result.steps.map((step, i) => (
@@ -193,7 +193,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
       {result.toolLinks.length > 0 && (
         <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-3">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
-            Passende Tools
+            {t("matchingTools")}
           </h3>
           <div className="flex flex-col gap-2">
             {result.toolLinks.map((tool) => (
@@ -215,7 +215,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
       {relatedArticles.length > 0 && (
         <div className="rounded-2xl bg-card border border-border shadow-sm p-5 flex flex-col gap-3">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-fg">
-            Passendes Wissen
+            {t("relatedKnowledge")}
           </h3>
           <div className="flex flex-col gap-2">
             {relatedArticles.map((match) => (
@@ -244,17 +244,17 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
             onClick={handleAddToGrow}
             className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary-dark active:scale-95 transition text-white font-semibold py-3 px-4 text-sm"
           >
-            <ClipboardList className="h-4 w-4" strokeWidth={2} /> Im Grow-Log speichern
+            <ClipboardList className="h-4 w-4" strokeWidth={2} /> {t("saveToLog")}
           </button>
         )}
         {saved && (
           <div className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary/15 border border-primary/35 text-primary font-semibold py-3 px-4 text-sm text-center">
-            <CheckCircle2 className="h-4 w-4" strokeWidth={2} /> Im Grow-Log gespeichert
+            <CheckCircle2 className="h-4 w-4" strokeWidth={2} /> {t("savedToLog")}
           </div>
         )}
         {!resolvedGrowId && (
           <p className="text-xs text-muted-fg text-center">
-            Kein aktiver Grow – Ergebnis kann nicht gespeichert werden.
+            {t("noActiveGrow")}
           </p>
         )}
 
@@ -262,7 +262,7 @@ export function DiagnoseResult({ result, category, onReset, growId, plantId }: P
           onClick={onReset}
           className="w-full flex items-center justify-center gap-2 rounded-xl border border-border hover:bg-background active:scale-95 transition text-muted-fg font-medium py-3 px-4 text-sm"
         >
-          <RotateCcw className="h-4 w-4" strokeWidth={2} /> Neue Diagnose starten
+          <RotateCcw className="h-4 w-4" strokeWidth={2} /> {t("startNew")}
         </button>
       </div>
     </div>

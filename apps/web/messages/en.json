@@ -178,6 +178,26 @@
     "back": "Back",
     "result": "Diagnosis Result"
   },
+  "diagnoseResult": {
+    "back": "← Back",
+    "newDiagnosis": "← New diagnosis",
+    "nodeNotFound": "Error: node “{id}” not found.",
+    "unknownResult": "Unknown result: {id}",
+    "confidenceHigh": "High certainty",
+    "confidenceMedium": "Medium certainty",
+    "confidenceLow": "Low certainty",
+    "confidenceScore": "Confidence: {score}/100",
+    "evidence": "Evidence: {level}",
+    "whyThis": "Why this diagnosis?",
+    "cause": "Cause: ",
+    "nextSteps": "Next steps",
+    "matchingTools": "Matching tools",
+    "relatedKnowledge": "Related knowledge",
+    "saveToLog": "Save to grow log",
+    "savedToLog": "Saved to grow log",
+    "noActiveGrow": "No active grow — the result can't be saved.",
+    "startNew": "Start a new diagnosis"
+  },
   "dashboard": {
     "title": "Dashboard",
     "myGrows": "My Grows",
