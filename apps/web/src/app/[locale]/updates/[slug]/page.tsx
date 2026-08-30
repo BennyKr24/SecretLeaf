@@ -1,6 +1,7 @@
 import { Link } from '@/i18n/navigation';
 import { notFound } from 'next/navigation';
 import type { Metadata, Route } from 'next';
+import { pageAlternates } from '@/lib/i18n/metadata';
 import {
   getAllUpdateSlugs,
   getUpdateBySlug,
@@ -26,9 +27,9 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const update = getUpdateBySlug(slug);
   if (!update) return { title: 'Update nicht gefunden – SecretLeaf' };
 
@@ -37,9 +38,7 @@ export async function generateMetadata({
   return {
     title: `${update.title} – SecretLeaf Updates`,
     description: update.summary,
-    alternates: {
-      canonical: `${BASE_URL}/updates/${slug}`,
-    },
+    alternates: pageAlternates(`/updates/${slug}`, locale),
     openGraph: {
       title: update.title,
       description: update.summary,

@@ -601,7 +601,8 @@
       "labelPerSqm": "Pro Quadratmeter",
       "labelBaseCalc": "Basiskalkulation",
       "labelFactors": "Korrekturfaktoren",
-      "rangeBarLabel": "Ertrag/m² einordnen"
+      "rangeBarLabel": "Ertrag/m² einordnen",
+      "unitPerPlant": "g/Pflanze"
     },
     "phaseVeg": "Vegetativ",
     "phaseBluete": "Blüte",
@@ -637,7 +638,8 @@
       "labelTotalPpf": "Gesamt-PPF",
       "labelUsablePpf": "Nutzbare PPF",
       "labelHeightFactor": "Höhenkorrektor",
-      "rangeBarLabel": "PPFD einordnen"
+      "rangeBarLabel": "PPFD einordnen",
+      "unitHrDay": "h/Tag"
     },
     "vpd": {
       "tip1": "Blatttemperatur ist entscheidend — LED-Lampen machen Blätter ca. 1–3 °C kühler als die Raumluft.",

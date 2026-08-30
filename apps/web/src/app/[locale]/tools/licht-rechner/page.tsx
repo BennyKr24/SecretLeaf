@@ -132,7 +132,7 @@ export default function LichtRechnerPage() {
               min={12}
               max={24}
               step={1}
-              unit="h/Tag"
+              unit={t('lighting.unitHrDay')}
               marks={[
                 { value: 12, label: t('lighting.markPhotoperiodFlower') },
                 { value: 18, label: t('lighting.markPhotoperiodVeg') },

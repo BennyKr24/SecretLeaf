@@ -230,7 +230,7 @@ export default function ErtragSchaetzerPage() {
               <ToolResult
                 label={t('yield.labelPerPlant')}
                 value={`${output.ertragProPflanze}`}
-                unit="g/Pflanze"
+                unit={t('yield.unitPerPlant')}
               />
               <ToolResult
                 label={t('yield.labelPerSqm')}

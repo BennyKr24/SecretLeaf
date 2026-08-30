@@ -1,7 +1,9 @@
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { Route } from "next";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { pageAlternates } from "@/lib/i18n/metadata";
 import { toolRegistry } from "@/lib/tools/registry";
 import {
   toolCategoryLabel,
@@ -35,6 +37,20 @@ const categoryIconBg: Record<ToolCategory, string> = {
   naehrstoffe: "bg-emerald-50 ring-1 ring-emerald-200",
   planung: "bg-violet-50 ring-1 ring-violet-200",
 };
+
+type PageProps = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const en = locale === "en";
+  return {
+    title: en ? "Grow Tools – SecretLeaf" : "Grow-Tools – SecretLeaf",
+    description: en
+      ? "Precision calculators for light, climate and nutrients — based on real cultivation values."
+      : "Präzisionswerkzeuge für Licht, Klima und Nährstoffe — basierend auf echten Anbauwerten.",
+    alternates: pageAlternates("/tools", locale),
+  };
+}
 
 export default async function ToolsHubPage() {
   const t = await getTranslations('toolsPage');
