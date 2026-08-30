@@ -111,6 +111,28 @@
     "deficiencies": "Mängel",
     "pests": "Schädlinge"
   },
+  "studiesList": {
+    "searchPlaceholder": "In {category} suchen…",
+    "sortQuality": "Nach Qualität",
+    "sortNewest": "Neueste zuerst",
+    "sortShortest": "Kürzeste zuerst",
+    "sortLongest": "Längste zuerst",
+    "reset": "Zurücksetzen",
+    "resultCount": "<b>{count}</b> Artikel",
+    "resultCountFiltered": "<b>{count}</b> Artikel gefunden",
+    "emptyTitle": "Keine Artikel gefunden.",
+    "emptyHint": "Passe deine Filter oder Suche an.",
+    "showMore": "{count} weitere anzeigen",
+    "readMinutes": "{count} Min",
+    "qualityTitle": "Qualität {score}/5",
+    "difficultyEinsteiger": "Einsteiger",
+    "difficultyFortgeschritten": "Fortgeschritten",
+    "difficultyProfi": "Profi",
+    "areaBlaetter": "Blätter",
+    "areaWachstum": "Wachstum & Wurzeln",
+    "areaKlima": "Klima & Umgebung",
+    "areaSchaedlinge": "Schädlinge"
+  },
   "tools": {
     "title": "Grow-Tools",
     "subtitle": "Präzisionswerkzeuge für deinen Anbau",

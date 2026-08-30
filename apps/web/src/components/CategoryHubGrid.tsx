@@ -16,9 +16,14 @@ const ORDERED_CATEGORIES: TerpiraCategory[] = [
 type Props = {
   articles: TerpiraArticle[];
   categoryLabels: Record<string, string>;
+  /** Optional locale-specific descriptions; falls back to the German CATEGORY_DESCRIPTIONS. */
+  categoryDescriptions?: Record<string, string>;
+  locale?: string;
 };
 
-export default function CategoryHubGrid({ articles, categoryLabels }: Props) {
+export default function CategoryHubGrid({ articles, categoryLabels, categoryDescriptions, locale }: Props) {
+  const descriptions = categoryDescriptions ?? CATEGORY_DESCRIPTIONS;
+  const articleWord = locale === "en" ? "articles" : "Artikel";
   const counts = new Map<string, number>();
   for (const a of articles) counts.set(a.category, (counts.get(a.category) ?? 0) + 1);
 
@@ -30,7 +35,7 @@ export default function CategoryHubGrid({ articles, categoryLabels }: Props) {
         const count = counts.get(cat) ?? 0;
         const Icon = CATEGORY_ICONS[cat] ?? FileText;
         const accent = CATEGORY_ACCENT[cat] ?? 'text-muted-fg';
-        const description = CATEGORY_DESCRIPTIONS[cat];
+        const description = descriptions[cat];
         const empty = count === 0;
 
         return (
@@ -50,7 +55,7 @@ export default function CategoryHubGrid({ articles, categoryLabels }: Props) {
                 <Icon className="h-5 w-5" strokeWidth={2} />
               </span>
               <span className="rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-semibold text-muted-fg">
-                {count} Artikel
+                {count} {articleWord}
               </span>
             </div>
             <div>

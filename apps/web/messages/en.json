@@ -111,6 +111,28 @@
     "deficiencies": "Deficiencies",
     "pests": "Pests"
   },
+  "studiesList": {
+    "searchPlaceholder": "Search in {category}…",
+    "sortQuality": "By quality",
+    "sortNewest": "Newest first",
+    "sortShortest": "Shortest first",
+    "sortLongest": "Longest first",
+    "reset": "Reset",
+    "resultCount": "<b>{count}</b> articles",
+    "resultCountFiltered": "<b>{count}</b> articles found",
+    "emptyTitle": "No articles found.",
+    "emptyHint": "Adjust your filters or search.",
+    "showMore": "Show {count} more",
+    "readMinutes": "{count} min",
+    "qualityTitle": "Quality {score}/5",
+    "difficultyEinsteiger": "Beginner",
+    "difficultyFortgeschritten": "Intermediate",
+    "difficultyProfi": "Pro",
+    "areaBlaetter": "Leaves",
+    "areaWachstum": "Growth & Roots",
+    "areaKlima": "Climate & Environment",
+    "areaSchaedlinge": "Pests"
+  },
   "tools": {
     "title": "Grow Tools",
     "subtitle": "Precision tools for your grow",

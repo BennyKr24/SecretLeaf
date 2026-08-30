@@ -1,17 +1,42 @@
 import type { Route } from "next";
+import type { Metadata } from "next";
 import { categoryLabels, wikiArticles, sourceRegister } from "@/data/terpira/wiki";
+import { CATEGORY_DESCRIPTIONS } from "@/lib/terpira/categoryIcons";
+import {
+  localizeCategoryLabelMap,
+  localizeCategoryDescriptionMap,
+} from "@/lib/i18n/localizeContent";
 import CategoryHubGrid from "@/components/CategoryHubGrid";
 import OpenSearchButton from "@/components/OpenSearchButton";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import { Microscope, Bug, FlaskConical } from "lucide-react";
 
-export const metadata = {
-  title: "Studien – SecretLeaf",
-  description: "Wissenschaftlich fundierte Inhalte zu Anbau, Terpenen, Medizin, Recht und Qualität.",
+type PageProps = {
+  params: Promise<{ locale: string }>;
 };
 
-export default function StudiesPage() {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return locale === "en"
+    ? {
+        title: "Studies – SecretLeaf",
+        description:
+          "Science-based content on cultivation, terpenes, medicine, law and quality.",
+      }
+    : {
+        title: "Studien – SecretLeaf",
+        description:
+          "Wissenschaftlich fundierte Inhalte zu Anbau, Terpenen, Medizin, Recht und Qualität.",
+      };
+}
+
+export default async function StudiesPage({ params }: PageProps) {
+  const { locale } = await params;
+  const en = locale === "en";
+  const labels = localizeCategoryLabelMap(categoryLabels, locale);
+  const descriptions = localizeCategoryDescriptionMap(CATEGORY_DESCRIPTIONS, locale);
+
   return (
     <main className="min-h-screen">
 
@@ -36,20 +61,23 @@ export default function StudiesPage() {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-400">
-                Wissensplattform
+                {en ? "Knowledge platform" : "Wissensplattform"}
               </p>
-              <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-white tracking-tight">Studien</h1>
+              <h1 className="mt-2 text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                {en ? "Studies" : "Studien"}
+              </h1>
               <p className="mt-2 max-w-xl text-[14px] text-slate-400 leading-relaxed">
-                Wissenschaftlich fundierte Artikel zu Anbau, Chemie, Medizin, Recht und mehr –
-                gestützt auf {sourceRegister.length} peer-reviewed Fachquellen.
+                {en
+                  ? `Science-based articles on cultivation, chemistry, medicine, law and more — backed by ${sourceRegister.length} peer-reviewed references.`
+                  : `Wissenschaftlich fundierte Artikel zu Anbau, Chemie, Medizin, Recht und mehr – gestützt auf ${sourceRegister.length} peer-reviewed Fachquellen.`}
               </p>
             </div>
 
             {/* Quick stats */}
             <div className="flex gap-5 sm:gap-8 flex-shrink-0">
               {[
-                { value: wikiArticles.length, label: 'Artikel' },
-                { value: sourceRegister.length, label: 'Quellen' },
+                { value: wikiArticles.length, label: en ? "Articles" : "Artikel" },
+                { value: sourceRegister.length, label: en ? "Sources" : "Quellen" },
               ].map(s => (
                 <div key={s.label} className="text-right">
                   <p className="text-xl font-bold text-white">{s.value}</p>
@@ -62,24 +90,24 @@ export default function StudiesPage() {
           {/* Sub-links */}
           <div className="mt-6 flex flex-wrap gap-2">
             <OpenSearchButton
-              label="Artikel durchsuchen"
+              label={en ? "Search articles" : "Artikel durchsuchen"}
               className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-400/30 bg-emerald-500/10
                 px-3 py-1.5 text-xs font-medium text-emerald-300 hover:bg-emerald-500/20 hover:text-emerald-200 transition-colors duration-150"
             />
             <Link href={"/studies/sources" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
                 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors duration-150">
-              <Microscope className="h-3.5 w-3.5" strokeWidth={2} /> Quellenregister
+              <Microscope className="h-3.5 w-3.5" strokeWidth={2} /> {en ? "Source register" : "Quellenregister"}
             </Link>
             <Link href={"/studies/pests" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
                 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors duration-150">
-              <Bug className="h-3.5 w-3.5" strokeWidth={2} /> Schädlings-Lexikon
+              <Bug className="h-3.5 w-3.5" strokeWidth={2} /> {en ? "Pest lexicon" : "Schädlings-Lexikon"}
             </Link>
             <Link href={"/studies/deficiencies" as Route}
               className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5
                 px-3 py-1.5 text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors duration-150">
-              <FlaskConical className="h-3.5 w-3.5" strokeWidth={2} /> Nährstoffmängel
+              <FlaskConical className="h-3.5 w-3.5" strokeWidth={2} /> {en ? "Nutrient deficiencies" : "Nährstoffmängel"}
             </Link>
           </div>
         </div>
@@ -89,10 +117,19 @@ export default function StudiesPage() {
       <section className="px-5 py-10">
         <div className="mx-auto max-w-6xl">
           <div className="mb-5">
-            <h2 className="text-lg font-semibold text-foreground">Fachgebiete</h2>
-            <p className="mt-1 text-sm text-muted-fg">Wähle ein Fachgebiet, um gezielt zu stöbern und zu filtern.</p>
+            <h2 className="text-lg font-semibold text-foreground">{en ? "Fields" : "Fachgebiete"}</h2>
+            <p className="mt-1 text-sm text-muted-fg">
+              {en
+                ? "Pick a field to browse and filter by topic."
+                : "Wähle ein Fachgebiet, um gezielt zu stöbern und zu filtern."}
+            </p>
           </div>
-          <CategoryHubGrid articles={wikiArticles} categoryLabels={categoryLabels} />
+          <CategoryHubGrid
+            articles={wikiArticles}
+            categoryLabels={labels}
+            categoryDescriptions={descriptions}
+            locale={locale}
+          />
         </div>
       </section>
 

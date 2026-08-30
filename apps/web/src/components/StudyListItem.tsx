@@ -1,6 +1,7 @@
 'use client';
 
 import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 import type { Route } from 'next';
 import type { TerpiraArticle, TerpiraDifficulty } from '@/lib/terpira/types';
 import { CATEGORY_ICONS, CATEGORY_ACCENT } from '@/lib/terpira/categoryIcons';
@@ -12,16 +13,13 @@ const DIFFICULTY_STYLE: Record<TerpiraDifficulty, { pill: string; dot: string }>
   profi:          { pill: 'text-purple-600 bg-purple-50 border-purple-100', dot: 'bg-purple-400' },
 };
 
-const DIFFICULTY_LABEL: Record<TerpiraDifficulty, string> = {
-  einsteiger: 'Einsteiger',
-  fortgeschritten: 'Fortgeschritten',
-  profi: 'Profi',
-};
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 /** Maps qualityScore 1–5 to a visual indicator */
 function QualityDots({ score }: { score: number }) {
+  const t = useTranslations('studiesList');
   return (
-    <span className="inline-flex items-center gap-0.5" title={`Qualität ${score}/5`}>
+    <span className="inline-flex items-center gap-0.5" title={t('qualityTitle', { score })}>
       {[1, 2, 3, 4, 5].map((i) => (
         <span
           key={i}
@@ -41,6 +39,7 @@ type Props = {
 };
 
 export default function StudyListItem({ article, snippet }: Props) {
+  const t = useTranslations('studiesList');
   const diff = DIFFICULTY_STYLE[article.difficulty];
   const qualityScore = article.qualityScore ?? 0;
   const CategoryIcon = CATEGORY_ICONS[article.category] ?? FileText;
@@ -108,9 +107,9 @@ export default function StudyListItem({ article, snippet }: Props) {
         {qualityScore > 0 && <QualityDots score={qualityScore} />}
         <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[10px] font-medium ${diff.pill}`}>
           <span className={`h-1.5 w-1.5 rounded-full ${diff.dot}`} />
-          {DIFFICULTY_LABEL[article.difficulty]}
+          {t(`difficulty${cap(article.difficulty)}`)}
         </span>
-        <span className="text-[10px] text-muted-fg tabular-nums">{article.readMinutes} Min</span>
+        <span className="text-[10px] text-muted-fg tabular-nums">{t('readMinutes', { count: article.readMinutes })}</span>
       </div>
 
       {/* Arrow */}
