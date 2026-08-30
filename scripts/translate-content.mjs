@@ -224,36 +224,61 @@ function index(strings) {
 }
 
 // ── Anthropic ──────────────────────────────────────────────────────────────
-async function translateBatch(items, client) {
-  const glossary = fs.readFileSync(GLOSSARY_PATH, "utf8");
-  const styleguide = fs.readFileSync(STYLEGUIDE_PATH, "utf8");
-  const system = [
-    {
-      type: "text",
-      text:
-        "You translate SecretLeaf's cannabis-cultivation content from German to English. " +
-        "Follow the style guide and glossary below exactly. Output ONLY a JSON array " +
-        'of {"id": <number>, "en": <string>} — no prose, no code fence.\n\n' +
-        `=== STYLE GUIDE ===\n${styleguide}\n\n=== GLOSSARY (JSON) ===\n${glossary}`,
-      cache_control: { type: "ephemeral" },
-    },
-  ];
+const SYSTEM_PROMPT = () => [
+  {
+    type: "text",
+    text:
+      "You translate SecretLeaf's cannabis-cultivation content from German to English. " +
+      "Follow the style guide and glossary below exactly. Output ONLY a JSON array " +
+      'of {"id": <number>, "en": <string>} — no prose, no code fence.\n\n' +
+      `=== STYLE GUIDE ===\n${fs.readFileSync(STYLEGUIDE_PATH, "utf8")}\n\n` +
+      `=== GLOSSARY (JSON) ===\n${fs.readFileSync(GLOSSARY_PATH, "utf8")}`,
+    cache_control: { type: "ephemeral" },
+  },
+];
+
+async function callModel(items, client) {
   const user =
     "Translate each `de` string. Keep markup, placeholders and trailing punctuation.\n\n" +
     JSON.stringify(items.map((it, i) => ({ id: i, de: it.de })), null, 2);
-
   const res = await client.messages.create({
     model: MODEL,
-    max_tokens: 8192,
-    system,
+    max_tokens: 16384,
+    system: SYSTEM_PROMPT(),
     messages: [{ role: "user", content: user }],
   });
   const block = res.content.find((b) => b.type === "text");
-  if (!block) throw new Error("no text in Anthropic response");
-  const json = block.text.trim().replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
-  const parsed = JSON.parse(json);
+  if (!block) throw new Error("no text block in Anthropic response");
+  // Trim to the outermost JSON array so stray prose / fences can't break parse.
+  let s = block.text.trim().replace(/^```(?:json)?\n?/, "").replace(/\n?```$/, "");
+  const a = s.indexOf("[");
+  const b = s.lastIndexOf("]");
+  if (a !== -1 && b > a) s = s.slice(a, b + 1);
+  const parsed = JSON.parse(s);
   const byId = new Map(parsed.map((p) => [p.id, p.en]));
   return items.map((it, i) => ({ ...it, en: byId.get(i) }));
+}
+
+/**
+ * Translate a chunk, tolerating a bad/truncated model response: on any failure
+ * the chunk is split and each half retried, down to single items. A single
+ * item that still can't be parsed is left untranslated (logged) instead of
+ * killing the whole run.
+ */
+async function translateBatch(items, client) {
+  try {
+    return await callModel(items, client);
+  } catch (err) {
+    if (items.length === 1) {
+      console.warn(`  ! skipped 1 string (${err.message}): ${items[0].de.slice(0, 60)}…`);
+      return [{ ...items[0], en: undefined }];
+    }
+    const mid = Math.ceil(items.length / 2);
+    console.warn(`  ! batch parse failed (${err.message}) — splitting ${items.length} → ${mid}+${items.length - mid}`);
+    const left = await translateBatch(items.slice(0, mid), client);
+    const right = await translateBatch(items.slice(mid), client);
+    return [...left, ...right];
+  }
 }
 
 // ── run ────────────────────────────────────────────────────────────────────
