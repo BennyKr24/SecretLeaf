@@ -89,9 +89,14 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit · `[x]` fertig & verifiziert
 - [ ] Grobkostenrahmen Vollpass abschätzen (~774k Zeichen Quelle, Sonnet)
 
 ### A4 — Vollübersetzung
-- [ ] `npm run i18n:translate --only=tree`
-- [ ] `npm run i18n:translate --only=diagnostics`
-- [ ] `npm run i18n:translate --only=wiki` (größter Batch, ggf. in Tranchen)
+- [x] `npm run i18n:translate --only=tree` — 223/223
+- [x] `npm run i18n:translate --only=diagnostics` — 1844/1844
+- [~] `npm run i18n:translate --only=wiki` (größter Batch, in Tranchen) —
+      **5180/5404**, 224 offen. Run vom 2026-08-30 lief in das Anthropic-
+      Ausgabelimit (Zugang zurück ab 2026-09-01 00:00 UTC). Danach
+      `npm run i18n:translate -- --only=wiki` erneut → nimmt nur die Rest-224.
+      Split-Retry hat die abgelehnten Batches sauber geloggt+übersprungen,
+      kein Teil-/Müll-Output in der TM.
 - [ ] TM-Dateien reviewen (Stichprobe je Kategorie) + committen
 
 ### A5a — Rendering-Overlay: Artikel-Detailseite  ✅
