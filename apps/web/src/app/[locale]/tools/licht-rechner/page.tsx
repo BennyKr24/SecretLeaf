@@ -24,13 +24,6 @@ const DEFAULTS: LightingInputs = {
   phase: 'veg',
 };
 
-const TIPS = [
-  'Mess die PPFD mit einem PAR-Meter — Berechnungen sind immer Schätzwerte.',
-  'Über 1.000 µmol/m²/s lohnt sich CO₂-Supplementierung fast immer.',
-  'DLI über 45 mol/m²/d ohne CO₂ führt meist zu Lichtstress statt mehr Ertrag.',
-  'Moderne Top-LEDs erreichen 2.8–3.2 µmol/J. Standard-LEDs liegen bei 2.0–2.5 µmol/J.',
-];
-
 export default function LichtRechnerPage() {
   const { inputs, setInput, loaded, saveSnapshot } = useToolState({
     slug: 'licht-rechner',
@@ -38,8 +31,10 @@ export default function LichtRechnerPage() {
     setupKeys: ['lampenLeistung'],
   });
 
-  const t = useTranslations('toolResult');
-  const output = useMemo(() => calculateLighting(inputs, t), [inputs, t]);
+  const tr = useTranslations('toolResult');
+  const t = useTranslations('tool');
+  const output = useMemo(() => calculateLighting(inputs, tr), [inputs, tr]);
+  const TIPS = [t('lighting.tip1'), t('lighting.tip2'), t('lighting.tip3'), t('lighting.tip4')];
 
   useMemo(() => {
     if (loaded) saveSnapshot(inputs, output.results);
@@ -62,12 +57,12 @@ export default function LichtRechnerPage() {
         {/* ── Inputs ──────────────────────────────────── */}
         <div className="space-y-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div>
-            <h2 className="text-base font-bold text-foreground">Deine Lichtsituation</h2>
-            <p className="mt-0.5 text-xs text-muted-fg">Passe die Werte an dein Setup an — die Ergebnisse ändern sich sofort.</p>
+            <h2 className="text-base font-bold text-foreground">{t('lighting.situationTitle')}</h2>
+            <p className="mt-0.5 text-xs text-muted-fg">{t('lighting.situationHint')}</p>
           </div>
 
           <ToolSlider
-            label="Lampenleistung"
+            label={t('lighting.lampPower')}
             value={inputs.lampenLeistung}
             onChange={(v) => setInput('lampenLeistung', v)}
             min={50}
@@ -83,7 +78,7 @@ export default function LichtRechnerPage() {
           />
 
           <ToolSlider
-            label="LED-Effizienz"
+            label={t('lighting.ledEfficiency')}
             value={inputs.effizienz}
             onChange={(v) => setInput('effizienz', v)}
             min={1.0}
@@ -92,13 +87,13 @@ export default function LichtRechnerPage() {
             unit="µmol/J"
             marks={[
               { value: 1.0, label: 'HPS' },
-              { value: 2.0, label: 'LED Ø' },
-              { value: 3.0, label: 'Top LED' },
+              { value: 2.0, label: t('lighting.markLedAvg') },
+              { value: 3.0, label: t('lighting.markTopLed') },
             ]}
           />
 
           <ToolSlider
-            label="Reflektorverlust"
+            label={t('lighting.reflectorLoss')}
             value={inputs.reflektorVerlust}
             onChange={(v) => setInput('reflektorVerlust', v)}
             min={0}
@@ -109,17 +104,17 @@ export default function LichtRechnerPage() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ToolInput
-              label="Aufhänghöhe"
+              label={t('lighting.mountHeight')}
               value={inputs.aufhaengHoehe}
               onChange={(v) => setInput('aufhaengHoehe', v)}
               unit="cm"
               min={15}
               max={150}
               step={5}
-              hint="Abstand Lampe → Pflanzenspitze"
+              hint={t('lighting.mountHeightHint')}
             />
             <ToolInput
-              label="Anbaufläche"
+              label={t('lighting.growArea')}
               value={inputs.flaeche}
               onChange={(v) => setInput('flaeche', v)}
               unit="m²"
@@ -131,7 +126,7 @@ export default function LichtRechnerPage() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ToolSlider
-              label="Photoperiode"
+              label={t('lighting.photoperiod')}
               value={inputs.photoperiode}
               onChange={(v) => setInput('photoperiode', v)}
               min={12}
@@ -139,18 +134,18 @@ export default function LichtRechnerPage() {
               step={1}
               unit="h/Tag"
               marks={[
-                { value: 12, label: '12h (Blüte)' },
-                { value: 18, label: '18h (Veg)' },
+                { value: 12, label: t('lighting.markPhotoperiodFlower') },
+                { value: 18, label: t('lighting.markPhotoperiodVeg') },
                 { value: 24, label: '24h' },
               ]}
             />
             <ToolSelect
-              label="Phase"
+              label={t('lighting.phase')}
               value={inputs.phase}
               onChange={(v) => setInput('phase', v as 'veg' | 'bluete')}
               options={[
-                { value: 'veg', label: 'Vegetativ' },
-                { value: 'bluete', label: 'Blüte' },
+                { value: 'veg', label: t('phaseVeg') },
+                { value: 'bluete', label: t('phaseBluete') },
               ]}
             />
           </div>
@@ -159,28 +154,28 @@ export default function LichtRechnerPage() {
         {/* ── Results ─────────────────────────────────── */}
         <div className="space-y-5">
           <ToolResultCard
-            title="Deine Pflanzen erhalten"
+            title={t('lighting.cardTitle')}
             interpretation={
               output.ppfd < 250
-                ? 'Zu wenig Licht — Pflanzen wachsen sehr langsam.'
+                ? t('lighting.interpVeryLow')
                 : output.ppfd < 400
-                ? 'Ausreichend für Keimlinge und Klone, aber unter dem Veg-Optimum.'
+                ? t('lighting.interpLow')
                 : output.ppfd <= 700
-                ? `Guter Bereich für die vegetative Phase. DLI: ${output.dli} mol/m²/d.`
+                ? t('lighting.interpVeg', { dli: output.dli })
                 : output.ppfd <= 1000
-                ? `Optimal für die Blüte. DLI: ${output.dli} mol/m²/d — super.`
-                : 'Sehr intensive Beleuchtung — CO₂ und präzise Temperaturkontrolle nötig.'
+                ? t('lighting.interpFlower', { dli: output.dli })
+                : t('lighting.interpVeryHigh')
             }
             recommendation={
               output.ppfd < 250
-                ? 'Hänge die Lampe tiefer oder verwende ein stärkeres Leuchtmittel.'
+                ? t('lighting.recLow')
                 : output.ppfd > 1200
-                ? 'Erhöhe den Lampenabstand oder ergänze CO₂ auf 1.000–1.200 ppm.'
+                ? t('lighting.recHigh')
                 : undefined
             }
           >
             <ToolResult
-              label="PPFD (geschätzt)"
+              label={t('lighting.labelPpfd')}
               value={`${output.ppfd}`}
               unit="µmol/m²/s"
               level={output.results[0]?.level}
@@ -190,39 +185,39 @@ export default function LichtRechnerPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <ToolResult
-                label="DLI"
+                label={t('lighting.labelDli')}
                 value={`${output.dli}`}
                 unit="mol/m²/d"
                 explanation={output.results[1]?.explanation}
               />
               <ToolResult
-                label="Gesamt-PPF"
+                label={t('lighting.labelTotalPpf')}
                 value={`${output.ppf}`}
                 unit="µmol/s"
               />
               <ToolResult
-                label="Nutzbare PPF"
+                label={t('lighting.labelUsablePpf')}
                 value={`${output.nutzbarePPF}`}
                 unit="µmol/s"
               />
               <ToolResult
-                label="Höhenkorrektor"
+                label={t('lighting.labelHeightFactor')}
                 value={output.results[4]?.formatted ?? '—'}
               />
             </div>
           </ToolResultCard>
 
           <ToolRangeBar
-            label="PPFD einordnen"
+            label={t('lighting.rangeBarLabel')}
             value={output.ppfd}
             min={0}
             max={1500}
             unit="µmol/m²/s"
             zones={[
-              { from: 0, to: 250, level: 'rot', label: 'Niedrig' },
-              { from: 250, to: 600, level: 'gelb', label: 'Mittel' },
-              { from: 600, to: 1000, level: 'gruen', label: 'Optimal' },
-              { from: 1000, to: 1500, level: 'gelb', label: 'Hoch' },
+              { from: 0, to: 250, level: 'rot', label: t('rangeLow') },
+              { from: 250, to: 600, level: 'gelb', label: t('rangeMid') },
+              { from: 600, to: 1000, level: 'gruen', label: t('rangeOptimal') },
+              { from: 1000, to: 1500, level: 'gelb', label: t('rangeHigh') },
             ]}
           />
         </div>

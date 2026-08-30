@@ -29,13 +29,6 @@ const DEFAULTS: YieldInputs = {
   duengerIntensitaet: 'mittel',
 };
 
-const TIPS = [
-  'Diese Schätzung schwankt in der Praxis um ±30 % — nimm sie als Planungsbasis, nicht als Versprechen.',
-  'Indoor-Ziel: 0.5 g/W für Einsteiger ist realistisch. 1 g/W und mehr braucht optimale Bedingungen.',
-  'Autoflower: kürzerer Zyklus, aber weniger Kontrolle über den Zeitpunkt der Blüteeinleitung.',
-  'Hydro lohnt sich erst, wenn du EC, pH und Temperatur zuverlässig im Griff hast.',
-];
-
 export default function ErtragSchaetzerPage() {
   const { inputs, setInput, loaded, saveSnapshot } = useToolState({
     slug: 'ertrags-schaetzer',
@@ -43,8 +36,10 @@ export default function ErtragSchaetzerPage() {
     setupKeys: ['lampenLeistung', 'substrat', 'anbauMethode', 'erfahrung'],
   });
 
-  const t = useTranslations('toolResult');
-  const output = useMemo(() => calculateYield(inputs, t), [inputs, t]);
+  const tr = useTranslations('toolResult');
+  const t = useTranslations('tool');
+  const output = useMemo(() => calculateYield(inputs, tr), [inputs, tr]);
+  const TIPS = [t('yield.tip1'), t('yield.tip2'), t('yield.tip3'), t('yield.tip4')];
 
   useMemo(() => {
     if (loaded) saveSnapshot(inputs, output.results);
@@ -67,13 +62,13 @@ export default function ErtragSchaetzerPage() {
         {/* ── Inputs ──────────────────────────────────── */}
         <div className="space-y-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div>
-            <h2 className="text-base font-bold text-foreground">Dein Grow-Setup</h2>
-            <p className="mt-0.5 text-xs text-muted-fg">Je genauer deine Angaben, desto besser die Prognose.</p>
+            <h2 className="text-base font-bold text-foreground">{t('yield.setupTitle')}</h2>
+            <p className="mt-0.5 text-xs text-muted-fg">{t('yield.setupHint')}</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ToolSelect
-              label="Anbaumethode"
+              label={t('yield.method')}
               value={inputs.anbauMethode}
               onChange={(v) => setInput('anbauMethode', v as 'indoor' | 'outdoor')}
               options={[
@@ -83,25 +78,25 @@ export default function ErtragSchaetzerPage() {
             />
             {inputs.anbauMethode === 'indoor' && (
               <ToolSelect
-                label="Erfahrung"
+                label={t('yield.experience')}
                 value={inputs.erfahrung}
                 onChange={(v) => setInput('erfahrung', v as TerpiraDifficulty)}
                 options={[
-                  { value: 'einsteiger', label: 'Einsteiger' },
-                  { value: 'fortgeschritten', label: 'Fortgeschritten' },
-                  { value: 'profi', label: 'Profi' },
+                  { value: 'einsteiger', label: t('yield.expEinsteiger') },
+                  { value: 'fortgeschritten', label: t('yield.expFortgeschritten') },
+                  { value: 'profi', label: t('yield.expProfi') },
                 ]}
               />
             )}
             {inputs.anbauMethode === 'outdoor' && (
               <ToolSelect
-                label="Vegetationsdauer vor der Blüte"
+                label={t('yield.vegDuration')}
                 value={inputs.vegDauer}
                 onChange={(v) => setInput('vegDauer', v as YieldInputs['vegDauer'])}
                 options={[
-                  { value: 'kurz', label: 'Kurz (< 4 Wochen)' },
-                  { value: 'standard', label: 'Standard (4–8 Wochen)' },
-                  { value: 'verlaengert', label: 'Verlängert (> 8 Wochen)' },
+                  { value: 'kurz', label: t('yield.vegShort') },
+                  { value: 'standard', label: t('yield.vegStandard') },
+                  { value: 'verlaengert', label: t('yield.vegExtended') },
                 ]}
               />
             )}
@@ -109,21 +104,21 @@ export default function ErtragSchaetzerPage() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ToolSelect
-              label="Genetik"
+              label={t('yield.genetics')}
               value={inputs.genetik}
               onChange={(v) => setInput('genetik', v as YieldInputs['genetik'])}
               options={[
-                { value: 'feminisiert', label: 'Feminisiert' },
+                { value: 'feminisiert', label: t('yield.genFeminized') },
                 { value: 'autoflower', label: 'Autoflower' },
-                { value: 'regular', label: 'Regulär' },
+                { value: 'regular', label: t('yield.genRegular') },
               ]}
             />
             <ToolSelect
-              label="Substrat"
+              label={t('yield.substrate')}
               value={inputs.substrat}
               onChange={(v) => setInput('substrat', v as Substrat)}
               options={[
-                { value: 'erde', label: 'Erde' },
+                { value: 'erde', label: t('yield.substrateSoil') },
                 { value: 'coco', label: 'Coco' },
                 { value: 'hydro', label: 'Hydro' },
               ]}
@@ -131,7 +126,7 @@ export default function ErtragSchaetzerPage() {
           </div>
 
           <ToolInput
-            label="Anbaufläche"
+            label={t('yield.growArea')}
             value={inputs.flaeche}
             onChange={(v) => setInput('flaeche', v)}
             unit="m²"
@@ -141,18 +136,18 @@ export default function ErtragSchaetzerPage() {
           />
 
           <ToolInput
-            label="Pflanzenanzahl"
+            label={t('yield.plantCount')}
             value={inputs.pflanzenAnzahl}
             onChange={(v) => setInput('pflanzenAnzahl', Math.round(v))}
             min={1}
             max={100}
             step={1}
-            hint={`Dichte: ${(inputs.pflanzenAnzahl / Math.max(0.25, inputs.flaeche)).toFixed(1)} Pflanzen/m²`}
+            hint={t('yield.densityHint', { density: (inputs.pflanzenAnzahl / Math.max(0.25, inputs.flaeche)).toFixed(1) })}
           />
 
           {inputs.anbauMethode === 'indoor' && (
             <ToolSlider
-              label="Lichtleistung"
+              label={t('yield.lightPower')}
               value={inputs.lichtLeistung}
               onChange={(v) => setInput('lichtLeistung', v)}
               min={100}
@@ -171,7 +166,7 @@ export default function ErtragSchaetzerPage() {
           {inputs.anbauMethode === 'outdoor' && (
             <div>
               <ToolSlider
-                label="Topfgröße pro Pflanze"
+                label={t('yield.potSize')}
                 value={inputs.topfgroesseLiter}
                 onChange={(v) => setInput('topfgroesseLiter', v)}
                 min={5}
@@ -186,19 +181,19 @@ export default function ErtragSchaetzerPage() {
                 ]}
               />
               <p className="mt-1.5 text-xs text-muted-fg">
-                Wurzelraum ist der wichtigste Einzelfaktor für Outdoor-Ertrag — größerer Topf schlägt Erfahrung.
+                {t('yield.potNote')}
               </p>
             </div>
           )}
 
           <ToolSelect
-            label="Dünger-Intensität"
+            label={t('yield.feedIntensity')}
             value={inputs.duengerIntensitaet}
             onChange={(v) => setInput('duengerIntensitaet', v as YieldInputs['duengerIntensitaet'])}
             options={[
-              { value: 'niedrig', label: 'Niedrig (organisch/minimal)' },
-              { value: 'mittel', label: 'Mittel (Standard-Dosierung)' },
-              { value: 'hoch', label: 'Hoch (optimiert)' },
+              { value: 'niedrig', label: t('yield.feedLow') },
+              { value: 'mittel', label: t('yield.feedMid') },
+              { value: 'hoch', label: t('yield.feedHigh') },
             ]}
           />
         </div>
@@ -206,24 +201,24 @@ export default function ErtragSchaetzerPage() {
         {/* ── Results ─────────────────────────────────── */}
         <div className="space-y-5">
           <ToolResultCard
-            title="Dein geschätzter Ertrag"
+            title={t('yield.cardTitle')}
             interpretation={
               output.ertragProQm < 200
-                ? `${output.ertragProPflanze} g/Pflanze ist ein typischer Einsteiger-Wert. Sehr viel Potenzial nach oben.`
+                ? t('yield.interpLow', { perPlant: output.ertragProPflanze })
                 : output.ertragProQm < 400
-                ? `Solider Wert. Bessere Veg-Phase und optimierte Nährstoffe können ihn deutlich steigern.`
-                : `Starke Prognose. Du brauchst hier präzise Kontrolle über Licht, Klima und Nährstoffe.`
+                ? t('yield.interpMid')
+                : t('yield.interpHigh')
             }
             recommendation={
               output.ertragProQm < 200
-                ? 'Prüfe zuerst Licht und Nährstoffe — das bringt am meisten.'
+                ? t('yield.recLow')
                 : output.ertragProQm > 600
-                ? 'Diese Zahl ist unter Idealbedingungen möglich — plane mit 60–70 % als sicherem Wert.'
+                ? t('yield.recHigh')
                 : undefined
             }
           >
             <ToolResult
-              label="Geschätzter Gesamtertrag"
+              label={t('yield.labelTotal')}
               value={`${output.gesamtErtrag}`}
               unit="g"
               level={output.results[0]?.level}
@@ -233,38 +228,38 @@ export default function ErtragSchaetzerPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <ToolResult
-                label="Pro Pflanze"
+                label={t('yield.labelPerPlant')}
                 value={`${output.ertragProPflanze}`}
                 unit="g/Pflanze"
               />
               <ToolResult
-                label="Pro Quadratmeter"
+                label={t('yield.labelPerSqm')}
                 value={`${output.ertragProQm}`}
                 unit="g/m²"
               />
             </div>
 
             <ToolResult
-              label="Basiskalkulation"
+              label={t('yield.labelBaseCalc')}
               value={output.results[3]?.formatted ?? '—'}
             />
             <ToolResult
-              label="Korrekturfaktoren"
+              label={t('yield.labelFactors')}
               value={output.results[4]?.formatted ?? '—'}
             />
           </ToolResultCard>
 
           <ToolRangeBar
-            label="Ertrag/m² einordnen"
+            label={t('yield.rangeBarLabel')}
             value={output.ertragProQm}
             min={0}
             max={800}
             unit="g/m²"
             zones={[
-              { from: 0, to: 200, level: 'rot', label: 'Niedrig' },
-              { from: 200, to: 400, level: 'gelb', label: 'Mittel' },
-              { from: 400, to: 600, level: 'gruen', label: 'Gut' },
-              { from: 600, to: 800, level: 'gelb', label: 'Top' },
+              { from: 0, to: 200, level: 'rot', label: t('rangeLow') },
+              { from: 200, to: 400, level: 'gelb', label: t('rangeMid') },
+              { from: 400, to: 600, level: 'gruen', label: t('rangeGood') },
+              { from: 600, to: 800, level: 'gelb', label: t('rangeTop') },
             ]}
           />
         </div>

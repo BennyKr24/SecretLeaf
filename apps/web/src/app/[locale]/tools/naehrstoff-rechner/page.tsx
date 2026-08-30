@@ -25,13 +25,6 @@ const DEFAULTS: NutrientInputs = {
   produktName: 'Allgemein',
 };
 
-const TIPS = [
-  'Kalibriere dein EC-Meter regelmäßig — ein Fehler von ±0.3 macht bei Pflanzen einen Unterschied.',
-  'Bei Coco immer CalMag hinzufügen — Coco bindet Kalzium und Magnesium aktiv.',
-  'Drain-EC deutlich über Input-EC (>+0.5)? Dann mit klarem Wasser spülen.',
-  'Hohe Temperaturen → Pflanzen trinken mehr als sie fressen → EC im Substrat steigt.',
-];
-
 export default function NaehrstoffRechnerPage() {
   const { inputs, setInput, loaded, saveSnapshot } = useToolState({
     slug: 'naehrstoff-rechner',
@@ -39,8 +32,10 @@ export default function NaehrstoffRechnerPage() {
     setupKeys: ['substrat'],
   });
 
-  const t = useTranslations('toolResult');
-  const output = useMemo(() => calculateNutrients(inputs, t), [inputs, t]);
+  const tr = useTranslations('toolResult');
+  const t = useTranslations('tool');
+  const output = useMemo(() => calculateNutrients(inputs, tr), [inputs, tr]);
+  const TIPS = [t('nutrients.tip1'), t('nutrients.tip2'), t('nutrients.tip3'), t('nutrients.tip4')];
 
   useMemo(() => {
     if (loaded) saveSnapshot(inputs, output.results);
@@ -63,13 +58,13 @@ export default function NaehrstoffRechnerPage() {
         {/* ── Inputs ──────────────────────────────────── */}
         <div className="space-y-6 rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div>
-            <h2 className="text-base font-bold text-foreground">Deine Nährlösung</h2>
-            <p className="mt-0.5 text-xs text-muted-fg">Basisdosierung steht auf dem Produkt — oder nutze 2.0 ml/L als Startwert.</p>
+            <h2 className="text-base font-bold text-foreground">{t('nutrients.solutionTitle')}</h2>
+            <p className="mt-0.5 text-xs text-muted-fg">{t('nutrients.solutionHint')}</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ToolSlider
-              label="Ausgangs-EC (Wasser)"
+              label={t('nutrients.sourceEc')}
               value={inputs.ausgangsEC}
               onChange={(v) => setInput('ausgangsEC', v)}
               min={0}
@@ -78,7 +73,7 @@ export default function NaehrstoffRechnerPage() {
               unit="mS/cm"
             />
             <ToolSlider
-              label="Ziel-EC"
+              label={t('nutrients.targetEc')}
               value={inputs.zielEC}
               onChange={(v) => setInput('zielEC', v)}
               min={0.5}
@@ -87,41 +82,41 @@ export default function NaehrstoffRechnerPage() {
               unit="mS/cm"
               marks={[
                 { value: 0.5, label: '0.5' },
-                { value: 1.4, label: 'Veg' },
-                { value: 2.2, label: 'Blüte' },
+                { value: 1.4, label: t('nutrients.markVeg') },
+                { value: 2.2, label: t('nutrients.markFlower') },
                 { value: 3.5, label: '3.5' },
               ]}
             />
           </div>
 
           <ToolInput
-            label="Wassermenge"
+            label={t('nutrients.waterAmount')}
             value={inputs.wassermenge}
             onChange={(v) => setInput('wassermenge', v)}
-            unit="Liter"
+            unit={t('nutrients.waterUnit')}
             min={1}
             max={500}
             step={1}
-            hint="Gesamtvolumen der Nährlösung"
+            hint={t('nutrients.waterHint')}
           />
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ToolSelect
-              label="Phase"
+              label={t('nutrients.phase')}
               value={inputs.phase}
               onChange={(v) => setInput('phase', v as NutrientInputs['phase'])}
               options={[
-                { value: 'veg', label: 'Vegetativ' },
-                { value: 'uebergang', label: 'Übergang' },
-                { value: 'bluete', label: 'Blüte' },
+                { value: 'veg', label: t('nutrients.phaseVeg') },
+                { value: 'uebergang', label: t('nutrients.phaseTransition') },
+                { value: 'bluete', label: t('nutrients.phaseFlower') },
               ]}
             />
             <ToolSelect
-              label="Substrat"
+              label={t('nutrients.substrate')}
               value={inputs.substrat}
               onChange={(v) => setInput('substrat', v as Substrat)}
               options={[
-                { value: 'erde', label: 'Erde' },
+                { value: 'erde', label: t('nutrients.substrateSoil') },
                 { value: 'coco', label: 'Coco' },
                 { value: 'hydro', label: 'Hydro' },
               ]}
@@ -130,26 +125,26 @@ export default function NaehrstoffRechnerPage() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <ToolInput
-              label="Basisdosierung"
+              label={t('nutrients.baseDosage')}
               value={inputs.dosierungBasis}
               onChange={(v) => setInput('dosierungBasis', v)}
-              unit="ml/L bei EC 1.0"
+              unit={t('nutrients.baseDosageUnit')}
               min={0.5}
               max={10}
               step={0.5}
-              hint="Herstellerangabe oder Erfahrungswert"
+              hint={t('nutrients.baseDosageHint')}
             />
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wide text-muted-fg">Produktname</label>
+              <label className="text-xs font-semibold uppercase tracking-wide text-muted-fg">{t('nutrients.productName')}</label>
               <input
                 type="text"
                 value={inputs.produktName}
                 onChange={(e) => setInput('produktName', e.target.value)}
                 className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-medium text-foreground outline-none
                   transition-[border-color,box-shadow] hover:border-emerald-300 focus:ring-2 focus:ring-emerald-200"
-                placeholder="z. B. BioBizz, Canna …"
+                placeholder={t('nutrients.productPlaceholder')}
               />
-              <p className="text-xs text-muted-fg">Für eigene Zuordnung</p>
+              <p className="text-xs text-muted-fg">{t('nutrients.productHelp')}</p>
             </div>
           </div>
         </div>
@@ -157,24 +152,24 @@ export default function NaehrstoffRechnerPage() {
         {/* ── Results ─────────────────────────────────── */}
         <div className="space-y-5">
           <ToolResultCard
-            title="Du gibst pro Liter"
+            title={t('nutrients.cardTitle')}
             interpretation={
               output.ecDifferenz < 0.3
-                ? 'Dein Leitungswasser hat schon viel Mineralien — wenig Dünger nötig.'
+                ? t('nutrients.interpLowEc')
                 : output.dosierungProLiter < 1
-                ? `Sehr geringe Dosis. Starte damit und erhöhe schrittweise.`
-                : `Für ${inputs.wassermenge} L Nährlösung auf EC ${inputs.zielEC} mS/cm.`
+                ? t('nutrients.interpLowDose')
+                : t('nutrients.interpNormal', { liters: inputs.wassermenge, ec: inputs.zielEC })
             }
             recommendation={
               output.dosierungProLiter > 5
-                ? 'Teile die Gabe in zwei Teile auf und prüfe den pH nach jedem Schritt.'
+                ? t('nutrients.recSplit')
                 : output.ecDifferenz < 0.3
-                ? 'Messe die Drain-EC regelmäßig — Salzaufbau ist hier wahrscheinlicher.'
+                ? t('nutrients.recDrain')
                 : undefined
             }
           >
             <ToolResult
-              label="Empfohlene Dosierung"
+              label={t('nutrients.labelDosage')}
               value={`${output.dosierungProLiter}`}
               unit="ml/L"
               level={output.results[0]?.level}
@@ -184,35 +179,35 @@ export default function NaehrstoffRechnerPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <ToolResult
-                label="Gesamtmenge"
+                label={t('nutrients.labelTotal')}
                 value={`${output.gesamtDosierung}`}
                 unit="ml"
                 explanation={output.results[1]?.explanation}
               />
               <ToolResult
-                label="EC-Differenz"
+                label={t('nutrients.labelEcDiff')}
                 value={`${output.ecDifferenz}`}
                 unit="mS/cm"
               />
             </div>
 
             <ToolResult
-              label="Korrekturfaktoren"
+              label={t('nutrients.labelFactors')}
               value={output.results[3]?.formatted ?? '—'}
             />
           </ToolResultCard>
 
           <ToolRangeBar
-            label="Ziel-EC einordnen"
+            label={t('nutrients.rangeBarLabel')}
             value={inputs.zielEC}
             min={0}
             max={4}
             unit="mS/cm"
             zones={[
-              { from: 0, to: 0.8, level: 'gelb', label: 'Keimlinge' },
-              { from: 0.8, to: 1.8, level: 'gruen', label: 'Veg' },
-              { from: 1.8, to: 2.5, level: 'gruen', label: 'Blüte' },
-              { from: 2.5, to: 4.0, level: 'rot', label: 'Hoch' },
+              { from: 0, to: 0.8, level: 'gelb', label: t('nutrients.rangeSeedlings') },
+              { from: 0.8, to: 1.8, level: 'gruen', label: t('nutrients.markVeg') },
+              { from: 1.8, to: 2.5, level: 'gruen', label: t('nutrients.markFlower') },
+              { from: 2.5, to: 4.0, level: 'rot', label: t('rangeHigh') },
             ]}
           />
 
