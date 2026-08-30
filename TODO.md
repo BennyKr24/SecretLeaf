@@ -87,21 +87,16 @@ Offen:
 
 ## 🌐 Übersetzung / i18n
 
-- ⏸️ **Englisch-Übersetzer (`TranslateButton` → `/api/translate` → MyMemory)
-  ist für den echten Content ungeeignet, bräuchte einen anderen Anbieter.**
-  Root Cause gefunden (2026-08-15): `apps/web/src/app/api/translate/route.ts`
-  nutzt die kostenlose MyMemory-API mit harten Limits — 500 Zeichen pro
-  Request (`text.slice(0, 500)`) und ~5.000 Zeichen/Tag/IP, geteilt über
-  **alle** Nutzer, die von derselben Vercel-Server-IP übersetzen. Studien-
-  Artikel sind oft mehrere tausend Zeichen lang, das Tageslimit ist damit
-  praktisch sofort aufgebraucht — deckt sich mit dem Nutzer-Report "geht bei
-  Studien nicht, eigentlich überall nicht". Betroffen: `TranslateButton.tsx`
-  (überall verwendet, nicht nur Studien) + `lib/translate.ts`. Fix braucht
-  eine Entscheidung für einen echten Übersetzungs-Backend (z. B. DeepL-API,
-  oder über den bereits integrierten Anthropic-Client aus dem Admin-AI-
-  Assist-Feature laufen lassen, oder Studien-Content einmalig statisch
-  vorübersetzen statt live on-demand) — daher noch kein Code-Fix, erstmal
-  Anbieter-Entscheidung nötig.
+- 🔧 **Englisch-Übersetzer wird dauerhaft neu gebaut — Plan + Fortschritt in
+  `docs/I18N_TRANSLATION_PLAN.md`.** Kurz: MyMemory (`api/translate` →
+  500 Zeichen/Request, ~5.000/Tag/IP geteilt) raus; statt Live-Übersetzung
+  eine Commit-Zeit-Pipeline (`scripts/translate-content.mjs`) über den
+  vorhandenen Anthropic-Client, mit Translation Memory + Glossar
+  (`docs/i18n/`) + CI-Check. Deckt Wiki (75), Diagnostics (20),
+  Diagnose-Baum und — separat als ICU-Templates — die Tool-Erklärungen ab.
+  Nächster Schritt: Pilot-Lauf `npm run i18n:translate:pilot` (braucht
+  `ANTHROPIC_API_KEY`, kostet Credits), dann Review. Details/Subtasks im
+  Plan-Doc.
 
 ## 🧪 Dünger-Katalog (`/database`, `/database/fertilizers`) — Restructure Phase 2/3
 

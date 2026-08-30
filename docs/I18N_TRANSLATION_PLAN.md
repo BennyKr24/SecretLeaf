@@ -1,0 +1,155 @@
+# I18N / Content-Übersetzung — Plan & Fortschritt
+
+**Ziel:** `/en/*` liefert echten englischen Inhalt (nicht nur die UI-Hülle),
+bleibt bei neuen deutschen Inhalten automatisch synchron, und hält
+Fachterminologie konsistent. Kein Live-Übersetzen zur Laufzeit, keine
+externen Vendor-Kosten im Betrieb.
+
+Status-Legende: `[ ]` offen · `[~]` in Arbeit · `[x]` fertig & verifiziert
+
+---
+
+## Ausgangslage (Code-Check 2026-08-30)
+
+- `api/translate/route.ts` nutzt die MyMemory-Gratis-API: `text.slice(0, 500)`
+  + ~5.000 Zeichen/Tag geteilt über **alle** Nutzer derselben Vercel-IP →
+  für Fließtext praktisch tot, fällt still auf Deutsch zurück.
+- `TranslateButton` hängt nur an 2 Stellen: `DiagnoseResult.tsx`,
+  `ToolResult.tsx`. **Nicht** in den Studien.
+- `studies/[slug]/page.tsx` liest `locale` gar nicht → `/en/studies/xyz`
+  zeigt wortwörtlich deutschen Artikeltext. Betroffen: 75 Wiki-Artikel
+  (`data/terpira/wiki.ts`), 20 Diagnose-Artikel (`data/terpira/diagnostics.ts`),
+  Diagnose-Baum (`lib/diagnose/tree.ts`), Tool-Erklärungen (`lib/tools/*.ts`).
+- Anthropic-Client existiert schon: `lib/ai/anthropic.ts` (`askClaude`,
+  `ANTHROPIC_API_KEY`), bisher admin-only. Kein neuer Vendor nötig.
+- **Der übersetzbare Content ist endlich und zur Build-Zeit bekannt**
+  (alles Datendateien, kein User-Content) → einmal übersetzen, cachen,
+  mitcommitten.
+
+## Architektur-Entscheidung
+
+**Claude-basiert, zur Commit-Zeit, gecacht, mit Projekt-Glossar.**
+
+- Provider: vorhandener Anthropic-Client. DeepL wäre für Term-Konsistenz
+  minimal besser (eingebautes Glossar), aber Free/Pro-Tarif seit Juli 2026
+  abgekündigt (Developer/Growth ~26 $/Mon) + neuer Vendor + Billing. Claude
+  + gecachter Glossar-/Styleguide-System-Prompt + Lint-Check schließt die
+  Konsistenzlücke, ohne neue Abhängigkeit.
+- Translation Memory: pro Quelldatei ein JSON, Key = Hash des deutschen
+  Quellstrings, Wert = `{ de, en }`. Unveränderte Strings werden nie neu
+  übersetzt. Neue/geänderte Strings → ein Claude-Batch-Call.
+- CI-Check erzwingt Vollständigkeit: PR mit unübersetzten deutschen Strings
+  wird rot.
+
+### Drei Tracks
+
+| Track | Inhalt | Methode |
+|---|---|---|
+| **A — Bulk-Content** | `wiki.ts`, `diagnostics.ts`, `tree.ts` (statische Prosa) | Pipeline + Translation Memory, feldweises Overlay bei `locale === "en"` |
+| **B — Tools** | ~25 Erklärungs-Strings in `lib/tools/*.ts` — **stark interpoliert** (`` `Bei ${x} cm …` ``) | In `messages/{de,en}.json` als ICU-Templates mit Platzhaltern verschieben, einmal übersetzen, zur Laufzeit interpolieren |
+| **C — Rendering & Cleanup** | Render-Pfade auf `en` verdrahten, `TranslateButton` + `api/translate` zurückbauen | — |
+
+---
+
+## Track A — Bulk-Content-Pipeline
+
+### A1 — Terminologie-Fundament
+- [x] `docs/i18n/glossary.json` — kuratierte DE→EN-Fachbegriffe + „nicht
+      übersetzen"-Liste
+- [x] `docs/i18n/styleguide.md` — Register, Anrede, Einheiten, Rechtstext-Umgang
+
+### A2 — Pipeline-Skript `scripts/translate-content.mjs`
+- [x] esbuild-Transpile + dynamischer Import von `wiki.ts` / `diagnostics.ts` /
+      `tree.ts` (löst `@/`-Alias auf, erzeugt die final zusammengesetzten
+      Objektlisten inkl. Seed-Expansion)
+- [x] String-Extraktion über bekannte Feldpfade auf `TerpiraArticle` /
+      `DiagnoseResult` (Prosa-Felder, keine Slugs/IDs/Zahlen-Metadaten)
+- [x] Translation-Memory-Dateien lesen/schreiben:
+      `apps/web/src/data/i18n/en.{wiki,diagnostics,diagnose-tree}.json`
+- [x] `--check` (CI): fehlt zu einem deutschen String der EN-Eintrag → exit 1
+- [x] `--stats`: Anzahl Strings / Zeichen / fehlend, pro Quelle
+- [x] `--prune`: TM-Einträge melden/entfernen, deren `de` nicht mehr vorkommt
+- [x] `--translate` [`--only=<quelle>`] [`--pilot=<n>`]: fehlende Strings
+      gebündelt an Claude, System-Prompt = Glossar + Styleguide +
+      Referenzübersetzungen (mit Prompt-Caching), JSON-Output → TM mergen
+- [x] npm-Scripts in Root-`package.json`: `i18n:check`, `i18n:stats`,
+      `i18n:translate`, `i18n:translate:pilot`
+- [x] leere TM-Dateien committet
+
+### A3 — Pilot & Qualitätsprüfung
+- [ ] `npm run i18n:translate:pilot` (nur `diagnostics`, ~15 Strings)
+      — **braucht `ANTHROPIC_API_KEY`, kostet API-Credits → Benny startet das**
+- [ ] Pilot-Output gegen Glossar/Styleguide reviewen; Prompt/Glossar nachziehen
+- [ ] Entscheidung: so weiterfahren / Prompt anpassen / doch DeepL
+
+### A4 — Vollübersetzung
+- [ ] `npm run i18n:translate --only=tree`
+- [ ] `npm run i18n:translate --only=diagnostics`
+- [ ] `npm run i18n:translate --only=wiki` (größter Batch, ggf. in Tranchen)
+- [ ] TM-Dateien reviewen (Stichprobe je Kategorie) + committen
+
+### A5 — Rendering-Overlay
+- [ ] `getArticleBySlug(slug, locale)` / `wikiArticles`-Zugriff: bei `en` die
+      TM-Übersetzung feldweise über den deutschen Artikel legen; fehlendes
+      Feld → deutscher Fallback + dezenter Hinweis „noch nicht übersetzt"
+- [ ] `studies/[slug]/page.tsx`, `category/[slug]/page.tsx`,
+      `studies/page.tsx`, `studies/sources` etc.: `locale` durchreichen
+- [ ] `generateMetadata` (Titel/Description) ebenfalls lokalisiert
+- [ ] Diagnose-Baum-Ergebnisse (`DiagnoseResult.tsx`) aus TM statt Rohtext
+- [ ] `hreflang`/Canonical prüfen — jetzt ehrlich zweisprachig
+
+---
+
+## Track B — Tools (ICU-Templates)
+
+- [ ] Erklärungs-Strings in `lib/tools/{lighting,nutrients,ventilation,vpd,yield}.ts`
+      inventarisieren (inkl. Helfer `ppfdExplanation`, `vpdExplanation`)
+- [ ] Jede Erklärung in `messages/de.json` unter `toolResult.*` als
+      ICU-Message mit benannten Platzhaltern (`{hoehe}`, `{pct}`, …)
+- [ ] Tool-Funktionen geben `{ key, values }` statt fertigem String zurück
+      (oder `t()` im Component-Layer, wo `explanation` gerendert wird)
+- [ ] `messages/en.json`: dieselben Keys übersetzt (Glossar beachten:
+      VPD, PPFD, EC, DLI bleiben; „Aufhänghöhe" → „mounting height" etc.)
+- [ ] `ToolResult.tsx`: `TranslateButton` entfernen, `explanation` direkt rendern
+- [ ] Kalibrierungs-/Ampel-Texte („Guter Bereich für aktives Wachstum.")
+      mit abdecken
+
+---
+
+## Track C — Cleanup
+
+- [ ] `TranslateButton` aus `DiagnoseResult.tsx` + `ToolResult.tsx` entfernen
+- [ ] `components/TranslateButton.tsx` löschen (oder auf dünnen
+      Claude-Fallback für echte Laufzeit-nur-Strings reduzieren — nur falls
+      nach A/B noch welche übrig sind)
+- [ ] `lib/translate.ts` + `api/translate/route.ts` löschen (kein Caller mehr)
+      bzw. auf `askClaude` + Cache umstellen
+- [ ] `messages/{de,en}.json` `translate.*`-Keys aufräumen
+- [ ] CSP / `connect-src`: `api.mymemory.translated.net` war nie drin — nichts
+      zu tun; nur prüfen, dass nichts anderes auf den alten Endpoint zeigt
+
+---
+
+## Track D — Mitpflegen automatisieren
+
+- [ ] `npm run i18n:check` in die CI-Lint-Stufe hängen (PR #23 fügt gerade
+      Lint-in-CI hinzu — dort andocken)
+- [ ] Glossar-Lint: EN-String, der einen Glossarbegriff abweichend übersetzt
+      → Warnung (einfache Wortliste, kein NLP)
+- [ ] `docs/CONTENT_BACKLOG.md` / Content-Factory-Doku: Hinweis „nach dem
+      Mergen neuer DE-Artikel `npm run i18n:translate` laufen lassen"
+- [ ] optional GitHub Action: bei Diff an den Content-Dateien Pipeline laufen
+      lassen, Übersetzungen als Commit an den PR hängen
+
+---
+
+## Reihenfolge
+
+A1 → A2 → **A3 (Pilot, Benny startet)** → A4 → B → A5 → C → D
+
+## Nicht in Scope
+
+- Weitere Sprachen als EN (Struktur ist aber sprachneutral).
+- Übersetzung des Impressums / der Datenschutzerklärung (bewusst DE-only mit
+  EN-Kontakt-Hinweis, siehe `datenschutz/page.tsx`).
+- TMS-Anbindung (Crowdin/Locize) — Overkill für Solo-Projekt.
