@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { getSetupCoverage, getToolHistory } from '@/hooks/useToolState';
 import { toolRegistry } from '@/lib/tools/registry';
-import { toolCategoryColor, toolCategoryIcon, toolCategoryLabel, toolCategoryAccent } from '@/lib/tools/types';
+import { toolCategoryColor, toolCategoryIcon, toolCategoryAccent } from '@/lib/tools/types';
 import type { ToolCategory } from '@/lib/tools/types';
 import { CheckCircle2, Circle } from 'lucide-react';
 
@@ -17,13 +18,16 @@ const categoryIconBg: Record<ToolCategory, string> = {
 };
 
 const COVERAGE_KEYS = [
-  { key: 'klima', label: 'Klima', slug: 'abluft-rechner' },
-  { key: 'licht', label: 'Licht', slug: 'licht-rechner' },
-  { key: 'naehrstoffe', label: 'Nährstoffe', slug: 'naehrstoff-rechner' },
-  { key: 'ertrag', label: 'Ertrag', slug: 'ertrags-schaetzer' },
+  { key: 'klima', msg: 'hubCovKlima', slug: 'abluft-rechner' },
+  { key: 'licht', msg: 'hubCovLicht', slug: 'licht-rechner' },
+  { key: 'naehrstoffe', msg: 'hubCovNaehrstoffe', slug: 'naehrstoff-rechner' },
+  { key: 'ertrag', msg: 'hubCovErtrag', slug: 'ertrags-schaetzer' },
 ] as const;
 
 export default function ToolsHubClient() {
+  const t = useTranslations('toolsPage');
+  const tt = useTranslations('tool');
+  const cap = (c: string) => c.charAt(0).toUpperCase() + c.slice(1);
   // Start with the same empty state the server renders — localStorage is
   // only readable on the client, so reading it in the useState initializer
   // would make the first client render diverge from the SSR output and
@@ -53,7 +57,7 @@ export default function ToolsHubClient() {
       {recentTool && (
         <section>
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-muted-fg">
-            Weiter machen
+            {t('hubContinue')}
           </p>
           <Link
             href={`/tools/${recentTool.slug}` as Route}
@@ -64,14 +68,14 @@ export default function ToolsHubClient() {
             </div>
             <div className="min-w-0">
               <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${toolCategoryColor[recentTool.category]}`}>
-                {RecentCategoryIcon && <RecentCategoryIcon className="h-3 w-3" strokeWidth={2.5} />} {toolCategoryLabel[recentTool.category]}
+                {RecentCategoryIcon && <RecentCategoryIcon className="h-3 w-3" strokeWidth={2.5} />} {tt(`category${cap(recentTool.category)}`)}
               </span>
               <p className="mt-0.5 text-sm font-bold text-foreground transition-colors group-hover:text-emerald-700">
-                {recentTool.title}
+                {tt(`registry.${recentTool.slug}.title`)}
               </p>
             </div>
             <span className="ml-auto flex-shrink-0 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition-colors group-hover:bg-emerald-100">
-              Weiter →
+              {t('hubContinueBtn')}
             </span>
           </Link>
         </section>
@@ -81,13 +85,13 @@ export default function ToolsHubClient() {
       <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-sm font-bold text-foreground">Grow-Check</h2>
+            <h2 className="text-sm font-bold text-foreground">{t('hubGrowCheck')}</h2>
             <p className="mt-0.5 text-xs text-muted-fg">
               {done === 0
-                ? 'Kein Bereich analysiert — starte mit dem ersten Tool.'
+                ? t('hubCheckNone')
                 : done === total
-                ? 'Dein Setup ist vollständig analysiert.'
-                : `${total - done} ${total - done === 1 ? 'Bereich' : 'Bereiche'} noch offen.`}
+                ? t('hubCheckComplete')
+                : t('hubCheckOpen', { count: total - done })}
             </p>
           </div>
           <span className="text-2xl font-bold tabular-nums text-emerald-600">
@@ -118,7 +122,7 @@ export default function ToolsHubClient() {
                       : 'border-border bg-background text-muted-fg hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700'
                   }`}
               >
-                {isDone ? <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} /> : <Circle className="h-3.5 w-3.5" strokeWidth={2} />} {c.label}
+                {isDone ? <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} /> : <Circle className="h-3.5 w-3.5" strokeWidth={2} />} {t(c.msg)}
               </Link>
             );
           })}
