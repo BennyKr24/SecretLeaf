@@ -209,25 +209,11 @@
       "wiki/hanf-rostmilben/quickFacts/1/value"
     ]
   },
-  "55a7872797b1": {
-    "de": "< 0.65",
-    "en": null,
-    "paths": [
-      "wiki/schimmel-und-mykotoxine-bei-cannabis/quickFacts/0/value"
-    ]
-  },
   "fd90dc084aa0": {
     "de": "< 20 °C (Hydro)",
     "en": null,
     "paths": [
       "wiki/wurzelfaeule/quickFacts/4/value"
-    ]
-  },
-  "915e09ad7805": {
-    "de": "> 55–60 %",
-    "en": null,
-    "paths": [
-      "wiki/bud-rot-botrytis/quickFacts/2/value"
     ]
   },
   "6920e46ad122": {
@@ -272,27 +258,6 @@
       "wiki/co2-management/quickFacts/2/value"
     ]
   },
-  "ffabe89e4498": {
-    "de": "≈ 0.75–0.80",
-    "en": null,
-    "paths": [
-      "wiki/schimmel-und-mykotoxine-bei-cannabis/quickFacts/1/value"
-    ]
-  },
-  "8f83df1d6d32": {
-    "de": "≈ 1:3:3, EC 1.4–2.0 mS/cm",
-    "en": null,
-    "paths": [
-      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/quickFacts/1/value"
-    ]
-  },
-  "6d307c6ebd60": {
-    "de": "≈ 10–15 %",
-    "en": null,
-    "paths": [
-      "wiki/cannabis-substrat-und-wurzelzone/quickFacts/1/value"
-    ]
-  },
   "9959e6d7db9e": {
     "de": "≈ 10–16 Wochen, steuerbar",
     "en": null,
@@ -329,25 +294,11 @@
       "wiki/calmag-supplementierung/quickFacts/1/value"
     ]
   },
-  "dd59ed7a578e": {
-    "de": "≈ 3:1:2, EC 1.0–1.6 mS/cm",
-    "en": null,
-    "paths": [
-      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/quickFacts/0/value"
-    ]
-  },
   "cf86d427958d": {
     "de": "≈ 35–45 mol·m⁻²·Tag⁻¹",
     "en": null,
     "paths": [
       "wiki/dli-und-photoperiode/quickFacts/1/value"
-    ]
-  },
-  "d7a276471d59": {
-    "de": "≈ 400–600 g/m²",
-    "en": null,
-    "paths": [
-      "wiki/indoor-outdoor-anbau-vergleich/quickFacts/0/value"
     ]
   },
   "ad563e7950ce": {
@@ -357,13 +308,6 @@
       "wiki/feminisiert-vs-regular-vs-autoflower/quickFacts/1/value"
     ]
   },
-  "5c8124a1b8a8": {
-    "de": "≈ 80 %",
-    "en": null,
-    "paths": [
-      "wiki/naehrstoffblockaden-und-antagonismen/quickFacts/3/value"
-    ]
-  },
   "e0e469a52c41": {
     "de": "≈1-3-2 früh/mittel Blüte → 0-3-3 spät Blüte, über 2–3 Wochen",
     "en": null,
@@ -371,25 +315,11 @@
       "wiki/bluetephase-ernaehrung-und-pflege/quickFacts/0/value"
     ]
   },
-  "ef2521cf0d33": {
-    "de": "≤ 0,05 % (w/w)",
-    "en": null,
-    "paths": [
-      "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/quickFacts/2/value"
-    ]
-  },
   "e8c7c083f635": {
     "de": "≥ 12 Std. ununterbrochen",
     "en": null,
     "paths": [
       "wiki/dli-und-photoperiode/quickFacts/2/value"
-    ]
-  },
-  "ac4edc34e665": {
-    "de": "0,877 (87,7 %)",
-    "en": null,
-    "paths": [
-      "wiki/decarboxylierung-grundlagen-und-fehler/quickFacts/4/value"
     ]
   },
   "74686159f480": {
@@ -812,13 +742,6 @@
       "wiki/orale-produkte-und-first-pass-risiken/glossary/1/term"
     ]
   },
-  "5d70d78b888c": {
-    "de": "110-121°C (230-250°F)",
-    "en": null,
-    "paths": [
-      "wiki/decarboxylierung-grundlagen-und-fehler/quickFacts/1/value"
-    ]
-  },
   "d0d237c0f22d": {
     "de": "115°C (240°F), 30-40 Minuten",
     "en": null,
@@ -831,21 +754,6 @@
     "en": null,
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/quickFacts/0/value"
-    ]
-  },
-  "ccbddd5c39fe": {
-    "de": "18–21 °C",
-    "en": null,
-    "paths": [
-      "wiki/trocknung-protokoll/quickFacts/0/value"
-    ]
-  },
-  "a4e5806a75bd": {
-    "de": "18–22 °C",
-    "en": null,
-    "paths": [
-      "wiki/cannabis-substrat-und-wurzelzone/quickFacts/2/value",
-      "wiki/ueberwaesserung-staunaesse/quickFacts/2/value"
     ]
   },
   "e484ac478c6a": {
@@ -1835,13 +1743,6 @@
       "wiki/hash-typen-vergleichen/sections/3/heading"
     ]
   },
-  "25da879ef613": {
-    "de": "40–50 %",
-    "en": null,
-    "paths": [
-      "wiki/bud-rot-botrytis/quickFacts/3/value"
-    ]
-  },
   "ca033a29a69a": {
     "de": "400–600 µmol·m⁻²·s⁻¹",
     "en": null,
@@ -1870,51 +1771,11 @@
       "wiki/spinnmilben/sections/4/content/4"
     ]
   },
-  "86318f317a89": {
-    "de": "5.5–6.2",
-    "en": null,
-    "paths": [
-      "wiki/substrat-vergleich-coco-erde-hydro/quickFacts/2/value"
-    ]
-  },
-  "3dc2bab1c4f6": {
-    "de": "5.8–6.2",
-    "en": null,
-    "paths": [
-      "wiki/naehrstoffblockaden-und-antagonismen/quickFacts/0/value",
-      "wiki/magnesiummangel/quickFacts/2/value",
-      "wiki/eisenmangel/quickFacts/3/value",
-      "wiki/ph-lockout/quickFacts/0/value",
-      "wiki/phosphormangel/quickFacts/2/value",
-      "wiki/substrat-vergleich-coco-erde-hydro/quickFacts/1/value"
-    ]
-  },
   "f00f8b8a2880": {
     "de": "5) Verfahrensfamilien im professionellen Vergleich",
     "en": null,
     "paths": [
       "wiki/hash-typen-vergleichen/sections/4/heading"
-    ]
-  },
-  "f7a2b6b1a6b5": {
-    "de": "50–70 mg/L",
-    "en": null,
-    "paths": [
-      "wiki/calmag-supplementierung/quickFacts/0/value"
-    ]
-  },
-  "fc815ef2c800": {
-    "de": "55–65 % RH",
-    "en": null,
-    "paths": [
-      "wiki/trocknung-protokoll/quickFacts/1/value"
-    ]
-  },
-  "0a243132b417": {
-    "de": "55–65 %, 18–21 °C",
-    "en": null,
-    "paths": [
-      "wiki/schimmel-und-mykotoxine-bei-cannabis/quickFacts/2/value"
     ]
   },
   "9dbadec681a0": {
@@ -1924,34 +1785,11 @@
       "wiki/bubble-hash-qualitaetskriterien/quickFacts/2/value"
     ]
   },
-  "9a2945bb6fbe": {
-    "de": "6.0–6.5",
-    "en": null,
-    "paths": [
-      "wiki/phosphormangel/quickFacts/3/value"
-    ]
-  },
-  "3fe9c2d792f1": {
-    "de": "6.0–6.8",
-    "en": null,
-    "paths": [
-      "wiki/naehrstoffblockaden-und-antagonismen/quickFacts/1/value",
-      "wiki/ph-lockout/quickFacts/1/value"
-    ]
-  },
   "fa80b162950a": {
     "de": "6.0–6.8 (Erde), 5.8–6.2 (Coco/Hydro)",
     "en": null,
     "paths": [
       "wiki/kaliummangel/quickFacts/3/value"
-    ]
-  },
-  "bd9bec8a7c8b": {
-    "de": "6.2–6.8",
-    "en": null,
-    "paths": [
-      "wiki/magnesiummangel/quickFacts/3/value",
-      "wiki/substrat-vergleich-coco-erde-hydro/quickFacts/0/value"
     ]
   },
   "325ddd38bbae": {
@@ -5888,13 +5726,6 @@
       "wiki/rosin-einordnung-ohne-hype/quickFacts/0/value"
     ]
   },
-  "4525848e37de": {
-    "de": "ca. 120–180 mg/L",
-    "en": null,
-    "paths": [
-      "wiki/calciummangel/quickFacts/3/value"
-    ]
-  },
   "4768e6f884a0": {
     "de": "ca. 2-10 Minuten",
     "en": null,
@@ -5907,13 +5738,6 @@
     "en": null,
     "paths": [
       "wiki/orale-produkte-und-first-pass-risiken/quickFacts/1/value"
-    ]
-  },
-  "ce15e22718b7": {
-    "de": "ca. 200–300 °C",
-    "en": null,
-    "paths": [
-      "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/quickFacts/0/value"
     ]
   },
   "8e0d1ffb676e": {
@@ -6387,13 +6211,6 @@
     "paths": [
       "wiki/trichom-reifegrad-bilddiagnose/glossary/2/term",
       "wiki/decarboxylierung-grundlagen-und-fehler/glossary/2/term"
-    ]
-  },
-  "cebad08dbc05": {
-    "de": "Cd 0,2 · Pb 0,5 · As 0,2 · Hg 0,1 µg/g",
-    "en": null,
-    "paths": [
-      "wiki/schwere-metalle-und-aufnahmewege/quickFacts/1/value"
     ]
   },
   "bf6660fc3ee1": {
@@ -10011,19 +9828,6 @@
       "wiki/substrat-vergleich-coco-erde-hydro/glossary/1/term"
     ]
   },
-  "1b2fc8498d96": {
-    "de": "EC",
-    "en": null,
-    "paths": [
-      "wiki/cannabis-anbau-grundlagen/glossary/2/term",
-      "wiki/vpd-und-ec-kombi-rechner-guide/glossary/1/term",
-      "wiki/how-to-grow-cannabis-anfaenger-tutorial/glossary/5/term",
-      "wiki/stickstoffmangel/glossary/2/term",
-      "wiki/stickstoffueberschuss/glossary/2/term",
-      "wiki/salzanreicherung-hohe-ec/glossary/0/term",
-      "wiki/ec-und-runoff-interpretation/glossary/1/term"
-    ]
-  },
   "9c828b532397": {
     "de": "EC beim Flush ruckartig statt schrittweise senken, was wie zusätzlicher Salzstress wirkt.",
     "en": null,
@@ -12661,13 +12465,6 @@
       "wiki/kontaminantenprofile-bei-extrakten/sections/0/content/0"
     ]
   },
-  "deae2d4d7585": {
-    "de": "F1",
-    "en": null,
-    "paths": [
-      "wiki/crossing-backcrossing-grundlagen/quickFacts/0/label"
-    ]
-  },
   "75301e2bdb0b": {
     "de": "F1-Einheitlichkeit ≠ Stabilität",
     "en": null,
@@ -12701,13 +12498,6 @@
     "en": null,
     "paths": [
       "wiki/crossing-backcrossing-grundlagen/sections/4/content/1"
-    ]
-  },
-  "8e2de3335023": {
-    "de": "F2",
-    "en": null,
-    "paths": [
-      "wiki/crossing-backcrossing-grundlagen/quickFacts/1/label"
     ]
   },
   "9e685bab337a": {
@@ -13825,13 +13615,6 @@
       "wiki/trauermuecken/glossary/2/definition"
     ]
   },
-  "9ae816716fdd": {
-    "de": "GC",
-    "en": null,
-    "paths": [
-      "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/glossary/1/term"
-    ]
-  },
   "208618fef3d9": {
     "de": "GC bleibt die richtige Methode für Terpene – dort ist die thermische Belastung kein Problem, weil Terpene stabile, flüchtige Moleküle sind.",
     "en": null,
@@ -13858,14 +13641,6 @@
     "en": null,
     "paths": [
       "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/quickFacts/0/label"
-    ]
-  },
-  "c49affe1aa8a": {
-    "de": "GC-MS",
-    "en": null,
-    "paths": [
-      "wiki/terpene-und-wirkprofil/glossary/0/term",
-      "wiki/coa-richtig-lesen/glossary/1/term"
     ]
   },
   "e88a47a5ff1a": {

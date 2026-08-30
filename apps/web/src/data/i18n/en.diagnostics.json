@@ -13,13 +13,6 @@
       "diagnostics/wurzelfaeule/quickFacts/4/value"
     ]
   },
-  "915e09ad7805": {
-    "de": "> 55–60 %",
-    "en": null,
-    "paths": [
-      "diagnostics/bud-rot-botrytis/quickFacts/2/value"
-    ]
-  },
   "9ac59e0f0bd4": {
     "de": "~400 ppm normal; Anreicherung 800–1200 ppm",
     "en": null,
@@ -340,13 +333,6 @@
     "en": null,
     "paths": [
       "diagnostics/salzanreicherung-hohe-ec/quickFacts/4/value"
-    ]
-  },
-  "a4e5806a75bd": {
-    "de": "18–22 °C",
-    "en": null,
-    "paths": [
-      "diagnostics/ueberwaesserung-staunaesse/quickFacts/2/value"
     ]
   },
   "143aef10d7cc": {
@@ -1245,13 +1231,6 @@
       "diagnostics/kaeltestress/sections/6/content/3"
     ]
   },
-  "25da879ef613": {
-    "de": "40–50 %",
-    "en": null,
-    "paths": [
-      "diagnostics/bud-rot-botrytis/quickFacts/3/value"
-    ]
-  },
   "e5553fb0bdfb": {
     "de": "5. Wirkstoffe nur in Vegetation/Frühblüte und im Rotationsprinzip — Resistenzen entstehen schnell bei Monotherapie.",
     "en": null,
@@ -1259,49 +1238,11 @@
       "diagnostics/spinnmilben/sections/4/content/4"
     ]
   },
-  "3dc2bab1c4f6": {
-    "de": "5.8–6.2",
-    "en": null,
-    "paths": [
-      "diagnostics/magnesiummangel/quickFacts/2/value",
-      "diagnostics/eisenmangel/quickFacts/3/value",
-      "diagnostics/ph-lockout/quickFacts/0/value",
-      "diagnostics/phosphormangel/quickFacts/2/value"
-    ]
-  },
-  "f7a2b6b1a6b5": {
-    "de": "50–70 mg/L",
-    "en": null,
-    "paths": [
-      "diagnostics/calmag-supplementierung/quickFacts/0/value"
-    ]
-  },
-  "9a2945bb6fbe": {
-    "de": "6.0–6.5",
-    "en": null,
-    "paths": [
-      "diagnostics/phosphormangel/quickFacts/3/value"
-    ]
-  },
-  "3fe9c2d792f1": {
-    "de": "6.0–6.8",
-    "en": null,
-    "paths": [
-      "diagnostics/ph-lockout/quickFacts/1/value"
-    ]
-  },
   "fa80b162950a": {
     "de": "6.0–6.8 (Erde), 5.8–6.2 (Coco/Hydro)",
     "en": null,
     "paths": [
       "diagnostics/kaliummangel/quickFacts/3/value"
-    ]
-  },
-  "bd9bec8a7c8b": {
-    "de": "6.2–6.8",
-    "en": null,
-    "paths": [
-      "diagnostics/magnesiummangel/quickFacts/3/value"
     ]
   },
   "3616223fd3f2": {
@@ -2683,13 +2624,6 @@
       "diagnostics/kalium-ueberschuss/sections/6/checklist/2"
     ]
   },
-  "4525848e37de": {
-    "de": "ca. 120–180 mg/L",
-    "en": null,
-    "paths": [
-      "diagnostics/calciummangel/quickFacts/3/value"
-    ]
-  },
   "d50288fde9dd": {
     "de": "Ca²⁺ konkurriert mit Mg²⁺ und K⁺ um die Wurzelaufnahme; ein Überschuss senkt deren Verfügbarkeit.",
     "en": null,
@@ -3797,15 +3731,6 @@
     "en": null,
     "paths": [
       "diagnostics/stickstoffueberschuss/summary"
-    ]
-  },
-  "1b2fc8498d96": {
-    "de": "EC",
-    "en": null,
-    "paths": [
-      "diagnostics/stickstoffmangel/glossary/2/term",
-      "diagnostics/stickstoffueberschuss/glossary/2/term",
-      "diagnostics/salzanreicherung-hohe-ec/glossary/0/term"
     ]
   },
   "a09b9fbbd6df": {
@@ -5306,7 +5231,7 @@
   },
   "5a45ac825e16": {
     "de": "Häufigste Ursache ist nicht zu wenig Mg, sondern eine pH-bedingte Blockade — Wurzelzonen-pH unter 5.8 (Hydro/Coco) bzw. unter 6.0 (Erde) sperrt Mg.",
-    "en": null,
+    "en": "The most common cause is not too little Mg, but a pH-induced lockout — a root-zone pH below 5.8 (hydro/coco) or below 6.0 (soil) locks out Mg.",
     "paths": [
       "diagnostics/magnesiummangel/keyTakeaways/1"
     ]
@@ -5825,14 +5750,14 @@
   },
   "87d686779b18": {
     "de": "Interveinale Chlorose an älteren Blättern ist das Leitsymptom. So unterscheidest du echten Mangel von pH-bedingter Blockade und korrigierst gezielt über Substrat-pH und Mg-Zufuhr.",
-    "en": null,
+    "en": "Interveinal chlorosis on older leaves is the key symptom. This is how you distinguish a true deficiency from a pH-induced lockout and correct it specifically via substrate pH and Mg supply.",
     "paths": [
       "diagnostics/magnesiummangel/summary"
     ]
   },
   "2f0ca6f5fb0f": {
     "de": "Interveinale Chlorose, ältere Blätter zuerst",
-    "en": null,
+    "en": "Interveinal chlorosis, older leaves first",
     "paths": [
       "diagnostics/magnesiummangel/quickFacts/0/value"
     ]
@@ -6502,7 +6427,7 @@
   },
   "dadd885c66b8": {
     "de": "Korrigiere zuerst den pH-Korridor, dann ergänze Mg über Bittersalz (MgSO4) 1–2 g/L als Wurzelgabe; Blattspray nur als Notmaßnahme.",
-    "en": null,
+    "en": "First correct the pH range, then supplement Mg via Epsom salt (MgSO4) at 1–2 g/L as a root application; foliar spray only as an emergency measure.",
     "paths": [
       "diagnostics/magnesiummangel/keyTakeaways/2"
     ]
@@ -7048,7 +6973,7 @@
   },
   "d03c5331791e": {
     "de": "Leitsymptom",
-    "en": null,
+    "en": "Key symptom",
     "paths": [
       "diagnostics/magnesiummangel/quickFacts/0/label",
       "diagnostics/stickstoffmangel/quickFacts/0/label",
@@ -7303,14 +7228,14 @@
   },
   "c907f8742a8e": {
     "de": "Magnesium ist mobil: Mangel zeigt sich zuerst an den ÄLTEREN, unteren Blättern als interveinale Chlorose bei grün bleibenden Blattadern.",
-    "en": null,
+    "en": "Magnesium is mobile: deficiency first appears on the OLDER, lower leaves as interveinal chlorosis with veins staying green.",
     "paths": [
       "diagnostics/magnesiummangel/keyTakeaways/0"
     ]
   },
   "d6c1c99d9451": {
     "de": "Magnesiummangel bei Cannabis erkennen und beheben",
-    "en": null,
+    "en": "Identify and fix magnesium deficiency in cannabis",
     "paths": [
       "diagnostics/magnesiummangel/title"
     ]
@@ -7534,7 +7459,7 @@
   },
   "88ce82f140a1": {
     "de": "MgSO4 1–2 g/L Wurzelgabe",
-    "en": null,
+    "en": "MgSO4 1–2 g/L root application",
     "paths": [
       "diagnostics/magnesiummangel/quickFacts/4/value"
     ]
@@ -7605,7 +7530,7 @@
   },
   "d87c896ea7be": {
     "de": "Mobil (Verlagerung in junge Blätter)",
-    "en": null,
+    "en": "Mobile (shifts to young leaves)",
     "paths": [
       "diagnostics/magnesiummangel/quickFacts/1/value",
       "diagnostics/phosphormangel/quickFacts/1/value"
@@ -7620,7 +7545,7 @@
   },
   "68e4c99af7b0": {
     "de": "Mobilität",
-    "en": null,
+    "en": "Mobility",
     "paths": [
       "diagnostics/magnesiummangel/quickFacts/1/label",
       "diagnostics/stickstoffmangel/quickFacts/1/label",
@@ -8536,14 +8461,14 @@
   },
   "bc4ba7e2b9e3": {
     "de": "pH-Fenster Mg (Coco/Hydro)",
-    "en": null,
+    "en": "pH window Mg (coco/hydro)",
     "paths": [
       "diagnostics/magnesiummangel/quickFacts/2/label"
     ]
   },
   "53f6e6a49050": {
     "de": "pH-Fenster Mg (Erde)",
-    "en": null,
+    "en": "pH window Mg (soil)",
     "paths": [
       "diagnostics/magnesiummangel/quickFacts/3/label"
     ]
@@ -9283,7 +9208,7 @@
   },
   "0000a6241237": {
     "de": "Schnellkorrektur",
-    "en": null,
+    "en": "Quick correction",
     "paths": [
       "diagnostics/magnesiummangel/quickFacts/4/label",
       "diagnostics/stickstoffmangel/quickFacts/4/label",

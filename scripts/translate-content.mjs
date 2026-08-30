@@ -54,7 +54,11 @@ const BATCH = Number(opt("--batch", "20")) || 20;
 const MODEL = process.env.I18N_MODEL || "claude-sonnet-5";
 
 // ── string collection ───────────────────────────────────────────────────────
-const isText = (v) => typeof v === "string" && v.trim().length > 1;
+// Skip strings with no real word in them: pure numbers, ranges, unit tokens
+// ("5.8–6.2", "< 0.2 mm", "MgSO4 1–2 g/L"). Anything with a 3+ letter run is
+// prose and gets translated. Unit abbreviations (mm, g, L, kPa) never do.
+const hasWord = (s) => /\p{L}{3,}/u.test(s);
+const isText = (v) => typeof v === "string" && v.trim().length > 1 && hasWord(v);
 const walkStrings = (node, prefix, out) => {
   if (Array.isArray(node)) {
     node.forEach((v, i) => walkStrings(v, `${prefix}/${i}`, out));
@@ -271,7 +275,6 @@ async function main() {
   }
 
   const rows = [];
-  let totalMissing = 0;
 
   for (const src of targets) {
     const mod = await loadModule(src.entry);
@@ -291,8 +294,8 @@ async function main() {
       else missing.push({ h, de: entry.de, paths: entry.paths });
       synced[h] = { de: entry.de, en, paths: entry.paths };
     }
-    totalMissing += missing.length;
-    rows.push({ id: src.id, strings: idx.size, chars, translated, missing: missing.length });
+    const row = { id: src.id, strings: idx.size, chars, translated, missing: missing.length };
+    rows.push(row);
 
     if (MODE === "prune") {
       const stale = Object.keys(tm).filter((h) => !idx.has(h));
@@ -332,8 +335,13 @@ async function main() {
         console.log(`  batch ${Math.floor(i / BATCH) + 1}: +${done.filter((d) => d.en).length} translated`);
       }
       if (!DRY_RUN) await writeTM(src.id, tm);
+      // reflect what the batches actually filled
+      row.translated = Object.values(tm).filter((v) => v.en && v.en.trim()).length;
+      row.missing = row.strings - row.translated;
     }
   }
+
+  const totalMissing = rows.reduce((n, r) => n + r.missing, 0);
 
   // report
   const pad = (s, n) => String(s).padEnd(n);
