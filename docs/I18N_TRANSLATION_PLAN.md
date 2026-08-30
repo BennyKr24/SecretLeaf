@@ -94,14 +94,25 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit · `[x]` fertig & verifiziert
 - [ ] `npm run i18n:translate --only=wiki` (größter Batch, ggf. in Tranchen)
 - [ ] TM-Dateien reviewen (Stichprobe je Kategorie) + committen
 
-### A5 — Rendering-Overlay
-- [ ] `getArticleBySlug(slug, locale)` / `wikiArticles`-Zugriff: bei `en` die
-      TM-Übersetzung feldweise über den deutschen Artikel legen; fehlendes
-      Feld → deutscher Fallback + dezenter Hinweis „noch nicht übersetzt"
-- [ ] `studies/[slug]/page.tsx`, `category/[slug]/page.tsx`,
-      `studies/page.tsx`, `studies/sources` etc.: `locale` durchreichen
-- [ ] `generateMetadata` (Titel/Description) ebenfalls lokalisiert
-- [ ] Diagnose-Baum-Ergebnisse (`DiagnoseResult.tsx`) aus TM statt Rohtext
+### A5a — Rendering-Overlay: Artikel-Detailseite  ✅
+- [x] `lib/i18n/localizeContent.ts` — `localizeArticle` / `localizeDiagnoseResult`
+      (deep string-swap aus dem TM, DE-Fallback), `isArticleTranslated`,
+      `localizeCategoryLabel`
+- [x] `studies/[slug]/page.tsx`: `locale` aus params, Artikel + verwandte
+      Artikel + `generateMetadata` lokalisiert, Kategorie-Labels lokalisiert,
+      Hinweis-Banner wenn Artikel (Titel) noch nicht übersetzt
+- [x] `/de` unberührt — alle Pfade guarden auf `locale === "en"`;
+      typecheck / lint / build grün
+
+### A5b — Rendering-Overlay: Listen & Chrome
+- [ ] `category/[slug]/page.tsx` + `StudiesListView`: Titel/Summary in Listen
+      lokalisieren, `locale` durchreichen, Kategorie-Label
+- [ ] `studies/page.tsx` + `CategoryHubGrid`: dito
+- [ ] `studies/sources/page.tsx`, Diagnose-Ergebnis-Komponente (`DiagnoseResult.tsx`)
+- [ ] Hartkodierte Studien-Chrome-Strings („Kernpunkte", „Quellen",
+      „Verwandte Artikel", „Min", „Häufige Fragen" …) nach `messages/{de,en}.json`
+- [ ] `categoryLabels` / `difficultyLabels` sauber über `messages` statt der
+      kleinen Map in `localizeContent.ts`
 - [ ] `hreflang`/Canonical prüfen — jetzt ehrlich zweisprachig
 
 ---

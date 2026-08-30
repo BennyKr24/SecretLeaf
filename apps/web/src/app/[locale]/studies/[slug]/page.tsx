@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import type { Route } from "next";
 import { categoryLabels, getArticleBySlug, getArticleSources, wikiArticles } from "@/data/terpira/wiki";
+import { localizeArticle, localizeCategoryLabel, isArticleTranslated } from "@/lib/i18n/localizeContent";
 import WikiReadingProgress from "@/components/WikiReadingProgress";
 import WikiAskBot from "@/components/WikiAskBot";
 import WikiArticleToc from "@/components/WikiArticleToc";
@@ -13,13 +14,14 @@ import { WikiArticleOpenTracker } from './client';
 import { Microscope, CheckCircle2, AlertTriangle, Bot, Square } from 'lucide-react';
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const article = getArticleBySlug(slug);
-  if (!article) return { title: "Nicht gefunden – SecretLeaf Studien" };
+  const { slug, locale } = await params;
+  const found = getArticleBySlug(slug);
+  if (!found) return { title: "Nicht gefunden – SecretLeaf Studien" };
+  const article = localizeArticle(found, locale);
   return {
     title: `${article.title} – SecretLeaf Studien`,
     description: article.summary,
@@ -33,14 +35,18 @@ const DIFFICULTY_META = {
 } as const;
 
 export default async function WikiArticlePage({ params }: PageProps) {
-  const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const { slug, locale } = await params;
+  const found = getArticleBySlug(slug);
 
-  if (!article) notFound();
+  if (!found) notFound();
+
+  const article = localizeArticle(found, locale);
+  const showPartialNote = !isArticleTranslated(found, locale);
 
   const relatedArticles = article.relatedSlugs
     .map((s) => wikiArticles.find((e) => e.slug === s))
-    .filter((e): e is NonNullable<typeof e> => Boolean(e));
+    .filter((e): e is NonNullable<typeof e> => Boolean(e))
+    .map((e) => localizeArticle(e, locale));
 
   const articleSources = getArticleSources(article);
   const simpleExplainers = article.simpleExplainers ?? [
@@ -66,13 +72,19 @@ export default async function WikiArticlePage({ params }: PageProps) {
       <main className="min-h-screen bg-card">
         <article className="mx-auto max-w-6xl px-4 sm:px-6 py-8 space-y-6">
 
+          {showPartialNote && (
+            <div className="rounded-xl border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 px-4 py-3 text-sm text-amber-900 dark:text-amber-300">
+              This article has not been translated to English yet — it is shown in German.
+            </div>
+          )}
+
           {/* ── Breadcrumb & Header ──────────────────────────────── */}
           <div className="rounded-2xl border border-border bg-card/90 p-6 sm:p-8 shadow-sm">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-1.5 text-sm text-muted-fg mb-5">
               <Link href={"/studies" as Route} className="hover:text-emerald-700 dark:text-emerald-400 font-medium transition-colors">Studien</Link>
               <span className="text-muted-fg">/</span>
-              <span className="text-muted-fg">{categoryLabels[article.category]}</span>
+              <span className="text-muted-fg">{localizeCategoryLabel(article.category, categoryLabels[article.category], locale)}</span>
               <span className="text-muted-fg">/</span>
               <span className="text-foreground font-medium truncate">{article.title}</span>
             </nav>
@@ -80,7 +92,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
             {/* Badges */}
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                {categoryLabels[article.category]}
+                {localizeCategoryLabel(article.category, categoryLabels[article.category], locale)}
               </span>
               {diff && (
                 <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${diff.color} ${diff.bg}`}>
@@ -349,7 +361,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
                       hover:border-emerald-300 hover:bg-emerald-50 dark:bg-emerald-950/30 transition-[border-color,background-color] duration-150 group"
                   >
                     <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-400 mb-1">
-                      {categoryLabels[entry.category]}
+                      {localizeCategoryLabel(entry.category, categoryLabels[entry.category], locale)}
                     </p>
                     <p className="text-sm font-bold text-foreground group-hover:text-emerald-800 dark:text-emerald-400 transition-colors">
                       {entry.title}
