@@ -85,18 +85,20 @@ Offen:
   "−35g bei fehlendem Log") sind produktinterne Heuristiken ohne externe
   Quelle — nicht gegen Literatur prüfbar, absichtlich nicht angefasst.
 
-## 🌐 Übersetzung / i18n
+## 🌐 Übersetzung / i18n — fast fertig, **PR #29 offen**
 
-- 🔧 **Englisch-Übersetzer wird dauerhaft neu gebaut — Plan + Fortschritt in
-  `docs/I18N_TRANSLATION_PLAN.md`.** Kurz: MyMemory (`api/translate` →
-  500 Zeichen/Request, ~5.000/Tag/IP geteilt) raus; statt Live-Übersetzung
-  eine Commit-Zeit-Pipeline (`scripts/translate-content.mjs`) über den
-  vorhandenen Anthropic-Client, mit Translation Memory + Glossar
-  (`docs/i18n/`) + CI-Check. Deckt Wiki (75), Diagnostics (20),
-  Diagnose-Baum und — separat als ICU-Templates — die Tool-Erklärungen ab.
-  Nächster Schritt: Pilot-Lauf `npm run i18n:translate:pilot` (braucht
-  `ANTHROPIC_API_KEY`, kostet Credits), dann Review. Details/Subtasks im
-  Plan-Doc.
+- ⏸️ **Alles gebaut und gepusht, wartet nur noch auf den Übersetzungslauf.**
+  Commit-Zeit-Pipeline (`scripts/translate-content.mjs`) + Translation
+  Memory + Glossar + CI-Check + Rendering-Overlay stehen; MyMemory-Runtime-
+  Translator gelöscht. Auf `/en` ist alles Nutzer-sichtbare übersetzt
+  (Studies inkl. AskBot, Diagnose, alle Tools + Hub, Chrome, per-Page
+  Canonical). Plan + Detailstand: `docs/I18N_TRANSLATION_PLAN.md`.
+  **Offen:**
+  1. **2026-09-01 00:00 UTC:** `npm run i18n:translate -- --only=wiki` +
+     `--only=diagnostics` (462 Strings, Artikel-Bodies + Tags; braucht
+     `ANTHROPIC_API_KEY` aus `apps/web/.env.local` — Account-Ausgabelimit
+     bis dahin). `en.*.json` committen → `i18n:check` grün.
+  2. **PR #29** nach `main` mergen (CI ist bis Schritt 1 erwartbar rot).
 
 ## 🧪 Dünger-Katalog (`/database`, `/database/fertilizers`) — Restructure Phase 2/3
 
@@ -188,23 +190,18 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   Sheet. Kein offener Bug, nur Doku, warum diese eine Stelle vom sonst
   einheitlichen Modal→Sheet-Muster abweicht.
 
-## 🔎 SEO — Unterseiten erben falschen Canonical (2026-08-30)
+## 🔎 SEO — per-Page Canonical (2026-08-30, in PR #29)
 
-- 🔧 **Helfer gebaut + Studies-Routes verdrahtet, Rest offen.**
+- 🔧 **Gelöst für alle relevanten Routes, wartet auf PR-#29-Merge.**
   `lib/i18n/metadata.ts` `pageAlternates(path, locale)` → `{ canonical,
-  languages: { de, en, "x-default" } }` (DE = bare Pfad, EN = `/en`-Prefix,
-  Konvention aus `i18n/routing.ts`). Eingehängt in `generateMetadata` von
-  `studies/[slug]`, `category/[slug]`, `studies`. **Noch offen:**
-  - `tools/*` und `diagnose/page.tsx` haben *gar kein* `generateMetadata`/
-    `metadata` → erben Titel+Description+alternates komplett vom Layout
-    (Startseite). Brauchen einen eigenen Metadata-Block, nicht nur
-    `alternates`.
-  - `updates/page.tsx` (static `metadata`, kein `locale`) + `updates/[slug]`
-    (`generateMetadata`-`params` ohne `locale`): haben `canonical`, aber
-    hardcodiert und ohne `languages`; locale müsste erst durchgereicht
-    werden.
-  - `studies/sources/page.tsx` ist `'use client'` → kein Metadata-Export
-    möglich; ggf. in eine Server-Wrapper-Page auslagern.
+  languages: { de, en, "x-default" } }`. Verdrahtet in: `studies`,
+  `studies/[slug]`, `category/[slug]`, `tools` + alle 6 Rechner (in
+  Server-`page.tsx` + `Client.tsx` gesplittet), `diagnose`, `updates`,
+  `updates/[slug]`. Vorher erbten die `'use client'`-Seiten den
+  Layout-Canonical (= Startseite).
+- 💤 **`studies/sources/page.tsx`** ist noch `'use client'` ohne eigene
+  Metadata — niedrige Priorität (Quellenregister, kaum SEO-relevant),
+  ggf. später ebenfalls in Server-Wrapper splitten.
 
 ## ✉️ Professionelle E-Mail-Templates (2026-08-30)
 
