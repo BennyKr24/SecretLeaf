@@ -155,10 +155,16 @@ Ansatz **A** gewählt: `t`-Injektion, Contract `explanation: string` bleibt.
 - [x] Die 5 Tool-Pages reichen `useTranslations('toolResult')` in `calculate*`.
 - [x] `ToolResult.tsx`: `explanation` direkt gerendert, Ampel-Pills
       (Optimal/Grenzwertig/Kritisch) lokalisiert.
-- [ ] **Noch DE (eigener Folge-Pass):** restliches Tool-Page-Chrome
-      (Input-Labels, Überschriften, `ToolRangeBar`-Zonen-Labels,
-      Seiten-Summaries) + die `formatted`-Aufschlüsselungszeilen
-      („Basiskalkulation", „Korrekturfaktoren") in `yield.ts`/`nutrients.ts`.
+- [x] **Tool-Page-Chrome** (Folge-Pass, gepusht `3e81d40` `22a55e9`
+      `0c7a2f2`): neuer `tool`-Namespace (de+en, 219 Keys, volle Parität) —
+      `ToolLayout`/`ToolResultCard`/`SaveToGrowButton`/`ToolInput` + alle 5
+      Pages (Tips, Überschriften, Input-Labels/Hints, Select-/Slider-Marks,
+      Card-Titel, Interpretation/Empfehlung, Result-Labels,
+      `ToolRangeBar`-Zonen). Registry-Titel/-Beschreibungen + Kategorie-
+      Labels via `tool.registry.<slug>` bzw. `tool.category*`.
+- [ ] Rest: ein paar kompakte DE-Einheiten (`g/Pflanze`, inline `Liter`),
+      der `produktName`-Default-Seed, die `formatted`-Aufschlüsselungs-
+      zeilen in `yield.ts`/`nutrients.ts` (`Phase: ×0.85 · …`).
 - Snapshot-Persistenz: `ToolSnapshot.results` speichert den String in der
   beim Rechnen aktiven Sprache (wie bei der Diagnose-Persistenz) — kein
   Shape-Change, alte Snapshots bleiben lesbar.
