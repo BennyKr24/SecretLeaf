@@ -93,9 +93,15 @@ export default async function DatenschutzPage({
               IP-Adressen dauerhaft und erstellen keine individuellen Nutzerprofile. Sie werden erst
               geladen, nachdem du im Cookie-Hinweis auf „Alle akzeptieren&quot; geklickt hast (Art. 6
               Abs. 1 lit. a DSGVO); wählst du „Nur notwendige&quot;, werden sie nicht geladen. Deine
-              Auswahl speichern wir lokal in deinem Browser (localStorage), damit du nicht bei jedem
-              Besuch erneut gefragt wirst — das ist zur Funktion des Hinweises selbst technisch
-              notwendig und erfordert keine gesonderte Einwilligung.
+              Auswahl speichern wir zusammen mit Zeitpunkt und Versionsstand lokal in deinem Browser
+              (localStorage), damit du nicht bei jedem Besuch erneut gefragt wirst — das ist zur
+              Funktion des Hinweises selbst technisch notwendig und erfordert keine gesonderte
+              Einwilligung. Du kannst deine Einwilligung jederzeit mit Wirkung für die Zukunft
+              widerrufen, indem du im Seitenfuß auf „Cookie-Einstellungen&quot; klickst; nach dem
+              Widerruf wird der Hinweis erneut angezeigt. Spätestens nach zwölf Monaten fragen wir
+              ohnehin erneut nach. Sendet dein Browser das Signal „Global Privacy Control&quot;
+              (GPC), werten wir das als Ablehnung — die Analyse-Tools werden dann ohne weitere
+              Nachfrage nicht geladen.
             </p>
           </section>
 

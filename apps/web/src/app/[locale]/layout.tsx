@@ -8,6 +8,7 @@ import { BottomNav, BottomNavSpacer } from "@/components/BottomNav";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LocaleBanner } from "@/components/LocaleBanner";
 import { CookieConsentBanner } from "@/components/cookie/CookieConsentBanner";
+import { CookieSettingsButton } from "@/components/cookie/CookieSettingsButton";
 import { routing } from "@/i18n/routing";
 import { Leaf } from "lucide-react";
 
@@ -120,6 +121,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                 <Link href="/datenschutz" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
                   {t("privacy")}
                 </Link>
+                <CookieSettingsButton />
               </div>
               <p className="text-[11px] text-muted-fg">
                 © {new Date().getFullYear()} SecretLeaf · {t("rights")}
