@@ -1,12 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
 import { sourceRegister } from "@/data/terpira/wiki";
 
 export default function WikiSourcesPage() {
+  const t = useTranslations("sourcesPage");
   const [query, setQuery] = useState("");
   const [sourceType, setSourceType] = useState<"alle" | "auto" | "manual">("alle");
   const [sortBy, setSortBy] = useState<"relevance" | "yearDesc" | "yearAsc">("relevance");
@@ -75,75 +77,57 @@ export default function WikiSourcesPage() {
     <main className="min-h-screen px-6 py-12">
       <section className="mx-auto max-w-6xl rounded-2xl border border-border bg-card/90 p-8 shadow-sm">
         <Link href={"/studies" as Route} className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800">
-          ← Zurück zu Studien
+          {t("back")}
         </Link>
 
-        <h1 className="mt-4 text-4xl font-bold text-foreground">Quellenregister</h1>
-        <p className="mt-3 text-muted-fg">
-          Alle wissenschaftlichen Quellen, auf die unsere Fachartikel verweisen – nach Herausgeber gruppiert.
-        </p>
-
-        <div className="mt-5 rounded-xl border border-rose-200 dark:border-rose-900/40 bg-rose-50 dark:bg-rose-950/30 p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-rose-700 dark:text-rose-400">Neuer Bereich</p>
-          <div className="mt-1 flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm text-rose-900 dark:text-rose-300">
-              Jetzt verfügbar: das Schädlings-Lexikon mit Bildkarten, Kategorien, Risikobewertungen und Gegenmaßnahmen.
-            </p>
-            <Link
-              href={"/studies/pests" as Route}
-              className="inline-flex rounded-lg border border-rose-300 bg-card px-3 py-1.5 text-sm font-semibold text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:bg-rose-950/40"
-            >
-              Schädlings-Lexikon öffnen
-            </Link>
-          </div>
-        </div>
+        <h1 className="mt-4 text-4xl font-bold text-foreground">{t("title")}</h1>
+        <p className="mt-3 text-muted-fg">{t("subtitle")}</p>
 
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-xl border border-border bg-card p-4">
-            <p className="text-xs uppercase tracking-wide text-muted-fg font-semibold">Gesamt</p>
+            <p className="text-xs uppercase tracking-wide text-muted-fg font-semibold">{t("statTotal")}</p>
             <p className="mt-1 text-2xl font-bold text-foreground">{sourceRegister.length}</p>
-            <p className="text-xs text-muted-fg">Quellen</p>
+            <p className="text-xs text-muted-fg">{t("statTotalUnit")}</p>
           </div>
           <div className="rounded-xl border border-blue-200 dark:border-blue-900/40 bg-blue-50 dark:bg-blue-950/30 p-4">
-            <p className="text-xs uppercase tracking-wide text-blue-700 dark:text-blue-400 font-semibold">Automatisch synchronisiert</p>
+            <p className="text-xs uppercase tracking-wide text-blue-700 dark:text-blue-400 font-semibold">{t("statAuto")}</p>
             <p className="mt-1 text-2xl font-bold text-blue-900 dark:text-blue-300">{autoCount}</p>
-            <p className="text-xs text-blue-700 dark:text-blue-400">synchronisiert</p>
+            <p className="text-xs text-blue-700 dark:text-blue-400">{t("statAutoUnit")}</p>
           </div>
           <div className="rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 p-4">
-            <p className="text-xs uppercase tracking-wide text-emerald-700 dark:text-emerald-400 font-semibold">Redaktionell geprüft</p>
+            <p className="text-xs uppercase tracking-wide text-emerald-700 dark:text-emerald-400 font-semibold">{t("statManual")}</p>
             <p className="mt-1 text-2xl font-bold text-emerald-900 dark:text-emerald-300">{manualCount}</p>
-            <p className="text-xs text-emerald-700 dark:text-emerald-400">geprüfte Einträge</p>
+            <p className="text-xs text-emerald-700 dark:text-emerald-400">{t("statManualUnit")}</p>
           </div>
           <div className="rounded-xl border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 p-4">
-            <p className="text-xs uppercase tracking-wide text-cyan-700 dark:text-cyan-400 font-semibold">Publisher</p>
+            <p className="text-xs uppercase tracking-wide text-cyan-700 dark:text-cyan-400 font-semibold">{t("statPublisher")}</p>
             <p className="mt-1 text-2xl font-bold text-cyan-900 dark:text-cyan-300">{publisherCounts.length}</p>
-            <p className="text-xs text-cyan-700 dark:text-cyan-400">verteilt</p>
+            <p className="text-xs text-cyan-700 dark:text-cyan-400">{t("statPublisherUnit")}</p>
           </div>
         </div>
 
         <div className="mt-6 rounded-xl border border-border bg-background p-4 text-sm text-foreground/80">
-          Redaktioneller Hinweis: Dieses Register dient als strukturierte Orientierung für die evidenzbasierte
-          Vertiefung. Vor operativen oder regulatorischen Entscheidungen sollten stets die aktuellen Originaldokumente geprüft werden.
+          {t("editorialNote")}
         </div>
 
         <div className="mt-6 grid gap-3 lg:grid-cols-[1fr_auto_auto]">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Titel, Publisher, ID oder DOI durchsuchen..."
+            placeholder={t("searchPlaceholder")}
             className="rounded-xl border border-border bg-card px-4 py-2.5 text-sm text-foreground outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
           />
           <Dropdown value={sortBy} onChange={(v) => setSortBy(v as "relevance" | "yearDesc" | "yearAsc")}>
-            <DropdownOption value="relevance">Sortierung: Relevanz</DropdownOption>
-            <DropdownOption value="yearDesc">Sortierung: Jahr (neu nach alt)</DropdownOption>
-            <DropdownOption value="yearAsc">Sortierung: Jahr (alt nach neu)</DropdownOption>
+            <DropdownOption value="relevance">{t("sortRelevance")}</DropdownOption>
+            <DropdownOption value="yearDesc">{t("sortYearDesc")}</DropdownOption>
+            <DropdownOption value="yearAsc">{t("sortYearAsc")}</DropdownOption>
           </Dropdown>
           <div className="flex items-center gap-2">
             {([
-              ["alle", "Alle"],
-              ["manual", "Manuell"],
-              ["auto", "Auto"],
-            ] as const).map(([value, label]) => (
+              ["alle", "filterAll"],
+              ["manual", "filterManual"],
+              ["auto", "filterAuto"],
+            ] as const).map(([value, key]) => (
               <button
                 key={value}
                 onClick={() => setSourceType(value)}
@@ -153,7 +137,7 @@ export default function WikiSourcesPage() {
                     : "border border-border bg-card text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400"
                 }`}
               >
-                {label}
+                {t(key)}
               </button>
             ))}
           </div>
@@ -172,7 +156,11 @@ export default function WikiSourcesPage() {
         </div>
 
         <p className="mt-5 text-sm text-muted-fg">
-          <span className="font-semibold text-foreground">{filtered.length}</span> Treffer in <span className="font-semibold text-foreground">{groupedByPublisher.length}</span> Publisher-Gruppen
+          {t.rich("resultSummary", {
+            hits: filtered.length,
+            groups: groupedByPublisher.length,
+            b: (chunks) => <span className="font-semibold text-foreground">{chunks}</span>,
+          })}
         </p>
 
         <div className="mt-4 space-y-6">
@@ -181,7 +169,7 @@ export default function WikiSourcesPage() {
               <div className="flex items-center justify-between gap-3">
                 <h2 className="text-lg font-bold text-foreground">{publisher}</h2>
                 <span className="rounded-full bg-background px-2.5 py-1 text-xs font-semibold text-foreground/80">
-                  {sources.length} Quellen
+                  {t("groupCount", { count: sources.length })}
                 </span>
               </div>
 
@@ -195,12 +183,12 @@ export default function WikiSourcesPage() {
                     <div className="mt-1 flex flex-wrap gap-2">
                       {source.sourceType === "auto" && (
                         <p className="inline-flex rounded-full border border-blue-200 dark:border-blue-900/40 bg-blue-50 dark:bg-blue-950/30 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:text-blue-400">
-                          Automatisch synchronisiert
+                          {t("badgeAuto")}
                         </p>
                       )}
                       {(source.sourceType ?? "manual") === "manual" && (
                         <p className="inline-flex rounded-full border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 px-2 py-0.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                          Redaktionell geprüft
+                          {t("badgeManual")}
                         </p>
                       )}
                     </div>
@@ -213,12 +201,12 @@ export default function WikiSourcesPage() {
                           onClick={() => copyDoi(source.doi as string)}
                           className="rounded-full border border-border bg-card px-2 py-0.5 text-[11px] font-semibold text-foreground/80 hover:border-emerald-300 hover:text-emerald-700 dark:text-emerald-400"
                         >
-                          {copiedDoi === source.doi ? "Kopiert" : "DOI kopieren"}
+                          {copiedDoi === source.doi ? t("doiCopied") : t("doiCopy")}
                         </button>
                       </div>
                     )}
                     <a href={source.url} target="_blank" rel="noreferrer" className="mt-2 inline-flex text-sm font-semibold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800">
-                      Zur Quelle
+                      {t("toSource")}
                     </a>
                   </li>
                 ))}
@@ -229,7 +217,7 @@ export default function WikiSourcesPage() {
 
         {filtered.length === 0 && (
           <div className="mt-6 rounded-xl border border-dashed border-border bg-background p-6 text-center text-sm text-foreground/80">
-            Keine Quellen für den aktuellen Filter gefunden. Versuche einen anderen Suchbegriff oder wechsle den Typfilter.
+            {t("empty")}
           </div>
         )}
       </section>
