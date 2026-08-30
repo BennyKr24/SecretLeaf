@@ -215,14 +215,13 @@ A5a ✅ → A5b ✅ (Kern) → B ✅ (Result-Cards) → C ✅ → D ✅ (bis auf
 **Offen (2026-08-30):**
 - **224 Wiki-Strings** — API-Cap, ab 2026-09-01 00:00 UTC
   `npm run i18n:translate -- --only=wiki`, dann `i18n:check` grün.
-- Per-Page-Canonical: studies-Routes, `/tools`-Hub, `/updates/[slug]`
-  verdrahtet. `/diagnose`-Landing + Tool-Rechner sind `'use client'` →
-  Canonical erbt vom Layout (bräuchte Server-Wrapper).
-- Winzige DE-Reste: `StudyListItem`-Tags (nicht im TM, kurze Keywords),
-  `produktName`-Default-Seed („Allgemein"), die `formatted`-
-  Aufschlüsselungszeilen in `yield.ts`/`nutrients.ts` (`×0.85 · …`).
-- Branch `benny/i18n-content-translation` (~30 Commits vor `main`) noch
-  nicht als PR offen.
+- Per-Page-Canonical: **alle** i18n-Routes verdrahtet — studies, `/tools`
+  + Rechner (in Server-`page.tsx` + `Client.tsx` gesplittet), `/diagnose`,
+  `/updates`.
+- `StudyListItem`-Tags: jetzt im TM (`tags` in `ARTICLE_FIELDS`), werden
+  beim 2026-09-01-Lauf mitübersetzt.
+- **PR #29 offen** (Basis `main`, 33 Commits). CI ist erwartbar rot bis
+  zum 2026-09-01-Lauf (`i18n:check` = 462 offene Strings).
 
 Sonst ist auf `/en` alles Nutzer-sichtbare übersetzt: Studies (Hub,
 Kategorien, Listen, Artikel-Detail, Quellen, TOC, Signals, AskBot),
