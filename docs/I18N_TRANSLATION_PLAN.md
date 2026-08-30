@@ -58,29 +58,35 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit · `[x]` fertig & verifiziert
       übersetzen"-Liste
 - [x] `docs/i18n/styleguide.md` — Register, Anrede, Einheiten, Rechtstext-Umgang
 
-### A2 — Pipeline-Skript `scripts/translate-content.mjs`
+### A2 — Pipeline-Skript `scripts/translate-content.mjs`  ✅ fertig, verifiziert
 - [x] esbuild-Transpile + dynamischer Import von `wiki.ts` / `diagnostics.ts` /
-      `tree.ts` (löst `@/`-Alias auf, erzeugt die final zusammengesetzten
-      Objektlisten inkl. Seed-Expansion)
-- [x] String-Extraktion über bekannte Feldpfade auf `TerpiraArticle` /
-      `DiagnoseResult` (Prosa-Felder, keine Slugs/IDs/Zahlen-Metadaten)
-- [x] Translation-Memory-Dateien lesen/schreiben:
-      `apps/web/src/data/i18n/en.{wiki,diagnostics,diagnose-tree}.json`
-- [x] `--check` (CI): fehlt zu einem deutschen String der EN-Eintrag → exit 1
-- [x] `--stats`: Anzahl Strings / Zeichen / fehlend, pro Quelle
-- [x] `--prune`: TM-Einträge melden/entfernen, deren `de` nicht mehr vorkommt
-- [x] `--translate` [`--only=<quelle>`] [`--pilot=<n>`]: fehlende Strings
-      gebündelt an Claude, System-Prompt = Glossar + Styleguide +
-      Referenzübersetzungen (mit Prompt-Caching), JSON-Output → TM mergen
-- [x] npm-Scripts in Root-`package.json`: `i18n:check`, `i18n:stats`,
-      `i18n:translate`, `i18n:translate:pilot`
-- [x] leere TM-Dateien committet
+      `tree.ts` (löst `@/`-Alias auf, `lucide-react`/`react` extern, Import aus
+      `node_modules/.cache/sl-i18n`)
+- [x] String-Extraktion über feste Feldpfade auf `TerpiraArticle` /
+      `DiagnoseResult` / `DiagnoseNode` / `DiagnoseCategory` (nur Prosa)
+- [x] Translation-Memory `apps/web/src/data/i18n/en.{wiki,diagnostics,diagnose-tree}.json`
+      — Key = 12-Hex-Hash von `de`, Wert `{ de, en, paths }`, nach `de` sortiert
+- [x] `--check` (CI, read-only): exit 1 bei unübersetztem String
+- [x] `--stats` (read-only): Strings / Zeichen / übersetzt / fehlend pro Quelle
+- [x] `--sync` (write): de/paths-Stubs auffrischen, vorhandene `en` erhalten
+- [x] `--prune` (write): TM-Einträge weg, deren `de` nicht mehr vorkommt
+- [x] `--translate` [`--only=<quelle>`] [`--pilot=<n>`] [`--dry-run`]: fehlende
+      Strings gebündelt (`--batch`, Default 20) an Anthropic, System-Prompt =
+      Styleguide + `glossary.json` mit `cache_control`, JSON-Output → TM,
+      schreibt nach jedem Batch; Modell via `I18N_MODEL` (Default
+      `claude-sonnet-5`)
+- [x] npm-Scripts: `i18n:stats` `i18n:check` `i18n:sync` `i18n:prune`
+      `i18n:translate` `i18n:translate:pilot`
+- [x] TM-Dateien via `--sync` materialisiert + committet:
+      **7.511 Strings / ~774.000 Zeichen**, alle `en: null`
 
 ### A3 — Pilot & Qualitätsprüfung
-- [ ] `npm run i18n:translate:pilot` (nur `diagnostics`, ~15 Strings)
+- [ ] `npm run i18n:translate:pilot` (nur `diagnostics`, 15 Strings)
       — **braucht `ANTHROPIC_API_KEY`, kostet API-Credits → Benny startet das**
-- [ ] Pilot-Output gegen Glossar/Styleguide reviewen; Prompt/Glossar nachziehen
+- [ ] Pilot-Output in `en.diagnostics.json` gegen Glossar/Styleguide reviewen;
+      Prompt/Glossar nachziehen
 - [ ] Entscheidung: so weiterfahren / Prompt anpassen / doch DeepL
+- [ ] Grobkostenrahmen Vollpass abschätzen (~774k Zeichen Quelle, Sonnet)
 
 ### A4 — Vollübersetzung
 - [ ] `npm run i18n:translate --only=tree`
