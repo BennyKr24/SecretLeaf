@@ -151,14 +151,6 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   `scripts/sync-fertilizer-prices.mjs` bleibt als möglicher Ausgangspunkt
   liegen.
 
-## 📚 Quellenregister (`/studies/sources`)
-
-- 🔍 **Inhalt: "Neuer Bereich"-Banner zum Schädlings-Lexikon wirkt stale.**
-  Der rosa Hinweis-Kasten oben auf der Seite bewirbt das Schädlings-Lexikon
-  noch als brandneu ("Jetzt verfügbar") — dürfte inzwischen etabliert sein
-  und nicht mehr als Ankündigung geführt werden. Prüfen, ob der Banner weg
-  kann oder durch aktuellere Inhalte ersetzt werden sollte.
-
 ## 🗂️ Studies-Kategorisierung — `anbau` überladen, Plan steht (2026-08-22)
 
 - ⏸️ **Plan fertig, noch nicht umgesetzt — Entscheidung steht aus.** Voller

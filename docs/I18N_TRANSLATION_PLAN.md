@@ -110,15 +110,25 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit · `[x]` fertig & verifiziert
       typecheck / lint / build grün
 
 ### A5b — Rendering-Overlay: Listen & Chrome
-- [ ] `category/[slug]/page.tsx` + `StudiesListView`: Titel/Summary in Listen
-      lokalisieren, `locale` durchreichen, Kategorie-Label
-- [ ] `studies/page.tsx` + `CategoryHubGrid`: dito
-- [ ] `studies/sources/page.tsx`, Diagnose-Ergebnis-Komponente (`DiagnoseResult.tsx`)
-- [ ] Hartkodierte Studien-Chrome-Strings („Kernpunkte", „Quellen",
-      „Verwandte Artikel", „Min", „Häufige Fragen" …) nach `messages/{de,en}.json`
-- [ ] `categoryLabels` / `difficultyLabels` sauber über `messages` statt der
-      kleinen Map in `localizeContent.ts`
+- [x] `category/[slug]/page.tsx` + `StudiesListView` + `StudyListItem`:
+      `locale` aus params, Artikel serverseitig via `localizeArticle`,
+      Kategorie-Label + -Beschreibung lokalisiert, `generateMetadata`,
+      Breadcrumb/Hero-Chrome. Client-Chrome (Suchfeld, Sort, Reset,
+      Trefferzahl, Empty-State, Show-more, Schwierigkeits- + Symptomarea-
+      Labels, „Min") → neuer `studiesList`-Namespace (de+en).
+- [x] `studies/page.tsx` (jetzt async) + `CategoryHubGrid`: lokalisierte
+      Label-/Beschreibungs-Maps, `generateMetadata`, Hero + Sub-Links.
+- [x] `studies/sources/page.tsx` → neuer `sourcesPage`-Namespace (de+en);
+      stale „Neuer Bereich"-Banner entfernt.
+- [ ] Diagnose-Ergebnis-Komponente (`DiagnoseResult.tsx`)
+- [ ] Restliche hartkodierte Chrome-Strings auf der **Artikel-Detailseite**
+      („Kernpunkte", „Hinweis", „Checkliste", „Einfach erklärt", „Glossar",
+      „Downloads", „Häufige Fragen", „Verwandte Artikel", „Quellen",
+      „Öffnen ↗", „Redaktioneller Hinweis" …) nach `messages`
 - [ ] `hreflang`/Canonical prüfen — jetzt ehrlich zweisprachig
+- Hinweis: EN-Maps (Kategorie-Label/-Beschreibung, Symptomarea) leben in
+  `localizeContent.ts`; `studiesList`/`sourcesPage` in `messages`. Bewusst
+  gemischt — die großen TM-JSONs dürfen nicht in den Client-Bundle.
 
 ---
 
