@@ -453,7 +453,10 @@
       "explEcDiff": "Ausgangswasser: {from} mS/cm → Ziel: {to} mS/cm.",
       "tipCoco": "Coco: 10–20 % Drain-Rate einplanen, um Salzaufbau zu vermeiden.",
       "tipHydro": "Hydro: Nährlösung alle 5–7 Tage komplett wechseln.",
-      "tipErde": "Erde: Organische Pufferung kann EC-Spitzen abfangen."
+      "tipErde": "Erde: Organische Pufferung kann EC-Spitzen abfangen.",
+      "productGeneric": "Allgemein",
+      "fPhase": "Phase",
+      "fSubstrate": "Substrat"
     },
     "ventilation": {
       "explVolGruen": "Ausreichend dimensioniert für dein Setup.",
@@ -465,7 +468,19 @@
       "explDuct": "Passend für bis zu {flow} m³/h."
     },
     "yield": {
-      "explTotal": "Reale Erträge variieren ±30 %. Diese Schätzung ist ein Orientierungswert."
+      "explTotal": "Reale Erträge variieren ±30 %. Diese Schätzung ist ein Orientierungswert.",
+      "expEinsteiger": "Einsteiger",
+      "expFortgeschritten": "Fortgeschritten",
+      "expProfi": "Profi",
+      "vegKurz": "kurz",
+      "vegStandard": "standard",
+      "vegVerlaengert": "verlängert",
+      "plants": "Pflanzen",
+      "vegDur": "Vegdauer",
+      "fGenetics": "Genetik",
+      "fSubstrate": "Substrat",
+      "fFeed": "Dünger",
+      "fDensity": "Dichte"
     }
   },
   "tool": {

@@ -453,7 +453,10 @@
       "explEcDiff": "Source water: {from} mS/cm → target: {to} mS/cm.",
       "tipCoco": "Coco: plan for a 10–20% drain rate to avoid salt build-up.",
       "tipHydro": "Hydro: fully replace the nutrient solution every 5–7 days.",
-      "tipErde": "Soil: organic buffering can absorb EC spikes."
+      "tipErde": "Soil: organic buffering can absorb EC spikes.",
+      "productGeneric": "Generic",
+      "fPhase": "Stage",
+      "fSubstrate": "Substrate"
     },
     "ventilation": {
       "explVolGruen": "Adequately sized for your setup.",
@@ -465,7 +468,19 @@
       "explDuct": "Suitable for up to {flow} m³/h."
     },
     "yield": {
-      "explTotal": "Real yields vary by ±30%. This estimate is a rough guide."
+      "explTotal": "Real yields vary by ±30%. This estimate is a rough guide.",
+      "expEinsteiger": "Beginner",
+      "expFortgeschritten": "Intermediate",
+      "expProfi": "Pro",
+      "vegKurz": "short",
+      "vegStandard": "standard",
+      "vegVerlaengert": "extended",
+      "plants": "plants",
+      "vegDur": "veg duration",
+      "fGenetics": "Genetics",
+      "fSubstrate": "Substrate",
+      "fFeed": "Feed",
+      "fDensity": "Density"
     }
   },
   "tool": {

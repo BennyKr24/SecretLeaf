@@ -2367,11 +2367,29 @@
       "wiki/terpen-panels-und-qualitaetslabels/glossary/3/definition"
     ]
   },
+  "ed482c05e9e0": {
+    "de": "Analytik",
+    "en": null,
+    "paths": [
+      "wiki/terpen-oxidationsprodukte-und-bedeutung/tags/2",
+      "wiki/minor-terpene-und-profiltiefe/tags/3",
+      "wiki/terpen-panels-und-qualitaetslabels/tags/3"
+    ]
+  },
   "cf7a25b09b6f": {
     "de": "Analytik: Cannabinoid-/Terpenprofil, Kontaminanten, mikrobiologische Parameter, ggf. Restlösungsmittel in relevanten Klassen.",
     "en": "Analytics: cannabinoid/terpene profile, contaminants, microbiological parameters, and where relevant residual solvents in relevant classes.",
     "paths": [
       "wiki/hash-typen-vergleichen/sections/6/content/2"
+    ]
+  },
+  "216ed7d85d6b": {
+    "de": "Anbau",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/1",
+      "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/1",
+      "wiki/how-to-grow-cannabis-profi-tutorial/tags/1"
     ]
   },
   "424e8a5d43a7": {
@@ -2458,6 +2476,14 @@
       "wiki/stickstoffmangel/keyTakeaways/1"
     ]
   },
+  "ff7c5bba6e66": {
+    "de": "Anfänger",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/2",
+      "wiki/outdoor-anbau-fuer-einsteiger/tags/1"
+    ]
+  },
   "1e738ec2e000": {
     "de": "Anhaltende Staunässe öffnet ein direktes Zeitfenster für Pythium-Wurzelfäule — je länger der Sauerstoffmangel besteht, desto höher das Infektionsrisiko.",
     "en": "Prolonged waterlogging opens a direct window for Pythium root rot — the longer the oxygen deficiency persists, the higher the infection risk.",
@@ -2504,7 +2530,10 @@
     "de": "Antagonismus",
     "en": "Antagonism",
     "paths": [
-      "wiki/naehrstoffblockaden-und-antagonismen/glossary/0/term"
+      "wiki/naehrstoffblockaden-und-antagonismen/tags/1",
+      "wiki/naehrstoffblockaden-und-antagonismen/glossary/0/term",
+      "wiki/kalium-ueberschuss/tags/2",
+      "wiki/calciumueberschuss/tags/2"
     ]
   },
   "1962fcd849ab": {
@@ -2571,6 +2600,13 @@
       "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/quickFacts/2/label"
     ]
   },
+  "189e16c3b0e0": {
+    "de": "Aphididae",
+    "en": null,
+    "paths": [
+      "wiki/blattlaeuse/tags/3"
+    ]
+  },
   "416bd7713f3b": {
     "de": "Aphididae (versch. Arten)",
     "en": "Aphididae (various species)",
@@ -2599,6 +2635,14 @@
       "wiki/cannabis-anbau-grundlagen/keyTakeaways/0"
     ]
   },
+  "438a2f5435e9": {
+    "de": "Aroma",
+    "en": null,
+    "paths": [
+      "wiki/lagerung-und-terpenverlust-vermeiden/tags/3",
+      "wiki/minor-terpene-und-profiltiefe/tags/2"
+    ]
+  },
   "484b53f335f6": {
     "de": "Aromastabilität",
     "en": "Aroma stability",
@@ -2625,6 +2669,13 @@
     "en": "Link aroma changes to the age of the harvest",
     "paths": [
       "wiki/lagerung-und-terpenverlust-vermeiden/sections/1/checklist/2"
+    ]
+  },
+  "2db1bc1a4e0f": {
+    "de": "Arsen",
+    "en": null,
+    "paths": [
+      "wiki/schwere-metalle-und-aufnahmewege/tags/3"
     ]
   },
   "3fa8fa52b1e5": {
@@ -3023,7 +3074,9 @@
     "de": "Autoflower",
     "en": "Autoflower",
     "paths": [
-      "wiki/outdoor-anbau-fuer-einsteiger/glossary/0/term"
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/5",
+      "wiki/outdoor-anbau-fuer-einsteiger/glossary/0/term",
+      "wiki/feminisiert-vs-regular-vs-autoflower/tags/2"
     ]
   },
   "a49912fb93f7": {
@@ -3173,6 +3226,13 @@
       "wiki/trauermuecken/glossary/0/definition"
     ]
   },
+  "33c86b7ad62f": {
+    "de": "Backcross",
+    "en": null,
+    "paths": [
+      "wiki/crossing-backcrossing-grundlagen/tags/1"
+    ]
+  },
   "2712379f8559": {
     "de": "Backcrossing (Rückkreuzung) kreuzt einen bereits entstandenen Hybrid erneut mit einer seiner ursprünglichen Elternlinien, um deren Genom-Anteil in den Nachkommen gezielt zu erhöhen.",
     "en": "Backcrossing crosses an already existing hybrid again with one of its original parent lines, to deliberately increase that parent's genome share in the offspring.",
@@ -3199,6 +3259,13 @@
     "en": "Backcrossing is also used to bring an already stable, proven line back to its original character after an outcross.",
     "paths": [
       "wiki/crossing-backcrossing-grundlagen/sections/3/content/1"
+    ]
+  },
+  "ff9f658402a6": {
+    "de": "Balkon",
+    "en": null,
+    "paths": [
+      "wiki/outdoor-anbau-fuer-einsteiger/tags/3"
     ]
   },
   "10c22d589328": {
@@ -4437,6 +4504,13 @@
       "wiki/wurzelgesundheit-diagnose/sections/1/heading"
     ]
   },
+  "9034551c0707": {
+    "de": "Bewässerung",
+    "en": null,
+    "paths": [
+      "wiki/bewaesserung-ohne-uebergiessen/tags/0"
+    ]
+  },
   "62dcf4ed271e": {
     "de": "Bewässerung ohne Übergiessen",
     "en": "Irrigation without overwatering",
@@ -4528,10 +4602,18 @@
       "wiki/mutterpflanzen-und-clone-hygiene/glossary/1/term"
     ]
   },
+  "d701ee3c3a9b": {
+    "de": "Bezugsquelle",
+    "en": null,
+    "paths": [
+      "wiki/supplier-risk-scoring-fuer-cannabis/tags/0"
+    ]
+  },
   "ffe6790e9adb": {
     "de": "BHO",
     "en": null,
     "paths": [
+      "wiki/concentrate-categorization-fuer-plattformen/tags/0",
       "wiki/concentrate-categorization-fuer-plattformen/glossary/0/term"
     ]
   },
@@ -4575,6 +4657,13 @@
     "en": "Bias reduction in evaluation",
     "paths": [
       "wiki/selektionsscorecards-fuer-pheno-hunts/sections/3/heading"
+    ]
+  },
+  "a94d18c66516": {
+    "de": "Bilddiagnose",
+    "en": null,
+    "paths": [
+      "wiki/trichom-reifegrad-bilddiagnose/tags/3"
     ]
   },
   "380bb92edbdb": {
@@ -4628,6 +4717,7 @@
     "de": "Biosynthese",
     "en": "Biosynthesis",
     "paths": [
+      "wiki/cannabinoid-biosynthese-verstehen/tags/0",
       "wiki/cannabinoid-biosynthese-verstehen/glossary/0/term"
     ]
   },
@@ -4644,7 +4734,8 @@
     "paths": [
       "wiki/inhalation-vs-edibles/glossary/0/term",
       "wiki/orale-produkte-und-first-pass-risiken/glossary/3/term",
-      "wiki/dosisprotokolle-ohne-uebertreibung/glossary/4/term"
+      "wiki/dosisprotokolle-ohne-uebertreibung/glossary/4/term",
+      "wiki/sublingual-tinkturen-richtig-einordnen/tags/2"
     ]
   },
   "8c9b1303fa7c": {
@@ -4780,6 +4871,13 @@
       "wiki/blattlaeuse/sections/1/content/0"
     ]
   },
+  "ed3f808a3fff": {
+    "de": "Blattläuse",
+    "en": null,
+    "paths": [
+      "wiki/blattlaeuse/tags/0"
+    ]
+  },
   "2fc3be8e8829": {
     "de": "Blattläuse bei Cannabis erkennen und bekämpfen",
     "en": "Identifying and controlling aphids on cannabis",
@@ -4827,6 +4925,13 @@
     "en": "Spraying the tops of leaves but skipping the undersides (where the mites sit).",
     "paths": [
       "wiki/spinnmilben/sections/7/content/2"
+    ]
+  },
+  "66b276fafefd": {
+    "de": "Blattrand",
+    "en": null,
+    "paths": [
+      "wiki/kaliummangel/tags/1"
     ]
   },
   "e9cc8e070f13": {
@@ -5075,6 +5180,13 @@
       "wiki/lichtstress-und-canopy-management/sections/6/content/2"
     ]
   },
+  "23fae754be13": {
+    "de": "Blei",
+    "en": null,
+    "paths": [
+      "wiki/schwere-metalle-und-aufnahmewege/tags/1"
+    ]
+  },
   "d4e0ad02fa7c": {
     "de": "Blei, Cadmium, Arsen und Quecksilber sind die 'Big 4' - fast jedes legale Cannabis-Testregime weltweit prüft genau auf diese vier Metalle, weil sie schon in kleinen Mengen gesundheitsrelevant sind.",
     "en": "Lead, cadmium, arsenic and mercury are the 'Big 4' - almost every legal cannabis testing regime worldwide screens specifically for these four metals, because they're health-relevant even in small amounts.",
@@ -5128,7 +5240,8 @@
     "de": "Blockade",
     "en": "Lockout",
     "paths": [
-      "wiki/naehrstoffblockaden-und-antagonismen/glossary/2/term"
+      "wiki/naehrstoffblockaden-und-antagonismen/glossary/2/term",
+      "wiki/ph-lockout/tags/2"
     ]
   },
   "ec63051dfcad": {
@@ -5136,6 +5249,14 @@
     "en": "Lockouts arise mainly from unfavorable pH (solubility and uptake lockout) and from antagonism between competing ions at the root surface.",
     "paths": [
       "wiki/naehrstoffblockaden-und-antagonismen/sections/0/content/1"
+    ]
+  },
+  "a39f120efb2f": {
+    "de": "Blüte",
+    "en": null,
+    "paths": [
+      "wiki/bud-rot-botrytis/tags/3",
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/0"
     ]
   },
   "aa28911f478b": {
@@ -5180,6 +5301,13 @@
       "wiki/bewaesserung-ohne-uebergiessen/sections/3/content/2"
     ]
   },
+  "466f4b7b07a0": {
+    "de": "Blüteauslösung",
+    "en": null,
+    "paths": [
+      "wiki/dli-und-photoperiode/tags/3"
+    ]
+  },
   "025a15834e28": {
     "de": "Blüten liegen meist bei 10-35% THC, Konzentrate dagegen bei 40-80%. Das ist kein kleiner Unterschied, sondern teils das Fünf- bis Achtfache pro Gramm. DanceSafe empfiehlt deshalb für den ersten Kontakt mit einem Konzentrat eine Menge 'nicht größer als ein Stecknadelkopf' - deutlich kleiner, als viele erwarten - sowie niedrigere Dab-Temperaturen, um zusätzlich die Reizung der Atemwege zu reduzieren.",
     "en": "Flower is usually around 10-35% THC, while concentrates are around 40-80%. That's not a small difference, but in some cases five to eight times as much per gram. DanceSafe therefore recommends, for first contact with a concentrate, an amount 'no bigger than a pinhead' - noticeably smaller than many expect - as well as lower dab temperatures, to additionally reduce irritation of the airways.",
@@ -5192,6 +5320,13 @@
     "en": "Calyx; the base structure of the cannabis bud, on which the densest trichome coverage sits.",
     "paths": [
       "wiki/trichom-reifegrad-bilddiagnose/glossary/1/definition"
+    ]
+  },
+  "64d0347ffdf5": {
+    "de": "Blütephase",
+    "en": null,
+    "paths": [
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/1"
     ]
   },
   "08c61b5d2711": {
@@ -5241,6 +5376,13 @@
     "en": "Soilborne",
     "paths": [
       "wiki/fusarium/glossary/2/term"
+    ]
+  },
+  "5ff11b8759e8": {
+    "de": "Botrytis",
+    "en": null,
+    "paths": [
+      "wiki/bud-rot-botrytis/tags/1"
     ]
   },
   "7e78f93065e9": {
@@ -5506,6 +5648,7 @@
     "de": "Bubble Bags",
     "en": "Bubble Bags",
     "paths": [
+      "wiki/bubble-hash-qualitaetskriterien/tags/4",
       "wiki/bubble-hash-qualitaetskriterien/glossary/3/term"
     ]
   },
@@ -5514,6 +5657,14 @@
     "en": "Bubble Bags refers to the graduated micron mesh bag sets that practically everyone washes with today. Marcus 'Bubbleman' Richardson is credited as the one who launched the first commercial multi-bag kit (3 bags) in 1999 — from this developed the now-common 6- to 8-bag sets with standard sizes such as 220/190/160/120/90/73/45/25 microns.",
     "paths": [
       "wiki/bubble-hash-qualitaetskriterien/sections/2/content/1"
+    ]
+  },
+  "282f9b362715": {
+    "de": "Bubble Hash",
+    "en": null,
+    "paths": [
+      "wiki/bubble-hash-qualitaetskriterien/tags/0",
+      "wiki/hash-typen-vergleichen/tags/2"
     ]
   },
   "eb8f201337f3": {
@@ -5542,6 +5693,13 @@
     "en": "Bubble Hash: From wash to quality",
     "paths": [
       "wiki/bubble-hash-qualitaetskriterien/title"
+    ]
+  },
+  "9dbccbe8ff0b": {
+    "de": "Bud Rot",
+    "en": null,
+    "paths": [
+      "wiki/bud-rot-botrytis/tags/0"
     ]
   },
   "d8a351c80169": {
@@ -5775,12 +5933,21 @@
       "wiki/calciummangel/sections/1/content/0"
     ]
   },
+  "37684c78a6c3": {
+    "de": "Cadmium",
+    "en": null,
+    "paths": [
+      "wiki/schwere-metalle-und-aufnahmewege/tags/2"
+    ]
+  },
   "d5642b965579": {
     "de": "Cal-Mag",
     "en": "Cal-Mag",
     "paths": [
+      "wiki/calciummangel/tags/1",
       "wiki/calciummangel/glossary/2/term",
       "wiki/calciumueberschuss/glossary/1/term",
+      "wiki/calmag-supplementierung/tags/0",
       "wiki/calmag-supplementierung/glossary/0/term"
     ]
   },
@@ -5859,6 +6026,16 @@
     "en": "Adding Cal-Mag to already hard tap water without a prior water analysis can shift the Ca:Mg ratio unnecessarily and trigger a new antagonism.",
     "paths": [
       "wiki/calmag-supplementierung/warnings/0"
+    ]
+  },
+  "636f0dc2dfb9": {
+    "de": "Calcium",
+    "en": null,
+    "paths": [
+      "wiki/calciummangel/tags/0",
+      "wiki/calciumueberschuss/tags/0",
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/7",
+      "wiki/calmag-supplementierung/tags/1"
     ]
   },
   "033fb1c5e72a": {
@@ -6103,8 +6280,10 @@
     "de": "Canopy",
     "en": "Canopy",
     "paths": [
+      "wiki/lichtstress-und-canopy-management/tags/1",
       "wiki/lichtstress-und-canopy-management/glossary/2/term",
-      "wiki/how-to-grow-cannabis-anfaenger-tutorial/glossary/1/term"
+      "wiki/how-to-grow-cannabis-anfaenger-tutorial/glossary/1/term",
+      "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/4"
     ]
   },
   "ffd968fc4e09": {
@@ -6184,6 +6363,13 @@
       "wiki/calciumueberschuss/glossary/0/term"
     ]
   },
+  "1221c1ab9631": {
+    "de": "Caryophyllen",
+    "en": null,
+    "paths": [
+      "wiki/myrcen-limonen-caryophyllen-einordnung/tags/2"
+    ]
+  },
   "0810c368e67c": {
     "de": "Case Hardening",
     "en": "Case hardening",
@@ -6195,6 +6381,7 @@
     "de": "CBGA",
     "en": "CBGA",
     "paths": [
+      "wiki/cannabinoid-biosynthese-verstehen/tags/1",
       "wiki/cannabinoid-biosynthese-verstehen/quickFacts/0/value"
     ]
   },
@@ -6210,6 +6397,7 @@
     "en": "CBN",
     "paths": [
       "wiki/trichom-reifegrad-bilddiagnose/glossary/2/term",
+      "wiki/thc-zu-cbn-abbau-und-oxidation/tags/1",
       "wiki/decarboxylierung-grundlagen-und-fehler/glossary/2/term"
     ]
   },
@@ -6273,6 +6461,7 @@
     "de": "Charas",
     "en": "Charas",
     "paths": [
+      "wiki/hash-typen-vergleichen/tags/6",
       "wiki/hash-typen-vergleichen/glossary/7/term"
     ]
   },
@@ -6337,6 +6526,14 @@
     "en": "Chelates keep iron soluble: EDDHA remains stable up to pH ~9, DTPA up to ~7.5, EDTA only up to ~6.5 — the chelate choice must match the pH.",
     "paths": [
       "wiki/eisenmangel/sections/1/content/1"
+    ]
+  },
+  "3a30dec0a93f": {
+    "de": "Chemie",
+    "en": null,
+    "paths": [
+      "wiki/cannabinoid-biosynthese-verstehen/tags/3",
+      "wiki/terpen-oxidationsprodukte-und-bedeutung/tags/3"
     ]
   },
   "7bf6f09907d5": {
@@ -6409,6 +6606,15 @@
       "wiki/wasseraktivitaet-und-curing/glossary/2/term"
     ]
   },
+  "651bac5b563c": {
+    "de": "Chlorose",
+    "en": null,
+    "paths": [
+      "wiki/magnesiummangel/tags/1",
+      "wiki/stickstoffmangel/tags/1",
+      "wiki/eisenmangel/tags/1"
+    ]
+  },
   "b581bc131f20": {
     "de": "Clone-Qualität ist nur dann vergleichbar, wenn Schnitt, Bewurzelung und Weitergabe standardisiert sind.",
     "en": "Clone quality is only comparable if cutting, rooting, and handover are standardized.",
@@ -6428,6 +6634,14 @@
     "en": "Clone rotation",
     "paths": [
       "wiki/genetik-und-phaenotyp-selektion/glossary/2/term"
+    ]
+  },
+  "08423724042a": {
+    "de": "Clones",
+    "en": null,
+    "paths": [
+      "wiki/genetik-und-phaenotyp-selektion/tags/3",
+      "wiki/mutterpflanzen-und-clone-hygiene/tags/1"
     ]
   },
   "13c995e5621a": {
@@ -6546,8 +6760,12 @@
     "de": "COA",
     "en": "COA",
     "paths": [
+      "wiki/coa-richtig-lesen/tags/0",
       "wiki/coa-richtig-lesen/glossary/0/term",
       "wiki/pgr-und-kontaminanten/glossary/1/term",
+      "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/tags/3",
+      "wiki/pestizidklassen-und-rueckstandsrisiken/tags/2",
+      "wiki/batch-release-und-freigabekriterien/tags/1",
       "wiki/batch-release-und-freigabekriterien/glossary/0/term"
     ]
   },
@@ -6621,6 +6839,14 @@
     "en": "COA, storage condition, smell and visible irregularities need to be assessed together.",
     "paths": [
       "wiki/batch-release-und-freigabekriterien/keyTakeaways/1"
+    ]
+  },
+  "2a6aef767af7": {
+    "de": "Coco",
+    "en": null,
+    "paths": [
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/8",
+      "wiki/substrat-vergleich-coco-erde-hydro/tags/3"
     ]
   },
   "88f8ddf5d7c6": {
@@ -6749,6 +6975,13 @@
       "wiki/grow-log-und-kpi-dashboard/glossary/1/term"
     ]
   },
+  "975422bfa944": {
+    "de": "Crossing",
+    "en": null,
+    "paths": [
+      "wiki/crossing-backcrossing-grundlagen/tags/0"
+    ]
+  },
   "a152563c85fc": {
     "de": "Crossing (Kreuzung) bezeichnet die Bestäubung einer weiblichen Pflanze mit Pollen einer genetisch unterschiedlichen männlichen Pflanze, wodurch eine neue Kombination (F1-Generation) entsteht.",
     "en": "Crossing denotes the pollination of a female plant with pollen from a genetically different male plant, producing a new combination (F1 generation).",
@@ -6777,6 +7010,13 @@
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/checklist/3"
     ]
   },
+  "f22b52800885": {
+    "de": "Cure",
+    "en": null,
+    "paths": [
+      "wiki/rosin-einordnung-ohne-hype/tags/3"
+    ]
+  },
   "26587d01aefc": {
     "de": "Cure 3–4 Wochen in verschlossenen Gläsern bei 62% RH und prüfe aw wöchentlich – Ziel ist aw < 0.65 für stabile Qualität.",
     "en": "Cure for 3–4 weeks in sealed jars at 62% RH and check aw weekly – the target is aw < 0.65 for stable quality.",
@@ -6795,8 +7035,10 @@
     "de": "Curing",
     "en": "Curing",
     "paths": [
+      "wiki/wasseraktivitaet-und-curing/tags/0",
       "wiki/wasseraktivitaet-und-curing/glossary/1/term",
       "wiki/schimmel-und-mykotoxine-bei-cannabis/glossary/2/term",
+      "wiki/trocknung-protokoll/tags/1",
       "wiki/trocknung-protokoll/glossary/2/term",
       "wiki/recall-und-sperrprozesse-fuer-chargen/glossary/1/term"
     ]
@@ -7460,6 +7702,13 @@
       "wiki/ueberwaesserung-staunaesse/keyTakeaways/0"
     ]
   },
+  "67b696468610": {
+    "de": "Dashboard",
+    "en": null,
+    "paths": [
+      "wiki/grow-log-und-kpi-dashboard/tags/2"
+    ]
+  },
   "ba890cf280a7": {
     "de": "Dass Regulierungsbehörden diesen Effekt ernst nehmen, sieht man direkt an den Zahlen selbst: Oregon setzt seinen Pestizid-Aktionswert für Blüten bei 0,2 ppm an, für Extrakte dagegen bei 1 ppm - ein um den Faktor 5 höherer erlaubter Wert, ausdrücklich weil bei der Verarbeitung eine Aufkonzentrierung erwartet wird. Das ist keine Lockerung der Sicherheit, sondern eine realistischere Rechnung: Wenn eine Blüte mit 0,2 ppm Pestizid zu Extrakt verarbeitet wird, kann der Extrakt legitim höhere Werte zeigen, ohne dass real mehr Pestizid 'produziert' wurde - es ist dasselbe Pestizid, nur in weniger Material konzentriert.",
     "en": "That regulators take this effect seriously is directly visible in the numbers themselves: Oregon sets its pesticide action level for bud at 0.2 ppm, but for extracts at 1 ppm - a permitted value 5 times higher, explicitly because concentration during processing is expected. This is not a loosening of safety standards, but a more realistic calculation: if a bud with 0.2 ppm pesticide is processed into extract, the extract can legitimately show higher values without any more pesticide actually being 'produced' - it is the same pesticide, just concentrated in less material.",
@@ -7472,6 +7721,20 @@
     "en": "Using the same nutrient program for photoperiod and autoflowering plants without adjusting the EC ceiling.",
     "paths": [
       "wiki/naehrstoffbedarf-cannabis-lebenszyklus/sections/6/content/0"
+    ]
+  },
+  "43bf4ac31f53": {
+    "de": "Daten",
+    "en": null,
+    "paths": [
+      "wiki/grow-log-und-kpi-dashboard/tags/3"
+    ]
+  },
+  "d26e56165b2a": {
+    "de": "Datenlog",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-profi-tutorial/tags/5"
     ]
   },
   "e5ef03ea93db": {
@@ -7527,6 +7790,7 @@
     "de": "Decarboxylierung",
     "en": "Decarboxylation",
     "paths": [
+      "wiki/decarboxylierung-grundlagen-und-fehler/tags/0",
       "wiki/decarboxylierung-grundlagen-und-fehler/glossary/3/term",
       "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/glossary/5/term"
     ]
@@ -7636,6 +7900,13 @@
     "en": "Definition and phase length",
     "paths": [
       "wiki/bluetephase-ernaehrung-und-pflege/sections/0/heading"
+    ]
+  },
+  "74634b105f13": {
+    "de": "Defoliation",
+    "en": null,
+    "paths": [
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/4"
     ]
   },
   "9d8d8cbd3935": {
@@ -8174,6 +8445,39 @@
     "de": "Diagnose",
     "en": "Diagnosis",
     "paths": [
+      "wiki/blattsymptom-troubleshooter/tags/0",
+      "wiki/magnesiummangel/tags/4",
+      "wiki/stickstoffmangel/tags/4",
+      "wiki/calciummangel/tags/4",
+      "wiki/kaliummangel/tags/4",
+      "wiki/eisenmangel/tags/4",
+      "wiki/spinnmilben/tags/4",
+      "wiki/thripse/tags/4",
+      "wiki/bud-rot-botrytis/tags/4",
+      "wiki/echter-mehltau-powdery-mildew/tags/4",
+      "wiki/wurzelfaeule/tags/4",
+      "wiki/stickstoffueberschuss/tags/4",
+      "wiki/kalium-ueberschuss/tags/4",
+      "wiki/calciumueberschuss/tags/4",
+      "wiki/salzanreicherung-hohe-ec/tags/4",
+      "wiki/naehrstoffverbrennung-tipburn/tags/4",
+      "wiki/hitzestress/tags/4",
+      "wiki/kaeltestress/tags/4",
+      "wiki/luftfeuchte-management/tags/4",
+      "wiki/co2-management/tags/4",
+      "wiki/ph-lockout/tags/3",
+      "wiki/ueberwaesserung-staunaesse/tags/3",
+      "wiki/phosphormangel/tags/3",
+      "wiki/ec-und-runoff-interpretation/tags/3",
+      "wiki/wurzelgesundheit-diagnose/tags/1",
+      "wiki/trauermuecken/tags/4",
+      "wiki/windbrand/tags/4",
+      "wiki/blattlaeuse/tags/4",
+      "wiki/weisse-fliege/tags/3",
+      "wiki/hanf-rostmilben/tags/3",
+      "wiki/fusarium/tags/3",
+      "wiki/calmag-supplementierung/tags/4",
+      "wiki/hop-latent-viroid-hlvd/tags/4",
       "wiki/hop-latent-viroid-hlvd/sections/4/heading"
     ]
   },
@@ -8330,6 +8634,13 @@
     "en": "Diagnostic protocol — step by step",
     "paths": [
       "wiki/blattsymptom-troubleshooter/sections/7/heading"
+    ]
+  },
+  "56d926f90bb0": {
+    "de": "Diagnostik",
+    "en": null,
+    "paths": [
+      "wiki/naehrstoffblockaden-und-antagonismen/tags/3"
     ]
   },
   "dc95f33b5876": {
@@ -9351,6 +9662,7 @@
     "de": "DLI",
     "en": "DLI",
     "paths": [
+      "wiki/dli-und-photoperiode/tags/0",
       "wiki/dli-und-photoperiode/glossary/0/term",
       "wiki/indoor-outdoor-anbau-vergleich/glossary/1/term"
     ]
@@ -9415,9 +9727,11 @@
     "de": "Dokumentation",
     "en": "Documentation",
     "paths": [
+      "wiki/cannabis-anbau-grundlagen/tags/3",
       "wiki/genetik-und-phaenotyp-selektion/quickFacts/2/label",
       "wiki/mutterpflanzen-und-clone-hygiene/quickFacts/2/label",
-      "wiki/recall-und-sperrprozesse-fuer-chargen/quickFacts/2/label"
+      "wiki/recall-und-sperrprozesse-fuer-chargen/quickFacts/2/label",
+      "wiki/selektionsscorecards-fuer-pheno-hunts/tags/3"
     ]
   },
   "d3ae48b969b5": {
@@ -9455,6 +9769,13 @@
       "wiki/kalium-ueberschuss/sections/7/content/0"
     ]
   },
+  "757ad65c6518": {
+    "de": "Dosierung",
+    "en": null,
+    "paths": [
+      "wiki/sublingual-tinkturen-richtig-einordnen/tags/3"
+    ]
+  },
   "fd4880cd9407": {
     "de": "Dosierung und Korrektur",
     "en": "Dosage and correction",
@@ -9467,6 +9788,13 @@
     "en": "Dosing: mg/mL instead of counting drops",
     "paths": [
       "wiki/sublingual-tinkturen-richtig-einordnen/sections/4/heading"
+    ]
+  },
+  "142a63554613": {
+    "de": "Dosis",
+    "en": null,
+    "paths": [
+      "wiki/dosisprotokolle-ohne-uebertreibung/tags/0"
     ]
   },
   "be95600315f4": {
@@ -9487,7 +9815,9 @@
     "de": "Drain",
     "en": "Runoff",
     "paths": [
+      "wiki/cannabis-substrat-und-wurzelzone/tags/2",
       "wiki/cannabis-substrat-und-wurzelzone/glossary/0/term",
+      "wiki/bewaesserung-ohne-uebergiessen/tags/1",
       "wiki/how-to-grow-cannabis-anfaenger-tutorial/glossary/2/term"
     ]
   },
@@ -9530,7 +9860,8 @@
     "de": "Drainage",
     "en": "Drainage",
     "paths": [
-      "wiki/ueberwaesserung-staunaesse/glossary/2/term"
+      "wiki/ueberwaesserung-staunaesse/glossary/2/term",
+      "wiki/ec-und-runoff-interpretation/tags/2"
     ]
   },
   "e53210560991": {
@@ -9601,7 +9932,8 @@
     "de": "Drift",
     "en": "Drift",
     "paths": [
-      "wiki/sensor-kalibrierung-und-messfehler/glossary/2/term"
+      "wiki/sensor-kalibrierung-und-messfehler/glossary/2/term",
+      "wiki/mutterpflanzen-und-clone-hygiene/tags/3"
     ]
   },
   "21d40446b83f": {
@@ -9609,6 +9941,13 @@
     "en": null,
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/2/term"
+    ]
+  },
+  "5277dd168232": {
+    "de": "Dry Sift",
+    "en": null,
+    "paths": [
+      "wiki/hash-typen-vergleichen/tags/1"
     ]
   },
   "97e9869a447d": {
@@ -9713,6 +10052,7 @@
     "de": "Dudding",
     "en": "Dudding",
     "paths": [
+      "wiki/hop-latent-viroid-hlvd/tags/2",
       "wiki/hop-latent-viroid-hlvd/glossary/1/term"
     ]
   },
@@ -9721,6 +10061,13 @@
     "en": "Feed according to EC target values for the stage and check the drainage EC regularly.",
     "paths": [
       "wiki/salzanreicherung-hohe-ec/sections/7/content/0"
+    ]
+  },
+  "3079db5bcf02": {
+    "de": "Dünger",
+    "en": null,
+    "paths": [
+      "wiki/pgr-und-kontaminanten/tags/1"
     ]
   },
   "6ceb6797e791": {
@@ -9742,6 +10089,13 @@
     "en": "Adding nutrients itself changes the pH of the solution. If the pH is set beforehand, it shifts again when nutrients are added — so always fully add nutrients first, then correct the pH.",
     "paths": [
       "wiki/ph-management-coco-erde-hydro/simpleExplainers/1/text"
+    ]
+  },
+  "992afee22f57": {
+    "de": "Düngung",
+    "en": null,
+    "paths": [
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/2"
     ]
   },
   "12accc54d145": {
@@ -9954,6 +10308,13 @@
       "wiki/full-melt-und-marketingsprache/sections/5/content/1"
     ]
   },
+  "3496b722301e": {
+    "de": "Echter Mehltau",
+    "en": null,
+    "paths": [
+      "wiki/echter-mehltau-powdery-mildew/tags/0"
+    ]
+  },
   "aa344c7b0eed": {
     "de": "Echter Mehltau bei Cannabis erkennen und bekämpfen",
     "en": "Identifying and controlling powdery mildew on cannabis",
@@ -10001,6 +10362,15 @@
     "en": "EDDHA chelate is deep red and colors the solution; this is normal and shows the high pH stability of this chelate.",
     "paths": [
       "wiki/eisenmangel/sections/10/content/0"
+    ]
+  },
+  "a72572b04966": {
+    "de": "Edibles",
+    "en": null,
+    "paths": [
+      "wiki/inhalation-vs-edibles/tags/1",
+      "wiki/decarboxylierung-grundlagen-und-fehler/tags/2",
+      "wiki/orale-produkte-und-first-pass-risiken/tags/3"
     ]
   },
   "3aee89af8ab3": {
@@ -10064,6 +10434,13 @@
     "en": "Egg-fungus-like organism (e.g. Pythium), not a true fungus, but with a fungus-like lifestyle.",
     "paths": [
       "wiki/wurzelfaeule/glossary/0/definition"
+    ]
+  },
+  "8f357cf6cbdb": {
+    "de": "Eigenanbau",
+    "en": null,
+    "paths": [
+      "wiki/schwere-metalle-und-aufnahmewege/tags/5"
     ]
   },
   "825944de66be": {
@@ -11480,6 +11857,13 @@
       "wiki/feminisiert-vs-regular-vs-autoflower/glossary/2/definition"
     ]
   },
+  "05bf956cc407": {
+    "de": "Einordnung",
+    "en": null,
+    "paths": [
+      "wiki/myrcen-limonen-caryophyllen-einordnung/tags/3"
+    ]
+  },
   "ed359e9df24a": {
     "de": "Einseitiges Welken trotz feuchtem Substrat = Verdacht auf Fusarium; Stängelquerschnitt auf bräunlichen Leitgewebering prüfen und befallenes Substrat danach nicht wiederverwenden.",
     "en": "One-sided wilting despite moist substrate = suspect Fusarium; check a stem cross-section for a brownish vascular ring and do not reuse infested substrate afterward.",
@@ -11543,6 +11927,13 @@
       "wiki/blattsymptom-troubleshooter/sections/5/content/0"
     ]
   },
+  "1a34477191ef": {
+    "de": "Einzelpflanze",
+    "en": null,
+    "paths": [
+      "wiki/outdoor-anbau-fuer-einsteiger/tags/5"
+    ]
+  },
   "d509dd4d2b24": {
     "de": "Einzelterpen ist nie die ganze Story",
     "en": "A single terpene is never the whole story",
@@ -11562,6 +11953,13 @@
     "en": "Single cause or combination (lockout/climate)?",
     "paths": [
       "wiki/blattsymptom-troubleshooter/quickFacts/2/value"
+    ]
+  },
+  "3e93030ad13f": {
+    "de": "Eisen",
+    "en": null,
+    "paths": [
+      "wiki/eisenmangel/tags/0"
     ]
   },
   "9da80763632f": {
@@ -11747,6 +12145,13 @@
       "wiki/coa-richtig-lesen/sections/2/content/1"
     ]
   },
+  "84b5bbbb43d1": {
+    "de": "Entscheidung",
+    "en": null,
+    "paths": [
+      "wiki/erntefenster-trichomreife/tags/3"
+    ]
+  },
   "e32156153b0e": {
     "de": "Entscheidung und Beobachtung kurz notieren, falls später ein Vergleich nötig wird",
     "en": "Briefly note the decision and observation in case a comparison is needed later",
@@ -11816,6 +12221,14 @@
     "en": null,
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/faq/1/answer"
+    ]
+  },
+  "3c9fca9c07f7": {
+    "de": "Erde",
+    "en": null,
+    "paths": [
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/7",
+      "wiki/substrat-vergleich-coco-erde-hydro/tags/5"
     ]
   },
   "5cb363d7e48c": {
@@ -12032,6 +12445,7 @@
     "de": "Eriophyidae",
     "en": "Eriophyidae",
     "paths": [
+      "wiki/hanf-rostmilben/tags/1",
       "wiki/hanf-rostmilben/glossary/0/term"
     ]
   },
@@ -12046,6 +12460,8 @@
     "de": "Ernte",
     "en": "Harvest",
     "paths": [
+      "wiki/pgr-und-kontaminanten/tags/3",
+      "wiki/recall-und-sperrprozesse-fuer-chargen/tags/2",
       "wiki/outdoor-anbau-fuer-einsteiger/quickFacts/1/label"
     ]
   },
@@ -12089,6 +12505,14 @@
     "en": "Do not spray fungicides on buds close to harvest — residues jeopardize quality and consumption safety.",
     "paths": [
       "wiki/echter-mehltau-powdery-mildew/warnings/0"
+    ]
+  },
+  "1b22bd5c46a3": {
+    "de": "Erntezeitpunkt",
+    "en": null,
+    "paths": [
+      "wiki/trichom-reifegrad-bilddiagnose/tags/1",
+      "wiki/erntefenster-trichomreife/tags/0"
     ]
   },
   "567e1b072e2b": {
@@ -12239,6 +12663,14 @@
     "en": "First symptom",
     "paths": [
       "wiki/bud-rot-botrytis/quickFacts/1/label"
+    ]
+  },
+  "c6c35d2c65c3": {
+    "de": "Ertrag",
+    "en": null,
+    "paths": [
+      "wiki/substrat-vergleich-coco-erde-hydro/tags/8",
+      "wiki/indoor-outdoor-anbau-vergleich/tags/3"
     ]
   },
   "86e8062b60ae": {
@@ -12451,6 +12883,13 @@
       "wiki/co2-management/simpleExplainers/1/text"
     ]
   },
+  "3219af24e5e7": {
+    "de": "Extrakte",
+    "en": null,
+    "paths": [
+      "wiki/kontaminantenprofile-bei-extrakten/tags/0"
+    ]
+  },
   "fe60b292b4cc": {
     "de": "Extrakte, die mit Butan, Propan, Ethanol oder CO2 hergestellt werden, bringen ein zusätzliches, eigenes Kontaminantenthema mit: Restlösungsmittel. Die zulässigen Grenzwerte unterscheiden sich je nach Markt und Lösungsmittelklasse spürbar - als grobe Momentaufnahme (diese Werte verschieben sich zwischen Jurisdiktionen und ändern sich mit der Zeit): Für sogenannte USP-<467>-Klasse-3-Lösungsmittel wie Butan oder Propan wird oft eine Grenze um 5.000 ppm angesetzt, der Bundesstaat Washington begrenzt Restlösungsmittel/Restgas insgesamt auf 500 ppm pro Gramm, und einzelne kalifornische Produktkategorien liegen je nach Produkttyp zwischen 1.000 und 5.000 ppm.",
     "en": "Extracts made with butane, propane, ethanol, or CO2 bring an additional, distinct contaminant issue with them: residual solvents. The permissible limits differ noticeably depending on market and solvent class - as a rough snapshot (these values shift between jurisdictions and change over time): for so-called USP <467> Class 3 solvents like butane or propane, a limit around 5,000 ppm is often set, the state of Washington limits total residual solvent/residual gas to 500 ppm per gram, and individual California product categories range between 1,000 and 5,000 ppm depending on product type.",
@@ -12554,6 +12993,13 @@
     "en": "Driving break after smoking/vaping",
     "paths": [
       "wiki/inhalation-set-setting-und-harm-reduction/quickFacts/3/label"
+    ]
+  },
+  "a367707c51d4": {
+    "de": "Fahrtüchtigkeit",
+    "en": null,
+    "paths": [
+      "wiki/inhalation-set-setting-und-harm-reduction/tags/3"
     ]
   },
   "8cd5b493be59": {
@@ -12774,6 +13220,13 @@
       "wiki/cannabis-anbau-grundlagen/quickFacts/1/label"
     ]
   },
+  "d4086a1f0a09": {
+    "de": "Fehlersuche",
+    "en": null,
+    "paths": [
+      "wiki/blattsymptom-troubleshooter/tags/4"
+    ]
+  },
   "e7c21b8c9f2a": {
     "de": "Fehlertoleranz",
     "en": "Error tolerance",
@@ -12939,6 +13392,7 @@
     "de": "First-Pass-Effekt",
     "en": "First-pass effect",
     "paths": [
+      "wiki/orale-produkte-und-first-pass-risiken/tags/1",
       "wiki/orale-produkte-und-first-pass-risiken/glossary/0/term"
     ]
   },
@@ -13083,6 +13537,13 @@
       "wiki/interlaborvergleich-und-ringtests/sections/1/content/0"
     ]
   },
+  "e9014307a419": {
+    "de": "Fortgeschritten",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/2"
+    ]
+  },
   "ce09f9bcdc38": {
     "de": "Fortgeschrittene Grower dokumentieren nicht nur, dass ein Run gut lief, sondern warum. Vergleiche Ertrag, Trimmanteil, Reifehomogenität, Duftprofil und Problemzonen je Durchlauf.",
     "en": "Advanced growers don't just document that a run went well, but why. Compare yield, trim ratio, ripening uniformity, scent profile, and problem areas per run.",
@@ -13165,6 +13626,13 @@
       "wiki/bubble-hash-qualitaetskriterien/sections/2/checklist/0"
     ]
   },
+  "e29702f43f62": {
+    "de": "Frankliniella",
+    "en": null,
+    "paths": [
+      "wiki/thripse/tags/3"
+    ]
+  },
   "13a65f56d7ad": {
     "de": "Frankliniella/Thrips spp.",
     "en": "Frankliniella/Thrips spp.",
@@ -13205,6 +13673,13 @@
     "en": "You can contain early infestation by removing infected leaves, controlling the climate, and maintaining sanitation. Heavily infested buds are lost. What matters is stopping the spread via spores.",
     "paths": [
       "wiki/echter-mehltau-powdery-mildew/faq/1/answer"
+    ]
+  },
+  "783cf4bb6ad1": {
+    "de": "Früherkennung",
+    "en": null,
+    "paths": [
+      "wiki/stressmarker-frueh-erkennen/tags/2"
     ]
   },
   "95d0f8a52ebe": {
@@ -13253,7 +13728,9 @@
     "de": "Full Melt",
     "en": "Full Melt",
     "paths": [
+      "wiki/hash-typen-vergleichen/tags/5",
       "wiki/hash-typen-vergleichen/glossary/3/term",
+      "wiki/full-melt-und-marketingsprache/tags/0",
       "wiki/full-melt-und-marketingsprache/quickFacts/1/label",
       "wiki/full-melt-und-marketingsprache/glossary/0/term"
     ]
@@ -13489,6 +13966,13 @@
       "wiki/feminisiert-vs-regular-vs-autoflower/sections/4/content/0"
     ]
   },
+  "008f5b40b3ef": {
+    "de": "Fusarium",
+    "en": null,
+    "paths": [
+      "wiki/fusarium/tags/0"
+    ]
+  },
   "4184d45093b1": {
     "de": "Fusarium befällt das Leitgewebe (Xylem) und verursacht dadurch oft ein einseitiges oder sektorales Welken einzelner Triebe, während der Rest der Pflanze zunächst unauffällig bleibt.",
     "en": "Fusarium infects the vascular tissue (xylem) and thereby often causes one-sided or sectoral wilting of individual shoots, while the rest of the plant initially remains unaffected.",
@@ -13571,6 +14055,13 @@
     "en": "Garda",
     "paths": [
       "wiki/hash-typen-vergleichen/glossary/5/term"
+    ]
+  },
+  "d81f9bcfd660": {
+    "de": "Garten",
+    "en": null,
+    "paths": [
+      "wiki/outdoor-anbau-fuer-einsteiger/tags/4"
     ]
   },
   "f0e262b58901": {
@@ -13823,6 +14314,16 @@
     "en": "Generation time",
     "paths": [
       "wiki/spinnmilben/quickFacts/3/label"
+    ]
+  },
+  "27265698cfc9": {
+    "de": "Genetik",
+    "en": null,
+    "paths": [
+      "wiki/genetik-und-phaenotyp-selektion/tags/0",
+      "wiki/feminisiert-vs-regular-vs-autoflower/tags/3",
+      "wiki/crossing-backcrossing-grundlagen/tags/3",
+      "wiki/genetische-stabilitaet-ueber-generationen/tags/0"
     ]
   },
   "eecfec9b6280": {
@@ -14364,6 +14865,13 @@
       "wiki/blattsymptom-troubleshooter/glossary/1/definition"
     ]
   },
+  "2d65242fd1d4": {
+    "de": "Glossar",
+    "en": null,
+    "paths": [
+      "wiki/full-melt-und-marketingsprache/tags/4"
+    ]
+  },
   "1addb1a30391": {
     "de": "Golovinomyces ambrosiae",
     "en": "Golovinomyces ambrosiae",
@@ -14420,6 +14928,13 @@
       "wiki/batch-release-und-freigabekriterien/glossary/1/term"
     ]
   },
+  "1bace9a59a13": {
+    "de": "Grenzwerte",
+    "en": null,
+    "paths": [
+      "wiki/coa-richtig-lesen/tags/3"
+    ]
+  },
   "bf6f32d07581": {
     "de": "Grenzwerte regional zuordnen",
     "en": "Map thresholds to region",
@@ -14460,6 +14975,20 @@
     "en": "Biggest risk",
     "paths": [
       "wiki/pgr-und-kontaminanten/quickFacts/1/label"
+    ]
+  },
+  "b97dc5270c17": {
+    "de": "Grow",
+    "en": null,
+    "paths": [
+      "wiki/stressmarker-frueh-erkennen/tags/3"
+    ]
+  },
+  "f282f486c325": {
+    "de": "Grow Log",
+    "en": null,
+    "paths": [
+      "wiki/grow-log-und-kpi-dashboard/tags/0"
     ]
   },
   "5b9b059e93fc": {
@@ -14739,6 +15268,10 @@
     "de": "Harm Reduction",
     "en": "Harm Reduction",
     "paths": [
+      "wiki/inhalation-vs-edibles/tags/3",
+      "wiki/inhalation-set-setting-und-harm-reduction/tags/1",
+      "wiki/dosisprotokolle-ohne-uebertreibung/tags/3",
+      "wiki/vaping-rauchen-und-verdampfen-vergleich/tags/3",
       "wiki/vaping-rauchen-und-verdampfen-vergleich/glossary/2/term"
     ]
   },
@@ -14816,6 +15349,7 @@
     "de": "Hash Rosin",
     "en": "Hash Rosin",
     "paths": [
+      "wiki/rosin-einordnung-ohne-hype/tags/1",
       "wiki/rosin-einordnung-ohne-hype/glossary/1/term"
     ]
   },
@@ -14859,6 +15393,13 @@
     "en": "Hash should first be classified by process family: mechanical, ice-water-based, press-based, and solvent-based.",
     "paths": [
       "wiki/hash-typen-vergleichen/keyTakeaways/0"
+    ]
+  },
+  "62ed9622006f": {
+    "de": "Hash-Qualität",
+    "en": null,
+    "paths": [
+      "wiki/full-melt-und-marketingsprache/tags/3"
     ]
   },
   "72f4a341389d": {
@@ -15317,6 +15858,13 @@
       "wiki/hitzestress/sections/8/content/0"
     ]
   },
+  "e627db2a71d7": {
+    "de": "Hitzestress",
+    "en": null,
+    "paths": [
+      "wiki/hitzestress/tags/0"
+    ]
+  },
   "fdf3a93a0b73": {
     "de": "Hitzestress (Tacoing, nach oben gerollte Blattränder) tritt oft gemeinsam mit Lichtstress auf, weil beide durch zu geringen Lampenabstand oder zu schwache Klimatisierung verursacht werden — Blatttemperatur-Messung trennt beide Ursachen.",
     "en": "Heat stress (taco-ing, leaf edges curling upward) often occurs together with light stress, because both are caused by too small a lamp distance or too weak climate control — leaf temperature measurement distinguishes between the two causes.",
@@ -15350,6 +15898,13 @@
     "en": "Heat stress rolls the leaf edges UPWARD and affects the leaves closest to the lamp first. Nutrient problems show typical color patterns (chlorosis) and follow the mobility of the nutrient, not the proximity to the lamp.",
     "paths": [
       "wiki/hitzestress/faq/0/answer"
+    ]
+  },
+  "07ea0a208064": {
+    "de": "HLVd",
+    "en": null,
+    "paths": [
+      "wiki/hop-latent-viroid-hlvd/tags/0"
     ]
   },
   "a851145009e9": {
@@ -15496,6 +16051,7 @@
     "de": "Homozygotie",
     "en": "Homozygosity",
     "paths": [
+      "wiki/genetische-stabilitaet-ueber-generationen/tags/4",
       "wiki/genetische-stabilitaet-ueber-generationen/glossary/0/term"
     ]
   },
@@ -15541,6 +16097,15 @@
       "wiki/hop-latent-viroid-hlvd/quickFacts/0/value"
     ]
   },
+  "bc7ce2333469": {
+    "de": "How to Grow",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/0",
+      "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/0",
+      "wiki/how-to-grow-cannabis-profi-tutorial/tags/0"
+    ]
+  },
   "53368165ed29": {
     "de": "How to Grow Cannabis: Schritt-für-Schritt für Anfänger",
     "en": "How to Grow Cannabis: Step-by-Step for Beginners",
@@ -15567,6 +16132,7 @@
     "en": "HPLC",
     "paths": [
       "wiki/coa-richtig-lesen/glossary/2/term",
+      "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/tags/0",
       "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/glossary/0/term"
     ]
   },
@@ -15654,6 +16220,13 @@
       "wiki/crossing-backcrossing-grundlagen/glossary/0/definition"
     ]
   },
+  "80f6b2824f81": {
+    "de": "Hydro",
+    "en": null,
+    "paths": [
+      "wiki/substrat-vergleich-coco-erde-hydro/tags/4"
+    ]
+  },
   "10a18dc3015c": {
     "de": "Hydro eignet sich nur mit etablierter, verlässlicher Routine — der Zeitgewinn beim Wachstum wird durch höheres Ausfallrisiko bei Kontrollfehlern erkauft.",
     "en": "Hydro is only suited with an established, reliable routine — the growth time gained is paid for with a higher failure risk from control mistakes.",
@@ -15710,6 +16283,21 @@
       "wiki/terpen-oxidationsprodukte-und-bedeutung/glossary/2/term"
     ]
   },
+  "de317cdfc0a7": {
+    "de": "Hydroponik",
+    "en": null,
+    "paths": [
+      "wiki/wurzelfaeule/tags/2"
+    ]
+  },
+  "542cc9c50872": {
+    "de": "Hygiene",
+    "en": null,
+    "paths": [
+      "wiki/integrierte-schaedlingspraevention-grow/tags/1",
+      "wiki/mutterpflanzen-und-clone-hygiene/tags/2"
+    ]
+  },
   "af4232c57622": {
     "de": "Hygiene strikt einhalten",
     "en": "Strictly maintain sanitation",
@@ -15743,6 +16331,13 @@
     "en": "Hypothesis that cannabinoids and terpenes together have a stronger effect than in isolation; scientifically still limited evidence.",
     "paths": [
       "wiki/terpene-und-wirkprofil/glossary/2/definition"
+    ]
+  },
+  "09de04691d8e": {
+    "de": "Ice Water Hash",
+    "en": null,
+    "paths": [
+      "wiki/bubble-hash-qualitaetskriterien/tags/1"
     ]
   },
   "f771634dab77": {
@@ -16338,6 +16933,13 @@
       "wiki/dosisprotokolle-ohne-uebertreibung/keyTakeaways/2"
     ]
   },
+  "a9cb38b7dd3c": {
+    "de": "Indoor",
+    "en": null,
+    "paths": [
+      "wiki/indoor-outdoor-anbau-vergleich/tags/0"
+    ]
+  },
   "62581019e1bf": {
     "de": "Indoor bietet dafür Reproduzierbarkeit: Terpen- und Cannabinoidprofile schwanken zwischen Durchgängen deutlich weniger als bei Outdoor-Pflanzen, die jede Saison unterschiedlichem Wetter ausgesetzt sind.",
     "en": "Indoor offers reproducibility in return: terpene and cannabinoid profiles vary significantly less between runs than with outdoor plants, which are exposed to different weather each season.",
@@ -16447,6 +17049,7 @@
     "de": "Inhalation",
     "en": "Inhalation",
     "paths": [
+      "wiki/inhalation-vs-edibles/tags/0",
       "wiki/inhalation-vs-edibles/quickFacts/0/value"
     ]
   },
@@ -16609,8 +17212,13 @@
     "de": "IPM",
     "en": "IPM",
     "paths": [
+      "wiki/spinnmilben/tags/2",
       "wiki/spinnmilben/glossary/1/term",
-      "wiki/integrierte-schaedlingspraevention-grow/glossary/0/term"
+      "wiki/thripse/tags/2",
+      "wiki/integrierte-schaedlingspraevention-grow/tags/0",
+      "wiki/integrierte-schaedlingspraevention-grow/glossary/0/term",
+      "wiki/blattlaeuse/tags/2",
+      "wiki/weisse-fliege/tags/2"
     ]
   },
   "7ed256dae0c1": {
@@ -17275,7 +17883,9 @@
     "de": "Kalibrierung",
     "en": "Calibration",
     "paths": [
-      "wiki/sensor-kalibrierung-und-messfehler/glossary/0/term"
+      "wiki/sensor-kalibrierung-und-messfehler/tags/1",
+      "wiki/sensor-kalibrierung-und-messfehler/glossary/0/term",
+      "wiki/ph-management-coco-erde-hydro/tags/3"
     ]
   },
   "ea7eac234da8": {
@@ -17304,6 +17914,14 @@
     "en": "Since 2024, California has mandated by law (SB 544) that licensed labs must use HPLC exclusively for official potency reporting – GC is explicitly excluded for this purpose.",
     "paths": [
       "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/keyTakeaways/2"
+    ]
+  },
+  "af94f68441b4": {
+    "de": "Kalium",
+    "en": null,
+    "paths": [
+      "wiki/kaliummangel/tags/0",
+      "wiki/kalium-ueberschuss/tags/0"
     ]
   },
   "60f1c688c447": {
@@ -17401,6 +18019,7 @@
     "de": "Kältestress",
     "en": "Cold stress",
     "paths": [
+      "wiki/kaeltestress/tags/0",
       "wiki/phosphormangel/quickFacts/4/value"
     ]
   },
@@ -17854,6 +18473,13 @@
       "wiki/hash-typen-vergleichen/sections/2/content/0"
     ]
   },
+  "0c29740160ae": {
+    "de": "Kif",
+    "en": null,
+    "paths": [
+      "wiki/hash-typen-vergleichen/tags/7"
+    ]
+  },
   "79aac70a1219": {
     "de": "Klar",
     "en": "Clear",
@@ -17894,6 +18520,13 @@
     "en": "Write down clear transition criteria for veg, stretch, flowering and harvest",
     "paths": [
       "wiki/how-to-grow-cannabis-profi-tutorial/sections/0/checklist/1"
+    ]
+  },
+  "79f73e5831ef": {
+    "de": "Klassifikation",
+    "en": null,
+    "paths": [
+      "wiki/hash-typen-vergleichen/tags/0"
     ]
   },
   "2b74e5235de8": {
@@ -18006,6 +18639,21 @@
     "en": "Smallest known plant pathogen; a circular RNA molecule without a protein coat.",
     "paths": [
       "wiki/hop-latent-viroid-hlvd/glossary/0/definition"
+    ]
+  },
+  "f7a6e5b531e8": {
+    "de": "Klima",
+    "en": null,
+    "paths": [
+      "wiki/vpd-einfach-erklaert/tags/1",
+      "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/5",
+      "wiki/echter-mehltau-powdery-mildew/tags/3",
+      "wiki/hitzestress/tags/3",
+      "wiki/kaeltestress/tags/3",
+      "wiki/luftfeuchte-management/tags/3",
+      "wiki/co2-management/tags/2",
+      "wiki/vpd-nach-wachstumsphase/tags/1",
+      "wiki/windbrand/tags/2"
     ]
   },
   "fe2518ecea72": {
@@ -18169,6 +18817,13 @@
       "wiki/vpd-und-ec-kombi-rechner-guide/quickFacts/1/value"
     ]
   },
+  "d5ab9f341ba4": {
+    "de": "Konsistenz",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-profi-tutorial/tags/4"
+    ]
+  },
   "c84c29a23778": {
     "de": "Konsistenz: feste, leicht elastische Wurzeln sind gesund; schleimige, leicht zerfallende Wurzeln sind ein starkes Fäule-Signal.",
     "en": "Consistency: firm, slightly elastic roots are healthy; slimy, easily disintegrating roots are a strong rot signal.",
@@ -18230,6 +18885,14 @@
     "en": "Consumer-oriented starting point",
     "paths": [
       "wiki/dosisprotokolle-ohne-uebertreibung/quickFacts/0/label"
+    ]
+  },
+  "3cdc809bcee0": {
+    "de": "Kontaminanten",
+    "en": null,
+    "paths": [
+      "wiki/coa-richtig-lesen/tags/2",
+      "wiki/kontaminantenprofile-bei-extrakten/tags/1"
     ]
   },
   "a48590151fb4": {
@@ -18356,6 +19019,14 @@
     "en": "Concentrate that softens or bubbles when heated but leaves visible black plant residue instead of melting completely - 3-4 stars.",
     "paths": [
       "wiki/full-melt-und-marketingsprache/glossary/1/definition"
+    ]
+  },
+  "6375a9b292f8": {
+    "de": "Konzentrate",
+    "en": null,
+    "paths": [
+      "wiki/inhalation-set-setting-und-harm-reduction/tags/2",
+      "wiki/concentrate-categorization-fuer-plattformen/tags/3"
     ]
   },
   "f98b7afa6750": {
@@ -18599,7 +19270,16 @@
     "de": "KPI",
     "en": "KPI",
     "paths": [
+      "wiki/grow-log-und-kpi-dashboard/tags/1",
       "wiki/grow-log-und-kpi-dashboard/glossary/0/term"
+    ]
+  },
+  "64cf62101cee": {
+    "de": "Krankheiten",
+    "en": null,
+    "paths": [
+      "wiki/fusarium/tags/1",
+      "wiki/hop-latent-viroid-hlvd/tags/3"
     ]
   },
   "a4bd47c59ad9": {
@@ -20091,6 +20771,21 @@
       "wiki/interlaborvergleich-und-ringtests/glossary/3/term"
     ]
   },
+  "0e66373f45dc": {
+    "de": "Label",
+    "en": null,
+    "paths": [
+      "wiki/terpen-panels-und-qualitaetslabels/tags/1"
+    ]
+  },
+  "7b6b969c8bc4": {
+    "de": "Labor",
+    "en": null,
+    "paths": [
+      "wiki/coa-richtig-lesen/tags/1",
+      "wiki/kontaminantenprofile-bei-extrakten/tags/4"
+    ]
+  },
   "8ece8b09b006": {
     "de": "Labordaten mit Sensorik korrelieren",
     "en": "Correlate lab data with sensory evaluation",
@@ -20103,6 +20798,13 @@
     "en": "Mirror lab results (if available) against your own process data",
     "paths": [
       "wiki/how-to-grow-cannabis-profi-tutorial/sections/4/checklist/1"
+    ]
+  },
+  "3f056af8b7a3": {
+    "de": "Laborvergleich",
+    "en": null,
+    "paths": [
+      "wiki/interlaborvergleich-und-ringtests/tags/2"
     ]
   },
   "630a4739f833": {
@@ -20159,6 +20861,18 @@
     "en": "Keep storage temperature below 20°C and exclude light — both measurably accelerate degradation",
     "paths": [
       "wiki/cannabinoid-biosynthese-verstehen/sections/3/checklist/1"
+    ]
+  },
+  "7a1990c0e88c": {
+    "de": "Lagerung",
+    "en": null,
+    "paths": [
+      "wiki/wasseraktivitaet-und-curing/tags/2",
+      "wiki/thc-zu-cbn-abbau-und-oxidation/tags/3",
+      "wiki/lagerung-und-terpenverlust-vermeiden/tags/1",
+      "wiki/recall-und-sperrprozesse-fuer-chargen/tags/3",
+      "wiki/batch-release-und-freigabekriterien/tags/2",
+      "wiki/lagerung-verpackung-und-lichtschutz/tags/0"
     ]
   },
   "9d31b480e12d": {
@@ -20320,6 +21034,13 @@
     "en": "The lifestyle of a fungus that only grows on living tissue.",
     "paths": [
       "wiki/echter-mehltau-powdery-mildew/glossary/0/definition"
+    ]
+  },
+  "69c9b97390b8": {
+    "de": "Lebenszyklus",
+    "en": null,
+    "paths": [
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/3"
     ]
   },
   "06f623e3a233": {
@@ -20564,6 +21285,14 @@
       "wiki/hash-typen-vergleichen/sections/3/content/3"
     ]
   },
+  "0d8d541d98f3": {
+    "de": "Licht",
+    "en": null,
+    "paths": [
+      "wiki/dli-und-photoperiode/tags/2",
+      "wiki/indoor-outdoor-anbau-vergleich/tags/2"
+    ]
+  },
   "c94faeb14522": {
     "de": "Licht- und Sauerstoffschutz definieren",
     "en": "Define light and oxygen protection",
@@ -20627,6 +21356,13 @@
       "wiki/indoor-outdoor-anbau-vergleich/glossary/2/term"
     ]
   },
+  "2ba1cf50047d": {
+    "de": "Lichtdichtigkeit",
+    "en": null,
+    "paths": [
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/8"
+    ]
+  },
   "fa11ae2d947b": {
     "de": "Lichtdichtigkeit und Hermaphroditismus: Vorsicht ja, Beweis nein",
     "en": "Light-tightness and hermaphroditism: caution yes, proof no",
@@ -20652,6 +21388,7 @@
     "de": "Lichtsättigung",
     "en": "Light saturation",
     "paths": [
+      "wiki/co2-management/tags/3",
       "wiki/co2-management/glossary/1/term"
     ]
   },
@@ -20659,6 +21396,7 @@
     "de": "Lichtschutz",
     "en": "Light protection",
     "paths": [
+      "wiki/lagerung-verpackung-und-lichtschutz/tags/2",
       "wiki/lagerung-verpackung-und-lichtschutz/glossary/1/term"
     ]
   },
@@ -20674,6 +21412,13 @@
     "en": "Light spectrum proportions (especially far red) affect leaf angle and internode stretch in addition to pure PPFD and should be factored into canopy planning.",
     "paths": [
       "wiki/lichtstress-und-canopy-management/sections/7/content/1"
+    ]
+  },
+  "bdbc808a91f0": {
+    "de": "Lichtstress",
+    "en": null,
+    "paths": [
+      "wiki/lichtstress-und-canopy-management/tags/2"
     ]
   },
   "49808f446790": {
@@ -20788,6 +21533,13 @@
       "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/glossary/3/definition"
     ]
   },
+  "28a1486d42a6": {
+    "de": "Limonen",
+    "en": null,
+    "paths": [
+      "wiki/myrcen-limonen-caryophyllen-einordnung/tags/1"
+    ]
+  },
   "7f8696da89a6": {
     "de": "Limonen oxidiert zu Limonenoxid, Carvon und Limonen-Hydroperoxid – diese Umwandlung ist vor allem aus der Duftstoff- und Allergieforschung gut belegt, da Limonen auch in vielen Parfums und Reinigungsmitteln vorkommt.",
     "en": "Limonene oxidizes into limonene oxide, carvone, and limonene hydroperoxide – this conversion is well established, especially from fragrance and allergy research, since limonene also occurs in many perfumes and cleaning products.",
@@ -20800,6 +21552,13 @@
     "en": null,
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/3/term"
+    ]
+  },
+  "8652e89cec5a": {
+    "de": "Linien",
+    "en": null,
+    "paths": [
+      "wiki/genetische-stabilitaet-ueber-generationen/tags/3"
     ]
   },
   "01216febb3aa": {
@@ -20855,6 +21614,7 @@
     "de": "Live Resin",
     "en": null,
     "paths": [
+      "wiki/concentrate-categorization-fuer-plattformen/tags/2",
       "wiki/concentrate-categorization-fuer-plattformen/quickFacts/1/label",
       "wiki/concentrate-categorization-fuer-plattformen/glossary/2/term"
     ]
@@ -20877,8 +21637,10 @@
     "de": "Live Rosin",
     "en": "Live Rosin",
     "paths": [
+      "wiki/rosin-einordnung-ohne-hype/tags/2",
       "wiki/rosin-einordnung-ohne-hype/quickFacts/2/label",
-      "wiki/rosin-einordnung-ohne-hype/glossary/2/term"
+      "wiki/rosin-einordnung-ohne-hype/glossary/2/term",
+      "wiki/hash-typen-vergleichen/tags/4"
     ]
   },
   "4d48dfa8b0bc": {
@@ -20920,6 +21682,7 @@
     "de": "Lockout",
     "en": "Lockout",
     "paths": [
+      "wiki/ph-lockout/tags/1",
       "wiki/ph-lockout/glossary/0/term"
     ]
   },
@@ -21056,6 +21819,13 @@
       "wiki/kaeltestress/faq/1/question"
     ]
   },
+  "4b21f18d5b44": {
+    "de": "Luftbewegung",
+    "en": null,
+    "paths": [
+      "wiki/windbrand/tags/1"
+    ]
+  },
   "74814c5681e3": {
     "de": "Luftbewegung im Canopy sichern",
     "en": "Ensure air movement in the canopy",
@@ -21068,6 +21838,13 @@
     "en": "Keep air movement gentle and indirect in the room (e.g. via a wall fan, not aimed directly at the buds).",
     "paths": [
       "wiki/trocknung-protokoll/sections/2/content/2"
+    ]
+  },
+  "2efe8e4b46e7": {
+    "de": "Luftfeuchte",
+    "en": null,
+    "paths": [
+      "wiki/luftfeuchte-management/tags/0"
     ]
   },
   "e7dd11d1566c": {
@@ -21147,6 +21924,14 @@
       "wiki/inhalation-set-setting-und-harm-reduction/sections/1/content/0"
     ]
   },
+  "b502eb348ec7": {
+    "de": "Magnesium",
+    "en": null,
+    "paths": [
+      "wiki/magnesiummangel/tags/0",
+      "wiki/calmag-supplementierung/tags/2"
+    ]
+  },
   "9d24c4e003f1": {
     "de": "Magnesium ist beweglich. Bei Knappheit zieht die Pflanze es aus alten Blättern ab und schickt es nach oben — deshalb vergilben zuerst die unteren Blätter.",
     "en": "Magnesium is mobile. When it's scarce, the plant pulls it from old leaves and sends it upward — that's why the lower leaves yellow first.",
@@ -21222,6 +22007,13 @@
     "en": "Ladybugs, lacewings, Aphidius spp.",
     "paths": [
       "wiki/blattlaeuse/quickFacts/4/value"
+    ]
+  },
+  "f5904cf7a123": {
+    "de": "Marketing",
+    "en": null,
+    "paths": [
+      "wiki/full-melt-und-marketingsprache/tags/2"
     ]
   },
   "522c975a1221": {
@@ -21623,6 +22415,13 @@
       "wiki/sensor-kalibrierung-und-messfehler/keyTakeaways/0"
     ]
   },
+  "9cb035bc924c": {
+    "de": "Messfehler",
+    "en": null,
+    "paths": [
+      "wiki/sensor-kalibrierung-und-messfehler/tags/2"
+    ]
+  },
   "36952e644853": {
     "de": "Messfrequenz",
     "en": "Measurement frequency",
@@ -21698,6 +22497,13 @@
     "en": "Measurement style",
     "paths": [
       "wiki/how-to-grow-cannabis-profi-tutorial/quickFacts/2/label"
+    ]
+  },
+  "cb13ea105cb2": {
+    "de": "Messwerte",
+    "en": null,
+    "paths": [
+      "wiki/ec-und-runoff-interpretation/tags/4"
     ]
   },
   "a1a54d167a54": {
@@ -21810,6 +22616,14 @@
     "en": "Microbial growth",
     "paths": [
       "wiki/wasseraktivitaet-und-curing/quickFacts/1/value"
+    ]
+  },
+  "49c44734ea4c": {
+    "de": "Mikrobiologie",
+    "en": null,
+    "paths": [
+      "wiki/wasseraktivitaet-und-curing/tags/3",
+      "wiki/schimmel-und-mykotoxine-bei-cannabis/tags/2"
     ]
   },
   "89605fe1d3a8": {
@@ -21929,6 +22743,13 @@
     "en": "Minor cannabinoids",
     "paths": [
       "wiki/cannabinoid-biosynthese-verstehen/glossary/2/term"
+    ]
+  },
+  "8b22cf5f41da": {
+    "de": "Minor Terpene",
+    "en": null,
+    "paths": [
+      "wiki/minor-terpene-und-profiltiefe/tags/0"
     ]
   },
   "5560179d35c0": {
@@ -22099,6 +22920,14 @@
       "wiki/vpd-und-ec-kombi-rechner-guide/sections/1/checklist/2"
     ]
   },
+  "1dc83f605edf": {
+    "de": "Monitoring",
+    "en": null,
+    "paths": [
+      "wiki/stressmarker-frueh-erkennen/tags/1",
+      "wiki/integrierte-schaedlingspraevention-grow/tags/2"
+    ]
+  },
   "61eddebef64c": {
     "de": "Monitoring und Alarmierung",
     "en": "Monitoring and alerting",
@@ -22160,6 +22989,13 @@
     "en": "Mulch",
     "paths": [
       "wiki/outdoor-anbau-fuer-einsteiger/glossary/1/term"
+    ]
+  },
+  "49cb35b36bf8": {
+    "de": "Multi-Zone",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-profi-tutorial/tags/6"
     ]
   },
   "f22a3d2b1bf3": {
@@ -22260,6 +23096,13 @@
       "wiki/genetik-und-phaenotyp-selektion/sections/1/checklist/2"
     ]
   },
+  "bfa49127397e": {
+    "de": "Mutterpflanzen",
+    "en": null,
+    "paths": [
+      "wiki/mutterpflanzen-und-clone-hygiene/tags/0"
+    ]
+  },
   "c84daa7d8c02": {
     "de": "Mutterpflanzen brauchen Hygiene- und Erneuerungszyklen gegen genetischen Drift.",
     "en": "Mother plants need sanitation and renewal cycles against genetic drift.",
@@ -22351,6 +23194,13 @@
       "wiki/schimmel-und-mykotoxine-bei-cannabis/sections/3/content/1"
     ]
   },
+  "de29dd6b9c84": {
+    "de": "Mykotoxine",
+    "en": null,
+    "paths": [
+      "wiki/schimmel-und-mykotoxine-bei-cannabis/tags/1"
+    ]
+  },
   "b212ae4d0520": {
     "de": "Mykotoxine bleiben auch nach Entfernen des sichtbaren Schimmelbefalls im Produkt — eine betroffene Charge durch Wegschneiden auffälliger Stellen 'retten' zu wollen, ist mikrobiologisch nicht sicher.",
     "en": "Mycotoxins remain in the product even after removing the visible mold infestation — trying to 'save' an affected batch by cutting away conspicuous spots is not microbiologically safe.",
@@ -22363,6 +23213,13 @@
     "en": "Mycotoxins are metabolic products of certain molds and remain in the product even after the visible fungal mycelium has died off or been removed — visual inspection alone cannot rule them out.",
     "paths": [
       "wiki/schimmel-und-mykotoxine-bei-cannabis/keyTakeaways/2"
+    ]
+  },
+  "b598631667e0": {
+    "de": "Myrcen",
+    "en": null,
+    "paths": [
+      "wiki/myrcen-limonen-caryophyllen-einordnung/tags/0"
     ]
   },
   "d6bcf11b5d0e": {
@@ -22590,6 +23447,13 @@
       "wiki/hanf-rostmilben/growValue"
     ]
   },
+  "b303a1acbb89": {
+    "de": "Nachernte",
+    "en": null,
+    "paths": [
+      "wiki/trocknung-protokoll/tags/2"
+    ]
+  },
   "d0313009e298": {
     "de": "Nachernte als Qualitätshebel",
     "en": "Post-harvest as a quality lever",
@@ -22695,11 +23559,38 @@
       "wiki/naehrstoffblockaden-und-antagonismen/title"
     ]
   },
+  "a9283560ce62": {
+    "de": "Nährstoffe",
+    "en": null,
+    "paths": [
+      "wiki/cannabis-anbau-grundlagen/tags/2",
+      "wiki/naehrstoffblockaden-und-antagonismen/tags/0",
+      "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/5",
+      "wiki/ph-lockout/tags/4",
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/0",
+      "wiki/substrat-vergleich-coco-erde-hydro/tags/1",
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/3",
+      "wiki/indoor-outdoor-anbau-vergleich/tags/7"
+    ]
+  },
   "8e8c1dbe9b48": {
     "de": "Nährstoffe zuerst vollständig auflösen, dann erst den pH einstellen — in umgekehrter Reihenfolge verschiebt sich der pH beim Zugeben der Nährstoffe erneut.",
     "en": "Dissolve nutrients completely first, then adjust the pH — in the reverse order, the pH shifts again when the nutrients are added.",
     "paths": [
       "wiki/ph-management-coco-erde-hydro/keyTakeaways/1"
+    ]
+  },
+  "39e1553b04b3": {
+    "de": "Nährstoffmangel",
+    "en": null,
+    "paths": [
+      "wiki/magnesiummangel/tags/3",
+      "wiki/stickstoffmangel/tags/3",
+      "wiki/calciummangel/tags/3",
+      "wiki/kaliummangel/tags/3",
+      "wiki/eisenmangel/tags/3",
+      "wiki/phosphormangel/tags/1",
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/1"
     ]
   },
   "33224034d397": {
@@ -23028,6 +23919,7 @@
     "de": "Nekrose",
     "en": "Necrosis",
     "paths": [
+      "wiki/kaliummangel/tags/2",
       "wiki/kaliummangel/glossary/0/term"
     ]
   },
@@ -23585,6 +24477,14 @@
       "wiki/vpd-und-ec-kombi-rechner-guide/quickFacts/1/label"
     ]
   },
+  "820df5566d0d": {
+    "de": "NPK",
+    "en": null,
+    "paths": [
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/4",
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/2"
+    ]
+  },
   "e1de4c2f8466": {
     "de": "NPK-Übergang",
     "en": "NPK transition",
@@ -23911,6 +24811,7 @@
     "de": "Nutrient Burn",
     "en": "Nutrient Burn",
     "paths": [
+      "wiki/naehrstoffverbrennung-tipburn/tags/1",
       "wiki/naehrstoffverbrennung-tipburn/glossary/0/term"
     ]
   },
@@ -24246,6 +25147,7 @@
     "de": "Onset",
     "en": "Onset",
     "paths": [
+      "wiki/inhalation-vs-edibles/tags/2",
       "wiki/inhalation-set-setting-und-harm-reduction/glossary/2/term",
       "wiki/orale-produkte-und-first-pass-risiken/quickFacts/0/label",
       "wiki/orale-produkte-und-first-pass-risiken/glossary/4/term"
@@ -24284,6 +25186,13 @@
     "en": "Appearance, melt test, color, and smell do not replace a lab analysis. Whether solvent, pesticide, or mold residues are present is something you can neither see nor taste.",
     "paths": [
       "wiki/full-melt-und-marketingsprache/warnings/1"
+    ]
+  },
+  "a77a21ff0cdc": {
+    "de": "Oral",
+    "en": null,
+    "paths": [
+      "wiki/orale-produkte-und-first-pass-risiken/tags/0"
     ]
   },
   "63731b9d0e4d": {
@@ -24367,6 +25276,7 @@
     "de": "Osmotischer Stress",
     "en": "Osmotic stress",
     "paths": [
+      "wiki/salzanreicherung-hohe-ec/tags/3",
       "wiki/salzanreicherung-hohe-ec/glossary/1/term"
     ]
   },
@@ -24389,6 +25299,14 @@
     "en": "Outcome: dry weight per area, loss rate, and where lab access is available, cannabinoid/terpene content.",
     "paths": [
       "wiki/grow-log-und-kpi-dashboard/sections/2/content/3"
+    ]
+  },
+  "9aac1455b8cf": {
+    "de": "Outdoor",
+    "en": null,
+    "paths": [
+      "wiki/outdoor-anbau-fuer-einsteiger/tags/0",
+      "wiki/indoor-outdoor-anbau-vergleich/tags/1"
     ]
   },
   "1f96142eb78f": {
@@ -24458,7 +25376,9 @@
     "de": "Oxidation",
     "en": "Oxidation",
     "paths": [
-      "wiki/thc-zu-cbn-abbau-und-oxidation/glossary/0/term"
+      "wiki/thc-zu-cbn-abbau-und-oxidation/tags/2",
+      "wiki/thc-zu-cbn-abbau-und-oxidation/glossary/0/term",
+      "wiki/terpen-oxidationsprodukte-und-bedeutung/tags/1"
     ]
   },
   "1211a7a36974": {
@@ -24648,6 +25568,14 @@
     "en": "Classify personal rating systems (e.g. from well-known producers) as opinion, not as a standard",
     "paths": [
       "wiki/full-melt-und-marketingsprache/sections/6/checklist/1"
+    ]
+  },
+  "aa65fe17e34f": {
+    "de": "Pestizide",
+    "en": null,
+    "paths": [
+      "wiki/pestizidklassen-und-rueckstandsrisiken/tags/0",
+      "wiki/kontaminantenprofile-bei-extrakten/tags/2"
     ]
   },
   "d50a1ec76769": {
@@ -25126,7 +26054,9 @@
     "de": "Pheno-Hunt",
     "en": "Pheno-hunt",
     "paths": [
-      "wiki/genetik-und-phaenotyp-selektion/glossary/0/term"
+      "wiki/genetik-und-phaenotyp-selektion/tags/1",
+      "wiki/genetik-und-phaenotyp-selektion/glossary/0/term",
+      "wiki/selektionsscorecards-fuer-pheno-hunts/tags/0"
     ]
   },
   "7515f21e10c9": {
@@ -25140,6 +26070,7 @@
     "de": "PHO",
     "en": null,
     "paths": [
+      "wiki/concentrate-categorization-fuer-plattformen/tags/1",
       "wiki/concentrate-categorization-fuer-plattformen/glossary/1/term"
     ]
   },
@@ -25148,6 +26079,13 @@
     "en": "Phosphate is a component of ATP (adenosine triphosphate), the central energy carrier of every cell, as well as of DNA and RNA — without sufficient P, the energy supply for growth and cell division breaks down.",
     "paths": [
       "wiki/phosphormangel/sections/1/content/0"
+    ]
+  },
+  "998b7663ed3f": {
+    "de": "Phosphor",
+    "en": null,
+    "paths": [
+      "wiki/phosphormangel/tags/0"
     ]
   },
   "9cf03b45c159": {
@@ -25231,6 +26169,7 @@
     "de": "Photoperiode",
     "en": "Photoperiod",
     "paths": [
+      "wiki/dli-und-photoperiode/tags/1",
       "wiki/feminisiert-vs-regular-vs-autoflower/glossary/0/term"
     ]
   },
@@ -25248,6 +26187,13 @@
       "wiki/dli-und-photoperiode/sections/2/checklist/2"
     ]
   },
+  "6405486aaadf": {
+    "de": "Photoperiodisch",
+    "en": null,
+    "paths": [
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/6"
+    ]
+  },
   "a0b9b523a541": {
     "de": "Photoperiodisch vs. Autoflower",
     "en": "Photoperiod vs. autoflower",
@@ -25260,6 +26206,13 @@
     "en": "Photoperiod plants (regular as well as feminized) allow a controllable vegetative stage that can be extended as needed — flowering is only triggered by switching the light cycle.",
     "paths": [
       "wiki/feminisiert-vs-regular-vs-autoflower/sections/3/content/0"
+    ]
+  },
+  "b0fa746a66b1": {
+    "de": "Photosynthese",
+    "en": null,
+    "paths": [
+      "wiki/co2-management/tags/1"
     ]
   },
   "17b5bdff7580": {
@@ -25480,6 +26433,14 @@
       "wiki/hash-typen-vergleichen/glossary/2/term"
     ]
   },
+  "f19fbc293abe": {
+    "de": "Potenz",
+    "en": null,
+    "paths": [
+      "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/tags/2",
+      "wiki/interlaborvergleich-und-ringtests/tags/3"
+    ]
+  },
   "2cd0ddfa8a76": {
     "de": "Potenz alleine reicht nicht für Qualitätsaussagen.",
     "en": "Potency alone is not enough to make quality claims.",
@@ -25494,12 +26455,22 @@
       "wiki/naehrstoffverbrennung-tipburn/glossary/2/term"
     ]
   },
+  "38bfce609b2f": {
+    "de": "Powdery Mildew",
+    "en": null,
+    "paths": [
+      "wiki/echter-mehltau-powdery-mildew/tags/1"
+    ]
+  },
   "f4b9eda1ce31": {
     "de": "PPFD",
     "en": "PPFD",
     "paths": [
+      "wiki/cannabis-anbau-grundlagen/tags/1",
       "wiki/cannabis-anbau-grundlagen/glossary/1/term",
+      "wiki/lichtstress-und-canopy-management/tags/0",
       "wiki/lichtstress-und-canopy-management/glossary/0/term",
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/9",
       "wiki/indoor-outdoor-anbau-vergleich/glossary/0/term"
     ]
   },
@@ -25654,7 +26625,8 @@
     "de": "Prävention",
     "en": "Prevention",
     "paths": [
-      "wiki/salzanreicherung-hohe-ec/quickFacts/4/label"
+      "wiki/salzanreicherung-hohe-ec/quickFacts/4/label",
+      "wiki/integrierte-schaedlingspraevention-grow/tags/3"
     ]
   },
   "a17951a62e06": {
@@ -25705,6 +26677,13 @@
     "en": "Premium quality rarely fails due to growth, but due to hygiene, sampling and traceability. Treat clone hygiene, mold prevention, water quality and the quality of your accessory/nutrient sources just as seriously as light and yield.",
     "paths": [
       "wiki/how-to-grow-cannabis-profi-tutorial/sections/3/content/0"
+    ]
+  },
+  "4a2f7c88d531": {
+    "de": "Presshash",
+    "en": null,
+    "paths": [
+      "wiki/hash-typen-vergleichen/tags/8"
     ]
   },
   "ec2944b18438": {
@@ -25798,11 +26777,26 @@
       "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/sections/1/content/1"
     ]
   },
+  "588df216666c": {
+    "de": "Profi",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-profi-tutorial/tags/2"
+    ]
+  },
   "23d8a33a930e": {
     "de": "Proficiency-Testing / Emerald Test",
     "en": "Proficiency testing / Emerald Test",
     "paths": [
       "wiki/interlaborvergleich-und-ringtests/glossary/1/term"
+    ]
+  },
+  "e267d343821f": {
+    "de": "Profil",
+    "en": null,
+    "paths": [
+      "wiki/terpene-und-wirkprofil/tags/3",
+      "wiki/minor-terpene-und-profiltiefe/tags/1"
     ]
   },
   "03b503bdadc8": {
@@ -26050,6 +27044,13 @@
       "wiki/kaeltestress/quickFacts/0/value"
     ]
   },
+  "dd89cf901c23": {
+    "de": "Pythium",
+    "en": null,
+    "paths": [
+      "wiki/wurzelfaeule/tags/1"
+    ]
+  },
   "ffe5fec94177": {
     "de": "Pythium bildet bewegliche Zoosporen, die in warmem, stehendem Wasser aktiv zur Wurzel schwimmen. Warme Nährlösung (> 22 °C) und niedriger Sauerstoff sind ideale Bedingungen.",
     "en": "Pythium forms motile zoospores that actively swim to the root in warm, standing water. Warm nutrient solution (> 22 °C) and low oxygen are ideal conditions.",
@@ -26083,6 +27084,17 @@
     "en": "Pythium root rot: more uniform wilting of the whole plant, roots turn brown and slimy, no characteristic vascular tissue ring in the stem.",
     "paths": [
       "wiki/fusarium/sections/3/content/1"
+    ]
+  },
+  "eb718207ad94": {
+    "de": "Qualität",
+    "en": null,
+    "paths": [
+      "wiki/batch-release-und-freigabekriterien/tags/0",
+      "wiki/lagerung-verpackung-und-lichtschutz/tags/3",
+      "wiki/hash-typen-vergleichen/tags/10",
+      "wiki/terpen-panels-und-qualitaetslabels/tags/2",
+      "wiki/supplier-risk-scoring-fuer-cannabis/tags/3"
     ]
   },
   "090895b17b32": {
@@ -26149,6 +27161,13 @@
       "wiki/thripse/sections/5/content/0"
     ]
   },
+  "7e03b72786a0": {
+    "de": "Quecksilber",
+    "en": null,
+    "paths": [
+      "wiki/schwere-metalle-und-aufnahmewege/tags/4"
+    ]
+  },
   "19d22dfb91bc": {
     "de": "Raeber et al. 2025, Phytochemical Analysis (ETH Zürich)",
     "en": "Raeber et al. 2025, Phytochemical Analysis (ETH Zurich)",
@@ -26175,6 +27194,13 @@
     "en": "Introduce predatory mites early",
     "paths": [
       "wiki/spinnmilben/sections/4/checklist/2"
+    ]
+  },
+  "929e889379bf": {
+    "de": "Rauchen",
+    "en": null,
+    "paths": [
+      "wiki/vaping-rauchen-und-verdampfen-vergleich/tags/1"
     ]
   },
   "16ba708922b9": {
@@ -26310,6 +27336,13 @@
       "wiki/sensor-kalibrierung-und-messfehler/glossary/1/term"
     ]
   },
+  "9d5e74710f04": {
+    "de": "Regelkreis",
+    "en": null,
+    "paths": [
+      "wiki/vpd-und-ec-kombi-rechner-guide/tags/3"
+    ]
+  },
   "0759d1961b91": {
     "de": "Regelmäßige Wurzelzonentemperatur- und Sauerstoffmessung ergänzt die visuelle Beurteilung um objektive, kontinuierliche Daten statt punktueller Momentaufnahmen.",
     "en": "Regular measurement of root zone temperature and oxygen supplements the visual assessment with objective, continuous data instead of isolated snapshots.",
@@ -26385,6 +27418,20 @@
     "en": "Regional legal status must be checked separately before implementation.",
     "paths": [
       "wiki/hash-typen-vergleichen/warnings/1"
+    ]
+  },
+  "eb324a13a0ff": {
+    "de": "Regionale Stile",
+    "en": null,
+    "paths": [
+      "wiki/hash-typen-vergleichen/tags/9"
+    ]
+  },
+  "b455784ab530": {
+    "de": "Regular",
+    "en": null,
+    "paths": [
+      "wiki/feminisiert-vs-regular-vs-autoflower/tags/1"
     ]
   },
   "788443b1ec5f": {
@@ -26547,6 +27594,21 @@
     "en": "Is visual inspection without traps enough?",
     "paths": [
       "wiki/integrierte-schaedlingspraevention-grow/faq/0/question"
+    ]
+  },
+  "191b4d737992": {
+    "de": "Reife",
+    "en": null,
+    "paths": [
+      "wiki/erntefenster-trichomreife/tags/2",
+      "wiki/cannabinoid-biosynthese-verstehen/tags/2"
+    ]
+  },
+  "cc7f9cb6d67d": {
+    "de": "Reifegrad",
+    "en": null,
+    "paths": [
+      "wiki/trichom-reifegrad-bilddiagnose/tags/2"
     ]
   },
   "35423e42598d": {
@@ -26745,6 +27807,13 @@
       "wiki/bud-rot-botrytis/sections/4/checklist/2"
     ]
   },
+  "702b322d9171": {
+    "de": "Rhythmus",
+    "en": null,
+    "paths": [
+      "wiki/bewaesserung-ohne-uebergiessen/tags/2"
+    ]
+  },
   "47e86b2ae4ef": {
     "de": "Richte dich nach dem pH: Bei hartnäckig hohem pH EDDHA (stabil bis ~9), im mittleren Bereich DTPA. EDTA ist nur bis pH ~6.5 zuverlässig.",
     "en": "Go by the pH: for stubbornly high pH use EDDHA (stable up to ~9), in the mid range use DTPA. EDTA is only reliable up to pH ~6.5.",
@@ -26773,6 +27842,13 @@
       "wiki/wurzelgesundheit-diagnose/glossary/0/definition"
     ]
   },
+  "7bd5ce204cfe": {
+    "de": "Ringtest",
+    "en": null,
+    "paths": [
+      "wiki/interlaborvergleich-und-ringtests/tags/1"
+    ]
+  },
   "e1096266dbbd": {
     "de": "Ringtest / Interlaborvergleich",
     "en": "Ring trial / interlaboratory comparison",
@@ -26797,7 +27873,8 @@
       "wiki/kaeltestress/quickFacts/4/label",
       "wiki/co2-management/quickFacts/4/label",
       "wiki/terpene-und-wirkprofil/quickFacts/1/label",
-      "wiki/windbrand/quickFacts/4/label"
+      "wiki/windbrand/quickFacts/4/label",
+      "wiki/supplier-risk-scoring-fuer-cannabis/tags/2"
     ]
   },
   "80983c96ac88": {
@@ -26905,6 +27982,14 @@
       "wiki/hitzestress/sections/3/checklist/0"
     ]
   },
+  "872336607466": {
+    "de": "Rosin",
+    "en": null,
+    "paths": [
+      "wiki/rosin-einordnung-ohne-hype/tags/0",
+      "wiki/hash-typen-vergleichen/tags/3"
+    ]
+  },
   "c7e64c5d6446": {
     "de": "Rosin einordnen ohne Hype",
     "en": "Classifying rosin without the hype",
@@ -26954,6 +28039,13 @@
       "wiki/bluetephase-ernaehrung-und-pflege/sections/6/content/1"
     ]
   },
+  "09e6342fc6f7": {
+    "de": "Rostmilben",
+    "en": null,
+    "paths": [
+      "wiki/hanf-rostmilben/tags/0"
+    ]
+  },
   "f0088b88306a": {
     "de": "Rostmilben besiedeln bevorzugt junge, sich entwickelnde Blätter und Blütenstrukturen in der oberen Canopy, wo sie durch Saugschäden Zellstruktur und Wachstum stören.",
     "en": "Russet mites preferentially colonize young, developing leaves and bud structures in the upper canopy, where they disrupt cell structure and growth through stippling damage.",
@@ -26973,6 +28065,7 @@
     "en": "Routine",
     "paths": [
       "wiki/how-to-grow-cannabis-anfaenger-tutorial/quickFacts/2/label",
+      "wiki/ph-management-coco-erde-hydro/tags/2",
       "wiki/integrierte-schaedlingspraevention-grow/quickFacts/2/label"
     ]
   },
@@ -27016,6 +28109,13 @@
     "en": "Residue",
     "paths": [
       "wiki/pestizidklassen-und-rueckstandsrisiken/glossary/0/term"
+    ]
+  },
+  "12fad0744f1a": {
+    "de": "Rückstände",
+    "en": null,
+    "paths": [
+      "wiki/pestizidklassen-und-rueckstandsrisiken/tags/1"
     ]
   },
   "1280bed22730": {
@@ -27071,6 +28171,7 @@
     "de": "Runoff",
     "en": "Runoff",
     "paths": [
+      "wiki/ec-und-runoff-interpretation/tags/1",
       "wiki/ec-und-runoff-interpretation/glossary/0/term",
       "wiki/bluetephase-ernaehrung-und-pflege/glossary/1/term"
     ]
@@ -27208,6 +28309,13 @@
       "wiki/ec-und-runoff-interpretation/quickFacts/1/label"
     ]
   },
+  "37289aaf2307": {
+    "de": "Salzstress",
+    "en": null,
+    "paths": [
+      "wiki/salzanreicherung-hohe-ec/tags/0"
+    ]
+  },
   "b9d9fad08923": {
     "de": "Salzstress (hohe EC) ist die Folge einer zu hohen Gesamtkonzentration gelöster Salze im Wurzelraum, unabhängig davon, welches Einzelnährstoffion dominiert.",
     "en": "Salt stress (high EC) is the result of an excessively high total concentration of dissolved salts in the root zone, regardless of which individual nutrient ion dominates.",
@@ -27234,6 +28342,13 @@
     "en": "Recognizing and fixing salt stress and high EC in cannabis",
     "paths": [
       "wiki/salzanreicherung-hohe-ec/title"
+    ]
+  },
+  "a00bd7fb57aa": {
+    "de": "Samen",
+    "en": null,
+    "paths": [
+      "wiki/feminisiert-vs-regular-vs-autoflower/tags/0"
     ]
   },
   "8aba4fcf1979": {
@@ -27313,6 +28428,16 @@
       "wiki/concentrate-categorization-fuer-plattformen/glossary/5/term"
     ]
   },
+  "65c14b1ce518": {
+    "de": "Sauerstoff",
+    "en": null,
+    "paths": [
+      "wiki/cannabis-substrat-und-wurzelzone/tags/3",
+      "wiki/wurzelfaeule/tags/3",
+      "wiki/ueberwaesserung-staunaesse/tags/4",
+      "wiki/lagerung-und-terpenverlust-vermeiden/tags/2"
+    ]
+  },
   "63842ee471ce": {
     "de": "Sauerstoffmangel / Überwässerung",
     "en": "Oxygen deficiency / overwatering",
@@ -27349,6 +28474,20 @@
       "wiki/lichtstress-und-canopy-management/glossary/1/definition"
     ]
   },
+  "948885acf0bb": {
+    "de": "Schädlinge",
+    "en": null,
+    "paths": [
+      "wiki/spinnmilben/tags/1",
+      "wiki/thripse/tags/1",
+      "wiki/substrat-vergleich-coco-erde-hydro/tags/2",
+      "wiki/trauermuecken/tags/1",
+      "wiki/blattlaeuse/tags/1",
+      "wiki/weisse-fliege/tags/1",
+      "wiki/hanf-rostmilben/tags/2",
+      "wiki/indoor-outdoor-anbau-vergleich/tags/6"
+    ]
+  },
   "bdb703bf801a": {
     "de": "Schädlingsdruck ist oft ein Prozesssignal für Klima-, Hygiene- oder Materialprobleme.",
     "en": "Pest pressure is often a process signal for climate, hygiene, or material problems.",
@@ -27375,6 +28514,17 @@
     "en": "Check first: Is the batch number identical to your product? Is the analysis date current?",
     "paths": [
       "wiki/coa-richtig-lesen/sections/0/content/0"
+    ]
+  },
+  "5ca8ddce4e4a": {
+    "de": "Schimmel",
+    "en": null,
+    "paths": [
+      "wiki/vpd-einfach-erklaert/tags/3",
+      "wiki/schimmel-und-mykotoxine-bei-cannabis/tags/0",
+      "wiki/bud-rot-botrytis/tags/2",
+      "wiki/echter-mehltau-powdery-mildew/tags/2",
+      "wiki/recall-und-sperrprozesse-fuer-chargen/tags/1"
     ]
   },
   "64d8f546f341": {
@@ -28158,6 +29308,13 @@
       "wiki/schwere-metalle-und-aufnahmewege/title"
     ]
   },
+  "dda74546ea2d": {
+    "de": "Schwermetalle",
+    "en": null,
+    "paths": [
+      "wiki/schwere-metalle-und-aufnahmewege/tags/0"
+    ]
+  },
   "dbe5f9bf8c40": {
     "de": "Schwerpunkt",
     "en": "Focus",
@@ -28169,6 +29326,7 @@
     "de": "Scorecard",
     "en": "Scorecard",
     "paths": [
+      "wiki/selektionsscorecards-fuer-pheno-hunts/tags/1",
       "wiki/selektionsscorecards-fuer-pheno-hunts/glossary/0/term"
     ]
   },
@@ -28263,6 +29421,14 @@
       "wiki/feminisiert-vs-regular-vs-autoflower/glossary/1/term"
     ]
   },
+  "bb2b47b27f58": {
+    "de": "Selektion",
+    "en": null,
+    "paths": [
+      "wiki/selektionsscorecards-fuer-pheno-hunts/tags/2",
+      "wiki/genetische-stabilitaet-ueber-generationen/tags/2"
+    ]
+  },
   "752c5a8c119b": {
     "de": "Selektionsfreiheit",
     "en": "Selection freedom",
@@ -28323,6 +29489,8 @@
     "de": "Sensorik",
     "en": "Sensory impression",
     "paths": [
+      "wiki/sensor-kalibrierung-und-messfehler/tags/0",
+      "wiki/terpene-und-wirkprofil/tags/2",
       "wiki/myrcen-limonen-caryophyllen-einordnung/glossary/1/term"
     ]
   },
@@ -28375,6 +29543,13 @@
       "wiki/inhalation-set-setting-und-harm-reduction/glossary/0/term"
     ]
   },
+  "49223c1ebedd": {
+    "de": "Set und Setting",
+    "en": null,
+    "paths": [
+      "wiki/inhalation-set-setting-und-harm-reduction/tags/0"
+    ]
+  },
   "2ab48f9208d7": {
     "de": "Setpoint",
     "en": "Setpoint",
@@ -28387,6 +29562,13 @@
     "en": "Setting",
     "paths": [
       "wiki/inhalation-set-setting-und-harm-reduction/glossary/1/term"
+    ]
+  },
+  "7013af4c42fe": {
+    "de": "Setup",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/4"
     ]
   },
   "6b1cf4231f88": {
@@ -28443,6 +29625,19 @@
     "en": "Safe storage aw",
     "paths": [
       "wiki/schimmel-und-mykotoxine-bei-cannabis/quickFacts/0/label"
+    ]
+  },
+  "4474c7526089": {
+    "de": "Sicherheit",
+    "en": null,
+    "paths": [
+      "wiki/schimmel-und-mykotoxine-bei-cannabis/tags/3",
+      "wiki/pgr-und-kontaminanten/tags/2",
+      "wiki/trocknung-protokoll/tags/4",
+      "wiki/pestizidklassen-und-rueckstandsrisiken/tags/3",
+      "wiki/recall-und-sperrprozesse-fuer-chargen/tags/0",
+      "wiki/batch-release-und-freigabekriterien/tags/3",
+      "wiki/kontaminantenprofile-bei-extrakten/tags/3"
     ]
   },
   "7c1b4ca224df": {
@@ -28950,6 +30145,13 @@
       "wiki/kontaminantenprofile-bei-extrakten/keyTakeaways/3"
     ]
   },
+  "b5430393c579": {
+    "de": "Sommer",
+    "en": null,
+    "paths": [
+      "wiki/outdoor-anbau-fuer-einsteiger/tags/2"
+    ]
+  },
   "04a0dfd03489": {
     "de": "Sorge für ausreichenden Frischluftaustausch passend zur Pflanzenmasse und Lichtleistung.",
     "en": "Ensure sufficient fresh air exchange matched to plant mass and light output.",
@@ -29088,6 +30290,13 @@
     "en": "Specific composition and quantity of terpenes in a cannabis product, characteristic of strain and process.",
     "paths": [
       "wiki/terpene-und-wirkprofil/glossary/1/definition"
+    ]
+  },
+  "216486a12379": {
+    "de": "Spinnmilben",
+    "en": null,
+    "paths": [
+      "wiki/spinnmilben/tags/0"
     ]
   },
   "1c5215cd5325": {
@@ -29234,7 +30443,9 @@
     "de": "Stabilität",
     "en": "Stability",
     "paths": [
-      "wiki/thc-zu-cbn-abbau-und-oxidation/glossary/2/term"
+      "wiki/genetik-und-phaenotyp-selektion/tags/2",
+      "wiki/thc-zu-cbn-abbau-und-oxidation/glossary/2/term",
+      "wiki/genetische-stabilitaet-ueber-generationen/tags/1"
     ]
   },
   "5996cb58229a": {
@@ -29955,7 +31166,8 @@
     "de": "Staunässe",
     "en": "Waterlogging",
     "paths": [
-      "wiki/bewaesserung-ohne-uebergiessen/glossary/2/term"
+      "wiki/bewaesserung-ohne-uebergiessen/glossary/2/term",
+      "wiki/ueberwaesserung-staunaesse/tags/0"
     ]
   },
   "179b92d7ab65": {
@@ -30014,6 +31226,15 @@
       "wiki/integrierte-schaedlingspraevention-grow/growValue"
     ]
   },
+  "7ec4ac8af9e9": {
+    "de": "Step by Step",
+    "en": null,
+    "paths": [
+      "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/3",
+      "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/3",
+      "wiki/how-to-grow-cannabis-profi-tutorial/tags/3"
+    ]
+  },
   "003caf331f90": {
     "de": "Sterne-Bewertungen und 'Full Melt' sind Selbsteinschätzungen von Herstellern oder Verkäufern - es gibt keine kontrollierende Stelle, die das zertifiziert oder überprüft.",
     "en": "Star ratings and 'full melt' are self-assessments by producers or sellers - there is no controlling body that certifies or verifies this.",
@@ -30032,6 +31253,7 @@
     "de": "Sterne-System",
     "en": "Star system",
     "paths": [
+      "wiki/full-melt-und-marketingsprache/tags/1",
       "wiki/full-melt-und-marketingsprache/glossary/3/term"
     ]
   },
@@ -30049,6 +31271,13 @@
       "wiki/luftfeuchte-management/growValue"
     ]
   },
+  "7138ad7146ef": {
+    "de": "Steuerung",
+    "en": null,
+    "paths": [
+      "wiki/vpd-und-ec-kombi-rechner-guide/tags/2"
+    ]
+  },
   "d7018fb8c320": {
     "de": "Steuerung von Pflanzenhöhe, Blattmasse und Lichtverteilung über den gesamten Bestand.",
     "en": "Control of plant height, leaf mass, and light distribution across the entire canopy.",
@@ -30061,6 +31290,14 @@
     "en": "Randomly opening buds from the densest area of the plant and checking the center for wilted leaflets",
     "paths": [
       "wiki/schimmel-und-mykotoxine-bei-cannabis/sections/3/checklist/0"
+    ]
+  },
+  "f08d1733b9c7": {
+    "de": "Stickstoff",
+    "en": null,
+    "paths": [
+      "wiki/stickstoffmangel/tags/0",
+      "wiki/stickstoffueberschuss/tags/0"
     ]
   },
   "823d79ef5978": {
@@ -30231,6 +31468,13 @@
       "wiki/vaping-rauchen-und-verdampfen-vergleich/simpleExplainers/1/text"
     ]
   },
+  "2319cd90fbab": {
+    "de": "Stress",
+    "en": null,
+    "paths": [
+      "wiki/stressmarker-frueh-erkennen/tags/0"
+    ]
+  },
   "1a07dd5c4ee7": {
     "de": "Stress (Trockenheit, Nährstoffmangel) macht Pflanzen attraktiver und anfälliger für Befall.",
     "en": "Stress (drought, nutrient deficiency) makes plants more attractive and more susceptible to infestation.",
@@ -30295,6 +31539,15 @@
       "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/glossary/2/definition"
     ]
   },
+  "08efa6376773": {
+    "de": "Studien",
+    "en": null,
+    "paths": [
+      "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/9",
+      "wiki/substrat-vergleich-coco-erde-hydro/tags/9",
+      "wiki/indoor-outdoor-anbau-vergleich/tags/8"
+    ]
+  },
   "05ba4ab16f0e": {
     "de": "Studien zu Cannabis-Produktionssystemen und Erfahrungen aus professionellen Indoor-Setups zeigen, dass die größten Gewinne aus konsistenter Standardisierung und früher Abweichungserkennung kommen.",
     "en": "Studies on cannabis production systems and experience from professional indoor setups show that the biggest gains come from consistent standardization and early deviation detection.",
@@ -30327,6 +31580,7 @@
     "de": "Sublingual",
     "en": "Sublingual",
     "paths": [
+      "wiki/sublingual-tinkturen-richtig-einordnen/tags/0",
       "wiki/sublingual-tinkturen-richtig-einordnen/glossary/0/term"
     ]
   },
@@ -30342,6 +31596,18 @@
     "en": "Substance that results from the alteration or decomposition of another molecule.",
     "paths": [
       "wiki/thc-zu-cbn-abbau-und-oxidation/glossary/1/definition"
+    ]
+  },
+  "d59f856adb4e": {
+    "de": "Substrat",
+    "en": null,
+    "paths": [
+      "wiki/cannabis-substrat-und-wurzelzone/tags/0",
+      "wiki/bewaesserung-ohne-uebergiessen/tags/3",
+      "wiki/substrat-vergleich-coco-erde-hydro/tags/0",
+      "wiki/wurzelgesundheit-diagnose/tags/3",
+      "wiki/ph-management-coco-erde-hydro/tags/1",
+      "wiki/trauermuecken/tags/2"
     ]
   },
   "9c2ca68823d5": {
@@ -30492,6 +31758,13 @@
       "wiki/terpen-panels-und-qualitaetslabels/glossary/2/definition"
     ]
   },
+  "be91940b79f4": {
+    "de": "Support",
+    "en": null,
+    "paths": [
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/6"
+    ]
+  },
   "1db029a2e99e": {
     "de": "Support-Bedarf",
     "en": "Support needs",
@@ -30525,6 +31798,13 @@
     "en": "Symbiotic fungal community on the root that supports the plant's nutrient and water uptake.",
     "paths": [
       "wiki/wurzelgesundheit-diagnose/glossary/2/definition"
+    ]
+  },
+  "ca9735b6a966": {
+    "de": "Symptome",
+    "en": null,
+    "paths": [
+      "wiki/blattsymptom-troubleshooter/tags/2"
     ]
   },
   "31aa9057f354": {
@@ -30783,6 +32063,15 @@
       "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/faq/0/answer"
     ]
   },
+  "2da10076c9e7": {
+    "de": "Temperatur",
+    "en": null,
+    "paths": [
+      "wiki/hitzestress/tags/1",
+      "wiki/kaeltestress/tags/1",
+      "wiki/decarboxylierung-grundlagen-und-fehler/tags/3"
+    ]
+  },
   "84a45c5a3789": {
     "de": "Temperatur im Substrat/an der Wurzel; steuert Wasser- und Nährstoffaufnahme stark.",
     "en": "Temperature in the substrate/at the root; strongly controls water and nutrient uptake.",
@@ -30895,6 +32184,16 @@
       "wiki/terpene-und-wirkprofil/glossary/1/term"
     ]
   },
+  "8154b066755d": {
+    "de": "Terpene",
+    "en": null,
+    "paths": [
+      "wiki/terpene-und-wirkprofil/tags/0",
+      "wiki/trocknung-protokoll/tags/3",
+      "wiki/indoor-outdoor-anbau-vergleich/tags/4",
+      "wiki/terpen-oxidationsprodukte-und-bedeutung/tags/0"
+    ]
+  },
   "7f167f384042": {
     "de": "Terpene beeinflussen das sensorische Profil und könnten Effekte unterstützen, ersetzen aber niemals Laborwerte für Cannabinoide oder Kontaminanten.",
     "en": "Terpenes influence the sensory profile and may support effects, but they never replace lab values for cannabinoids or contaminants.",
@@ -30986,6 +32285,13 @@
       "wiki/terpen-oxidationsprodukte-und-bedeutung/glossary/1/term"
     ]
   },
+  "ab1a45b98299": {
+    "de": "Terpenpanel",
+    "en": null,
+    "paths": [
+      "wiki/terpen-panels-und-qualitaetslabels/tags/0"
+    ]
+  },
   "75fca80d4f14": {
     "de": "Terpenpanel als Ausschnitt verstehen, nicht als vollständige Liste",
     "en": "Understand a terpene panel as an excerpt, not a complete list",
@@ -30998,6 +32304,13 @@
     "en": "Only make terpene comparisons using the same measurement method",
     "paths": [
       "wiki/myrcen-limonen-caryophyllen-einordnung/sections/1/checklist/2"
+    ]
+  },
+  "c81a0d985c09": {
+    "de": "Terpenverlust",
+    "en": null,
+    "paths": [
+      "wiki/lagerung-und-terpenverlust-vermeiden/tags/0"
     ]
   },
   "d5ec181efdf8": {
@@ -31091,11 +32404,25 @@
       "wiki/decarboxylierung-grundlagen-und-fehler/glossary/0/definition"
     ]
   },
+  "43e36bca8a97": {
+    "de": "Tetranychus",
+    "en": null,
+    "paths": [
+      "wiki/spinnmilben/tags/3"
+    ]
+  },
   "049c5738b576": {
     "de": "Tetranychus urticae u. a.",
     "en": "Tetranychus urticae and others",
     "paths": [
       "wiki/spinnmilben/quickFacts/0/value"
+    ]
+  },
+  "83c91957085b": {
+    "de": "Textur",
+    "en": null,
+    "paths": [
+      "wiki/concentrate-categorization-fuer-plattformen/tags/4"
     ]
   },
   "100724344566": {
@@ -31123,6 +32450,7 @@
     "de": "THC",
     "en": "THC",
     "paths": [
+      "wiki/thc-zu-cbn-abbau-und-oxidation/tags/0",
       "wiki/decarboxylierung-grundlagen-und-fehler/glossary/1/term"
     ]
   },
@@ -31154,6 +32482,13 @@
       "wiki/thc-zu-cbn-abbau-und-oxidation/title"
     ]
   },
+  "11e77952bf6c": {
+    "de": "THC-Gehalt",
+    "en": null,
+    "paths": [
+      "wiki/interlaborvergleich-und-ringtests/tags/0"
+    ]
+  },
   "e82e1777123c": {
     "de": "THC-Höchststand",
     "en": "THC peak",
@@ -31165,6 +32500,7 @@
     "de": "THCA",
     "en": "THCA",
     "paths": [
+      "wiki/decarboxylierung-grundlagen-und-fehler/tags/1",
       "wiki/decarboxylierung-grundlagen-und-fehler/glossary/0/term"
     ]
   },
@@ -31200,6 +32536,7 @@
     "de": "The Claw",
     "en": "The Claw",
     "paths": [
+      "wiki/stickstoffueberschuss/tags/3",
       "wiki/stickstoffueberschuss/glossary/0/term"
     ]
   },
@@ -31216,6 +32553,13 @@
     "en": "Thigmomorphogenesis",
     "paths": [
       "wiki/windbrand/glossary/2/term"
+    ]
+  },
+  "8e9253d5ffb4": {
+    "de": "Thripse",
+    "en": null,
+    "paths": [
+      "wiki/thripse/tags/0"
     ]
   },
   "9c175d65f4ca": {
@@ -31267,11 +32611,26 @@
       "wiki/dli-und-photoperiode/sections/5/content/1"
     ]
   },
+  "fc4e84255a41": {
+    "de": "Timing",
+    "en": null,
+    "paths": [
+      "wiki/orale-produkte-und-first-pass-risiken/tags/2"
+    ]
+  },
+  "435b8b705e4f": {
+    "de": "Tinktur",
+    "en": null,
+    "paths": [
+      "wiki/sublingual-tinkturen-richtig-einordnen/tags/1"
+    ]
+  },
   "5e356cd56eda": {
     "de": "Tipburn",
     "en": "Tip burn",
     "paths": [
       "wiki/salzanreicherung-hohe-ec/glossary/2/term",
+      "wiki/naehrstoffverbrennung-tipburn/tags/2",
       "wiki/naehrstoffverbrennung-tipburn/glossary/1/term"
     ]
   },
@@ -31279,6 +32638,7 @@
     "de": "Titration",
     "en": "Titration",
     "paths": [
+      "wiki/dosisprotokolle-ohne-uebertreibung/tags/1",
       "wiki/dosisprotokolle-ohne-uebertreibung/glossary/0/term"
     ]
   },
@@ -31307,6 +32667,7 @@
     "de": "Toleranz",
     "en": "Tolerance",
     "paths": [
+      "wiki/dosisprotokolle-ohne-uebertreibung/tags/2",
       "wiki/dosisprotokolle-ohne-uebertreibung/glossary/1/term"
     ]
   },
@@ -31394,6 +32755,14 @@
       "wiki/ph-management-coco-erde-hydro/glossary/1/term"
     ]
   },
+  "130fe584ad3a": {
+    "de": "Toxizität",
+    "en": null,
+    "paths": [
+      "wiki/stickstoffueberschuss/tags/2",
+      "wiki/kalium-ueberschuss/tags/3"
+    ]
+  },
   "38fb09781e9d": {
     "de": "Tracke tägliches Topfgewicht, Klima und Drain-EC – nach 3 Runs erkennst du Muster, die sonst unsichtbar bleiben.",
     "en": "Track daily pot weight, climate, and runoff EC – after 3 runs you'll recognize patterns that otherwise stay invisible.",
@@ -31408,11 +32777,26 @@
       "wiki/schwere-metalle-und-aufnahmewege/glossary/2/term"
     ]
   },
+  "4cf3c91e0b08": {
+    "de": "Transpiration",
+    "en": null,
+    "paths": [
+      "wiki/vpd-einfach-erklaert/tags/2",
+      "wiki/vpd-nach-wachstumsphase/tags/3"
+    ]
+  },
   "9e176b5c2373": {
     "de": "Transpirationsstrom",
     "en": "Transpiration stream",
     "paths": [
       "wiki/calciummangel/glossary/1/term"
+    ]
+  },
+  "f204f47f73dc": {
+    "de": "Trauermücken",
+    "en": null,
+    "paths": [
+      "wiki/trauermuecken/tags/0"
     ]
   },
   "7e10458178c6": {
@@ -31476,6 +32860,13 @@
     "en": "Drivers",
     "paths": [
       "wiki/thc-zu-cbn-abbau-und-oxidation/quickFacts/0/label"
+    ]
+  },
+  "ef64848a4dfe": {
+    "de": "Trellis",
+    "en": null,
+    "paths": [
+      "wiki/bluetephase-ernaehrung-und-pflege/tags/5"
     ]
   },
   "d46ee5e7e868": {
@@ -31547,6 +32938,14 @@
     "en": "Determining trichome maturity via image diagnosis",
     "paths": [
       "wiki/trichom-reifegrad-bilddiagnose/title"
+    ]
+  },
+  "82d74de73f3e": {
+    "de": "Trichome",
+    "en": null,
+    "paths": [
+      "wiki/trichom-reifegrad-bilddiagnose/tags/0",
+      "wiki/erntefenster-trichomreife/tags/1"
     ]
   },
   "e9aa6794e6dc": {
@@ -31654,6 +33053,13 @@
       "wiki/trocknung-protokoll/growValue"
     ]
   },
+  "3b77df3302fc": {
+    "de": "Trocknung",
+    "en": null,
+    "paths": [
+      "wiki/trocknung-protokoll/tags/0"
+    ]
+  },
   "f510634e52fe": {
     "de": "Trocknung ist der kontrollierte Prozess, bei dem geernteten Blüten Wasser entzogen wird, bis eine für Lagerung und Curing sichere Wasseraktivität erreicht ist.",
     "en": "Drying is the controlled process by which water is removed from harvested buds until a water activity safe for storage and curing is reached.",
@@ -31694,6 +33100,13 @@
     "en": "Counting drops is unreliable - instead calculate using the mg/mL figure on the label and a graduated pipette.",
     "paths": [
       "wiki/sublingual-tinkturen-richtig-einordnen/keyTakeaways/3"
+    ]
+  },
+  "c3af076f92c5": {
+    "de": "Troubleshooting",
+    "en": null,
+    "paths": [
+      "wiki/blattsymptom-troubleshooter/tags/1"
     ]
   },
   "b29b0aaea859": {
@@ -31872,6 +33285,14 @@
       "wiki/naehrstoffbedarf-cannabis-lebenszyklus/sections/4/content/1"
     ]
   },
+  "4113c7c4143d": {
+    "de": "Überdüngung",
+    "en": null,
+    "paths": [
+      "wiki/salzanreicherung-hohe-ec/tags/2",
+      "wiki/naehrstoffverbrennung-tipburn/tags/0"
+    ]
+  },
   "d032e7179e14": {
     "de": "Überdüngung / zu N-betonte Blütephase",
     "en": "Overfertilization / too N-heavy flowering stage",
@@ -31907,6 +33328,15 @@
       "wiki/blattlaeuse/sections/5/content/2"
     ]
   },
+  "fe59a735a090": {
+    "de": "Überschuss",
+    "en": null,
+    "paths": [
+      "wiki/stickstoffueberschuss/tags/1",
+      "wiki/kalium-ueberschuss/tags/1",
+      "wiki/calciumueberschuss/tags/1"
+    ]
+  },
   "24a8fe0b88a9": {
     "de": "Überschuss/Fehleinsatz: Anreicherung bei zu niedriger Temperatur (kein Mehrertrag) oder gefährlich hohe ppm ohne Belüftung/Sicherheit.",
     "en": "Toxicity/misuse: Supplementation at too low a temperature (no yield gain) or dangerously high ppm without ventilation/safety.",
@@ -31926,6 +33356,13 @@
     "en": "Excess nitrate is stored in the plant and drives chlorophyll and protein synthesis — hence the dark, almost blue-green foliage.",
     "paths": [
       "wiki/stickstoffueberschuss/sections/1/content/0"
+    ]
+  },
+  "4d2bb368f919": {
+    "de": "Übersicht",
+    "en": null,
+    "paths": [
+      "wiki/blattsymptom-troubleshooter/tags/3"
     ]
   },
   "1ac08aba9c04": {
@@ -31982,6 +33419,14 @@
     "en": "Monitor the root zone temperature specifically, alongside the air — it's the underestimated lever.",
     "paths": [
       "wiki/kaeltestress/sections/7/content/0"
+    ]
+  },
+  "25f985701e3a": {
+    "de": "Überwässerung",
+    "en": null,
+    "paths": [
+      "wiki/ueberwaesserung-staunaesse/tags/1",
+      "wiki/trauermuecken/tags/3"
     ]
   },
   "b60a2b90e740": {
@@ -32090,6 +33535,13 @@
       "wiki/decarboxylierung-grundlagen-und-fehler/quickFacts/4/label"
     ]
   },
+  "0e619044cb55": {
+    "de": "Umwelt",
+    "en": null,
+    "paths": [
+      "wiki/indoor-outdoor-anbau-vergleich/tags/5"
+    ]
+  },
   "4e73db872368": {
     "de": "Umwelt- und Nährstoffwechselwirkungen",
     "en": "Environmental and nutrient interactions",
@@ -32177,6 +33629,13 @@
     "en": "Consistently reduce invalid shadow zones",
     "paths": [
       "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/sections/1/checklist/1"
+    ]
+  },
+  "fc017fa816c5": {
+    "de": "Uniformität",
+    "en": null,
+    "paths": [
+      "wiki/lichtstress-und-canopy-management/tags/3"
     ]
   },
   "1fc34446490b": {
@@ -32434,6 +33893,13 @@
       "wiki/how-to-grow-cannabis-profi-tutorial/growValue"
     ]
   },
+  "f0ec430246c9": {
+    "de": "Vaping",
+    "en": null,
+    "paths": [
+      "wiki/vaping-rauchen-und-verdampfen-vergleich/tags/0"
+    ]
+  },
   "071c916ae9a2": {
     "de": "Vaping, Rauchen und Verdampfen im Vergleich",
     "en": "Vaping, smoking, and vaporizing compared",
@@ -32495,6 +33961,13 @@
     "en": "Vegetative stage & stretch",
     "paths": [
       "wiki/stickstoffmangel/quickFacts/2/value"
+    ]
+  },
+  "e31ddc10a827": {
+    "de": "Vegetationsphase",
+    "en": null,
+    "paths": [
+      "wiki/stickstoffmangel/tags/2"
     ]
   },
   "ffd7f7e62c5f": {
@@ -32670,6 +34143,13 @@
     "en": "Isolate suspicious, underperforming plants early and have them tested, instead of hoping they will 'recover'.",
     "paths": [
       "wiki/hop-latent-viroid-hlvd/sections/6/content/2"
+    ]
+  },
+  "1a2d984ce1ad": {
+    "de": "Verdampfen",
+    "en": null,
+    "paths": [
+      "wiki/vaping-rauchen-und-verdampfen-vergleich/tags/2"
     ]
   },
   "fb03d2837c0c": {
@@ -32917,6 +34397,13 @@
       "wiki/lagerung-und-terpenverlust-vermeiden/growValue"
     ]
   },
+  "d6c4b1df29e0": {
+    "de": "Verpackung",
+    "en": null,
+    "paths": [
+      "wiki/lagerung-verpackung-und-lichtschutz/tags/1"
+    ]
+  },
   "bef44c3d25ac": {
     "de": "Verpackung plus Klima",
     "en": "Packaging plus climate",
@@ -32943,6 +34430,13 @@
     "en": "Hidden life stage",
     "paths": [
       "wiki/thripse/quickFacts/3/label"
+    ]
+  },
+  "25f8a537084c": {
+    "de": "Vertrauen",
+    "en": null,
+    "paths": [
+      "wiki/supplier-risk-scoring-fuer-cannabis/tags/1"
     ]
   },
   "dae953d7d809": {
@@ -33097,6 +34591,7 @@
     "de": "Viroid",
     "en": "Viroid",
     "paths": [
+      "wiki/hop-latent-viroid-hlvd/tags/1",
       "wiki/hop-latent-viroid-hlvd/glossary/0/term"
     ]
   },
@@ -33321,13 +34816,21 @@
     "de": "VPD",
     "en": "VPD",
     "paths": [
+      "wiki/cannabis-anbau-grundlagen/tags/0",
       "wiki/cannabis-anbau-grundlagen/glossary/0/term",
+      "wiki/vpd-einfach-erklaert/tags/0",
       "wiki/vpd-einfach-erklaert/glossary/0/term",
+      "wiki/vpd-und-ec-kombi-rechner-guide/tags/0",
       "wiki/vpd-und-ec-kombi-rechner-guide/glossary/0/term",
+      "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/6",
+      "wiki/hitzestress/tags/2",
       "wiki/hitzestress/glossary/1/term",
+      "wiki/luftfeuchte-management/tags/2",
       "wiki/luftfeuchte-management/glossary/1/term",
       "wiki/stressmarker-frueh-erkennen/glossary/2/term",
-      "wiki/vpd-nach-wachstumsphase/glossary/0/term"
+      "wiki/vpd-nach-wachstumsphase/tags/0",
+      "wiki/vpd-nach-wachstumsphase/glossary/0/term",
+      "wiki/windbrand/tags/3"
     ]
   },
   "d2e09bc64351": {
@@ -33552,6 +35055,20 @@
     "en": "Growth rate and oxygen availability",
     "paths": [
       "wiki/substrat-vergleich-coco-erde-hydro/sections/2/heading"
+    ]
+  },
+  "0cb66f4d5784": {
+    "de": "Wachstumsphase",
+    "en": null,
+    "paths": [
+      "wiki/vpd-nach-wachstumsphase/tags/2"
+    ]
+  },
+  "98e2381f5325": {
+    "de": "Wachstumsregler",
+    "en": null,
+    "paths": [
+      "wiki/pgr-und-kontaminanten/tags/0"
     ]
   },
   "6cff3e6f34fd": {
@@ -34932,6 +36449,7 @@
     "de": "Wash",
     "en": "Wash",
     "paths": [
+      "wiki/bubble-hash-qualitaetskriterien/tags/3",
       "wiki/bubble-hash-qualitaetskriterien/glossary/4/term"
     ]
   },
@@ -35052,6 +36570,13 @@
     "en": "Water deficiency due to excessively high salt concentration outside the root, despite moist substrate.",
     "paths": [
       "wiki/salzanreicherung-hohe-ec/glossary/1/definition"
+    ]
+  },
+  "619c1cecf6c2": {
+    "de": "Wasserqualität",
+    "en": null,
+    "paths": [
+      "wiki/calmag-supplementierung/tags/3"
     ]
   },
   "b935cd0dd76e": {
@@ -35388,6 +36913,13 @@
     "en": "White to cream-colored",
     "paths": [
       "wiki/wurzelgesundheit-diagnose/quickFacts/0/value"
+    ]
+  },
+  "622a0cef25ff": {
+    "de": "Weiße Fliege",
+    "en": null,
+    "paths": [
+      "wiki/weisse-fliege/tags/0"
     ]
   },
   "c49c7d867f37": {
@@ -36817,6 +38349,7 @@
     "de": "Windbrand",
     "en": "Windburn",
     "paths": [
+      "wiki/windbrand/tags/0",
       "wiki/windbrand/glossary/0/term"
     ]
   },
@@ -37255,6 +38788,13 @@
       "wiki/bubble-hash-qualitaetskriterien/glossary/5/term"
     ]
   },
+  "880421c1678b": {
+    "de": "WPFF",
+    "en": null,
+    "paths": [
+      "wiki/bubble-hash-qualitaetskriterien/tags/2"
+    ]
+  },
   "01a91fc6c9b8": {
     "de": "WPFF – ganze Pflanze, sofort gefroren",
     "en": "WPFF – whole plant, frozen immediately",
@@ -37309,6 +38849,15 @@
     "en": "Measure root pH",
     "paths": [
       "wiki/stickstoffmangel/sections/5/checklist/2"
+    ]
+  },
+  "ecbe134ae325": {
+    "de": "Wurzelfäule",
+    "en": null,
+    "paths": [
+      "wiki/wurzelfaeule/tags/0",
+      "wiki/wurzelgesundheit-diagnose/tags/2",
+      "wiki/fusarium/tags/2"
     ]
   },
   "5cef83712733": {
@@ -37449,6 +38998,16 @@
     "en": "Root growth and nutrient uptake depend directly on oxygen availability in the root zone. Loosely structured coco coir and well-aerated hydro systems (air stones, flow) provide more dissolved oxygen than compacted soil.",
     "paths": [
       "wiki/substrat-vergleich-coco-erde-hydro/sections/2/content/0"
+    ]
+  },
+  "43f1936b42f6": {
+    "de": "Wurzelzone",
+    "en": null,
+    "paths": [
+      "wiki/cannabis-substrat-und-wurzelzone/tags/1",
+      "wiki/kaeltestress/tags/2",
+      "wiki/ueberwaesserung-staunaesse/tags/2",
+      "wiki/wurzelgesundheit-diagnose/tags/0"
     ]
   },
   "47191ea3fdf3": {
@@ -38071,6 +39630,13 @@
     "en": "Too many variables at once",
     "paths": [
       "wiki/cannabis-anbau-grundlagen/quickFacts/1/value"
+    ]
+  },
+  "a174170b5917": {
+    "de": "Zucht",
+    "en": null,
+    "paths": [
+      "wiki/crossing-backcrossing-grundlagen/tags/2"
     ]
   },
   "b92f6d131129": {

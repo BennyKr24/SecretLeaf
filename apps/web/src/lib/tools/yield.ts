@@ -122,8 +122,9 @@ export function calculateYield(inputs: YieldInputs, t: ToolT): YieldOutput {
 
   const level = yieldLevel(ertragProQm, anbauMethode);
 
-  const erfahrungLabel = erfahrung === 'einsteiger' ? 'Einsteiger' : erfahrung === 'fortgeschritten' ? 'Fortgeschritten' : 'Profi';
-  const vegDauerLabel = vegDauer === 'kurz' ? 'kurz' : vegDauer === 'verlaengert' ? 'verlängert' : 'standard';
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const erfahrungLabel = t(`yield.exp${cap(erfahrung)}`);
+  const vegDauerLabel = t(`yield.veg${cap(vegDauer)}`);
 
   const results: ToolResultData[] = [
     {
@@ -151,12 +152,12 @@ export function calculateYield(inputs: YieldInputs, t: ToolT): YieldOutput {
       value: round(basisErtrag, 0),
       formatted: anbauMethode === 'indoor'
         ? `${lichtLeistung}W × ${GPW[erfahrung]} g/W (${erfahrungLabel})`
-        : `${pflanzenAnzahl} Pflanzen × ${topfgroesseLiter}L × ${GPP_OUTDOOR_PRO_LITER} g/L × Vegdauer ${vegDauerLabel} (×${VEGDAUER_FAKTOR[vegDauer]})`,
+        : `${pflanzenAnzahl} ${t('yield.plants')} × ${topfgroesseLiter}L × ${GPP_OUTDOOR_PRO_LITER} g/L × ${t('yield.vegDur')} ${vegDauerLabel} (×${VEGDAUER_FAKTOR[vegDauer]})`,
     },
     {
       label: 'Korrekturfaktoren',
       value: round(genFaktor * subFaktor * dunFaktor * denFaktor, 2),
-      formatted: `Genetik: ×${genFaktor}  ·  Substrat: ×${subFaktor}  ·  Dünger: ×${dunFaktor}  ·  Dichte: ×${round(denFaktor, 2)}`,
+      formatted: `${t('yield.fGenetics')}: ×${genFaktor}  ·  ${t('yield.fSubstrate')}: ×${subFaktor}  ·  ${t('yield.fFeed')}: ×${dunFaktor}  ·  ${t('yield.fDensity')}: ×${round(denFaktor, 2)}`,
     },
   ];
 

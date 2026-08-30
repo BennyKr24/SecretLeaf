@@ -1455,6 +1455,14 @@
       "diagnostics/echter-mehltau-powdery-mildew/quickFacts/4/label"
     ]
   },
+  "abb17b70a2fa": {
+    "de": "Antagonismus",
+    "en": null,
+    "paths": [
+      "diagnostics/kalium-ueberschuss/tags/2",
+      "diagnostics/calciumueberschuss/tags/2"
+    ]
+  },
   "1962fcd849ab": {
     "de": "Anteil an Bicarbonaten im Wasser, der den pH puffert und nach oben treibt.",
     "en": "Proportion of bicarbonates in the water that buffers the pH and pushes it upward.",
@@ -1475,6 +1483,13 @@
     "paths": [
       "diagnostics/kaeltestress/glossary/0/term",
       "diagnostics/phosphormangel/glossary/1/term"
+    ]
+  },
+  "189e16c3b0e0": {
+    "de": "Aphididae",
+    "en": null,
+    "paths": [
+      "diagnostics/blattlaeuse/tags/3"
     ]
   },
   "416bd7713f3b": {
@@ -2176,6 +2191,13 @@
       "diagnostics/blattlaeuse/sections/1/content/0"
     ]
   },
+  "ed3f808a3fff": {
+    "de": "Blattläuse",
+    "en": null,
+    "paths": [
+      "diagnostics/blattlaeuse/tags/0"
+    ]
+  },
   "2fc3be8e8829": {
     "de": "Blattläuse bei Cannabis erkennen und bekämpfen",
     "en": "Recognizing and controlling aphids on cannabis",
@@ -2223,6 +2245,13 @@
     "en": "Spraying the leaf tops but skipping the undersides (where the mites sit).",
     "paths": [
       "diagnostics/spinnmilben/sections/7/content/2"
+    ]
+  },
+  "66b276fafefd": {
+    "de": "Blattrand",
+    "en": null,
+    "paths": [
+      "diagnostics/kaliummangel/tags/1"
     ]
   },
   "8f13fc0137bd": {
@@ -2344,6 +2373,20 @@
       "diagnostics/thripse/sections/4/checklist/0"
     ]
   },
+  "54b3013a168c": {
+    "de": "Blockade",
+    "en": null,
+    "paths": [
+      "diagnostics/ph-lockout/tags/2"
+    ]
+  },
+  "a39f120efb2f": {
+    "de": "Blüte",
+    "en": null,
+    "paths": [
+      "diagnostics/bud-rot-botrytis/tags/3"
+    ]
+  },
   "aa28911f478b": {
     "de": "Blüte (Knospenfüllung)",
     "en": "Flowering (bud filling)",
@@ -2363,6 +2406,13 @@
     "en": "Soil-borne",
     "paths": [
       "diagnostics/fusarium/glossary/2/term"
+    ]
+  },
+  "5ff11b8759e8": {
+    "de": "Botrytis",
+    "en": null,
+    "paths": [
+      "diagnostics/bud-rot-botrytis/tags/1"
     ]
   },
   "7e78f93065e9": {
@@ -2512,6 +2562,13 @@
       "diagnostics/trauermuecken/sections/4/checklist/2"
     ]
   },
+  "9dbccbe8ff0b": {
+    "de": "Bud Rot",
+    "en": null,
+    "paths": [
+      "diagnostics/bud-rot-botrytis/tags/0"
+    ]
+  },
   "d8a351c80169": {
     "de": "Bud Rot (Botrytis) bei Cannabis erkennen und verhindern",
     "en": "Recognizing and preventing bud rot (Botrytis) in cannabis",
@@ -2642,8 +2699,10 @@
     "de": "Cal-Mag",
     "en": "Cal-Mag",
     "paths": [
+      "diagnostics/calciummangel/tags/1",
       "diagnostics/calciummangel/glossary/2/term",
       "diagnostics/calciumueberschuss/glossary/1/term",
+      "diagnostics/calmag-supplementierung/tags/0",
       "diagnostics/calmag-supplementierung/glossary/0/term"
     ]
   },
@@ -2715,6 +2774,15 @@
     "en": "Cal-Mag supplementation with already-hard tap water, without a prior water analysis, can needlessly shift the Ca:Mg ratio and trigger a new antagonism.",
     "paths": [
       "diagnostics/calmag-supplementierung/warnings/0"
+    ]
+  },
+  "636f0dc2dfb9": {
+    "de": "Calcium",
+    "en": null,
+    "paths": [
+      "diagnostics/calciummangel/tags/0",
+      "diagnostics/calciumueberschuss/tags/0",
+      "diagnostics/calmag-supplementierung/tags/1"
     ]
   },
   "033fb1c5e72a": {
@@ -2862,6 +2930,15 @@
     "en": "Chelates keep iron soluble: EDDHA stays stable up to pH ~9, DTPA up to ~7.5, EDTA only up to ~6.5 — the chelate choice must match the pH.",
     "paths": [
       "diagnostics/eisenmangel/sections/1/content/1"
+    ]
+  },
+  "651bac5b563c": {
+    "de": "Chlorose",
+    "en": null,
+    "paths": [
+      "diagnostics/magnesiummangel/tags/1",
+      "diagnostics/stickstoffmangel/tags/1",
+      "diagnostics/eisenmangel/tags/1"
     ]
   },
   "13c995e5621a": {
@@ -3340,6 +3417,41 @@
       "diagnostics/calciummangel/sections/2/content/1"
     ]
   },
+  "64dd65edfeaa": {
+    "de": "Diagnose",
+    "en": null,
+    "paths": [
+      "diagnostics/magnesiummangel/tags/4",
+      "diagnostics/stickstoffmangel/tags/4",
+      "diagnostics/calciummangel/tags/4",
+      "diagnostics/kaliummangel/tags/4",
+      "diagnostics/eisenmangel/tags/4",
+      "diagnostics/spinnmilben/tags/4",
+      "diagnostics/thripse/tags/4",
+      "diagnostics/trauermuecken/tags/4",
+      "diagnostics/bud-rot-botrytis/tags/4",
+      "diagnostics/echter-mehltau-powdery-mildew/tags/4",
+      "diagnostics/wurzelfaeule/tags/4",
+      "diagnostics/stickstoffueberschuss/tags/4",
+      "diagnostics/kalium-ueberschuss/tags/4",
+      "diagnostics/calciumueberschuss/tags/4",
+      "diagnostics/salzanreicherung-hohe-ec/tags/4",
+      "diagnostics/naehrstoffverbrennung-tipburn/tags/4",
+      "diagnostics/hitzestress/tags/4",
+      "diagnostics/kaeltestress/tags/4",
+      "diagnostics/windbrand/tags/4",
+      "diagnostics/luftfeuchte-management/tags/4",
+      "diagnostics/co2-management/tags/4",
+      "diagnostics/ph-lockout/tags/3",
+      "diagnostics/ueberwaesserung-staunaesse/tags/3",
+      "diagnostics/blattlaeuse/tags/4",
+      "diagnostics/weisse-fliege/tags/3",
+      "diagnostics/phosphormangel/tags/3",
+      "diagnostics/hanf-rostmilben/tags/3",
+      "diagnostics/fusarium/tags/3",
+      "diagnostics/calmag-supplementierung/tags/4"
+    ]
+  },
   "acd1c0c7e1b2": {
     "de": "Diagnose — Abgrenzung",
     "en": "Diagnosis — differentiation",
@@ -3789,6 +3901,13 @@
       "diagnostics/stickstoffmangel/sections/5/checklist/1"
     ]
   },
+  "3496b722301e": {
+    "de": "Echter Mehltau",
+    "en": null,
+    "paths": [
+      "diagnostics/echter-mehltau-powdery-mildew/tags/0"
+    ]
+  },
   "aa344c7b0eed": {
     "de": "Echter Mehltau bei Cannabis erkennen und bekämpfen",
     "en": "Identifying and controlling powdery mildew on cannabis",
@@ -4097,6 +4216,13 @@
       "diagnostics/fusarium/quickFacts/1/value"
     ]
   },
+  "3e93030ad13f": {
+    "de": "Eisen",
+    "en": null,
+    "paths": [
+      "diagnostics/eisenmangel/tags/0"
+    ]
+  },
   "9da80763632f": {
     "de": "Eisen ist immobil: Mangel zeigt sich an den JÜNGSTEN Blättern als leuchtend gelbe interveinale Chlorose mit scharf grünen Adern.",
     "en": "Iron is immobile: deficiency shows up on the YOUNGEST leaves as bright yellow interveinal chlorosis with sharply green veins.",
@@ -4304,6 +4430,7 @@
     "de": "Eriophyidae",
     "en": "Eriophyidae",
     "paths": [
+      "diagnostics/hanf-rostmilben/tags/1",
       "diagnostics/hanf-rostmilben/glossary/0/term"
     ]
   },
@@ -4632,6 +4759,13 @@
       "diagnostics/blattlaeuse/glossary/1/definition"
     ]
   },
+  "e29702f43f62": {
+    "de": "Frankliniella",
+    "en": null,
+    "paths": [
+      "diagnostics/thripse/tags/3"
+    ]
+  },
   "13a65f56d7ad": {
     "de": "Frankliniella/Thrips spp.",
     "en": "Frankliniella/Thrips spp.",
@@ -4686,6 +4820,13 @@
     "en": "For large, healthy plants, they're usually just a nuisance. For seedlings and clones, the root-feeding larvae are dangerous, and they can promote root rot.",
     "paths": [
       "diagnostics/trauermuecken/faq/1/answer"
+    ]
+  },
+  "008f5b40b3ef": {
+    "de": "Fusarium",
+    "en": null,
+    "paths": [
+      "diagnostics/fusarium/tags/0"
     ]
   },
   "4184d45093b1": {
@@ -5307,6 +5448,13 @@
       "diagnostics/hitzestress/sections/8/content/0"
     ]
   },
+  "e627db2a71d7": {
+    "de": "Hitzestress",
+    "en": null,
+    "paths": [
+      "diagnostics/hitzestress/tags/0"
+    ]
+  },
   "91351485ae60": {
     "de": "Hitzestress bei Cannabis erkennen und beheben",
     "en": "Recognizing and fixing heat stress in cannabis",
@@ -5452,6 +5600,13 @@
     "en": "Honeydew and sooty mold occur with both pests and are therefore not a distinguishing feature — flight behavior is the more reliable indicator.",
     "paths": [
       "diagnostics/weisse-fliege/sections/3/content/2"
+    ]
+  },
+  "de317cdfc0a7": {
+    "de": "Hydroponik",
+    "en": null,
+    "paths": [
+      "diagnostics/wurzelfaeule/tags/2"
     ]
   },
   "af4232c57622": {
@@ -5766,7 +5921,11 @@
     "de": "IPM",
     "en": "IPM",
     "paths": [
-      "diagnostics/spinnmilben/glossary/1/term"
+      "diagnostics/spinnmilben/tags/2",
+      "diagnostics/spinnmilben/glossary/1/term",
+      "diagnostics/thripse/tags/2",
+      "diagnostics/blattlaeuse/tags/2",
+      "diagnostics/weisse-fliege/tags/2"
     ]
   },
   "9e0d2b273342": {
@@ -6000,6 +6159,14 @@
       "diagnostics/ph-lockout/sections/4/checklist/0"
     ]
   },
+  "af94f68441b4": {
+    "de": "Kalium",
+    "en": null,
+    "paths": [
+      "diagnostics/kaliummangel/tags/0",
+      "diagnostics/kalium-ueberschuss/tags/0"
+    ]
+  },
   "60f1c688c447": {
     "de": "Kalium aktiviert zahlreiche Enzyme der Zuckersynthese; fehlt es, sinken Ertrag und Knospendichte.",
     "en": "Potassium activates numerous enzymes of sugar synthesis; if it's lacking, yield and bud density decrease.",
@@ -6088,6 +6255,7 @@
     "de": "Kältestress",
     "en": "Cold stress",
     "paths": [
+      "diagnostics/kaeltestress/tags/0",
       "diagnostics/phosphormangel/quickFacts/4/value"
     ]
   },
@@ -6244,6 +6412,18 @@
     "en": "Small white insects that fly up in a cloud when the plant is touched are the key symptom. This lets you recognize the infestation early and prevent it from spreading via honeydew and sooty mold.",
     "paths": [
       "diagnostics/weisse-fliege/summary"
+    ]
+  },
+  "f7a6e5b531e8": {
+    "de": "Klima",
+    "en": null,
+    "paths": [
+      "diagnostics/echter-mehltau-powdery-mildew/tags/3",
+      "diagnostics/hitzestress/tags/3",
+      "diagnostics/kaeltestress/tags/3",
+      "diagnostics/windbrand/tags/2",
+      "diagnostics/luftfeuchte-management/tags/3",
+      "diagnostics/co2-management/tags/2"
     ]
   },
   "fe2518ecea72": {
@@ -6430,6 +6610,13 @@
     "en": "First correct the pH range, then supplement Mg via Epsom salt (MgSO4) at 1–2 g/L as a root application; foliar spray only as an emergency measure.",
     "paths": [
       "diagnostics/magnesiummangel/keyTakeaways/2"
+    ]
+  },
+  "64cf62101cee": {
+    "de": "Krankheiten",
+    "en": null,
+    "paths": [
+      "diagnostics/fusarium/tags/1"
     ]
   },
   "7790d9b02038": {
@@ -7055,6 +7242,7 @@
     "de": "Lichtsättigung",
     "en": "Light saturation",
     "paths": [
+      "diagnostics/co2-management/tags/3",
       "diagnostics/co2-management/glossary/1/term"
     ]
   },
@@ -7111,6 +7299,7 @@
     "de": "Lockout",
     "en": "Lockout",
     "paths": [
+      "diagnostics/ph-lockout/tags/1",
       "diagnostics/ph-lockout/glossary/0/term"
     ]
   },
@@ -7170,11 +7359,25 @@
       "diagnostics/kaeltestress/faq/1/question"
     ]
   },
+  "4b21f18d5b44": {
+    "de": "Luftbewegung",
+    "en": null,
+    "paths": [
+      "diagnostics/windbrand/tags/1"
+    ]
+  },
   "74814c5681e3": {
     "de": "Luftbewegung im Canopy sichern",
     "en": "Ensure air movement in the canopy",
     "paths": [
       "diagnostics/bud-rot-botrytis/sections/5/checklist/1"
+    ]
+  },
+  "2efe8e4b46e7": {
+    "de": "Luftfeuchte",
+    "en": null,
+    "paths": [
+      "diagnostics/luftfeuchte-management/tags/0"
     ]
   },
   "e7dd11d1566c": {
@@ -7217,6 +7420,14 @@
     "en": "A magnifying glass is essential: eggs (round, pearly spheres) and moving mites on the underside confirm the diagnosis.",
     "paths": [
       "diagnostics/spinnmilben/sections/3/content/2"
+    ]
+  },
+  "b502eb348ec7": {
+    "de": "Magnesium",
+    "en": null,
+    "paths": [
+      "diagnostics/magnesiummangel/tags/0",
+      "diagnostics/calmag-supplementierung/tags/2"
     ]
   },
   "9d24c4e003f1": {
@@ -7730,6 +7941,25 @@
       "diagnostics/kaliummangel/quickFacts/2/value"
     ]
   },
+  "a9283560ce62": {
+    "de": "Nährstoffe",
+    "en": null,
+    "paths": [
+      "diagnostics/ph-lockout/tags/4"
+    ]
+  },
+  "39e1553b04b3": {
+    "de": "Nährstoffmangel",
+    "en": null,
+    "paths": [
+      "diagnostics/magnesiummangel/tags/3",
+      "diagnostics/stickstoffmangel/tags/3",
+      "diagnostics/calciummangel/tags/3",
+      "diagnostics/kaliummangel/tags/3",
+      "diagnostics/eisenmangel/tags/3",
+      "diagnostics/phosphormangel/tags/1"
+    ]
+  },
   "a4e03bcb367d": {
     "de": "Nährstoffsprenkel sind statisch und folgen oft einem Mangelmuster; Milbenschaden breitet sich aktiv aus und zeigt bewegliche Tiere.",
     "en": "Nutrient speckling is static and often follows a deficiency pattern; mite damage spreads actively and shows moving organisms.",
@@ -7797,6 +8027,7 @@
     "de": "Nekrose",
     "en": "Necrosis",
     "paths": [
+      "diagnostics/kaliummangel/tags/2",
       "diagnostics/kaliummangel/glossary/0/term"
     ]
   },
@@ -8091,6 +8322,7 @@
     "de": "Nutrient Burn",
     "en": "Nutrient Burn",
     "paths": [
+      "diagnostics/naehrstoffverbrennung-tipburn/tags/1",
       "diagnostics/naehrstoffverbrennung-tipburn/glossary/0/term"
     ]
   },
@@ -8233,6 +8465,7 @@
     "de": "Osmotischer Stress",
     "en": "Osmotic stress",
     "paths": [
+      "diagnostics/salzanreicherung-hohe-ec/tags/3",
       "diagnostics/salzanreicherung-hohe-ec/glossary/1/term"
     ]
   },
@@ -8564,6 +8797,13 @@
       "diagnostics/phosphormangel/sections/1/content/0"
     ]
   },
+  "998b7663ed3f": {
+    "de": "Phosphor",
+    "en": null,
+    "paths": [
+      "diagnostics/phosphormangel/tags/0"
+    ]
+  },
   "9cf03b45c159": {
     "de": "Phosphor bildet bei hohem pH unlösliche Calciumphosphate und bei niedrigem pH unlösliche Eisen-/Aluminiumphosphate — sein nutzbares Fenster ist dadurch besonders schmal und mittig.",
     "en": "Phosphorus forms insoluble calcium phosphates at high pH and insoluble iron/aluminum phosphates at low pH — its usable window is therefore especially narrow and centered.",
@@ -8611,6 +8851,13 @@
     "en": "Phosphorus deficiency is an undersupply of plant-available phosphate. Phosphorus is a central component of ATP, nucleic acids, and cell membranes, making it essential for energy transfer and cell division.",
     "paths": [
       "diagnostics/phosphormangel/sections/0/content/0"
+    ]
+  },
+  "b0fa746a66b1": {
+    "de": "Photosynthese",
+    "en": null,
+    "paths": [
+      "diagnostics/co2-management/tags/1"
     ]
   },
   "17b5bdff7580": {
@@ -8711,6 +8958,13 @@
       "diagnostics/naehrstoffverbrennung-tipburn/glossary/2/term"
     ]
   },
+  "38bfce609b2f": {
+    "de": "Powdery Mildew",
+    "en": null,
+    "paths": [
+      "diagnostics/echter-mehltau-powdery-mildew/tags/1"
+    ]
+  },
   "9159375f1b43": {
     "de": "PPFD-Niveau gegen Lichtsättigung prüfen",
     "en": "Check PPFD level against light saturation",
@@ -8786,6 +9040,13 @@
     "en": "Purple stems/leaf undersides, slow growth",
     "paths": [
       "diagnostics/kaeltestress/quickFacts/0/value"
+    ]
+  },
+  "dd89cf901c23": {
+    "de": "Pythium",
+    "en": null,
+    "paths": [
+      "diagnostics/wurzelfaeule/tags/1"
     ]
   },
   "ffe5fec94177": {
@@ -9093,6 +9354,13 @@
       "diagnostics/hitzestress/sections/3/checklist/0"
     ]
   },
+  "09e6342fc6f7": {
+    "de": "Rostmilben",
+    "en": null,
+    "paths": [
+      "diagnostics/hanf-rostmilben/tags/0"
+    ]
+  },
   "f0088b88306a": {
     "de": "Rostmilben besiedeln bevorzugt junge, sich entwickelnde Blätter und Blütenstrukturen in der oberen Canopy, wo sie durch Saugschäden Zellstruktur und Wachstum stören.",
     "en": "Russet mites preferentially colonize young, developing leaves and bud structures in the upper canopy, where their stippling damage disrupts cell structure and growth.",
@@ -9112,6 +9380,13 @@
     "en": "Sooty mold on the leaves is a secondary symptom of honeydew, not an independent fungal infestation — the cause is the aphid infestation itself.",
     "paths": [
       "diagnostics/blattlaeuse/sections/3/content/2"
+    ]
+  },
+  "37289aaf2307": {
+    "de": "Salzstress",
+    "en": null,
+    "paths": [
+      "diagnostics/salzanreicherung-hohe-ec/tags/0"
     ]
   },
   "b9d9fad08923": {
@@ -9149,6 +9424,14 @@
       "diagnostics/luftfeuchte-management/sections/10/content/0"
     ]
   },
+  "65c14b1ce518": {
+    "de": "Sauerstoff",
+    "en": null,
+    "paths": [
+      "diagnostics/wurzelfaeule/tags/3",
+      "diagnostics/ueberwaesserung-staunaesse/tags/4"
+    ]
+  },
   "63842ee471ce": {
     "de": "Sauerstoffmangel / Überwässerung",
     "en": "Oxygen deficiency / overwatering",
@@ -9178,11 +9461,31 @@
       "diagnostics/hanf-rostmilben/sections/2/heading"
     ]
   },
+  "948885acf0bb": {
+    "de": "Schädlinge",
+    "en": null,
+    "paths": [
+      "diagnostics/spinnmilben/tags/1",
+      "diagnostics/thripse/tags/1",
+      "diagnostics/trauermuecken/tags/1",
+      "diagnostics/blattlaeuse/tags/1",
+      "diagnostics/weisse-fliege/tags/1",
+      "diagnostics/hanf-rostmilben/tags/2"
+    ]
+  },
   "25dc09212097": {
     "de": "Schalte die Umluft nicht komplett ab: Stehende, feuchte Luft fördert Schimmel und Mehltau.",
     "en": "Don't turn off air circulation completely: stagnant, humid air promotes mold and mildew.",
     "paths": [
       "diagnostics/windbrand/warnings/1"
+    ]
+  },
+  "5ca8ddce4e4a": {
+    "de": "Schimmel",
+    "en": null,
+    "paths": [
+      "diagnostics/bud-rot-botrytis/tags/2",
+      "diagnostics/echter-mehltau-powdery-mildew/tags/2"
     ]
   },
   "831b346401b3": {
@@ -10078,6 +10381,13 @@
       "diagnostics/naehrstoffverbrennung-tipburn/glossary/1/definition"
     ]
   },
+  "216486a12379": {
+    "de": "Spinnmilben",
+    "en": null,
+    "paths": [
+      "diagnostics/spinnmilben/tags/0"
+    ]
+  },
   "1c5215cd5325": {
     "de": "Spinnmilben bei Cannabis erkennen und bekämpfen",
     "en": "Identifying and controlling spider mites on cannabis",
@@ -10736,6 +11046,13 @@
       "diagnostics/naehrstoffverbrennung-tipburn/sections/7/content/0"
     ]
   },
+  "74cf071e12d8": {
+    "de": "Staunässe",
+    "en": null,
+    "paths": [
+      "diagnostics/ueberwaesserung-staunaesse/tags/0"
+    ]
+  },
   "179b92d7ab65": {
     "de": "Staunässe beseitigen",
     "en": "Eliminate waterlogging",
@@ -10776,6 +11093,14 @@
     "en": "Never control the RH number in isolation — without temperature it is meaningless to the plant. Track VPD.",
     "paths": [
       "diagnostics/luftfeuchte-management/warnings/0"
+    ]
+  },
+  "f08d1733b9c7": {
+    "de": "Stickstoff",
+    "en": null,
+    "paths": [
+      "diagnostics/stickstoffmangel/tags/0",
+      "diagnostics/stickstoffueberschuss/tags/0"
     ]
   },
   "6799db5c5802": {
@@ -10860,6 +11185,13 @@
     "en": "Stress (drought, nutrient deficiency) makes plants more attractive and more susceptible to infestation.",
     "paths": [
       "diagnostics/spinnmilben/sections/6/content/1"
+    ]
+  },
+  "d59f856adb4e": {
+    "de": "Substrat",
+    "en": null,
+    "paths": [
+      "diagnostics/trauermuecken/tags/2"
     ]
   },
   "9c2ca68823d5": {
@@ -11047,6 +11379,14 @@
       "diagnostics/bud-rot-botrytis/sections/2/checklist/2"
     ]
   },
+  "2da10076c9e7": {
+    "de": "Temperatur",
+    "en": null,
+    "paths": [
+      "diagnostics/hitzestress/tags/1",
+      "diagnostics/kaeltestress/tags/1"
+    ]
+  },
   "84a45c5a3789": {
     "de": "Temperatur im Substrat/an der Wurzel; steuert Wasser- und Nährstoffaufnahme stark.",
     "en": "Temperature in the substrate/at the root; strongly controls water and nutrient uptake.",
@@ -11075,6 +11415,13 @@
       "diagnostics/bud-rot-botrytis/sections/5/checklist/3"
     ]
   },
+  "43e36bca8a97": {
+    "de": "Tetranychus",
+    "en": null,
+    "paths": [
+      "diagnostics/spinnmilben/tags/3"
+    ]
+  },
   "049c5738b576": {
     "de": "Tetranychus urticae u. a.",
     "en": "Tetranychus urticae and others",
@@ -11086,6 +11433,7 @@
     "de": "The Claw",
     "en": "The Claw",
     "paths": [
+      "diagnostics/stickstoffueberschuss/tags/3",
       "diagnostics/stickstoffueberschuss/glossary/0/term"
     ]
   },
@@ -11094,6 +11442,13 @@
     "en": "Thigmomorphogenesis",
     "paths": [
       "diagnostics/windbrand/glossary/2/term"
+    ]
+  },
+  "8e9253d5ffb4": {
+    "de": "Thripse",
+    "en": null,
+    "paths": [
+      "diagnostics/thripse/tags/0"
     ]
   },
   "9c175d65f4ca": {
@@ -11143,6 +11498,7 @@
     "en": "Tip burn",
     "paths": [
       "diagnostics/salzanreicherung-hohe-ec/glossary/2/term",
+      "diagnostics/naehrstoffverbrennung-tipburn/tags/2",
       "diagnostics/naehrstoffverbrennung-tipburn/glossary/1/term"
     ]
   },
@@ -11167,11 +11523,26 @@
       "diagnostics/ueberwaesserung-staunaesse/sections/6/content/0"
     ]
   },
+  "130fe584ad3a": {
+    "de": "Toxizität",
+    "en": null,
+    "paths": [
+      "diagnostics/stickstoffueberschuss/tags/2",
+      "diagnostics/kalium-ueberschuss/tags/3"
+    ]
+  },
   "9e176b5c2373": {
     "de": "Transpirationsstrom",
     "en": "Transpiration stream",
     "paths": [
       "diagnostics/calciummangel/glossary/1/term"
+    ]
+  },
+  "f204f47f73dc": {
+    "de": "Trauermücken",
+    "en": null,
+    "paths": [
+      "diagnostics/trauermuecken/tags/0"
     ]
   },
   "7e10458178c6": {
@@ -11321,6 +11692,14 @@
       "diagnostics/fusarium/quickFacts/3/label"
     ]
   },
+  "4113c7c4143d": {
+    "de": "Überdüngung",
+    "en": null,
+    "paths": [
+      "diagnostics/salzanreicherung-hohe-ec/tags/2",
+      "diagnostics/naehrstoffverbrennung-tipburn/tags/0"
+    ]
+  },
   "d032e7179e14": {
     "de": "Überdüngung / zu N-betonte Blütephase",
     "en": "Overfertilization / flowering stage too N-heavy",
@@ -11340,6 +11719,15 @@
     "en": "Avoid excessive nitrogen fertilization — nitrogen-rich, soft tissue is especially attractive to aphids.",
     "paths": [
       "diagnostics/blattlaeuse/sections/5/content/2"
+    ]
+  },
+  "fe59a735a090": {
+    "de": "Überschuss",
+    "en": null,
+    "paths": [
+      "diagnostics/stickstoffueberschuss/tags/1",
+      "diagnostics/kalium-ueberschuss/tags/1",
+      "diagnostics/calciumueberschuss/tags/1"
     ]
   },
   "24a8fe0b88a9": {
@@ -11396,6 +11784,14 @@
     "en": "Monitor the root zone temperature specifically alongside the air — it is the underestimated lever.",
     "paths": [
       "diagnostics/kaeltestress/sections/7/content/0"
+    ]
+  },
+  "25f985701e3a": {
+    "de": "Überwässerung",
+    "en": null,
+    "paths": [
+      "diagnostics/trauermuecken/tags/3",
+      "diagnostics/ueberwaesserung-staunaesse/tags/1"
     ]
   },
   "b60a2b90e740": {
@@ -11594,6 +11990,13 @@
     "en": "Vegetative stage & stretch",
     "paths": [
       "diagnostics/stickstoffmangel/quickFacts/2/value"
+    ]
+  },
+  "e31ddc10a827": {
+    "de": "Vegetationsphase",
+    "en": null,
+    "paths": [
+      "diagnostics/stickstoffmangel/tags/2"
     ]
   },
   "e05e6c81e358": {
@@ -11934,7 +12337,10 @@
     "de": "VPD",
     "en": "VPD",
     "paths": [
+      "diagnostics/hitzestress/tags/2",
       "diagnostics/hitzestress/glossary/1/term",
+      "diagnostics/windbrand/tags/3",
+      "diagnostics/luftfeuchte-management/tags/2",
       "diagnostics/luftfeuchte-management/glossary/1/term"
     ]
   },
@@ -12169,6 +12575,13 @@
       "diagnostics/salzanreicherung-hohe-ec/glossary/1/definition"
     ]
   },
+  "619c1cecf6c2": {
+    "de": "Wasserqualität",
+    "en": null,
+    "paths": [
+      "diagnostics/calmag-supplementierung/tags/3"
+    ]
+  },
   "b935cd0dd76e": {
     "de": "Wasserquelle (RO, Leitungswasser, Brunnenwasser) und deren Härte kennen, bevor supplementiert wird",
     "en": "Know the water source (RO, tap water, well water) and its hardness before supplementing",
@@ -12307,6 +12720,13 @@
     "en": "Because too much calcium displaces magnesium uptake. The plant shows the typical interveinal chlorosis, even though magnesium is actually being dosed.",
     "paths": [
       "diagnostics/calciumueberschuss/faq/1/answer"
+    ]
+  },
+  "622a0cef25ff": {
+    "de": "Weiße Fliege",
+    "en": null,
+    "paths": [
+      "diagnostics/weisse-fliege/tags/0"
     ]
   },
   "c49c7d867f37": {
@@ -12740,6 +13160,7 @@
     "de": "Windbrand",
     "en": "Windburn",
     "paths": [
+      "diagnostics/windbrand/tags/0",
       "diagnostics/windbrand/glossary/0/term"
     ]
   },
@@ -12881,6 +13302,14 @@
       "diagnostics/stickstoffmangel/sections/5/checklist/2"
     ]
   },
+  "ecbe134ae325": {
+    "de": "Wurzelfäule",
+    "en": null,
+    "paths": [
+      "diagnostics/wurzelfaeule/tags/0",
+      "diagnostics/fusarium/tags/2"
+    ]
+  },
   "5cef83712733": {
     "de": "Wurzelfäule (Pythium) bei Cannabis erkennen und beheben",
     "en": "Recognizing and fixing root rot (Pythium) in cannabis",
@@ -12921,6 +13350,14 @@
     "en": "Avoid root stress from waterlogging or extreme temperature fluctuations — weakened roots are more susceptible to initial infestation.",
     "paths": [
       "diagnostics/fusarium/sections/5/content/2"
+    ]
+  },
+  "43f1936b42f6": {
+    "de": "Wurzelzone",
+    "en": null,
+    "paths": [
+      "diagnostics/kaeltestress/tags/2",
+      "diagnostics/ueberwaesserung-staunaesse/tags/2"
     ]
   },
   "47191ea3fdf3": {

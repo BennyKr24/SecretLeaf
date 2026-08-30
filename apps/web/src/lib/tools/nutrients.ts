@@ -93,6 +93,7 @@ export function calculateNutrients(inputs: NutrientInputs, t: ToolT): NutrientOu
       : phase === 'bluete'
         ? t('nutrients.phaseBluete')
         : t('nutrients.phaseUebergang');
+  const productLabel = produktName === 'Allgemein' ? t('nutrients.productGeneric') : produktName;
 
   const results: ToolResultData[] = [
     {
@@ -101,7 +102,7 @@ export function calculateNutrients(inputs: NutrientInputs, t: ToolT): NutrientOu
       formatted: `${dosierungProLiter}`,
       unit: 'ml/L',
       level,
-      explanation: t('nutrients.explDosage', { product: produktName, ec: zielEC, phase: phaseLabel }),
+      explanation: t('nutrients.explDosage', { product: productLabel, ec: zielEC, phase: phaseLabel }),
     },
     {
       label: 'Gesamtmenge',
@@ -120,7 +121,7 @@ export function calculateNutrients(inputs: NutrientInputs, t: ToolT): NutrientOu
     {
       label: 'Korrekturfaktoren',
       value: round(phaseFactor * substratFactor, 2),
-      formatted: `Phase: ×${phaseFactor}  ·  Substrat: ×${substratFactor}`,
+      formatted: `${t('nutrients.fPhase')}: ×${phaseFactor}  ·  ${t('nutrients.fSubstrate')}: ×${substratFactor}`,
     },
     {
       label: 'Substrat-Tipp',

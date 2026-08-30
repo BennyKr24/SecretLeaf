@@ -99,6 +99,7 @@ const pickFields = (record, fields, prefix, out) => {
 const ARTICLE_FIELDS = [
   "title",
   "summary",
+  "tags",
   "keyTakeaways",
   "quickFacts.*.label",
   "quickFacts.*.value",
