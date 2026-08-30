@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import ToolLayout from '@/components/tools/ToolLayout';
 import ToolInput from '@/components/tools/ToolInput';
 import ToolSlider from '@/components/tools/ToolSlider';
@@ -37,10 +38,11 @@ export default function AbluftRechnerPage() {
     setupKeys: ['raumLaenge', 'raumBreite', 'raumHoehe', 'lampenLeistung'],
   });
 
+  const t = useTranslations('toolResult');
   const output = useMemo(() => {
-    const result = calculateVentilation(inputs);
+    const result = calculateVentilation(inputs, t);
     return result;
-  }, [inputs]);
+  }, [inputs, t]);
 
   // Auto-save on every calculation
   useMemo(() => {

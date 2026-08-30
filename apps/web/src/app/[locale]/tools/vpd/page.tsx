@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import ToolLayout from '@/components/tools/ToolLayout';
 import ToolSlider from '@/components/tools/ToolSlider';
 import ToolToggle from '@/components/tools/ToolToggle';
@@ -173,7 +174,8 @@ export default function VpdPage() {
     defaults: DEFAULTS,
   });
 
-  const output = useMemo(() => calculateVPD(inputs), [inputs]);
+  const t = useTranslations('toolResult');
+  const output = useMemo(() => calculateVPD(inputs, t), [inputs, t]);
 
   useMemo(() => {
     if (loaded) saveSnapshot(inputs, output.results);

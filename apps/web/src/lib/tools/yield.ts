@@ -1,4 +1,4 @@
-import type { ToolResultData, ResultLevel, Substrat } from './types';
+import type { ToolResultData, ResultLevel, Substrat, ToolT } from './types';
 import type { TerpiraDifficulty } from '@/lib/terpira/types';
 import { round } from './units';
 
@@ -100,7 +100,7 @@ function yieldLevel(ertragProQm: number, methode: 'indoor' | 'outdoor'): ResultL
   return 'rot';
 }
 
-export function calculateYield(inputs: YieldInputs): YieldOutput {
+export function calculateYield(inputs: YieldInputs, t: ToolT): YieldOutput {
   const { flaeche, anbauMethode, erfahrung, genetik, lichtLeistung, topfgroesseLiter, vegDauer, pflanzenAnzahl, substrat, duengerIntensitaet } = inputs;
 
   const genFaktor = GENETIK_FAKTOR[genetik];
@@ -132,7 +132,7 @@ export function calculateYield(inputs: YieldInputs): YieldOutput {
       formatted: `${gesamtErtrag}`,
       unit: 'g',
       level,
-      explanation: 'Reale Erträge variieren ±30 %. Diese Schätzung ist ein Orientierungswert.',
+      explanation: t('yield.explTotal'),
     },
     {
       label: 'Pro Pflanze',

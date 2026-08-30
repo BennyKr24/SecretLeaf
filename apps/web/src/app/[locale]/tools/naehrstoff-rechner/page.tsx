@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import ToolLayout from '@/components/tools/ToolLayout';
 import ToolInput from '@/components/tools/ToolInput';
 import ToolSlider from '@/components/tools/ToolSlider';
@@ -38,7 +39,8 @@ export default function NaehrstoffRechnerPage() {
     setupKeys: ['substrat'],
   });
 
-  const output = useMemo(() => calculateNutrients(inputs), [inputs]);
+  const t = useTranslations('toolResult');
+  const output = useMemo(() => calculateNutrients(inputs, t), [inputs, t]);
 
   useMemo(() => {
     if (loaded) saveSnapshot(inputs, output.results);

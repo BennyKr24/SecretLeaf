@@ -358,6 +358,65 @@
     "featuredTitle": "Meistgenutzte Tools",
     "calculateBtn": "Jetzt berechnen →"
   },
+  "toolResult": {
+    "levelGruen": "Optimal",
+    "levelGelb": "Grenzwertig",
+    "levelRot": "Kritisch",
+    "vpd": {
+      "phaseSaemling": "Sämling / Klon",
+      "phaseVeg": "Vegetativ",
+      "phaseBluete": "Blüte",
+      "explVeryLow": "VPD von {vpd} kPa ist extrem niedrig. Schimmel- und Botrytis-Risiko kritisch hoch. Sofort Luftfeuchte senken.",
+      "explBelow": "VPD von {vpd} kPa liegt unter dem Optimum für {phase} ({min}–{max} kPa). Temperatur erhöhen oder Luftfeuchte senken.",
+      "explInRange": "VPD von {vpd} kPa liegt im Zielbereich für {phase} ({min}–{max} kPa). Stomata offen, Transpiration und Nährstoffaufnahme optimal.",
+      "explAbove": "VPD von {vpd} kPa überschreitet den optimalen Bereich für {phase} ({min}–{max} kPa). Luftfeuchte erhöhen oder Temperatur senken.",
+      "explCritical": "VPD von {vpd} kPa ist kritisch hoch. Die Pflanze schließt die Stomata — Wachstum und Transpiration stoppen. Klima dringend korrigieren.",
+      "explTargetRh": "Um den Ideal-VPD von {mid} kPa zu erreichen, sollte die Luftfeuchte bei {rh} % liegen.",
+      "explSvpAir": "Sättigungsdampfdruck bei {temp} °C Lufttemperatur.",
+      "explSvpLeaf": "Sättigungsdampfdruck bei {temp} °C Blatttemperatur ({offset} °C Offset).",
+      "zoneMoldRisk": "Extremes Schimmelrisiko",
+      "zoneTooHumid": "Zu feucht für {phase}",
+      "zoneOptimal": "Optimal für {phase}",
+      "zoneTooDry": "Zu trocken — Nährstoffaufnahme eingeschränkt",
+      "zoneDroughtStress": "Trockenstress — Pflanze schließt Stomata"
+    },
+    "lighting": {
+      "phaseVeg": "vegetative Phase",
+      "phaseBluete": "Blütephase",
+      "explPpfdLow": "Deutlich unter dem Zielbereich ({target}). Lampe näher positionieren oder stärkeres Modell einsetzen.",
+      "explPpfdHigh": "Über dem empfohlenen Bereich ({target}). Lichtstress wahrscheinlich — Abstand erhöhen oder dimmen.",
+      "explPpfdOk": "Im empfohlenen Bereich für {phase} ({target}).",
+      "explDliLow": "Niedrig — eher für Keimlinge/Klone geeignet.",
+      "explDliHigh": "Sehr hoch — CO2-Supplementierung empfohlen.",
+      "explDliOk": "Guter Bereich für aktives Wachstum.",
+      "explTotalPpf": "Bei {eff} µmol/J Effizienz.",
+      "explUsablePpf": "Nach {loss} % Reflektorverlust.",
+      "explHeightFactor": "Bei {height} cm Aufhänghöhe erreichen ca. {pct} % des Lichts die Pflanzenfläche."
+    },
+    "nutrients": {
+      "phaseVeg": "vegetative Phase",
+      "phaseBluete": "Blütephase",
+      "phaseUebergang": "Übergangsphase",
+      "explDosage": "Für {product} bei Ziel-EC {ec} mS/cm in {phase}.",
+      "explTotal": "Für {liters} Liter Nährlösung.",
+      "explEcDiff": "Ausgangswasser: {from} mS/cm → Ziel: {to} mS/cm.",
+      "tipCoco": "Coco: 10–20 % Drain-Rate einplanen, um Salzaufbau zu vermeiden.",
+      "tipHydro": "Hydro: Nährlösung alle 5–7 Tage komplett wechseln.",
+      "tipErde": "Erde: Organische Pufferung kann EC-Spitzen abfangen."
+    },
+    "ventilation": {
+      "explVolGruen": "Ausreichend dimensioniert für dein Setup.",
+      "explVolGelb": "Knapp bemessen — eine Stufe größer wählen empfohlen.",
+      "explVolRot": "Hoher Bedarf — leistungsstarken Lüfter mit Drehzahlregler einsetzen.",
+      "explHeatLoad": "{watts} W erzeugen ca. {btu} BTU/h Wärmeeintrag.",
+      "explAkfOn": "+25 % Aufschlag für Aktivkohlefilter-Widerstand.",
+      "explAkfOff": "Kein AKF aktiv.",
+      "explDuct": "Passend für bis zu {flow} m³/h."
+    },
+    "yield": {
+      "explTotal": "Reale Erträge variieren ±30 %. Diese Schätzung ist ein Orientierungswert."
+    }
+  },
   "common": {
     "loading": "Laden …",
     "error": "Ein Fehler ist aufgetreten",
@@ -380,11 +439,6 @@
     "de": "DE",
     "en": "EN",
     "switchTo": "Sprache wechseln"
-  },
-  "translate": {
-    "button": "Übersetzen",
-    "loading": "Übersetzt …",
-    "showOriginal": "Original anzeigen"
   },
   "userMenu": {
     "openMenu": "Benutzer-Menü öffnen",

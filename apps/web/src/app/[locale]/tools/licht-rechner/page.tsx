@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { useTranslations } from 'next-intl';
 import ToolLayout from '@/components/tools/ToolLayout';
 import ToolInput from '@/components/tools/ToolInput';
 import ToolSlider from '@/components/tools/ToolSlider';
@@ -37,7 +38,8 @@ export default function LichtRechnerPage() {
     setupKeys: ['lampenLeistung'],
   });
 
-  const output = useMemo(() => calculateLighting(inputs), [inputs]);
+  const t = useTranslations('toolResult');
+  const output = useMemo(() => calculateLighting(inputs, t), [inputs, t]);
 
   useMemo(() => {
     if (loaded) saveSnapshot(inputs, output.results);

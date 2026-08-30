@@ -358,6 +358,65 @@
     "featuredTitle": "Most-used tools",
     "calculateBtn": "Calculate now →"
   },
+  "toolResult": {
+    "levelGruen": "Optimal",
+    "levelGelb": "Borderline",
+    "levelRot": "Critical",
+    "vpd": {
+      "phaseSaemling": "Seedling / clone",
+      "phaseVeg": "Vegetative",
+      "phaseBluete": "Flowering",
+      "explVeryLow": "A VPD of {vpd} kPa is extremely low. Mould and botrytis risk is critically high. Lower humidity immediately.",
+      "explBelow": "A VPD of {vpd} kPa is below the optimum for {phase} ({min}–{max} kPa). Raise the temperature or lower humidity.",
+      "explInRange": "A VPD of {vpd} kPa is within the target range for {phase} ({min}–{max} kPa). Stomata open, transpiration and nutrient uptake optimal.",
+      "explAbove": "A VPD of {vpd} kPa exceeds the optimal range for {phase} ({min}–{max} kPa). Raise humidity or lower the temperature.",
+      "explCritical": "A VPD of {vpd} kPa is critically high. The plant closes its stomata — growth and transpiration stop. Correct the climate urgently.",
+      "explTargetRh": "To reach the ideal VPD of {mid} kPa, humidity should be around {rh}%.",
+      "explSvpAir": "Saturation vapour pressure at {temp} °C air temperature.",
+      "explSvpLeaf": "Saturation vapour pressure at {temp} °C leaf temperature ({offset} °C offset).",
+      "zoneMoldRisk": "Extreme mould risk",
+      "zoneTooHumid": "Too humid for {phase}",
+      "zoneOptimal": "Optimal for {phase}",
+      "zoneTooDry": "Too dry — nutrient uptake limited",
+      "zoneDroughtStress": "Drought stress — plant closes stomata"
+    },
+    "lighting": {
+      "phaseVeg": "vegetative phase",
+      "phaseBluete": "flowering phase",
+      "explPpfdLow": "Well below the target range ({target}). Move the lamp closer or use a stronger model.",
+      "explPpfdHigh": "Above the recommended range ({target}). Light stress likely — increase the distance or dim.",
+      "explPpfdOk": "Within the recommended range for {phase} ({target}).",
+      "explDliLow": "Low — better suited to seedlings/clones.",
+      "explDliHigh": "Very high — CO₂ supplementation recommended.",
+      "explDliOk": "Good range for active growth.",
+      "explTotalPpf": "At {eff} µmol/J efficacy.",
+      "explUsablePpf": "After {loss}% reflector loss.",
+      "explHeightFactor": "At {height} cm mounting height, roughly {pct}% of the light reaches the canopy."
+    },
+    "nutrients": {
+      "phaseVeg": "the vegetative phase",
+      "phaseBluete": "the flowering phase",
+      "phaseUebergang": "the transition phase",
+      "explDosage": "For {product} at a target EC of {ec} mS/cm in {phase}.",
+      "explTotal": "For {liters} litres of nutrient solution.",
+      "explEcDiff": "Source water: {from} mS/cm → target: {to} mS/cm.",
+      "tipCoco": "Coco: plan for a 10–20% drain rate to avoid salt build-up.",
+      "tipHydro": "Hydro: fully replace the nutrient solution every 5–7 days.",
+      "tipErde": "Soil: organic buffering can absorb EC spikes."
+    },
+    "ventilation": {
+      "explVolGruen": "Adequately sized for your setup.",
+      "explVolGelb": "Tight — going one size larger is recommended.",
+      "explVolRot": "High demand — use a powerful fan with a speed controller.",
+      "explHeatLoad": "{watts} W generate roughly {btu} BTU/h of heat input.",
+      "explAkfOn": "+25% surcharge for activated-carbon-filter resistance.",
+      "explAkfOff": "No carbon filter active.",
+      "explDuct": "Suitable for up to {flow} m³/h."
+    },
+    "yield": {
+      "explTotal": "Real yields vary by ±30%. This estimate is a rough guide."
+    }
+  },
   "common": {
     "loading": "Loading …",
     "error": "An error occurred",
@@ -380,11 +439,6 @@
     "de": "DE",
     "en": "EN",
     "switchTo": "Switch language"
-  },
-  "translate": {
-    "button": "Translate",
-    "loading": "Translating …",
-    "showOriginal": "Show original"
   },
   "userMenu": {
     "openMenu": "Open user menu",

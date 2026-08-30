@@ -56,6 +56,14 @@ export type ToolMeta = {
 
 // ── Tool Results ────────────────────────────────────────────────────────────
 
+/**
+ * Minimal translator signature the pure calc functions accept so their
+ * `explanation` / ampel strings come from the `toolResult` message namespace
+ * instead of being hardcoded German. Pass `useTranslations("toolResult")`
+ * from the (client) tool page. Structurally compatible with next-intl's `t`.
+ */
+export type ToolT = (key: string, values?: Record<string, string | number>) => string;
+
 export type ResultLevel = "gruen" | "gelb" | "rot";
 
 export const resultLevelClass: Record<ResultLevel, string> = {

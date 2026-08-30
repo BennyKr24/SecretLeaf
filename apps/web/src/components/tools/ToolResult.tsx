@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import type { ResultLevel } from '@/lib/tools/types';
 import { resultLevelClass } from '@/lib/tools/types';
-import { TranslateButton } from '@/components/TranslateButton';
 import { CheckCircle2, AlertTriangle, XCircle } from 'lucide-react';
 
 type ToolResultProps = {
@@ -22,6 +22,7 @@ const levelText: Record<ResultLevel, string> = {
 };
 
 export function ToolResult({ label, value, unit, level, explanation, large }: ToolResultProps) {
+  const t = useTranslations('toolResult');
   const [flash, setFlash] = useState(false);
   const prevRef = useRef(value);
 
@@ -56,11 +57,11 @@ export function ToolResult({ label, value, unit, level, explanation, large }: To
           <div className="mt-1.5">
             <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${resultLevelClass[level]}`}>
               {level === 'gruen' ? (
-                <><CheckCircle2 className="h-3 w-3" strokeWidth={2} /> Optimal</>
+                <><CheckCircle2 className="h-3 w-3" strokeWidth={2} /> {t('levelGruen')}</>
               ) : level === 'gelb' ? (
-                <><AlertTriangle className="h-3 w-3" strokeWidth={2} /> Grenzwertig</>
+                <><AlertTriangle className="h-3 w-3" strokeWidth={2} /> {t('levelGelb')}</>
               ) : (
-                <><XCircle className="h-3 w-3" strokeWidth={2} /> Kritisch</>
+                <><XCircle className="h-3 w-3" strokeWidth={2} /> {t('levelRot')}</>
               )}
             </span>
           </div>
@@ -74,7 +75,7 @@ export function ToolResult({ label, value, unit, level, explanation, large }: To
               : 'text-muted-fg'
           }`}
         >
-          <TranslateButton text={explanation} />
+          {explanation}
         </p>
       )}
     </div>
