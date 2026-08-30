@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { useAuth } from '@/hooks/useAuth';
@@ -13,12 +14,14 @@ import { Sprout, CheckCircle2, Loader2, Save } from 'lucide-react';
 
 type Props = {
   toolSlug: string;
+  /** Localised tool name, snapshotted into the grow-log entry. */
   toolTitle: string;
   summary: string;
   results: ToolResultData[];
 };
 
 export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props) {
+  const t = useTranslations('tool');
   const { user } = useAuth();
   // Start null (matches SSR) and read the real value after mount — reading
   // localStorage in the useState initializer would make the first client
@@ -52,7 +55,7 @@ export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props
         toolTitle,
         summary,
       },
-      notes: `${toolTitle} in Grow gespeichert`,
+      notes: t('savedNote', { tool: toolTitle }),
     });
 
     try {
@@ -66,7 +69,7 @@ export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props
       console.error('[tools] Save to grow failed:', saveError);
       storeDeleteLogEntry(entry.id);
       setStatus('error');
-      setError('Speichern fehlgeschlagen. Bitte erneut versuchen.');
+      setError(t('saveError'));
     }
   }
 
@@ -75,11 +78,11 @@ export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props
       <div className="flex items-center gap-2 rounded-xl border border-dashed border-border bg-background px-4 py-3">
         <Sprout className="h-4 w-4 flex-shrink-0 text-emerald-600" strokeWidth={2} />
         <p className="text-xs text-muted-fg">
-          <span className="font-semibold">Kein aktiver Grow.</span>{' '}
+          <span className="font-semibold">{t('noActiveGrow')}</span>{' '}
           <Link href="/start" className="text-emerald-600 hover:underline">
-            Grow starten
+            {t('startGrow')}
           </Link>{' '}
-          um Ergebnisse zu speichern.
+          {t('toSaveResults')}
         </p>
       </div>
     );
@@ -107,7 +110,7 @@ export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props
           </span>
           <div>
             <p className="text-sm font-semibold text-emerald-800">
-              {status === 'saved' ? 'Im Grow gespeichert' : 'In Grow speichern'}
+              {status === 'saved' ? t('savedToGrow') : t('saveToGrow')}
             </p>
             <p className="text-xs text-emerald-600">
               {activeGrow.name} · {toolSlug} · {summary}
@@ -115,7 +118,7 @@ export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props
           </div>
         </div>
         <span className="flex-shrink-0 rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold text-emerald-700 shadow-sm">
-          {status === 'saved' ? 'Grow Log' : status === 'saving' ? 'Speichert...' : 'Jetzt sichern'}
+          {status === 'saved' ? t('growLog') : status === 'saving' ? t('saving') : t('saveNow')}
         </span>
       </button>
 
@@ -124,7 +127,7 @@ export default function SaveToGrowButton({ toolSlug, toolTitle, summary }: Props
           href={`/grow/${activeGrow.id}/log` as Route}
           className="inline-flex items-center text-xs font-semibold text-emerald-700 hover:underline"
         >
-          Zum Grow-Log wechseln →
+          {t('switchToLog')}
         </Link>
       )}
 

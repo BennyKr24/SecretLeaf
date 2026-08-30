@@ -421,6 +421,56 @@
       "explTotal": "Real yields vary by ±30%. This estimate is a rough guide."
     }
   },
+  "tool": {
+    "breadcrumb": "Tools",
+    "diffEinsteiger": "Beginner",
+    "diffFortgeschritten": "Intermediate",
+    "diffProfi": "Pro",
+    "practiceTips": "Practical tips",
+    "calcNext": "Calculate next",
+    "relatedArticles": "Related articles",
+    "minRead": "{count} min read",
+    "thatMeans": "This means: ",
+    "saveError": "Saving failed. Please try again.",
+    "savedToGrow": "Saved to grow",
+    "saveToGrow": "Save to grow",
+    "growLog": "Grow log",
+    "saving": "Saving…",
+    "saveNow": "Save now",
+    "noActiveGrow": "No active grow.",
+    "startGrow": "Start a grow",
+    "toSaveResults": "to save results.",
+    "switchToLog": "Go to the grow log →",
+    "savedNote": "{tool} saved to grow",
+    "decrease": "Decrease",
+    "increase": "Increase",
+    "categoryKlima": "Climate",
+    "categoryLicht": "Light",
+    "categoryNaehrstoffe": "Nutrients",
+    "categoryPlanung": "Planning",
+    "registry": {
+      "abluft-rechner": {
+        "title": "Ventilation calculator",
+        "desc": "Calculate air exchange and fan size"
+      },
+      "licht-rechner": {
+        "title": "Light calculator",
+        "desc": "Calculate PPFD, DLI and light intensity"
+      },
+      "naehrstoff-rechner": {
+        "title": "Nutrient calculator",
+        "desc": "Calculate target EC and dosage for your substrate"
+      },
+      "ertrags-schaetzer": {
+        "title": "Yield estimator",
+        "desc": "Yield forecast based on setup and experience"
+      },
+      "vpd": {
+        "title": "VPD calculator",
+        "desc": "Calculate the optimal VPD for every growth stage"
+      }
+    }
+  },
   "common": {
     "loading": "Loading …",
     "error": "An error occurred",

@@ -421,6 +421,56 @@
       "explTotal": "Reale Erträge variieren ±30 %. Diese Schätzung ist ein Orientierungswert."
     }
   },
+  "tool": {
+    "breadcrumb": "Werkzeuge",
+    "diffEinsteiger": "Einsteiger",
+    "diffFortgeschritten": "Fortgeschritten",
+    "diffProfi": "Profi",
+    "practiceTips": "Praxistipps",
+    "calcNext": "Als nächstes berechnen",
+    "relatedArticles": "Verwandte Fachartikel",
+    "minRead": "{count} min Lesezeit",
+    "thatMeans": "Das bedeutet: ",
+    "saveError": "Speichern fehlgeschlagen. Bitte erneut versuchen.",
+    "savedToGrow": "Im Grow gespeichert",
+    "saveToGrow": "In Grow speichern",
+    "growLog": "Grow Log",
+    "saving": "Speichert…",
+    "saveNow": "Jetzt sichern",
+    "noActiveGrow": "Kein aktiver Grow.",
+    "startGrow": "Grow starten",
+    "toSaveResults": "um Ergebnisse zu speichern.",
+    "switchToLog": "Zum Grow-Log wechseln →",
+    "savedNote": "{tool} in Grow gespeichert",
+    "decrease": "Verringern",
+    "increase": "Erhöhen",
+    "categoryKlima": "Klima",
+    "categoryLicht": "Licht",
+    "categoryNaehrstoffe": "Nährstoffe",
+    "categoryPlanung": "Planung",
+    "registry": {
+      "abluft-rechner": {
+        "title": "Abluft-Rechner",
+        "desc": "Luftumwälzung und Lüftergröße berechnen"
+      },
+      "licht-rechner": {
+        "title": "Licht-Rechner",
+        "desc": "PPFD, DLI und Lichtintensität berechnen"
+      },
+      "naehrstoff-rechner": {
+        "title": "Nährstoff-Rechner",
+        "desc": "EC-Ziel und Dosierung für dein Substrat berechnen"
+      },
+      "ertrags-schaetzer": {
+        "title": "Ertrags-Schätzer",
+        "desc": "Ertragsprognose basierend auf Setup und Erfahrung"
+      },
+      "vpd": {
+        "title": "VPD-Rechner",
+        "desc": "Optimalen VPD-Wert für jede Wachstumsphase berechnen"
+      }
+    }
+  },
   "common": {
     "loading": "Laden …",
     "error": "Ein Fehler ist aufgetreten",

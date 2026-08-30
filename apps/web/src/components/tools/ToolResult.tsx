@@ -92,6 +92,7 @@ type ToolResultCardProps = {
 };
 
 export function ToolResultCard({ title, children, interpretation, recommendation }: ToolResultCardProps) {
+  const tt = useTranslations('tool');
   const hasFooter = interpretation || recommendation;
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
@@ -105,7 +106,7 @@ export function ToolResultCard({ title, children, interpretation, recommendation
         <div className="border-t border-emerald-100 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 px-5 py-4 space-y-1.5">
           {interpretation && (
             <p className="text-sm text-emerald-900 dark:text-emerald-200">
-              <span className="font-semibold">Das bedeutet: </span>
+              <span className="font-semibold">{tt('thatMeans')}</span>
               {interpretation}
             </p>
           )}

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 type Props = {
   label: string;
   value: number;
@@ -13,6 +15,7 @@ type Props = {
 };
 
 export default function ToolInput({ label, value, onChange, unit, min, max, step = 1, hint, warning }: Props) {
+  const t = useTranslations('tool');
   const isInvalid = warning != null;
 
   return (
@@ -26,7 +29,7 @@ export default function ToolInput({ label, value, onChange, unit, min, max, step
           type="button"
           onClick={() => onChange(Math.max(min ?? -Infinity, value - step))}
           className="flex h-10 w-10 items-center justify-center rounded-l-xl border border-r-0 border-border bg-background text-foreground/80 hover:bg-card transition-[transform,background-color] duration-150 active:scale-90 text-lg font-medium"
-          aria-label="Verringern"
+          aria-label={t('decrease')}
         >
           −
         </button>
@@ -48,7 +51,7 @@ export default function ToolInput({ label, value, onChange, unit, min, max, step
           type="button"
           onClick={() => onChange(Math.min(max ?? Infinity, value + step))}
           className="flex h-10 w-10 items-center justify-center rounded-r-xl border border-l-0 border-border bg-background text-foreground/80 hover:bg-card transition-[transform,background-color] duration-150 active:scale-90 text-lg font-medium"
-          aria-label="Erhöhen"
+          aria-label={t('increase')}
         >
           +
         </button>
