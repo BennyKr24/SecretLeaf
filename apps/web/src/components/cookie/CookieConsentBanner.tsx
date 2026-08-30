@@ -27,11 +27,14 @@ export function CookieConsentBanner() {
             {t("learnMore")}
           </Link>
         </p>
+        {/* Both actions get identical weight (variant + size + placement) so
+            rejecting is exactly as easy as accepting — DSK-Orientierungshilfe
+            f. Anbieter digitaler Dienste (Stand Nov. 2024), § 25 TDDDG. */}
         <div className="flex flex-shrink-0 items-center gap-2">
           <CTAButton variant="secondary" size="sm" onClick={() => setConsent("essential")}>
             {t("essentialOnly")}
           </CTAButton>
-          <CTAButton variant="primary" size="sm" onClick={() => setConsent("all")}>
+          <CTAButton variant="secondary" size="sm" onClick={() => setConsent("all")}>
             {t("acceptAll")}
           </CTAButton>
         </div>

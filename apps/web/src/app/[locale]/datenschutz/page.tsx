@@ -57,6 +57,13 @@ export default async function DatenschutzPage({
               Verarbeitung zur Wahrung berechtigter Interessen erforderlich ist (Art. 6 Abs. 1
               lit. f DSGVO), etwa für den technisch fehlerfreien und sicheren Betrieb der Website.
             </p>
+            <p className="mt-2">
+              Wir setzen <strong>keine</strong> Cookies oder vergleichbaren Technologien zu
+              Werbe-, Profilbildungs- oder seitenübergreifenden Tracking-Zwecken ein. Ein Zugriff
+              auf Informationen in deinem Endgerät, der über das technisch Notwendige hinausgeht,
+              erfolgt ausschließlich mit deiner Einwilligung (§ 25 Abs. 1 TDDDG). Eine Übersicht
+              der lokal in deinem Browser gespeicherten Werte findest du in Abschnitt 9.
+            </p>
           </section>
 
           <section>
@@ -66,8 +73,10 @@ export default async function DatenschutzPage({
               CA 91789, USA) gehostet. Beim Aufruf der Website werden automatisch
               Server-Log-Dateien erstellt (u. a. IP-Adresse, Datum/Uhrzeit, aufgerufene Seite,
               Browsertyp), die technisch zur Auslieferung der Seite erforderlich sind (Art. 6
-              Abs. 1 lit. f DSGVO). Eine Übermittlung in die USA erfolgt auf Grundlage der
-              EU-Standardvertragsklauseln bzw. eines gleichwertigen Angemessenheitsbeschlusses.
+              Abs. 1 lit. f DSGVO). Mit Vercel besteht ein Vertrag zur Auftragsverarbeitung nach
+              Art. 28 DSGVO. Soweit dabei Daten in die USA übermittelt werden, erfolgt dies auf
+              Grundlage der EU-Standardvertragsklauseln (Art. 46 DSGVO); ergänzend kann sich der
+              Anbieter dem EU-US Data Privacy Framework unterworfen haben.
             </p>
           </section>
 
@@ -80,6 +89,11 @@ export default async function DatenschutzPage({
               bzw. lokale Speicherwerte gesetzt (Art. 6 Abs. 1 lit. b DSGVO). Ohne diese
               Speicherung ist eine Nutzung des Nutzerkontos nicht möglich. Für diese technisch
               notwendigen Cookies ist keine gesonderte Einwilligung erforderlich.
+            </p>
+            <p className="mt-2">
+              Mit dem Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO.
+              Soweit eine Verarbeitung außerhalb der EU stattfindet, erfolgt diese auf Grundlage
+              der EU-Standardvertragsklauseln (Art. 46 DSGVO).
             </p>
           </section>
 
@@ -106,13 +120,41 @@ export default async function DatenschutzPage({
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-foreground">6. Newsletter (Loops)</h2>
+            <h2 className="text-lg font-bold text-foreground">6. Fehlerdiagnose &amp; Stabilität (Sentry)</h2>
+            <p className="mt-2">
+              Um technische Fehler zu erkennen und zu beheben, setzen wir den Dienst{" "}
+              <strong>Sentry</strong> (Functional Software, Inc., 45 Fremont Street, San Francisco,
+              CA 94105, USA) ein. Tritt in deinem Browser ein Fehler auf, werden dabei technische
+              Informationen (u. a. Fehlermeldung, betroffene Seite, Browser- und Gerätetyp) sowie
+              eine datensparsame Aufzeichnung des Seitenzustands im Fehlermoment („Session
+              Replay&quot;) an Sentry übermittelt. Sämtliche Texteingaben und Medieninhalte sind
+              dabei technisch unkenntlich gemacht (maskiert); eine fortlaufende
+              Sitzungsaufzeichnung findet nicht statt. Diese im Browser ausgeführte Fehlerdiagnose
+              wird — wie die Reichweitenmessung — erst geladen, nachdem du im Cookie-Hinweis auf
+              „Alle akzeptieren&quot; geklickt hast (Art. 6 Abs. 1 lit. a DSGVO); ohne Einwilligung
+              bleibt sie vollständig deaktiviert, und ein Widerruf beendet sie.
+            </p>
+            <p className="mt-2">
+              Unabhängig davon protokollieren wir serverseitig Fehler unserer eigenen Anwendung
+              ohne Bezug zu deinem Endgerät auf Grundlage unseres berechtigten Interesses an einem
+              stabilen und sicheren Betrieb (Art. 6 Abs. 1 lit. f DSGVO). Mit Sentry besteht ein
+              Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO; eine Übermittlung in die USA
+              erfolgt auf Grundlage der EU-Standardvertragsklauseln (Art. 46 DSGVO), ergänzend
+              kann sich der Anbieter dem EU-US Data Privacy Framework unterworfen haben.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-bold text-foreground">7. Newsletter (Loops)</h2>
             <p className="mt-2">
               Wenn du dich für unseren Newsletter anmeldest, wird deine E-Mail-Adresse zur
               Versendung von Updates an unseren Versanddienstleister <strong>Loops</strong>{" "}
-              (USA) übermittelt und dort gespeichert, bis du dich abmeldest. Rechtsgrundlage ist
-              deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Du kannst deine Einwilligung
-              jederzeit über den Abmeldelink in jeder Newsletter-Mail oder per Mail an{" "}
+              (Loops, Inc., USA) übermittelt und dort gespeichert, bis du dich abmeldest.
+              Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Mit dem
+              Anbieter besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO; die
+              Übermittlung in die USA erfolgt auf Grundlage der EU-Standardvertragsklauseln
+              (Art. 46 DSGVO). Du kannst deine Einwilligung jederzeit über den Abmeldelink in
+              jeder Newsletter-Mail oder per Mail an{" "}
               <a href="mailto:contact@secretleaf.net" className="font-semibold text-[#1f7a4f] hover:text-[#17613f]">
                 contact@secretleaf.net
               </a>{" "}
@@ -121,7 +163,7 @@ export default async function DatenschutzPage({
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-foreground">7. KI-gestützte Funktionen</h2>
+            <h2 className="text-lg font-bold text-foreground">8. KI-gestützte Funktionen</h2>
             <p className="mt-2">
               Einzelne Funktionen (z. B. die Diagnose-Hilfe) können ganz oder teilweise
               automatisiert bzw. KI-gestützt arbeiten. Entsprechend gekennzeichnete Ausgaben
@@ -131,7 +173,65 @@ export default async function DatenschutzPage({
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-foreground">8. Deine Rechte</h2>
+            <h2 className="text-lg font-bold text-foreground">9. Übersicht der lokal gespeicherten Daten</h2>
+            <p className="mt-2">
+              Diese Website speichert die folgenden Werte im lokalen Speicher deines Browsers
+              (localStorage / sessionStorage). Es handelt sich nicht um Cookies im klassischen
+              Sinne; die Werte werden nicht automatisch an einen Server übertragen.
+            </p>
+            <div className="mt-3 overflow-x-auto">
+              <table className="w-full border-collapse text-left text-[13px]">
+                <thead>
+                  <tr className="border-b border-border text-foreground">
+                    <th className="py-2 pr-4 font-semibold">Bezeichnung</th>
+                    <th className="py-2 pr-4 font-semibold">Zweck</th>
+                    <th className="py-2 pr-4 font-semibold">Speicherdauer</th>
+                    <th className="py-2 font-semibold">Grundlage</th>
+                  </tr>
+                </thead>
+                <tbody className="align-top">
+                  <tr className="border-b border-border/60">
+                    <td className="py-2 pr-4"><code>theme</code></td>
+                    <td className="py-2 pr-4">Merkt deine Hell-/Dunkel-Einstellung.</td>
+                    <td className="py-2 pr-4">Dauerhaft, bis du sie löschst</td>
+                    <td className="py-2">Technisch notwendig (§ 25 Abs. 2 TDDDG)</td>
+                  </tr>
+                  <tr className="border-b border-border/60">
+                    <td className="py-2 pr-4"><code>sl-cookie-consent</code></td>
+                    <td className="py-2 pr-4">
+                      Speichert deine Cookie-Entscheidung inkl. Zeitpunkt und Versionsstand.
+                    </td>
+                    <td className="py-2 pr-4">Bis zu 12 Monate, dann erneute Abfrage</td>
+                    <td className="py-2">
+                      Technisch notwendig / Nachweis der Einwilligung (Art. 7 Abs. 1 DSGVO)
+                    </td>
+                  </tr>
+                  <tr className="border-b border-border/60">
+                    <td className="py-2 pr-4"><code>sl-cookie-reopen</code></td>
+                    <td className="py-2 pr-4">
+                      Kurzzeitige Hilfsmarkierung, damit der Hinweis nach einem Widerruf trotz
+                      GPC-Signal erneut erscheint.
+                    </td>
+                    <td className="py-2 pr-4">Ende der Browser-Sitzung</td>
+                    <td className="py-2">Technisch notwendig (§ 25 Abs. 2 TDDDG)</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 pr-4"><code>sb-…-auth-token</code> (nur mit Konto)</td>
+                    <td className="py-2 pr-4">Hält deine Anmeldung aufrecht (Supabase, Abschnitt 4).</td>
+                    <td className="py-2 pr-4">Bis zum Abmelden bzw. Ablauf der Sitzung</td>
+                    <td className="py-2">Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3">
+              Die Analyse-Tools (Abschnitt 5) und die Fehlerdiagnose im Browser (Abschnitt 6)
+              werden nur nach Einwilligung geladen und setzen selbst keine Cookies.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-bold text-foreground">10. Deine Rechte</h2>
             <p className="mt-2">Du hast jederzeit das Recht auf:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>Auskunft über die von uns verarbeiteten Daten (Art. 15 DSGVO)</li>
@@ -141,6 +241,11 @@ export default async function DatenschutzPage({
               <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
               <li>Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
             </ul>
+            <p className="mt-2">
+              Eine erteilte Einwilligung (z. B. in die Reichweitenmessung oder den Newsletter)
+              kannst du jederzeit mit Wirkung für die Zukunft widerrufen, ohne dass die
+              Rechtmäßigkeit der bis dahin erfolgten Verarbeitung berührt wird.
+            </p>
             <p className="mt-2">
               Wende dich dazu einfach an{" "}
               <a href="mailto:contact@secretleaf.net" className="font-semibold text-[#1f7a4f] hover:text-[#17613f]">
@@ -152,12 +257,13 @@ export default async function DatenschutzPage({
           </section>
 
           <section>
-            <h2 className="text-lg font-bold text-foreground">9. Aktualität</h2>
+            <h2 className="text-lg font-bold text-foreground">11. Aktualität</h2>
             <p className="mt-2">
               Diese Datenschutzerklärung wird bei Änderungen unserer Datenverarbeitung
               entsprechend aktualisiert. Es gilt jeweils die auf dieser Seite abrufbare aktuelle
               Fassung.
             </p>
+            <p className="mt-2 text-muted-fg">Stand: August 2026</p>
           </section>
         </div>
       </section>
