@@ -1,31 +1,17 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import {
+  CONSENT_REOPEN_KEY,
+  clearStoredConsent,
+  gpcEnabled,
+  readStoredConsent,
+  writeStoredConsent,
+  type ConsentChoice,
+} from "@/lib/cookie-consent";
+import { initClientSentry } from "@/lib/analytics-runtime";
 
-export type ConsentChoice = "all" | "essential";
-
-const STORAGE_KEY = "sl-cookie-consent";
-
-/** Set right before a withdrawal reload so GPC doesn't immediately re-hide the banner. */
-const REOPEN_KEY = "sl-cookie-reopen";
-
-/**
- * Bump when the set of tools gated behind "all" changes (e.g. a new tracker is
- * added). A stored record with a lower version is treated as no decision, so
- * the banner reappears and the user consents to the new scope.
- */
-const CONSENT_VERSION = 1;
-
-/** Re-ask for consent after this long (12 months), matching common CMP practice. */
-const CONSENT_MAX_AGE_MS = 1000 * 60 * 60 * 24 * 365;
-
-interface StoredConsent {
-  choice: ConsentChoice;
-  /** CONSENT_VERSION at the time the choice was made */
-  v: number;
-  /** epoch ms when the choice was made — accountability + expiry */
-  ts: number;
-}
+export type { ConsentChoice };
 
 interface CookieConsentContextValue {
   /** null = no valid decision stored (never chosen, or expired / outdated) */
@@ -48,44 +34,14 @@ export function useCookieConsent() {
   return useContext(CookieConsentContext);
 }
 
-/** Browser-level "do not sell/share" opt-out (Global Privacy Control). */
-function gpcEnabled(): boolean {
-  return (
-    typeof navigator !== "undefined" &&
-    (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true
-  );
-}
-
-/** Reads + validates the stored record, tolerating the old bare-string format. */
-function readStoredConsent(): ConsentChoice | null {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return null;
-
-  // Legacy format: the value was just "all" / "essential" with no metadata.
-  if (raw === "all" || raw === "essential") return raw;
-
-  let parsed: StoredConsent;
-  try {
-    parsed = JSON.parse(raw) as StoredConsent;
-  } catch {
-    return null;
-  }
-
-  if (parsed.choice !== "all" && parsed.choice !== "essential") return null;
-  if (parsed.v !== CONSENT_VERSION) return null;
-  if (typeof parsed.ts !== "number" || Date.now() - parsed.ts > CONSENT_MAX_AGE_MS) return null;
-
-  return parsed.choice;
-}
-
 export function CookieConsentProvider({ children }: { children: React.ReactNode }) {
   const [consent, setConsentState] = useState<ConsentChoice | null>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const stored = readStoredConsent();
-    const reopening = sessionStorage.getItem(REOPEN_KEY) === "1";
-    sessionStorage.removeItem(REOPEN_KEY);
+    const reopening = sessionStorage.getItem(CONSENT_REOPEN_KEY) === "1";
+    sessionStorage.removeItem(CONSENT_REOPEN_KEY);
 
     let resolved = stored;
     // No explicit choice yet, but the browser sends GPC: honor that opt-out
@@ -101,20 +57,23 @@ export function CookieConsentProvider({ children }: { children: React.ReactNode 
   }, []);
 
   const setConsent = (choice: ConsentChoice) => {
-    const record: StoredConsent = { choice, v: CONSENT_VERSION, ts: Date.now() };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(record));
+    writeStoredConsent(choice);
     setConsentState(choice);
+    // Boot the consent-gated Sentry SDK right away so error diagnostics work
+    // this session too — <Script>-based tools (Plausible / Vercel) mount on the
+    // re-render, Sentry needs an explicit kick.
+    if (choice === "all") void initClientSentry();
   };
 
   const resetConsent = () => {
     const hadAnalytics = consent === "all";
-    localStorage.removeItem(STORAGE_KEY);
+    clearStoredConsent();
     setConsentState(null);
     if (hadAnalytics) {
-      // A plain re-render can't unload Plausible / Vercel scripts that already
-      // ran, so reload into the pre-consent state. Flag the reload so the GPC
-      // check above doesn't instantly re-hide the banner.
-      if (gpcEnabled()) sessionStorage.setItem(REOPEN_KEY, "1");
+      // A plain re-render can't unload Plausible / Vercel / Sentry code that
+      // already ran, so reload into the pre-consent state. Flag the reload so
+      // the GPC check above doesn't instantly re-hide the banner.
+      if (gpcEnabled()) sessionStorage.setItem(CONSENT_REOPEN_KEY, "1");
       window.location.reload();
     }
   };
