@@ -14,9 +14,9 @@ import { Analytics } from "@/lib/analytics";
 
 type EffectivePlan = "free" | "pro" | "team";
 
-function effectivePlan(role: string, plan: string): EffectivePlan {
-  if (role === "TEAM") return "team";
+function effectivePlan(plan: string): EffectivePlan {
   if (plan === "pro") return "pro";
+  if (plan === "team") return "team";
   return "free";
 }
 
@@ -110,7 +110,7 @@ export default function ProfilePage() {
     }
   };
 
-  const plan = effectivePlan(user.role, user.plan);
+  const plan = effectivePlan(user.plan);
 
   const planLabel: Record<EffectivePlan, string> = {
     team: t("planTeam"),

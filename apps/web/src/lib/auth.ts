@@ -59,7 +59,7 @@ const fetchUserFromApi = async (accessToken: string): Promise<{ role: UserRole; 
   const body = (await response.json()) as CurrentUserResponse;
   const role = body.user?.role;
   const normalizedRole: UserRole =
-    role === "ADMIN" ? "ADMIN" : role === "TEAM" ? "TEAM" : role === "PROVIDER" ? "PROVIDER" : "CONSUMER";
+    role === "ADMIN" ? "ADMIN" : role === "PROVIDER" ? "PROVIDER" : "CONSUMER";
   const plan = body.user?.plan;
   const normalizedPlan: UserPlan = plan === "pro" || plan === "team" ? plan : "free";
 

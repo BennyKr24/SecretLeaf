@@ -107,6 +107,51 @@ export type AdminBriefing = {
   attention: BriefingAttention[];
 };
 
+// ── Nutzer ──────────────────────────────────────────────────────────────────
+
+export type AdminUserRole = "CONSUMER" | "PROVIDER" | "ADMIN";
+export type AdminUserPlan = "free" | "pro" | "team";
+
+export type AdminUserRow = {
+  id: string;
+  email: string | null;
+  role: AdminUserRole;
+  banned: boolean;
+  plan: AdminUserPlan;
+  subStatus: string | null;
+  currentPeriodEnd: string | null;
+  emailConfirmed: boolean;
+  provider: string;
+  createdAt: string;
+  lastSignInAt: string | null;
+};
+
+export type AdminUserDetail = AdminUserRow & {
+  stripeCustomerId: string | null;
+  grows: number;
+  logEntries: number;
+  lastLogAt: string | null;
+  lastDiagnosisAt: string | null;
+};
+
+export const adminUsersQuerySchema = listQuerySchema.extend({
+  role: z.enum(["CONSUMER", "PROVIDER", "ADMIN"]).optional(),
+  plan: z.enum(["free", "pro", "team"]).optional(),
+});
+
+export type AdminUsersQuery = z.infer<typeof adminUsersQuerySchema>;
+
+export const adminUserPatchSchema = z
+  .object({
+    role: z.enum(["CONSUMER", "PROVIDER", "ADMIN"]).optional(),
+    banned: z.boolean().optional(),
+    /** true = grant Pro, false = revoke to free */
+    grantPro: z.boolean().optional(),
+  })
+  .refine((v) => v.role !== undefined || v.banned !== undefined || v.grantPro !== undefined, {
+    message: "Nichts zu ändern",
+  });
+
 // ── Steuerung ───────────────────────────────────────────────────────────────
 
 export type ControlFlag = {

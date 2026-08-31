@@ -25,27 +25,34 @@ export class AdminHttpError extends Error {
   }
 }
 
-export type AdminRouteContext = {
+export type AdminRouteContext<P = Record<string, string>> = {
   actor: AuditActor;
   req: Request;
   url: URL;
+  /** resolved dynamic route params ({} for non-dynamic routes) */
+  params: P;
 };
+
+/** Next.js passes `{ params: Promise<...> }` as the 2nd handler arg for
+ *  dynamic segments; non-dynamic routes get nothing. */
+type NextRouteArg<P> = { params: Promise<P> } | undefined;
 
 /**
  * Wrap an admin route handler. The handler returns a plain JS value that is
  * serialized as JSON (200), or throws — `AdminHttpError` for expected 4xx,
  * `ZodError` for a 400 with issues, anything else for a logged 500.
  */
-export function adminRoute<T>(
-  handler: (ctx: AdminRouteContext) => Promise<T>,
-): (req: Request) => Promise<Response> {
-  return async (req: Request): Promise<Response> => {
+export function adminRoute<T, P extends Record<string, string> = Record<string, string>>(
+  handler: (ctx: AdminRouteContext<P>) => Promise<T>,
+): (req: Request, next?: NextRouteArg<P>) => Promise<Response> {
+  return async (req: Request, next?: NextRouteArg<P>): Promise<Response> => {
     const gate = await requireAdmin(req);
     if (gate instanceof Response) return gate;
 
     try {
       const url = new URL(req.url);
-      const data = await handler({ actor: { userId: gate.userId, email: gate.email }, req, url });
+      const params = next ? await next.params : ({} as P);
+      const data = await handler({ actor: { userId: gate.userId, email: gate.email }, req, url, params });
       return Response.json(data ?? { ok: true });
     } catch (err) {
       if (err instanceof z.ZodError) {

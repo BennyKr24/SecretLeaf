@@ -6,6 +6,21 @@ const USER_ROLES_TABLE = "user_roles";
 const SUBSCRIPTIONS_TABLE = "subscriptions";
 const ENTITLED_STATUSES = new Set(["active", "trialing"]);
 
+/**
+ * A banned user is locked out of every authenticated route: this returns
+ * `true` and callers of getAuthenticatedUserWithRole() then get `null`.
+ * Toggled from the Nutzer admin page (docs/ADMIN_PANEL_OVERHAUL_PLAN.md §4.4).
+ */
+async function isUserBanned(userId: string): Promise<boolean> {
+  const supabase = getSupabaseServerClient();
+  const { data } = await supabase
+    .from(USER_ROLES_TABLE)
+    .select("banned")
+    .eq("user_id", userId)
+    .maybeSingle();
+  return (data as { banned?: boolean } | null)?.banned === true;
+}
+
 type UserRoleRow = {
   user_id: string;
   role: UserRole;
@@ -18,7 +33,6 @@ type SubscriptionRow = {
 
 function normalizeRole(value: string | null | undefined): UserRole {
   if (value === "ADMIN") return "ADMIN";
-  if (value === "TEAM") return "TEAM";
   if (value === "PROVIDER") return "PROVIDER";
   return "CONSUMER";
 }
@@ -103,10 +117,15 @@ export async function getAuthenticatedUserWithRole(
     return null;
   }
 
-  const [role, plan] = await Promise.all([
+  const [role, plan, banned] = await Promise.all([
     getUserRole(auth.user.id),
     getUserPlan(auth.user.id),
+    isUserBanned(auth.user.id),
   ]);
+
+  if (banned) {
+    return null;
+  }
 
   return {
     userId: auth.user.id,
