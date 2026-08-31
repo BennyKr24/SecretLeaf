@@ -6,55 +6,8 @@ import type { ReactNode } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
 import { IconChip } from "@/components/ui/IconChip";
 import { Sheet } from "@/components/ui/Sheet";
-import {
-  Home,
-  Bot,
-  Users,
-  Microscope,
-  Settings,
-  Dna,
-  BarChart3,
-  ShieldAlert,
-  Lock,
-  Leaf,
-  LogOut,
-  ArrowLeft,
-  Menu,
-  type LucideIcon,
-} from "lucide-react";
-
-const NAV_GROUPS: Array<{
-  label: string;
-  items: Array<{ href: string; label: string; icon: LucideIcon; exact?: boolean }>;
-}> = [
-  {
-    label: "Übersicht",
-    items: [
-      { href: "/dashboard/admin", label: "Übersicht", icon: Home, exact: true },
-    ],
-  },
-  {
-    label: "Assistent",
-    items: [
-      { href: "/dashboard/admin/assistant", label: "KI-Assistent", icon: Bot },
-    ],
-  },
-  {
-    label: "Inhalte",
-    items: [
-      { href: "/dashboard/admin/users", label: "Benutzer", icon: Users },
-      { href: "/dashboard/admin/studies", label: "Studien", icon: Microscope },
-    ],
-  },
-  {
-    label: "Pipeline",
-    items: [
-      { href: "/dashboard/admin/engine", label: "Pipeline-Engine", icon: Settings },
-      { href: "/dashboard/admin/algorithm", label: "Algorithmus", icon: Dna },
-      { href: "/dashboard/admin/analytics", label: "Auswertungen", icon: BarChart3 },
-    ],
-  },
-];
+import { ADMIN_NAV, activeAdminEntry } from "@/components/admin/nav";
+import { ShieldAlert, Lock, Leaf, LogOut, ArrowLeft, Menu } from "lucide-react";
 
 /** Sidebar content shared by the persistent desktop `<aside>` and the
  * mobile drawer (rendered inside `Sheet`) — identical markup, just a
@@ -73,6 +26,7 @@ function AdminSidebarContent({
   onLogout: () => void;
   onNavigate?: () => void;
 }) {
+  const activeHref = activeAdminEntry(pathname)?.href;
   return (
     <>
       {/* Logo */}
@@ -97,16 +51,14 @@ function AdminSidebarContent({
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto px-3 py-3">
-        {NAV_GROUPS.map((group) => (
-          <div key={group.label} className="mb-4">
+        {ADMIN_NAV.map((group) => (
+          <div key={group.group} className="mb-4">
             <p className="mb-1 px-3 text-[9px] font-bold uppercase tracking-[0.25em] text-muted-fg">
-              {group.label}
+              {group.group}
             </p>
             <div className="space-y-0.5">
               {group.items.map((item) => {
-                const isActive = item.exact
-                  ? pathname === item.href
-                  : pathname.startsWith(item.href);
+                const isActive = activeHref === item.href;
                 const Icon = item.icon;
                 return (
                   <Link
@@ -221,10 +173,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const initials = session.user.username
     ? session.user.username.slice(0, 2).toUpperCase()
     : "AD";
-  const activeItem = NAV_GROUPS.flatMap((g) => g.items).find((item) =>
-    item.exact ? pathname === item.href : pathname.startsWith(item.href)
-  );
-  const activeLabel = activeItem?.label ?? "Admin";
+  const activeLabel = activeAdminEntry(pathname)?.label ?? "Admin";
 
   return (
     <div className="flex min-h-screen bg-background">
