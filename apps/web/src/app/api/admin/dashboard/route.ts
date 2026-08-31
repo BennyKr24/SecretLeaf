@@ -362,6 +362,7 @@ export async function POST(req: Request) {
             "Du hilfst dem Admin-Team von SecretLeaf (einer Cannabis-Grow-App) bei Notizen, " +
               "Content-Entwürfen (z. B. Wissensartikel, Studien-Zusammenfassungen) und Ideen für die App. " +
               "Antworte auf Deutsch, präzise und ohne Floskeln.",
+            { feature: "admin-assistant", actorId: adminOrResponse.userId },
           );
           logInfo("admin.ai-assist", { by: adminOrResponse.userId, promptLength: prompt.length });
           return Response.json({ reply });

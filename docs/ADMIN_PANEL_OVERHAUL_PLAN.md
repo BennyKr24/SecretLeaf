@@ -457,10 +457,14 @@ Grund für die Auslagerung: `<CTAButton>` + next-intl `<Link>` erzwingen ein
 - [ ] Migrationsstand-Panel in Betrieb (braucht Prod-DB-Zugriff → mit Phase 1b)
 
 ### Phase 2 — Geld & Zustellung
-- [ ] Migrationen `ai_usage`, `cost_entries`, `stripe_events`, `email_log`, `alert_rules`
-- [ ] `askClaude()` schreibt `ai_usage`; Stripe-Webhook schreibt `stripe_events`; Send-Email-Hook + Newsletter schreiben `email_log`
-- [ ] Cron `cost-sync` (Stripe + Vercel/Brevo APIs) + `alert-check` (→ Brevo-Mail)
-- [ ] **Finanzen-Seite** (§4.2) + **Mail-Seite** (§4.7) inkl. Brevo-Bounce-Webhook
+- [x] Migrationen `202608310001_ai_usage.sql`, `202608310002_cost_entries.sql` (lokal angewendet; **noch nicht Prod**)
+- [x] `lib/admin/pricing.ts` (Anthropic-Preistabelle aus dem `claude-api`-Skill) + `lib/admin/aiUsage.ts` (`recordAiUsage`, fire-and-forget)
+- [x] `askClaude()` schreibt `ai_usage` (model/tokens/cache/€, mit `feature` + `actorId`)
+- [x] **Finanzen-Seite** (`/dashboard/admin/finance`, §4.2): `api/admin/finance` GET (Abo-Zahlen + **live Stripe MtD** brutto/Gebühren/netto wenn `STRIPE_SECRET_KEY` da; verifiziert gegen Sandbox: 59 € brutto / 2,11 € Gebühr) + Kosten pro Monat nach Dienst (inkl. synthetischer „anthropic"-Reihe aus `ai_usage`) + Burn. POST = manueller Kosten-Posten (`cost_entries`, audit-geloggt). Nav: `finance` live.
+- [ ] Migrationen `stripe_events`, `email_log`, `alert_rules`
+- [ ] Stripe-Webhook schreibt `stripe_events` (Idempotenz + Health); Send-Email-Hook + Newsletter schreiben `email_log` (braucht `benny/email-templates`-Merge)
+- [ ] Cron `cost-sync` (Vercel/Brevo APIs) + `alert-check` (→ Brevo-Mail)
+- [ ] **Mail-Seite** (§4.7) inkl. Brevo-Bounce-Webhook
 - [ ] Alert-System scharf, Standard-Regeln seeden
 
 ### Phase 3 — Menschen & Inhalte & Hebel

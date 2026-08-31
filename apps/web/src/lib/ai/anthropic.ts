@@ -1,4 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { recordAiUsage } from "@/lib/admin/aiUsage";
+
+const MODEL = "claude-opus-5";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Admin-only Claude API access. Never imported by user-facing code paths —
@@ -20,13 +23,25 @@ export function getAnthropicClient(): Anthropic {
   return client;
 }
 
-export async function askClaude(prompt: string, system?: string): Promise<string> {
+export async function askClaude(
+  prompt: string,
+  system?: string,
+  opts?: { feature?: string; actorId?: string | null },
+): Promise<string> {
   const anthropic = getAnthropicClient();
   const response = await anthropic.messages.create({
-    model: "claude-opus-5",
+    model: MODEL,
     max_tokens: 4096,
     ...(system ? { system } : {}),
     messages: [{ role: "user", content: prompt }],
+  });
+
+  // Cost tracking for the Finanzen module — fire-and-forget.
+  void recordAiUsage({
+    model: MODEL,
+    feature: opts?.feature ?? "admin-assistant",
+    usage: response.usage,
+    actorId: opts?.actorId ?? null,
   });
 
   const textBlock = response.content.find((block) => block.type === "text");

@@ -107,6 +107,53 @@ export type AdminBriefing = {
   attention: BriefingAttention[];
 };
 
+// ── Finanzen ────────────────────────────────────────────────────────────────
+
+export type FinanceCostMonth = {
+  /** "YYYY-MM" */
+  month: string;
+  /** cents per service, incl. synthetic "anthropic" from ai_usage */
+  byService: Record<string, number>;
+  totalCents: number;
+};
+
+export type AdminFinance = {
+  generatedAt: string;
+  revenue: {
+    /** true once live Stripe figures below are populated */
+    stripeConnected: boolean;
+    activePro: number;
+    trialing: number;
+    pastDue: number;
+    canceled30d: number;
+    /** estimate: activePro × monthly price */
+    estimatedMrrCents: number;
+    /** live Stripe, current calendar month — null when not connected */
+    grossMtdCents: number | null;
+    feesMtdCents: number | null;
+    netMtdCents: number | null;
+  };
+  costs: {
+    /** last 6 months, oldest → newest */
+    months: FinanceCostMonth[];
+    currentMonthCents: number;
+    aiUsageMtdCents: number;
+    aiCallsMtd: number;
+  };
+  /** current-month costs minus current-month net revenue (or est. MRR) */
+  burnMtdCents: number;
+};
+
+export const financeCostSchema = z.object({
+  service: z.string().min(1).max(40),
+  /** "YYYY-MM" */
+  periodMonth: z.string().regex(/^\d{4}-\d{2}$/),
+  amountCents: z.coerce.number().int().min(0).max(100_000_00),
+  note: z.string().max(280).optional(),
+});
+
+export type FinanceCostInput = z.infer<typeof financeCostSchema>;
+
 // ── Betrieb / Ops ───────────────────────────────────────────────────────────
 
 export type OpsLastRun = {
