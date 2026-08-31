@@ -2,10 +2,15 @@
  * updates.ts
  *
  * Typen, Datenzugriff und Badge-Klassen für das SecretLeaf Updates-System.
- * Quelle der Wahrheit: apps/web/src/data/updates.json
+ *
+ * Quelle der Wahrheit ist die `updates`-Tabelle (bearbeitbar unter
+ * /dashboard/admin/changelog). `src/data/updates.json` bleibt als
+ * Build-/Fallback-Datenquelle, falls die DB leer oder nicht erreichbar ist
+ * (z. B. während `next build` ohne DB-Zugriff).
  */
 
 import updatesJson from '@/data/updates.json';
+import { getSupabaseServerClient } from '@/lib/supabaseServer';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -55,14 +60,13 @@ export type CategoryMeta = {
   color: string;
 };
 
-export type UpdatesData = {
+type UpdatesJsonShape = {
   categoryMeta: Record<string, CategoryMeta>;
   updates: UpdateEntry[];
 };
 
 // ── Badge color map ───────────────────────────────────────────────────────────
-// Tailwind-Klassen müssen hier stehen (nicht im JSON) damit Purging korrekt funktioniert.
-// Neue Farben hier ergänzen; JSON referenziert nur den Schlüssel.
+// Tailwind-Klassen müssen hier stehen (nicht in der DB) damit Purging funktioniert.
 
 export const BADGE_COLORS: Record<string, string> = {
   emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
@@ -75,65 +79,98 @@ export const BADGE_COLORS: Record<string, string> = {
   default: 'bg-white/5        text-white/50    border-white/10',
 };
 
-// ── Data access ───────────────────────────────────────────────────────────────
-
-const data = updatesJson as UpdatesData;
-
-/** Alle Updates, neueste zuerst. */
-export function getAllUpdates(): UpdateEntry[] {
-  return [...data.updates].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
-}
-
-/** Ein Update anhand seines Slugs. */
-export function getUpdateBySlug(slug: string): UpdateEntry | undefined {
-  return data.updates.find((u) => u.slug === slug);
-}
-
-/** Das als featured markierte Update (maximal eines). */
-export function getFeaturedUpdate(): UpdateEntry | undefined {
-  return data.updates.find((u) => u.featured);
-}
-
-/** Updates gefiltert nach Kategorie, neueste zuerst. */
-export function getUpdatesByCategory(category: string): UpdateEntry[] {
-  return getAllUpdates().filter((u) => u.category === category);
-}
-
-/** Alle Kategorie-Metadaten aus dem JSON. */
-export function getCategoryMeta(): Record<string, CategoryMeta> {
-  return data.categoryMeta;
-}
-
-/** Kategorie-Metadaten für eine einzelne Kategorie, mit Fallback. */
-export function getCategoryMetaFor(category: string): CategoryMeta {
-  return data.categoryMeta[category] ?? { label: category, color: 'default' };
-}
-
 const BADGE_FALLBACK = 'bg-white/5 text-white/50 border-white/10';
 
-/** Badge-Klassen für eine Kategorie. */
+// ── Category meta (config, nicht in der DB) ───────────────────────────────────
+
+const json = updatesJson as UpdatesJsonShape;
+
+export function getCategoryMeta(): Record<string, CategoryMeta> {
+  return json.categoryMeta;
+}
+
+export function getCategoryMetaFor(category: string): CategoryMeta {
+  return json.categoryMeta[category] ?? { label: category, color: 'default' };
+}
+
 export function getBadgeClasses(category: string): string {
   const meta = getCategoryMetaFor(category);
   return BADGE_COLORS[meta.color] ?? BADGE_FALLBACK;
 }
 
-/** Slugs aller Updates — für generateStaticParams. */
-export function getAllUpdateSlugs(): string[] {
-  return data.updates.map((u) => u.slug);
-}
-
-/** Alle vorhandenen Kategorien (unique, aus den Daten abgeleitet). */
-export function getAvailableCategories(): string[] {
-  return [...new Set(getAllUpdates().map((u) => u.category))];
-}
-
-/** Datum im deutschen Langformat: "1. Juni 2026". */
 export function formatUpdateDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('de-DE', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
+  return new Date(iso).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+// ── Data access ──────────────────────────────────────────────────────────────
+
+type UpdateRow = {
+  slug: string;
+  version: string | null;
+  date: string;
+  title: string;
+  summary: string;
+  category: string;
+  featured: boolean;
+  sections: UpdateSections | null;
+  stats: Record<string, string | number> | null;
+  cta: UpdateCta | null;
+};
+
+const mapRow = (r: UpdateRow): UpdateEntry => ({
+  slug: r.slug,
+  version: r.version,
+  date: typeof r.date === 'string' ? r.date.slice(0, 10) : r.date,
+  title: r.title,
+  summary: r.summary,
+  category: r.category,
+  featured: r.featured,
+  sections: r.sections ?? {},
+  ...(r.stats ? { stats: r.stats } : {}),
+  ...(r.cta ? { cta: r.cta } : {}),
+});
+
+const jsonUpdates = (): UpdateEntry[] =>
+  [...json.updates].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+/** All published updates, newest first. DB-backed, JSON fallback. */
+export async function getAllUpdates(): Promise<UpdateEntry[]> {
+  try {
+    const supabase = getSupabaseServerClient();
+    const { data, error } = await supabase
+      .from('updates')
+      .select('slug, version, date, title, summary, category, featured, sections, stats, cta')
+      .eq('published', true)
+      .order('date', { ascending: false });
+    if (error || !data || data.length === 0) return jsonUpdates();
+    return (data as UpdateRow[]).map(mapRow);
+  } catch {
+    return jsonUpdates();
+  }
+}
+
+export async function getUpdateBySlug(slug: string): Promise<UpdateEntry | undefined> {
+  const all = await getAllUpdates();
+  return all.find((u) => u.slug === slug);
+}
+
+export async function getFeaturedUpdate(): Promise<UpdateEntry | undefined> {
+  const all = await getAllUpdates();
+  return all.find((u) => u.featured);
+}
+
+export async function getUpdatesByCategory(category: string): Promise<UpdateEntry[]> {
+  const all = await getAllUpdates();
+  return all.filter((u) => u.category === category);
+}
+
+export async function getAvailableCategories(): Promise<string[]> {
+  const all = await getAllUpdates();
+  return [...new Set(all.map((u) => u.category))];
+}
+
+/** Slugs for generateStaticParams — JSON only, so the build never needs the DB.
+ *  New DB-only slugs render on demand (`dynamicParams = true`). */
+export function getAllUpdateSlugs(): string[] {
+  return json.updates.map((u) => u.slug);
 }

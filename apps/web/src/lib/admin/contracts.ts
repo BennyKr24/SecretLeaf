@@ -152,6 +152,47 @@ export const adminUserPatchSchema = z
     message: "Nichts zu ändern",
   });
 
+// ── Neuigkeiten / Updates ───────────────────────────────────────────────────
+
+export type AdminUpdate = {
+  id: string;
+  slug: string;
+  version: string | null;
+  date: string;
+  title: string;
+  summary: string;
+  category: string;
+  featured: boolean;
+  published: boolean;
+  /** true when the row carries rich `sections` content (JSON import) */
+  hasSections: boolean;
+  updatedAt: string;
+};
+
+export type AdminUpdatesResponse = {
+  updates: AdminUpdate[];
+  categories: string[];
+};
+
+export const updateCreateSchema = z.object({
+  slug: z
+    .string()
+    .min(1)
+    .max(80)
+    .regex(/^[a-z0-9-]+$/, "nur Kleinbuchstaben, Ziffern und Bindestriche"),
+  title: z.string().min(1).max(200),
+  summary: z.string().min(1).max(1000),
+  category: z.string().min(1).max(40),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  version: z.string().max(40).optional(),
+  featured: z.boolean().optional(),
+  published: z.boolean().optional(),
+});
+
+export type UpdateCreateInput = z.infer<typeof updateCreateSchema>;
+
+export const updatePatchSchema = updateCreateSchema.partial();
+
 // ── Steuerung ───────────────────────────────────────────────────────────────
 
 export type ControlFlag = {

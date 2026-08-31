@@ -69,7 +69,7 @@ export const ADMIN_NAV_REGISTRY: AdminNavItem[] = [
   // ── Inhalte ─────────────────────────────────────────────────────────────
   { group: "Inhalte", segment: "studies", label: "Studien", icon: Microscope, status: "live" },
   { group: "Inhalte", segment: "content", label: "Content & Wissen", icon: Languages, status: "planned", phase: 3 },
-  { group: "Inhalte", segment: "changelog", label: "Neuigkeiten", icon: Megaphone, status: "planned", phase: 3 },
+  { group: "Inhalte", segment: "changelog", label: "Neuigkeiten", icon: Megaphone, status: "live" },
 
   // ── Maschine ────────────────────────────────────────────────────────────
   { group: "Maschine", segment: "ops", label: "Betrieb", icon: CalendarClock, status: "live" },
