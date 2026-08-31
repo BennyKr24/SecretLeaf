@@ -1,431 +1,381 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { Dropdown, DropdownOption } from "@/components/ui/Dropdown";
-import { ResponsiveTable } from "@/components/ui/ResponsiveTable";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAdminAuth } from "@/lib/useAdminAuth";
-import { adminApi } from "@/lib/adminApi";
-import { Users, Pencil } from "lucide-react";
+import { adminFetch } from "@/lib/admin/client";
+import type {
+  AdminListResponse,
+  AdminUserRow,
+  AdminUserDetail,
+  AdminUserRole,
+} from "@/lib/admin/contracts";
+import { AdminPage, AdminPageSkeleton } from "@/components/admin/AdminPage";
+import { Alert } from "@/components/admin/Alert";
+import { Badge, type BadgeTone } from "@/components/ui/Badge";
+import { CTAButton } from "@/components/ui/CTAButton";
+import { Users, X, ChevronLeft, ChevronRight } from "lucide-react";
 
-type AdminUser = {
-  id: string;
-  email: string | null;
-  role: string;
-  createdAt: string;
-  lastSignIn: string | null;
-  emailConfirmed: boolean;
-  provider: string;
+const ROLE_TONE: Record<AdminUserRole, BadgeTone> = {
+  ADMIN: "rose",
+  PROVIDER: "amber",
+  CONSUMER: "muted",
 };
+const dt = (iso: string | null) => (iso ? new Date(iso).toLocaleDateString("de-DE") : "—");
+const dtt = (iso: string | null) => (iso ? new Date(iso).toLocaleString("de-DE") : "—");
+const field =
+  "rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none";
 
-type UsersResponse = {
-  users: AdminUser[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-};
+function UserDrawer({
+  userId,
+  onClose,
+  onChanged,
+}: {
+  userId: string;
+  onClose: () => void;
+  onChanged: () => void;
+}) {
+  const auth = useAdminAuth();
+  const [detail, setDetail] = useState<AdminUserDetail | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
-const ROLES = ["CONSUMER", "PROVIDER", "ADMIN"] as const;
-const ROLE_COLORS: Record<string, string> = {
-  ADMIN: "bg-purple-100 dark:bg-purple-950/40 text-purple-700 dark:text-purple-400",
-  PROVIDER: "bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400",
-  CONSUMER: "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400",
-};
+  const load = useCallback(async () => {
+    if (auth.status !== "authenticated") return;
+    try {
+      setDetail(await adminFetch<AdminUserDetail>(auth.session, `users/${userId}`));
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Fehler beim Laden");
+    }
+  }, [auth, userId]);
 
-function formatDate(iso: string | null): string {
-  if (!iso) return "—";
-  return new Date(iso).toLocaleDateString("de-DE", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  useEffect(() => {
+    void (async () => {
+      await load();
+    })();
+  }, [load]);
+
+  const patch = async (body: Record<string, unknown>) => {
+    if (auth.status !== "authenticated") return;
+    setBusy(true);
+    setErr(null);
+    try {
+      await adminFetch(auth.session, `users/${userId}`, { method: "PATCH", json: body });
+      await load();
+      onChanged();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Änderung fehlgeschlagen");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const remove = async () => {
+    if (auth.status !== "authenticated") return;
+    setBusy(true);
+    try {
+      await adminFetch(auth.session, `users/${userId}`, { method: "DELETE" });
+      onChanged();
+      onClose();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : "Löschen fehlgeschlagen");
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-40 flex justify-end" role="dialog" aria-modal="true">
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <aside className="modal-surface relative flex h-full w-full max-w-md flex-col overflow-y-auto border-l border-border p-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-foreground">Nutzer</h2>
+          <button onClick={onClose} className="rounded-lg p-1 text-muted-fg hover:text-foreground">
+            <X className="h-5 w-5" strokeWidth={2} />
+          </button>
+        </div>
+
+        {err && (
+          <Alert tone="error" className="mt-3" onDismiss={() => setErr(null)}>
+            {err}
+          </Alert>
+        )}
+
+        {!detail ? (
+          <AdminPageSkeleton rows={4} />
+        ) : (
+          <div className="mt-4 space-y-5 text-sm">
+            <div>
+              <p className="font-semibold text-foreground">{detail.email ?? "(keine E-Mail)"}</p>
+              <p className="break-all text-xs text-muted-fg">{detail.id}</p>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                <Badge tone={ROLE_TONE[detail.role]}>{detail.role}</Badge>
+                <Badge tone={detail.plan === "free" ? "muted" : "primary"}>{detail.plan}</Badge>
+                {detail.subStatus && <Badge tone="muted">{detail.subStatus}</Badge>}
+                {detail.banned && <Badge tone="rose">gesperrt</Badge>}
+                {!detail.emailConfirmed && <Badge tone="amber">unbestätigt</Badge>}
+              </div>
+            </div>
+
+            <dl className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs">
+              <dt className="text-muted-fg">Registriert</dt>
+              <dd className="text-foreground">{dt(detail.createdAt)}</dd>
+              <dt className="text-muted-fg">Letzter Login</dt>
+              <dd className="text-foreground">{dtt(detail.lastSignInAt)}</dd>
+              <dt className="text-muted-fg">Provider</dt>
+              <dd className="text-foreground">{detail.provider}</dd>
+              <dt className="text-muted-fg">Grows</dt>
+              <dd className="text-foreground">{detail.grows}</dd>
+              <dt className="text-muted-fg">Log-Einträge</dt>
+              <dd className="text-foreground">{detail.logEntries}</dd>
+              <dt className="text-muted-fg">Letzter Log</dt>
+              <dd className="text-foreground">{dt(detail.lastLogAt)}</dd>
+              <dt className="text-muted-fg">Letzte Diagnose</dt>
+              <dd className="text-foreground">{dt(detail.lastDiagnosisAt)}</dd>
+              {detail.stripeCustomerId && (
+                <>
+                  <dt className="text-muted-fg">Stripe</dt>
+                  <dd className="break-all text-foreground">{detail.stripeCustomerId}</dd>
+                </>
+              )}
+            </dl>
+
+            <div className="space-y-2 border-t border-border pt-4">
+              <label className="flex items-center justify-between gap-2">
+                <span className="text-xs text-muted-fg">Rolle</span>
+                <select
+                  value={detail.role}
+                  disabled={busy}
+                  onChange={(e) => void patch({ role: e.target.value })}
+                  className={field}
+                >
+                  <option value="CONSUMER">CONSUMER</option>
+                  <option value="PROVIDER">PROVIDER</option>
+                  <option value="ADMIN">ADMIN</option>
+                </select>
+              </label>
+
+              <div className="flex flex-wrap gap-2">
+                {detail.plan === "free" ? (
+                  <button
+                    onClick={() => void patch({ grantPro: true })}
+                    disabled={busy}
+                    className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50"
+                  >
+                    Pro gewähren
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => void patch({ grantPro: false })}
+                    disabled={busy}
+                    className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium disabled:opacity-50"
+                  >
+                    Pro entziehen
+                  </button>
+                )}
+                <button
+                  onClick={() => void patch({ banned: !detail.banned })}
+                  disabled={busy}
+                  className="rounded-lg border border-border px-3 py-1.5 text-xs font-medium disabled:opacity-50"
+                >
+                  {detail.banned ? "Entsperren" : "Sperren"}
+                </button>
+              </div>
+
+              <div className="pt-2">
+                {confirmDelete ? (
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-rose-500">Endgültig löschen?</span>
+                    <button
+                      onClick={() => void remove()}
+                      disabled={busy}
+                      className="rounded-lg bg-rose-500 px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-50"
+                    >
+                      Ja, löschen
+                    </button>
+                    <button onClick={() => setConfirmDelete(false)} className="rounded-lg border border-border px-3 py-1.5 text-xs">
+                      Abbrechen
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setConfirmDelete(true)}
+                    className="text-xs font-medium text-rose-500 hover:underline"
+                  >
+                    Account löschen
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </aside>
+    </div>
+  );
 }
 
 export default function AdminUsersPage() {
   const auth = useAdminAuth();
-  const [users, setUsers] = useState<AdminUser[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [resp, setResp] = useState<AdminListResponse<AdminUserRow> | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Pagination
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [total, setTotal] = useState(0);
-
-  // Filters
   const [search, setSearch] = useState("");
-  const [roleFilter, setRoleFilter] = useState("all");
+  const [role, setRole] = useState("");
+  const [plan, setPlan] = useState("");
+  const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState<string | null>(null);
+  const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  // Modals
-  const [editingUser, setEditingUser] = useState<AdminUser | null>(null);
-  const [editRole, setEditRole] = useState("");
-  const [deletingUser, setDeletingUser] = useState<AdminUser | null>(null);
-  const [actionLoading, setActionLoading] = useState(false);
+  useEffect(() => {
+    if (debounce.current) clearTimeout(debounce.current);
+    debounce.current = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);
+    }, 400);
+    return () => {
+      if (debounce.current) clearTimeout(debounce.current);
+    };
+  }, [search]);
 
-  const fetchUsers = useCallback(async () => {
+  const load = useCallback(async () => {
     if (auth.status !== "authenticated") return;
     setLoading(true);
-    setError(null);
     try {
-      const data = await adminApi<UsersResponse>(auth.session, "users-list", {
-        page,
-        limit: 25,
-        search: search || undefined,
-        roleFilter,
-      });
-      setUsers(data.users);
-      setTotal(data.total);
-      setTotalPages(data.totalPages);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Benutzer konnten nicht geladen werden");
+      const params = new URLSearchParams({ page: String(page), limit: "25", sortBy: "created_at", sortDir: "desc" });
+      if (debouncedSearch) params.set("search", debouncedSearch);
+      if (role) params.set("role", role);
+      if (plan) params.set("plan", plan);
+      setResp(await adminFetch<AdminListResponse<AdminUserRow>>(auth.session, `users?${params}`));
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Fehler beim Laden");
     } finally {
       setLoading(false);
     }
-  }, [auth, page, search, roleFilter]);
+  }, [auth, page, debouncedSearch, role, plan]);
 
   useEffect(() => {
-    const t = setTimeout(() => {
-      void fetchUsers();
-    }, 0);
-    return () => clearTimeout(t);
-  }, [fetchUsers]);
-
-  // Debounce search
-  const [searchInput, setSearchInput] = useState("");
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSearch(searchInput);
-      setPage(1);
-    }, 400);
-    return () => clearTimeout(timer);
-  }, [searchInput]);
-
-  const handleRoleChange = async () => {
-    if (!editingUser || auth.status !== "authenticated") return;
-    setActionLoading(true);
-    setError(null);
-    try {
-      await adminApi(auth.session, "user-update-role", {
-        userId: editingUser.id,
-        role: editRole,
-      });
-      setSuccess(`Rolle von ${editingUser.email ?? editingUser.id} auf ${editRole} geändert.`);
-      setEditingUser(null);
-      await fetchUsers();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Rolle konnte nicht geändert werden");
-    } finally {
-      setActionLoading(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!deletingUser || auth.status !== "authenticated") return;
-    setActionLoading(true);
-    setError(null);
-    try {
-      await adminApi(auth.session, "user-delete", { userId: deletingUser.id });
-      setSuccess(`Benutzer ${deletingUser.email ?? deletingUser.id} wurde gelöscht.`);
-      setDeletingUser(null);
-      await fetchUsers();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Benutzer konnte nicht gelöscht werden");
-    } finally {
-      setActionLoading(false);
-    }
-  };
+    void (async () => {
+      await load();
+    })();
+  }, [load]);
 
   if (auth.status !== "authenticated") return null;
 
   return (
-    <div>
-      <div className="mb-7">
-        <div className="flex items-center gap-2 text-xs text-muted-fg">
-          <span>Admin</span><span>/</span><span className="font-semibold text-muted-fg">Benutzer</span>
-        </div>
-        <div className="mt-1 flex items-center gap-3">
-          <Users className="h-6 w-6 text-emerald-600" strokeWidth={2} />
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Benutzerverwaltung</h1>
-            <p className="text-sm text-muted-fg">Rollen verwalten, Benutzerkonten einsehen und administrieren.</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Stats Row */}
-      <div className="mb-6 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-fg">Gesamt</p>
-          <p className="mt-1 text-2xl font-bold text-foreground">{total}</p>
-        </div>
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-fg">Aktuelle Seite</p>
-          <p className="mt-1 text-2xl font-bold text-foreground">{users.length}</p>
-        </div>
-        <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-fg">Seite</p>
-          <p className="mt-1 text-2xl font-bold text-foreground">{page} / {totalPages || 1}</p>
-        </div>
-      </div>
-
-      {/* Notifications */}
-      {error && (
-        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-2 text-sm text-red-700">
-          {error}
-          <button onClick={() => setError(null)} className="ml-2 font-semibold transition-transform duration-150 active:scale-90 hover:underline">×</button>
-        </div>
-      )}
-      {success && (
-        <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-700">
-          {success}
-          <button onClick={() => setSuccess(null)} className="ml-2 font-semibold transition-transform duration-150 active:scale-90 hover:underline">×</button>
-        </div>
-      )}
-
-      {/* Filters & Search */}
-      <div className="mb-4 flex flex-wrap items-center gap-3">
-        <div className="flex-1">
+    <AdminPage title="Nutzer" icon={Users} description={resp ? `${resp.total} insgesamt` : undefined}>
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
           <input
-            type="text"
-            placeholder="Suche nach E-Mail oder ID..."
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full max-w-sm rounded-xl border border-border px-3 py-2 text-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-[var(--ring)]"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="E-Mail suchen…"
+            className={`${field} min-w-[220px] flex-1`}
           />
+          <select value={role} onChange={(e) => { setRole(e.target.value); setPage(1); }} className={field}>
+            <option value="">Alle Rollen</option>
+            <option value="CONSUMER">Consumer</option>
+            <option value="PROVIDER">Provider</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+          <select value={plan} onChange={(e) => { setPlan(e.target.value); setPage(1); }} className={field}>
+            <option value="">Alle Pläne</option>
+            <option value="free">Free</option>
+            <option value="pro">Pro</option>
+            <option value="team">Team</option>
+          </select>
         </div>
-        <Dropdown value={roleFilter} onChange={(v) => { setRoleFilter(v); setPage(1); }}>
-          <DropdownOption value="all">Alle Rollen</DropdownOption>
-          <DropdownOption value="CONSUMER">Consumer</DropdownOption>
-          <DropdownOption value="PROVIDER">Provider</DropdownOption>
-          <DropdownOption value="ADMIN">Admin</DropdownOption>
-        </Dropdown>
-        <button
-          onClick={() => void fetchUsers()}
-          className="rounded-xl border border-border px-3 py-2 text-sm font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background"
-        >
-          Aktualisieren
-        </button>
-      </div>
 
-      {/* Users Table */}
-      <div className="min-h-[400px] overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-        {loading ? (
-          <div className="flex min-h-[400px] items-center justify-center gap-3">
-            <div className="h-5 w-5 animate-spin rounded-full border-2 border-emerald-600 dark:border-emerald-500 border-t-transparent" />
-            <span className="text-sm text-muted-fg">Benutzer werden geladen...</span>
-          </div>
-        ) : users.length === 0 ? (
-          <div className="px-4 py-12 text-center text-sm text-muted-fg">Keine Benutzer gefunden.</div>
-        ) : (
-          <ResponsiveTable
-            rows={users}
-            rowKey={(user) => user.id}
-            cellPadding="px-3 py-3"
-            columns={[
-              {
-                header: "E-Mail",
-                isTitle: true,
-                tdClassName: "font-medium text-foreground",
-                cell: (user) => (
-                  <>
-                    <div className="font-medium text-foreground">{user.email ?? "—"}</div>
-                    <div className="text-[10px] font-mono text-muted-fg">{user.id.slice(0, 8)}…</div>
-                  </>
-                ),
-              },
-              {
-                header: "Rolle",
-                cell: (user) => (
-                  <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${ROLE_COLORS[user.role] ?? "bg-border text-foreground/80"}`}>
-                    {user.role}
-                  </span>
-                ),
-              },
-              { header: "Provider", cell: (user) => <span className="capitalize">{user.provider}</span> },
-              {
-                header: "Bestätigt",
-                cell: (user) =>
-                  user.emailConfirmed ? (
-                    <span className="inline-flex items-center gap-1 text-xs text-emerald-600">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Ja
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 text-xs text-amber-600">
-                      <span className="h-1.5 w-1.5 rounded-full bg-amber-500" /> Nein
-                    </span>
-                  ),
-              },
-              { header: "Registriert", cell: (user) => formatDate(user.createdAt) },
-              { header: "Letzter Login", cell: (user) => formatDate(user.lastSignIn) },
-              {
-                header: "Aktionen",
-                fullWidthOnMobile: true,
-                cell: (user) => (
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => { setEditingUser(user); setEditRole(user.role); }}
-                      className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-400 transition active:scale-90 hover:bg-emerald-100 dark:bg-emerald-950/40"
-                      title="Rolle bearbeiten"
-                    >
-                      <Pencil className="h-3 w-3" strokeWidth={2} /> Rolle
-                    </button>
-                    <button
-                      onClick={() => setDeletingUser(user)}
-                      className="rounded-lg px-2 py-1 text-xs font-medium text-red-600 transition active:scale-90 hover:bg-red-50"
-                      title="Benutzer löschen"
-                    >
-                      ⌫
-                    </button>
-                  </div>
-                ),
-              },
-            ]}
-          />
+        {error && (
+          <Alert tone="error" onDismiss={() => setError(null)}>
+            {error}
+          </Alert>
         )}
-      </div>
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="mt-4 flex items-center justify-between">
-          <p className="text-xs text-muted-fg">{total} Benutzer insgesamt</p>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page <= 1}
-              className="rounded-xl border border-border px-3 py-1.5 text-xs font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background disabled:opacity-40"
-            >
-              ← Zurück
-            </button>
-            <button
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              disabled={page >= totalPages}
-              className="rounded-xl border border-border px-3 py-1.5 text-xs font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background disabled:opacity-40"
-            >
-              Weiter →
-            </button>
-          </div>
-        </div>
-      )}
+        {loading && !resp ? (
+          <AdminPageSkeleton rows={6} />
+        ) : resp ? (
+          <>
+            <div className="overflow-x-auto rounded-xl border border-border">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-card text-left text-xs text-muted-fg">
+                    <th className="px-3 py-2 font-medium">E-Mail</th>
+                    <th className="px-3 py-2 font-medium">Rolle</th>
+                    <th className="px-3 py-2 font-medium">Plan</th>
+                    <th className="px-3 py-2 font-medium">Registriert</th>
+                    <th className="px-3 py-2 font-medium">Letzter Login</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {resp.rows.map((u) => (
+                    <tr
+                      key={u.id}
+                      onClick={() => setSelected(u.id)}
+                      className="cursor-pointer border-b border-border last:border-0 bg-card hover:bg-background"
+                    >
+                      <td className="px-3 py-2">
+                        <span className="text-foreground">{u.email ?? "(keine)"}</span>
+                        <span className="ml-2 text-xs text-muted-fg">{u.provider}</span>
+                        {u.banned && <Badge tone="rose" className="ml-2">gesperrt</Badge>}
+                        {!u.emailConfirmed && <Badge tone="amber" className="ml-2">unbestätigt</Badge>}
+                      </td>
+                      <td className="px-3 py-2">
+                        <Badge tone={ROLE_TONE[u.role]}>{u.role}</Badge>
+                      </td>
+                      <td className="px-3 py-2">
+                        <Badge tone={u.plan === "free" ? "muted" : "primary"}>{u.plan}</Badge>
+                      </td>
+                      <td className="px-3 py-2 text-muted-fg">{dt(u.createdAt)}</td>
+                      <td className="px-3 py-2 text-muted-fg">{dt(u.lastSignInAt)}</td>
+                    </tr>
+                  ))}
+                  {resp.rows.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="px-3 py-8 text-center text-muted-fg">
+                        Keine Nutzer gefunden.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-      {/* Edit Role Modal — always mounted + class-toggled (not conditionally
-          rendered) so open/close can transition instead of popping
-          instantly, same pattern as components/UserMenu.tsx. Modals stay
-          opaque + centered (.modal-surface, DESIGN_SYSTEM.md §16) — the
-          glass/blur treatment is reserved for trigger-anchored dropdowns. */}
-      <div
-        className={`fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:items-center ${
-          editingUser ? "opacity-100" : "invisible pointer-events-none opacity-0"
-        }`}
-      >
-        <div
-          className={`modal-surface w-full max-w-md rounded-t-2xl border border-border px-6 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-xl transition-[opacity,transform] duration-300 [transition-timing-function:var(--ease-drawer)] md:mx-4 md:rounded-2xl md:pb-6 ${
-            editingUser ? "translate-y-0 opacity-100 md:scale-100" : "translate-y-full opacity-0 md:translate-y-0 md:scale-[0.96]"
-          }`}
-        >
-          {editingUser && (
-            <>
-              <h3 className="text-lg font-bold text-foreground">Rolle bearbeiten</h3>
-              <p className="mt-1 text-sm text-muted-fg">
-                Benutzer: <span className="font-mono font-medium">{editingUser.email ?? editingUser.id}</span>
-              </p>
-
-              <div className="mt-4 space-y-2">
-                {ROLES.map((role) => (
-                  <label
-                    key={role}
-                    className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition ${
-                      editRole === role
-                        ? "border-emerald-600 dark:border-emerald-500 bg-emerald-100 dark:bg-emerald-950/40"
-                        : "border-border hover:bg-background"
-                    }`}
+            {resp.totalPages > 1 && (
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-fg">
+                  Seite {resp.page} / {resp.totalPages}
+                </span>
+                <div className="flex gap-2">
+                  <CTAButton
+                    variant="secondary"
+                    size="sm"
+                    type="button"
+                    disabled={resp.page <= 1}
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
                   >
-                    <input
-                      type="radio"
-                      name="role"
-                      value={role}
-                      checked={editRole === role}
-                      onChange={() => setEditRole(role)}
-                      className="accent-primary"
-                    />
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">{role}</p>
-                      <p className="text-xs text-muted-fg">
-                        {role === "ADMIN" && "Voller Zugriff auf das Admin-Panel und alle Funktionen."}
-                        {role === "PROVIDER" && "Kann Angebote erstellen und Studien bearbeiten."}
-                        {role === "CONSUMER" && "Standard-Benutzer. Kann Studien lesen und suchen."}
-                      </p>
-                    </div>
-                  </label>
-                ))}
+                    <ChevronLeft className="h-4 w-4" strokeWidth={2} /> Zurück
+                  </CTAButton>
+                  <CTAButton
+                    variant="secondary"
+                    size="sm"
+                    type="button"
+                    disabled={resp.page >= resp.totalPages}
+                    onClick={() => setPage((p) => p + 1)}
+                  >
+                    Weiter <ChevronRight className="h-4 w-4" strokeWidth={2} />
+                  </CTAButton>
+                </div>
               </div>
-
-              <div className="mt-5 flex justify-end gap-3">
-                <button
-                  onClick={() => setEditingUser(null)}
-                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background"
-                >
-                  Abbrechen
-                </button>
-                <button
-                  onClick={() => void handleRoleChange()}
-                  disabled={actionLoading || editRole === editingUser.role}
-                  className="rounded-xl bg-emerald-600 dark:bg-emerald-500 px-4 py-2 text-sm font-semibold text-white transition active:scale-[0.97] hover:bg-emerald-700 disabled:opacity-50"
-                >
-                  {actionLoading ? "Wird gespeichert..." : "Rolle speichern"}
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+            )}
+          </>
+        ) : null}
       </div>
 
-      {/* Delete Confirmation Modal — same always-mounted pattern as above. */}
-      <div
-        className={`fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-300 md:items-center ${
-          deletingUser ? "opacity-100" : "invisible pointer-events-none opacity-0"
-        }`}
-      >
-        <div
-          className={`modal-surface w-full max-w-md rounded-t-2xl border border-red-200 px-6 pt-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] shadow-xl transition-[opacity,transform] duration-300 [transition-timing-function:var(--ease-drawer)] md:mx-4 md:rounded-2xl md:pb-6 ${
-            deletingUser ? "translate-y-0 opacity-100 md:scale-100" : "translate-y-full opacity-0 md:translate-y-0 md:scale-[0.96]"
-          }`}
-        >
-          {deletingUser && (
-            <>
-              <h3 className="text-lg font-bold text-red-700">Benutzer löschen</h3>
-              <p className="mt-2 text-sm text-muted-fg">
-                Bist du sicher, dass du den Benutzer{" "}
-                <span className="font-mono font-semibold text-foreground">
-                  {deletingUser.email ?? deletingUser.id}
-                </span>{" "}
-                endgültig löschen möchtest?
-              </p>
-              <p className="mt-2 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">
-                Diese Aktion kann nicht rückgängig gemacht werden. Alle Daten des Benutzers werden unwiderruflich gelöscht.
-              </p>
-
-              <div className="mt-5 flex justify-end gap-3">
-                <button
-                  onClick={() => setDeletingUser(null)}
-                  className="rounded-xl border border-border px-4 py-2 text-sm font-medium text-muted-fg transition active:scale-[0.97] hover:bg-background"
-                >
-                  Abbrechen
-                </button>
-                <button
-                  onClick={() => void handleDelete()}
-                  disabled={actionLoading}
-                  className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition active:scale-[0.97] hover:bg-red-700 disabled:opacity-50"
-                >
-                  {actionLoading ? "Wird gelöscht..." : "Endgültig löschen"}
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
+      {selected && (
+        <UserDrawer userId={selected} onClose={() => setSelected(null)} onChanged={() => void load()} />
+      )}
+    </AdminPage>
   );
 }

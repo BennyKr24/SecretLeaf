@@ -19,6 +19,10 @@ import {
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://secretleaf.net';
 
+// Slugs that only exist in the DB (added via the admin editor, not in
+// updates.json) render on demand rather than 404.
+export const dynamicParams = true;
+
 export function generateStaticParams() {
   return getAllUpdateSlugs().map((slug) => ({ slug }));
 }
@@ -29,7 +33,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const update = getUpdateBySlug(slug);
+  const update = await getUpdateBySlug(slug);
   if (!update) return { title: 'Update nicht gefunden – SecretLeaf' };
 
   const meta = getCategoryMetaFor(update.category);
@@ -252,7 +256,7 @@ export default async function UpdateDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const update = getUpdateBySlug(slug);
+  const update = await getUpdateBySlug(slug);
 
   if (!update) notFound();
 

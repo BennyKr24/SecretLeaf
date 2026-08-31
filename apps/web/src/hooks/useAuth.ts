@@ -22,11 +22,10 @@ export type AuthUser = SessionUser & {
   /** Resolved plan — always present, defaults to "free". */
   plan: UserPlan;
   /**
-   * True for pro/team plans or TEAM role — the single source of truth for
-   * Pro-gated UI. Compute it once here rather than re-deriving
-   * `plan === "pro" || ...` ad hoc at each call site (that drifted once
-   * already: the grow page checked `role === "TEAM"` too, the pricing page
-   * didn't, so a TEAM-role user saw the free upsell on /pricing).
+   * True for pro/team plans — the single source of truth for Pro-gated UI.
+   * Compute it once here rather than re-deriving `plan === "pro" || ...` ad
+   * hoc at each call site (that drifted once already between the grow and
+   * pricing pages).
    */
   isPro: boolean;
   /** Display name from profile, or username fallback. */
@@ -75,7 +74,7 @@ function toAuthUser(user: SessionUser): AuthUser {
   return {
     ...user,
     plan,
-    isPro: plan === "pro" || plan === "team" || user.role === "TEAM",
+    isPro: plan === "pro" || plan === "team",
     displayName,
     initials: getInitials(displayName),
   };

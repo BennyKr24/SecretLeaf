@@ -175,9 +175,11 @@ export default async function UpdatesPage({
 }) {
   const { category } = await searchParams;
 
-  const allUpdates = getAllUpdates();
+  const [allUpdates, availableCategories] = await Promise.all([
+    getAllUpdates(),
+    getAvailableCategories(),
+  ]);
   const categoryMeta = getCategoryMeta();
-  const availableCategories = getAvailableCategories();
 
   const filteredUpdates = category
     ? allUpdates.filter((u) => u.category === category)

@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import type { Route } from "next";
 import { getApiHealth, getPublicOverview, getPublicStatusReport } from "@/lib/publicApi";
-import changelogData from "@/data/changelog.json";
+import { getAllUpdates, getBadgeClasses, getCategoryMetaFor } from "@/lib/updates";
 import type { StatusEvent } from "@/lib/types";
 
 const levelClasses: Record<string, string> = {
@@ -138,17 +138,6 @@ const getImpactModel = (overallStatus: string) => {
   };
 };
 
-const typeLabels: Record<string, { label: string; cls: string }> = {
-  feature:     { label: "Feature",      cls: "bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/40" },
-  fix:         { label: "Bugfix",       cls: "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-900/40" },
-  security:    { label: "Sicherheit",   cls: "bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-900/40" },
-  performance: { label: "Performance",  cls: "bg-blue-100 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-900/40" },
-  release:     { label: "Release",      cls: "bg-violet-100 dark:bg-violet-950/40 text-violet-700 dark:text-violet-400 border-violet-200 dark:border-violet-900/40" },
-  docs:        { label: "Doku",         cls: "bg-border text-foreground/80 border-border" },
-  chore:       { label: "Intern",       cls: "bg-border text-foreground/80 border-border" },
-  update:      { label: "Update",       cls: "bg-cyan-100 dark:bg-cyan-950/40 text-cyan-700 dark:text-cyan-400 border-cyan-200 dark:border-cyan-900/40" },
-};
-
 const getFreshnessMeta = (iso: string | null) => {
   if (!iso) {
     return {
@@ -232,28 +221,12 @@ export default async function StatusPage() {
   const coverageFreshness = getFreshnessMeta(overview?.stats.latestStudyAt ?? null);
   const priorityCards = getPriorityCards();
 
-  const operationalChangelog = (statusReport?.events ?? [])
-    .filter((event: StatusEvent) => event.count > 0 || event.lastSeen)
-    .slice(0, 4)
-    .map((event: StatusEvent) => ({
-      hash: `ops-${event.key}-${event.lastSeen ?? statusReport?.generatedAt ?? "now"}`,
-      version: null,
-      date: (event.lastSeen ?? statusReport?.generatedAt ?? new Date().toISOString()).slice(0, 10),
-      title: event.label,
-      type: event.level === "red" ? "security" : event.level === "yellow" ? "fix" : "update",
-      changes: [event.description, `Count: ${event.count}`],
-    }));
-
-  const changelog = [...(changelogData.releases ?? []), ...operationalChangelog]
-    .sort((a, b) => {
-      const byDate = new Date(b.date).getTime() - new Date(a.date).getTime();
-      if (byDate !== 0) return byDate;
-      const aIsRelease = Boolean(a.version);
-      const bIsRelease = Boolean(b.version);
-      if (aIsRelease === bIsRelease) return 0;
-      return aIsRelease ? -1 : 1;
-    })
-    .slice(0, 8);
+  // Zwei getrennte Blöcke weiter unten — bewusst NICHT gemischt:
+  //   • "Automatischer Betrieb" = statusReport.events (Import-/Sync-/Coverage-
+  //     Läufe der Pipeline).
+  //   • "Neuigkeiten" = die `updates`-Tabelle (im Admin unter Neuigkeiten
+  //     gepflegt) — neue Inhalte/Features, die Benny selbst einträgt.
+  const news = (await getAllUpdates()).slice(0, 6);
 
   return (
     <main className="min-h-screen bg-background">
@@ -449,9 +422,11 @@ export default async function StatusPage() {
 
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Historie</p>
-            <h2 className="mt-2 text-2xl font-bold text-foreground">Was in den letzten 30 Tagen war</h2>
-            <p className="mt-2 text-sm text-muted-fg">Ein kurzer Überblick über Datenaktualität und Auffälligkeiten.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Automatischer Betrieb</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">Automatische Läufe &amp; Datenaktualität</h2>
+            <p className="mt-2 text-sm text-muted-fg">
+              Import-, Sync- und Coverage-Läufe der Pipeline aus den letzten 30 Tagen — wie frisch die Daten sind und ob etwas auffällig war.
+            </p>
 
             <div className="mt-5 space-y-3">
               {(statusReport?.events ?? []).map((event: StatusEvent) => (
@@ -475,41 +450,35 @@ export default async function StatusPage() {
           </section>
 
           <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Chronik</p>
-            <h2 className="mt-2 text-2xl font-bold text-foreground">Was sich zuletzt getan hat</h2>
-            <p className="mt-2 text-sm text-muted-fg">Neue Features, Fixes und Updates in SecretLeaf.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Neuigkeiten</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">Neue Inhalte, Features &amp; Fixes</h2>
+            <p className="mt-2 text-sm text-muted-fg">Manuell gepflegte Änderungen an SecretLeaf — getrennt von den automatischen Läufen links.</p>
 
             <div className="mt-5 space-y-3">
-              {changelog.map((entry) => {
-                const tl = typeLabels[entry.type] ?? typeLabels["update"]!;
-                return (
-                  <article key={entry.hash} className="rounded-xl border border-border bg-background p-4">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold ${tl.cls}`}>{tl.label}</span>
-                      {entry.version && (
-                        <span className="rounded-full border border-border bg-card px-2.5 py-0.5 text-xs font-mono text-muted-fg">v{entry.version}</span>
-                      )}
-                      <time className="ml-auto text-xs text-muted-fg">
-                        {new Date(entry.date).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}
-                      </time>
-                    </div>
-                    <h3 className="mt-2 text-sm font-semibold text-foreground">{entry.title}</h3>
-                    {entry.changes.length > 0 && (
-                      <ul className="mt-2 space-y-1">
-                        {entry.changes.slice(0, 4).map((change: string, i: number) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-muted-fg">
-                            <span className="mt-0.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-emerald-400" />
-                            {change}
-                          </li>
-                        ))}
-                        {entry.changes.length > 4 && (
-                          <li className="text-xs text-muted-fg pl-3.5">+ {entry.changes.length - 4} weitere Änderungen</li>
-                        )}
-                      </ul>
+              {news.length === 0 && (
+                <p className="rounded-xl border border-border bg-background p-4 text-sm text-muted-fg">
+                  Noch keine Einträge.
+                </p>
+              )}
+              {news.map((entry) => (
+                <article key={entry.slug} className="rounded-xl border border-border bg-background p-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold ${getBadgeClasses(entry.category)}`}>
+                      {getCategoryMetaFor(entry.category).label}
+                    </span>
+                    {entry.version && (
+                      <span className="rounded-full border border-border bg-card px-2.5 py-0.5 text-xs font-mono text-muted-fg">
+                        {entry.version}
+                      </span>
                     )}
-                  </article>
-                );
-              })}
+                    <time className="ml-auto text-xs text-muted-fg">
+                      {new Date(entry.date).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}
+                    </time>
+                  </div>
+                  <h3 className="mt-2 text-sm font-semibold text-foreground">{entry.title}</h3>
+                  <p className="mt-1 text-xs leading-relaxed text-muted-fg">{entry.summary}</p>
+                </article>
+              ))}
             </div>
           </section>
         </div>

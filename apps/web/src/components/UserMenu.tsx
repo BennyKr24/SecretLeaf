@@ -31,8 +31,8 @@ function Avatar({ user }: { user: AuthUser }) {
 
 // ── Plan Badge ────────────────────────────────────────────────────────────────
 
-function PlanBadge({ plan, role }: { plan: "free" | "pro" | "team"; role: string }) {
-  const effectivePlan = role === "TEAM" ? "team" : plan;
+function PlanBadge({ plan }: { plan: "free" | "pro" | "team" }) {
+  const effectivePlan = plan;
   if (effectivePlan === "pro") {
     return (
       <span className="ml-1 rounded-full bg-amber-100 dark:bg-amber-900 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300">
@@ -197,7 +197,7 @@ export function UserMenu() {
               <div className="min-w-0">
                 <p className="text-[13px] font-semibold text-foreground truncate flex items-center gap-1">
                   {user.displayName}
-                  <PlanBadge plan={user.plan} role={user.role} />
+                  <PlanBadge plan={user.plan} />
                 </p>
                 <p className="text-[11px] text-muted-fg capitalize">
                   {user.role.toLowerCase()}
