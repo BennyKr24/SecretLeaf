@@ -400,9 +400,18 @@ app/api/admin/
 
 ## 6. Entscheidungen (2026-08-31 geklärt)
 
-1. **`[locale]` im Admin-Pfad → raus.** Admin zieht auf `/admin` ohne Locale
-   (eigener Route-Zweig), Redirects von `/[locale]/dashboard/admin/*` auf neu.
-   Umzug in **Phase 1**.
+1. **`[locale]` im Admin-Pfad → raus, aber eigener Pass.** Ziel bleibt `/admin`
+   ohne Locale. Beim Umsetzen (2026-08-31) zeigte sich mehr Kopplung als
+   gedacht: die geteilte `<CTAButton>` und next-intl `<Link>` (`localePrefix:
+   "always"`) hängen jeden `href` an ein `/de`-Präfix, d. h. der Umzug
+   erzwingt entweder einen intl-Provider-Wrapper für `/admin` **oder** einen
+   Swap der Nav-Primitives nur für Admin. Zusätzlich gibt es **kein**
+   `@supabase/ssr` / Cookie-Session im Projekt → das „Server-`layout.tsx`-
+   Gate" braucht erst diese Abhängigkeit. **Beides zusammen** als eigener
+   Infra-Pass „Admin-Routing + Server-Auth" (nach den Seiten-Sanierungen),
+   nicht verzahnt mit den Bug-/Design-Fixes. Bis dahin bleibt der
+   **Client-Gate in `AdminShell`** (ist ohnehin nur UX — die echte Grenze
+   sind die `requireAdmin`-Bearer-Checks in den API-Routen).
 2. **`updates.json` → DB-Tabelle `updates`** (+ Backfill aus der JSON,
    `lib/updates.ts` liest aus DB). Editor wird normale CRUD-Fläche.
 3. **`"TEAM"`-Rolle → aus `UserRole` entfernen.** Kein Team-Feature auf der
@@ -432,16 +441,21 @@ app/api/admin/
 _Stand: erster Fundament-Commit steht (`tsc` + `eslint` clean, alle 7 Admin-Routen 200 im `next dev`)._
 
 ### Phase 1 — Bestand sanieren (Bugs + Design)
-- [ ] Übersicht-Rebuild (§3.1)
-- [ ] Benutzer: B1/B2 serverseitig, B9, Plan-Spalte (Read-only Join), Design (§3.2)
+- [x] `/status`: Chronik-Split — `operationalChangelog`-Merge entfernt; „Automatischer Betrieb" (Läufe, aus `statusReport.events`) und „Neuigkeiten" (manuell, aus `changelog.json`) sind jetzt zwei klar getrennte Blöcke (§3.9). _Interim ohne `updates`-Tabelle; die kommt in Phase 2._
+- [ ] Übersicht-Rebuild (§3.1) — Vertical Slice: `lib/admin/client.ts` + `api/admin/overview/route.ts` + Seite auf Primitives
+- [ ] Benutzer: B1/B2 serverseitig (Postgres-View), B9 (`TEAM` raus), Plan-Spalte (Read-only Join), Design (§3.2)
 - [ ] Studien: B4, B5, Detail-View, `studyType`-Filter, Design (§3.4)
 - [ ] Algorithmus: B6, B7, Typ-Import, Datei-Split (§3.7)
 - [ ] Auswertungen: B3, erste Zeitreihe, Dataviz-Palette (§3.8)
 - [ ] Engine: batchSize, Confirm, Progress; Logs → Automation (§3.6)
 - [ ] Assistent: Streaming/Markdown + Persistenz-Entscheidung (§3.13)
-- [ ] `/status`: Chronik in „Automatische Läufe" + „Neuigkeiten" splitten (§3.9)
 - [ ] Voller Design-System-Pass über alle 7 Seiten (0.3 abhaken)
 - [ ] `tsc --noEmit` + `eslint` clean; `next dev` alle Routen 200
+
+### Phase 1b — Admin-Routing + Server-Auth (eigener Infra-Pass)
+- [ ] `@supabase/ssr` einführen, Cookie-Session serverseitig lesbar machen
+- [ ] Admin von `/[locale]/dashboard/admin/*` nach `/admin/*` ziehen (§6.1), Redirects, `proxy.ts`-Matcher, `ADMIN_BASE` flippen
+- [ ] Server-`layout.tsx` mit echtem `requireAdmin`-Gate (Redirect statt Client-Flash)
 
 ### Phase 2 — Umsatz & Betrieb sichtbar machen
 - [ ] `stripe_events`-Migration + Webhook-Persistenz

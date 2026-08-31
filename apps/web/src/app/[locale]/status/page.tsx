@@ -232,19 +232,14 @@ export default async function StatusPage() {
   const coverageFreshness = getFreshnessMeta(overview?.stats.latestStudyAt ?? null);
   const priorityCards = getPriorityCards();
 
-  const operationalChangelog = (statusReport?.events ?? [])
-    .filter((event: StatusEvent) => event.count > 0 || event.lastSeen)
-    .slice(0, 4)
-    .map((event: StatusEvent) => ({
-      hash: `ops-${event.key}-${event.lastSeen ?? statusReport?.generatedAt ?? "now"}`,
-      version: null,
-      date: (event.lastSeen ?? statusReport?.generatedAt ?? new Date().toISOString()).slice(0, 10),
-      title: event.label,
-      type: event.level === "red" ? "security" : event.level === "yellow" ? "fix" : "update",
-      changes: [event.description, `Count: ${event.count}`],
-    }));
-
-  const changelog = [...(changelogData.releases ?? []), ...operationalChangelog]
+  // Zwei getrennte Quellen, zwei getrennte Blöcke weiter unten — bewusst NICHT
+  // mehr zu einer Liste gemischt:
+  //   • "Automatischer Betrieb" = statusReport.events (Import-/Sync-/Coverage-
+  //     Läufe der Pipeline) — steht schon in der Sektion "Automatischer
+  //     Betrieb" mit vollem Detail.
+  //   • "Neuigkeiten" = changelog.json (manuell gepflegte + aus Git
+  //     abgeleitete Einträge zu neuen Inhalten/Features).
+  const changelog = [...(changelogData.releases ?? [])]
     .sort((a, b) => {
       const byDate = new Date(b.date).getTime() - new Date(a.date).getTime();
       if (byDate !== 0) return byDate;
@@ -449,9 +444,11 @@ export default async function StatusPage() {
 
         <div className="mt-8 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
           <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Historie</p>
-            <h2 className="mt-2 text-2xl font-bold text-foreground">Was in den letzten 30 Tagen war</h2>
-            <p className="mt-2 text-sm text-muted-fg">Ein kurzer Überblick über Datenaktualität und Auffälligkeiten.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Automatischer Betrieb</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">Automatische Läufe &amp; Datenaktualität</h2>
+            <p className="mt-2 text-sm text-muted-fg">
+              Import-, Sync- und Coverage-Läufe der Pipeline aus den letzten 30 Tagen — wie frisch die Daten sind und ob etwas auffällig war.
+            </p>
 
             <div className="mt-5 space-y-3">
               {(statusReport?.events ?? []).map((event: StatusEvent) => (
@@ -475,9 +472,9 @@ export default async function StatusPage() {
           </section>
 
           <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Chronik</p>
-            <h2 className="mt-2 text-2xl font-bold text-foreground">Was sich zuletzt getan hat</h2>
-            <p className="mt-2 text-sm text-muted-fg">Neue Features, Fixes und Updates in SecretLeaf.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400">Neuigkeiten</p>
+            <h2 className="mt-2 text-2xl font-bold text-foreground">Neue Inhalte, Features &amp; Fixes</h2>
+            <p className="mt-2 text-sm text-muted-fg">Manuell gepflegte Änderungen an SecretLeaf — getrennt von den automatischen Läufen links.</p>
 
             <div className="mt-5 space-y-3">
               {changelog.map((entry) => {
