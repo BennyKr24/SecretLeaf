@@ -53,6 +53,60 @@ export function buildListResponse<T>(
 
 export type AdminErrorBody = { error: string; issues?: unknown };
 
+// ── Lage / Briefing ─────────────────────────────────────────────────────────
+
+export type BriefingRun = {
+  jobName: string;
+  label: string;
+  scheduleLabel: string;
+  lastRun: {
+    success: boolean;
+    finishedAt: string;
+    durationSeconds: number | null;
+    error: string | null;
+  } | null;
+  /** no successful run within 1.5× the schedule interval */
+  stale: boolean;
+};
+
+export type BriefingAttention = {
+  severity: "error" | "warn" | "info";
+  text: string;
+  href: string;
+};
+
+export type AdminBriefing = {
+  generatedAt: string;
+  money: {
+    /** true once the Stripe webhook/API is wired (Phase 2); until then the
+     *  figures below are derived from the `subscriptions` table only */
+    stripeConnected: boolean;
+    activePro: number;
+    trialing: number;
+    pastDue: number;
+    canceled30d: number;
+    /** estimate: activePro × monthly price — not real billed revenue yet */
+    estimatedMrrCents: number;
+  };
+  people: {
+    totalUsers: number;
+    newUsers24h: number;
+    newUsers7d: number;
+    activeGrows: number;
+    /** share (0–1) of last-7d new users that have created ≥1 grow */
+    activation7d: number;
+    logEntries24h: number;
+  };
+  content: {
+    pendingReview: number;
+    newStudies24h: number;
+    totalStudies: number;
+    feedbackEvents7d: number;
+  };
+  runs: BriefingRun[];
+  attention: BriefingAttention[];
+};
+
 // ── Audit ───────────────────────────────────────────────────────────────────
 
 export const auditListQuerySchema = listQuerySchema.extend({

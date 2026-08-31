@@ -59,7 +59,7 @@ export type AdminNavItem = {
 
 export const ADMIN_NAV_REGISTRY: AdminNavItem[] = [
   // ── Betrieb ──────────────────────────────────────────────────────────────
-  { group: "Betrieb", segment: "", label: "Übersicht", icon: Home, exact: true, status: "live" },
+  { group: "Betrieb", segment: "", label: "Lage", icon: Home, exact: true, status: "live" },
   { group: "Betrieb", segment: "automation", label: "Automatisierung", icon: CalendarClock, status: "planned", phase: 2 },
   { group: "Betrieb", segment: "audit", label: "Audit-Log", icon: ScrollText, status: "planned", phase: 2 },
 
