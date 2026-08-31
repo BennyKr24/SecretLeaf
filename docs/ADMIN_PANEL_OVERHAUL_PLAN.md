@@ -1,487 +1,489 @@
-# Admin-Panel — Überarbeitung: Plan, Analyse & Recherche
+# SecretLeaf HQ — Admin-Leitstand: Plan, Analyse & Recherche
 
-**Ziel:** Das Admin-Panel vom „Studien-Kontrollraum mit ein paar Extras" zu
-einem echten Betriebs-Cockpit machen. Seit dem letzten Umbau (2026-08-16,
-9→7 Seiten) sind Billing, Auth-Mails, i18n-Pipeline, Consent-Versionierung,
-das Knowledge-OS-CMS und die Grow-/Diagnose-Domäne dazugekommen — **keins
-davon hat eine Admin-Oberfläche**. Gleichzeitig hat der bestehende Bestand
-strukturelle Altlasten (eine 785-Zeilen-Mega-Route, kein Server-Gate, keine
-geteilten Typen/Primitives) und mehrere echte Bugs.
+**Neuausrichtung (2026-08-31):** Das Admin-Panel wird vom Studien-Werkzeug zu
+einem **Leitstand für das ganze Unternehmen** — „SecretLeaf HQ". Benny nutzt es
+solo, als **tägliches Morgen-Briefing** (2-Minuten-Blick: was lief über Nacht,
+welche Zahl bewegt sich, was braucht heute eine Entscheidung) und für gezielte
+Steuerung. Es schickt **gezielte Benachrichtigungen** per E-Mail bei echten
+Ereignissen. Kosten kommen **so automatisch wie möglich** rein.
+
+Was gesteuert / überwacht werden muss: Umsatz & Kosten, Wachstum & Nutzer,
+Content & Wissen, Betrieb & Zustellung (inkl. ausgebaute Mail-Anbindung),
+Compliance — plus die **Hebel**, die wir bisher übersehen (§5).
 
 Status-Legende: `[ ]` offen · `[~]` in Arbeit · `[x]` fertig & verifiziert
-
-Referenz-Design: `DESIGN_SYSTEM.md` (v2.2) ist die Quelle der Wahrheit — vor
-allem §5 (Farben), §13/§14 (Cards/Buttons), §16 (Materials), §18 (Dashboard
-Rules), §19 (Mobile). §4 verbietet ausdrücklich „Admin Templates / Bootstrap
-Dashboards / Themeforest" als Vorbild — das bleibt so.
+Design: `DESIGN_SYSTEM.md` v2.2 ist Quelle der Wahrheit (§5 Farben, §13/§14
+Cards/Buttons, §16 Materials, §18 „Arbeitsfläche, nicht Marketing", §19 Mobile).
+§4 verbietet „Admin/Bootstrap/Themeforest-Dashboards" als Vorbild.
 
 ---
 
-## 0. Ausgangslage (Code-Check 2026-08-31)
+## 0. Die Module (Ziel-Bild)
 
-Zwei Analyse-Durchläufe (bestehende Seiten + fehlende Flächen). Kurzfassung.
-
-### 0.1 Struktur heute
-
-| Ebene | Umsetzung |
-|---|---|
-| Routing | `apps/web/src/app/[locale]/dashboard/admin/**` — 1 Layout + 7 Seiten, **alle `"use client"`** |
-| Shell/Nav | `components/admin/AdminShell.tsx` (client, 272 Z.) — 4 Nav-Gruppen, 3 davon mit nur 1 Eintrag |
-| Auth-Gate | `lib/useAdminAuth.ts` — rein clientseitig, Supabase-Session + `role === "ADMIN"`. Läuft **doppelt pro Navigation** (Shell + jede Seite) |
-| API-Client | `lib/adminApi.ts` — `adminApi(session, action, params)` → **`POST /api/admin/dashboard`** |
-| API-Backend | **Eine einzige Datei**: `app/api/admin/dashboard/route.ts` (785 Z.), ein `POST`-Handler mit `switch(action)` über **18 Fälle** |
-| Server-Auth | `requireAdmin(req)` in `lib/serverAuth.ts` |
-
-Kein Server-Component im ganzen Admin-Baum, keine Ressourcen-Routen, **keine
-geteilten Admin-Typen** — jede Seite deklariert ihre Response-Shape inline.
-`layout.tsx` (7 Z.) macht nichts außer `<AdminShell>`.
-
-**Aktuelle Nav (`NAV_GROUPS`):**
-- Übersicht → `/dashboard/admin`
-- Assistent → `/dashboard/admin/assistant`
-- Inhalte → Benutzer, Studien
-- Pipeline → Pipeline-Engine, Algorithmus, **Auswertungen** (Analytics falsch einsortiert)
-
-### 0.2 Bugs & tote UI im Bestand
-
-| # | Fundstelle | Problem |
+| Modul | Was es steuert / zeigt | Route |
 |---|---|---|
-| B1 | `users/page.tsx` + `users-list` | **Suche & Rollenfilter filtern nur die aktuelle 25er-Seite** — Server filtert *nach* der Pagination. Wer auf Seite 2+ liegt, ist unauffindbar. |
-| B2 | `users-list` | `total`/`totalPages` sind ein zugegebener Schätzwert (`?? users.length`) → Pagination-Controls oft falsch. |
-| B3 | `analytics/page.tsx` | **„Ø Score" mittelt nur die Top-20-Studien** → aufgeblähter, sinnloser Wert. „Study Types"-Kachel zählt *distinkte Typen*, nicht Studien (falsch beschriftet). |
-| B4 | `page.tsx` → `studies/page.tsx` | Deep-Link `/dashboard/admin/studies?filter=pending` wird von der Zielseite **ignoriert**. |
-| B5 | `studies/page.tsx` | Suche **ohne Debounce** → ein Fetch pro Tastenanschlag (Users-Seite macht 400 ms). |
-| B6 | `algorithm/page.tsx` | **Kein Dirty-State-Guard** — ungespeicherte Edits verschwinden beim Reload. Save-Buttons nicht deaktiviert wenn `tableExists === false` (jeder Klick → 500-Toast). |
-| B7 | `algorithm/page.tsx` | Sektion „Blockierte Quellen" hat als **einzige kein „Zurücksetzen"**. `newBlocked.reason`-Input wird nie gerendert. |
-| B8 | `dashboard/route.ts` `engine-*` | Server-zu-Server-`fetch` in dasselbe Deployment via `getBaseUrl(req)` (Header-Raterei). Falscher Host-Header ⇒ Pipeline/Adapt/Reprocess brechen ohne Fallback. Kein Progress/Polling bei langen Läufen, keine Bestätigung bei destruktiven Nicht-Dry-Runs. |
-| B9 | `types.ts` | `UserRole` enthält `"TEAM"`, aber Users-UI **und** Server-Whitelist lehnen es ab → ein TEAM-User ist uneditierbar, zeigt Fallback-Badge. |
-| B10 | mehrere | Backend kann mehr als die UI zeigt: `study-update.reviewNote`, `studies`-Filter `studyType` + Sort `study_type`, `engine-reprocess.batchSize`, blocked-source `reason`. Kein Studien-Detail-View (Abstract/DOI/Topics nirgends lesbar). Keine Zeitreihe/Trend **irgendwo** im Panel. |
-| B11 | `assistant/page.tsx` | Copy verspricht geräteübergreifende Persistenz — ist reines `localStorage`. Kein Streaming, kein Markdown-Rendering, kein „als Notiz speichern". |
+| **Lage** | Morgen-Briefing: Umsatz heute/MTD, neue Nutzer, aktive Grows, Nacht-Läufe, was rot ist, offene Entscheidungen | `/admin` |
+| **Finanzen** | MRR/ARR, Abos (aktiv/Trial/past_due), Stripe-Auszahlungen & Gebühren, Infra-Kosten pro Dienst, Burn & Runway, Umsatz-vs-Kosten-Trend, Budget-Alerts | `/admin/finance` |
+| **Wachstum** | Signup-Funnel, Aktivierung (erster Grow), Retention-Kohorten, Free→Pro-Conversion, Kündigungen + Gründe | `/admin/growth` |
+| **Nutzer** | Serverseitige Suche/Filter, Detail (Plan, Grows, Aktivität, Mails, Consent), Aktionen: Pro geben/entziehen, Rolle, sperren, Support-Ansicht | `/admin/users` |
+| **Content & Wissen** | Studien-Queue + Engine, Wissens-CMS (live/Entwurf/Review), Übersetzungs-Coverage, Neuigkeiten-Editor (speist `/status`) | `/admin/content` |
+| **Betrieb** | Cron-Registry + Lauf-Historie + „jetzt ausführen", Fehler-Memory, Migrationsstand lokal/prod, Sentry-Fehlerrate, Integrations-/Key-Status | `/admin/ops` |
+| **Zustellung / Mail** | Auth-Mail-Log, Hook-Health, Bounces/Complaints, Newsletter-Signups, Broadcast an Segmente | `/admin/mail` |
+| **Steuerung** | Feature-Flags, Wartungsmodus/Kill-Switches, Site-Banner, Pricing-Config, Rate-Limits, Decision-Log (§5) | `/admin/control` |
+| **Compliance** | Consent-Quoten & -Version, DSGVO-Anfragen-Log, Impressumspflicht-Trigger, Sub-Prozessoren-Liste | `/admin/compliance` |
+| **Audit-Log** | wer hat was wann geändert — quer über alles | `/admin/audit` |
+| **Engine / Algorithmus** | (bleibt) Pipeline-Trigger + Scoring-Config, aber unter Content einsortiert | `/admin/engine`, `/admin/algorithm` |
+| **Assistent** | (bleibt) Claude-Chat für Notizen/Entwürfe, mit Server-Persistenz | `/admin/assistant` |
 
-### 0.3 Design-System-Verstöße (durchgängig)
+Pfade **ohne `[locale]`** — der `/admin`-Umzug ist ein eigener Infra-Pass
+(§7 „Phase 1b"), bis dahin läuft alles unter `/dashboard/admin/*`.
 
-- **`emerald-*` als Erfolgs-/Markengrün** in `users`, `studies`, Übersichts-Status-Pill
-  (`bg-emerald-500/15`, `text-emerald-600`, `bg-emerald-600`-Buttons,
-  `border-emerald-600`-Spinner). §5 sagt: Erfolg = `--primary`, und
-  Standard-Grün ist explizit der „KI-generierte Dark-SaaS"-Tell.
-- **Rohes `red-*`** für Fehler (`border-red-200 bg-red-50 text-red-700`) statt der `rose-*`-Tokens.
-- **Pills handgerollt** mit `bg-purple-100 / bg-blue-100 / bg-emerald-100 / bg-amber-100 / bg-red-100`
-  in `users` (`ROLE_COLORS`), `studies` (`QualityBadge`/`PriorityBadge`), `analytics`
-  (zwei getrennte Prioritäts-Implementierungen). `<Badge tone>` gibt's — nur `algorithm` nutzt es.
-- **Modal-Buttons handgerollt** (`bg-emerald-600 dark:bg-emerald-500`) statt `<CTAButton>`. Users-Modal nutzt Glyphen `⌫`/`×` statt Lucide.
-- **4 verschiedene Notification-Muster** (Auto-Toast, Dismiss-Banner, Banner-mit-X, Result-Card). Kein `<Alert>`.
-- **Übersichts-Schnellzugriff-Cards, Users/Studies-Stat-Reihen, Analytics `MetricCard`/`BarChart`** bauen `<Card>` (und einen echten Chart) von Hand nach. Kein Dataviz-Palette.
-- `users` & `studies` bauen **je ein eigenes always-mounted, class-getoggeltes Modal** (~40 Z. fast identisch) statt eines geteilten. `Sheet` (existiert) wird dafür nicht genutzt.
-- 785-Zeilen-Route ohne jede Input-Validierung (ad-hoc `as string`), kein `GET`/Caching, kein geteilter Pagination-Contract.
+---
 
-### 0.4 Was komplett fehlt — 30 von ~37 Tabellen ohne jede Admin-Sicht
+## 1. Ausgangslage (Code-Check 2026-08-31)
+
+Zwei Analyse-Durchläufe. Kern: **30 von ~37 DB-Tabellen ohne jede Admin-Sicht**,
+alles läuft über **eine 785-Zeilen-Route** (`api/admin/dashboard`, 18-Wege-
+`switch`, keine Validierung), kein Server-Gate, keine geteilten Typen/Primitives.
+
+### 1.1 Was fehlt komplett
 
 | Bereich | Backend existiert | Admin-Sicht |
 |---|---|---|
-| **Billing / Stripe** | `subscriptions`-Tabelle (`20260819200137`), `api/billing/{checkout,portal,webhook}`, `lib/stripe.ts` | **keine** — kein Abo sichtbar, kein Webhook-Log (Events werden in-memory verarbeitet, keine Persistenz/Idempotenz), Benutzer-Seite hat nicht mal eine Plan-Spalte |
-| **E-Mail** | `api/auth/send-email` (Supabase-Hook), `lib/email/brevo.ts`, `emails/*` React-Email-Templates, `api/newsletter` (Loops) | **keine** — kein Send-Log, kein Bounce-Handling; im Plan-Doc als SPOF markiert, nur Console-Logging |
-| **i18n** | Branch `benny/i18n-content-translation`: `scripts/translate-content.mjs`, TM als JSON (`src/data/i18n/*.json`), `docs/i18n/glossary.json` | **keine** — Coverage nur als CLI-`--stats`, Lauf ist manueller Laptop-Job, kein Review-Queue. *Noch nicht auf `main`.* |
-| **Consent / Datenschutz** | `lib/cookie-consent.ts` (`CONSENT_VERSION = 2`), `components/cookie/*` | **keine** — Consent lebt nur im `localStorage` (`sl-cookie-consent`), **kein Server-Record** → Art.-7-DSGVO-Nachweis = ein `ts` im Browser |
-| **Changelog / News** | `src/data/changelog.json` (+ `scripts/generate-changelog.mjs`) **und** `src/data/updates.json` (+ `lib/updates.ts`) — zwei parallele, handgepflegte Systeme die auseinanderdriften | **keine** — 0 Treffer für beide Dateien in `dashboard/admin` |
-| **Cron / Automatisierung** | 7 Vercel-Crons, `automation_job_runs` + `automation_error_memory` Tabellen, `lib/automationRuns.ts` | **minimal** — nur letzte **20** Zeilen auf dem Engine-Tab; nur 3 der 7 Jobs manuell auslösbar; `automation_error_memory` (Retry-Backoff-Intelligenz) **komplett unsichtbar** |
-| **Runtime-Config / Feature-Flags** | `engine_config` (**ist** über Algorithmus-Seite bedienbar). Sonst nur hartkodierte Konstanten + „Env-Key vorhanden?"-Checks | kein generisches Flag-System; `fertilizers`-Route ist hart auf 503; `CONSENT_VERSION` hartkodiert |
-| **Knowledge OS** | **19 `knowledge_*`-Tabellen** — vollständiges Headless-CMS mit Versionierung, Review-Queue, Contributors, Media, Sources/References, Metrics/Events, Embeddings | **keine** — nur per SQL bedienbar. Größtes Schema der App. |
-| **Grows & Diagnosen** | `grows`/`plants`/`log_entries` + `diagnoses`/`recommendations`/`recommendation_events`/`diagnosis_outcomes`/`plant_health_snapshots` (9 Tabellen) | **keine** — der Kern des Nutzerprodukts hat kein operatives Dashboard; die selbstlernende Diagnose-Outcome-Schleife erzeugt Daten, die nichts anzeigt |
+| **Billing / Stripe** | `subscriptions`-Tabelle, `api/billing/{checkout,portal,webhook}`, `lib/stripe.ts` | **keine** — kein Abo sichtbar, Webhook-Events werden nicht persistiert (keine Idempotenz), Benutzer-Seite ohne Plan-Spalte |
+| **Kosten** | — | **nichts** — keine Aggregation von Vercel/Supabase/Anthropic/Brevo, kein Burn/Runway |
+| **E-Mail** | `api/auth/send-email` (Supabase-Hook), `lib/email/brevo.ts`, `emails/*`, `api/newsletter` (Loops) | **keine** — kein Send-Log, kein Bounce-Handling; im Email-Plan als SPOF markiert |
+| **i18n** | Branch `benny/i18n-content-translation`: `scripts/translate-content.mjs`, TM als JSON, `docs/i18n/glossary.json` | **keine** — Coverage nur CLI, Lauf ist manueller Laptop-Job |
+| **Consent** | `lib/cookie-consent.ts` (`CONSENT_VERSION = 2`), `components/cookie/*` | **keine** — nur `localStorage`, **kein Server-Record** → Art.-7-DSGVO-Nachweis = ein `ts` im Browser |
+| **Changelog / News** | `data/changelog.json` (+ Script) **und** `data/updates.json` (+ `lib/updates.ts`) — zwei parallele handgepflegte Systeme | **keine** |
+| **Cron / Automatisierung** | 7 Vercel-Crons, `automation_job_runs` + `automation_error_memory` | **minimal** — nur letzte 20 Zeilen auf dem Engine-Tab, nur 3 von 7 Jobs auslösbar, `automation_error_memory` unsichtbar |
+| **Knowledge OS** | 19 `knowledge_*`-Tabellen (CMS mit Versionierung/Review/Media) | **keine** — nur per SQL |
+| **Grows & Diagnosen** | `grows`/`plants`/`log_entries` + `diagnoses`/`recommendations`/`recommendation_events`/`diagnosis_outcomes`/`plant_health_snapshots` | **keine** — Kern des Produkts ohne operatives Dashboard |
 
-**Cron-Fahrplan (`apps/web/vercel.json`):**
+**Cron-Fahrplan (`apps/web/vercel.json`):** `study-refresh` (tgl 04:17),
+`engine-sync` (tgl 04:37), `engine-health` (tgl 04:47), `health-snapshot`
+(tgl 04:50), `engine-adapt` (Mo 05:00), `engine-reprocess` (Mo 05:15),
+`cleanup` (So 04:40). Auth via `CRON_SECRET`.
 
-| Pfad | Schedule | Bedeutung |
+### 1.2 Bugs & tote UI im Bestand
+
+| # | Fundstelle | Problem |
 |---|---|---|
-| `/api/automation/study-refresh` | `17 4 * * *` | tgl. 04:17 — Studien re-ranken |
-| `/api/automation/engine-sync` | `37 4 * * *` | tgl. 04:37 — volle Engine-Pipeline |
-| `/api/automation/engine-health` | `47 4 * * *` | tgl. 04:47 — Engine-Health-Check |
-| `/api/automation/health-snapshot` | `50 4 * * *` | tgl. 04:50 — `plant_health_snapshots` + Diagnose-Outcome-Job |
-| `/api/automation/engine-adapt` | `0 5 * * 1` | Mo 05:00 — Scoring-Gewichte neu → `engine_config` |
-| `/api/automation/engine-reprocess` | `15 5 * * 1` | Mo 05:15 — gespeicherte Studien neu bewerten |
-| `/api/automation/cleanup` | `40 4 * * 0` | So 04:40 — abgelaufene Test-User löschen |
+| B1 | `users` + `users-list` | Suche & Rollenfilter filtern nur die aktuelle 25er-Seite (Server filtert *nach* Pagination) — wer auf Seite 2+ liegt ist unauffindbar |
+| B2 | `users-list` | `total`/`totalPages` sind ein zugegebener Schätzwert (`?? users.length`) |
+| B3 | `analytics` | „Ø Score" mittelt nur die Top-20-Studien; „Study Types" zählt distinkte Typen statt Studien |
+| B4 | `page.tsx` → `studies` | Deep-Link `?filter=pending` wird von der Zielseite ignoriert |
+| B5 | `studies` | Suche ohne Debounce → Fetch pro Tastenanschlag |
+| B6 | `algorithm` | Kein Dirty-State-Guard; Save-Buttons nicht disabled wenn `tableExists === false` (jeder Klick → 500) |
+| B7 | `algorithm` | „Blockierte Quellen" als einzige Sektion ohne „Zurücksetzen"; `reason`-Input nie gerendert |
+| B8 | `dashboard/route.ts` `engine-*` | Server-zu-Server-`fetch` mit Base-URL-Raterei; kein Progress bei langen Läufen; keine Bestätigung bei destruktiven Nicht-Dry-Runs |
+| B9 | `types.ts` | `UserRole` enthält `"TEAM"`, von UI + Server abgelehnt → TEAM-User uneditierbar → **`"TEAM"` raus** (Entscheidung §8) |
+| B10 | mehrere | Backend kann mehr als die UI zeigt (`reviewNote`, `studyType`-Filter, `batchSize`, blocked-source `reason`); kein Studien-Detail-View; keine Zeitreihe irgendwo |
+| B11 | `assistant` | „geräteübergreifend"-Copy, ist reines `localStorage`; kein Streaming, kein Markdown |
+
+### 1.3 Design-System-Verstöße (durchgängig)
+
+`emerald-*` als Erfolgs-/Markengrün (§5 sagt `--primary`); rohes `red-*` statt
+`rose-*`; handgerollte Pills statt `<Badge tone>`; Modal-Buttons statt
+`<CTAButton>`; 4 verschiedene Banner-Muster statt `<Alert>`; bespoke `<Card>`/
+`<BarChart>`-Nachbauten; zwei handgebaute Toggle-Modals statt eines geteilten.
 
 ---
 
-## 1. Recherche — was ein Admin-Panel 2026 ausmacht
+## 2. Recherche — Leitstand-Prinzipien
 
-Quellen: [SaaS-Admin-Panel-UX-Prinzipien](https://taqwah.agency/blog/saas-admin-panel-design-guide) ·
+Quellen: [SaaS-Admin-Panel-UX](https://taqwah.agency/blog/saas-admin-panel-design-guide) ·
 [Admin-Dashboard Best Practices](https://rosalie24.medium.com/admin-dashboard-design-best-practices-for-saas-platforms-2f77e21b394b) ·
-[Next.js-SaaS-Admin: Users/Metrics/Flags](https://dev.to/whoffagents/building-a-saas-admin-dashboard-with-nextjs-14-users-metrics-and-feature-flags-2ikf) ·
+[Next.js-SaaS-Admin](https://dev.to/whoffagents/building-a-saas-admin-dashboard-with-nextjs-14-users-metrics-and-feature-flags-2ikf) ·
 [Audit-Logging für interne Tools](https://appmaster.io/blog/audit-logging-internal-tools-activity-feed) ·
-[Cron-Job-Monitoring-Dashboards](https://cronitor.io/cron-job-monitoring) ·
-[Was ist ein Admin-Panel](https://flatlogic.com/blog/what-is-an-admin-panel-in-modern-saas/)
+[Cron-Job-Monitoring](https://cronitor.io/cron-job-monitoring)
 
-1. **Panel = Handeln & Steuern, nicht Beobachten.** Der Unterschied zum
-   User-Dashboard: das Panel zentriert *Aktionen und Kontrolle*. Jede Ansicht
-   soll eine Handlung ermöglichen, nicht nur eine Zahl zeigen. Deckt sich mit
-   `DESIGN_SYSTEM.md` §18 („Arbeitsfläche, nicht Marketing").
-2. **Übersicht: 3–5 kritische Kennzahlen, einspaltig, nach Priorität.**
-   Nicht „alles was wir haben". Alarme oben, Rest darunter.
-3. **Modulare Seitenstruktur.** Features müssen andocken/abgehen können, ohne
-   den Rest anzufassen — genau unser Problem (neue Features landen laufend).
-   Heißt konkret: Ressourcen-Routen statt einer Mega-`switch`, eine Registry
-   für Nav-Einträge, geteilte Primitives.
-4. **Audit-Log als Rückgrat.** Sobald ein Panel Nutzer/Billing/Config
-   anfasst, ist „wer hat was wann geändert" (Feld-Level-Diff, unveränderlich,
-   nur Admin lesbar) Standard. Bei Bulk-Aktionen: ein Eltern-Event + pro
-   Datensatz ein Kind-Event.
-5. **Cron braucht eine eigene Lauf-Historie.** Job-Name, menschenlesbarer
-   Schedule, letzter Lauf, nächster erwarteter, Erfolgsquote, Ø-Dauer,
-   stdout/Fehler pro Lauf, „hat seit > Intervall nicht erfolgreich
-   abgeschlossen"-Alarm, „jetzt ausführen". Das ist zugleich die saubere
-   Datenquelle, um auf `/status` die **automatischen Läufe von den manuellen
-   Neuigkeiten zu trennen** (der zweite Punkt aus der Ausgangs-Anfrage).
-6. **Row-Expansion statt Detailseiten-Sprünge** für Nutzer/Abos: Kerninfo in
-   der Zeile, Permissions/History/Billing auf Aufklappen. Advanced-Settings
-   hinter einem „Erweitert"-Toggle.
-7. **Real-time-Erwartung.** Live-Zähler / auto-aktualisierende Panels gelten
-   als Standard; statische Ansichten mit Reload-Zwang wirken alt. Für uns
-   pragmatisch: `revalidate`-Tags + gezieltes Client-Polling auf den
-   Lauf-/Health-Ansichten, kein Voll-SPA.
+1. **Panel = Handeln & Steuern, nicht Beobachten.** Jede Ansicht ermöglicht
+   eine Handlung, nicht nur eine Zahl (deckt sich mit §18).
+2. **Briefing: 3–5 kritische Kennzahlen, einspaltig nach Priorität.** Alarme
+   oben, Rest darunter. Nicht „alles was wir haben".
+3. **Modulare Struktur.** Module docken über eine Registry an, ohne den Rest
+   anzufassen — Pflicht, weil laufend Features dazukommen.
+4. **Audit-Log als Rückgrat.** „Wer hat was wann" mit Feld-Diff, unveränderlich.
+5. **Cron braucht Lauf-Historie.** Job, Schedule menschenlesbar, letzter/
+   nächster Lauf, Erfolgsquote, Ø-Dauer, stdout/Fehler, Stale-Alarm, „jetzt
+   ausführen". Das trennt auch auf `/status` die automatischen Läufe von den
+   manuellen Neuigkeiten.
+6. **Row-Expansion statt Seiten-Sprünge** für Nutzer/Abos.
+7. **Real-time-Erwartung** — pragmatisch: `revalidate`-Tags + gezieltes
+   Client-Polling auf Lauf-/Health-Ansichten, kein Voll-SPA.
 
 ---
 
-## 2. Ziel-Architektur
+## 3. Ziel-Architektur
 
-### 2.1 Informationsarchitektur — neue Navigation
-
-Gruppen mit echtem Gewicht, Analytics raus aus „Pipeline", neue Bereiche
-sauber einsortiert. Pfade **ohne `[locale]`** (Entscheidung §6.1). **Fett = neu.**
+### 3.1 Navigation (Registry)
 
 ```
-BETRIEB
-  Übersicht                /admin
-  Automatisierung          /admin/automation      ← NEU (aus Engine-Tab herausgelöst)
-  Audit-Log                /admin/audit           ← NEU
+LAGE
+  Lage                     /admin                (= Morgen-Briefing)
 
-NUTZER & UMSATZ
-  Benutzer                 /admin/users
-  Abonnements              /admin/billing          ← NEU
-  E-Mail                   /admin/email            ← NEU (Phase 4)
+GELD
+  Finanzen                 /admin/finance
+  Wachstum                 /admin/growth
+
+MENSCHEN
+  Nutzer                   /admin/users
+  Zustellung / Mail        /admin/mail
 
 INHALTE
-  Studien                  /admin/studies
-  Neuigkeiten & Changelog  /admin/changelog        ← NEU
-  Übersetzungen (i18n)     /admin/i18n             ← NEU (Phase 4, nach Branch-Merge)
-
-PRODUKT
-  Auswertungen             /admin/analytics
-  Grows & Diagnosen        /admin/product          ← NEU (Phase 3)
-
-ENGINE
-  Pipeline-Engine          /admin/engine
+  Content & Wissen         /admin/content
+  Engine                   /admin/engine
   Algorithmus              /admin/algorithm
 
-SYSTEM
+MASCHINE
+  Betrieb                  /admin/ops
+  Steuerung                /admin/control
+  Audit-Log                /admin/audit
+
+SONSTIGES
+  Compliance               /admin/compliance
   Assistent                /admin/assistant
-  Feature-Flags & Config   /admin/config           ← NEU (Phase 4)
-  Datenschutz & Consent    /admin/consent          ← NEU (Phase 4)
 ```
 
-_Knowledge OS (`/admin/knowledge`) ist ausgeklammert — eigener Durchgang, siehe §6.4._
+Gerendert aus `components/admin/nav.ts` (steht schon, Phase 0). Neue Seite =
+ein Registry-Eintrag. `status: "planned"`-Einträge mit Phasen-Marker sind bis
+zu ihrer Phase ausgeblendet. `badge?` erlaubt Live-Zähler (offene Reviews,
+past_due-Abos), `flag?` blendet hinter Feature-Flag aus.
 
-Nav wird aus einer **Registry** (`components/admin/nav.ts`) gerendert:
-`{ group, href, label, icon, badge?, flag? }`. Neue Seite = ein Registry-
-Eintrag, nicht ein Eingriff in die Shell. `badge?` erlaubt Live-Zähler (z. B.
-„3" offene Reviews), `flag?` blendet unfertige Bereiche hinter einem Feature-
-Flag aus.
-
-### 2.2 Technische Architektur
+### 3.2 Technische Architektur
 
 | Thema | Heute | Ziel |
 |---|---|---|
-| API | 1 Datei, `POST` + `switch` über 18 Actions, keine Validierung | **Ressourcen-Routen** `app/api/admin/<resource>/route.ts` mit echten `GET`/`PATCH`/`POST`/`DELETE`, **zod**-Schemas pro Endpoint, geteilte Response-Contracts in `lib/admin/contracts.ts` |
-| Auth | clientseitig, doppelt pro Navigation | **`layout.tsx` als Server Component** mit `requireAdmin` serverseitig (Redirect statt Client-Flash); `useAdminAuth` nur noch für Logout/Anzeige. Jede Ressourcen-Route ruft `requireAdmin` selbst. |
-| Rendering | alle Seiten `"use client"` | Server Components für den Daten-Load (RSC + `fetch` mit `revalidate`-Tag), Client-Inseln nur für Interaktion (Filter, Modals, Trigger) |
-| Typen | inline pro Seite, `EngineConfig` dupliziert `configLoader.ts` | `lib/admin/contracts.ts` — eine Quelle; `algorithm` importiert `EngineConfigData` aus `configLoader.ts` |
-| Engine-Trigger | Server-zu-Server-`fetch` mit Base-URL-Raterei | Automations-**Logik** direkt aufrufen (`runEngineSync(opts)` als importierbare Funktion; die Cron-Route wird ein dünner Wrapper). Kein Self-Fetch mehr. |
-| Mutations | überall ad-hoc | Jede Mutation schreibt einen **`admin_audit_log`**-Eintrag (Actor, Ressource, Vorher/Nachher-Diff) über einen zentralen `withAudit()`-Wrapper |
+| API | 1 Datei, `POST` + `switch`, keine Validierung | **Ressourcen-Routen** `app/api/admin/<modul>/route.ts`, echte Verben, **zod**, geteilte Contracts in `lib/admin/contracts.ts` |
+| Auth | clientseitig, doppelt pro Navigation | Client-Gate bleibt (UX); echte Grenze = `requireAdmin`-Bearer in jeder Route. Server-`layout.tsx`-Gate braucht `@supabase/ssr` → Phase 1b |
+| Rendering | alle Seiten `"use client"` | RSC für den Daten-Load (`fetch` + `revalidate`-Tag), Client-Inseln nur für Interaktion |
+| Typen | inline pro Seite, `EngineConfig` dupliziert | `lib/admin/contracts.ts` — eine Quelle |
+| Engine-Trigger | Self-`fetch` mit Base-URL-Raterei | Automations-**Logik** direkt aufrufen (`runEngineSync(opts)`), Cron-Route wird dünner Wrapper |
+| Mutations | ad-hoc | jede Mutation → `withAudit()` → `admin_audit_log` |
 
-### 2.3 Neue geteilte Primitives (`components/admin/`)
+**Geteilte Primitives (`components/admin/`)** — stehen z. T. schon:
+`<AdminPage>`/`<AdminPageSkeleton>` ✓, `<Alert>` ✓, `<StatCard>`/`<KpiRow>` ✓;
+noch zu bauen: `<DataTable>` (serverseitig sortieren/paginieren/Debounce/Row-
+Expansion/Bulk), `<AdminModal>`, `<RunHistory>`, `<TrendLine>`/`<BarList>`
+(dataviz-Palette), `<MoneyValue>` (€-Formatierung + Vorzeichen-Farbe),
+`<Sparkline>`.
 
-Bauen einmal, überall nutzen — beseitigt 0.3 fast vollständig:
+### 3.3 Kosten — so automatisch wie möglich
 
-- **`<AdminPage>`** — Breadcrumb + Icon-Titel + optionale Aktion(en), `max-w`, Ladeskelett. Ersetzt den handgerollten Header auf jeder Seite.
-- **`<Alert tone="error|warn|info|success">`** — ein Banner-Muster statt vier. Nutzt `rose/amber/sky/primary`-Tokens.
-- **`<StatCard>`** — auf `<Card>`+`<IconChip>`, mit optionalem Trend-Delta. Ersetzt `MetricCard`, die Übersichts-`StatCard`, die Users/Studies-Stat-Reihen.
-- **`<DataTable>`** — auf `<ResponsiveTable>`: serverseitige Sortierung/Pagination als Contract, Debounce-Suche eingebaut, Zeilen-Expansion, Bulk-Select, `<EmptyState>`-Integration. Users + Studien + Billing + Audit + Automation nutzen dasselbe.
-- **`<AdminModal>`** — auf `.modal-surface`, Fokus-Trap, `<CTAButton>`-Footer. Ersetzt die zwei handgebauten Toggle-Modals.
-- **`<RunHistory>`** — Lauf-Tabelle mit Status-`<Badge>`, Dauer, aufklappbarem stdout/`error_details`/`metadata`. Für Automation + Engine.
-- **`<KpiRow>`** — 3–5 `<StatCard>`, einspaltig auf Mobile (Recherche-Punkt 2).
-- **Charts** — `dataviz`-Skill-Palette, ein `<BarList>` + `<TrendLine>` statt bespoke `<BarChart>`.
+| Quelle | Wie | Aufwand |
+|---|---|---|
+| **Stripe** | `stripe.balanceTransactions` / `payouts` / `invoices` — Umsatz, Gebühren, Auszahlungen live über die schon integrierte Stripe-Lib | gering |
+| **Anthropic** | Token-Zählung **im Code**: jeder `askClaude()`-Call schreibt `{model, inTok, outTok, €}` in `ai_usage`. €-Faktor aus einer Preistabelle (`lib/admin/pricing.ts`, per `claude-api`-Skill gepflegt). Deckt Admin-Assistent + i18n-Läufe ab | mittel |
+| **Vercel** | Vercel-API (`/v1/usage` bzw. Rechnungs-Endpoint) wenn API-Token gesetzt, sonst monatlicher Handeintrag | mittel |
+| **Supabase** | keine brauchbare Kosten-API → monatlicher Handeintrag (Plan-Fixbetrag + evtl. Zusatz) | gering |
+| **Brevo** | Kontingent-Endpoint für Rest-Credits; Kosten = Plan-Fixbetrag monatlich | gering |
+| **Domain** | Fixbetrag/Jahr, Handeintrag mit Ablaufdatum (→ Alert) | gering |
 
-### 2.4 Audit-Log (Querschnitt, Phase 0)
+Neue Tabelle **`cost_entries`** (`service`, `period_month`, `amount_cents`,
+`source: "auto"|"manual"`, `note`, `created_at`). Auto-Quellen schreiben via
+Cron `cost-sync` (neu). `finance`-Seite zeigt: MRR, Kosten/Monat gestapelt nach
+Dienst, **Burn** (Kosten − Umsatz), **Runway** (Kontostand ÷ Burn — Kontostand
+als Handeintrag oder Stripe-Balance + Puffer), 6-Monats-Trend.
 
-Neue Tabelle `admin_audit_log` (siehe §4). Jede schreibende Admin-Aktion
-geht durch `withAudit(actor, { resource, resourceId, action, before, after })`.
-Eigene Seite `/dashboard/admin/audit`: filterbar nach Actor/Ressource/
-Zeitraum, Feld-Diff-Ansicht, immutable (nur `INSERT`, kein `UPDATE`/`DELETE`
-per RLS). Bulk-Aktionen: Eltern-Eintrag + Kind-Einträge pro Datensatz.
+### 3.4 Alert-System
 
----
+Neue Tabelle **`alert_rules`** (`key`, `enabled`, `threshold jsonb`,
+`channel: "email"`, `last_fired_at`). Cron **`alert-check`** (alle 15–30 min)
+wertet die Regeln aus und schickt bei Auslösung eine E-Mail an Benny über den
+**bestehenden Brevo-Adapter** (`lib/email/brevo.ts`). Standard-Regeln:
 
-## 3. Seite für Seite
+- Cron seit > (Schedule-Intervall × 1,5) ohne Erfolg
+- Mail-Hook: letzter Send-Fehler / Hook seit > X h ohne Erfolg
+- neue Pro-Zahlung (positiv, zur Motivation)
+- Abo `past_due` oder `canceled`
+- Monatskosten projiziert > Budget (`alert_rules.threshold.budget_cents`)
+- Studien-Review-Queue > N
+- Sentry-Fehlerrate > Baseline (wenn Sentry-API-Token gesetzt)
+- Domain-/SSL-Ablauf < 30 Tage
 
-### 3.1 Übersicht — Rebuild
-
-- `<KpiRow>` mit **max. 5**: offene Reviews · aktive Pro-Abos · fehlgeschlagene Crons (24 h) · neue Nutzer (7 T) · Studien-Coverage %. Jede Kachel verlinkt auf ihre Handlungs-Seite.
-- **Alarm-Stack oben** (nur wenn was brennt): Cron seit > Intervall rot · Webhook-Signatur-Fehler · Mail-Hook down · Reviews > Schwelle. Nutzt `<Alert>`.
-- „Letzter Pipeline-Durchlauf" bleibt, aber als `<RunHistory>`-Kompaktvariante.
-- **Raus:** die 5 handgerollten Schnellzugriff-Cards (die Nav leistet das). `system-stats`-Felder, die hier nur doppelt liegen.
-- Server Component; `revalidate: 60` + Tag `admin-overview`.
-
-### 3.2 Benutzer — Bugfix + Erweiterung
-
-- **B1/B2:** Suche & Rollenfilter **serverseitig** — weg von `auth.admin.listUsers`-Post-Filtering. Option A: `auth_users`-View + `user_roles`-Join serverseitig filtern/zählen (echte `total`). Option B: nächtlicher Sync `auth.users` → eigene `admin_users_index`-Tabelle. **Empfehlung: A** (kein neuer Sync-Job, Postgres kann das).
-- **Plan-Spalte** aus `subscriptions` (Left Join): `free/pro/team` + `status`-Punkt. Row-Expansion zeigt Stripe-Customer-Link, `current_period_end`, letzte Rechnung.
-- **B9:** `"TEAM"` in `ROLES` + Server-Whitelist aufnehmen (oder bewusst aus `UserRole` entfernen — Entscheidung §6).
-- `<DataTable>`: Sortierung, Bulk-Rollenänderung, „Nutzer einladen".
-- Design: `<Badge tone>` statt `ROLE_COLORS`, `<Alert>`, `<AdminModal>`, Lucide-Icons.
-
-### 3.3 Abonnements — NEU (P1)
-
-- **Voraussetzung:** Webhook-Persistenz. Neue Tabelle `stripe_events` (Event-ID unique = Idempotenz, `type`, `payload jsonb`, `received_at`, `processed`, `error`). `api/billing/webhook` schreibt jeden Event rein, bevor er verarbeitet wird; bei Fehler `error` setzen statt nur `logError`.
-- Seite: `<DataTable>` aller `subscriptions` (User ↔ Plan ↔ Status ↔ `current_period_end` ↔ Stripe-Links). `<KpiRow>`: aktive Pro · Trialing · Past-due · MRR (aus Plan × Preis).
-- Aktionen: **Pro manuell gewähren/entziehen** (Comp-Accounts, Support, Refund) → schreibt `subscriptions` + `admin_audit_log`; optional Stripe-Sub anlegen/canceln über API.
-- **Webhook-Health-Panel:** letzter Event, Signatur-Fehler-Zähler, unverarbeitete Events mit „retry".
-- Promo-Code-Nutzung (Codes sind aktiv, `checkout` hat `allow_promotion_codes: true`) — Redemptions aus Stripe API zählen.
-- Verweis auf `secretleaf_pro_monetization_deferral` — Live-Stripe ist geparkt, aber Test-Modus-Abos existieren schon und sind hier sichtbar zu machen.
-
-### 3.4 Studien — Bugfix + Detail-View
-
-- **B4:** `?filter=pending` (und `?quality=`, `?priority=`) aus der URL lesen und in den Initial-State übernehmen.
-- **B5:** Debounce 400 ms (aus `<DataTable>`).
-- **B10:** Studien-**Detail-Panel** (Row-Expansion oder Drawer): Abstract, DOI-Link, `matched_topics`, `flags`, `origin_label`, `review_note`-Editor. `studyType`-Filter + `study_type`-Sort exponieren.
-- Bulk approve/reject.
-- Design: `<Badge tone>` statt `QualityBadge`/`PriorityBadge`, `<Alert>`, `<CTAButton>` im Modal.
-
-### 3.5 Automatisierung — NEU (P1), aus dem Engine-Tab herausgelöst
-
-- **Job-Registry** (menschenlesbar aus `vercel.json` abgeleitet, `components/admin/cronRegistry.ts`): Name, Schedule (`17 4 * * *` → „täglich 04:17"), Beschreibung, Route.
-- Pro Job: letzter Lauf (Status/Dauer), **nächster erwarteter**, Erfolgsquote (30 T), Ø-Dauer, `<RunHistory>` mit vollem `automation_job_runs`-Verlauf (nicht 20 Zeilen), `error_details` + `metadata` aufklappbar. Filter nach `job_name`.
-- **`automation_error_memory`-Panel:** was steckt im Retry-Backoff fest (`fingerprint`, `fail_count`, `next_retry_at`, `last_error`) — „Force-Retry" / „Eintrag löschen".
-- **„Jetzt ausführen" für alle 7 Jobs** (heute nur 3). Bestätigungs-Dialog bei Nicht-Dry-Run.
-- **Stale-Cron-Alarm:** Job ohne Erfolg seit > Schedule-Intervall → rote Zeile + Übersichts-Alarm. Daten sind da, nur nie angezeigt.
-- Direkter Funktionsaufruf statt Self-Fetch (§2.2).
-
-### 3.6 Pipeline-Engine — verschlankt
-
-- Bleibt als Trigger-Konsole (Sync/Adapt/Reprocess), aber: `engine-reprocess.batchSize` als Input, Bestätigung bei nicht-Dry-Run, Progress-Polling (Lauf schreibt Zwischenstand in `automation_job_runs.metadata`, UI pollt).
-- Logs-Tabelle wandert zu §3.5; hier nur noch „letzte 5 engine-sync".
-- `extractStats`-Heuristik ersetzen durch typisierte Response-Contracts der Automations-Funktionen.
-
-### 3.7 Algorithmus — Altlasten
-
-- **B6:** Dirty-State-Tracking (`isDirty` pro Sektion), `beforeunload`-Guard, Save-Buttons disabled wenn `!tableExists`.
-- **B7:** „Zurücksetzen" für „Blockierte Quellen"; `reason`-Input rendern.
-- `EngineConfig`-Typ raus, `EngineConfigData` aus `configLoader.ts` importieren.
-- `MIGRATION_SQL`-DDL-String aus der Komponente → auf einen echten Migrations-Verweis / `<SetupRequired>` mit Link.
-- 1562-Zeilen-Datei in `algorithm/tabs/*.tsx` splitten.
-- `<Alert>`/Token-Politur (amber-Hardcodes im `SetupRequired`).
-
-### 3.8 Auswertungen — echte Metriken
-
-- **B3:** „Ø Score" über den **ganzen** Korpus (ein `avg()`-Query), nicht Top-20. „Study Types" klar beschriften („… verschiedene Typen").
-- **Erste Zeitreihe im Panel:** neue Studien/Woche, Feedback-Events/Woche, Accept-Rate-Trend — `<TrendLine>` mit `dataviz`-Palette.
-- `unknown`-Buckets aus `null` explizit als „ohne Angabe" labeln.
-- `<BarList>` statt bespoke `<BarChart>`; Prioritäts-Pill einmal (`<Badge>`), nicht zweimal.
-- Product-Analytics (aktive Grows, Phasenverteilung, Diagnose-Genauigkeit aus der Outcome-Kette) gehen auf die neue Seite §3.11 — nicht hier reinquetschen.
-
-### 3.9 Neuigkeiten & Changelog — NEU (P2) · löst den `/status`-Punkt
-
-- **Editor für `src/data/updates.json`**: CRUD pro Eintrag (`slug`, `version`, `date`, `title`, `summary`, `category`, `featured`-Toggle mit „max. 1"-Guard, `sections{…}`, `stats`, `cta`). Schreibt die JSON-Datei via Server-Route + Git-Commit **oder** (sauberer) migriert `updates.json` in eine `updates`-Tabelle. **Empfehlung: Tabelle** (`updates`), dann ist der Editor eine normale CRUD-Fläche und `lib/updates.ts` liest aus der DB.
-- **Changelog-Generator-Trigger:** `generate-changelog.mjs` als Server-Action ausführbar, Vorschau, manuelle Einträge + `version`-Tags über die UI.
-- **`/status`-Folgeänderung** (`app/[locale]/status/page.tsx`): die „Chronik"-Sektion (Z. 477–514) wird **zwei getrennte Blöcke**:
-  1. **„Automatische Läufe"** — aus `automation_job_runs` (Import-/Sync-/Coverage-Läufe), read-only, kompakt.
-  2. **„Neuigkeiten"** — nur `updates`/manuelle Changelog-Einträge (neue Inhalte/Features).
-  Der `operationalChangelog`-Merge (Z. 235–256) entfällt; die operativen Events sind ohnehin schon in „Was in den letzten 30 Tagen war" (Z. 451–475). Ergebnis: nicht mehr alles in einer Tabelle.
-- Verweis: `feedback_copywriting_no_ai_kitsch` — Changelog-Copy bleibt schlicht deklarativ.
-
-### 3.10 E-Mail — NEU (P2, Phase 4)
-
-- **Voraussetzung:** neue Tabelle `email_log` (Empfänger-Hash, Template, Locale, Brevo-`messageId`, Status, `error`, `sent_at`). `api/auth/send-email` und `api/newsletter` schreiben rein.
-- **Brevo-Bounce-Webhook** neu: `api/email/brevo-webhook` konsumiert `hardBounce`/`spam`/`blocked` → `email_log.status` aktualisieren + `email_suppression`-Liste.
-- Seite: Delivery-Log (`<DataTable>`), Hook-up/down-Indikator (letzter Erfolg vs. jetzt), Bounce-/Complaint-Liste, „Transaktionsmail erneut senden" (Support), Loops-Newsletter-Signups-Zähler.
-- Verweis: `secretleaf_email_templates_plan` — Phase 4–5 dort (Dashboard-Keys, E2E) sind Voraussetzung.
-
-### 3.11 Grows & Diagnosen — NEU (P2, Phase 3)
-
-- Aggregat: aktive Grows, Phasenverteilung, Log-Aktivität/Woche, Diagnose-Genauigkeit aus `diagnosis_outcomes`, Recommendation apply/dismiss aus `recommendation_events`.
-- Per-User-Drilldown für Support (ein Grow ansehen, Log-Einträge, letzte Diagnose).
-- Verweis: `project_diagnosis_outcome_chain` — die Outcome-Kette erzeugt genau die Daten für die Genauigkeits-Kachel.
-
-### 3.12 Wissen / Knowledge OS — NEU (P1-Wert, Phase 3, größter Brocken)
-
-19 Tabellen, Multi-Tab-Bereich:
-- **Artikel** — Liste + Editor, Draft/Publish-State, `knowledge_versions`-Historie, `knowledge_reviews`-Queue.
-- **Struktur** — `knowledge_categories`, `knowledge_tags`, `knowledge_relations`/`wiki_relationships`.
-- **Quellen** — `knowledge_sources` / `knowledge_references` verwalten.
-- **Medien** — `knowledge_media`-Bibliothek.
-- **Beitragende** — `knowledge_contributors`.
-- **Analytics** — `knowledge_metrics` / `knowledge_events`.
-- Eigenes Sub-Plan-Dokument sinnvoll, sobald priorisiert (`docs/ADMIN_KNOWLEDGE_OS_PLAN.md`).
-
-### 3.13 Assistent — Politur
-
-- **B11:** entweder Server-Persistenz (`admin_assistant_threads`-Tabelle, dann stimmt die „geräteübergreifend"-Copy) **oder** Copy ehrlich auf „auf diesem Gerät" ändern. Empfehlung: kleine Tabelle, ist wenig Aufwand.
-- Streaming-Antwort, Markdown-Rendering, „Antwort kopieren", `<EmptyState>` statt Dashed-Div.
-- `<Alert>` statt hartkodiertem rose-Banner.
-
-### 3.14 Feature-Flags & Config — NEU (P3, Phase 4)
-
-- Neue Tabelle `feature_flags` (`key`, `enabled`, `description`, `rollout jsonb`, `updated_by`, `updated_at`).
-- Erste Flags: `newsletter`, `email_hook`, `ai_assistant`, `fertilizer_catalog` (löst den 503-Hardcode ab), `translate_button`.
-- **Integration-Status-Panel** (read-only): welche env-gekoppelten Provider laufen — Stripe, Brevo, Loops, Anthropic, `CRON_SECRET` — als „konfiguriert / fehlt". Viel Produkt degradiert heute still bei fehlendem Key.
-- `engine_config` bleibt konzeptionell hier eingeordnet, Editor bleibt auf `/algorithm`.
-
-### 3.15 Datenschutz & Consent — NEU (P3, Phase 4)
-
-- **Voraussetzung:** Server-seitiger Consent-Beacon + `consent_records`-Tabelle (`anon_id`, `choice`, `version`, `gpc`, `ts`, `ua_hash`) — sonst gibt es nichts anzuzeigen.
-- Consent-Versions-Registry + Liste der gegateten Tools editierbar ohne Deploy (statt `CONSENT_VERSION`-Konstante).
-- Accept-all- vs. Essential-Rate, GPC-Anteil.
-- Proof-of-Consent-Export für DSGVO-Anfragen.
+Jede Alert-Mail verlinkt tief in das zuständige Modul. Auslösungen landen auch
+im **`admin_audit_log`** (`resource: "alert"`) für eine Historie.
 
 ---
 
-## 4. Datenbank-Migrationen
+## 4. Module im Detail
 
-Neue Tabellen (alle service-role-write, admin-read, `[locale]`-frei):
+### 4.1 Lage (Morgen-Briefing) — `/admin`
+
+Einspaltig, nach Priorität. Server Component, `revalidate: 60`.
+
+1. **Braucht Entscheidung** (nur wenn nicht leer, `<Alert>`-Stack): roter Cron,
+   Mail-Hook down, `past_due`-Abo, Review-Queue über Schwelle, Kosten über
+   Budget, Migrations-Drift prod. Jede Zeile verlinkt in ihr Modul.
+2. **Geld heute** (`<KpiRow>`): Umsatz heute · Umsatz MTD · aktive Pro · MRR ·
+   Runway (Tage). Delta zu gestern/Vormonat.
+3. **Menschen** (`<KpiRow>`): neue Nutzer 24 h / 7 T · aktive Grows · Aktivierung
+   (Anteil neuer Nutzer mit erstem Grow) · Kündigungen 7 T.
+4. **Über Nacht gelaufen** (`<RunHistory>` kompakt): die 7 Crons der letzten
+   24 h — grün/rot, Dauer, kurzer Output. „Alles grün" wenn ok.
+5. **Content-Puls**: Review-Queue-Größe · neue Studien 24 h · Übersetzungs-
+   Coverage % · letzter Wissens-Artikel-Edit.
+
+### 4.2 Finanzen — `/admin/finance`
+
+- **Voraussetzung:** `stripe_events`-Tabelle (Webhook-Idempotenz + Persistenz),
+  `cost_entries`-Tabelle, Cron `cost-sync`.
+- Umsatz: MRR/ARR, MtD/letzter Monat, ARPU, `<TrendLine>` 12 Monate.
+- Abos: `<DataTable>` (User ↔ Plan ↔ Status ↔ Renewal ↔ Stripe-Links),
+  Zähler aktiv/Trial/past_due/canceled. Aktion **Pro manuell gewähren/entziehen**
+  (Comp/Support/Refund) → `subscriptions` + `admin_audit_log`.
+- Stripe-Health: letzter Event, Signatur-Fehler, unverarbeitete Events + Retry;
+  Auszahlungen (nächste, letzte), Gebühren MtD, Promo-Code-Redemptions.
+- Kosten: gestapelt nach Dienst/Monat, Handeintrag-Formular für manuelle Posten,
+  **Burn & Runway**, Budget pro Dienst (→ Alert).
+
+### 4.3 Wachstum — `/admin/growth`
+
+- Signup-Funnel: Registrierung → E-Mail bestätigt → erster Grow → erster
+  Log-Eintrag → Pro. Zahlen + Conversion je Stufe.
+- Retention-Kohorten (Monats-Kohorten, „aktiv" = Log-Eintrag im Zeitraum) als
+  Heatmap.
+- Free→Pro-Conversion über Zeit; Kündigungen mit `cancellation_reason`
+  (Stripe-Portal-Feedback, sofern gesetzt) — sonst „ohne Angabe".
+- Aktivierungs-Rate als Leit-KPI (auch auf der Lage).
+
+### 4.4 Nutzer — `/admin/users`
+
+- **B1/B2:** Postgres-**View** auf `auth.users` + `user_roles`-Join,
+  serverseitig filtern/zählen (echte `total`). Kein nächtlicher Sync.
+- `<DataTable>`: E-Mail, Rolle, **Plan** (`subscriptions`-Join), bestätigt,
+  registriert, letzte Aktivität. Sortierung, Debounce-Suche, Bulk-Rollen.
+- **Detail-Drawer** (Row-Expansion): Plan/Renewal/Stripe-Link, Grows + letzter
+  Log, letzte Mails (`email_log`), Consent-Status, Aktivitäts-Timeline.
+  Aktionen: Pro geben/entziehen, Rolle, **sperren** (`banned`-Flag →
+  Middleware), löschen, **Support-Ansicht** (read-only Impersonation später).
+- **B9:** `"TEAM"` aus `UserRole` entfernen (`types.ts`, Server-Whitelist).
+
+### 4.5 Content & Wissen — `/admin/content`
+
+- **Studien:** bestehende Verwaltung (B4/B5/Detail-View/`studyType`-Filter/
+  `reviewNote`), plus Engine-Trigger-Panel eingebettet.
+- **Wissen (Knowledge OS):** erst mal read-only Liste aus `knowledge_articles`
+  (Status live/Entwurf, letzter Edit, `knowledge_reviews`-Queue-Zähler). Voller
+  CMS-Editor = eigener Durchgang (`docs/ADMIN_KNOWLEDGE_OS_PLAN.md`).
+- **Übersetzungen:** Coverage % pro Quelle (nach `benny/i18n`-Merge), Liste der
+  offenen Strings, „Lauf anstoßen" + letzter Lauf/Kosten (aus `ai_usage`).
+- **Neuigkeiten-Editor:** `updates`-Tabelle (Backfill aus `updates.json`,
+  `lib/updates.ts` liest aus DB). CRUD, `featured`-Toggle (max 1), Vorschau.
+  **Speist die `/status`-Seite** — der Chronik-Split (§4.9) wird damit sauber.
+
+### 4.6 Betrieb — `/admin/ops`
+
+- **Cron-Registry** (`components/admin/cronRegistry.ts`, aus `vercel.json`
+  abgeleitet): Name, Schedule menschenlesbar, Beschreibung, Route.
+- Pro Job: letzter Lauf (Status/Dauer), nächster erwarteter, Erfolgsquote 30 T,
+  Ø-Dauer, `<RunHistory>` voller Verlauf (nicht 20 Zeilen), `error_details` +
+  `metadata` aufklappbar, Filter nach `job_name`.
+- **`automation_error_memory`-Panel:** was steckt im Retry-Backoff
+  (`fingerprint`, `fail_count`, `next_retry_at`) — Force-Retry / löschen.
+- **„Jetzt ausführen"** für alle 7 Jobs (heute 3), Bestätigung bei Nicht-Dry-Run.
+- **Migrationsstand:** lokale vs. Prod-`schema_migrations` gegen
+  `supabase/migrations/` — Drift sichtbar machen (siehe die aktuelle
+  `202606020014/15`-Altlast + der Prod-Gap von 2026-08-19).
+- **Integrations-Status:** welche env-gekoppelten Provider leben (Stripe, Brevo,
+  Loops, Anthropic, `CRON_SECRET`, Vercel-Token, Sentry) — „konfiguriert/fehlt".
+- **Sentry-Fehlerrate** (wenn API-Token gesetzt), Release/Deploy-Info (live
+  Commit, letzter Deploy).
+
+### 4.7 Zustellung / Mail — `/admin/mail`
+
+- **Voraussetzung:** `email_log` (`recipient_hash`, `template`, `locale`,
+  `provider_message_id`, `status`, `error`, `sent_at`) + `email_suppression`.
+  `api/auth/send-email` + `api/newsletter` schreiben rein. Neuer
+  Brevo-Bounce-Webhook `api/email/brevo-webhook` → `status` + Suppression.
+- Delivery-Log (`<DataTable>`), Hook-up/down-Indikator, Bounce-/Complaint-Liste,
+  „Transaktionsmail erneut senden" (Support), Loops-Newsletter-Signups-Zähler.
+- **Broadcast an Segmente** (§5): eine einmalige Mail an „alle Pro", „alle
+  past_due", „alle mit Grow aber ohne Log seit 14 T" — Vorlage + Vorschau +
+  Test an sich selbst + Bestätigung. Rechtlich: nur transaktionsnah / mit
+  Opt-in; Segment-Definition sichtbar, Versand ins `email_log`.
+
+### 4.8 Steuerung — `/admin/control` (die Hebel, siehe §5)
+
+Feature-Flags, Wartungsmodus, Site-Banner, Pricing-Config, Rate-Limits,
+Decision-Log — Detail in §5.
+
+### 4.9 Compliance — `/admin/compliance`
+
+- **Voraussetzung:** Server-Consent-Beacon + `consent_records`
+  (`anon_id`, `choice`, `version`, `gpc`, `ua_hash`, `created_at`).
+- Consent-Version-Registry + gegatete Tools ohne Deploy editierbar; Accept-all-
+  vs. Essential-Rate, GPC-Anteil; Proof-of-Consent-Export für Anfragen.
+- **DSGVO-Anfragen-Log** (Auskunft/Löschung) als leichter Tracker.
+- **Impressumspflicht-Trigger:** Checkliste, die „aktiv" wird, sobald
+  Monetarisierung startet (~Feb 2027) — § 5 DDG, USt, Handelsregister, AVV.
+- **Sub-Prozessoren-Liste** (Vercel, Supabase, Stripe, Brevo, Loops, Anthropic,
+  Sentry, Plausible) — hält Datenschutz-Seite + Banner synchron.
+
+### 4.10 `/status`-Folgeänderung (schon erledigt, hier zur Doku)
+
+`operationalChangelog`-Merge entfernt; „Automatischer Betrieb" (Läufe) und
+„Neuigkeiten" (manuell) sind zwei getrennte Blöcke. Sobald der Neuigkeiten-
+Editor (§4.5) auf der `updates`-Tabelle steht, liest der „Neuigkeiten"-Block
+daraus statt aus `changelog.json`.
+
+---
+
+## 5. Hebel / Steuerung — was wir bisher übersehen
+
+Konkrete Steuer-Hebel für ein Solo-geführtes Unternehmen, die heute nur als
+Code-Konstanten, Env-Vars oder gar nicht existieren:
+
+| Hebel | Heute | Ziel (Modul „Steuerung") |
+|---|---|---|
+| **Wartungsmodus / Kill-Switch** | `fertilizers`-Route hart auf 503 | `feature_flags` + Middleware: ganze App oder einzelne Route in Wartung/Read-only, mit Hinweistext, ohne Deploy |
+| **Feature-Flags** | hartkodierte Konstanten, „Env-Key da?"-Checks | `feature_flags`-Tabelle + UI: `newsletter`, `email_hook`, `ai_assistant`, `translate_button`, `fertilizer_catalog`, per-Locale-Rollout |
+| **Site-Banner** | — | globaler Hinweis-Banner („Wartung heute 22 Uhr", „neue Funktion") mit Zeitfenster, ohne Deploy; teilt Datenmodell mit dem Neuigkeiten-Editor |
+| **Pricing-Steuerung** | Env-Vars + Stripe-Dashboard | Preis/Trial-Länge/Promo-Codes einsehen; Go-Live-Checkliste (Live-Keys, Webhook, Portal) mit Status; Preis-Anzeige gegen Live-Preise gegenchecken |
+| **Rate-Limits / Missbrauch** | **keine** (Security-Audit-Memo) | Top-API-Verbraucher, IP/User throttlen oder sperren, `translate`/`ai-assist` mit Limit; `banned`-Flag auf User |
+| **Broadcast-Mail an Segmente** | — | einmalige Mail an ein definiertes Segment (Dunning-Nudge, Feature-Ankündigung) — §4.7 |
+| **Decision-Log** | Entscheidungen leben in Plan-Docs/Memory | leichter Tracker im Panel: „worauf bin ich blockiert", „was entschieden wann, warum" — quer verlinkt mit Audit-Log |
+| **Backup-Status** | Supabase macht Backups, unsichtbar | letzter Backup-Zeitpunkt + PITR-Fenster anzeigen (Peace of Mind), Test-Restore-Erinnerung |
+| **Externe Abhängigkeiten** | verstreut | ein Health-Streifen: DKIM/SPF/DMARC für `secretleaf.net`, SSL-Ablauf, Domain-Renewal-Datum, DNS-Änderungen — mit Ablauf-Alerts |
+| **Legal-Trigger** | im Kopf / in Memory | Checkliste, die bei Monetarisierungs-Start scharf schaltet (Impressum, USt, AVV) — §4.9 |
+| **Budget & Burn-Alert** | — | Monatsbudget pro Dienst, Alarm bei Projektion über Budget — §3.3/§3.4 |
+| **Segment-Definitionen** | ad-hoc pro Query | „Power-User", „at risk", „Champion" einmal definieren, in Wachstum + Mail wiederverwenden |
+| **Release-/Deploy-Sicht** | Changelog ist die einzige Spur | live Commit, letzter Deploy, Vercel-Link, „prod hinkt Migrationen hinterher"-Warnung |
+
+---
+
+## 6. Datenbank-Migrationen
 
 | Migration | Tabelle | Zweck | Phase |
 |---|---|---|---|
-| `…_admin_audit_log.sql` | `admin_audit_log` (`id`, `actor_id`, `actor_email`, `resource`, `resource_id`, `action`, `before jsonb`, `after jsonb`, `parent_id` nullable, `created_at`). Nur `INSERT` per RLS. | Querschnitts-Audit | 0 |
-| `…_stripe_events.sql` | `stripe_events` (`id` = Stripe-Event-ID PK, `type`, `payload jsonb`, `received_at`, `processed bool`, `error text`) | Webhook-Idempotenz + Health | 2 |
-| `…_updates_table.sql` | `updates` (Spiegel des `updates.json`-Schemas) + Backfill aus der JSON | Changelog-Editor | 2 |
-| `…_email_log.sql` | `email_log` (`id`, `recipient_hash`, `template`, `locale`, `provider_message_id`, `status`, `error`, `sent_at`) + `email_suppression` (`recipient_hash` PK, `reason`, `created_at`) | Mail-Log + Bounce | 4 |
-| `…_feature_flags.sql` | `feature_flags` (`key` PK, `enabled`, `description`, `rollout jsonb`, `updated_by`, `updated_at`) | Flags | 4 |
-| `…_consent_records.sql` | `consent_records` (`id`, `anon_id`, `choice`, `version`, `gpc bool`, `ua_hash`, `created_at`) | Consent-Nachweis | 4 |
-| `…_admin_assistant_threads.sql` | `admin_assistant_threads` (`id`, `admin_id`, `messages jsonb`, `updated_at`) | Assistent-Persistenz | 1 (optional) |
+| `202608310000_admin_audit_log.sql` ✓ | `admin_audit_log` | Querschnitts-Audit (append-only, RLS revoked, service-role only) | 0 (Datei da, **noch nicht auf Prod**) |
+| `…_ai_usage.sql` | `ai_usage` (`model`, `in_tokens`, `out_tokens`, `cost_cents`, `feature`, `created_at`) | Anthropic-Kosten aus dem Code | 2 |
+| `…_cost_entries.sql` | `cost_entries` (`service`, `period_month`, `amount_cents`, `source`, `note`) | Infra-Kosten (auto + manuell) | 2 |
+| `…_stripe_events.sql` | `stripe_events` (`id` PK, `type`, `payload`, `received_at`, `processed`, `error`) | Webhook-Idempotenz + Health | 2 |
+| `…_email_log.sql` | `email_log` + `email_suppression` | Mail-Log + Bounce | 2 |
+| `…_alert_rules.sql` | `alert_rules` (`key`, `enabled`, `threshold`, `channel`, `last_fired_at`) | Alert-System | 2 |
+| `…_updates_table.sql` | `updates` (Spiegel `updates.json`) + Backfill | Neuigkeiten-Editor | 3 |
+| `…_feature_flags.sql` | `feature_flags` (`key`, `enabled`, `description`, `rollout`, `updated_by`) | Flags + Wartungsmodus | 3 |
+| `…_decision_log.sql` | `decision_log` (`title`, `status`, `context`, `decided_at`, `decided_by`) | Decision-Log | 3 |
+| `…_consent_records.sql` | `consent_records` | Consent-Nachweis | 4 |
+| `…_user_moderation.sql` | Spalte `user_roles.banned bool` (oder eigene `user_moderation`) | Sperren | 3 |
 
-Kein Schema-Wechsel an bestehenden Tabellen nötig außer optionaler Left-Joins.
-Alle Migrations gegen **lokale DB und Prod** fahren (`supabase db push --linked`)
-— siehe `secretleaf_security_migration_gap_2026_08_19` (stille Dup-Timestamp-
-Push-Fehler): Timestamps streng monoton wählen, Push-Ergebnis verifizieren.
+Alle service-role-write, admin-read. Timestamps streng monoton, Prod-Push
+verifizieren (siehe `secretleaf_security_migration_gap_2026_08_19`). Lokale
+Migrations-Historie hat einen Drift (`202606020014/15` als applied eingetragen,
+Dateien fehlen) — separat mit `supabase migration repair` glätten.
 
 ---
 
-## 5. API-Umbau
+## 7. API-Umbau
 
 `app/api/admin/dashboard/route.ts` (785 Z., 18 Actions) → Ressourcen-Routen:
 
 ```
 app/api/admin/
-  overview/route.ts         GET
-  users/route.ts            GET (filter/sort/paginate serverseitig), PATCH (role), DELETE
-  users/invite/route.ts     POST
-  billing/route.ts          GET (subscriptions + KPIs), PATCH (grant/revoke)
-  billing/webhook-health/route.ts   GET
-  studies/route.ts          GET, PATCH, DELETE, POST (bulk)
-  automation/route.ts       GET (registry + runs + error-memory)
-  automation/run/route.ts   POST (job-name, dry-run)
-  automation/error-memory/route.ts  DELETE
-  algorithm/route.ts        GET, PATCH (section), POST (reset)
-  analytics/route.ts        GET
-  changelog/route.ts        GET, POST (entry), PATCH, DELETE
-  changelog/generate/route.ts       POST
-  audit/route.ts            GET
-  assistant/route.ts        POST (stream)
-  email/route.ts            GET (Phase 4)
-  config/flags/route.ts     GET, PATCH (Phase 4)
-  consent/route.ts          GET (Phase 4)
-  knowledge/**              (Phase 3)
+  overview|briefing/route.ts   GET   (Lage)   ← Phase 1
+  finance/route.ts             GET, PATCH (grant/revoke)
+  finance/costs/route.ts       GET, POST (manueller Posten)
+  growth/route.ts              GET
+  users/route.ts               GET, PATCH, DELETE, POST (bulk, ban)
+  users/[id]/route.ts          GET   (Detail-Drawer)
+  content/studies/route.ts     GET, PATCH, DELETE, POST (bulk)
+  content/knowledge/route.ts   GET
+  content/updates/route.ts     GET, POST, PATCH, DELETE
+  ops/route.ts                 GET   (cron registry + runs + error-memory + integrations)
+  ops/run/route.ts             POST  (job-name, dry-run)
+  ops/error-memory/route.ts    DELETE
+  mail/route.ts                GET
+  mail/broadcast/route.ts      POST
+  control/flags/route.ts       GET, PATCH
+  control/decisions/route.ts   GET, POST, PATCH
+  compliance/route.ts          GET
+  audit/route.ts               GET
+  algorithm/route.ts           GET, PATCH, POST(reset)
+  assistant/route.ts           POST (stream)
 ```
 
-- Jede Route: `requireAdmin` → zod-Parse → Handler → bei Mutation `withAudit()`.
-- Geteilte Contracts in `lib/admin/contracts.ts` (Request- **und** Response-Typen), Client-`adminApi` typisiert dagegen.
-- `engine-*`: `lib/automation/engineSync.ts` etc. exportieren `runX(opts): Promise<XResult>`; Cron-Routen + Admin-Routen rufen dieselbe Funktion. **Kein Self-Fetch.**
-- Alt-Route bleibt übergangsweise als Deprecation-Shim (leitet auf die neuen Handler um), bis alle Seiten migriert sind, dann löschen.
-
----
-
-## 6. Entscheidungen (2026-08-31 geklärt)
-
-1. **`[locale]` im Admin-Pfad → raus, aber eigener Pass.** Ziel bleibt `/admin`
-   ohne Locale. Beim Umsetzen (2026-08-31) zeigte sich mehr Kopplung als
-   gedacht: die geteilte `<CTAButton>` und next-intl `<Link>` (`localePrefix:
-   "always"`) hängen jeden `href` an ein `/de`-Präfix, d. h. der Umzug
-   erzwingt entweder einen intl-Provider-Wrapper für `/admin` **oder** einen
-   Swap der Nav-Primitives nur für Admin. Zusätzlich gibt es **kein**
-   `@supabase/ssr` / Cookie-Session im Projekt → das „Server-`layout.tsx`-
-   Gate" braucht erst diese Abhängigkeit. **Beides zusammen** als eigener
-   Infra-Pass „Admin-Routing + Server-Auth" (nach den Seiten-Sanierungen),
-   nicht verzahnt mit den Bug-/Design-Fixes. Bis dahin bleibt der
-   **Client-Gate in `AdminShell`** (ist ohnehin nur UX — die echte Grenze
-   sind die `requireAdmin`-Bearer-Checks in den API-Routen).
-2. **`updates.json` → DB-Tabelle `updates`** (+ Backfill aus der JSON,
-   `lib/updates.ts` liest aus DB). Editor wird normale CRUD-Fläche.
-3. **`"TEAM"`-Rolle → aus `UserRole` entfernen.** Kein Team-Feature auf der
-   Roadmap (Pro-Monetization bis ~Feb 2027 geparkt). Rückgängig machbar.
-   Betrifft `types.ts`, `UserPlan` bleibt (`team` dort ist ein Stripe-Plan-Name).
-4. **Knowledge OS → eigener Durchgang.** Nicht in diesem Overhaul. Eigenes
-   Sub-Plan-Doc (`docs/ADMIN_KNOWLEDGE_OS_PLAN.md`), wenn eine Content-
-   Strategie-Entscheidung dafür da ist. Phase 3 hier = nur Grows & Diagnosen.
-5. **Benutzer-Filter → Postgres-View auf `auth.users`** + `user_roles`-Join,
-   serverseitig filtern/zählen. Kein nächtlicher Sync-Job.
-
----
-
-## 7. Phasenplan
-
-### Phase 0 — Fundament (kein sichtbares Feature, aber alles hängt dran)
-- [x] `admin_audit_log`-Migration (`202608310000_admin_audit_log.sql`) + `withAudit()`/`recordAuditEntry()`/`diffFields()` in `lib/admin/audit.ts`
-- [x] `lib/admin/contracts.ts` — `listQuerySchema`, `AdminListResponse<T>`, `buildListResponse`, Audit-Contracts (Pro-Ressource-Schemas kommen mit der jeweiligen Phase-1-Seite)
-- [x] `lib/admin/http.ts` — `adminRoute()`, `parseQuery`/`parseBody`, `AdminHttpError` (Ressourcen-Routen-Helper steht)
-- [x] Nav-Registry `components/admin/nav.ts` + `AdminShell` darauf umgestellt (6 Gruppen, `activeAdminEntry()` Longest-Match)
-- [x] Primitives: `<AdminPage>`/`<AdminPageSkeleton>`, `<Alert>` (rose/amber/sky/primary), `<StatCard>`/`<KpiRow>`
-- [ ] Server-`layout.tsx` mit `requireAdmin` (kommt mit dem `/admin`-Umzug §6.1 in Phase 1)
-- [ ] Deprecation-Shim für `api/admin/dashboard` (Routen wandern mit jeder Phase-1-Seite mit)
-- [ ] Restliche Primitives: `<DataTable>`, `<AdminModal>`, `<RunHistory>`, `<BarList>`/`<TrendLine>` (größer, gebaut wenn die Phase-1-Seiten sie brauchen)
-- [ ] Migration gegen lokale DB **und** Prod fahren (`supabase db push --linked`), Ergebnis verifizieren
-
-_Stand: erster Fundament-Commit steht (`tsc` + `eslint` clean, alle 7 Admin-Routen 200 im `next dev`)._
-
-### Phase 1 — Bestand sanieren (Bugs + Design)
-- [x] `/status`: Chronik-Split — `operationalChangelog`-Merge entfernt; „Automatischer Betrieb" (Läufe, aus `statusReport.events`) und „Neuigkeiten" (manuell, aus `changelog.json`) sind jetzt zwei klar getrennte Blöcke (§3.9). _Interim ohne `updates`-Tabelle; die kommt in Phase 2._
-- [ ] Übersicht-Rebuild (§3.1) — Vertical Slice: `lib/admin/client.ts` + `api/admin/overview/route.ts` + Seite auf Primitives
-- [ ] Benutzer: B1/B2 serverseitig (Postgres-View), B9 (`TEAM` raus), Plan-Spalte (Read-only Join), Design (§3.2)
-- [ ] Studien: B4, B5, Detail-View, `studyType`-Filter, Design (§3.4)
-- [ ] Algorithmus: B6, B7, Typ-Import, Datei-Split (§3.7)
-- [ ] Auswertungen: B3, erste Zeitreihe, Dataviz-Palette (§3.8)
-- [ ] Engine: batchSize, Confirm, Progress; Logs → Automation (§3.6)
-- [ ] Assistent: Streaming/Markdown + Persistenz-Entscheidung (§3.13)
-- [ ] Voller Design-System-Pass über alle 7 Seiten (0.3 abhaken)
-- [ ] `tsc --noEmit` + `eslint` clean; `next dev` alle Routen 200
+Jede Route: `requireAdmin` → zod → Handler → bei Mutation `withAudit()`.
+Geteilte Contracts in `lib/admin/contracts.ts`. Client: `adminFetch<T>()` ✓.
+`engine-*`: `lib/automation/*` exportiert `runX(opts)`, Cron + Admin rufen
+dieselbe Funktion — kein Self-`fetch`. Alt-Route bleibt Deprecation-Shim bis
+alle Module migriert sind, dann löschen.
 
 ### Phase 1b — Admin-Routing + Server-Auth (eigener Infra-Pass)
-- [ ] `@supabase/ssr` einführen, Cookie-Session serverseitig lesbar machen
-- [ ] Admin von `/[locale]/dashboard/admin/*` nach `/admin/*` ziehen (§6.1), Redirects, `proxy.ts`-Matcher, `ADMIN_BASE` flippen
-- [ ] Server-`layout.tsx` mit echtem `requireAdmin`-Gate (Redirect statt Client-Flash)
-
-### Phase 2 — Umsatz & Betrieb sichtbar machen
-- [ ] `stripe_events`-Migration + Webhook-Persistenz
-- [ ] Abonnements-Seite (§3.3)
-- [ ] Automatisierung-Seite + `automation_error_memory`-Panel + Stale-Alarm (§3.5)
-- [ ] Audit-Log-Seite (§2.4)
-- [ ] `updates`-Tabelle + Changelog-Editor (§3.9)
-
-### Phase 3 — Produkt
-- [ ] Grows & Diagnosen (§3.11)
-- [ ] _Knowledge OS (§3.12) — ausgeklammert, eigener Durchgang + `docs/ADMIN_KNOWLEDGE_OS_PLAN.md`_
-
-### Phase 4 — Rand-Systeme
-- [ ] E-Mail-Log + Brevo-Bounce-Webhook (§3.10) — nach Email-Plan Phase 4–5
-- [ ] i18n-Seite (nach `benny/i18n-content-translation`-Merge)
-- [ ] Feature-Flags & Config + Integration-Status (§3.14)
-- [ ] Datenschutz & Consent + Server-Beacon (§3.15)
+`@supabase/ssr` einführen → Cookie-Session serverseitig; Admin von
+`/[locale]/dashboard/admin/*` nach `/admin/*` (Redirects, `proxy.ts`-Matcher,
+`ADMIN_BASE` flippen); Server-`layout.tsx` mit echtem `requireAdmin`-Gate.
+Grund für die Auslagerung: `<CTAButton>` + next-intl `<Link>` erzwingen ein
+`/de`-Präfix; sauber lösen statt mit den Modul-Bauten verzahnen.
 
 ---
 
-## 8. Definition of Done (pro Phase)
+## 8. Entscheidungen (2026-08-31 geklärt)
+
+1. **Nutzung:** tägliches Morgen-Briefing als Zentrum, Module dahinter.
+2. **Module:** alle vier (Finanzen/Wachstum/Content/Betrieb) + ausgebaute Mail
+   + die Hebel aus §5.
+3. **Kosten:** so automatisch wie möglich — Anthropic-Token im Code zählen,
+   Vercel/Supabase/Brevo per API wo verfügbar, Rest monatlicher Handeintrag.
+4. **Alerts:** gezielte E-Mail-Benachrichtigungen über den Brevo-Adapter.
+5. **`[locale]` raus** → `/admin`, aber Phase 1b (eigener Infra-Pass).
+6. **`updates.json` → Tabelle.**
+7. **`"TEAM"` aus `UserRole` entfernen.**
+8. **Knowledge OS** = eigener Durchgang; hier nur read-only Liste.
+9. **Benutzer-Filter** = Postgres-View auf `auth.users`.
+
+---
+
+## 9. Phasenplan
+
+### Phase 0 — Fundament ✓ (committet)
+- [x] `admin_audit_log`-Migration + `withAudit()`/`diffFields()` (`lib/admin/audit.ts`)
+- [x] `lib/admin/contracts.ts`, `lib/admin/http.ts` (`adminRoute()`), `lib/admin/client.ts` (`adminFetch`)
+- [x] Nav-Registry (`components/admin/nav.ts`) + `AdminShell` darauf
+- [x] Primitives: `<AdminPage>`, `<Alert>`, `<StatCard>`/`<KpiRow>`
+- [x] `/status`-Chronik-Split
+- [ ] Migration `admin_audit_log` auf Prod fahren
+- [ ] Restliche Primitives: `<DataTable>`, `<AdminModal>`, `<RunHistory>`, `<TrendLine>`/`<BarList>`, `<MoneyValue>`
+
+### Phase 1 — Lage + Betrieb (das tägliche Briefing steht)
+- [ ] `components/admin/cronRegistry.ts` (aus `vercel.json`)
+- [ ] `api/admin/briefing/route.ts` — Umsatz/Nutzer/Grows/Nacht-Läufe/Content-Puls in einem Call
+- [ ] **Lage-Seite** (`/dashboard/admin`) als Morgen-Briefing (§4.1) auf Primitives
+- [ ] **Betrieb-Seite** (§4.6): Cron-Registry + `<RunHistory>` + error-memory + „jetzt ausführen" + Integrations-Status + Migrationsstand
+- [ ] Nav: „Übersicht" → „Lage"; Analytics/Engine neu einsortiert
+- [ ] `tsc` + `eslint` clean; alle Routen 200
+
+### Phase 2 — Geld & Zustellung
+- [ ] Migrationen `ai_usage`, `cost_entries`, `stripe_events`, `email_log`, `alert_rules`
+- [ ] `askClaude()` schreibt `ai_usage`; Stripe-Webhook schreibt `stripe_events`; Send-Email-Hook + Newsletter schreiben `email_log`
+- [ ] Cron `cost-sync` (Stripe + Vercel/Brevo APIs) + `alert-check` (→ Brevo-Mail)
+- [ ] **Finanzen-Seite** (§4.2) + **Mail-Seite** (§4.7) inkl. Brevo-Bounce-Webhook
+- [ ] Alert-System scharf, Standard-Regeln seeden
+
+### Phase 3 — Menschen & Inhalte & Hebel
+- [ ] Benutzer-Seite neu (§4.4): Postgres-View, `<DataTable>`, Detail-Drawer, `TEAM` raus, `banned`
+- [ ] Wachstum-Seite (§4.3): Funnel, Kohorten, Conversion
+- [ ] Content-Seite (§4.5): Studien + Knowledge-Liste + Neuigkeiten-Editor (`updates`-Tabelle) → `/status` liest daraus
+- [ ] Steuerung-Seite (§4.8/§5): `feature_flags` + Wartungsmodus + Site-Banner + `decision_log` + Pricing-Checkliste
+- [ ] Algorithmus: B6, B7, Typ-Import, Datei-Split
+
+### Phase 4 — Compliance & Rest
+- [ ] Consent-Beacon + `consent_records` + Compliance-Seite (§4.9)
+- [ ] i18n-Coverage in Content (nach Branch-Merge)
+- [ ] Rate-Limits / Missbrauchs-Panel, externe-Abhängigkeiten-Health
+- [ ] Assistent: Streaming/Markdown + Server-Persistenz
+
+### Phase 1b — Admin-Routing + Server-Auth (parallel möglich, §7)
+
+---
+
+## 10. Definition of Done (pro Phase)
 
 - `tsc --noEmit` + `eslint` clean über alle berührten Dateien
-- `next dev`: jede Admin-Route 200, entfernte Routen 404, keine Compile-Fehler im Log
-- Jede schreibende Aktion erzeugt einen `admin_audit_log`-Eintrag
-- Kein `emerald-*`/`red-*`-Hardcode mehr auf berührten Seiten; `<Badge>`/`<Alert>`/`<CTAButton>` durchgängig
-- Kein `"use client"` auf Seiten, die nur Daten laden
-- Neue Migrations gegen lokale DB **und** Prod gefahren + verifiziert
-- `TODO.md`-Punkte („📊 Admin-Panel + Status-Seite Review") abgehakt/entfernt, Commit ist der Nachweis
+- `next dev`: jede Admin-Route 200, entfernte 404, keine Compile-Fehler
+- Jede schreibende Aktion → `admin_audit_log`-Eintrag
+- Kein `emerald-*`/`red-*`-Hardcode auf berührten Seiten; `<Badge>`/`<Alert>`/`<CTAButton>` durchgängig
+- Kein `"use client"` auf reinen Daten-Lade-Seiten
+- Neue Migrationen gegen lokale DB **und** Prod gefahren + verifiziert
+- Neue Kosten-/Alert-Quellen: ein echter Testlauf dokumentiert
