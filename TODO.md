@@ -16,6 +16,35 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
+## 📊 Admin-Panel-Überarbeitung + `/status`-Chronik-Split (2026-08-31)
+
+- 🔍 **Vollständiger Plan liegt in `docs/ADMIN_PANEL_OVERHAUL_PLAN.md`**
+  (Ausgangslage-Code-Check + Recherche + Ziel-IA + Seite-für-Seite +
+  Migrationen + API-Umbau + 5-Phasen-Plan). Kurz:
+  - Bestand: 7 Seiten, eine 785-Z.-Mega-Route (`api/admin/dashboard`), kein
+    Server-Gate, keine geteilten Typen/Primitives, ~11 echte Bugs
+    (Users-Suche filtert nur die aktuelle Seite, Analytics-„Ø Score" mittelt
+    nur Top-20, `?filter=pending`-Deep-Link ignoriert, Algorithmus ohne
+    Dirty-Guard, u. a.), durchgängig `emerald-*`/`red-*`-Hardcodes statt
+    Design-System-Tokens.
+  - Fehlt komplett: Billing/Abos, Cron-Lauf-Historie (nur 20 Z. sichtbar,
+    `automation_error_memory` unsichtbar), Audit-Log, E-Mail-Log,
+    Knowledge-OS-CMS (19 Tabellen), Grow-/Diagnose-Domäne, Feature-Flags,
+    Consent-Records, Changelog-Editor. 30 von ~37 DB-Tabellen ohne Admin-Sicht.
+  - Nächster Schritt: Phase 0 (Fundament — Contracts, Ressourcen-Routen,
+    `admin_audit_log`, geteilte Primitives, Nav-Registry).
+
+- 🔍 **`/status`-Chronik-Split** ist Teil von Phase 1 des obigen Plans (§3.9):
+  `app/[locale]/status/page.tsx` mischt in „Was sich zuletzt getan hat"
+  (Z. 477–514) `changelogData.releases` (manuell) mit `operationalChangelog`
+  (Z. 235–245, aus `statusReport.events` = Cron-/Pipeline-Läufe) in **einer**
+  Liste. Ziel: zwei getrennte Blöcke — „Automatische Läufe" (aus
+  `automation_job_runs`) und „Neuigkeiten" (nur manuelle Einträge). Der
+  `operationalChangelog`-Merge (Z. 247–256) entfällt; die Events stehen schon
+  in „Was in den letzten 30 Tagen war" (Z. 451–475).
+
+---
+
 ## 💳 Pro-Plan / Stripe — Live-Modus fehlt noch (Stand 2026-08-19)
 
 - ✅ **Test-Modus vollständig eingerichtet und Ende-zu-Ende verifiziert.**
