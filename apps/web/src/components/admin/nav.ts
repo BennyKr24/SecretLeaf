@@ -13,22 +13,19 @@
 // ────────────────────────────────────────────────────────────────────────────
 
 import {
-  Home,
+  Radar,
   Bot,
   Users,
   Microscope,
-  Settings,
-  Dna,
-  BarChart3,
   CalendarClock,
   ScrollText,
-  CreditCard,
   Mail,
   Megaphone,
   Languages,
   Sprout,
-  ToggleLeft,
+  SlidersHorizontal,
   ShieldCheck,
+  Euro,
   type LucideIcon,
 } from "lucide-react";
 
@@ -37,12 +34,12 @@ export const ADMIN_BASE = "/dashboard/admin";
 export type AdminNavStatus = "live" | "planned";
 
 export type AdminNavGroup =
-  | "Betrieb"
-  | "Nutzer & Umsatz"
+  | "Lage"
+  | "Geld"
+  | "Menschen"
   | "Inhalte"
-  | "Produkt"
-  | "Engine"
-  | "System";
+  | "Maschine"
+  | "Sonstiges";
 
 export type AdminNavItem = {
   group: AdminNavGroup;
@@ -58,43 +55,40 @@ export type AdminNavItem = {
 };
 
 export const ADMIN_NAV_REGISTRY: AdminNavItem[] = [
-  // ── Betrieb ──────────────────────────────────────────────────────────────
-  { group: "Betrieb", segment: "", label: "Lage", icon: Home, exact: true, status: "live" },
-  { group: "Betrieb", segment: "automation", label: "Automatisierung", icon: CalendarClock, status: "planned", phase: 2 },
-  { group: "Betrieb", segment: "audit", label: "Audit-Log", icon: ScrollText, status: "planned", phase: 2 },
+  // ── Lage ────────────────────────────────────────────────────────────────
+  { group: "Lage", segment: "", label: "Lage", icon: Radar, exact: true, status: "live" },
 
-  // ── Nutzer & Umsatz ─────────────────────────────────────────────────────
-  { group: "Nutzer & Umsatz", segment: "users", label: "Benutzer", icon: Users, status: "live" },
-  { group: "Nutzer & Umsatz", segment: "billing", label: "Abonnements", icon: CreditCard, status: "planned", phase: 2 },
-  { group: "Nutzer & Umsatz", segment: "email", label: "E-Mail", icon: Mail, status: "planned", phase: 4 },
+  // ── Geld ────────────────────────────────────────────────────────────────
+  { group: "Geld", segment: "finance", label: "Finanzen", icon: Euro, status: "planned", phase: 2 },
+  { group: "Geld", segment: "growth", label: "Wachstum", icon: Sprout, status: "planned", phase: 3 },
+
+  // ── Menschen ────────────────────────────────────────────────────────────
+  { group: "Menschen", segment: "users", label: "Nutzer", icon: Users, status: "live" },
+  { group: "Menschen", segment: "mail", label: "Zustellung / Mail", icon: Mail, status: "planned", phase: 2 },
 
   // ── Inhalte ─────────────────────────────────────────────────────────────
   { group: "Inhalte", segment: "studies", label: "Studien", icon: Microscope, status: "live" },
-  { group: "Inhalte", segment: "changelog", label: "Neuigkeiten & Changelog", icon: Megaphone, status: "planned", phase: 2 },
-  { group: "Inhalte", segment: "i18n", label: "Übersetzungen", icon: Languages, status: "planned", phase: 4 },
+  { group: "Inhalte", segment: "content", label: "Content & Wissen", icon: Languages, status: "planned", phase: 3 },
+  { group: "Inhalte", segment: "changelog", label: "Neuigkeiten", icon: Megaphone, status: "planned", phase: 3 },
 
-  // ── Produkt ─────────────────────────────────────────────────────────────
-  { group: "Produkt", segment: "analytics", label: "Auswertungen", icon: BarChart3, status: "live" },
-  { group: "Produkt", segment: "product", label: "Grows & Diagnosen", icon: Sprout, status: "planned", phase: 3 },
+  // ── Maschine ────────────────────────────────────────────────────────────
+  { group: "Maschine", segment: "ops", label: "Betrieb", icon: CalendarClock, status: "live" },
+  { group: "Maschine", segment: "control", label: "Steuerung", icon: SlidersHorizontal, status: "planned", phase: 3 },
+  { group: "Maschine", segment: "audit", label: "Audit-Log", icon: ScrollText, status: "planned", phase: 2 },
 
-  // ── Engine ──────────────────────────────────────────────────────────────
-  { group: "Engine", segment: "engine", label: "Pipeline-Engine", icon: Settings, status: "live" },
-  { group: "Engine", segment: "algorithm", label: "Algorithmus", icon: Dna, status: "live" },
-
-  // ── System ──────────────────────────────────────────────────────────────
-  { group: "System", segment: "assistant", label: "Assistent", icon: Bot, status: "live" },
-  { group: "System", segment: "config", label: "Feature-Flags & Config", icon: ToggleLeft, status: "planned", phase: 4 },
-  { group: "System", segment: "consent", label: "Datenschutz & Consent", icon: ShieldCheck, status: "planned", phase: 4 },
+  // ── Sonstiges ───────────────────────────────────────────────────────────
+  { group: "Sonstiges", segment: "compliance", label: "Compliance", icon: ShieldCheck, status: "planned", phase: 4 },
+  { group: "Sonstiges", segment: "assistant", label: "Assistent", icon: Bot, status: "live" },
 ];
 
 /** Order groups render in. */
 export const ADMIN_NAV_GROUP_ORDER: AdminNavGroup[] = [
-  "Betrieb",
-  "Nutzer & Umsatz",
+  "Lage",
+  "Geld",
+  "Menschen",
   "Inhalte",
-  "Produkt",
-  "Engine",
-  "System",
+  "Maschine",
+  "Sonstiges",
 ];
 
 export type AdminNavEntry = AdminNavItem & { href: string };

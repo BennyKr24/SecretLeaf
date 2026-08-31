@@ -145,7 +145,7 @@ export default function AdminLagePage() {
               <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-muted-fg">
                 Über Nacht gelaufen
               </h2>
-              <Link href="/dashboard/admin/engine" className="text-xs font-medium text-primary hover:underline">
+              <Link href="/dashboard/admin/ops" className="text-xs font-medium text-primary hover:underline">
                 Engine &amp; Läufe →
               </Link>
             </div>

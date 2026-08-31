@@ -107,6 +107,85 @@ export type AdminBriefing = {
   attention: BriefingAttention[];
 };
 
+// ── Betrieb / Ops ───────────────────────────────────────────────────────────
+
+export type OpsLastRun = {
+  success: boolean;
+  startedAt: string | null;
+  finishedAt: string;
+  durationSeconds: number | null;
+  error: string | null;
+  fetched: number;
+  inserted: number;
+  updated: number;
+  skipped: number;
+  metadata: Record<string, unknown> | null;
+};
+
+export type OpsJob = {
+  jobName: string;
+  path: string;
+  label: string;
+  description: string;
+  schedule: string;
+  scheduleLabel: string;
+  nextRunIso: string | null;
+  lastRun: OpsLastRun | null;
+  /** 0–1 over the last 30 days, null if no runs */
+  successRate30d: number | null;
+  avgDurationSeconds: number | null;
+  runs30d: number;
+  stale: boolean;
+};
+
+export type OpsErrorMemory = {
+  jobName: string;
+  fingerprint: string;
+  failCount: number;
+  lastError: string | null;
+  firstFailedAt: string;
+  lastFailedAt: string;
+  nextRetryAt: string | null;
+};
+
+export type OpsIntegration = {
+  key: string;
+  label: string;
+  configured: boolean;
+  note: string;
+};
+
+export type OpsRecentRun = {
+  jobName: string;
+  success: boolean;
+  finishedAt: string;
+  durationSeconds: number | null;
+  fetched: number;
+  inserted: number;
+  updated: number;
+  skipped: number;
+  error: string | null;
+};
+
+export type AdminOps = {
+  generatedAt: string;
+  jobs: OpsJob[];
+  errorMemory: OpsErrorMemory[];
+  integrations: OpsIntegration[];
+  recentRuns: OpsRecentRun[];
+};
+
+export const opsRunSchema = z.object({
+  /** the job's `jobName` from the cron registry */
+  job: z.string().min(1).max(64),
+  dryRun: z.boolean().optional(),
+  lookbackDays: z.coerce.number().int().min(1).max(90).optional(),
+  maxProcessed: z.coerce.number().int().min(1).max(1000).optional(),
+  batchSize: z.coerce.number().int().min(1).max(200).optional(),
+});
+
+export type OpsRunInput = z.infer<typeof opsRunSchema>;
+
 // ── Audit ───────────────────────────────────────────────────────────────────
 
 export const auditListQuerySchema = listQuerySchema.extend({

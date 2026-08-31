@@ -1,17 +1,23 @@
 // ──────────────────────────────────────────────────────────────────────────────
-// Admin Dashboard API – Overview, Studies, Engine, Analytics, Settings
+// Admin Dashboard API — DEPRECATED, wird abgebaut
 // ──────────────────────────────────────────────────────────────────────────────
 //
-// Consolidated API for the admin control panel.
-// All endpoints require ADMIN role via Bearer token.
+// Die alte Sammel-Route (POST + `switch(action)`). Neue Flächen laufen über
+// echte Ressourcen-Routen unter /api/admin/<modul>/ (siehe
+// docs/ADMIN_PANEL_OVERHAUL_PLAN.md §7). Hier stehen nur noch die Actions,
+// deren Seiten noch nicht migriert sind:
 //
-// POST /api/admin/dashboard
-// Body: { action: "overview" | "studies" | "engine-trigger" | ... , ...params }
+//   studies, study-update, study-delete   → wandern nach /api/admin/content/studies
+//   users-list, user-update-role, user-delete → wandern nach /api/admin/users
+//   ai-assist                             → wandert nach /api/admin/assistant
+//
+// Entfernt (Seiten gelöscht / ersetzt): overview, system-stats (→ /api/admin/briefing),
+// engine-trigger/-adapt/-reprocess/-logs (→ /api/admin/ops[/run]),
+// analytics, algorithm-get/-update/-reset, weights-history.
 // ──────────────────────────────────────────────────────────────────────────────
 
 import { requireAdmin } from "@/lib/serverAuth";
 import { getSupabaseServerClient } from "@/lib/supabaseServer";
-import { AUTOMATION_RUNS_TABLE } from "@/lib/automationRuns";
 import { logError, logInfo } from "@/lib/log";
 
 export const dynamic = "force-dynamic";
@@ -66,38 +72,13 @@ function normalizeLegacyStudyRow(row: Record<string, unknown>) {
   };
 }
 
-/**
- * Derive a reliable base URL for internal fetch calls.
- * Priority: origin header → VERCEL_URL env → host header.
- */
-function getBaseUrl(req: Request): string {
-  const origin = req.headers.get("origin");
-  if (origin && origin.startsWith("http")) return origin;
-  const vercelUrl = process.env.VERCEL_URL;
-  if (vercelUrl) return `https://${vercelUrl}`;
-  const host = req.headers.get("host");
-  if (host) return `https://${host}`;
-  return "";
-}
-
 type AdminAction =
-  | "overview"
   | "studies"
   | "study-update"
   | "study-delete"
-  | "engine-trigger"
-  | "engine-adapt"
-  | "engine-reprocess"
-  | "engine-logs"
-  | "analytics"
   | "users-list"
   | "user-update-role"
   | "user-delete"
-  | "system-stats"
-  | "algorithm-get"
-  | "algorithm-update"
-  | "algorithm-reset"
-  | "weights-history"
   | "ai-assist";
 
 export async function POST(req: Request) {
@@ -110,66 +91,6 @@ export async function POST(req: Request) {
     const supabase = getSupabaseServerClient();
 
     switch (action) {
-      // ── OVERVIEW ──────────────────────────────────────────────────────
-      case "overview": {
-        const now = new Date();
-        const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
-        const weekStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
-
-        // Studies counts
-        const [todayRes, weekRes, totalRes] = await Promise.all([
-          supabase.from(STUDIES_TABLE).select("id", { count: "exact", head: true }).gte("created_at", todayStart),
-          supabase.from(STUDIES_TABLE).select("id", { count: "exact", head: true }).gte("created_at", weekStart),
-          supabase.from(STUDIES_TABLE).select("id", { count: "exact", head: true }),
-        ]);
-
-        // Pipeline status from recent runs
-        const { data: recentRuns } = await supabase
-          .from(AUTOMATION_RUNS_TABLE)
-          .select("job_name, success, finished_at, error_details, metadata")
-          .eq("job_name", "engine-sync")
-          .order("finished_at", { ascending: false })
-          .limit(10);
-
-        const runs = recentRuns ?? [];
-        let consecutiveFailures = 0;
-        for (const run of runs) {
-          if (!run.success) consecutiveFailures++;
-          else break;
-        }
-
-        let pipelineStatus: "healthy" | "degraded" | "failing" = "healthy";
-        if (consecutiveFailures >= 3) pipelineStatus = "failing";
-        else if (consecutiveFailures > 0) pipelineStatus = "degraded";
-
-        const lastRun = runs[0] ?? null;
-        const errorCount = runs.filter((r) => !r.success).length;
-
-        // Pending review count
-        const { count: pendingCount } = await supabase
-          .from(STUDIES_TABLE)
-          .select("id", { count: "exact", head: true })
-          .eq("quality_status", "pending");
-
-        return Response.json({
-          newToday: todayRes.count ?? 0,
-          newThisWeek: weekRes.count ?? 0,
-          totalStudies: totalRes.count ?? 0,
-          pendingReview: pendingCount ?? 0,
-          pipelineStatus,
-          lastRun: lastRun
-            ? {
-                success: lastRun.success,
-                finishedAt: lastRun.finished_at,
-                errors: lastRun.error_details,
-                metadata: lastRun.metadata,
-              }
-            : null,
-          errorCount,
-          consecutiveFailures,
-        });
-      }
-
       // ── STUDIES LIST ──────────────────────────────────────────────────
       case "studies": {
         const page = Math.max(1, Number(body.page) || 1);
@@ -226,9 +147,7 @@ export async function POST(req: Request) {
           const allowedSorts = useEngineFields
             ? ["created_at", "relevance_score", "title", "fetched_at", "study_type"]
             : ["created_at", "title", "source"];
-          const safeSortBy = allowedSorts.includes(sortBy)
-            ? sortBy
-            : "created_at";
+          const safeSortBy = allowedSorts.includes(sortBy) ? sortBy : "created_at";
 
           const query = supabase
             .from(STUDIES_TABLE)
@@ -251,7 +170,7 @@ export async function POST(req: Request) {
           logInfo("admin.studies.legacy-fallback", { error: queryError });
           const legacyResult = await buildStudiesQuery(false);
           studiesData = ((legacyResult.data as Array<Record<string, unknown>> | null) ?? []).map((row) =>
-            normalizeLegacyStudyRow(row)
+            normalizeLegacyStudyRow(row),
           );
           totalCount = legacyResult.count ?? null;
           queryError = legacyResult.error?.message ?? null;
@@ -317,147 +236,6 @@ export async function POST(req: Request) {
         return Response.json({ deleted: true });
       }
 
-      // ── ENGINE TRIGGER ────────────────────────────────────────────────
-      case "engine-trigger": {
-        const { getCronSecret } = await import("@/lib/env");
-        const cronSecret = getCronSecret();
-        const params = new URLSearchParams();
-        if (body.dryRun) params.set("dryRun", "true");
-        if (body.lookbackDays) params.set("lookbackDays", String(body.lookbackDays));
-        if (body.maxProcessed) params.set("maxProcessed", String(body.maxProcessed));
-
-        const baseUrl = getBaseUrl(req);
-        const url = `${baseUrl}/api/automation/engine-sync?${params.toString()}`;
-
-        const res = await fetch(url, { cache: "no-store", headers: { Authorization: `Bearer ${cronSecret}` } });
-        const result = await res.json();
-
-        logInfo("admin.engine-trigger", { by: adminOrResponse.userId, dryRun: !!body.dryRun });
-        return Response.json(result);
-      }
-
-      // ── ENGINE ADAPT ──────────────────────────────────────────────────
-      case "engine-adapt": {
-        const { getCronSecret } = await import("@/lib/env");
-        const cronSecret = getCronSecret();
-
-        const baseUrl = getBaseUrl(req);
-        const url = `${baseUrl}/api/automation/engine-adapt`;
-
-        const res = await fetch(url, { cache: "no-store", headers: { Authorization: `Bearer ${cronSecret}` } });
-        const result = await res.json();
-
-        logInfo("admin.engine-adapt", { by: adminOrResponse.userId });
-        return Response.json(result);
-      }
-
-      // ── ENGINE REPROCESS ──────────────────────────────────────────────
-      case "engine-reprocess": {
-        const { getCronSecret } = await import("@/lib/env");
-        const cronSecret = getCronSecret();
-        const params = new URLSearchParams();
-        if (body.batchSize) params.set("batchSize", String(body.batchSize));
-
-        const baseUrl = getBaseUrl(req);
-        const url = `${baseUrl}/api/automation/engine-reprocess?${params.toString()}`;
-
-        const res = await fetch(url, { cache: "no-store", headers: { Authorization: `Bearer ${cronSecret}` } });
-        const result = await res.json();
-
-        logInfo("admin.engine-reprocess", { by: adminOrResponse.userId });
-        return Response.json(result);
-      }
-
-      // ── ENGINE LOGS ───────────────────────────────────────────────────
-      case "engine-logs": {
-        const limit = Math.min(50, Math.max(1, Number(body.limit) || 20));
-
-        const { data, error } = await supabase
-          .from(AUTOMATION_RUNS_TABLE)
-          .select("*")
-          .order("finished_at", { ascending: false })
-          .limit(limit);
-
-        if (error) return Response.json({ error: error.message }, { status: 500 });
-        return Response.json({ runs: data ?? [] });
-      }
-
-      // ── ANALYTICS ─────────────────────────────────────────────────────
-      case "analytics": {
-        // Top studies by score
-        const { data: topStudies } = await supabase
-          .from(STUDIES_TABLE)
-          .select("id, title, relevance_score, study_type, editorial_priority, origin_label, matched_topics")
-          .order("relevance_score", { ascending: false })
-          .limit(20);
-
-        // Score distribution buckets
-        const { data: allScores } = await supabase
-          .from(STUDIES_TABLE)
-          .select("relevance_score");
-
-        const distribution = { "0-20": 0, "21-40": 0, "41-60": 0, "61-80": 0, "81-100": 0 };
-        for (const row of allScores ?? []) {
-          const s = (row.relevance_score as number) ?? 0;
-          if (s <= 20) distribution["0-20"]++;
-          else if (s <= 40) distribution["21-40"]++;
-          else if (s <= 60) distribution["41-60"]++;
-          else if (s <= 80) distribution["61-80"]++;
-          else distribution["81-100"]++;
-        }
-
-        // Source breakdown
-        const { data: sourceData } = await supabase
-          .from(STUDIES_TABLE)
-          .select("origin_label");
-
-        const sourceCounts: Record<string, number> = {};
-        for (const row of sourceData ?? []) {
-          const label = (row.origin_label as string) || "Unknown";
-          sourceCounts[label] = (sourceCounts[label] ?? 0) + 1;
-        }
-        const topSources = Object.entries(sourceCounts)
-          .sort(([, a], [, b]) => b - a)
-          .slice(0, 15)
-          .map(([source, count]) => ({ source, count }));
-
-        // Type breakdown
-        const { data: typeData } = await supabase
-          .from(STUDIES_TABLE)
-          .select("study_type");
-
-        const typeCounts: Record<string, number> = {};
-        for (const row of typeData ?? []) {
-          const t = (row.study_type as string) || "unknown";
-          typeCounts[t] = (typeCounts[t] ?? 0) + 1;
-        }
-
-        // Priority breakdown
-        const { data: prioData } = await supabase
-          .from(STUDIES_TABLE)
-          .select("editorial_priority");
-
-        const prioCounts: Record<string, number> = {};
-        for (const row of prioData ?? []) {
-          const p = (row.editorial_priority as string) || "unknown";
-          prioCounts[p] = (prioCounts[p] ?? 0) + 1;
-        }
-
-        // Feedback stats
-        const { count: totalFeedback } = await supabase
-          .from("study_feedback")
-          .select("id", { count: "exact", head: true });
-
-        return Response.json({
-          topStudies: topStudies ?? [],
-          scoreDistribution: distribution,
-          topSources,
-          typeCounts,
-          priorityCounts: prioCounts,
-          totalFeedbackEvents: totalFeedback ?? 0,
-        });
-      }
-
       // ── USERS LIST ────────────────────────────────────────────────────
       case "users-list": {
         const page = Math.max(1, Number(body.page) || 1);
@@ -465,7 +243,6 @@ export async function POST(req: Request) {
         const searchQuery = typeof body.search === "string" ? body.search.trim() : "";
         const roleFilter = typeof body.roleFilter === "string" ? body.roleFilter : "all";
 
-        // Fetch users from Supabase Auth admin API (uses service role key)
         const { data: authResponse, error: authError } = await supabase.auth.admin.listUsers({
           page,
           perPage: limit,
@@ -476,8 +253,6 @@ export async function POST(req: Request) {
         }
 
         const authUsers = authResponse?.users ?? [];
-
-        // Get all user roles
         const userIds = authUsers.map((u) => u.id);
         const { data: roleRows } = await supabase
           .from("user_roles")
@@ -500,23 +275,18 @@ export async function POST(req: Request) {
           provider: u.app_metadata?.provider ?? "email",
         }));
 
-        // Apply filters client-side (auth.admin.listUsers doesn't support filtering)
+        // NB: filters here only see the current page — real bug B1, fixed
+        // when this moves to /api/admin/users (Postgres view, §4.4).
         if (searchQuery) {
           const q = searchQuery.toLowerCase();
           users = users.filter(
-            (u) =>
-              (u.email && u.email.toLowerCase().includes(q)) ||
-              u.id.toLowerCase().includes(q),
+            (u) => (u.email && u.email.toLowerCase().includes(q)) || u.id.toLowerCase().includes(q),
           );
         }
         if (roleFilter !== "all") {
           users = users.filter((u) => u.role === roleFilter);
         }
 
-        // Get total count from auth
-        // Supabase admin listUsers returns all users paginated, we'll estimate total
-        // The actual total is available through a separate count
-        const { data: countData } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1 });
         const totalFromList = (() => {
           if (authResponse && typeof authResponse === "object" && "total" in authResponse) {
             const total = (authResponse as { total?: unknown }).total;
@@ -524,7 +294,7 @@ export async function POST(req: Request) {
           }
           return null;
         })();
-        const totalUsers = countData?.users ? (totalFromList ?? users.length) : users.length;
+        const totalUsers = totalFromList ?? users.length;
 
         return Response.json({
           users,
@@ -544,8 +314,6 @@ export async function POST(req: Request) {
         if (!newRole || !["CONSUMER", "PROVIDER", "ADMIN"].includes(newRole)) {
           return Response.json({ error: "Invalid role. Must be CONSUMER, PROVIDER, or ADMIN." }, { status: 400 });
         }
-
-        // Prevent admin from demoting themselves
         if (userId === adminOrResponse.userId && newRole !== "ADMIN") {
           return Response.json({ error: "Du kannst deine eigene Admin-Rolle nicht entfernen." }, { status: 400 });
         }
@@ -564,187 +332,17 @@ export async function POST(req: Request) {
       case "user-delete": {
         const userId = body.userId as string;
         if (!userId) return Response.json({ error: "userId required" }, { status: 400 });
-
-        // Prevent admin from deleting themselves
         if (userId === adminOrResponse.userId) {
           return Response.json({ error: "Du kannst deinen eigenen Account nicht löschen." }, { status: 400 });
         }
 
-        // Delete from user_roles first
         await supabase.from("user_roles").delete().eq("user_id", userId);
 
-        // Delete from Supabase Auth
-        const { error: authError } = await supabase.auth.admin.deleteUser(userId);
-        if (authError) return Response.json({ error: authError.message }, { status: 500 });
+        const { error: authDeleteError } = await supabase.auth.admin.deleteUser(userId);
+        if (authDeleteError) return Response.json({ error: authDeleteError.message }, { status: 500 });
 
         logInfo("admin.user-delete", { userId, by: adminOrResponse.userId });
         return Response.json({ deleted: true });
-      }
-
-      // ── SYSTEM STATS ──────────────────────────────────────────────────
-      case "system-stats": {
-        // User counts by role
-        const { data: roleCounts } = await supabase
-          .from("user_roles")
-          .select("role");
-
-        const usersByRole: Record<string, number> = { CONSUMER: 0, PROVIDER: 0, ADMIN: 0 };
-        for (const row of roleCounts ?? []) {
-          const r = (row as { role: string }).role;
-          usersByRole[r] = (usersByRole[r] ?? 0) + 1;
-        }
-
-        // Total auth users
-        const { data: authCount } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1 });
-        const totalAuthUsers = (() => {
-          if (authCount && typeof authCount === "object" && "total" in authCount) {
-            const total = (authCount as { total?: unknown }).total;
-            if (typeof total === "number") return total;
-          }
-          return 0;
-        })();
-
-        // Studies count
-        const { count: studiesCount } = await supabase
-          .from(STUDIES_TABLE)
-          .select("id", { count: "exact", head: true });
-
-        // Automation runs (last 24h)
-        const since24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-        const { count: runsLast24h } = await supabase
-          .from(AUTOMATION_RUNS_TABLE)
-          .select("id", { count: "exact", head: true })
-          .gte("finished_at", since24h);
-
-        // Feedback count
-        const { count: feedbackCount } = await supabase
-          .from("study_feedback")
-          .select("id", { count: "exact", head: true });
-
-        return Response.json({
-          usersByRole,
-          totalAuthUsers,
-          totalStudies: studiesCount ?? 0,
-          automationRunsLast24h: runsLast24h ?? 0,
-          totalFeedbackEvents: feedbackCount ?? 0,
-        });
-      }
-
-      // ── ALGORITHM GET ─────────────────────────────────────────────────
-      case "algorithm-get": {
-        const { loadFullConfig, isEngineConfigTableAvailable } = await import("@/lib/engine/configLoader");
-        const tableExists = await isEngineConfigTableAvailable(supabase);
-        const { config: algoConfig, fromDatabase } = await loadFullConfig(supabase);
-
-        return Response.json({
-          config: algoConfig,
-          fromDatabase,
-          tableExists,
-        });
-      }
-
-      // ── ALGORITHM UPDATE ──────────────────────────────────────────────
-      case "algorithm-update": {
-        const section = body.section as string;
-        const value = body.value;
-
-        if (!section || value === undefined) {
-          return Response.json({ error: "section and value required" }, { status: 400 });
-        }
-
-        const validSections = [
-          "required_keywords",
-          "preferred_sources",
-          "blocked_sources",
-          "custom_exclusions",
-          "topic_clusters",
-          "scoring_params",
-          "cannabis_anchor",
-        ];
-        if (!validSections.includes(section)) {
-          return Response.json({ error: `Invalid section: ${section}` }, { status: 400 });
-        }
-
-        const { saveConfigSection, resetConfigCache } = await import("@/lib/engine/configLoader");
-        resetConfigCache();
-        const result = await saveConfigSection(
-          supabase,
-          section as Parameters<typeof saveConfigSection>[1],
-          value as Parameters<typeof saveConfigSection>[2],
-          adminOrResponse.userId,
-        );
-
-        if (!result.success) {
-          return Response.json({ error: result.error }, { status: 500 });
-        }
-
-        logInfo("admin.algorithm-update", {
-          section,
-          by: adminOrResponse.userId,
-        });
-
-        return Response.json({ saved: true, section });
-      }
-
-      // ── ALGORITHM RESET ───────────────────────────────────────────────
-      case "algorithm-reset": {
-        const section = body.section as string;
-
-        const { getDefaultConfig, saveConfigSection, resetConfigCache } = await import("@/lib/engine/configLoader");
-        const defaults = getDefaultConfig();
-
-        if (section && section !== "all") {
-          const validSections = Object.keys(defaults);
-          if (!validSections.includes(section)) {
-            return Response.json({ error: `Invalid section: ${section}` }, { status: 400 });
-          }
-          resetConfigCache();
-          const result = await saveConfigSection(
-            supabase,
-            section as keyof typeof defaults,
-            defaults[section as keyof typeof defaults],
-            adminOrResponse.userId,
-          );
-          if (!result.success) {
-            return Response.json({ error: result.error }, { status: 500 });
-          }
-
-          logInfo("admin.algorithm-reset", { section, by: adminOrResponse.userId });
-          return Response.json({ reset: true, section });
-        }
-
-        // Reset all sections
-        resetConfigCache();
-        for (const [key, val] of Object.entries(defaults)) {
-          const result = await saveConfigSection(
-            supabase,
-            key as keyof typeof defaults,
-            val as Parameters<typeof saveConfigSection>[2],
-            adminOrResponse.userId,
-          );
-          if (!result.success) {
-            return Response.json({ error: `Failed to reset ${key}: ${result.error}` }, { status: 500 });
-          }
-        }
-
-        logInfo("admin.algorithm-reset", { section: "all", by: adminOrResponse.userId });
-        return Response.json({ reset: true, section: "all" });
-      }
-
-      // ── WEIGHTS HISTORY (read-only) ─────────────────────────────────────
-      // Latest engine-adapt cron run — audit/history only. The weights it
-      // computed are auto-applied into engine_config.scoring_params.weights
-      // by the cron itself (see api/automation/engine-adapt/route.ts); this
-      // action never writes anything, it just shows what last happened.
-      case "weights-history": {
-        const { data: latestWeights } = await supabase
-          .from("scoring_weights_history")
-          .select("weights, reason, based_on_studies, computed_at")
-          .order("computed_at", { ascending: false })
-          .limit(1)
-          .maybeSingle();
-
-        return Response.json({ latest: latestWeights ?? null });
       }
 
       // ── AI ASSIST (Claude) ───────────────────────────────────────────
@@ -763,7 +361,7 @@ export async function POST(req: Request) {
             prompt,
             "Du hilfst dem Admin-Team von SecretLeaf (einer Cannabis-Grow-App) bei Notizen, " +
               "Content-Entwürfen (z. B. Wissensartikel, Studien-Zusammenfassungen) und Ideen für die App. " +
-              "Antworte auf Deutsch, präzise und ohne Floskeln."
+              "Antworte auf Deutsch, präzise und ohne Floskeln.",
           );
           logInfo("admin.ai-assist", { by: adminOrResponse.userId, promptLength: prompt.length });
           return Response.json({ reply });
@@ -775,7 +373,7 @@ export async function POST(req: Request) {
       }
 
       default:
-        return Response.json({ error: `Unknown action: ${action}` }, { status: 400 });
+        return Response.json({ error: `Unknown or removed action: ${action}` }, { status: 400 });
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : "Admin API error";

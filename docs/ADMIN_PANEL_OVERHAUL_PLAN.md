@@ -446,13 +446,15 @@ Grund für die Auslagerung: `<CTAButton>` + next-intl `<Link>` erzwingen ein
 - [ ] Migration `admin_audit_log` auf Prod fahren
 - [ ] Restliche Primitives: `<DataTable>`, `<AdminModal>`, `<RunHistory>`, `<TrendLine>`/`<BarList>`, `<MoneyValue>`
 
-### Phase 1 — Lage + Betrieb (das tägliche Briefing steht)
-- [ ] `components/admin/cronRegistry.ts` (aus `vercel.json`)
-- [ ] `api/admin/briefing/route.ts` — Umsatz/Nutzer/Grows/Nacht-Läufe/Content-Puls in einem Call
-- [ ] **Lage-Seite** (`/dashboard/admin`) als Morgen-Briefing (§4.1) auf Primitives
-- [ ] **Betrieb-Seite** (§4.6): Cron-Registry + `<RunHistory>` + error-memory + „jetzt ausführen" + Integrations-Status + Migrationsstand
-- [ ] Nav: „Übersicht" → „Lage"; Analytics/Engine neu einsortiert
-- [ ] `tsc` + `eslint` clean; alle Routen 200
+### Phase 1 — Lage + Betrieb (das tägliche Briefing steht) ✓
+- [x] `components/admin/cronRegistry.ts` (7 Jobs aus `vercel.json` + `nextCronRun`/`cronIntervalMs`)
+- [x] `api/admin/briefing/route.ts` — Geld/Menschen/Content-Puls/Nacht-Läufe/„braucht Entscheidung" in einem Call
+- [x] **Lage-Seite** (`/dashboard/admin`) als Morgen-Briefing (§4.1) auf Primitives
+- [x] **Betrieb-Seite** (`/dashboard/admin/ops`, §4.6): Cron-Jobs mit Lauf-Historie + Erfolgsquote + „Ausführen"/„Test" (→ `api/admin/ops/run`, audit-geloggt), `automation_error_memory`-Panel, Integrations-Status. `api/admin/ops/route.ts` GET + `api/admin/ops/run/route.ts` POST.
+- [x] **Prune:** `/algorithm`, `/analytics`, `/engine`-Seiten gelöscht (Studien-Engine = nur Notfall-Zugriff, Entscheidung §8/2). Mega-Route `api/admin/dashboard` von 785 → ~380 Z., als deprecated markiert — nur noch `studies*`, `users*`, `ai-assist`.
+- [x] Nav: neue IA (Lage / Geld / Menschen / Inhalte / Maschine / Sonstiges), aus der Registry
+- [x] `tsc` + `eslint` clean; ops/run + Audit-Log end-to-end verifiziert
+- [ ] Migrationsstand-Panel in Betrieb (braucht Prod-DB-Zugriff → mit Phase 1b)
 
 ### Phase 2 — Geld & Zustellung
 - [ ] Migrationen `ai_usage`, `cost_entries`, `stripe_events`, `email_log`, `alert_rules`
