@@ -468,10 +468,10 @@ Grund für die Auslagerung: `<CTAButton>` + next-intl `<Link>` erzwingen ein
 - [ ] Alert-System scharf, Standard-Regeln seeden
 
 ### Phase 3 — Menschen & Inhalte & Hebel
+- [x] **Steuerung-Seite** (`/dashboard/admin/control`, §4.8/§5): `feature_flags`-Tabelle (`202608310003`, 5 Flags geseedet) + `lib/featureFlags.ts` (`isFeatureEnabled`, 30 s-Cache, Code-Default-Fallback) + `decision_log` (`202608310004`). `api/admin/control` GET/PATCH (Flag-Toggle, audit) + `api/admin/control/decisions` POST/PATCH. **Real verdrahtet:** `ai_assistant` gated `ai-assist`, `newsletter` gated `api/newsletter` (Toggle → 503, end-to-end verifiziert). Nav: `control` live. _Offen: Wartungsmodus (Middleware), Site-Banner, Pricing-Checkliste._
 - [ ] Benutzer-Seite neu (§4.4): Postgres-View, `<DataTable>`, Detail-Drawer, `TEAM` raus, `banned`
 - [ ] Wachstum-Seite (§4.3): Funnel, Kohorten, Conversion
 - [ ] Content-Seite (§4.5): Studien + Knowledge-Liste + Neuigkeiten-Editor (`updates`-Tabelle) → `/status` liest daraus
-- [ ] Steuerung-Seite (§4.8/§5): `feature_flags` + Wartungsmodus + Site-Banner + `decision_log` + Pricing-Checkliste
 - [ ] Algorithmus: B6, B7, Typ-Import, Datei-Split
 
 ### Phase 4 — Compliance & Rest

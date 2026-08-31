@@ -347,6 +347,14 @@ export async function POST(req: Request) {
 
       // ── AI ASSIST (Claude) ───────────────────────────────────────────
       case "ai-assist": {
+        const { isFeatureEnabled } = await import("@/lib/featureFlags");
+        if (!(await isFeatureEnabled("ai_assistant"))) {
+          return Response.json(
+            { error: "Der KI-Assistent ist aktuell deaktiviert (Steuerung → Feature-Flags)." },
+            { status: 403 },
+          );
+        }
+
         const prompt = (body.prompt as string | undefined)?.trim();
         if (!prompt) {
           return Response.json({ error: "prompt fehlt" }, { status: 400 });

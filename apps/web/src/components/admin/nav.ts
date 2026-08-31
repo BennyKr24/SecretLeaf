@@ -73,7 +73,7 @@ export const ADMIN_NAV_REGISTRY: AdminNavItem[] = [
 
   // ── Maschine ────────────────────────────────────────────────────────────
   { group: "Maschine", segment: "ops", label: "Betrieb", icon: CalendarClock, status: "live" },
-  { group: "Maschine", segment: "control", label: "Steuerung", icon: SlidersHorizontal, status: "planned", phase: 3 },
+  { group: "Maschine", segment: "control", label: "Steuerung", icon: SlidersHorizontal, status: "live" },
   { group: "Maschine", segment: "audit", label: "Audit-Log", icon: ScrollText, status: "planned", phase: 2 },
 
   // ── Sonstiges ───────────────────────────────────────────────────────────

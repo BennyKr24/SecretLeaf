@@ -107,6 +107,51 @@ export type AdminBriefing = {
   attention: BriefingAttention[];
 };
 
+// ── Steuerung ───────────────────────────────────────────────────────────────
+
+export type ControlFlag = {
+  key: string;
+  enabled: boolean;
+  description: string;
+  updatedAt: string | null;
+  /** true when the value is the code default (no DB row yet) */
+  isDefault: boolean;
+};
+
+export type DecisionStatus = "open" | "decided" | "dropped";
+
+export type DecisionEntry = {
+  id: string;
+  title: string;
+  status: DecisionStatus;
+  context: string | null;
+  decision: string | null;
+  decidedAt: string | null;
+  createdAt: string;
+};
+
+export type AdminControl = {
+  generatedAt: string;
+  flags: ControlFlag[];
+  decisions: DecisionEntry[];
+};
+
+export const flagPatchSchema = z.object({
+  key: z.string().min(1).max(64),
+  enabled: z.boolean(),
+});
+
+export const decisionCreateSchema = z.object({
+  title: z.string().min(1).max(200),
+  context: z.string().max(4000).optional(),
+});
+
+export const decisionPatchSchema = z.object({
+  id: z.string().uuid(),
+  status: z.enum(["open", "decided", "dropped"]).optional(),
+  decision: z.string().max(4000).optional(),
+});
+
 // ── Finanzen ────────────────────────────────────────────────────────────────
 
 export type FinanceCostMonth = {

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { isFeatureEnabled } from '@/lib/featureFlags';
 
 const LOOPS_CONTACTS_URL = 'https://app.loops.so/api/v1/contacts/create';
 
@@ -31,6 +32,13 @@ async function subscribeWithLoops(email: string) {
 }
 
 export async function POST(req: Request) {
+  if (!(await isFeatureEnabled('newsletter'))) {
+    return NextResponse.json(
+      { error: 'Die Newsletter-Anmeldung ist gerade deaktiviert.' },
+      { status: 503 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await req.json();
