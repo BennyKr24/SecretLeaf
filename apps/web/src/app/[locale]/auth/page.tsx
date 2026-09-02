@@ -2,6 +2,7 @@
 
 import { Link, useRouter } from '@/i18n/navigation';
 import { useSearchParams } from 'next/navigation';
+import { useLocale } from 'next-intl';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { loginWithSupabase, registerWithSupabase, saveSession, getSession } from '@/lib/auth';
 import AuthInput from '@/components/auth/AuthInput';
@@ -89,6 +90,7 @@ function ErrorBox({ message }: { message: string }) {
 function AuthPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const locale = useLocale() === 'en' ? 'en' : 'de';
   const [mode, setMode] = useState<Mode>(() => {
     const m = searchParams.get('mode');
     if (m === 'register' || m === 'forgot') return m;
@@ -183,7 +185,7 @@ function AuthPageInner() {
         const redirectTo = getSafeRedirect(searchParams.get('next'));
         router.push(redirectTo);
       } else {
-        const session = await registerWithSupabase({ email: cleanEmail, password });
+        const session = await registerWithSupabase({ email: cleanEmail, password, locale });
         if (session) {
           saveSession(session);
           router.push('/dashboard/onboarding');
