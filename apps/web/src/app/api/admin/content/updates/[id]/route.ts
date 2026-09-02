@@ -25,6 +25,9 @@ export const PATCH = adminRoute<{ id: string }, Params>(async ({ req, actor, par
   if (input.slug !== undefined) patch.slug = input.slug;
   if (input.published !== undefined) patch.published = input.published;
   if (input.featured !== undefined) patch.featured = input.featured;
+  if (input.banner !== undefined) patch.banner = input.banner;
+  if (input.bannerStartsAt !== undefined) patch.banner_starts_at = input.bannerStartsAt;
+  if (input.bannerEndsAt !== undefined) patch.banner_ends_at = input.bannerEndsAt;
 
   if (Object.keys(patch).length === 0) throw new AdminHttpError(400, "Nichts zu ändern");
 

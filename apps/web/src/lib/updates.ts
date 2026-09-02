@@ -149,6 +149,38 @@ export async function getAllUpdates(): Promise<UpdateEntry[]> {
   }
 }
 
+export type SiteBannerEntry = {
+  slug: string;
+  title: string;
+  summary: string;
+  cta: UpdateCta | null;
+};
+
+/** The currently active site-wide banner (`banner = true`, published, inside
+ *  its time window), or null. DB-only — no JSON fallback, since the banner
+ *  is a live "right now" signal, not changelog content that needs to survive
+ *  a DB outage. */
+export async function getActiveBanner(): Promise<SiteBannerEntry | null> {
+  try {
+    const supabase = getSupabaseServerClient();
+    const nowIso = new Date().toISOString();
+    const { data, error } = await supabase
+      .from('updates')
+      .select('slug, title, summary, cta')
+      .eq('banner', true)
+      .eq('published', true)
+      .or(`banner_starts_at.is.null,banner_starts_at.lte.${nowIso}`)
+      .or(`banner_ends_at.is.null,banner_ends_at.gte.${nowIso}`)
+      .order('date', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (error || !data) return null;
+    return { slug: data.slug, title: data.title, summary: data.summary, cta: data.cta ?? null };
+  } catch {
+    return null;
+  }
+}
+
 export async function getUpdateBySlug(slug: string): Promise<UpdateEntry | undefined> {
   const all = await getAllUpdates();
   return all.find((u) => u.slug === slug);

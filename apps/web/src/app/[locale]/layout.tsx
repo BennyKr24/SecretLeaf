@@ -7,9 +7,11 @@ import { NavigationBar } from "@/components/NavigationBar";
 import { BottomNav, BottomNavSpacer } from "@/components/BottomNav";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LocaleBanner } from "@/components/LocaleBanner";
+import { SiteBanner } from "@/components/SiteBanner";
 import { CookieConsentBanner } from "@/components/cookie/CookieConsentBanner";
 import { CookieSettingsButton } from "@/components/cookie/CookieSettingsButton";
 import { routing } from "@/i18n/routing";
+import { getActiveBanner } from "@/lib/updates";
 import { Leaf } from "lucide-react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://secretleaf.net";
@@ -76,10 +78,13 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   const messages = await getMessages();
   const t = await getTranslations({ locale, namespace: "footer" });
+  const banner = await getActiveBanner();
 
   return (
     <NextIntlClientProvider messages={messages}>
       <ThemeProvider>
+        {/* Admin-curated announcement (Steuerung → Neuigkeiten), if one is live */}
+        <SiteBanner banner={banner} />
         {/* Language onboarding banner (client component, renders nothing for non-EN browsers) */}
         <LocaleBanner />
 

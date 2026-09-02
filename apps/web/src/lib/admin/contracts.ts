@@ -166,6 +166,10 @@ export type AdminUpdate = {
   published: boolean;
   /** true when the row carries rich `sections` content (JSON import) */
   hasSections: boolean;
+  /** also shown as the site-wide banner (subject to the window below) */
+  banner: boolean;
+  bannerStartsAt: string | null;
+  bannerEndsAt: string | null;
   updatedAt: string;
 };
 
@@ -187,6 +191,9 @@ export const updateCreateSchema = z.object({
   version: z.string().max(40).optional(),
   featured: z.boolean().optional(),
   published: z.boolean().optional(),
+  banner: z.boolean().optional(),
+  bannerStartsAt: z.string().datetime().nullable().optional(),
+  bannerEndsAt: z.string().datetime().nullable().optional(),
 });
 
 export type UpdateCreateInput = z.infer<typeof updateCreateSchema>;

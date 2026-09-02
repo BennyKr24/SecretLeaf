@@ -14,6 +14,17 @@ import { Megaphone, Star, Pencil, Trash2 } from "lucide-react";
 const field =
   "rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none";
 
+/** ISO string -> value for <input type="datetime-local"> in the browser's local time. */
+const toLocalInput = (iso: string | null): string => {
+  if (!iso) return "";
+  const d = new Date(iso);
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
+
+/** <input type="datetime-local"> value (interpreted as local time) -> ISO string, or null. */
+const toIso = (local: string): string | null => (local ? new Date(local).toISOString() : null);
+
 const emptyForm = {
   slug: "",
   title: "",
@@ -23,6 +34,9 @@ const emptyForm = {
   version: "",
   featured: false,
   published: true,
+  banner: false,
+  bannerStartsAt: "",
+  bannerEndsAt: "",
 };
 type FormState = typeof emptyForm;
 
@@ -49,6 +63,9 @@ function Editor({
           version: editing.version ?? "",
           featured: editing.featured,
           published: editing.published,
+          banner: editing.banner,
+          bannerStartsAt: toLocalInput(editing.bannerStartsAt),
+          bannerEndsAt: toLocalInput(editing.bannerEndsAt),
         }
       : { ...emptyForm, category: categories[0] ?? "" },
   );
@@ -71,6 +88,9 @@ function Editor({
         version: form.version || undefined,
         featured: form.featured,
         published: form.published,
+        banner: form.banner,
+        bannerStartsAt: toIso(form.bannerStartsAt),
+        bannerEndsAt: toIso(form.bannerEndsAt),
       };
       if (editing) {
         await adminFetch(auth.session, `content/updates/${editing.id}`, { method: "PATCH", json: body });
@@ -134,6 +154,34 @@ function Editor({
             <input type="checkbox" checked={form.published} onChange={(e) => set("published", e.target.checked)} />
             Veröffentlicht
           </label>
+        </div>
+        <div className="space-y-2 rounded-lg border border-border bg-background/50 p-3 sm:col-span-2">
+          <label className="flex items-center gap-2 text-xs font-medium text-foreground">
+            <input type="checkbox" checked={form.banner} onChange={(e) => set("banner", e.target.checked)} />
+            Auch als Site-Banner zeigen (Titel + Zusammenfassung, oben auf jeder Seite)
+          </label>
+          {form.banner && (
+            <div className="grid gap-2 sm:grid-cols-2">
+              <label className="flex flex-col gap-1 text-xs text-muted-fg">
+                Sichtbar ab (optional)
+                <input
+                  type="datetime-local"
+                  value={form.bannerStartsAt}
+                  onChange={(e) => set("bannerStartsAt", e.target.value)}
+                  className={field}
+                />
+              </label>
+              <label className="flex flex-col gap-1 text-xs text-muted-fg">
+                Sichtbar bis (optional)
+                <input
+                  type="datetime-local"
+                  value={form.bannerEndsAt}
+                  onChange={(e) => set("bannerEndsAt", e.target.value)}
+                  className={field}
+                />
+              </label>
+            </div>
+          )}
         </div>
         <div className="flex gap-2 sm:col-span-2">
           <CTAButton variant="primary" size="sm" type="submit" disabled={busy}>
@@ -247,6 +295,7 @@ export default function AdminChangelogPage() {
                   <Badge tone="muted">{u.category}</Badge>
                   {!u.published && <Badge tone="amber">Entwurf</Badge>}
                   {u.hasSections && <Badge tone="muted">Detailinhalt</Badge>}
+                  {u.banner && <Badge tone="primary">Banner</Badge>}
                 </div>
                 <p className="text-xs text-muted-fg">
                   {u.date} · <code>{u.slug}</code>

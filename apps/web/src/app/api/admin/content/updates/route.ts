@@ -26,6 +26,9 @@ type Row = {
   featured: boolean;
   published: boolean;
   sections: Record<string, unknown> | null;
+  banner: boolean;
+  banner_starts_at: string | null;
+  banner_ends_at: string | null;
   updated_at: string;
 };
 
@@ -40,6 +43,9 @@ const mapRow = (r: Row): AdminUpdate => ({
   featured: r.featured,
   published: r.published,
   hasSections: !!r.sections && Object.keys(r.sections).length > 0,
+  banner: r.banner,
+  bannerStartsAt: r.banner_starts_at,
+  bannerEndsAt: r.banner_ends_at,
   updatedAt: r.updated_at,
 });
 
@@ -47,7 +53,9 @@ export const GET = adminRoute(async (): Promise<AdminUpdatesResponse> => {
   const supabase = getSupabaseServerClient();
   const { data, error } = await supabase
     .from("updates")
-    .select("id, slug, version, date, title, summary, category, featured, published, sections, updated_at")
+    .select(
+      "id, slug, version, date, title, summary, category, featured, published, sections, banner, banner_starts_at, banner_ends_at, updated_at",
+    )
     .order("date", { ascending: false });
   if (error) throw new Error(error.message);
 
@@ -81,6 +89,9 @@ export const POST = adminRoute(async ({ req, actor }) => {
           version: input.version ?? null,
           featured: input.featured ?? false,
           published: input.published ?? true,
+          banner: input.banner ?? false,
+          banner_starts_at: input.bannerStartsAt ?? null,
+          banner_ends_at: input.bannerEndsAt ?? null,
           created_by: actor.userId,
         })
         .select("id")
