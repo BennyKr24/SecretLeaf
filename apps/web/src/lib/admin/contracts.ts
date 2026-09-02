@@ -300,6 +300,35 @@ export const financeCostSchema = z.object({
 
 export type FinanceCostInput = z.infer<typeof financeCostSchema>;
 
+// ── Wachstum ────────────────────────────────────────────────────────────────
+
+export type GrowthFunnelStage = {
+  key: string;
+  label: string;
+  users: number;
+  /** % of the first stage (total signups) */
+  pctOfTotal: number;
+  /** % of the previous stage — null for the first stage */
+  pctOfPrevious: number | null;
+};
+
+export type GrowthMonth = {
+  /** "YYYY-MM" */
+  month: string;
+  newSignups: number;
+  newPro: number;
+  /** newPro / newSignups for that month, 0 when newSignups is 0 */
+  conversionPct: number;
+};
+
+export type AdminGrowth = {
+  generatedAt: string;
+  funnel: GrowthFunnelStage[];
+  activationPct: number;
+  /** last 6 months, oldest → newest */
+  months: GrowthMonth[];
+};
+
 // ── Betrieb / Ops ───────────────────────────────────────────────────────────
 
 export type OpsLastRun = {

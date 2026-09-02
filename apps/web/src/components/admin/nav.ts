@@ -60,7 +60,7 @@ export const ADMIN_NAV_REGISTRY: AdminNavItem[] = [
 
   // ── Geld ────────────────────────────────────────────────────────────────
   { group: "Geld", segment: "finance", label: "Finanzen", icon: Euro, status: "live" },
-  { group: "Geld", segment: "growth", label: "Wachstum", icon: Sprout, status: "planned", phase: 3 },
+  { group: "Geld", segment: "growth", label: "Wachstum", icon: Sprout, status: "live" },
 
   // ── Menschen ────────────────────────────────────────────────────────────
   { group: "Menschen", segment: "users", label: "Nutzer", icon: Users, status: "live" },
