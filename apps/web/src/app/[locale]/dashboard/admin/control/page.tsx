@@ -32,6 +32,40 @@ function Toggle({ on, disabled, onChange }: { on: boolean; disabled?: boolean; o
   );
 }
 
+function MaintenanceMessageEditor({
+  flag,
+  busy,
+  onSave,
+}: {
+  flag: ControlFlag;
+  busy: boolean;
+  onSave: (description: string) => void;
+}) {
+  const [text, setText] = useState(flag.description);
+  const dirty = text.trim() !== flag.description.trim();
+
+  return (
+    <div className="mt-2 flex items-start gap-2">
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows={2}
+        maxLength={500}
+        placeholder="Hinweistext, der Besuchern während der Wartung angezeigt wird"
+        className="min-w-0 flex-1 resize-none rounded-lg border border-border bg-background px-2 py-1.5 text-xs focus:border-primary focus:outline-none"
+      />
+      <button
+        type="button"
+        disabled={busy || !dirty}
+        onClick={() => onSave(text.trim())}
+        className="flex-shrink-0 rounded-md bg-primary px-2 py-1.5 text-xs font-semibold text-white disabled:opacity-40"
+      >
+        Speichern
+      </button>
+    </div>
+  );
+}
+
 const STATUS_META: Record<DecisionEntry["status"], { label: string; tone: "amber" | "primary" | "muted" }> = {
   open: { label: "offen", tone: "amber" },
   decided: { label: "entschieden", tone: "primary" },
@@ -153,6 +187,25 @@ export default function AdminControlPage() {
     [auth, load],
   );
 
+  const saveFlagMessage = useCallback(
+    async (flag: ControlFlag, description: string) => {
+      if (auth.status !== "authenticated") return;
+      setBusyFlag(flag.key);
+      try {
+        await adminFetch(auth.session, "control", {
+          method: "PATCH",
+          json: { key: flag.key, enabled: flag.enabled, description },
+        });
+        await load();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Speichern fehlgeschlagen");
+      } finally {
+        setBusyFlag(null);
+      }
+    },
+    [auth, load],
+  );
+
   const addDecision = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
@@ -205,21 +258,34 @@ export default function AdminControlPage() {
             <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-muted-fg">Feature-Flags</h2>
             <div className="space-y-2">
               {data.flags.map((flag) => (
-                <Card key={flag.key} padding="sm" className="flex items-center gap-3">
-                  <Toggle on={flag.enabled} disabled={busyFlag === flag.key} onChange={() => void toggleFlag(flag)} />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <code className="text-sm font-semibold text-foreground">{flag.key}</code>
-                      {flag.isDefault && <Badge tone="muted">Standard</Badge>}
+                <Card key={flag.key} padding="sm">
+                  <div className="flex items-center gap-3">
+                    <Toggle on={flag.enabled} disabled={busyFlag === flag.key} onChange={() => void toggleFlag(flag)} />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <code className="text-sm font-semibold text-foreground">{flag.key}</code>
+                        {flag.isDefault && <Badge tone="muted">Standard</Badge>}
+                        {flag.key === "maintenance_mode" && flag.enabled && (
+                          <Badge tone="rose">aktiv — Seite gesperrt</Badge>
+                        )}
+                      </div>
+                      {flag.key !== "maintenance_mode" && <p className="text-xs text-muted-fg">{flag.description}</p>}
                     </div>
-                    <p className="text-xs text-muted-fg">{flag.description}</p>
                   </div>
+                  {flag.key === "maintenance_mode" && (
+                    <MaintenanceMessageEditor
+                      flag={flag}
+                      busy={busyFlag === flag.key}
+                      onSave={(description) => void saveFlagMessage(flag, description)}
+                    />
+                  )}
                 </Card>
               ))}
             </div>
             <p className="text-xs text-muted-fg">
               Wirkt serverseitig innerhalb von ~30 s. Verdrahtet: <code>ai_assistant</code> (KI-Assistent),{" "}
-              <code>newsletter</code> (Anmeldung). <code>maintenance_mode</code> ist noch nicht aktiv.
+              <code>newsletter</code> (Anmeldung), <code>maintenance_mode</code> (sperrt die App für Nicht-Admins,
+              Admin-Bereich + Login bleiben erreichbar).
             </p>
           </section>
 

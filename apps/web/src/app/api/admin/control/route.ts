@@ -61,6 +61,7 @@ export const PATCH = adminRoute(async ({ req, actor }) => {
 
   const flags = await getAllFeatureFlags();
   const before = flags.find((f) => f.key === input.key);
+  const description = input.description ?? before?.description ?? null;
 
   await withAudit(
     actor,
@@ -68,14 +69,17 @@ export const PATCH = adminRoute(async ({ req, actor }) => {
       resource: "feature_flag",
       resourceId: input.key,
       action: "toggle",
-      ...diffFields({ enabled: before?.enabled }, { enabled: input.enabled }),
+      ...diffFields(
+        { enabled: before?.enabled, description: before?.description },
+        { enabled: input.enabled, description },
+      ),
     },
     async () => {
       const { error } = await supabase.from(FEATURE_FLAGS_TABLE).upsert(
         {
           key: input.key,
           enabled: input.enabled,
-          description: before?.description ?? null,
+          description,
           updated_by: actor.userId,
         },
         { onConflict: "key" },
@@ -85,5 +89,5 @@ export const PATCH = adminRoute(async ({ req, actor }) => {
   );
 
   resetFeatureFlagCache();
-  return { key: input.key, enabled: input.enabled };
+  return { key: input.key, enabled: input.enabled, description };
 });

@@ -27,7 +27,7 @@ export const FEATURE_FLAG_DEFAULTS: Record<
   newsletter: { enabled: true, description: "Newsletter-Anmeldung (Loops) aktiv" },
   translate_button: { enabled: true, description: "Übersetzen-Button auf Inhalten sichtbar" },
   fertilizer_catalog: { enabled: false, description: "Dünger-Katalog öffentlich (aktuell offline)" },
-  maintenance_mode: { enabled: false, description: "Wartungsmodus — App für Nicht-Admins gesperrt (noch nicht verdrahtet)" },
+  maintenance_mode: { enabled: false, description: "Wir sind gerade mit Wartungsarbeiten beschäftigt und bald wieder da." },
 };
 
 export type FeatureFlag = {
@@ -75,6 +75,21 @@ export async function isFeatureEnabled(key: FeatureFlagKey): Promise<boolean> {
   const row = rows.get(key);
   if (row) return row.enabled;
   return FEATURE_FLAG_DEFAULTS[key]?.enabled ?? false;
+}
+
+/** Single flag with its message text — for callers that need the `description`
+ *  as user-facing copy (e.g. the maintenance-mode banner in `proxy.ts`), not
+ *  just the on/off value. */
+export async function getFeatureFlag(
+  key: FeatureFlagKey,
+): Promise<{ enabled: boolean; description: string }> {
+  const rows = await loadFlags();
+  const row = rows.get(key);
+  const def = FEATURE_FLAG_DEFAULTS[key];
+  return {
+    enabled: row ? row.enabled : def.enabled,
+    description: row?.description ?? def.description,
+  };
 }
 
 /** Full list for the admin UI — DB rows merged over the code defaults. */

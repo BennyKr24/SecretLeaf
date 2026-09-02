@@ -225,6 +225,8 @@ export type AdminControl = {
 export const flagPatchSchema = z.object({
   key: z.string().min(1).max(64),
   enabled: z.boolean(),
+  /** when provided, replaces the flag's message text (e.g. the maintenance-mode banner copy) */
+  description: z.string().max(500).optional(),
 });
 
 export const decisionCreateSchema = z.object({
