@@ -438,33 +438,48 @@ Beispiele:
 # 12. Subscription Model
 
 Live seit 2026-08-19 (Migration `20260819200137_subscriptions.sql`).
+Trial + Codes ergänzt 2026-08-27 (`202608270000_pro_trial_and_codes.sql`).
 
 ---
 
-Tabelle:
+Tabellen:
 
-subscriptions
-
----
-
-Pflichtfelder:
-
-* user_id
-* plan
-* status
-* current_period_end
-
-Zusätzlich: stripe_customer_id, stripe_subscription_id (zur Zuordnung von Stripe-Webhook-Events).
+* subscriptions
+* pro_codes
+* pro_code_redemptions
 
 ---
 
-Pläne (lowercase — deckungsgleich mit dem UserPlan-TS-Type in apps/web):
+**subscriptions** — eine Zeile pro Nutzer. Fehlende Zeile = free.
 
-* free
-* pro
-* team
+Pflichtfelder: user_id, plan, status, current_period_end.
 
-Fehlende Zeile = free. Eine Zeile entsteht erst beim ersten Checkout.
+Zusätzlich:
+
+* stripe_customer_id, stripe_subscription_id — Zuordnung von Stripe-Webhook-Events
+* source — `stripe` | `trial` | `code`: wie das Entitlement erteilt wurde
+* trial_redeemed_at — gesetzt beim ersten Aktivieren des Self-Serve-Trials;
+  blockiert einen zweiten Trial unabhängig vom aktuellen status
+
+Pläne (lowercase — deckungsgleich mit dem UserPlan-TS-Type in apps/web): free, pro, team.
+
+**Entitlement-Check** (`getUserSubscription()` in `apps/web/src/lib/serverAuth.ts`):
+status ∈ {`active`, `trialing`} **und** `current_period_end` in der Zukunft
+(oder NULL) → Pro. Dadurch laufen Trial und Code-Grants beim Lesen ab, ohne
+Cron; eine gesunde Stripe-`active`-Subscription trägt immer ein zukünftiges
+Periodenende, zahlende Nutzer sind also nicht betroffen.
+
+---
+
+**pro_codes** — Admin-generierte Zugangscodes (Panel: `/dashboard/admin/codes`).
+Felder: code (normalisiert, unique), duration_days, max_redemptions,
+redemption_count, note, expires_at (nullable), active, created_by, created_at.
+Nur Service-Role (Admin-API hinter `requireAdmin`) liest/schreibt — kein RLS-Policy.
+
+**pro_code_redemptions** — Ledger, eine Zeile pro (code_id, user_id); das
+unique-Constraint ist zugleich der Concurrency-Guard. Einlösen verlängert
+`subscriptions.current_period_end` um `duration_days` (source=`code`,
+status=`active`). RLS: Nutzer liest seine eigenen Redemptions.
 
 ---
 

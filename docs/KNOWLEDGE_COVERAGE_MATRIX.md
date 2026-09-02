@@ -23,7 +23,13 @@ Coverage is measured per **domain area** against a canonical target topic set
 - **Target** — number of canonical topics in scope.
 - **Exists** — topics with *any* article today (published **or** orphaned).
 - **Published** — topics with a reader-visible article (slug in `GROW_KNOWLEDGE`;
-  see `apps/web/src/data/terpira/wiki.ts`).
+  see `apps/web/src/data/terpira/wiki.ts`). Since 2026-08-22 the reader-visible
+  diagnostic articles (deficiencies, toxicities, diseases, pests, environmental
+  stress, generic troubleshooters) live under the `diagnose` `TerpiraCategory`
+  and the phase/how-to guides under `tutorials` — split out of the former
+  catch-all `anbau` (see `docs/CONTENT_CATEGORY_RESTRUCTURE_PLAN.md`). The
+  domain-area rows below are unaffected: they measure topic coverage, not the
+  category slug.
 - **Handbook-grade** — published *and* scoring ≥ 65 (tier A/B) in the Phase 16 audit.
 - **Coverage %** = Handbook-grade ÷ Target. This is deliberately strict: a lite
   stub or an orphaned definition does **not** count as coverage.

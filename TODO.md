@@ -16,14 +16,14 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
-## 📊 Admin-Panel-Überarbeitung (Stand 2026-09-02)
+## 📊 Admin-Panel-Überarbeitung (Stand 2026-09-03)
 
 Voller Plan + Phasen-Checkliste: `docs/ADMIN_PANEL_OVERHAUL_PLAN.md`.
 `/status`-Chronik-Split, Phase 0–3a/b/c und die vier „Hebel"
 (`stripe_events`-Idempotenz, Wartungsmodus, Site-Banner, Wachstum-Funnel)
 sind gebaut, verifiziert und auf Prod (Migrationen bis `202609020002`
 angewendet). Live-Seiten: Lage, Finanzen, Steuerung, Nutzer, Neuigkeiten,
-Betrieb, Wachstum.
+Betrieb, Wachstum, Pro-Codes.
 
 Noch offen:
 - 🔍 **Studien/Assistent** laufen noch auf dem alten `adminApi`/Design-Muster
@@ -33,18 +33,32 @@ Noch offen:
   hängt an PR #29 (i18n). Ein reiner Design-Umbau der Studien-Seite ist ohne
   Browser-Test riskant — ein aktiv genutzter Moderations-Workflow.
 - ⏸️ **Mail-Modul** (`/dashboard/admin/mail`, `email_log`) hängt an PR #30.
-- ⏸️ **Pro-Codes-Admin-UI** hängt an PR #27 — dessen App-Code (Redeem-Endpoints,
-  `serverAuth.ts`-Änderungen) ist **nicht** gemerged, nur das Schema
-  (`202608270000_pro_trial_and_codes`) wurde am 2026-09-02 isoliert
-  nachgezogen, weil gemergter Admin-Code (`subscriptions_source_check`)
-  schon davon abhing. `pro_codes`/`pro_code_redemptions` existieren also auf
-  Prod, aber niemand kann sie befüllen, bis PR #27 gemerged wird.
 - 🔍 Phase 2b Rest: `email_log`/`alert_rules`-Migrationen, Cron `cost-sync` +
   `alert-check`, Consent-Records + Compliance-Seite (Phase 4).
 
 ---
 
-## 💳 Pro-Plan / Stripe — Live-Modus fehlt noch (Stand 2026-08-19)
+## 💳 Pro-Plan / Stripe — ZURÜCKGESTELLT bis frühestens ~Feb 2027
+
+- 🅿️ **Entscheidung 2026-08-27: bezahltes Pro kommt in den ersten ~6 Monaten
+  nicht.** Zuerst wird Pro inhaltlich so ausgebaut, dass es das Geld wert ist,
+  und mehr Nutzungsdaten gesammelt. Übergangsweise höchstens Free-Codes oder
+  ein 1-Monats-Trial — kein Live-Checkout. Der komplette Live-Go-Live
+  (Stripe-Account-Aktivierung → Produkt/Preise/Webhook/Portal im Live-Modus →
+  4 Vercel-Env-Vars → Prod-Smoke-Test) bleibt hier als fertiger Runbook
+  liegen, wird aber erst wieder aufgegriffen, wenn die Ausbau-Entscheidung
+  gefallen ist. Blocker bei einem Anlauf am 2026-08-27: der Live-Account
+  `SecretLeaf` (`acct_1U6Hp8HmbWy555oe`) ist **nicht aktiviert** (KYC:
+  Unternehmensdaten, Ausweis, IBAN, Einreichung zur Prüfung) — Stripe sperrt
+  den Live-Modus komplett bis dahin, das muss Benny selbst machen.
+- ✅ **Trial + Codes live seit 2026-09-03** (PR #27 gemerged). `/pricing`
+  läuft als Trial-/Code-State-Machine hinter `PAID_LAUNCH_ENABLED = false`
+  (bezahlter Pfad geparkt, 1 Flag zum Reaktivieren). Self-serve 30-Tage-Trial
+  (`/api/billing/trial`, einmalig via `trial_redeemed_at`), einlösbare Codes
+  (`/api/billing/redeem`, Admin-Panel `/dashboard/admin/pro-codes` auf der
+  neuen Primitives-Architektur neu gebaut), Ablauf per Read-Time-Check in
+  `getUserSubscription()` ohne Cron. Migration
+  `202608270000_pro_trial_and_codes.sql` lokal + Prod angewendet.
 
 - ✅ **Test-Modus vollständig eingerichtet und Ende-zu-Ende verifiziert.**
   Stripe Sandbox-Account (`SecretLeaf Sandbox`, `acct_1U6HpRH5zm2C1ryD`):
@@ -61,28 +75,37 @@ Noch offen:
   gefixt: die `subscriptions`-Migration war nie gegen lokale DB *oder* Prod
   gefahren worden (nur als Datei vorhanden) — beides am 2026-08-21
   nachgeholt (`supabase db push --linked`).
+- ✅ **Code-Audit auf Live-Tauglichkeit (2026-08-27): nichts zu ändern.**
+  `lib/stripe.ts`, `lib/env.ts`, `api/billing/{checkout,portal,webhook}` lesen
+  alles aus Env-Vars, keine test-mode-Annahmen, kein hartcodierter Key/
+  Price. Entitlement ausschließlich über den Webhook
+  (`checkout.session.completed`). `PRICE_*_DISPLAY` in `pricing/page.tsx`
+  steht schon auf `4,99 €` / `59 €` / `4,92 €`-pro-Monat — deckt sich mit den
+  geplanten Live-Preisen, d. h. Schritt 3 ist nur „Live-Prices mit exakt
+  diesen Beträgen anlegen", kein Code-Change. `.env.example` ist vollständig
+  und korrekt.
 - ⏸️ **Für echten Go-Live fehlt nur noch, was ausschließlich manuell geht:**
-  1. Dieselbe Produkt-/Preis-/Webhook-/Portal-Konfiguration im Stripe
-     **Live-Modus** wiederholen (Sandbox-Werte gelten nur für Tests)
-  2. Die vier Live-`STRIPE_*`-Werte (Secret Key, Webhook Secret, beide
-     Price-IDs) in **Vercel → Settings → Environment Variables** eintragen —
-     `.env.local` gilt nur lokal
-  3. Preis in `apps/web/src/app/[locale]/pricing/page.tsx`
-     (`PRICE_*_DISPLAY`-Konstanten) einmal gegen die Live-Preise gegenchecken
+  1. Im Stripe **Live-Modus** neu anlegen (Sandbox-Objekte gelten nicht):
+     Produkt „SecretLeaf Pro" + zwei Preise (4,99 €/Monat, 59 €/Jahr,
+     beide EUR, recurring) · Webhook-Endpoint auf
+     `https://secretleaf.vercel.app/api/billing/webhook` mit den Events
+     `checkout.session.completed`, `customer.subscription.updated`,
+     `customer.subscription.deleted` · Customer Portal aktivieren
+     (Kündigen + Zahlungsmethode ändern, Business-Infos/Rechtstexte setzen)
+  2. In **Vercel → Settings → Environment Variables** (Scope: Production)
+     die vier Werte setzen — aktuell hat Prod **keine** `STRIPE_*`-Vars,
+     d. h. `/api/billing/*` läuft dort bis dahin in 500:
+     `STRIPE_SECRET_KEY` (`sk_live_…`), `STRIPE_WEBHOOK_SECRET`
+     (`whsec_…` vom Live-Endpoint), `STRIPE_PRICE_ID_PRO_MONTHLY`,
+     `STRIPE_PRICE_ID_PRO_YEARLY` (beide Live-`price_…`) → danach
+     Production neu deployen. `NEXT_PUBLIC_SITE_URL` steht auf Prod schon
+     korrekt (wird anderswo genutzt).
+  3. Smoke-Test auf Prod mit echter Karte: Login → `/pricing` → Checkout →
+     Zahlung → `subscriptions`-Zeile `plan=pro` → `/pricing`+`/profile`
+     zeigen Pro → Customer Portal öffnet. Danach ggf. Test-Abo in Stripe
+     stornieren/refunden.
 
 ---
-
-## 🖼️ Bilder-Nachprüfung (Pests + Deficiencies, 2026-08-19)
-
-- ⏸️ **Nochmal kritisch über die Fotos in beiden Lexika drüberschauen.**
-  Heute alle Bilder in `studies/pests` (16 Arten) und `studies/deficiencies`
-  (7 Mangelbilder) neu besorgt/geprüft, dabei mehrfach falsch zugeordnete
-  Bilder erst im zweiten/dritten Anlauf gefunden (Erdfloh-Eier statt Käfer,
-  falsche Pflanze bei Gallmücken, Diagramm statt Foto bei Schildläusen,
-  unklare Milben-Fotos). Mit frischem Blick nochmal alle durchgehen, ob noch
-  was Falsches/Unklares übersehen wurde. Siehe `apps/web/public/terpira/
-  pests/ATTRIBUTION.md` und `.../deficiencies/ATTRIBUTION.md` für die
-  aktuelle Quellenliste.
 
 ## 📐 Grow-Rechner — Kalibrierungsaudit (2026-08-21)
 
@@ -99,16 +122,6 @@ Erfahrungslevel) und Blütedauer (an Genetik statt Erfahrung gekoppelt,
 Migration `202608210000_grow_genetik_typ.sql` lokal + Prod angewendet).
 Offen:
 
-- 💤 **PPFD-Untergrenze Blüte in `lighting.ts`** (aktuell 600) liegt am
-  unteren Rand des 2026er-Konsens (mehrere Quellen nennen eher 700–900 ohne
-  CO2-Anreicherung) — optionale Anhebung auf 700, kein Fehler.
-- 💤 **Trocknung/Curing-Parameter in `phases.ts`** (18–21°C/50–60% RH, festes
-  10–15-Min.-Burping über 2–4 Wochen) sind nicht falsch, aber aktuelle Praxis
-  tendiert zu 55–65% RH und gestaffeltem Burping (täglich → alle 2–3 Tage)
-  für bessere Terpenerhaltung — optionales Update, kein Bug.
-- 💤 **Genetik-Faktor `regular: 0.85` in `yield.ts`** ist irreführend
-  benannt — bildet vermutlich implizit Männchen-Ausfall im Bestand ab, ohne
-  das im Code zu benennen. Kein Zahlenfehler, Kommentar würde helfen.
 - 💤 **`intelligence.ts` Ertragsverlust-/-gewinn-Gramm-Heuristiken** (z. B.
   "−35g bei fehlendem Log") sind produktinterne Heuristiken ohne externe
   Quelle — nicht gegen Literatur prüfbar, absichtlich nicht angefasst.
@@ -183,32 +196,6 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   wird, ist eine eigene Infra-/Budget-Entscheidung, losgelöst von Phase 1/2.
   `scripts/sync-fertilizer-prices.mjs` bleibt als möglicher Ausgangspunkt
   liegen.
-
-## 📚 Quellenregister (`/studies/sources`)
-
-- 🔍 **Inhalt: "Neuer Bereich"-Banner zum Schädlings-Lexikon wirkt stale.**
-  Der rosa Hinweis-Kasten oben auf der Seite bewirbt das Schädlings-Lexikon
-  noch als brandneu ("Jetzt verfügbar") — dürfte inzwischen etabliert sein
-  und nicht mehr als Ankündigung geführt werden. Prüfen, ob der Banner weg
-  kann oder durch aktuellere Inhalte ersetzt werden sollte.
-
-## 🗂️ Studies-Kategorisierung — `anbau` überladen, Plan steht (2026-08-22)
-
-- ⏸️ **Plan fertig, noch nicht umgesetzt — Entscheidung steht aus.** Voller
-  Plan mit Datenbasis, Cluster-Aufschlüsselung, Optionsvergleich und
-  Migrationsaufwand: `docs/CONTENT_CATEGORY_RESTRUCTURE_PLAN.md`.
-  Kurzfassung: **54 von 97 live sichtbaren Artikeln (56 %) liegen in
-  `anbau`**, davon 33 (61 % von `anbau`) inhaltlich reine Diagnose-Artikel
-  (Mangel/Überschuss/Krankheit/Schädling/Umweltstress) statt Technik/
-  Tutorial — zwei komplett unterschiedliche Nutzerintentionen in einer
-  Kategorie. Das bestehende `/diagnose`-Tool (`lib/diagnose/tree.ts`)
-  gruppiert genau diesen Themenbereich schon symptomgetrieben (Blätter ·
-  Wachstum & Wurzeln · Klima & Umgebung · Schädlinge) — Empfehlung im Plan
-  ist, dieses bereits bewährte Muster für eine neue `diagnose`-Kategorie
-  wiederzuverwenden statt eine zweite, konkurrierende Taxonomie zu
-  erfinden. Dringlich vor der nächsten Content-Factory-Welle (12 weitere
-  Mängel + 12 Krankheiten + 12 Schädlinge laut Backlog), sonst wächst die
-  Schieflage weiter, bevor migriert wird.
 
 ## 📱 Mobile UX (nach dem Nav/PWA-Umbau vom 2026-08-16)
 

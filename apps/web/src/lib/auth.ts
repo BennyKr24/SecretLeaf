@@ -1,6 +1,6 @@
 "use client";
 
-import { SessionData, UserPlan, UserRole } from "./types";
+import { PlanSource, SessionData, UserPlan, UserRole } from "./types";
 import { getSupabaseBrowserClient } from "./supabaseBrowser";
 
 const SESSION_KEY = "secretleaf.session";
@@ -16,7 +16,19 @@ type CurrentUserResponse = {
     email: string | null;
     role: UserRole;
     plan: UserPlan;
+    planSource?: PlanSource;
+    trialRedeemed?: boolean;
+    currentPeriodEnd?: string | null;
   };
+};
+
+/** Server-authoritative account fields refreshed from /api/auth/me on every login/restore. */
+type AuthUserFields = {
+  role: UserRole;
+  plan: UserPlan;
+  planSource: PlanSource;
+  trialRedeemed: boolean;
+  currentPeriodEnd: string | null;
 };
 
 const usernameFromEmail = (email: string) => {
@@ -28,9 +40,7 @@ const toSessionData = (params: {
   accessToken: string;
   userId: string;
   email?: string | null | undefined;
-  role: UserRole;
-  plan: UserPlan;
-}): SessionData => ({
+} & AuthUserFields): SessionData => ({
   token: params.accessToken,
   user: {
     id: params.userId,
@@ -38,11 +48,22 @@ const toSessionData = (params: {
     ...(params.email ? { email: params.email } : {}),
     role: params.role,
     plan: params.plan,
+    planSource: params.planSource,
+    trialRedeemed: params.trialRedeemed,
+    currentPeriodEnd: params.currentPeriodEnd,
   },
 });
 
-/** Fetches server-authoritative role + plan for the current user in one call. */
-const fetchUserFromApi = async (accessToken: string): Promise<{ role: UserRole; plan: UserPlan }> => {
+const FALLBACK_AUTH_FIELDS: AuthUserFields = {
+  role: "CONSUMER",
+  plan: "free",
+  planSource: "stripe",
+  trialRedeemed: false,
+  currentPeriodEnd: null,
+};
+
+/** Fetches server-authoritative role + plan (+ entitlement source) for the current user in one call. */
+const fetchUserFromApi = async (accessToken: string): Promise<AuthUserFields> => {
   const response = await fetch("/api/auth/me", {
     method: "GET",
     headers: {
@@ -53,7 +74,7 @@ const fetchUserFromApi = async (accessToken: string): Promise<{ role: UserRole; 
   });
 
   if (!response.ok) {
-    return { role: "CONSUMER", plan: "free" };
+    return FALLBACK_AUTH_FIELDS;
   }
 
   const body = (await response.json()) as CurrentUserResponse;
@@ -62,8 +83,17 @@ const fetchUserFromApi = async (accessToken: string): Promise<{ role: UserRole; 
     role === "ADMIN" ? "ADMIN" : role === "PROVIDER" ? "PROVIDER" : "CONSUMER";
   const plan = body.user?.plan;
   const normalizedPlan: UserPlan = plan === "pro" || plan === "team" ? plan : "free";
+  const rawSource = body.user?.planSource;
+  const planSource: PlanSource =
+    rawSource === "trial" || rawSource === "code" ? rawSource : "stripe";
 
-  return { role: normalizedRole, plan: normalizedPlan };
+  return {
+    role: normalizedRole,
+    plan: normalizedPlan,
+    planSource,
+    trialRedeemed: body.user?.trialRedeemed === true,
+    currentPeriodEnd: body.user?.currentPeriodEnd ?? null,
+  };
 };
 
 export const getSession = (): SessionData | null => {
@@ -109,14 +139,13 @@ export const registerWithSupabase = async (input: SupabaseAuthInput): Promise<Se
     return null;
   }
 
-  const { role, plan } = await fetchUserFromApi(accessToken);
+  const authFields = await fetchUserFromApi(accessToken);
 
   const session = toSessionData({
     accessToken,
     userId: user.id,
     email: user.email,
-    role,
-    plan,
+    ...authFields,
   });
   saveSession(session);
   return session;
@@ -137,14 +166,13 @@ export const loginWithSupabase = async (input: SupabaseAuthInput): Promise<Sessi
     throw new Error(error?.message || "Login fehlgeschlagen");
   }
 
-  const { role, plan } = await fetchUserFromApi(data.session.access_token);
+  const authFields = await fetchUserFromApi(data.session.access_token);
 
   const session = toSessionData({
     accessToken: data.session.access_token,
     userId: data.user.id,
     email: data.user.email,
-    role,
-    plan,
+    ...authFields,
   });
   saveSession(session);
   return session;
@@ -165,14 +193,13 @@ export const restoreSessionFromSupabase = async (): Promise<SessionData | null> 
   }
 
   // Always refresh role + plan from API to keep them in sync
-  const { role, plan } = await fetchUserFromApi(data.session.access_token);
+  const authFields = await fetchUserFromApi(data.session.access_token);
 
   const session = toSessionData({
     accessToken: data.session.access_token,
     userId: data.session.user.id,
     email: data.session.user.email,
-    role,
-    plan,
+    ...authFields,
   });
   saveSession(session);
   return session;
