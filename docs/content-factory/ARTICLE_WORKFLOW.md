@@ -118,8 +118,15 @@ standard §8). Article moves to `status = in_review`; each review recorded in
   slug with `growValue`/`qualityScore`/`growCategory`.
 - Register the article in the **Knowledge Coverage Matrix**; recompute the
   affected area's coverage %.
+- **Translate the new German prose.** After the article lands on `main`, run
+  `npm run i18n:translate` from the repo root (needs `ANTHROPIC_API_KEY`; picks
+  up only the new/changed strings) and commit the updated
+  `apps/web/src/data/i18n/en.*.json`. CI (`npm run i18n:check`) fails on any
+  untranslated content string, so this is not optional. See
+  `docs/I18N_TRANSLATION_PLAN.md`.
 
-**Exit gate:** article live, graph/tool links resolve, coverage metric updated.
+**Exit gate:** article live, graph/tool links resolve, coverage metric updated,
+`npm run i18n:check` green.
 
 ---
 
@@ -160,3 +167,4 @@ without quality degradation.*
 - [ ] Four editorial reviews `approved`.
 - [ ] Typed relations + tool links resolve.
 - [ ] `quality_score` ≥ 65; published and coverage metric updated.
+- [ ] `npm run i18n:translate` run + `en.*.json` committed; `npm run i18n:check` green.

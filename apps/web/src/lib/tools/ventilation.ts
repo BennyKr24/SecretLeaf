@@ -1,4 +1,4 @@
-import type { ToolResultData, ResultLevel } from './types';
+import type { ToolResultData, ResultLevel, ToolT } from './types';
 import { round } from './units';
 
 // ── Ventilation calculation ────────────────────────────────────────────────
@@ -49,7 +49,7 @@ function getLevel(empfohlen: number): ResultLevel {
   return 'gruen';
 }
 
-export function calculateVentilation(inputs: VentilationInputs): VentilationOutput {
+export function calculateVentilation(inputs: VentilationInputs, t: ToolT): VentilationOutput {
   const { raumLaenge, raumBreite, raumHoehe, lichtLeistung, akfAktiv, umgebungsTemp, zielTemp } = inputs;
 
   const raumVolumen = round(raumLaenge * raumBreite * raumHoehe, 2);
@@ -86,10 +86,10 @@ export function calculateVentilation(inputs: VentilationInputs): VentilationOutp
       unit: 'm³/h',
       level,
       explanation: level === 'gruen'
-        ? 'Ausreichend dimensioniert für dein Setup.'
+        ? t('ventilation.explVolGruen')
         : level === 'gelb'
-        ? 'Knapp bemessen — eine Stufe größer wählen empfohlen.'
-        : 'Hoher Bedarf — leistungsstarken Lüfter mit Drehzahlregler einsetzen.',
+        ? t('ventilation.explVolGelb')
+        : t('ventilation.explVolRot'),
     },
     {
       label: 'Raumvolumen',
@@ -108,21 +108,21 @@ export function calculateVentilation(inputs: VentilationInputs): VentilationOutp
       value: waermeLast,
       formatted: `${waermeLast}`,
       unit: 'm³/h',
-      explanation: `${lichtLeistung}W erzeugen ca. ${round(btuPerHour, 0)} BTU/h Wärmeeintrag.`,
+      explanation: t('ventilation.explHeatLoad', { watts: lichtLeistung, btu: round(btuPerHour, 0) }),
     },
     {
       label: 'AKF-Korrektur',
       value: akfAufschlag,
       formatted: akfAktiv ? `+${akfAufschlag}` : '0',
       unit: 'm³/h',
-      explanation: akfAktiv ? '+25 % Aufschlag für Aktivkohlefilter-Widerstand.' : 'Kein AKF aktiv.',
+      explanation: akfAktiv ? t('ventilation.explAkfOn') : t('ventilation.explAkfOff'),
     },
     {
       label: 'Empfohlener Rohrdurchmesser',
       value: rohr.durchmesser,
       formatted: `${rohr.durchmesser}`,
       unit: 'mm',
-      explanation: `Passend für bis zu ${rohr.maxFlow} m³/h.`,
+      explanation: t('ventilation.explDuct', { flow: rohr.maxFlow }),
     },
   ];
 

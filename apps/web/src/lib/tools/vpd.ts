@@ -1,4 +1,4 @@
-import type { ToolResultData, ResultLevel } from './types';
+import type { ToolResultData, ResultLevel, ToolT } from './types';
 import { round } from './units';
 
 // ── VPD Calculation ─────────────────────────────────────────────────────────
@@ -54,6 +54,9 @@ export const VPD_PHASE_LABELS: Record<VPDPhase, string> = {
   bluete:   'Blüte',
 };
 
+const phaseLabel = (t: ToolT, phase: VPDPhase): string =>
+  t(`vpd.phase${phase.charAt(0).toUpperCase()}${phase.slice(1)}`);
+
 function vpdLevel(vpd: number, phase: VPDPhase): ResultLevel {
   const [min, max] = OPTIMAL_RANGES[phase];
   if (vpd < 0.3)                         return 'rot';  // extreme condensation / botrytis
@@ -64,34 +67,27 @@ function vpdLevel(vpd: number, phase: VPDPhase): ResultLevel {
   return 'rot';
 }
 
-function vpdZone(vpd: number, phase: VPDPhase): string {
+function vpdZone(vpd: number, phase: VPDPhase, t: ToolT): string {
   const [min, max] = OPTIMAL_RANGES[phase];
-  if (vpd < 0.3)    return 'Extremes Schimmelrisiko';
-  if (vpd < min)    return `Zu feucht für ${VPD_PHASE_LABELS[phase]}`;
-  if (vpd <= max)   return `Optimal für ${VPD_PHASE_LABELS[phase]}`;
-  if (vpd <= 1.7)   return 'Zu trocken — Nährstoffaufnahme eingeschränkt';
-  return 'Trockenstress — Pflanze schließt Stomata';
+  const phase_ = phaseLabel(t, phase);
+  if (vpd < 0.3)    return t('vpd.zoneMoldRisk');
+  if (vpd < min)    return t('vpd.zoneTooHumid', { phase: phase_ });
+  if (vpd <= max)   return t('vpd.zoneOptimal', { phase: phase_ });
+  if (vpd <= 1.7)   return t('vpd.zoneTooDry');
+  return t('vpd.zoneDroughtStress');
 }
 
-function vpdExplanation(vpd: number, phase: VPDPhase): string {
+function vpdExplanation(vpd: number, phase: VPDPhase, t: ToolT): string {
   const [min, max] = OPTIMAL_RANGES[phase];
-  const label = VPD_PHASE_LABELS[phase];
-  if (vpd < 0.3) {
-    return `VPD von ${vpd} kPa ist extrem niedrig. Schimmel- und Botrytis-Risiko kritisch hoch. Sofort Luftfeuchte senken.`;
-  }
-  if (vpd < min) {
-    return `VPD von ${vpd} kPa liegt unter dem Optimum für ${label} (${min}–${max} kPa). Temperatur erhöhen oder Luftfeuchte senken.`;
-  }
-  if (vpd <= max) {
-    return `VPD von ${vpd} kPa liegt im Zielbereich für ${label} (${min}–${max} kPa). Stomata offen, Transpiration und Nährstoffaufnahme optimal.`;
-  }
-  if (vpd <= 1.7) {
-    return `VPD von ${vpd} kPa überschreitet den optimalen Bereich für ${label} (${min}–${max} kPa). Luftfeuchte erhöhen oder Temperatur senken.`;
-  }
-  return `VPD von ${vpd} kPa ist kritisch hoch. Die Pflanze schließt die Stomata — Wachstum und Transpiration stoppen. Klima dringend korrigieren.`;
+  const v = { vpd, phase: phaseLabel(t, phase), min, max };
+  if (vpd < 0.3)  return t('vpd.explVeryLow', v);
+  if (vpd < min)  return t('vpd.explBelow', v);
+  if (vpd <= max) return t('vpd.explInRange', v);
+  if (vpd <= 1.7) return t('vpd.explAbove', v);
+  return t('vpd.explCritical', v);
 }
 
-export function calculateVPD(inputs: VPDInputs): VPDOutput {
+export function calculateVPD(inputs: VPDInputs, t: ToolT): VPDOutput {
   const { lufttemperatur, luftfeuchtigkeit, blattOffsetManuell, blattOffset, phase } = inputs;
 
   const offset   = blattOffsetManuell ? blattOffset : -2;
@@ -107,7 +103,7 @@ export function calculateVPD(inputs: VPDInputs): VPDOutput {
   const targetRH = Math.min(95, Math.max(20, round(((svpLeaf - midVPD) / svpAir) * 100, 0)));
 
   const level = vpdLevel(vpd, phase);
-  const zone  = vpdZone(vpd, phase);
+  const zone  = vpdZone(vpd, phase, t);
 
   const results: ToolResultData[] = [
     {
@@ -116,28 +112,31 @@ export function calculateVPD(inputs: VPDInputs): VPDOutput {
       formatted: `${vpd}`,
       unit: 'kPa',
       level,
-      explanation: vpdExplanation(vpd, phase),
+      explanation: vpdExplanation(vpd, phase, t),
     },
     {
       label: 'Empfohlene Luftfeuchte',
       value: targetRH,
       formatted: `${targetRH}`,
       unit: '%',
-      explanation: `Um den Ideal-VPD von ${midVPD} kPa zu erreichen, sollte die Luftfeuchte bei ${targetRH} % liegen.`,
+      explanation: t('vpd.explTargetRh', { mid: midVPD, rh: targetRH }),
     },
     {
       label: 'SVP Luft',
       value: svpAir,
       formatted: `${svpAir}`,
       unit: 'kPa',
-      explanation: `Sättigungsdampfdruck bei ${lufttemperatur} °C Lufttemperatur.`,
+      explanation: t('vpd.explSvpAir', { temp: lufttemperatur }),
     },
     {
       label: 'SVP Blatt',
       value: svpLeaf,
       formatted: `${svpLeaf}`,
       unit: 'kPa',
-      explanation: `Sättigungsdampfdruck bei ${leafTemp} °C Blatttemperatur (${offset >= 0 ? '+' : ''}${offset} °C Offset).`,
+      explanation: t('vpd.explSvpLeaf', {
+        temp: leafTemp,
+        offset: `${offset >= 0 ? '+' : ''}${offset}`,
+      }),
     },
   ];
 

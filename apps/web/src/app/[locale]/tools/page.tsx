@@ -1,10 +1,11 @@
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 import type { Route } from "next";
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { pageAlternates } from "@/lib/i18n/metadata";
 import { toolRegistry } from "@/lib/tools/registry";
 import {
-  toolCategoryLabel,
   toolCategoryIcon,
   toolCategoryAccent,
   type ToolCategory,
@@ -15,12 +16,7 @@ const FEATURED_SLUGS = ["vpd", "licht-rechner", "naehrstoff-rechner"];
 
 const CATEGORIES: ToolCategory[] = ["klima", "licht", "naehrstoffe", "planung"];
 
-const CATEGORY_DESCRIPTIONS: Record<ToolCategory, string> = {
-  klima: "Berechne VPD, Luftbedarf und Rohrdurchmesser — damit Temperatur, VPD und Luftfeuchte auf jede Phase abgestimmt sind.",
-  licht: "Finde die optimale Lichtintensität (PPFD) und das tägliche Lichtintegral (DLI).",
-  naehrstoffe: "Berechne EC-Ziel und Dosierung – für jede Phase und jedes Substrat.",
-  planung: "Schätze deinen Ertrag realistisch ein, bevor du mit dem Grow beginnst.",
-};
+const capCat = (c: string) => c.charAt(0).toUpperCase() + c.slice(1);
 
 const categoryTopBar: Record<ToolCategory, string> = {
   klima: "from-cyan-400 to-cyan-600",
@@ -36,8 +32,33 @@ const categoryIconBg: Record<ToolCategory, string> = {
   planung: "bg-violet-50 ring-1 ring-violet-200",
 };
 
+type PageProps = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const en = locale === "en";
+  return {
+    title: en ? "Grow Tools – SecretLeaf" : "Grow-Tools – SecretLeaf",
+    description: en
+      ? "Precision calculators for light, climate and nutrients — based on real cultivation values."
+      : "Präzisionswerkzeuge für Licht, Klima und Nährstoffe — basierend auf echten Anbauwerten.",
+    alternates: pageAlternates("/tools", locale),
+  };
+}
+
+const DIFF_KEY: Record<string, string> = {
+  einsteiger: "diffEinsteiger",
+  fortgeschritten: "diffFortShort",
+  profi: "diffProfi",
+};
+
 export default async function ToolsHubPage() {
   const t = await getTranslations('toolsPage');
+  const tt = await getTranslations('tool');
+  const catLabel = (c: string) => tt(`category${capCat(c)}`);
+  const catDesc = (c: string) => tt(`categoryDesc${capCat(c)}`);
+  const toolTitle = (slug: string) => tt(`registry.${slug}.title`);
+  const toolDesc = (slug: string) => tt(`registry.${slug}.desc`);
   const featuredTools = FEATURED_SLUGS.map((slug) =>
     toolRegistry.find((tool) => tool.slug === slug)
   ).filter(Boolean);
@@ -113,13 +134,13 @@ export default async function ToolsHubPage() {
                         <tool.icon className="h-6 w-6" strokeWidth={2} />
                       </div>
                       <span className={`block text-xs font-semibold ${toolCategoryAccent[tool.category]}`}>
-                        {toolCategoryLabel[tool.category]}
+                        {catLabel(tool.category)}
                       </span>
                       <h3 className="mt-1 text-lg font-bold text-foreground transition-colors group-hover:text-emerald-700">
-                        {tool.title}
+                        {toolTitle(tool.slug)}
                       </h3>
                       <p className="mt-1.5 text-sm leading-relaxed text-muted-fg">
-                        {tool.shortDescription}
+                        {toolDesc(tool.slug)}
                       </p>
                       {/* Always visible on touch (no hover to reveal it) —
                           reveal-on-hover only kicks in where hover exists. */}
@@ -143,9 +164,9 @@ export default async function ToolsHubPage() {
               <section key={cat} className="border-t border-border pt-8">
                 <div className="mb-5">
                   <h2 className={`flex items-center gap-2 text-base font-bold ${toolCategoryAccent[cat]}`}>
-                    <CatIcon className="h-4 w-4" strokeWidth={2} /> {toolCategoryLabel[cat]}
+                    <CatIcon className="h-4 w-4" strokeWidth={2} /> {catLabel(cat)}
                   </h2>
-                  <p className="mt-1 text-sm text-muted-fg">{CATEGORY_DESCRIPTIONS[cat]}</p>
+                  <p className="mt-1 text-sm text-muted-fg">{catDesc(cat)}</p>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {tools.map((tool) => (
@@ -159,17 +180,13 @@ export default async function ToolsHubPage() {
                           <tool.icon className="h-4 w-4" strokeWidth={2} />
                         </div>
                         <span className="rounded-full border border-border bg-background px-2 py-0.5 text-[11px] font-medium text-muted-fg">
-                          {tool.difficulty === "einsteiger"
-                            ? "Einsteiger"
-                            : tool.difficulty === "fortgeschritten"
-                            ? "Fortg."
-                            : "Profi"}
+                          {tt(DIFF_KEY[tool.difficulty] ?? "diffProfi")}
                         </span>
                       </div>
                       <h3 className="mt-3 text-base font-bold text-foreground transition-colors group-hover:text-emerald-700">
-                        {tool.title}
+                        {toolTitle(tool.slug)}
                       </h3>
-                      <p className="mt-1 text-sm text-muted-fg">{tool.shortDescription}</p>
+                      <p className="mt-1 text-sm text-muted-fg">{toolDesc(tool.slug)}</p>
                     </Link>
                   ))}
                 </div>
@@ -180,26 +197,26 @@ export default async function ToolsHubPage() {
 
         {/* ── WEITERE WERKZEUGE ─────────────────────────── */}
         <section className="border-t border-border pt-8">
-          <h2 className="mb-5 text-sm font-bold text-foreground">Weitere Werkzeuge</h2>
+          <h2 className="mb-5 text-sm font-bold text-foreground">{t('moreTools')}</h2>
           <div className="grid gap-4 md:grid-cols-2">
             <Link
               href={"/tools/plans" as Route}
               className="tool-card-lift rounded-2xl border border-border bg-card p-5 shadow-sm"
             >
-              <p className="text-sm font-semibold text-emerald-700">Planung</p>
-              <h2 className="mt-1 text-xl font-bold text-foreground">Düngerpläne</h2>
+              <p className="text-sm font-semibold text-emerald-700">{t('plansEyebrow')}</p>
+              <h2 className="mt-1 text-xl font-bold text-foreground">{t('plansTitle')}</h2>
               <p className="mt-2 text-sm text-muted-fg">
-                Fertige Düngerpläne, filterbar nach Setup, Budget und Ziel.
+                {t('plansDesc')}
               </p>
             </Link>
             <Link
               href={"/search" as Route}
               className="tool-card-lift rounded-2xl border border-border bg-card p-5 shadow-sm"
             >
-              <p className="text-sm font-semibold text-cyan-700">Recherche</p>
-              <h2 className="mt-1 text-xl font-bold text-foreground">Globale Suche</h2>
+              <p className="text-sm font-semibold text-cyan-700">{t('searchEyebrow')}</p>
+              <h2 className="mt-1 text-xl font-bold text-foreground">{t('searchTitle')}</h2>
               <p className="mt-2 text-sm text-muted-fg">
-                Schneller Zugriff auf Fachartikel, Quellen und Datenbankeinträge.
+                {t('searchDesc')}
               </p>
             </Link>
           </div>

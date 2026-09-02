@@ -2,8 +2,9 @@
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import type { TerpiraArticle, TerpiraDifficulty, DiagnoseArea } from '@/lib/terpira/types';
-import { DIAGNOSE_AREA_LABELS, DIAGNOSE_AREA_ICONS, DIAGNOSE_AREA_ORDER } from '@/lib/terpira/categoryIcons';
+import { DIAGNOSE_AREA_ICONS, DIAGNOSE_AREA_ORDER } from '@/lib/terpira/categoryIcons';
 import { Dropdown, DropdownOption } from '@/components/ui/Dropdown';
 import StudyListItem from './StudyListItem';
 
@@ -21,11 +22,7 @@ type Props = {
 };
 
 const DIFFICULTIES: TerpiraDifficulty[] = ['einsteiger', 'fortgeschritten', 'profi'];
-const DIFFICULTY_LABELS: Record<TerpiraDifficulty, string> = {
-  einsteiger: 'Einsteiger',
-  fortgeschritten: 'Fortgeschritten',
-  profi: 'Profi',
-};
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 const INITIAL_VISIBLE = 12;
 
@@ -78,6 +75,7 @@ function toCsv(set: Set<string>): string {
 // ─── Component ──────────────────────────────────────────────────────────────
 
 export default function StudiesListView({ articles, categoryLabel, showDiagnoseAreaFacet = false }: Props) {
+  const t = useTranslations('studiesList');
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -220,7 +218,7 @@ export default function StudiesListView({ articles, categoryLabel, showDiagnoseA
             ref={searchRef}
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder={`In ${categoryLabel} suchen…`}
+            placeholder={t('searchPlaceholder', { category: categoryLabel })}
             className="w-full rounded-lg border border-border bg-card py-2.5 pl-9 pr-8 text-[13.5px]
               text-foreground placeholder:text-muted-fg outline-none shadow-sm
               focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 transition-[border-color,box-shadow]"
@@ -236,10 +234,10 @@ export default function StudiesListView({ articles, categoryLabel, showDiagnoseA
 
         {!search.trim() && (
           <Dropdown value={sort} onChange={(v) => setSort(v as SortMode)}>
-            <DropdownOption value="qualitaet">Nach Qualität</DropdownOption>
-            <DropdownOption value="neueste">Neueste zuerst</DropdownOption>
-            <DropdownOption value="kurz">Kürzeste zuerst</DropdownOption>
-            <DropdownOption value="lang">Längste zuerst</DropdownOption>
+            <DropdownOption value="qualitaet">{t('sortQuality')}</DropdownOption>
+            <DropdownOption value="neueste">{t('sortNewest')}</DropdownOption>
+            <DropdownOption value="kurz">{t('sortShortest')}</DropdownOption>
+            <DropdownOption value="lang">{t('sortLongest')}</DropdownOption>
           </Dropdown>
         )}
 
@@ -249,7 +247,7 @@ export default function StudiesListView({ articles, categoryLabel, showDiagnoseA
             className="rounded-lg border border-border bg-card px-3 py-2.5 text-[13.5px] font-medium text-muted-fg
               hover:text-red-500 hover:border-red-300 shadow-sm transition-[color,border-color,transform] duration-150 active:scale-[0.97]"
           >
-            Zurücksetzen
+            {t('reset')}
           </button>
         )}
       </div>
@@ -273,7 +271,7 @@ export default function StudiesListView({ articles, categoryLabel, showDiagnoseA
                 }`}
               >
                 <Icon className="h-3.5 w-3.5" strokeWidth={2} />
-                {DIAGNOSE_AREA_LABELS[area]}
+                {t(`area${cap(area)}`)}
                 <span className={active ? 'text-white/80' : 'text-muted-fg'}>({count})</span>
               </button>
             );
@@ -297,7 +295,7 @@ export default function StudiesListView({ articles, categoryLabel, showDiagnoseA
                   : 'border-border bg-card text-muted-fg hover:border-emerald-300 hover:text-foreground'
               }`}
             >
-              {DIFFICULTY_LABELS[diff]} <span className={active ? 'text-white/80' : 'text-muted-fg'}>({count})</span>
+              {t(`difficulty${cap(diff)}`)} <span className={active ? 'text-white/80' : 'text-muted-fg'}>({count})</span>
             </button>
           );
         })}
@@ -325,16 +323,18 @@ export default function StudiesListView({ articles, categoryLabel, showDiagnoseA
       {/* ── Result info ──────────────────────────────────────── */}
       <div className="flex items-center justify-between text-[13px] text-muted-fg">
         <span>
-          <span className="font-semibold text-foreground">{filtered.length}</span>
-          {' '}Artikel{hasFilters && ' gefunden'}
+          {t.rich(hasFilters ? 'resultCountFiltered' : 'resultCount', {
+            count: filtered.length,
+            b: (chunks) => <span className="font-semibold text-foreground">{chunks}</span>,
+          })}
         </span>
       </div>
 
       {/* ── Flat result list ─────────────────────────────────── */}
       {filtered.length === 0 ? (
         <div className="rounded-xl border-2 border-dashed border-border bg-background py-16 text-center">
-          <p className="text-sm font-medium text-muted-fg">Keine Artikel gefunden.</p>
-          <p className="mt-1 text-xs text-muted-fg">Passe deine Filter oder Suche an.</p>
+          <p className="text-sm font-medium text-muted-fg">{t('emptyTitle')}</p>
+          <p className="mt-1 text-xs text-muted-fg">{t('emptyHint')}</p>
         </div>
       ) : (
         <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
@@ -355,7 +355,7 @@ export default function StudiesListView({ articles, categoryLabel, showDiagnoseA
                 onClick={() => setVisibleCount(c => c + 12)}
                 className="inline-flex items-center rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-100 transition-[background-color,transform] duration-150 active:scale-[0.97]"
               >
-                {hiddenCount} weitere anzeigen
+                {t('showMore', { count: hiddenCount })}
               </button>
             </div>
           )}

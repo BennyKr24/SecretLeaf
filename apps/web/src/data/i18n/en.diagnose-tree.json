@@ -1,0 +1,1574 @@
+{
+  "7443f2f4d0ee": {
+    "de": "2–3 Behandlungszyklen im 5-Tage-Abstand",
+    "en": "2–3 treatment cycles at 5-day intervals",
+    "paths": [
+      "result/thripse/steps/2"
+    ]
+  },
+  "21077983144c": {
+    "de": "30–60× Mikroskop: Wurmförmige Milben an Blattstielen und Trichombasen",
+    "en": "30–60x microscope: worm-shaped mites on leaf stems and trichome bases",
+    "paths": [
+      "result/rostmilben/steps/0"
+    ]
+  },
+  "2be5dfe5289a": {
+    "de": "Abluft und Zuluft optimieren",
+    "en": "Optimize exhaust air and intake air",
+    "paths": [
+      "result/hitzestress/steps/1"
+    ]
+  },
+  "e357379cb7e9": {
+    "de": "Abluft-Rechner",
+    "en": "Exhaust air calculator",
+    "paths": [
+      "result/hitzestress/toolLinks/1/label"
+    ]
+  },
+  "92b11e15b154": {
+    "de": "Adulte fliegen harmlos, aber Larven fressen Feinwurzeln und fördern Pythium / Fusarium.",
+    "en": "Adults fly harmlessly, but larvae feed on fine roots and promote Pythium / Fusarium.",
+    "paths": [
+      "result/trauermuecken/explanation"
+    ]
+  },
+  "a85a615ee482": {
+    "de": "Ältere / untere Blätter",
+    "en": "Older / lower leaves",
+    "paths": [
+      "node/blaetter-start/options/0/label"
+    ]
+  },
+  "bc8e3dd51b31": {
+    "de": "Ältere, untere Blätter vergilben zuerst – Stickstoff wird aus dem Altgewebe mobilisiert und in den Neuwuchs verlagert.",
+    "en": "Older, lower leaves yellow first – nitrogen is mobilized from old tissue and relocated to new growth.",
+    "paths": [
+      "result/n-mangel/explanation"
+    ]
+  },
+  "931f59e5bf50": {
+    "de": "Befallene Stellen sofort mit desinfizierten Werkzeugen großzügig entfernen",
+    "en": "Immediately remove affected areas generously using disinfected tools",
+    "paths": [
+      "result/botrytis/steps/0"
+    ]
+  },
+  "69b0f1755dd6": {
+    "de": "Befallene Triebteile rückschneiden",
+    "en": "Prune back infested shoot parts",
+    "paths": [
+      "result/blattlaeuse/steps/0"
+    ]
+  },
+  "cdd219c745fa": {
+    "de": "Bewässerungsfrequenz reduzieren",
+    "en": "Reduce watering frequency",
+    "paths": [
+      "result/ueberwaesserung/steps/0"
+    ]
+  },
+  "9bc0e276bea9": {
+    "de": "Bewässerungsrhythmus stabilisieren (keine Staunässe)",
+    "en": "Stabilize the watering rhythm (no waterlogging)",
+    "paths": [
+      "result/fe-mangel/steps/2"
+    ]
+  },
+  "bd3b71d8d983": {
+    "de": "Blätter",
+    "en": "Leaves",
+    "paths": [
+      "category/blaetter/label"
+    ]
+  },
+  "6bfa045dc8d2": {
+    "de": "Blätter rollen leicht, Ca-Mangel-Zeichen",
+    "en": "Leaves curl slightly, signs of Ca deficiency",
+    "paths": [
+      "node/klima-trocken/options/0/label"
+    ]
+  },
+  "f68e21416e3d": {
+    "de": "Blätter rollen sich nach oben (tacoing), Spitzen verbrennen – die Pflanze versucht Verdunstungsfläche zu reduzieren.",
+    "en": "Leaves roll upward (tacoing), tips burn – the plant is trying to reduce its evaporative surface area.",
+    "paths": [
+      "result/hitzestress/explanation"
+    ]
+  },
+  "50e8f1035114": {
+    "de": "Blätter welken am Aprikosenmittag – Stomata-Stress",
+    "en": "Leaves wilt at apricot midday – stomatal stress",
+    "paths": [
+      "node/klima-trocken/options/1/label"
+    ]
+  },
+  "b6380f07bc6b": {
+    "de": "Blattlausbefall an Triebspitzen. Kolonien entfernt, Kaliseife aufgetragen, Nützlinge eingesetzt.",
+    "en": "Aphid infestation on shoot tips. Colonies removed, insecticidal soap applied, beneficial insects introduced.",
+    "paths": [
+      "result/blattlaeuse/logNote"
+    ]
+  },
+  "ed3f808a3fff": {
+    "de": "Blattläuse",
+    "en": "Aphids",
+    "paths": [
+      "result/blattlaeuse/title"
+    ]
+  },
+  "e0abf785a58e": {
+    "de": "Blattränder braun + nekrotisch",
+    "en": "Leaf margins brown + necrotic",
+    "paths": [
+      "node/blaetter-alt/options/1/label"
+    ]
+  },
+  "9cb36c0f6619": {
+    "de": "Botrytis (Grauschimmel)",
+    "en": "Botrytis (botrytis)",
+    "paths": [
+      "result/botrytis/title"
+    ]
+  },
+  "c15116e4fa4f": {
+    "de": "Botrytis-Befall erkannt – Grauschimmel in Blüten. Befall entfernt, Belüftung und RLF korrigiert.",
+    "en": "Botrytis infestation identified – botrytis in the buds. Infestation removed, ventilation and RH corrected.",
+    "paths": [
+      "result/botrytis/logNote"
+    ]
+  },
+  "df8f7c712585": {
+    "de": "Braun-nekrotische Blattspitzen (Tipping) an gesunden Pflanzen ohne sonstiges Mangelbild ist das Hauptzeichen.",
+    "en": "Brown, necrotic leaf tips (tipping) on otherwise healthy plants with no other deficiency symptoms is the main sign.",
+    "paths": [
+      "result/uebersalzung/explanation"
+    ]
+  },
+  "77e70418b326": {
+    "de": "Braune Blattspitzen (Tipping) bei sonst gesunden Blättern",
+    "en": "Brown leaf tips (tipping) on otherwise healthy leaves",
+    "paths": [
+      "node/blaetter-gesamt/options/0/label"
+    ]
+  },
+  "d607056a1162": {
+    "de": "Braune, nekrotische Blattränder an mittleren bis älteren Blättern. Tritt typischerweise in der Blüte auf.",
+    "en": "Brown, necrotic leaf margins on middle to older leaves. Typically occurs during flowering.",
+    "paths": [
+      "result/k-mangel/explanation"
+    ]
+  },
+  "b4d92083bf9b": {
+    "de": "Breitmilben",
+    "en": "Broad mites",
+    "paths": [
+      "result/breitmilben/title"
+    ]
+  },
+  "42492cdcd389": {
+    "de": "Breitmilben und Rostmilben sind mit bloßem Auge nicht sichtbar.",
+    "en": "Broad mites and rust mites are not visible to the naked eye.",
+    "paths": [
+      "node/schaedlinge-mikroskopisch/hint"
+    ]
+  },
+  "fdcbf5b61e77": {
+    "de": "Breitmilben-Verdacht – verkrüppelte Triebspitzen. Mikroskop genutzt, Neem-Behandlung gestartet.",
+    "en": "Suspected broad mites – deformed shoot tips. Microscope used, neem treatment started.",
+    "paths": [
+      "result/breitmilben/logNote"
+    ]
+  },
+  "4b5a255ee492": {
+    "de": "Bronzefärbung schreitet von unten nach oben fort. Trichome werden zerstört – Harzproduktion fällt aus.",
+    "en": "Bronzing progresses from bottom to top. Trichomes are destroyed – resin production stops.",
+    "paths": [
+      "result/rostmilben/explanation"
+    ]
+  },
+  "d1096aadac76": {
+    "de": "Bronzefärbung von unten nach oben kombiniert mit beschädigten Trichomen passt zu Rostmilben – Mikroskop-Check bestätigt.",
+    "en": "Bronzing progressing from bottom to top combined with damaged trichomes fits russet mites – microscope check confirms it.",
+    "paths": [
+      "result/rostmilben/reasoning"
+    ]
+  },
+  "9d37a0861246": {
+    "de": "Bronzefärbung von unten nach oben, Pflanze wirkt ausgetrocknet",
+    "en": "Bronzing from bottom to top, plant appears dried out",
+    "paths": [
+      "node/schaedlinge-mikroskopisch/options/1/label"
+    ]
+  },
+  "c38a80b20671": {
+    "de": "BTI-Produkte + Gelbleimtafeln auf Topfkante",
+    "en": "BTI products + yellow sticky traps on pot rim",
+    "paths": [
+      "result/trauermuecken/steps/2"
+    ]
+  },
+  "bde4bb9fdd3f": {
+    "de": "Ca:Mg-Verhältnis prüfen",
+    "en": "Check the Ca:Mg ratio",
+    "paths": [
+      "result/mg-mangel/steps/1"
+    ]
+  },
+  "a5c3ee2e86b7": {
+    "de": "Ca/Mg-Verhältnis prüfen und ausbalancieren",
+    "en": "Check and balance the Ca/Mg ratio",
+    "paths": [
+      "result/k-mangel/steps/1"
+    ]
+  },
+  "b85e991b16ca": {
+    "de": "Cal/Mag-Gabe moderat erhöhen",
+    "en": "Moderately increase Cal/Mag application",
+    "paths": [
+      "result/ca-mangel/steps/0"
+    ]
+  },
+  "c654ad246b9a": {
+    "de": "Calcium ist immobil – Neuwuchs zeigt sich deformiert oder mit kleinen Nekroseflecken.",
+    "en": "Calcium is immobile – new growth appears deformed or with small necrotic spots.",
+    "paths": [
+      "result/ca-mangel/explanation"
+    ]
+  },
+  "c3f0ab79b071": {
+    "de": "Calciummangel (Ca)",
+    "en": "Calcium deficiency (Ca)",
+    "paths": [
+      "result/ca-mangel/title"
+    ]
+  },
+  "888370b57d63": {
+    "de": "Calciummangel-Verdacht – verkrüppelter Neuwuchs. Cal/Mag angepasst, Klima gecheckt.",
+    "en": "Suspected calcium deficiency – crippled new growth. Cal/Mag adjusted, climate checked.",
+    "paths": [
+      "result/ca-mangel/logNote"
+    ]
+  },
+  "940dba550ea4": {
+    "de": "Cannabis-spezifische Milbe, besiedelt Trichomzonen und destroiert Harzdrüsen.",
+    "en": "Cannabis-specific mite, colonizes trichome zones and destroys resin glands.",
+    "paths": [
+      "result/rostmilben/cause"
+    ]
+  },
+  "53fded37d9ae": {
+    "de": "Chaotisches Mischbild – gelb, verbrannt, dunkel gleichzeitig",
+    "en": "Chaotic mixed picture – yellow, burnt, dark all at once",
+    "paths": [
+      "node/blaetter-gesamt/options/1/label"
+    ]
+  },
+  "11b17f669a16": {
+    "de": "Chlorose zwischen Blattadern (Adern noch grün)",
+    "en": "Chlorosis between leaf veins (veins still green)",
+    "paths": [
+      "node/blaetter-alt/options/2/label"
+    ]
+  },
+  "54965d479fba": {
+    "de": "Dauernasse Substratoberfläche ohne Trockenphase erstickt die Wurzelzone.",
+    "en": "A constantly wet substrate surface without a dry phase suffocates the root zone.",
+    "paths": [
+      "result/ueberwaesserung/cause"
+    ]
+  },
+  "2ae3d11cdff5": {
+    "de": "Dauernasse Substratoberfläche und hoher Organikanteil bieten ideale Eiablagefläche.",
+    "en": "Constantly wet substrate surface and high organic content provide an ideal egg-laying surface.",
+    "paths": [
+      "result/trauermuecken/cause"
+    ]
+  },
+  "fcfa9875c6fb": {
+    "de": "Deformiert, Nekrosen an Blattspitzen",
+    "en": "Deformed, necrosis at leaf tips",
+    "paths": [
+      "node/blaetter-neu/options/1/label"
+    ]
+  },
+  "a73cd65bc2a8": {
+    "de": "Deformierter Neuwuchs passt zu Ca-Immobilität, aber hohes VPD und pH-Fehler sehen ähnlich aus – Klimawerte sollten gegengeprüft werden.",
+    "en": "Deformed new growth fits calcium immobility, but high VPD and pH errors look similar – climate values should be cross-checked.",
+    "paths": [
+      "result/ca-mangel/reasoning"
+    ]
+  },
+  "a788f47f639f": {
+    "de": "Die Pflanze schließt Stomata und verlangsamt Photosynthese, um Wasser zu sparen. Calciumaufnahme leidet.",
+    "en": "The plant closes its stomata and slows photosynthesis to conserve water. Calcium uptake suffers.",
+    "paths": [
+      "result/vpd-hoch/explanation"
+    ]
+  },
+  "93b1a82eee86": {
+    "de": "Drain-pH und Drain-EC messen",
+    "en": "Measure runoff pH and runoff EC",
+    "paths": [
+      "result/lockout/steps/0"
+    ]
+  },
+  "6b4b9fc301ee": {
+    "de": "Drain-Verhältnis erhöhen (20–30 % Runoff)",
+    "en": "Increase the runoff ratio (20–30 % runoff)",
+    "paths": [
+      "result/uebersalzung/steps/2"
+    ]
+  },
+  "31875afa87ca": {
+    "de": "Drainage kontrollieren",
+    "en": "Check drainage",
+    "paths": [
+      "result/ueberwaesserung/steps/2"
+    ]
+  },
+  "a0d249060b78": {
+    "de": "Dummeldunkle Blätter, keine Verbesserung nach Düngung",
+    "en": "Dark, dull leaves, no improvement after nutrient application",
+    "paths": [
+      "node/blaetter-gesamt/options/3/label"
+    ]
+  },
+  "1361c5245704": {
+    "de": "Dunkles Laub mit Violetttönen deutet auf P-Blockade hin – ähnliche Symptome treten auch bei Kältestress auf, daher mittlere Sicherheit.",
+    "en": "Dark foliage with purple tones points to P blockage – similar symptoms also occur with cold stress, so confidence is medium.",
+    "paths": [
+      "result/p-mangel/reasoning"
+    ]
+  },
+  "41d3c347f193": {
+    "de": "EC im Drain messen – wenn > 3,5 EC: Spülgang",
+    "en": "Measure EC in the runoff – if > 3,5 EC: flushing cycle",
+    "paths": [
+      "result/uebersalzung/steps/0"
+    ]
+  },
+  "4507221cad78": {
+    "de": "Einschleppung über Kleidung oder Frischpflanzen, Puppenstadien im Substrat.",
+    "en": "Introduced via clothing or fresh plants, pupal stages in the substrate.",
+    "paths": [
+      "result/thripse/cause"
+    ]
+  },
+  "529b3677c9ac": {
+    "de": "Eisenmangel (Fe)",
+    "en": "Iron deficiency (Fe)",
+    "paths": [
+      "result/fe-mangel/title"
+    ]
+  },
+  "9b30c28e6746": {
+    "de": "Eisenmangel-Verdacht – heller Neuwuchs, Adern noch grün. pH gesenkt, Fe-Chelat zugegeben.",
+    "en": "Suspected iron deficiency – pale new growth, veins still green. pH lowered, Fe chelate added.",
+    "paths": [
+      "result/fe-mangel/logNote"
+    ]
+  },
+  "0a3f6e341830": {
+    "de": "Feine Flieger über dem Substrat",
+    "en": "Fine flying insects above the substrate",
+    "paths": [
+      "node/wachstum-welk/options/0/label"
+    ]
+  },
+  "69b7b203643e": {
+    "de": "Feine Gespinste auf der Blattunterseite kombiniert mit hellen Saugpunkten oben sind ein eindeutiges Spinnmilben-Zeichen.",
+    "en": "Fine webbing on the underside of the leaf combined with light stippling on top is a clear sign of spider mites.",
+    "paths": [
+      "result/spinnmilben/reasoning"
+    ]
+  },
+  "347cc8eab769": {
+    "de": "Feine Gespinste und helle Punkte auf Blättern",
+    "en": "Fine webbing and light spots on leaves",
+    "paths": [
+      "node/schaedlinge-start/options/0/label"
+    ]
+  },
+  "03e8655170fb": {
+    "de": "Feine Gespinste und helle Saugpunkte auf Blattoberseiten. Populationsverdopplung alle 3–5 Tage.",
+    "en": "Fine webbing and light stippling on leaf tops. Population doubles every 3–5 days.",
+    "paths": [
+      "result/spinnmilben/explanation"
+    ]
+  },
+  "4e36522941a8": {
+    "de": "Feuchte erhöhen + Lampe kühler fahren",
+    "en": "Increase humidity + run the lamp cooler",
+    "paths": [
+      "result/spinnmilben/steps/2"
+    ]
+  },
+  "6bb1b3465b2d": {
+    "de": "Florfliegenlarven oder Marienkäfer einsetzen",
+    "en": "Introduce lacewing larvae or ladybugs",
+    "paths": [
+      "result/blattlaeuse/steps/2"
+    ]
+  },
+  "dbe4f29ec799": {
+    "de": "Geeignete Fe-Chelatform einsetzen",
+    "en": "Use a suitable Fe chelate form",
+    "paths": [
+      "result/fe-mangel/steps/1"
+    ]
+  },
+  "028265bb930f": {
+    "de": "Gesamte Pflanze gleichmäßig",
+    "en": "Entire plant evenly",
+    "paths": [
+      "node/blaetter-start/options/2/label"
+    ]
+  },
+  "738a9974ddbe": {
+    "de": "Gibt es bereits sichtbare Schimmelzeichen?",
+    "en": "Are there already visible signs of mold?",
+    "paths": [
+      "node/klima-nass/question"
+    ]
+  },
+  "65bf2c7a599f": {
+    "de": "Glasig-glänzende, verdrehte Triebspitzen die NICHT auf Düngung reagieren. Nur unter 60× Lupe sichtbar.",
+    "en": "Glassy, twisted shoot tips that do NOT respond to nutrients. Only visible under a 60x loupe.",
+    "paths": [
+      "result/breitmilben/explanation"
+    ]
+  },
+  "fda52fedb4e2": {
+    "de": "Gleichmäßig gelb, abfallend",
+    "en": "Evenly yellow, dropping off",
+    "paths": [
+      "node/blaetter-alt/options/0/label"
+    ]
+  },
+  "96c60b2a29bf": {
+    "de": "Gleichmäßige Vergilbung alter Blätter von unten nach oben ist das Lehrbuchbild für N-Mobilisierung – einer der eindeutigsten Mängel überhaupt.",
+    "en": "Uniform yellowing of old leaves from bottom to top is the textbook picture for N mobilization – one of the clearest deficiencies of all.",
+    "paths": [
+      "result/n-mangel/reasoning"
+    ]
+  },
+  "7503b64372e9": {
+    "de": "Grau-staubiger Rasen in Blütenständen ist Botrytis cinerea – das Muster ist unverwechselbar und erfordert sofortiges Handeln.",
+    "en": "A gray, dusty coating on the buds is Botrytis cinerea – the pattern is unmistakable and requires immediate action.",
+    "paths": [
+      "result/botrytis/reasoning"
+    ]
+  },
+  "e5d1c48a5504": {
+    "de": "Grauer oder brauner Schimmelrasen in Buds",
+    "en": "Gray or brown mold mat in buds",
+    "paths": [
+      "node/schaedlinge-start/options/4/label"
+    ]
+  },
+  "2bf0f9564d11": {
+    "de": "Grauer, staubiger Schimmelrasen in Blütenständen. Einzelner Bud fault = sofort handeln.",
+    "en": "Gray, dusty mold coating on the buds. A single affected bud = act immediately.",
+    "paths": [
+      "result/botrytis/explanation"
+    ]
+  },
+  "6779d25a322a": {
+    "de": "Grüne oder schwarze Kolonien an Triebspitzen mit klebriger Honigtau-Ausscheidung.",
+    "en": "Green or black colonies on shoot tips with sticky honeydew excretion.",
+    "paths": [
+      "result/blattlaeuse/explanation"
+    ]
+  },
+  "49be8c140d9d": {
+    "de": "Hanfrostmilbe (Hemp Russet Mite)",
+    "en": "Hemp russet mite (Hemp Russet Mite)",
+    "paths": [
+      "result/rostmilben/title"
+    ]
+  },
+  "e627db2a71d7": {
+    "de": "Hitzestress",
+    "en": "Heat stress",
+    "paths": [
+      "result/hitzestress/title"
+    ]
+  },
+  "44d3e19b25f5": {
+    "de": "Hitzestress – Blätter rollen hoch (tacoing). Lampenabstand korrigiert, Belüftung optimiert.",
+    "en": "Heat stress – leaves roll up (tacoing). Lamp distance corrected, ventilation optimized.",
+    "paths": [
+      "result/hitzestress/logNote"
+    ]
+  },
+  "4954f8a698ff": {
+    "de": "Hohe Luftfeuchtigkeit + dichte Blütenstände + mangelnde Luftzirkulation.",
+    "en": "High humidity + dense buds + insufficient air circulation.",
+    "paths": [
+      "result/botrytis/cause"
+    ]
+  },
+  "deafbfa58708": {
+    "de": "Hohes VPD / Trockenstress",
+    "en": "High VPD / drought stress",
+    "paths": [
+      "result/vpd-hoch/title"
+    ]
+  },
+  "22d39b3e6b6e": {
+    "de": "Hohes VPD festgestellt – trockene Luft. Befeuchter aktiviert, Soll-VPD eingestellt.",
+    "en": "High VPD detected – dry air. Humidifier activated, target VPD set.",
+    "paths": [
+      "result/vpd-hoch/logNote"
+    ]
+  },
+  "82eb207f91d9": {
+    "de": "Immobile Nährstoffe zeigen sich immer am neuen Gewebe.",
+    "en": "Immobile nutrients always show up on new tissue.",
+    "paths": [
+      "node/blaetter-neu/hint"
+    ]
+  },
+  "24fe5deb4de7": {
+    "de": "Interkostale Chlorosen an älteren Blättern – die Blattadern bleiben grün, der Bereich dazwischen wird gelb.",
+    "en": "Interveinal chlorosis on older leaves – the leaf veins stay green, the area between them turns yellow.",
+    "paths": [
+      "result/mg-mangel/explanation"
+    ]
+  },
+  "85abbe3b59a0": {
+    "de": "Interkostale Chlorosen mit grünen Adern an alten Blättern – dieses Muster ist nahezu unverwechselbar für Mg-Mangel.",
+    "en": "Interveinal chlorosis with green veins on old leaves – this pattern is nearly unmistakable for magnesium deficiency.",
+    "paths": [
+      "result/mg-mangel/reasoning"
+    ]
+  },
+  "360808936c16": {
+    "de": "Ist das Substrat gerade kalt oder selten?",
+    "en": "Is the substrate currently cold or infrequently watered?",
+    "paths": [
+      "node/blaetter-violett/question"
+    ]
+  },
+  "ac3840f0f245": {
+    "de": "Ja – grauer Staub / Rasen in Blütenständen",
+    "en": "Yes – gray dust / mat on buds",
+    "paths": [
+      "node/klima-nass/options/0/label"
+    ]
+  },
+  "d5afd186f892": {
+    "de": "K-Anteil gezielt anheben",
+    "en": "Increase K levels in a targeted way",
+    "paths": [
+      "result/k-mangel/steps/0"
+    ]
+  },
+  "d68f2e6b7236": {
+    "de": "Kaliseife / Pflanzenöl im 3x Intervall (je 3 Tage)",
+    "en": "Insecticidal soap / plant oil at 3x intervals (every 3 days)",
+    "paths": [
+      "result/spinnmilben/steps/1"
+    ]
+  },
+  "bf1cc5983d22": {
+    "de": "Kaliseife lokal auf Kolonien",
+    "en": "Insecticidal soap applied locally to colonies",
+    "paths": [
+      "result/blattlaeuse/steps/1"
+    ]
+  },
+  "5cbecb0b2092": {
+    "de": "Kaliummangel (K)",
+    "en": "Potassium deficiency (K)",
+    "paths": [
+      "result/k-mangel/title"
+    ]
+  },
+  "fca83479a347": {
+    "de": "Kaliummangel-Verdacht – nekrotische Blattränder. K erhöht, Nährstoffverhältnisse neu balanciert.",
+    "en": "Suspected potassium deficiency – necrotic leaf margins. K increased, nutrient ratios rebalanced.",
+    "paths": [
+      "result/k-mangel/logNote"
+    ]
+  },
+  "7b68d63b2ffe": {
+    "de": "Kältestress",
+    "en": "Cold stress",
+    "paths": [
+      "result/kaeltestress/title"
+    ]
+  },
+  "338fa73d40ab": {
+    "de": "Kältestress erkannt – violette Töne, langsames Wachstum. Substrattemperatur angehoben.",
+    "en": "Cold stress detected – purple tones, slow growth. Substrate temperature raised.",
+    "paths": [
+      "result/kaeltestress/logNote"
+    ]
+  },
+  "cfe3d364e575": {
+    "de": "Kannst du unter 60× Lupe etwas an den Triebspitzen erkennen?",
+    "en": "Can you see anything on the shoot tips under a 60x magnifying glass?",
+    "paths": [
+      "node/schaedlinge-mikroskopisch/question"
+    ]
+  },
+  "0ede80d29d59": {
+    "de": "Klassische Mangelsymptome ohne Reaktion auf Düngung oder pH-Korrektur. Wachsige Kolonien an Feinwurzeln.",
+    "en": "Classic deficiency symptoms with no response to nutrients or pH correction. Waxy colonies on fine roots.",
+    "paths": [
+      "result/wurzellaeuse/explanation"
+    ]
+  },
+  "77679ec62943": {
+    "de": "Kleine bewegliche Punkte + glänzende Eier auf Blattunterseite",
+    "en": "Small moving dots + shiny eggs on the underside of leaves",
+    "paths": [
+      "node/schaedlinge-mikroskopisch/options/0/label"
+    ]
+  },
+  "2b261be7e99a": {
+    "de": "Kleine schwarze Flieger über dem Substrat",
+    "en": "Small black flies above the substrate",
+    "paths": [
+      "node/schaedlinge-start/options/3/label"
+    ]
+  },
+  "9d289d250453": {
+    "de": "Klima & Umgebung",
+    "en": "Climate & Environment",
+    "paths": [
+      "category/klima/label"
+    ]
+  },
+  "0477b272ebe8": {
+    "de": "Koloniebildung an N-reichen Triebspitzen, schnelle parthenogenetische Vermehrung.",
+    "en": "Colony formation on N-rich shoot tips, rapid parthenogenetic reproduction.",
+    "paths": [
+      "result/blattlaeuse/cause"
+    ]
+  },
+  "91d5307f94e0": {
+    "de": "Kolonien an Triebspitzen, klebrige Blätter",
+    "en": "Colonies on shoot tips, sticky leaves",
+    "paths": [
+      "node/schaedlinge-start/options/2/label"
+    ]
+  },
+  "5b83ae631225": {
+    "de": "Lampenabstand erhöhen / Lichtleistung drosseln",
+    "en": "Increase lamp distance / reduce light output",
+    "paths": [
+      "result/hitzestress/steps/0"
+    ]
+  },
+  "048b17656bac": {
+    "de": "Langsames Wachstum, violette Töne (Anthocyan-Einlagerung) und schlechte Wasseraufnahme.",
+    "en": "Slow growth, violet tones (anthocyanin accumulation), and poor water uptake.",
+    "paths": [
+      "result/kaeltestress/explanation"
+    ]
+  },
+  "cbe38a93574e": {
+    "de": "Limonengrün / sehr hell, Adern sichtbar grün",
+    "en": "Lime green / very pale, veins visibly green",
+    "paths": [
+      "node/blaetter-neu/options/0/label"
+    ]
+  },
+  "349bbf939293": {
+    "de": "Limonengrüner Neuwuchs mit noch erkennbaren grünen Adern ist spezifisch für Fe – fast ausnahmslos eine pH-Drift-Folge.",
+    "en": "Lime-green new growth with still-visible green veins is specific to Fe – almost without exception a consequence of pH drift.",
+    "paths": [
+      "result/fe-mangel/reasoning"
+    ]
+  },
+  "dd8bf04ee159": {
+    "de": "Luft zu trocken – Blätter wirken gestresst",
+    "en": "Air too dry – leaves appear stressed",
+    "paths": [
+      "node/klima-start/options/2/label"
+    ]
+  },
+  "a41858989bac": {
+    "de": "Luftbefeuchter einsetzen oder Temp. senken",
+    "en": "Use a humidifier or lower the temp.",
+    "paths": [
+      "result/vpd-hoch/steps/1"
+    ]
+  },
+  "2e6a4ac52884": {
+    "de": "Luftzirkulation direkt an den Buds verbessern",
+    "en": "Improve air circulation directly at the buds",
+    "paths": [
+      "result/botrytis/steps/2"
+    ]
+  },
+  "6c61ac07acc6": {
+    "de": "Magnesiummangel (Mg)",
+    "en": "Magnesium deficiency (Mg)",
+    "paths": [
+      "result/mg-mangel/title"
+    ]
+  },
+  "2b406f27b429": {
+    "de": "Magnesiummangel-Verdacht – Chlorosen zwischen Blattadern. Mg ergänzt, Ca:Mg-Verhältnis angepasst.",
+    "en": "Suspected magnesium deficiency – chlorosis between leaf veins. Mg supplemented, Ca:Mg ratio adjusted.",
+    "paths": [
+      "result/mg-mangel/logNote"
+    ]
+  },
+  "9f680886276a": {
+    "de": "Mangelbild obwohl Nährstoffe korrekt sind",
+    "en": "Deficiency pattern despite correct nutrients",
+    "paths": [
+      "node/wachstum-welk/options/1/label"
+    ]
+  },
+  "4ecce1d7340d": {
+    "de": "Mangelbild ohne jede Reaktion auf Nährstoff- oder pH-Anpassung kann viele Ursachen haben – Wurzelläuse sind selten, aber schwer erkennbar.",
+    "en": "A deficiency pattern with no response whatsoever to nutrient or pH adjustment can have many causes – root aphids are rare but hard to detect.",
+    "paths": [
+      "result/wurzellaeuse/reasoning"
+    ]
+  },
+  "99ba53b6f4e7": {
+    "de": "Mehrere Mangelsymptome gleichzeitig ohne klare Richtung und keine Reaktion auf Nachfüttern – EC und pH im Drain sollten das bestätigen.",
+    "en": "Multiple deficiency symptoms at once with no clear direction and no response to additional feeding – EC and pH in the runoff should confirm this.",
+    "paths": [
+      "result/lockout/reasoning"
+    ]
+  },
+  "be84702db04d": {
+    "de": "Meist pH-bedingte Blockade (pH > 7,0) oder nasse Wurzelzone.",
+    "en": "Mostly a pH-related lockout (pH > 7,0) or a wet root zone.",
+    "paths": [
+      "result/fe-mangel/cause"
+    ]
+  },
+  "2816fb8dc799": {
+    "de": "Mg ergänzen (z. B. Bittersalz 1–2 g/L)",
+    "en": "Supplement magnesium (e.g., Epsom salt 1–2 g/L)",
+    "paths": [
+      "result/mg-mangel/steps/0"
+    ]
+  },
+  "7e758269b847": {
+    "de": "Mikroskop-Check an Triebspitze (Eier auf Blattunterseite)",
+    "en": "Microscope check on shoot tip (eggs on leaf underside)",
+    "paths": [
+      "result/breitmilben/steps/0"
+    ]
+  },
+  "4498c2d2150f": {
+    "de": "Mobiler Mangel wandert stets von alt nach neu.",
+    "en": "Mobile deficiencies always move from old to new.",
+    "paths": [
+      "node/blaetter-alt/hint"
+    ]
+  },
+  "cbc604e6b73e": {
+    "de": "Moderate P-Anhebung + Nachkontrolle nach 5 Tagen",
+    "en": "Moderate P increase + follow-up check after 5 days",
+    "paths": [
+      "result/p-mangel/steps/2"
+    ]
+  },
+  "aef4dab4e947": {
+    "de": "N-Anteil im Futter schrittweise erhöhen",
+    "en": "Gradually increase the N share in feed",
+    "paths": [
+      "result/n-mangel/steps/1"
+    ]
+  },
+  "99e96e027a12": {
+    "de": "Nach 3–5 Tagen Neuwuchs (nicht Altblätter) bewerten",
+    "en": "Assess new growth (not old leaves) after 3–5 days",
+    "paths": [
+      "result/n-mangel/steps/2"
+    ]
+  },
+  "449ac366527e": {
+    "de": "Nach 5–7 Tagen auf Stopp der Randnekrose prüfen",
+    "en": "After 5–7 days, check whether margin necrosis has stopped",
+    "paths": [
+      "result/k-mangel/steps/2"
+    ]
+  },
+  "f02d9d7b712a": {
+    "de": "Nächste Gabe auf 50 % reduzieren",
+    "en": "Reduce the next feeding to 50 %",
+    "paths": [
+      "result/uebersalzung/steps/1"
+    ]
+  },
+  "f6f4bad0a563": {
+    "de": "Nächste Gabe früher einplanen",
+    "en": "Schedule the next feeding earlier",
+    "paths": [
+      "result/vpd-hoch/steps/2"
+    ]
+  },
+  "1a1876b97a23": {
+    "de": "Nährstoff-Rechner",
+    "en": "Nutrient calculator",
+    "paths": [
+      "result/n-mangel/toolLinks/0/label",
+      "result/p-mangel/toolLinks/0/label",
+      "result/k-mangel/toolLinks/0/label",
+      "result/mg-mangel/toolLinks/0/label",
+      "result/fe-mangel/toolLinks/0/label",
+      "result/lockout/toolLinks/0/label",
+      "result/uebersalzung/toolLinks/0/label"
+    ]
+  },
+  "d0cc4343f5d2": {
+    "de": "Nährstoffblockade",
+    "en": "Nutrient lockout",
+    "paths": [
+      "result/lockout/title"
+    ]
+  },
+  "19969054f965": {
+    "de": "Nährstoffblockade-Verdacht – Mischsymptome trotz Düngung. Drain-Werte gemessen, Spülgang durchgeführt.",
+    "en": "Suspected nutrient lockout – mixed symptoms despite feeding. Runoff values measured, flush performed.",
+    "paths": [
+      "result/lockout/logNote"
+    ]
+  },
+  "27e76de4f222": {
+    "de": "Neem-Azadirachtin 3× im 5-Tage-Abstand",
+    "en": "Neem azadirachtin 3x at 5-day intervals",
+    "paths": [
+      "result/breitmilben/steps/1"
+    ]
+  },
+  "4c955568a6b3": {
+    "de": "Nematoden (Steinernema feltiae) ins Gießwasser",
+    "en": "Nematodes (Steinernema feltiae) into the irrigation water",
+    "paths": [
+      "result/trauermuecken/steps/1"
+    ]
+  },
+  "c8c6c0243de6": {
+    "de": "Nematoden gegen Puppenstadien im Substrat",
+    "en": "Nematodes against pupal stages in the substrate",
+    "paths": [
+      "result/thripse/steps/1"
+    ]
+  },
+  "a336e21dbec7": {
+    "de": "Neuer Triebwuchs / Blattspitzen",
+    "en": "New shoot growth / leaf tips",
+    "paths": [
+      "node/blaetter-start/options/1/label"
+    ]
+  },
+  "d447a09df01f": {
+    "de": "Nichts erkennbar – eher Nährstoffproblem",
+    "en": "Nothing visible – more likely a nutrient problem",
+    "paths": [
+      "node/schaedlinge-mikroskopisch/options/2/label"
+    ]
+  },
+  "12230f142675": {
+    "de": "Noch nicht sichtbar – hohe RLF präventiv senken",
+    "en": "Not yet visible – lower high RH preventively",
+    "paths": [
+      "node/klima-nass/options/1/label"
+    ]
+  },
+  "22b068749a34": {
+    "de": "Nutrient Burn erkannt – braune Blattspitzen. EC gesenkt, Spülgang durchgeführt.",
+    "en": "Nutrient burn detected – brown leaf tips. EC lowered, flushing cycle performed.",
+    "paths": [
+      "result/uebersalzung/logNote"
+    ]
+  },
+  "24caaaf50a60": {
+    "de": "P wird bei kühlem Substrat oder falschem pH blockiert. Violette Blattstiele und matt-dunkelgrüne Blätter sind typisch.",
+    "en": "P is blocked by cool substrate or incorrect pH. Purple petioles and dull dark-green leaves are typical.",
+    "paths": [
+      "result/p-mangel/explanation"
+    ]
+  },
+  "fc337b0ba7f4": {
+    "de": "Pflanze welkt trotz nassem Substrat",
+    "en": "Plant wilts despite wet substrate",
+    "paths": [
+      "node/wachstum-start/options/0/label"
+    ]
+  },
+  "a8f5031ee723": {
+    "de": "pH im Wurzelraum prüfen (Ziel: 5,8–6,5 Erde / 5,5–6,1 Coco)",
+    "en": "Check pH in the root zone (target: 5.8–6.5 soil / 5.5–6.1 coco coir)",
+    "paths": [
+      "result/n-mangel/steps/0"
+    ]
+  },
+  "9e323e793c00": {
+    "de": "pH korrigieren",
+    "en": "Correct pH",
+    "paths": [
+      "result/p-mangel/steps/1"
+    ]
+  },
+  "f27ba016ec02": {
+    "de": "pH und EC in Zielbereich bringen",
+    "en": "Bring pH and EC into target range",
+    "paths": [
+      "result/ca-mangel/steps/2"
+    ]
+  },
+  "aa650b3057e4": {
+    "de": "pH zuerst in Zielbereich senken",
+    "en": "First lower pH into the target range",
+    "paths": [
+      "result/fe-mangel/steps/0"
+    ]
+  },
+  "de50d0549673": {
+    "de": "pH-Drift oder Salzakkumulation blockiert mehrere Nährstoffe gleichzeitig.",
+    "en": "pH drift or salt accumulation blocks multiple nutrients simultaneously.",
+    "paths": [
+      "result/lockout/cause"
+    ]
+  },
+  "0447f4eb02d1": {
+    "de": "pH-Korridor einhalten (6,0–6,5)",
+    "en": "Maintain the pH range (6,0–6,5)",
+    "paths": [
+      "result/mg-mangel/steps/2"
+    ]
+  },
+  "2192173f1fd8": {
+    "de": "Phosphormangel (P)",
+    "en": "Phosphorus deficiency (P)",
+    "paths": [
+      "result/p-mangel/title"
+    ]
+  },
+  "cb42bfe006f4": {
+    "de": "Phosphormangel-Verdacht – dunkles Laub, evtl. violette Stiele. Wurzelzone temperiert + pH angepasst.",
+    "en": "Suspected phosphorus deficiency – dark foliage, possibly purple stems. Root zone temperature-controlled + pH adjusted.",
+    "paths": [
+      "result/p-mangel/logNote"
+    ]
+  },
+  "584c263ffe99": {
+    "de": "Randnekrosen an alten Blättern (nicht Spitze, nicht Mitte) sind ein starkes Kalium-Signal – besonders charakteristisch in der Blüte.",
+    "en": "Marginal necrosis on old leaves (not the tip, not the center) is a strong potassium signal – especially characteristic during flowering.",
+    "paths": [
+      "result/k-mangel/reasoning"
+    ]
+  },
+  "0e08fa9e60fa": {
+    "de": "Raubmilben (Amblyseius swirskii) einsetzen",
+    "en": "Deploy predatory mites (Amblyseius swirskii)",
+    "paths": [
+      "result/thripse/steps/0"
+    ]
+  },
+  "997d63ea00bb": {
+    "de": "Raubmilben (Phytoseiulus persimilis) sofort ausbringen",
+    "en": "Deploy predatory mites (Phytoseiulus persimilis) immediately",
+    "paths": [
+      "result/spinnmilben/steps/0"
+    ]
+  },
+  "249610ab8c47": {
+    "de": "Raubmilben Amblyseius andersoni als Dauerbesatz",
+    "en": "Predatory mites Amblyseius andersoni as a permanent population",
+    "paths": [
+      "result/breitmilben/steps/2",
+      "result/rostmilben/steps/2"
+    ]
+  },
+  "d64b6f5e34c9": {
+    "de": "Raumtemperatur in der Nachtabsenkung prüfen (> 17 °C)",
+    "en": "Check room temperature during the night-time drop (> 17 °C)",
+    "paths": [
+      "result/kaeltestress/steps/1"
+    ]
+  },
+  "7f435e585b2f": {
+    "de": "RLF unter 50 % in der Blüte halten",
+    "en": "Keep RH below 50 % during flowering",
+    "paths": [
+      "result/botrytis/steps/1"
+    ]
+  },
+  "95c43e26e8cd": {
+    "de": "Rostmilben-Verdacht – Bronzefärbung, Trichome beschädigt. Mikroskopkontrolle + Behandlung gestartet.",
+    "en": "Suspected rust mites – bronzing, trichomes damaged. Microscope inspection + treatment started.",
+    "paths": [
+      "result/rostmilben/logNote"
+    ]
+  },
+  "948885acf0bb": {
+    "de": "Schädlinge",
+    "en": "Pests",
+    "paths": [
+      "category/schaedlinge/label"
+    ]
+  },
+  "5e06796428e6": {
+    "de": "Schnell welkend nach Gabe – erholt sich kaum",
+    "en": "Wilts quickly after feeding – barely recovers",
+    "paths": [
+      "node/wachstum-start/options/2/label"
+    ]
+  },
+  "8780f7438f04": {
+    "de": "Schrittweise auf balanciertes Futter zurückführen",
+    "en": "Gradually return to balanced feeding",
+    "paths": [
+      "result/lockout/steps/2"
+    ]
+  },
+  "d171cc036615": {
+    "de": "Schwarze Flieger direkt über nassem Substrat passen kaum zu etwas anderem – Trauermückenbefall ist sehr klar erkennbar.",
+    "en": "Black flyers directly above wet substrate hardly fit anything else – fungus gnat infestation is very clearly identifiable.",
+    "paths": [
+      "result/trauermuecken/reasoning"
+    ]
+  },
+  "0b78168f7c1d": {
+    "de": "Schwefel-/Neem-Präparat wöchentlich in der Veg-Phase",
+    "en": "Sulfur/neem preparation weekly during the veg stage",
+    "paths": [
+      "result/rostmilben/steps/1"
+    ]
+  },
+  "ec7ab309bca5": {
+    "de": "Sehr heller, limonengrüner Neuwuchs mit noch erkennbaren Blattadern – Eisen ist immobil.",
+    "en": "Very pale, lime-green new growth with still-visible leaf veins – iron is immobile.",
+    "paths": [
+      "result/fe-mangel/explanation"
+    ]
+  },
+  "c7c9a98ffdd2": {
+    "de": "Sichtbare Kolonien an Triebspitzen mit klebriger Honigtau-Ausscheidung sind Blattläuse – kaum Verwechslungsmöglichkeit.",
+    "en": "Visible colonies on shoot tips with sticky honeydew excretion are aphids – little risk of misidentification.",
+    "paths": [
+      "result/blattlaeuse/reasoning"
+    ]
+  },
+  "c071884c2dc9": {
+    "de": "Silbrige Schabspuren (kein Gespinst) mit schwarzen Kotpunkten auf Blattunterseiten sind thrips-spezifisch – Verwechslungsgefahr gering.",
+    "en": "Silvery scraping marks (no webbing) with black fecal spots on leaf undersides are thrips-specific – low risk of confusion.",
+    "paths": [
+      "result/thripse/reasoning"
+    ]
+  },
+  "7016c82a5464": {
+    "de": "Silbrige Schabspuren + schwarze Kotpunkte",
+    "en": "Silvery scraping marks + black fecal spots",
+    "paths": [
+      "node/schaedlinge-start/options/1/label"
+    ]
+  },
+  "4572c1524a5f": {
+    "de": "Silbrige Schabspuren + schwarze Kotpunkte. Virusvektor (TSWV) – Frühintervention ist kritisch.",
+    "en": "Silvery scraping marks + black fecal spots. Virus vector (TSWV) – early intervention is critical.",
+    "paths": [
+      "result/thripse/explanation"
+    ]
+  },
+  "216486a12379": {
+    "de": "Spinnmilben",
+    "en": "Spider mites",
+    "paths": [
+      "result/spinnmilben/title"
+    ]
+  },
+  "cfe741cf6f56": {
+    "de": "Spinnmilbenbefall festgestellt – Gespinste + Punkte auf Blättern. Raubmilben eingesetzt, behandelt.",
+    "en": "Spider mite infestation detected – webbing + stippling on leaves. Predatory mites deployed, treated.",
+    "paths": [
+      "result/spinnmilben/logNote"
+    ]
+  },
+  "b54c3453419d": {
+    "de": "Stickstoffmangel (N)",
+    "en": "Nitrogen deficiency (N)",
+    "paths": [
+      "result/n-mangel/title"
+    ]
+  },
+  "fdc147504c54": {
+    "de": "Stickstoffmangel festgestellt – ältere Blätter vergilben. pH geprüft, N-Gabe angepasst.",
+    "en": "Nitrogen deficiency identified – older leaves are yellowing. pH checked, N dosing adjusted.",
+    "paths": [
+      "result/n-mangel/logNote"
+    ]
+  },
+  "95bca50b714e": {
+    "de": "Substrat ist kalt (< 18 °C) oder Nachtabsenkung extrem",
+    "en": "Substrate is cold (< 18 °C) or night-time temperature drop is extreme",
+    "paths": [
+      "node/blaetter-violett/options/0/label"
+    ]
+  },
+  "94ed768a6b02": {
+    "de": "Substrat ist zu nass, kein Austrocknen",
+    "en": "Substrate is too wet, not drying out",
+    "paths": [
+      "node/wachstum-welk/options/2/label"
+    ]
+  },
+  "91c07ded35e5": {
+    "de": "Substrat wechseln und Topf reinigen",
+    "en": "Change substrate and clean pot",
+    "paths": [
+      "result/wurzellaeuse/steps/1"
+    ]
+  },
+  "edfb51ab42ce": {
+    "de": "Substratoberfläche antrocknen lassen",
+    "en": "Let the substrate surface dry out",
+    "paths": [
+      "result/trauermuecken/steps/0"
+    ]
+  },
+  "3697d71e7dcf": {
+    "de": "Substrattemperatur messen (min. 18 °C)",
+    "en": "Measure substrate temperature (min. 18 °C)",
+    "paths": [
+      "result/kaeltestress/steps/0"
+    ]
+  },
+  "f20b911c6069": {
+    "de": "Substrattemperatur überprüfen (min. 18 °C)",
+    "en": "Check substrate temperature (min. 18 °C)",
+    "paths": [
+      "result/p-mangel/steps/0"
+    ]
+  },
+  "340b4924713d": {
+    "de": "Substrattemperatur unter 15 °C hemmt Nährstoffaufnahme und Enzymaktivität.",
+    "en": "Substrate temperature below 15 °C inhibits nutrient uptake and enzyme activity.",
+    "paths": [
+      "result/kaeltestress/cause"
+    ]
+  },
+  "9451e3b41ed6": {
+    "de": "Systemische Maßnahmen + engmaschiges Root-Monitoring",
+    "en": "Systemic measures + close-interval root monitoring",
+    "paths": [
+      "result/wurzellaeuse/steps/2"
+    ]
+  },
+  "62b5ebde9f9b": {
+    "de": "Tacoing (nach oben rollende Blätter) ist die direkte pflanzliche Schutzreaktion gegen Überhitzung – ein sehr zuverlässiges Zeichen.",
+    "en": "Tacoing (leaves rolling upward) is the plant's direct protective response to overheating – a very reliable sign.",
+    "paths": [
+      "result/hitzestress/reasoning"
+    ]
+  },
+  "c8c9ddddccbf": {
+    "de": "Temperatur passt – eher Blockade / pH-Problem",
+    "en": "Temperature is fine – more likely lockout / pH issue",
+    "paths": [
+      "node/wachstum-langsam/options/2/label"
+    ]
+  },
+  "fd6a305eda82": {
+    "de": "Temperatur passt – eher P-Blockade möglich",
+    "en": "Temperature is fine – phosphorus (P) lockout more likely",
+    "paths": [
+      "node/blaetter-violett/options/1/label"
+    ]
+  },
+  "1fcefe334860": {
+    "de": "Temperaturen dauerhaft über 30 °C führen zu Zellschäden und Terpenverlust.",
+    "en": "Sustained temperatures above 30 °C cause cell damage and terpene loss.",
+    "paths": [
+      "result/hitzestress/cause"
+    ]
+  },
+  "40b83f35d13b": {
+    "de": "Thripbefall – silbrige Fraßspuren + Kotpunkte. Raubmilben + Nematoden eingesetzt.",
+    "en": "Thrips infestation – silvery feeding marks + fecal spots. Predatory mites + nematodes applied.",
+    "paths": [
+      "result/thripse/logNote"
+    ]
+  },
+  "8e9253d5ffb4": {
+    "de": "Thripse",
+    "en": "Thrips",
+    "paths": [
+      "result/thripse/title"
+    ]
+  },
+  "b8b28a09851d": {
+    "de": "Tipping (braune Spitzen bei sonst gesunden Blättern ohne Mangelbild) ist das eindeutigste Nutrient-Burn-Zeichen – selten etwas anderes.",
+    "en": "Tipping (brown tips on otherwise healthy leaves with no deficiency pattern) is the clearest sign of nutrient burn – rarely anything else.",
+    "paths": [
+      "result/uebersalzung/reasoning"
+    ]
+  },
+  "07a71e079bb1": {
+    "de": "Topf ggf. isolieren / Heizmatte nutzen",
+    "en": "Insulate the pot if needed / use a heat mat",
+    "paths": [
+      "result/kaeltestress/steps/2"
+    ]
+  },
+  "34d3fff39b88": {
+    "de": "Topf nehmen und Wurzeln + Topfwände auf wachsige Punkte prüfen",
+    "en": "Remove pot and check roots + pot walls for waxy spots",
+    "paths": [
+      "result/wurzellaeuse/steps/0"
+    ]
+  },
+  "70a51bd69c75": {
+    "de": "Topf vor Gabe auf Gewicht prüfen (leicht + trocken)",
+    "en": "Check pot weight before watering (light + dry)",
+    "paths": [
+      "result/ueberwaesserung/steps/1"
+    ]
+  },
+  "f204f47f73dc": {
+    "de": "Trauermücken",
+    "en": "Fungus gnats",
+    "paths": [
+      "result/trauermuecken/title"
+    ]
+  },
+  "28348efe418a": {
+    "de": "Trauermückenbefall – Flieger über Substrat. Gießintervall erhöht, BTI + Nematoden eingesetzt.",
+    "en": "Fungus gnat infestation – flyers above substrate. Watering interval increased, BTI + nematodes deployed.",
+    "paths": [
+      "result/trauermuecken/logNote"
+    ]
+  },
+  "79eb742fb509": {
+    "de": "Trockene Warmluft (> 27 °C, < 40 % RLF) begünstigt exponentielle Ausbreitung.",
+    "en": "Dry warm air (> 27 °C, < 40 % RH) favors exponential spread.",
+    "paths": [
+      "result/spinnmilben/cause"
+    ]
+  },
+  "948ccc06078f": {
+    "de": "Trockenstress durch hohes VPD erklärt Stomata-Reaktion und sekundäre Ca-Probleme – VPD-Messung bestätigt die Diagnose.",
+    "en": "Drought stress from high VPD explains the stomatal response and secondary Ca issues – VPD measurement confirms the diagnosis.",
+    "paths": [
+      "result/vpd-hoch/reasoning"
+    ]
+  },
+  "a16415db19cc": {
+    "de": "Übersalzung / Nutrient Burn",
+    "en": "Over-salinization / nutrient burn",
+    "paths": [
+      "result/uebersalzung/title"
+    ]
+  },
+  "f9e13c011ee3": {
+    "de": "Überwässerung / Wurzelstress",
+    "en": "Overwatering / root stress",
+    "paths": [
+      "result/ueberwaesserung/title"
+    ]
+  },
+  "ae4d9558ebf7": {
+    "de": "Überwässerung-Verdacht – welk trotz nassem Substrat. Gießintervall erhöht, Drainage geprüft.",
+    "en": "Suspected overwatering – wilting despite wet substrate. Watering interval increased, drainage checked.",
+    "paths": [
+      "result/ueberwaesserung/logNote"
+    ]
+  },
+  "bbde008b3e9a": {
+    "de": "Uneinheitliches Blattbild mit Mischsymptomen (gelb + verbrannt + dunkel) trotz Düngung ist ein klassisches Lockout-Zeichen.",
+    "en": "An inconsistent leaf pattern with mixed symptoms (yellow + burnt + dark) despite feeding is a classic lockout sign.",
+    "paths": [
+      "result/lockout/explanation"
+    ]
+  },
+  "37c9daf90f29": {
+    "de": "Unterdosierung oder pH-bedingte Aufnahmeblockade.",
+    "en": "Underdosing or pH-related uptake blockage.",
+    "paths": [
+      "result/n-mangel/cause"
+    ]
+  },
+  "e91c1c39ebac": {
+    "de": "Unterversorgung im Peak-Bedarf oder Antagonismus durch Ca/Mg.",
+    "en": "Undersupply during peak demand or antagonism from Ca/Mg.",
+    "paths": [
+      "result/k-mangel/cause"
+    ]
+  },
+  "653c02fa93a9": {
+    "de": "Verkrüppelt, glasig-glänzend, nicht auf Dünger reaktiv",
+    "en": "Stunted, glassy-shiny, not responsive to nutrients",
+    "paths": [
+      "node/blaetter-neu/options/2/label"
+    ]
+  },
+  "d31abcfb2ba4": {
+    "de": "Verkrüppelte Triebspitzen ohne jede Reaktion auf Düngungsanpassung deuten auf Milben hin – Mikroskopkontrolle ist zur Bestätigung nötig.",
+    "en": "Deformed shoot tips with no response whatsoever to nutrient adjustment point to mites – microscope inspection is needed to confirm.",
+    "paths": [
+      "result/breitmilben/reasoning"
+    ]
+  },
+  "cb79a98db529": {
+    "de": "Verkrüppelte Triebspitzen, nicht auf Dünger reaktiv",
+    "en": "Deformed shoot tips, not responsive to nutrients",
+    "paths": [
+      "node/schaedlinge-start/options/5/label"
+    ]
+  },
+  "db0d01f751bd": {
+    "de": "Versteckter Wurzelbefall, fast unmöglich zu erkennen ohne Topf entfernen.",
+    "en": "Hidden root infestation, nearly impossible to detect without removing the pot.",
+    "paths": [
+      "result/wurzellaeuse/cause"
+    ]
+  },
+  "66d3e8ec0f18": {
+    "de": "Violette Anthocyan-Einlagerung + langsames Wachstum bei bekannt kühlem Substrat passen gut zusammen – P-Blockade sieht aber ähnlich aus.",
+    "en": "Violet anthocyanin accumulation + slow growth with a known-cool substrate fit together well – but P lockout looks similar.",
+    "paths": [
+      "result/kaeltestress/reasoning"
+    ]
+  },
+  "bcec4e1e1c96": {
+    "de": "Violette Töne, langsames Wachstum",
+    "en": "Purple tones, slow growth",
+    "paths": [
+      "node/blaetter-gesamt/options/2/label"
+    ]
+  },
+  "12af75403e1e": {
+    "de": "VPD / RLF stabilisieren",
+    "en": "Stabilize VPD / RH",
+    "paths": [
+      "result/ca-mangel/steps/1"
+    ]
+  },
+  "f7a9eb7e5511": {
+    "de": "VPD-Rechner",
+    "en": "VPD calculator",
+    "paths": [
+      "result/ca-mangel/toolLinks/0/label",
+      "result/hitzestress/toolLinks/0/label",
+      "result/vpd-hoch/toolLinks/0/label",
+      "result/spinnmilben/toolLinks/0/label",
+      "result/botrytis/toolLinks/0/label"
+    ]
+  },
+  "ef8b69db4634": {
+    "de": "VPD-Ziel: 0,8–1,2 kPa in Veg / 1,0–1,5 kPa in Blüte",
+    "en": "VPD target: 0,8–1,2 kPa in veg / 1,0–1,5 kPa in flowering",
+    "paths": [
+      "result/vpd-hoch/steps/0"
+    ]
+  },
+  "7e19562d6de1": {
+    "de": "Wachstum & Wurzeln",
+    "en": "Growth & Roots",
+    "paths": [
+      "category/wachstum/label"
+    ]
+  },
+  "a3ca4ba9ad53": {
+    "de": "Wachstum ist stark gebremst ohne Mangelsymptome",
+    "en": "Growth is strongly slowed without deficiency symptoms",
+    "paths": [
+      "node/wachstum-start/options/1/label"
+    ]
+  },
+  "7a652a7902a9": {
+    "de": "Was beschreibt das Gesamtbild am besten?",
+    "en": "What best describes the overall picture?",
+    "paths": [
+      "node/blaetter-gesamt/question"
+    ]
+  },
+  "aafe3fc7bb9b": {
+    "de": "Was fällt am meisten auf?",
+    "en": "What stands out the most?",
+    "paths": [
+      "node/wachstum-start/question"
+    ]
+  },
+  "38937b6fb300": {
+    "de": "Was hast du beobachtet?",
+    "en": "What have you observed?",
+    "paths": [
+      "node/schaedlinge-start/question"
+    ]
+  },
+  "7b8a24131e83": {
+    "de": "Was ist das auffälligste Klimaproblem?",
+    "en": "What is the most noticeable climate issue?",
+    "paths": [
+      "node/klima-start/question"
+    ]
+  },
+  "fb2917579b53": {
+    "de": "Welche Symptome zeigt die Pflanze?",
+    "en": "What symptoms is the plant showing?",
+    "paths": [
+      "node/klima-trocken/question"
+    ]
+  },
+  "290ef10791eb": {
+    "de": "Welche weiteren Anzeichen gibt es?",
+    "en": "What other signs are there?",
+    "paths": [
+      "node/wachstum-welk/question"
+    ]
+  },
+  "ab963deb325e": {
+    "de": "Welke trotz nassem Substrat, dunkle Flecken und langsames Wachstum – klassische Überwässerungszeichen.",
+    "en": "Wilting despite wet substrate, dark spots, and slow growth – classic signs of overwatering.",
+    "paths": [
+      "result/ueberwaesserung/explanation"
+    ]
+  },
+  "242cd0a71aeb": {
+    "de": "Welken trotz feuchtem Substrat ist das Überwässerungs-Paradox – Wurzelkrankheiten scheiden als Alternative nicht aus.",
+    "en": "Wilting despite moist substrate is the overwatering paradox – root diseases cannot be ruled out as an alternative.",
+    "paths": [
+      "result/ueberwaesserung/reasoning"
+    ]
+  },
+  "42261890016d": {
+    "de": "Wie ist die Umgebungstemperatur?",
+    "en": "What is the ambient temperature?",
+    "paths": [
+      "node/wachstum-langsam/question"
+    ]
+  },
+  "22b466967f02": {
+    "de": "Wie sehen die alten Blätter aus?",
+    "en": "What do the old leaves look like?",
+    "paths": [
+      "node/blaetter-alt/question"
+    ]
+  },
+  "5890ef7f8448": {
+    "de": "Wie sieht der Neuwuchs aus?",
+    "en": "What does the new growth look like?",
+    "paths": [
+      "node/blaetter-neu/question"
+    ]
+  },
+  "51fff46952cb": {
+    "de": "Winzige Milben (0,2 mm), toxischer Speichel verkrüppelt Triebspitzen.",
+    "en": "Tiny mites (0.2 mm), toxic saliva deforms shoot tips.",
+    "paths": [
+      "result/breitmilben/cause"
+    ]
+  },
+  "5eae771a55ba": {
+    "de": "Wo zeigen sich die Symptome hauptsächlich?",
+    "en": "Where do the symptoms mainly show up?",
+    "paths": [
+      "node/blaetter-start/question"
+    ]
+  },
+  "279b508d0943": {
+    "de": "Wurzelläuse (Cannabis Root Aphid)",
+    "en": "Root aphids (Cannabis Root Aphid)",
+    "paths": [
+      "result/wurzellaeuse/title"
+    ]
+  },
+  "47d3e231efab": {
+    "de": "Wurzelläuse-Verdacht – Mangelbild ohne Reaktion auf Düngung. Wurzeln kontrolliert, Maßnahmen eingeleitet.",
+    "en": "Suspected root aphids – deficiency pattern with no response to nutrients. Roots checked, measures initiated.",
+    "paths": [
+      "result/wurzellaeuse/logNote"
+    ]
+  },
+  "0574726c8358": {
+    "de": "Wurzelzone mit pH-korrigiertem Wasser (ggf. leicht erhöhter EC) spülen",
+    "en": "Flush the root zone with pH-corrected water (optionally with slightly elevated EC)",
+    "paths": [
+      "result/lockout/steps/1"
+    ]
+  },
+  "5dab988efa3f": {
+    "de": "Ziel-Canopy-Temperatur: 22–26 °C",
+    "en": "Target canopy temperature: 22–26 °C",
+    "paths": [
+      "result/hitzestress/steps/2"
+    ]
+  },
+  "fdc47debf040": {
+    "de": "Zu geringe Ca-Verfügbarkeit oder hohes VPD mit Transpirationsstress.",
+    "en": "Too low calcium availability or high VPD with transpiration stress.",
+    "paths": [
+      "result/ca-mangel/cause"
+    ]
+  },
+  "ccc24529ddd7": {
+    "de": "Zu heiß – Blätter rollen nach oben (tacoing)",
+    "en": "Too hot – leaves curl upward (tacoing)",
+    "paths": [
+      "node/klima-start/options/0/label"
+    ]
+  },
+  "887682fe561c": {
+    "de": "Zu heiß (> 30 °C)",
+    "en": "Too hot (> 30 °C)",
+    "paths": [
+      "node/wachstum-langsam/options/0/label"
+    ]
+  },
+  "02a2d688a9be": {
+    "de": "Zu hohe EC im Root-Zone verursacht osmotischen Stress.",
+    "en": "Excessively high EC in the root zone causes osmotic stress.",
+    "paths": [
+      "result/uebersalzung/cause"
+    ]
+  },
+  "1eb87536a976": {
+    "de": "Zu hohe Luftfeuchtigkeit / Schimmelgefahr",
+    "en": "Excessive humidity / mold risk",
+    "paths": [
+      "node/klima-start/options/3/label"
+    ]
+  },
+  "b7bf00de1d5d": {
+    "de": "Zu kalt – violette Töne, langsames Wachstum",
+    "en": "Too cold – purple tones, slow growth",
+    "paths": [
+      "node/klima-start/options/1/label"
+    ]
+  },
+  "d390f182e870": {
+    "de": "Zu kalt (< 18 °C am Substrat)",
+    "en": "Too cold (< 18 °C at the substrate)",
+    "paths": [
+      "node/wachstum-langsam/options/1/label"
+    ]
+  },
+  "3f0880d60be3": {
+    "de": "Zu niedrige Luftfeuchtigkeit + hohe Temperatur = hoher Sättigungsdefizit-Druck.",
+    "en": "Too low humidity + high temperature = high saturation deficit pressure.",
+    "paths": [
+      "result/vpd-hoch/cause"
+    ]
+  },
+  "c3f30bbf974a": {
+    "de": "Zu niedrige Wurzeltemperatur oder pH außerhalb Zielbereich.",
+    "en": "Root temperature too low or pH outside the target range.",
+    "paths": [
+      "result/p-mangel/cause"
+    ]
+  },
+  "366b5f84cd1e": {
+    "de": "Zu wenig Mg oder Ca/K-Antagonismus.",
+    "en": "Too little magnesium or Ca/K antagonism.",
+    "paths": [
+      "result/mg-mangel/cause"
+    ]
+  }
+}

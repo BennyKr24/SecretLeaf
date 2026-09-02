@@ -1,8 +1,11 @@
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import type { Route } from "next";
 import { categoryLabels, getArticleBySlug, getArticleSources, wikiArticles } from "@/data/terpira/wiki";
+import { localizeArticle, localizeCategoryLabel, isArticleTranslated } from "@/lib/i18n/localizeContent";
+import { pageAlternates } from "@/lib/i18n/metadata";
 import WikiReadingProgress from "@/components/WikiReadingProgress";
 import WikiAskBot from "@/components/WikiAskBot";
 import WikiArticleToc from "@/components/WikiArticleToc";
@@ -13,16 +16,19 @@ import { WikiArticleOpenTracker } from './client';
 import { Microscope, CheckCircle2, AlertTriangle, Bot, Square } from 'lucide-react';
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const article = getArticleBySlug(slug);
-  if (!article) return { title: "Nicht gefunden – SecretLeaf Studien" };
+  const { slug, locale } = await params;
+  const t = await getTranslations({ locale, namespace: "article" });
+  const found = getArticleBySlug(slug);
+  if (!found) return { title: t("notFound") };
+  const article = localizeArticle(found, locale);
   return {
-    title: `${article.title} – SecretLeaf Studien`,
+    title: `${article.title} – ${t("metaTitleSuffix")}`,
     description: article.summary,
+    alternates: pageAlternates(`/studies/${slug}`, locale),
   };
 }
 
@@ -33,19 +39,24 @@ const DIFFICULTY_META = {
 } as const;
 
 export default async function WikiArticlePage({ params }: PageProps) {
-  const { slug } = await params;
-  const article = getArticleBySlug(slug);
+  const { slug, locale } = await params;
+  const t = await getTranslations({ locale, namespace: "article" });
+  const found = getArticleBySlug(slug);
 
-  if (!article) notFound();
+  if (!found) notFound();
+
+  const article = localizeArticle(found, locale);
+  const showPartialNote = !isArticleTranslated(found, locale);
 
   const relatedArticles = article.relatedSlugs
     .map((s) => wikiArticles.find((e) => e.slug === s))
-    .filter((e): e is NonNullable<typeof e> => Boolean(e));
+    .filter((e): e is NonNullable<typeof e> => Boolean(e))
+    .map((e) => localizeArticle(e, locale));
 
   const articleSources = getArticleSources(article);
   const simpleExplainers = article.simpleExplainers ?? [
-    { title: "Kurz erklärt", text: article.keyTakeaways[0] ?? "Dieser Artikel fasst das Thema kompakt und wissenschaftlich fundiert zusammen." },
-    { title: "Warum relevant?", text: article.keyTakeaways[1] ?? "Die Inhalte helfen bei fundierten Entscheidungen zu Qualität, Anbau und Sicherheit." },
+    { title: t("explainerShort"), text: article.keyTakeaways[0] ?? t("explainerShortText") },
+    { title: t("explainerWhy"), text: article.keyTakeaways[1] ?? t("explainerWhyText") },
   ];
 
   const diff = DIFFICULTY_META[article.difficulty];
@@ -66,13 +77,19 @@ export default async function WikiArticlePage({ params }: PageProps) {
       <main className="min-h-screen bg-card">
         <article className="mx-auto max-w-6xl px-4 sm:px-6 py-8 space-y-6">
 
+          {showPartialNote && (
+            <div className="rounded-xl border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 px-4 py-3 text-sm text-amber-900 dark:text-amber-300">
+              {t("notTranslated")}
+            </div>
+          )}
+
           {/* ── Breadcrumb & Header ──────────────────────────────── */}
           <div className="rounded-2xl border border-border bg-card/90 p-6 sm:p-8 shadow-sm">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-1.5 text-sm text-muted-fg mb-5">
-              <Link href={"/studies" as Route} className="hover:text-emerald-700 dark:text-emerald-400 font-medium transition-colors">Studien</Link>
+              <Link href={"/studies" as Route} className="hover:text-emerald-700 dark:text-emerald-400 font-medium transition-colors">{t("breadcrumbStudies")}</Link>
               <span className="text-muted-fg">/</span>
-              <span className="text-muted-fg">{categoryLabels[article.category]}</span>
+              <span className="text-muted-fg">{localizeCategoryLabel(article.category, categoryLabels[article.category], locale)}</span>
               <span className="text-muted-fg">/</span>
               <span className="text-foreground font-medium truncate">{article.title}</span>
             </nav>
@@ -80,7 +97,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
             {/* Badges */}
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                {categoryLabels[article.category]}
+                {localizeCategoryLabel(article.category, categoryLabels[article.category], locale)}
               </span>
               {diff && (
                 <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${diff.color} ${diff.bg}`}>
@@ -91,14 +108,14 @@ export default async function WikiArticlePage({ params }: PageProps) {
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                {article.readMinutes} Min
+                {t("readMinutes", { count: article.readMinutes })}
               </span>
               {articleSources.length > 0 && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-cyan-100 dark:bg-cyan-950/40 px-3 py-1 text-xs font-semibold text-cyan-700 dark:text-cyan-400">
-                  <Microscope className="h-3 w-3" strokeWidth={2} /> {articleSources.length} Quellen
+                  <Microscope className="h-3 w-3" strokeWidth={2} /> {t("sourceCount", { count: articleSources.length })}
                 </span>
               )}
-              <span className="text-xs text-muted-fg">Aktualisiert: {article.lastUpdated}</span>
+              <span className="text-xs text-muted-fg">{t("updated", { date: article.lastUpdated })}</span>
               {/* Bookmark button */}
               <BookmarkButton slug={article.slug} size="md" className="ml-auto" />
             </div>
@@ -127,7 +144,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
 
             {/* Key Takeaways */}
             <div className="mt-5 rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 p-4">
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">Kernpunkte</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">{t("keyPoints")}</h2>
               <ul className="mt-2 space-y-1.5">
                 {article.keyTakeaways.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-emerald-900">
@@ -142,7 +159,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
             {article.warnings && article.warnings.length > 0 && (
               <div className="mt-4 rounded-xl border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-950/30 p-4">
                 <h2 className="text-sm font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
-                  <AlertTriangle className="h-4 w-4" strokeWidth={2} /> Hinweis
+                  <AlertTriangle className="h-4 w-4" strokeWidth={2} /> {t("note")}
                 </h2>
                 <ul className="mt-2 space-y-1 pl-4 text-sm text-amber-900">
                   {article.warnings.map((w) => (
@@ -183,7 +200,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
                     {section.checklist && section.checklist.length > 0 && (
                       <div className="ml-10 rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 p-4">
                         <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 mb-2 flex items-center gap-1.5">
-                          <CheckCircle2 className="h-4 w-4" strokeWidth={2} /> Checkliste
+                          <CheckCircle2 className="h-4 w-4" strokeWidth={2} /> {t("checklist")}
                         </p>
                         <ul className="space-y-1.5">
                           {section.checklist.map((item) => (
@@ -208,7 +225,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
 
               {/* Erklärt-Boxen */}
               <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-                <h2 className="text-sm font-bold text-foreground mb-3">Einfach erklärt</h2>
+                <h2 className="text-sm font-bold text-foreground mb-3">{t("simplyExplained")}</h2>
                 <div className="space-y-3">
                   {simpleExplainers.map((box) => (
                     <div key={box.title} className="rounded-xl border border-border bg-background p-3">
@@ -222,7 +239,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
               {/* Glossar */}
               {article.glossary && article.glossary.length > 0 && (
                 <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-                  <h3 className="text-sm font-bold text-foreground mb-3">Glossar</h3>
+                  <h3 className="text-sm font-bold text-foreground mb-3">{t("glossary")}</h3>
                   <div className="space-y-2">
                     {article.glossary.map((item) => (
                       <div key={item.term} className="rounded-lg border border-border bg-background p-3">
@@ -236,7 +253,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
 
                 {article.downloads && article.downloads.length > 0 && (
                   <div className="rounded-2xl border border-cyan-200 dark:border-cyan-900/40 bg-cyan-50 dark:bg-cyan-950/30 p-5 shadow-sm">
-                    <h3 className="text-sm font-bold text-cyan-900 mb-3">Downloads</h3>
+                    <h3 className="text-sm font-bold text-cyan-900 mb-3">{t("downloads")}</h3>
                     <div className="space-y-2">
                       {article.downloads.map((item) => (
                         <a
@@ -255,20 +272,19 @@ export default async function WikiArticlePage({ params }: PageProps) {
 
               {/* Wiki-Bot Hinweis */}
               <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50 dark:bg-emerald-950/30 p-4">
-                <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 mb-1 flex items-center gap-1"><Bot className="h-3.5 w-3.5" strokeWidth={2} /> Studien-Assistent</p>
+                <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 mb-1 flex items-center gap-1"><Bot className="h-3.5 w-3.5" strokeWidth={2} /> {t("assistant")}</p>
                 <p className="text-xs text-emerald-700 dark:text-emerald-400">
-                  Fragen zu diesem Thema? Der Studien-Assistent fasst Inhalte zusammen und verlinkt
-                  relevante Artikel. Unten rechts öffnen.
+                  {t("assistantHint")}
                 </p>
               </div>
 
               {/* Quellen-Hinweis */}
               <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
-                <p className="text-xs font-semibold text-foreground/80 mb-1 flex items-center gap-1"><Microscope className="h-3.5 w-3.5" strokeWidth={2} /> Quellen</p>
+                <p className="text-xs font-semibold text-foreground/80 mb-1 flex items-center gap-1"><Microscope className="h-3.5 w-3.5" strokeWidth={2} /> {t("sources")}</p>
                 <p className="text-xs text-muted-fg">
-                  Referenzen stehen unten im Artikel oder im{' '}
+                  {t("sourcesHint")}{' '}
                   <Link href={"/studies/sources" as Route} className="text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 font-semibold">
-                    Quellenregister
+                    {t("sourceRegister")}
                   </Link>.
                 </p>
               </div>
@@ -278,7 +294,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
           {/* ── FAQ ─────────────────────────────────────────────── */}
           {article.faq && article.faq.length > 0 && (
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-sm">
-              <h2 className="text-2xl font-bold text-foreground mb-5">Häufige Fragen</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-5">{t("faq")}</h2>
               <div className="space-y-2">
                 {article.faq.map((item) => (
                   <details key={item.question}
@@ -304,10 +320,10 @@ export default async function WikiArticlePage({ params }: PageProps) {
           {articleSources.length > 0 && (
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-                <h2 className="text-2xl font-bold text-foreground">Quellen</h2>
+                <h2 className="text-2xl font-bold text-foreground">{t("sources")}</h2>
                 <Link href={"/studies/sources" as Route}
                   className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 transition-colors">
-                  → Gesamtregister
+                  {t("fullRegister")}
                 </Link>
               </div>
               <ol className="space-y-3">
@@ -328,7 +344,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
                       className="flex-shrink-0 self-start rounded-lg border border-border bg-card
                         px-2.5 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 hover:border-emerald-300
                         hover:bg-emerald-50 dark:bg-emerald-950/30 transition-[border-color,background-color] duration-150">
-                      Öffnen ↗
+                      {t("open")}
                     </a>
                   </li>
                 ))}
@@ -339,7 +355,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
           {/* ── Verwandte Artikel ────────────────────────────────── */}
           {relatedArticles.length > 0 && (
             <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-sm">
-              <h2 className="text-2xl font-bold text-foreground mb-5">Verwandte Artikel</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-5">{t("relatedArticles")}</h2>
               <div className="grid gap-3 sm:grid-cols-2">
                 {relatedArticles.map((entry) => (
                   <Link
@@ -349,7 +365,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
                       hover:border-emerald-300 hover:bg-emerald-50 dark:bg-emerald-950/30 transition-[border-color,background-color] duration-150 group"
                   >
                     <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-400 mb-1">
-                      {categoryLabels[entry.category]}
+                      {localizeCategoryLabel(entry.category, categoryLabels[entry.category], locale)}
                     </p>
                     <p className="text-sm font-bold text-foreground group-hover:text-emerald-800 dark:text-emerald-400 transition-colors">
                       {entry.title}
@@ -363,9 +379,7 @@ export default async function WikiArticlePage({ params }: PageProps) {
 
           {/* ── Disclaimer ────────────────────────────────────────── */}
           <div className="rounded-2xl border border-border bg-background px-6 py-4 text-xs text-muted-fg shadow-sm">
-            <strong className="text-foreground/80">Redaktioneller Hinweis:</strong> Die Inhalte dienen der Wissensvermittlung
-            und Aufklärung. Regionale Rechtslage, medizinische Fragen und regulatorische Anforderungen
-            müssen stets separat durch Fachpersonal geprüft werden.
+            <strong className="text-foreground/80">{t("editorialNoteLabel")}</strong> {t("editorialNoteText")}
           </div>
         </article>
       </main>

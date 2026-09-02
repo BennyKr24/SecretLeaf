@@ -6,12 +6,18 @@ import { categoryLabels, wikiArticles } from "@/data/terpira/wiki";
 import StudiesListView from "@/components/StudiesListView";
 import type { TerpiraCategory } from "@/lib/terpira/types";
 import { CATEGORY_ICONS, CATEGORY_DESCRIPTIONS } from "@/lib/terpira/categoryIcons";
+import {
+  localizeArticle,
+  localizeCategoryLabel,
+  localizeCategoryDescription,
+} from "@/lib/i18n/localizeContent";
+import { pageAlternates } from "@/lib/i18n/metadata";
 import { FileText } from "lucide-react";
 
 const validCategories = Object.keys(categoryLabels) as TerpiraCategory[];
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 };
 
 export function generateStaticParams() {
@@ -19,24 +25,36 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { slug } = await params;
-  const label = categoryLabels[slug as TerpiraCategory];
-  if (!label) return { title: "Kategorie – SecretLeaf" };
+  const { slug, locale } = await params;
+  const cat = slug as TerpiraCategory;
+  const deLabel = categoryLabels[cat];
+  if (!deLabel) return { title: "Kategorie – SecretLeaf" };
+  const label = localizeCategoryLabel(cat, deLabel, locale);
+  const description = localizeCategoryDescription(cat, CATEGORY_DESCRIPTIONS[cat], locale);
+  const en = locale === "en";
   return {
-    title: `${label} – Studien – SecretLeaf`,
-    description: CATEGORY_DESCRIPTIONS[slug as TerpiraCategory] ?? `Alle Fachartikel zum Thema ${label} auf SecretLeaf.`,
+    title: en ? `${label} – Studies – SecretLeaf` : `${label} – Studien – SecretLeaf`,
+    description:
+      description ??
+      (en
+        ? `All in-depth articles on ${label} at SecretLeaf.`
+        : `Alle Fachartikel zum Thema ${label} auf SecretLeaf.`),
+    alternates: pageAlternates(`/category/${slug}`, locale),
   };
 }
 
 export default async function CategoryPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const cat = slug as TerpiraCategory;
   if (!validCategories.includes(cat)) notFound();
 
-  const label = categoryLabels[cat];
+  const en = locale === "en";
+  const label = localizeCategoryLabel(cat, categoryLabels[cat], locale);
   const CategoryIcon = CATEGORY_ICONS[cat] ?? FileText;
-  const description = CATEGORY_DESCRIPTIONS[cat];
-  const articles = wikiArticles.filter(a => a.category === cat);
+  const description = localizeCategoryDescription(cat, CATEGORY_DESCRIPTIONS[cat], locale);
+  const articles = wikiArticles
+    .filter(a => a.category === cat)
+    .map(a => localizeArticle(a, locale));
 
   return (
     <main className="min-h-screen">
@@ -56,7 +74,7 @@ export default async function CategoryPage({ params }: PageProps) {
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
             <Link href={"/studies" as Route} className="text-[13px] text-muted-fg hover:text-white transition-colors">
-              Studien
+              {en ? "Studies" : "Studien"}
             </Link>
             <svg className="w-3.5 h-3.5 text-foreground/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -69,7 +87,7 @@ export default async function CategoryPage({ params }: PageProps) {
               <CategoryIcon className="h-6 w-6" strokeWidth={2} />
             </span>
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-400">Fachgebiet</p>
+              <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-400">{en ? "Field" : "Fachgebiet"}</p>
               <h1 className="mt-0.5 text-3xl font-bold text-white tracking-tight">{label}</h1>
               {description && (
                 <p className="mt-1.5 text-sm text-muted-fg leading-relaxed max-w-xl">{description}</p>
@@ -80,7 +98,7 @@ export default async function CategoryPage({ params }: PageProps) {
           <div className="mt-4 flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-3 py-1 text-xs font-medium text-slate-300">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              {articles.length} Artikel
+              {articles.length} {en ? "articles" : "Artikel"}
             </span>
           </div>
         </div>

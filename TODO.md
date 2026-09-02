@@ -126,23 +126,18 @@ Offen:
   "−35g bei fehlendem Log") sind produktinterne Heuristiken ohne externe
   Quelle — nicht gegen Literatur prüfbar, absichtlich nicht angefasst.
 
-## 🌐 Übersetzung / i18n
+## 🌐 Übersetzung / i18n — live seit 2026-09-03 (PR #29 gemerged)
 
-- ⏸️ **Englisch-Übersetzer (`TranslateButton` → `/api/translate` → MyMemory)
-  ist für den echten Content ungeeignet, bräuchte einen anderen Anbieter.**
-  Root Cause gefunden (2026-08-15): `apps/web/src/app/api/translate/route.ts`
-  nutzt die kostenlose MyMemory-API mit harten Limits — 500 Zeichen pro
-  Request (`text.slice(0, 500)`) und ~5.000 Zeichen/Tag/IP, geteilt über
-  **alle** Nutzer, die von derselben Vercel-Server-IP übersetzen. Studien-
-  Artikel sind oft mehrere tausend Zeichen lang, das Tageslimit ist damit
-  praktisch sofort aufgebraucht — deckt sich mit dem Nutzer-Report "geht bei
-  Studien nicht, eigentlich überall nicht". Betroffen: `TranslateButton.tsx`
-  (überall verwendet, nicht nur Studien) + `lib/translate.ts`. Fix braucht
-  eine Entscheidung für einen echten Übersetzungs-Backend (z. B. DeepL-API,
-  oder über den bereits integrierten Anthropic-Client aus dem Admin-AI-
-  Assist-Feature laufen lassen, oder Studien-Content einmalig statisch
-  vorübersetzen statt live on-demand) — daher noch kein Code-Fix, erstmal
-  Anbieter-Entscheidung nötig.
+- ✅ **Fertig.** Commit-Zeit-Pipeline (`scripts/translate-content.mjs`) +
+  Translation Memory + Glossar + CI-Check (`i18n:check`, blockierend) +
+  Rendering-Overlay stehen; MyMemory-Runtime-Translator gelöscht. Auf `/en`
+  ist alles Nutzer-sichtbare übersetzt (Studies inkl. AskBot, Diagnose, alle
+  Tools + Hub, Chrome, per-Page Canonical). Der ausstehende Übersetzungslauf
+  (462 fehlende Strings, durch main-Drift seit dem Branch-Cut) lief am
+  2026-09-03 real gegen die Anthropic-API (24 Batches) — `i18n:check` +
+  `i18n:glossary-lint` grün, `en.wiki.json`/`en.diagnostics.json`
+  aktualisiert. Plan + Detailstand: `docs/I18N_TRANSLATION_PLAN.md`. Nach
+  neuen DE-Artikeln: `npm run i18n:translate`.
 
 ## 🧪 Dünger-Katalog (`/database`, `/database/fertilizers`) — Restructure Phase 2/3
 
@@ -215,3 +210,49 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   kein Formular; zentriert/fade-scale bleibt dort die bessere UX als ein
   Sheet. Kein offener Bug, nur Doku, warum diese eine Stelle vom sonst
   einheitlichen Modal→Sheet-Muster abweicht.
+
+## 🔎 SEO — per-Page Canonical (2026-08-30, PR #29 gemerged 2026-09-03)
+
+- ✅ **Gelöst für alle relevanten Routes, live.**
+  `lib/i18n/metadata.ts` `pageAlternates(path, locale)` → `{ canonical,
+  languages: { de, en, "x-default" } }`. Verdrahtet in: `studies`,
+  `studies/[slug]`, `category/[slug]`, `tools` + alle 6 Rechner (in
+  Server-`page.tsx` + `Client.tsx` gesplittet), `diagnose`, `updates`,
+  `updates/[slug]`. Vorher erbten die `'use client'`-Seiten den
+  Layout-Canonical (= Startseite).
+- 💤 **`studies/sources/page.tsx`** ist noch `'use client'` ohne eigene
+  Metadata — niedrige Priorität (Quellenregister, kaum SEO-relevant),
+  ggf. später ebenfalls in Server-Wrapper splitten.
+
+## ✉️ Professionelle E-Mail-Templates (2026-08-30)
+
+- 🔍 **Alle ausgehenden Mails brauchen ein einheitliches, hochwertiges
+  Layout — kein 0815.** Aktueller Stand: es gibt *keinen* eigenen Mailer.
+  Die einzigen Mails, die Nutzer bekommen, sind die Supabase-Auth-Mails
+  (Signup-Bestätigung, Magic Link, Passwort-Reset — ausgelöst in
+  `apps/web/src/app/[locale]/auth/page.tsx`), und die laufen mit dem
+  Supabase-Default-Text. Ziel:
+  - **Gemeinsames HTML-Grundgerüst** (table-based, Dark-Mode-tauglich,
+    ~600px, Inline-CSS — E-Mail-Clients können kein `<style>`): Header mit
+    Logo/Banner, klarer Textkörper, Footer mit vollständiger Anschrift +
+    Impressumsdaten (Betreiber, Adresse, Kontakt, USt-Falls-vorhanden),
+    Abmelde-/Rechtshinweis wo nötig. Optisch an `DESIGN_SYSTEM.md` +
+    Marken-Palette angelehnt, nicht der generische SaaS-Purple-Gradient.
+  - **Supabase-Auth-Templates** im Dashboard (Auth → Email Templates) mit
+    diesem Gerüst ersetzen — DE + EN Variante, da die App zweisprachig ist
+    (Supabase kann nur *ein* Template pro Typ → entweder zweisprachig im
+    selben Body oder Redirect-Locale-Logik prüfen).
+  - **Mailer-Entscheidung für app-eigene Mails** (alles außerhalb Auth:
+    z. B. künftige Benachrichtigungen, Kontaktformular-Antworten). Resend
+    passt zum Stack (React-Email für die Templates, ein API-Key, kein
+    SMTP-Setup); Alternative wäre Supabase-SMTP-Custom mit eigenem
+    Provider. Kein Vendor-Zwang, solange nur Auth-Mails rausgehen.
+  - **Absender-Domain**: aktuell verschicken Supabase-Mails von deren
+    Shared-Domain → landen eher im Spam. Eigene Versand-Subdomain
+    (`mail.secretleaf.*`) mit SPF/DKIM/DMARC einrichten, sobald ein Mailer
+    steht.
+  - Nicht in Scope: Newsletter/Marketing-Mails (eigenes Thema, eigenes
+    Consent).
+  - **Am Ende: Test-Versand aller Template-Typen an eine echte Inbox
+    gegenchecken** (Rendering in Gmail-App, Apple Mail, Outlook-Web;
+    Dark-Mode; Spam-Score z. B. via mail-tester.com).

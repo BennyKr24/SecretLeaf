@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   sections: Array<{ heading: string }>;
 };
 
 export default function WikiArticleToc({ sections }: Props) {
+  const t = useTranslations('article');
   const [activeId, setActiveId] = useState('section-1');
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export default function WikiArticleToc({ sections }: Props) {
   return (
     <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
       <p className="text-xs font-semibold uppercase tracking-wide text-muted-fg mb-3">
-        Inhaltsverzeichnis
+        {t('toc')}
       </p>
       <ol className="space-y-1">
         {sections.map((section, idx) => {

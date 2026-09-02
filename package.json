@@ -33,6 +33,13 @@
     "wiki:studies:validate": "node scripts/validate-auto-sources.mjs",
     "wiki:studies:report": "node scripts/generate-wiki-sync-report.mjs",
     "pests:images:check": "node scripts/validate-pest-images.mjs",
+    "i18n:stats": "node scripts/translate-content.mjs --stats",
+    "i18n:check": "node scripts/translate-content.mjs --check",
+    "i18n:sync": "node scripts/translate-content.mjs --sync",
+    "i18n:prune": "node scripts/translate-content.mjs --prune",
+    "i18n:translate": "node scripts/translate-content.mjs --translate",
+    "i18n:translate:pilot": "node scripts/translate-content.mjs --translate --only=diagnostics --pilot=15",
+    "i18n:glossary-lint": "node scripts/translate-content.mjs --glossary-lint",
     "prebuild": "npm run changelog:generate && npm run coverage:snapshot"
   },
   "overrides": {

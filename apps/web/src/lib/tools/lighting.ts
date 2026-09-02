@@ -1,4 +1,4 @@
-import type { ToolResultData, ResultLevel } from './types';
+import type { ToolResultData, ResultLevel, ToolT } from './types';
 import { round } from './units';
 
 // ── PPFD & DLI calculation ─────────────────────────────────────────────────
@@ -57,15 +57,18 @@ function ppfdLevel(ppfd: number, phase: 'veg' | 'bluete'): ResultLevel {
   return 'rot';
 }
 
-function ppfdExplanation(ppfd: number, phase: 'veg' | 'bluete'): string {
-  const ziel = phase === 'veg' ? '400–600 µmol/m²/s' : '700–900 µmol/m²/s (ohne CO₂)';
+function ppfdExplanation(ppfd: number, phase: 'veg' | 'bluete', t: ToolT): string {
+  const target = phase === 'veg' ? '400–600 µmol/m²/s' : '700–900 µmol/m²/s';
   if (ppfd < (phase === 'veg' ? 250 : 550)) {
-    return `Deutlich unter dem Zielbereich (${ziel}). Lampe näher positionieren oder stärkeres Modell einsetzen.`;
+    return t('lighting.explPpfdLow', { target });
   }
   if (ppfd > (phase === 'veg' ? 800 : 1050)) {
-    return `Über dem empfohlenen Bereich (${ziel}). Ohne CO₂ ab ~900–1.000 Lichtsättigung, darüber Bleaching-Risiko — Abstand erhöhen oder dimmen.`;
+    return t('lighting.explPpfdHigh', { target });
   }
-  return `Im empfohlenen Bereich für ${phase === 'veg' ? 'vegetative Phase' : 'Blütephase'} (${ziel}).`;
+  return t('lighting.explPpfdOk', {
+    phase: phase === 'veg' ? t('lighting.phaseVeg') : t('lighting.phaseBluete'),
+    target,
+  });
 }
 
 // DLI-Zielbereiche (mol/m²/Tag) nach Phase — Resource Innovation Institute u. a.
@@ -83,7 +86,7 @@ function dliLevel(dli: number, phase: 'veg' | 'bluete'): ResultLevel {
   return 'rot';
 }
 
-export function calculateLighting(inputs: LightingInputs): LightingOutput {
+export function calculateLighting(inputs: LightingInputs, t: ToolT): LightingOutput {
   const { lampenLeistung, effizienz, reflektorVerlust, aufhaengHoehe, flaeche, photoperiode, phase } = inputs;
 
   const ppf = round(lampenLeistung * effizienz, 1);
@@ -101,7 +104,7 @@ export function calculateLighting(inputs: LightingInputs): LightingOutput {
       formatted: `${ppfd}`,
       unit: 'µmol/m²/s',
       level,
-      explanation: ppfdExplanation(ppfd, phase),
+      explanation: ppfdExplanation(ppfd, phase, t),
     },
     {
       label: 'Tageslichtintegral (DLI)',
@@ -109,27 +112,30 @@ export function calculateLighting(inputs: LightingInputs): LightingOutput {
       formatted: `${dli}`,
       unit: 'mol/m²/d',
       level: dliLevel(dli, phase),
-      explanation: dli < 20 ? 'Niedrig — eher für Keimlinge/Klone geeignet.' : dli > 55 ? 'Sehr hoch — CO2-Supplementierung empfohlen.' : 'Guter Bereich für aktives Wachstum.',
+      explanation: dli < 20 ? t('lighting.explDliLow') : dli > 55 ? t('lighting.explDliHigh') : t('lighting.explDliOk'),
     },
     {
       label: 'Gesamt-PPF',
       value: ppf,
       formatted: `${ppf}`,
       unit: 'µmol/s',
-      explanation: `Bei ${effizienz} µmol/J Effizienz.`,
+      explanation: t('lighting.explTotalPpf', { eff: effizienz }),
     },
     {
       label: 'Nutzbare PPF',
       value: nutzbarePPF,
       formatted: `${nutzbarePPF}`,
       unit: 'µmol/s',
-      explanation: `Nach ${reflektorVerlust}% Reflektorverlust.`,
+      explanation: t('lighting.explUsablePpf', { loss: reflektorVerlust }),
     },
     {
       label: 'Höhenkorrekturfaktor',
       value: round(hFactor, 2),
       formatted: `${round(hFactor * 100, 0)}%`,
-      explanation: `Bei ${aufhaengHoehe} cm Aufhänghöhe erreichen ca. ${round(hFactor * 100, 0)}% des Lichts die Pflanzenfläche.`,
+      explanation: t('lighting.explHeightFactor', {
+        height: aufhaengHoehe,
+        pct: round(hFactor * 100, 0),
+      }),
     },
   ];
 

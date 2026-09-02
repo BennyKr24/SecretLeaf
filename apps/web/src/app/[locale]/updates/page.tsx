@@ -1,5 +1,6 @@
 import { Link } from '@/i18n/navigation';
 import type { Metadata, Route } from 'next';
+import { pageAlternates } from '@/lib/i18n/metadata';
 import {
   getAllUpdates,
   getCategoryMeta,
@@ -16,21 +17,28 @@ import { Leaf } from 'lucide-react';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://secretleaf.net';
 
-export const metadata: Metadata = {
-  title: 'Updates – SecretLeaf',
-  description:
-    'Alle SecretLeaf Updates: neue Features, Verbesserungen und Datenbank-Erweiterungen für das Grow OS.',
-  alternates: {
-    canonical: `${BASE_URL}/updates`,
-  },
-  openGraph: {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const en = locale === 'en';
+  const description = en
+    ? 'All SecretLeaf updates: new features, improvements and database expansions for the Grow OS.'
+    : 'Alle SecretLeaf Updates: neue Features, Verbesserungen und Datenbank-Erweiterungen für das Grow OS.';
+  return {
     title: 'Updates – SecretLeaf',
-    description:
-      'Alle SecretLeaf Updates: neue Features, Verbesserungen und Datenbank-Erweiterungen für das Grow OS.',
-    url: `${BASE_URL}/updates`,
-    type: 'website',
-  },
-};
+    description,
+    alternates: pageAlternates('/updates', locale),
+    openGraph: {
+      title: 'Updates – SecretLeaf',
+      description,
+      url: `${BASE_URL}/updates`,
+      type: 'website',
+    },
+  };
+}
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 

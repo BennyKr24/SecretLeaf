@@ -1,4 +1,4 @@
-import type { ToolResultData, ResultLevel, Substrat } from './types';
+import type { ToolResultData, ResultLevel, Substrat, ToolT } from './types';
 import { round } from './units';
 
 // ── Nutrient / EC calculator ───────────────────────────────────────────────
@@ -67,15 +67,15 @@ function ecLevel(ziel: number, phase: NutrientInputs['phase'], substrat: Substra
   return 'rot';
 }
 
-function substratTipp(substrat: Substrat): string {
+function substratTipp(substrat: Substrat, t: ToolT): string {
   switch (substrat) {
-    case 'coco': return 'Coco: 10–20 % Drain-Rate einplanen, um Salzaufbau zu vermeiden.';
-    case 'hydro': return 'Hydro: Nährlösung alle 5–7 Tage komplett wechseln.';
-    case 'erde': return 'Erde: Organische Pufferung kann EC-Spitzen abfangen.';
+    case 'coco': return t('nutrients.tipCoco');
+    case 'hydro': return t('nutrients.tipHydro');
+    case 'erde': return t('nutrients.tipErde');
   }
 }
 
-export function calculateNutrients(inputs: NutrientInputs): NutrientOutput {
+export function calculateNutrients(inputs: NutrientInputs, t: ToolT): NutrientOutput {
   const { ausgangsEC, zielEC, wassermenge, phase, substrat, dosierungBasis, produktName } = inputs;
 
   const ecDifferenz = round(Math.max(0, zielEC - ausgangsEC), 2);
@@ -87,7 +87,13 @@ export function calculateNutrients(inputs: NutrientInputs): NutrientOutput {
   const gesamtDosierung = round(dosierungProLiter * wassermenge, 1);
 
   const level = ecLevel(zielEC, phase, substrat);
-  const phaseLabel = phase === 'veg' ? 'vegetative Phase' : phase === 'bluete' ? 'Blütephase' : 'Übergangsphase';
+  const phaseLabel =
+    phase === 'veg'
+      ? t('nutrients.phaseVeg')
+      : phase === 'bluete'
+        ? t('nutrients.phaseBluete')
+        : t('nutrients.phaseUebergang');
+  const productLabel = produktName === 'Allgemein' ? t('nutrients.productGeneric') : produktName;
 
   const results: ToolResultData[] = [
     {
@@ -96,31 +102,31 @@ export function calculateNutrients(inputs: NutrientInputs): NutrientOutput {
       formatted: `${dosierungProLiter}`,
       unit: 'ml/L',
       level,
-      explanation: `Für ${produktName} bei Ziel-EC ${zielEC} mS/cm in ${phaseLabel}.`,
+      explanation: t('nutrients.explDosage', { product: productLabel, ec: zielEC, phase: phaseLabel }),
     },
     {
       label: 'Gesamtmenge',
       value: gesamtDosierung,
       formatted: `${gesamtDosierung}`,
       unit: 'ml',
-      explanation: `Für ${wassermenge} Liter Nährlösung.`,
+      explanation: t('nutrients.explTotal', { liters: wassermenge }),
     },
     {
       label: 'EC-Differenz',
       value: ecDifferenz,
       formatted: `${ecDifferenz}`,
       unit: 'mS/cm',
-      explanation: `Ausgangswasser: ${ausgangsEC} mS/cm → Ziel: ${zielEC} mS/cm.`,
+      explanation: t('nutrients.explEcDiff', { from: ausgangsEC, to: zielEC }),
     },
     {
       label: 'Korrekturfaktoren',
       value: round(phaseFactor * substratFactor, 2),
-      formatted: `Phase: ×${phaseFactor}  ·  Substrat: ×${substratFactor}`,
+      formatted: `${t('nutrients.fPhase')}: ×${phaseFactor}  ·  ${t('nutrients.fSubstrate')}: ×${substratFactor}`,
     },
     {
       label: 'Substrat-Tipp',
       value: 0,
-      formatted: substratTipp(substrat),
+      formatted: substratTipp(substrat, t),
     },
   ];
 

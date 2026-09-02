@@ -3,9 +3,10 @@
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { Analytics } from '@/lib/analytics';
 import type { ToolMeta, ToolCategory } from '@/lib/tools/types';
-import { toolCategoryLabel, toolCategoryIcon, toolCategoryColor, toolCategoryAccent } from '@/lib/tools/types';
+import { toolCategoryIcon, toolCategoryColor, toolCategoryAccent } from '@/lib/tools/types';
 import { getToolBySlug } from '@/lib/tools/registry';
 import type { ReactNode } from 'react';
 import { Lightbulb } from 'lucide-react';
@@ -31,14 +32,17 @@ const categoryIconBg: Record<ToolCategory, string> = {
   planung: 'bg-violet-50 ring-violet-200',
 };
 
-const difficultyLabel = (d: ToolMeta['difficulty']) =>
-  d === 'einsteiger' ? 'Einsteiger' : d === 'fortgeschritten' ? 'Fortgeschritten' : 'Profi';
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 export default function ToolLayout({ meta, tips, relatedArticles, children }: Props) {
+  const t = useTranslations('tool');
   const relatedTools = meta.relatedToolSlugs
     .map((s) => getToolBySlug(s))
     .filter(Boolean) as ToolMeta[];
   const CategoryIcon = toolCategoryIcon[meta.category];
+  const catLabel = (c: ToolCategory) => t(`category${cap(c)}`);
+  const toolTitle = (slug: string) => t(`registry.${slug}.title`);
+  const toolDesc = (slug: string) => t(`registry.${slug}.desc`);
 
   useEffect(() => {
     Analytics.toolUsed(meta.slug);
@@ -52,7 +56,7 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
           href={'/tools' as Route}
           className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-muted-fg transition-colors hover:text-emerald-700"
         >
-          <span className="text-base leading-none">←</span> Werkzeuge
+          <span className="text-base leading-none">←</span> {t('breadcrumb')}
         </Link>
 
         {/* Header card with colored top bar */}
@@ -66,14 +70,14 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${toolCategoryColor[meta.category]}`}>
-                    <CategoryIcon className="h-3 w-3" strokeWidth={2.5} /> {toolCategoryLabel[meta.category]}
+                    <CategoryIcon className="h-3 w-3" strokeWidth={2.5} /> {catLabel(meta.category)}
                   </span>
                   <span className="rounded-full border border-border bg-background px-2.5 py-0.5 text-xs font-medium text-muted-fg">
-                    {difficultyLabel(meta.difficulty)}
+                    {t(`diff${cap(meta.difficulty)}`)}
                   </span>
                 </div>
-                <h1 className="mt-2 text-3xl font-bold text-foreground sm:text-4xl">{meta.title}</h1>
-                <p className="mt-1.5 max-w-2xl text-sm text-muted-fg">{meta.shortDescription}</p>
+                <h1 className="mt-2 text-3xl font-bold text-foreground sm:text-4xl">{toolTitle(meta.slug)}</h1>
+                <p className="mt-1.5 max-w-2xl text-sm text-muted-fg">{toolDesc(meta.slug)}</p>
               </div>
             </div>
           </div>
@@ -86,7 +90,7 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
         {tips && tips.length > 0 && (
           <section className="mt-8 rounded-2xl border border-border bg-card p-5 shadow-sm">
             <h3 className="mb-3 flex items-center gap-1.5 text-sm font-bold text-foreground">
-              <Lightbulb className="h-4 w-4" strokeWidth={2} /> Praxistipps
+              <Lightbulb className="h-4 w-4" strokeWidth={2} /> {t('practiceTips')}
             </h3>
             <ul className="space-y-2.5">
               {tips.map((tip) => (
@@ -102,7 +106,7 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
         {/* Cross-tool navigation */}
         {relatedTools.length > 0 && (
           <section className="mt-8">
-            <h3 className="mb-4 text-sm font-bold text-foreground">Als nächstes berechnen</h3>
+            <h3 className="mb-4 text-sm font-bold text-foreground">{t('calcNext')}</h3>
             <div className="grid gap-3 sm:grid-cols-2">
               {relatedTools.map((tool) => (
                 <Link
@@ -115,9 +119,9 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-foreground transition-colors group-hover:text-emerald-700">
-                      {tool.title}
+                      {toolTitle(tool.slug)}
                     </p>
-                    <p className="mt-0.5 truncate text-xs text-muted-fg">{tool.shortDescription}</p>
+                    <p className="mt-0.5 truncate text-xs text-muted-fg">{toolDesc(tool.slug)}</p>
                   </div>
                   <span className="ml-auto flex-shrink-0 text-muted-fg transition-colors group-hover:text-emerald-500">
                     →
@@ -131,7 +135,7 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
         {/* Related articles */}
         {relatedArticles && relatedArticles.length > 0 && (
           <section className="mt-8">
-            <h3 className="mb-4 text-sm font-bold text-foreground">Verwandte Fachartikel</h3>
+            <h3 className="mb-4 text-sm font-bold text-foreground">{t('relatedArticles')}</h3>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {relatedArticles.map((article) => (
                 <Link
@@ -144,7 +148,7 @@ export default function ToolLayout({ meta, tips, relatedArticles, children }: Pr
                     {article.title}
                   </p>
                   {article.readMinutes && (
-                    <p className="mt-2 text-xs text-muted-fg">{article.readMinutes} min Lesezeit</p>
+                    <p className="mt-2 text-xs text-muted-fg">{t('minRead', { count: article.readMinutes })}</p>
                   )}
                 </Link>
               ))}

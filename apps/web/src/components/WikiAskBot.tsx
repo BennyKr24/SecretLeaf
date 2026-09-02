@@ -8,11 +8,14 @@ import {
   type FormEvent,
   type KeyboardEvent,
 } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { Route } from 'next';
 import { wikiArticles, categoryLabels } from '@/data/terpira/wiki';
 import type { TerpiraArticle } from '@/lib/terpira/types';
 import { Bot, Leaf } from 'lucide-react';
+
+type TFn = (key: string, values?: Record<string, string | number>) => string;
 
 // ─── Typen ────────────────────────────────────────────────────────────────────
 
@@ -95,11 +98,11 @@ function scoreArticle(article: TerpiraArticle, tokens: string[]): number {
   return score;
 }
 
-function findArticles(query: string, limit = 4): ScoredArticle[] {
+function findArticles(query: string, articles: TerpiraArticle[], limit = 4): ScoredArticle[] {
   const tokens = tok(query);
   if (tokens.length === 0) return [];
 
-  return wikiArticles
+  return articles
     .map(article => ({ article, score: scoreArticle(article, tokens) }))
     .filter(r => r.score > 0)
     .sort((a, b) => b.score - a.score)
@@ -132,10 +135,10 @@ type FaqHit = {
 // Titeltreffer stark (Gewicht 12) – ein Artikel, dessen Titel zufällig ein
 // Query-Wort enthält, kann so vor dem Artikel landen, der die Frage wörtlich
 // als FAQ beantwortet. Ein Mindest-Score verhindert schwache Zufallstreffer.
-function findBestFaq(tokens: string[]): FaqHit | null {
+function findBestFaq(tokens: string[], articles: TerpiraArticle[]): FaqHit | null {
   const MIN_SCORE = 10;
   let best: FaqHit | null = null;
-  for (const article of wikiArticles) {
+  for (const article of articles) {
     for (const faq of article.faq ?? []) {
       const score = scoreFaqMatch(faq.question, faq.answer, tokens);
       if (score > 0 && (!best || score > best.score)) {
@@ -146,12 +149,9 @@ function findBestFaq(tokens: string[]): FaqHit | null {
   return best && best.score >= MIN_SCORE ? best : null;
 }
 
-function synthesizeAnswer(query: string, results: ScoredArticle[]): string {
+function synthesizeAnswer(query: string, results: ScoredArticle[], t: TFn, articles: TerpiraArticle[]): string {
   if (results.length === 0) {
-    return (
-      'Zu dieser Frage habe ich keinen passenden Artikel im Wiki gefunden. ' +
-      'Versuche es mit einem anderen Suchbegriff oder nutze die Volltextsuche (Strg+K) über alle Artikel, Glossar und Quellen.'
-    );
+    return t('noResult');
   }
 
   const top = results[0]!;
@@ -160,21 +160,21 @@ function synthesizeAnswer(query: string, results: ScoredArticle[]): string {
 
   // Direkter FAQ-Treffer (über alle Artikel gesucht) beantwortet die Frage
   // konkret statt nur den generischen Artikel-Summary zu zeigen.
-  const bestFaq = findBestFaq(tokens);
+  const bestFaq = findBestFaq(tokens, articles);
 
   if (bestFaq) {
     lines.push(`**${bestFaq.faq.question}**`);
     lines.push(bestFaq.faq.answer);
     if (bestFaq.article.slug !== top.article.slug) {
       lines.push('');
-      lines.push(`Aus dem Artikel „${bestFaq.article.title}“.`);
+      lines.push(t('fromArticle', { title: bestFaq.article.title }));
     }
   } else {
     lines.push(top.article.summary);
     lines.push('');
 
     if (top.article.keyTakeaways.length > 0) {
-      lines.push('**Kernpunkte:**');
+      lines.push(`**${t('keyPoints')}**`);
       for (const kp of top.article.keyTakeaways.slice(0, 3)) {
         lines.push(`• ${kp}`);
       }
@@ -200,7 +200,7 @@ function synthesizeAnswer(query: string, results: ScoredArticle[]): string {
     second.score >= top.score * 0.45
   ) {
     lines.push('');
-    lines.push(`**Ergänzend – „${second.article.title}“:**`);
+    lines.push(`**${t('supplementary', { title: second.article.title })}**`);
     lines.push(second.article.keyTakeaways[0] ?? second.article.summary);
   }
 
@@ -244,18 +244,15 @@ function RenderAnswer({ text }: { text: string }) {
 
 // ─── Starter-Fragen ───────────────────────────────────────────────────────────
 
-const SUGGESTED: Array<{ label: string; q: string }> = [
-  { label: 'Was ist VPD?', q: 'Was ist VPD und welchen Einfluss hat es auf Cannabis?' },
-  { label: 'CBD vs. THC', q: 'Worin unterscheiden sich CBD und THC?' },
-  { label: 'Terpene erklärt', q: 'Was sind Terpene und welche Wirkung haben sie?' },
-  { label: 'Curing & Wasseraktivität', q: 'Wie funktioniert Curing und was bedeutet Wasseraktivität?' },
-  { label: 'Endocannabinoid-System', q: 'Wie wirkt Cannabis über das Endocannabinoid-System?' },
-  { label: 'Phänotyp-Selektion', q: 'Was ist ein Pheno-Hunt und warum ist er wichtig?' },
-];
+const suggestedQuestions = (t: TFn): Array<{ label: string; q: string }> =>
+  [1, 2, 3, 4, 5, 6].map(n => ({ label: t(`sug${n}Label`), q: t(`sug${n}Q`) }));
 
 // ─── WikiAskBot ───────────────────────────────────────────────────────────────
 
 export default function WikiAskBot() {
+  const t = useTranslations('askBot');
+  const locale = useLocale();
+  const SUGGESTED = suggestedQuestions(t);
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -302,13 +299,27 @@ export default function WikiAskBot() {
     const delay = 600 + Math.random() * 300;
     await new Promise(resolve => setTimeout(resolve, delay));
 
-    const results = findArticles(question, 4);
-    const answerText = synthesizeAnswer(question, results);
+    // For /en, lay the committed EN translation memory over the article data
+    // before searching + summarising. The TM JSON is heavy (~800 KB), so it's
+    // dynamically imported here — only when an English user actually asks —
+    // and never lands in the initial bundle.
+    type Cat = TerpiraArticle['category'];
+    let articles = wikiArticles;
+    let localizeCat = (c: Cat): string => categoryLabels[c] ?? c;
+    if (locale === 'en') {
+      const m = await import('@/lib/i18n/localizeContent');
+      articles = wikiArticles.map(a => m.localizeArticle(a, 'en'));
+      const catMap = m.localizeCategoryLabelMap(categoryLabels, 'en');
+      localizeCat = (c: Cat): string => catMap[c] ?? categoryLabels[c] ?? c;
+    }
+
+    const results = findArticles(question, articles, 4);
+    const answerText = synthesizeAnswer(question, results, t, articles);
 
     const sources: MessageSource[] = results.slice(0, 3).map(r => ({
       title: r.article.title,
       slug: r.article.slug,
-      category: categoryLabels[r.article.category] ?? r.article.category,
+      category: localizeCat(r.article.category),
     }));
 
     const botMsg: Message = {
@@ -320,7 +331,7 @@ export default function WikiAskBot() {
 
     setMessages(prev => [...prev.slice(0, -1), botMsg]);
     setLoading(false);
-  }, [loading]);
+  }, [loading, locale, t]);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -344,7 +355,7 @@ export default function WikiAskBot() {
       {/* ── Floating Trigger ──────────────────────────────────────── */}
       <button
         onClick={() => setOpen(true)}
-        aria-label="Studien-Assistent öffnen"
+        aria-label={t('openLabel')}
         className={`
           fixed bottom-[calc(60px+env(safe-area-inset-bottom)+1rem)] right-6 z-50 flex items-center gap-2
           md:bottom-6
@@ -359,7 +370,7 @@ export default function WikiAskBot() {
             d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
           />
         </svg>
-        <span className="text-sm font-semibold">Studien-Assistent</span>
+        <span className="text-sm font-semibold">{t('name')}</span>
         <span className="inline-flex h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
       </button>
 
@@ -378,7 +389,7 @@ export default function WikiAskBot() {
         className={`fixed inset-0 z-50 flex items-end justify-end sm:items-end p-4 sm:p-6 transition-opacity duration-300 ${
           open ? 'opacity-100' : 'invisible pointer-events-none opacity-0'
         }`}
-        role="dialog" aria-modal aria-label="Studien-Assistent"
+        role="dialog" aria-modal aria-label={t('name')}
       >
           {/* Backdrop */}
           <div
@@ -401,15 +412,15 @@ export default function WikiAskBot() {
                   <Bot className="h-4 w-4" strokeWidth={2} />
                 </div>
                 <div>
-                  <p className="font-bold text-sm">Studien-Assistent</p>
-                  <p className="text-xs text-emerald-200">Auf Basis von {wikiArticles.length} Artikeln</p>
+                  <p className="font-bold text-sm">{t('name')}</p>
+                  <p className="text-xs text-emerald-200">{t('basedOn', { count: wikiArticles.length })}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 {messages.length > 0 && (
                   <button onClick={reset}
                     className="text-xs text-white/60 hover:text-white px-2 py-1 rounded-lg hover:bg-card/10 transition active:scale-[0.97]">
-                    Zurücksetzen
+                    {t('reset')}
                   </button>
                 )}
                 <button onClick={() => setOpen(false)}
@@ -427,19 +438,17 @@ export default function WikiAskBot() {
                 <div className="space-y-4">
                   <div className="rounded-xl bg-card border border-border p-4 shadow-sm">
                     <p className="text-sm text-foreground/80">
-                      Hallo! Ich bin der <strong className="text-foreground">Studien-Assistent</strong>.
-                      Frag mich alles rund um Cannabis – ich durchsuche
-                      alle {wikiArticles.length} Artikel für dich und fasse die wichtigsten
-                      Punkte zusammen.
+                      {t('greetingLead')} <strong className="text-foreground">{t('name')}</strong>.{' '}
+                      {t('greetingBody', { count: wikiArticles.length })}
                     </p>
                     <p className="mt-2 text-xs text-muted-fg">
-                      Läuft vollständig lokal · keine Daten verlassen deinen Browser
+                      {t('localNote')}
                     </p>
                   </div>
 
                   <div>
                     <p className="text-xs font-semibold text-muted-fg uppercase tracking-wider px-1 mb-2">
-                      Schnellstart
+                      {t('quickstart')}
                     </p>
                     <div className="grid grid-cols-2 gap-2">
                       {SUGGESTED.map(s => (
@@ -481,7 +490,7 @@ export default function WikiAskBot() {
                               />
                             ))}
                           </span>
-                          <span className="text-xs text-muted-fg">Durchsuche Studien…</span>
+                          <span className="text-xs text-muted-fg">{t('thinking')}</span>
                         </div>
                       ) : msg.role === 'user' ? (
                         <div className="rounded-2xl rounded-tr-sm bg-primary px-4 py-2.5
@@ -496,7 +505,7 @@ export default function WikiAskBot() {
                           </div>
                           {msg.sources && msg.sources.length > 0 && (
                             <div className="px-1 space-y-1">
-                              <p className="text-xs text-muted-fg font-medium">Artikel dazu:</p>
+                              <p className="text-xs text-muted-fg font-medium">{t('sourcesHeading')}</p>
                               {msg.sources.map(src => (
                                 <Link
                                   key={src.slug}
@@ -532,7 +541,7 @@ export default function WikiAskBot() {
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={handleKey}
-                  placeholder="Frag zu Studien, Tools oder Diagnose…"
+                  placeholder={t('placeholder')}
                   disabled={loading}
                   className="flex-1 rounded-xl border border-border bg-background px-4 py-2.5
                     text-sm text-foreground placeholder:text-muted-fg outline-none
@@ -552,7 +561,7 @@ export default function WikiAskBot() {
                 </button>
               </form>
               <p className="mt-1.5 text-center text-xs text-muted-fg">
-                Inhalte dienen der Information · kein Ersatz für medizinischen Rat
+                {t('disclaimer')}
               </p>
             </div>
           </div>
