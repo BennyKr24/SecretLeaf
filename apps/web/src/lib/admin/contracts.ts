@@ -431,3 +431,32 @@ export type AuditEntry = {
   parentId: string | null;
   createdAt: string;
 };
+
+// ── Pro-Codes ───────────────────────────────────────────────────────────────
+
+export type ProCode = {
+  id: string;
+  code: string;
+  durationDays: number;
+  maxRedemptions: number;
+  redemptionCount: number;
+  note: string | null;
+  expiresAt: string | null;
+  active: boolean;
+  createdAt: string;
+};
+
+export type AdminProCodesResponse = {
+  codes: ProCode[];
+};
+
+export const proCodeCreateSchema = z.object({
+  durationDays: z.coerce.number().int().min(1).max(3650),
+  maxRedemptions: z.coerce.number().int().min(1).max(10_000).optional(),
+  note: z.string().max(280).optional(),
+  expiresAt: z.string().datetime().optional(),
+});
+
+export const proCodePatchSchema = z.object({
+  active: z.boolean(),
+});
