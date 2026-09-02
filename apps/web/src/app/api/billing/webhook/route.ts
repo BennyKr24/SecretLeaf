@@ -21,6 +21,7 @@ import { logError, logInfo, logWarn } from "@/lib/log";
 export const dynamic = "force-dynamic";
 
 const SUBSCRIPTIONS_TABLE = "subscriptions";
+const STRIPE_EVENTS_TABLE = "stripe_events";
 
 async function upsertFromSubscription(
   userId: string,
@@ -88,6 +89,34 @@ export async function POST(request: Request) {
     return Response.json({ error: "Invalid signature" }, { status: 400 });
   }
 
+  const supabase = getSupabaseServerClient();
+  const { error: insertError } = await supabase.from(STRIPE_EVENTS_TABLE).insert({
+    id: event.id,
+    type: event.type,
+    payload: event.data.object,
+    received_at: new Date(event.created * 1000).toISOString(),
+    processed: false,
+  });
+
+  if (insertError) {
+    if (insertError.code === "23505") {
+      const { data: existing } = await supabase
+        .from(STRIPE_EVENTS_TABLE)
+        .select("processed")
+        .eq("id", event.id)
+        .single();
+      if (existing?.processed) {
+        logInfo("billing.webhook.duplicate_skipped", { eventId: event.id, type: event.type });
+        return Response.json({ received: true, duplicate: true });
+      }
+      // Row exists from a prior failed attempt (processed = false) — fall through and retry.
+    } else {
+      // Persisting the event is best-effort for health/dedup — a DB hiccup here
+      // shouldn't block processing the actual entitlement change below.
+      logError("billing.webhook.event_log_failed", { eventId: event.id, message: insertError.message });
+    }
+  }
+
   try {
     switch (event.type) {
       case "checkout.session.completed": {
@@ -128,11 +157,14 @@ export async function POST(request: Request) {
         break;
     }
 
+    await supabase.from(STRIPE_EVENTS_TABLE).update({ processed: true, error: null }).eq("id", event.id);
     return Response.json({ received: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Webhook handling failed";
     logError("billing.webhook.handler_failed", { message, eventType: event.type });
-    // 500 tells Stripe to retry — safe here since our writes are upserts/updates.
+    await supabase.from(STRIPE_EVENTS_TABLE).update({ error: message }).eq("id", event.id);
+    // 500 tells Stripe to retry — safe here since our writes are upserts/updates,
+    // and the row above stays `processed = false` so the retry isn't skipped as a duplicate.
     return Response.json({ error: message }, { status: 500 });
   }
 }

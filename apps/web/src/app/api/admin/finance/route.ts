@@ -62,7 +62,7 @@ export const GET = adminRoute(async (): Promise<AdminFinance> => {
   const thisMonth = months[months.length - 1] as string;
   const day30Ago = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
 
-  const [subsRes, costRes, aiRes, stripeMtd] = await Promise.all([
+  const [subsRes, costRes, aiRes, stripeMtd, stripeEventsRes] = await Promise.all([
     supabase.from("subscriptions").select("plan, status, created_at"),
     supabase
       .from("cost_entries")
@@ -70,6 +70,11 @@ export const GET = adminRoute(async (): Promise<AdminFinance> => {
       .gte("period_month", rangeStart),
     supabase.from("ai_usage").select("cost_cents, created_at").gte("created_at", `${rangeStart}T00:00:00Z`),
     liveStripeMtd(),
+    supabase
+      .from("stripe_events")
+      .select("id, type, received_at, processed, error")
+      .order("received_at", { ascending: false })
+      .limit(50),
   ]);
 
   // ── Revenue ─────────────────────────────────────────────────────────────
@@ -112,6 +117,25 @@ export const GET = adminRoute(async (): Promise<AdminFinance> => {
   const netRevenueMtd = stripeMtd ? stripeMtd.net : estimatedMrrCents;
   const burnMtdCents = currentMonthCents - netRevenueMtd;
 
+  // ── Stripe webhook health ──────────────────────────────────────────────
+  const stripeEvents = (stripeEventsRes.data ?? []) as Array<{
+    id: string;
+    type: string;
+    received_at: string;
+    processed: boolean;
+    error: string | null;
+  }>;
+  const lastEvent = stripeEvents[0];
+  const stripeHealth = {
+    lastEventAt: lastEvent?.received_at ?? null,
+    lastEventType: lastEvent?.type ?? null,
+    unprocessedCount: stripeEvents.filter((e) => !e.processed).length,
+    recentErrors: stripeEvents
+      .filter((e) => e.error)
+      .slice(0, 10)
+      .map((e) => ({ id: e.id, type: e.type, receivedAt: e.received_at, error: e.error as string })),
+  };
+
   return {
     generatedAt: new Date().toISOString(),
     revenue: {
@@ -132,6 +156,7 @@ export const GET = adminRoute(async (): Promise<AdminFinance> => {
       aiCallsMtd,
     },
     burnMtdCents,
+    stripeHealth,
   };
 });
 

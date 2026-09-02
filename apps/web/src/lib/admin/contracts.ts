@@ -273,6 +273,12 @@ export type AdminFinance = {
   };
   /** current-month costs minus current-month net revenue (or est. MRR) */
   burnMtdCents: number;
+  stripeHealth: {
+    lastEventAt: string | null;
+    lastEventType: string | null;
+    unprocessedCount: number;
+    recentErrors: Array<{ id: string; type: string; receivedAt: string; error: string }>;
+  };
 };
 
 export const financeCostSchema = z.object({

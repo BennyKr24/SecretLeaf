@@ -9,7 +9,7 @@ import { Alert } from "@/components/admin/Alert";
 import { StatCard, KpiRow } from "@/components/admin/StatCard";
 import { Card } from "@/components/ui/Card";
 import { CTAButton } from "@/components/ui/CTAButton";
-import { Euro, TrendingUp, Receipt, Flame, CreditCard, Bot } from "lucide-react";
+import { Euro, TrendingUp, Receipt, Flame, CreditCard, Bot, Webhook } from "lucide-react";
 
 const euro = (cents: number) =>
   (cents / 100).toLocaleString("de-DE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
@@ -27,6 +27,17 @@ const SERVICE_LABEL: Record<string, string> = {
   other: "Sonstiges",
 };
 const label = (s: string) => SERVICE_LABEL[s] ?? s;
+
+function relTime(iso: string): string {
+  const diffMs = Date.now() - new Date(iso).getTime();
+  const min = Math.round(diffMs / 60000);
+  if (min < 1) return "gerade eben";
+  if (min < 60) return `vor ${min} min`;
+  const h = Math.round(min / 60);
+  if (h < 24) return `vor ${h} h`;
+  const d = Math.round(h / 24);
+  return `vor ${d} T`;
+}
 
 const thisMonthKey = () => {
   const d = new Date();
@@ -212,6 +223,47 @@ export default function AdminFinancePage() {
                 tone={data.revenue.canceled30d > 0 ? "rose" : "muted"}
               />
             </KpiRow>
+          </section>
+
+          {/* Stripe-Health */}
+          <section className="space-y-3">
+            <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-muted-fg">Stripe-Webhook</h2>
+            <KpiRow>
+              <StatCard
+                label="Letztes Event"
+                value={data.stripeHealth.lastEventAt ? relTime(data.stripeHealth.lastEventAt) : "—"}
+                hint={data.stripeHealth.lastEventType ?? undefined}
+                icon={Webhook}
+                tone="muted"
+              />
+              <StatCard
+                label="Unverarbeitet"
+                value={data.stripeHealth.unprocessedCount}
+                icon={Webhook}
+                tone={data.stripeHealth.unprocessedCount > 0 ? "amber" : "primary"}
+              />
+              <StatCard
+                label="Fehlerhaft (letzte 10)"
+                value={data.stripeHealth.recentErrors.length}
+                icon={Webhook}
+                tone={data.stripeHealth.recentErrors.length > 0 ? "rose" : "primary"}
+              />
+            </KpiRow>
+            {data.stripeHealth.recentErrors.length > 0 && (
+              <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border">
+                {data.stripeHealth.recentErrors.map((e) => (
+                  <li key={e.id} className="bg-card px-3 py-2.5 text-sm">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-medium text-foreground">{e.type}</span>
+                      <span className="text-xs text-muted-fg">{relTime(e.receivedAt)}</span>
+                    </div>
+                    <p className="mt-0.5 truncate text-xs text-rose-500" title={e.error}>
+                      {e.error}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
 
           {/* AI-Verbrauch */}
