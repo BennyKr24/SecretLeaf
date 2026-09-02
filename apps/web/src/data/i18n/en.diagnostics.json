@@ -1457,7 +1457,7 @@
   },
   "abb17b70a2fa": {
     "de": "Antagonismus",
-    "en": null,
+    "en": "Antagonism",
     "paths": [
       "diagnostics/kalium-ueberschuss/tags/2",
       "diagnostics/calciumueberschuss/tags/2"
@@ -1487,7 +1487,7 @@
   },
   "189e16c3b0e0": {
     "de": "Aphididae",
-    "en": null,
+    "en": "Aphididae",
     "paths": [
       "diagnostics/blattlaeuse/tags/3"
     ]
@@ -2193,7 +2193,7 @@
   },
   "ed3f808a3fff": {
     "de": "Blattläuse",
-    "en": null,
+    "en": "Aphids",
     "paths": [
       "diagnostics/blattlaeuse/tags/0"
     ]
@@ -2249,7 +2249,7 @@
   },
   "66b276fafefd": {
     "de": "Blattrand",
-    "en": null,
+    "en": "Leaf margin",
     "paths": [
       "diagnostics/kaliummangel/tags/1"
     ]
@@ -2375,14 +2375,14 @@
   },
   "54b3013a168c": {
     "de": "Blockade",
-    "en": null,
+    "en": "Blockage",
     "paths": [
       "diagnostics/ph-lockout/tags/2"
     ]
   },
   "a39f120efb2f": {
     "de": "Blüte",
-    "en": null,
+    "en": "Flowering",
     "paths": [
       "diagnostics/bud-rot-botrytis/tags/3"
     ]
@@ -2410,7 +2410,7 @@
   },
   "5ff11b8759e8": {
     "de": "Botrytis",
-    "en": null,
+    "en": "Botrytis",
     "paths": [
       "diagnostics/bud-rot-botrytis/tags/1"
     ]
@@ -2564,7 +2564,7 @@
   },
   "9dbccbe8ff0b": {
     "de": "Bud Rot",
-    "en": null,
+    "en": "Bud rot",
     "paths": [
       "diagnostics/bud-rot-botrytis/tags/0"
     ]
@@ -2778,7 +2778,7 @@
   },
   "636f0dc2dfb9": {
     "de": "Calcium",
-    "en": null,
+    "en": "Calcium",
     "paths": [
       "diagnostics/calciummangel/tags/0",
       "diagnostics/calciumueberschuss/tags/0",
@@ -2934,7 +2934,7 @@
   },
   "651bac5b563c": {
     "de": "Chlorose",
-    "en": null,
+    "en": "Chlorosis",
     "paths": [
       "diagnostics/magnesiummangel/tags/1",
       "diagnostics/stickstoffmangel/tags/1",
@@ -3419,7 +3419,7 @@
   },
   "64dd65edfeaa": {
     "de": "Diagnose",
-    "en": null,
+    "en": "Diagnosis",
     "paths": [
       "diagnostics/magnesiummangel/tags/4",
       "diagnostics/stickstoffmangel/tags/4",
@@ -3903,7 +3903,7 @@
   },
   "3496b722301e": {
     "de": "Echter Mehltau",
-    "en": null,
+    "en": "Powdery Mildew",
     "paths": [
       "diagnostics/echter-mehltau-powdery-mildew/tags/0"
     ]
@@ -4218,7 +4218,7 @@
   },
   "3e93030ad13f": {
     "de": "Eisen",
-    "en": null,
+    "en": "Iron",
     "paths": [
       "diagnostics/eisenmangel/tags/0"
     ]
@@ -4761,7 +4761,7 @@
   },
   "e29702f43f62": {
     "de": "Frankliniella",
-    "en": null,
+    "en": "Frankliniella",
     "paths": [
       "diagnostics/thripse/tags/3"
     ]
@@ -4824,7 +4824,7 @@
   },
   "008f5b40b3ef": {
     "de": "Fusarium",
-    "en": null,
+    "en": "Fusarium",
     "paths": [
       "diagnostics/fusarium/tags/0"
     ]
@@ -5450,7 +5450,7 @@
   },
   "e627db2a71d7": {
     "de": "Hitzestress",
-    "en": null,
+    "en": "Heat Stress",
     "paths": [
       "diagnostics/hitzestress/tags/0"
     ]
@@ -5604,7 +5604,7 @@
   },
   "de317cdfc0a7": {
     "de": "Hydroponik",
-    "en": null,
+    "en": "Hydroponics",
     "paths": [
       "diagnostics/wurzelfaeule/tags/2"
     ]
@@ -6161,7 +6161,7 @@
   },
   "af94f68441b4": {
     "de": "Kalium",
-    "en": null,
+    "en": "Potassium",
     "paths": [
       "diagnostics/kaliummangel/tags/0",
       "diagnostics/kalium-ueberschuss/tags/0"
@@ -6416,7 +6416,7 @@
   },
   "f7a6e5b531e8": {
     "de": "Klima",
-    "en": null,
+    "en": "Climate",
     "paths": [
       "diagnostics/echter-mehltau-powdery-mildew/tags/3",
       "diagnostics/hitzestress/tags/3",
@@ -6614,7 +6614,7 @@
   },
   "64cf62101cee": {
     "de": "Krankheiten",
-    "en": null,
+    "en": "Diseases",
     "paths": [
       "diagnostics/fusarium/tags/1"
     ]
@@ -7361,7 +7361,7 @@
   },
   "4b21f18d5b44": {
     "de": "Luftbewegung",
-    "en": null,
+    "en": "Air Movement",
     "paths": [
       "diagnostics/windbrand/tags/1"
     ]
@@ -7375,7 +7375,7 @@
   },
   "2efe8e4b46e7": {
     "de": "Luftfeuchte",
-    "en": null,
+    "en": "Relative Humidity",
     "paths": [
       "diagnostics/luftfeuchte-management/tags/0"
     ]
@@ -7424,7 +7424,7 @@
   },
   "b502eb348ec7": {
     "de": "Magnesium",
-    "en": null,
+    "en": "Magnesium",
     "paths": [
       "diagnostics/magnesiummangel/tags/0",
       "diagnostics/calmag-supplementierung/tags/2"
@@ -7943,14 +7943,14 @@
   },
   "a9283560ce62": {
     "de": "Nährstoffe",
-    "en": null,
+    "en": "Nutrients",
     "paths": [
       "diagnostics/ph-lockout/tags/4"
     ]
   },
   "39e1553b04b3": {
     "de": "Nährstoffmangel",
-    "en": null,
+    "en": "Nutrient deficiency",
     "paths": [
       "diagnostics/magnesiummangel/tags/3",
       "diagnostics/stickstoffmangel/tags/3",
@@ -8799,7 +8799,7 @@
   },
   "998b7663ed3f": {
     "de": "Phosphor",
-    "en": null,
+    "en": "Phosphorus",
     "paths": [
       "diagnostics/phosphormangel/tags/0"
     ]
@@ -8855,7 +8855,7 @@
   },
   "b0fa746a66b1": {
     "de": "Photosynthese",
-    "en": null,
+    "en": "Photosynthesis",
     "paths": [
       "diagnostics/co2-management/tags/1"
     ]
@@ -8960,7 +8960,7 @@
   },
   "38bfce609b2f": {
     "de": "Powdery Mildew",
-    "en": null,
+    "en": "Powdery Mildew",
     "paths": [
       "diagnostics/echter-mehltau-powdery-mildew/tags/1"
     ]
@@ -9044,7 +9044,7 @@
   },
   "dd89cf901c23": {
     "de": "Pythium",
-    "en": null,
+    "en": "Pythium",
     "paths": [
       "diagnostics/wurzelfaeule/tags/1"
     ]
@@ -9356,7 +9356,7 @@
   },
   "09e6342fc6f7": {
     "de": "Rostmilben",
-    "en": null,
+    "en": "Rust mites",
     "paths": [
       "diagnostics/hanf-rostmilben/tags/0"
     ]
@@ -9384,7 +9384,7 @@
   },
   "37289aaf2307": {
     "de": "Salzstress",
-    "en": null,
+    "en": "Salt Stress",
     "paths": [
       "diagnostics/salzanreicherung-hohe-ec/tags/0"
     ]
@@ -9426,7 +9426,7 @@
   },
   "65c14b1ce518": {
     "de": "Sauerstoff",
-    "en": null,
+    "en": "Oxygen",
     "paths": [
       "diagnostics/wurzelfaeule/tags/3",
       "diagnostics/ueberwaesserung-staunaesse/tags/4"
@@ -9463,7 +9463,7 @@
   },
   "948885acf0bb": {
     "de": "Schädlinge",
-    "en": null,
+    "en": "Pests",
     "paths": [
       "diagnostics/spinnmilben/tags/1",
       "diagnostics/thripse/tags/1",
@@ -9482,7 +9482,7 @@
   },
   "5ca8ddce4e4a": {
     "de": "Schimmel",
-    "en": null,
+    "en": "Mold",
     "paths": [
       "diagnostics/bud-rot-botrytis/tags/2",
       "diagnostics/echter-mehltau-powdery-mildew/tags/2"
@@ -10383,7 +10383,7 @@
   },
   "216486a12379": {
     "de": "Spinnmilben",
-    "en": null,
+    "en": "Spider mites",
     "paths": [
       "diagnostics/spinnmilben/tags/0"
     ]
@@ -11048,7 +11048,7 @@
   },
   "74cf071e12d8": {
     "de": "Staunässe",
-    "en": null,
+    "en": "Waterlogging",
     "paths": [
       "diagnostics/ueberwaesserung-staunaesse/tags/0"
     ]
@@ -11097,7 +11097,7 @@
   },
   "f08d1733b9c7": {
     "de": "Stickstoff",
-    "en": null,
+    "en": "Nitrogen",
     "paths": [
       "diagnostics/stickstoffmangel/tags/0",
       "diagnostics/stickstoffueberschuss/tags/0"
@@ -11189,7 +11189,7 @@
   },
   "d59f856adb4e": {
     "de": "Substrat",
-    "en": null,
+    "en": "Substrate",
     "paths": [
       "diagnostics/trauermuecken/tags/2"
     ]
@@ -11381,7 +11381,7 @@
   },
   "2da10076c9e7": {
     "de": "Temperatur",
-    "en": null,
+    "en": "Temperature",
     "paths": [
       "diagnostics/hitzestress/tags/1",
       "diagnostics/kaeltestress/tags/1"
@@ -11417,7 +11417,7 @@
   },
   "43e36bca8a97": {
     "de": "Tetranychus",
-    "en": null,
+    "en": "Tetranychus",
     "paths": [
       "diagnostics/spinnmilben/tags/3"
     ]
@@ -11446,7 +11446,7 @@
   },
   "8e9253d5ffb4": {
     "de": "Thripse",
-    "en": null,
+    "en": "Thrips",
     "paths": [
       "diagnostics/thripse/tags/0"
     ]
@@ -11525,7 +11525,7 @@
   },
   "130fe584ad3a": {
     "de": "Toxizität",
-    "en": null,
+    "en": "Toxicity",
     "paths": [
       "diagnostics/stickstoffueberschuss/tags/2",
       "diagnostics/kalium-ueberschuss/tags/3"
@@ -11540,7 +11540,7 @@
   },
   "f204f47f73dc": {
     "de": "Trauermücken",
-    "en": null,
+    "en": "Fungus gnats",
     "paths": [
       "diagnostics/trauermuecken/tags/0"
     ]
@@ -11694,7 +11694,7 @@
   },
   "4113c7c4143d": {
     "de": "Überdüngung",
-    "en": null,
+    "en": "Overfertilization",
     "paths": [
       "diagnostics/salzanreicherung-hohe-ec/tags/2",
       "diagnostics/naehrstoffverbrennung-tipburn/tags/0"
@@ -11723,7 +11723,7 @@
   },
   "fe59a735a090": {
     "de": "Überschuss",
-    "en": null,
+    "en": "Toxicity",
     "paths": [
       "diagnostics/stickstoffueberschuss/tags/1",
       "diagnostics/kalium-ueberschuss/tags/1",
@@ -11788,7 +11788,7 @@
   },
   "25f985701e3a": {
     "de": "Überwässerung",
-    "en": null,
+    "en": "Overwatering",
     "paths": [
       "diagnostics/trauermuecken/tags/3",
       "diagnostics/ueberwaesserung-staunaesse/tags/1"
@@ -11994,7 +11994,7 @@
   },
   "e31ddc10a827": {
     "de": "Vegetationsphase",
-    "en": null,
+    "en": "Vegetative stage",
     "paths": [
       "diagnostics/stickstoffmangel/tags/2"
     ]
@@ -12577,7 +12577,7 @@
   },
   "619c1cecf6c2": {
     "de": "Wasserqualität",
-    "en": null,
+    "en": "Water quality",
     "paths": [
       "diagnostics/calmag-supplementierung/tags/3"
     ]
@@ -12724,7 +12724,7 @@
   },
   "622a0cef25ff": {
     "de": "Weiße Fliege",
-    "en": null,
+    "en": "Whiteflies",
     "paths": [
       "diagnostics/weisse-fliege/tags/0"
     ]
@@ -13304,7 +13304,7 @@
   },
   "ecbe134ae325": {
     "de": "Wurzelfäule",
-    "en": null,
+    "en": "Root Rot",
     "paths": [
       "diagnostics/wurzelfaeule/tags/0",
       "diagnostics/fusarium/tags/2"
@@ -13354,7 +13354,7 @@
   },
   "43f1936b42f6": {
     "de": "Wurzelzone",
-    "en": null,
+    "en": "Root Zone",
     "paths": [
       "diagnostics/kaeltestress/tags/2",
       "diagnostics/ueberwaesserung-staunaesse/tags/2"

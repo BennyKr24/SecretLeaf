@@ -64,28 +64,28 @@
   },
   "d7b23d3d7edf": {
     "de": "'Live Resin' (BHO/PHO) vs. 'Live Rosin' (solventlos)",
-    "en": null,
+    "en": "'Live Resin' (BHO/PHO) vs. 'Live Rosin' (solventless)",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/quickFacts/3/value"
     ]
   },
   "59ae65508bba": {
     "de": "'Live Resin' → lösungsmittelbasiert (BHO/PHO), aus frisch gefrorenem Material",
-    "en": null,
+    "en": "'Live Resin' → solvent-based (BHO/PHO), from fresh-frozen material",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/2/checklist/0"
     ]
   },
   "b70e40b33132": {
     "de": "'Live Resin' und 'Live Rosin' klingen fast identisch und starten beide aus frisch gefrorenem Material, sind aber unterschiedliche Produktfamilien: Live Resin ist lösungsmittelbasiert (BHO/PHO), Live Rosin ist solventlos gepresst.",
-    "en": null,
+    "en": "'Live Resin' and 'Live Rosin' sound almost identical and both start from fresh-frozen material, but they are different product families: Live Resin is solvent-based (BHO/PHO), Live Rosin is pressed solventless.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/keyTakeaways/1"
     ]
   },
   "602a0a428897": {
     "de": "'Live Rosin' → solventlos gepresst, aus frisch gefrorenem Material oder frisch gefrorenem Hash",
-    "en": null,
+    "en": "'Live Rosin' → solventless pressed, from fresh-frozen material or fresh-frozen hash",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/2/checklist/1"
     ]
@@ -113,14 +113,14 @@
   },
   "3d58f63d3065": {
     "de": "'Resin' ohne 'Live' → lösungsmittelbasiert, aus getrocknetem/kuriertem Material",
-    "en": null,
+    "en": "'Resin' without 'Live' → solvent-based, from dried/cured material",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/2/checklist/2"
     ]
   },
   "493568aff261": {
     "de": "'Rosin' ohne 'Live' → solventlos gepresst, aus getrocknetem/kuriertem Material oder Hash",
-    "en": null,
+    "en": "'Rosin' without 'Live' → solventless pressed, from dried/cured material or hash",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/2/checklist/3"
     ]
@@ -134,14 +134,14 @@
   },
   "e1262ffde3a7": {
     "de": "'Terpenreich' ist kein regulierter Begriff mit festem Schwellenwert – Labore, Hersteller und Shops verwenden ihn uneinheitlich.",
-    "en": null,
+    "en": "'Terpene-rich' is not a regulated term with a fixed threshold – labs, manufacturers and shops use it inconsistently.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/keyTakeaways/2"
     ]
   },
   "acae99ed684a": {
     "de": "'Terpenreich', 'HTFSE' oder ähnliche Label als Prozess- bzw. Marketingbegriff behandeln, nicht als geprüfte Wirkangabe",
-    "en": null,
+    "en": "Treat 'terpene-rich', 'HTFSE', or similar labels as a process or marketing term, not as a verified claim of effect",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/5/checklist/2"
     ]
@@ -225,14 +225,14 @@
   },
   "83b38816c775": {
     "de": "~13-40 %, ~50 % THCA",
-    "en": null,
+    "en": "~13-40 %, ~50 % THCA",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/quickFacts/1/value"
     ]
   },
   "bf50a36095f5": {
     "de": "~2-3 % (informelle Branchenschätzung)",
-    "en": null,
+    "en": "~2-3 % (informal industry estimate)",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/quickFacts/0/value"
     ]
@@ -1843,7 +1843,7 @@
   },
   "dee1b21acd80": {
     "de": "80-95 %+ (Faustregel aus der Grower-Community)",
-    "en": null,
+    "en": "80-95%+ (rule of thumb from the grower community)",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/quickFacts/0/value"
     ]
@@ -2032,7 +2032,7 @@
   },
   "013c1b361942": {
     "de": "Achte auf einen QR-Code oder Link, der direkt zur Datenbank des Testlabors führt, und auf eine Chargennummer auf dem COA, die tatsächlich zur Nummer auf der Verpackung passt. Ohne diesen Abgleich ist ein PDF-Zertifikat auf der Webseite wenig wert - es könnte für jede beliebige Charge oder ein ganz anderes Produkt stehen. Wie du ein COA im Detail liest, steht ausführlich in Coa richtig lesen.",
-    "en": null,
+    "en": "Look for a QR code or link that leads directly to the testing lab's database, and for a batch number on the COA that actually matches the number on the packaging. Without this cross-check, a PDF certificate on the website is worth little - it could stand for any batch, or an entirely different product. How to read a COA in detail is covered in full in Reading a COA correctly.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/4/content/1"
     ]
@@ -2124,7 +2124,7 @@
   },
   "7f45445c0313": {
     "de": "Aktives Aufschlagen/Rühren während des Purge: Luft wird eingearbeitet, die Kristallstruktur wird aufgebrochen, es entsteht eine weiche, cremige Masse. Je nachdem, wie stark aufgeschlagen wird, reicht das Ergebnis von einer glatten, butterartigen Konsistenz (Budder) bis zu einer lockereren, glänzenderen, teils fließenden Konsistenz (Badder/Batter). Wichtig: Die Texturunterschiede zwischen Budder, Badder und Batter sagen nichts über die Potenz aus - sie beschreiben ausschließlich, wie stark aufgeschlagen wurde.",
-    "en": null,
+    "en": "Active whipping/stirring during purging: air is worked in, the crystal structure is broken up, and a soft, creamy mass results. Depending on how vigorously it's whipped, the result ranges from a smooth, buttery consistency (budder) to a looser, glossier, sometimes flowing consistency (badder/batter). Important: the textural differences between budder, badder and batter say nothing about potency - they only describe how much whipping was applied.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/content/2"
     ]
@@ -2362,14 +2362,14 @@
   },
   "e1739f113d64": {
     "de": "Analyseverfahren, das flüchtige Stoffe aus der Gasphase über einer Probe misst; kann auf derselben Probe von Direktinjektionsverfahren abweichen.",
-    "en": null,
+    "en": "Analysis method that measures volatile substances from the gas phase above a sample; can differ from direct injection procedures on the same sample.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/glossary/3/definition"
     ]
   },
   "ed482c05e9e0": {
     "de": "Analytik",
-    "en": null,
+    "en": "Analytics",
     "paths": [
       "wiki/terpen-oxidationsprodukte-und-bedeutung/tags/2",
       "wiki/minor-terpene-und-profiltiefe/tags/3",
@@ -2385,7 +2385,7 @@
   },
   "216ed7d85d6b": {
     "de": "Anbau",
-    "en": null,
+    "en": "Grow",
     "paths": [
       "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/1",
       "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/1",
@@ -2422,14 +2422,14 @@
   },
   "b06ad694aa8d": {
     "de": "Anders als bei der Cannabinoid-Potenzmessung, für die in vielen Regionen etablierte Ringtests und Zertifizierungsstandards existieren, gibt es für Terpenanalytik bislang keinen vergleichbar verbreiteten, terpenspezifischen Prüfstandard. Das erklärt einen Teil der Streuung, die du siehst, wenn zwei Labore dieselbe Charge unterschiedlich bewerten.",
-    "en": null,
+    "en": "Unlike cannabinoid potency measurement, for which established ring tests and certification standards exist in many regions, there is so far no comparably widespread, terpene-specific testing standard. This explains part of the variation you see when two labs rate the same batch differently.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/4/content/1"
     ]
   },
   "be54157d1e31": {
     "de": "Anders als bei lizenzierten Apotheken gibt es für Samenbanken keine Aufsichtsstelle, die Angaben vorab prüft. Praktisch jeder kann innerhalb weniger Tage eine Webseite mit kopiertem Katalog und übernommenen Sortenbeschreibungen aufsetzen. Das heißt nicht, dass die meisten Anbieter unseriös sind - aber die Einstiegshürde für Trittbrettfahrer ist niedrig, und du musst selbst prüfen, wo du kaufst.",
-    "en": null,
+    "en": "Unlike licensed pharmacies, there is no regulatory body for seed banks that checks claims in advance. Practically anyone can set up a website with a copied catalog and lifted strain descriptions within a few days. That doesn't mean most vendors are disreputable - but the barrier to entry for copycats is low, and you have to check for yourself where you buy.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/0/content/1"
     ]
@@ -2457,7 +2457,7 @@
   },
   "c98c9280f4d3": {
     "de": "Anders als etwa bei THC-Grenzwerten gibt es für den Begriff 'terpenreich' keinen einheitlichen, regulierten Schwellenwert. Labore, Hersteller und Shops verwenden ihn inkonsistent – was der eine Anbieter als terpenreich bewirbt, kann bei einem anderen Standard sein.",
-    "en": null,
+    "en": "Unlike, say, THC thresholds, there is no uniform, regulated threshold for the term 'terpene-rich'. Labs, manufacturers, and shops use it inconsistently – what one supplier markets as terpene-rich might be standard at another.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/3/content/0"
     ]
@@ -2478,7 +2478,7 @@
   },
   "ff7c5bba6e66": {
     "de": "Anfänger",
-    "en": null,
+    "en": "Beginner",
     "paths": [
       "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/2",
       "wiki/outdoor-anbau-fuer-einsteiger/tags/1"
@@ -2602,7 +2602,7 @@
   },
   "189e16c3b0e0": {
     "de": "Aphididae",
-    "en": null,
+    "en": "Aphididae",
     "paths": [
       "wiki/blattlaeuse/tags/3"
     ]
@@ -2637,7 +2637,7 @@
   },
   "438a2f5435e9": {
     "de": "Aroma",
-    "en": null,
+    "en": "Aroma",
     "paths": [
       "wiki/lagerung-und-terpenverlust-vermeiden/tags/3",
       "wiki/minor-terpene-und-profiltiefe/tags/2"
@@ -2652,7 +2652,7 @@
   },
   "72ac079e6306": {
     "de": "Aromatisch durchaus möglich – die menschliche Nase reagiert auf manche Duftstoffe schon in Spuren, das ist ein allgemeines Prinzip der Riechchemie. Eine pharmakologische Wirkung in solch geringen Mengen ist dagegen deutlich weniger gut belegt.",
-    "en": null,
+    "en": "Aromatically, it's certainly possible – the human nose reacts to some fragrance compounds even in trace amounts, which is a general principle of olfactory chemistry. A pharmacological effect at such low amounts, on the other hand, is far less well documented.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/faq/0/answer"
     ]
@@ -2673,7 +2673,7 @@
   },
   "2db1bc1a4e0f": {
     "de": "Arsen",
-    "en": null,
+    "en": "Arsenic",
     "paths": [
       "wiki/schwere-metalle-und-aufnahmewege/tags/3"
     ]
@@ -2771,7 +2771,7 @@
   },
   "64e286a91b2e": {
     "de": "Auf den meisten COAs stehen Cannabinoid- und Terpenwerte nebeneinander, wie gleichwertige Messungen. Chemisch sind sie das aber nicht: Terpene sind deutlich flüchtiger als Cannabinoide wie THC oder CBD. Sie verdampfen und reagieren mit Sauerstoff schon bei normaler Proben-Handhabung – Transport, Zwischenlagerung, Mahlen der Probe, Zeit zwischen Ernte und Test –, und zwar in einem Ausmaß, das Cannabinoide in der gleichen Zeit kaum betrifft.",
-    "en": null,
+    "en": "On most COAs, cannabinoid and terpene values appear side by side, as if they were equivalent measurements. Chemically, they are not: terpenes are significantly more volatile than cannabinoids like THC or CBD. They evaporate and react with oxygen even during normal sample handling – transport, interim storage, grinding the sample, time between harvest and testing – to an extent that barely affects cannabinoids in the same timeframe.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/0/content/0"
     ]
@@ -2785,7 +2785,7 @@
   },
   "9f0a68f746da": {
     "de": "Auf dieser Seite gibt es bereits einen ausführlichen Artikel zur solventlosen Rosin-Familie (Flower Rosin, Hash Rosin, Live Rosin, Live Hash Rosin) - Konzentrate, die ausschließlich mit Hitze und Druck gepresst werden, ganz ohne Lösungsmittel. Dieser Artikel behandelt bewusst die andere, ebenso verbreitete Produktfamilie: Konzentrate, die mit Butan (BHO) oder Propan (PHO) als Lösungsmittel extrahiert werden.",
-    "en": null,
+    "en": "This site already has a detailed article on the solventless Rosin family (Flower Rosin, Hash Rosin, Live Rosin, Live Hash Rosin) - concentrates that are pressed exclusively with heat and pressure, without any solvent. This article deliberately covers the other, equally common product family: concentrates extracted with butane (BHO) or propane (PHO) as the solvent.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/0/content/0"
     ]
@@ -2960,7 +2960,7 @@
   },
   "3da97d974a6f": {
     "de": "Aus der Suchtmedizin und Pharmakologie kommt zudem regelmäßig Skepsis gegenüber Aussagen, die einzelne Terpene mit spezifischen therapeutischen Effekten verknüpfen – solche Zuordnungen werden dort häufig als 'weitgehend anekdotisch' eingeordnet, nicht als klinisch abgesichert.",
-    "en": null,
+    "en": "Addiction medicine and pharmacology also regularly express skepticism toward claims that link individual terpenes to specific therapeutic effects – such attributions are often classified there as 'largely anecdotal', not as clinically established.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/3/content/1"
     ]
@@ -2981,7 +2981,7 @@
   },
   "985fab7df03d": {
     "de": "aus frisch gefrorenem Material, lösungsmittelbasiert",
-    "en": null,
+    "en": "from fresh-frozen material, solvent-based",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/quickFacts/1/value"
     ]
@@ -3228,7 +3228,7 @@
   },
   "33c86b7ad62f": {
     "de": "Backcross",
-    "en": null,
+    "en": "Backcross",
     "paths": [
       "wiki/crossing-backcrossing-grundlagen/tags/1"
     ]
@@ -3263,7 +3263,7 @@
   },
   "ff9f658402a6": {
     "de": "Balkon",
-    "en": null,
+    "en": "Balcony",
     "paths": [
       "wiki/outdoor-anbau-fuer-einsteiger/tags/3"
     ]
@@ -3551,14 +3551,14 @@
   },
   "a427377da6e6": {
     "de": "Bei den meisten Produkten merkst du einen Fehlkauf sofort. Bei Samen ist das strukturell anders: Ob die Genetik stimmt, zeigt sich erst am Ende eines vollständigen Grow-Zyklus - bei falscher oder gefälschter Genetik hast du dann nicht nur Geld, sondern eine ganze Saison verloren.",
-    "en": null,
+    "en": "With most products, you notice a bad purchase right away. With seeds, it's structurally different: whether the genetics are correct only shows up at the end of a complete grow cycle - and with incorrect or counterfeit genetics, you've then lost not just money, but an entire season.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/5/content/0"
     ]
   },
   "42d95c69ab02": {
     "de": "Bei den meisten Produkten merkst du sofort, ob sie taugen. Bei Samen, Dünger und anderem Grow-Zubehör ist das anders: Ob die Genetik stimmt, zeigt sich erst am Ende eines kompletten Grow-Zyklus - typischerweise mehrere Monate später. Ob ein Dünger tatsächlich frei von Schwermetallen ist, siehst du der Flasche nicht an. Diese Verzögerung zwischen Kauf und Erkenntnis ist der Grund, warum es sich lohnt, die Quelle selbst zu bewerten - nicht nur das einzelne Produkt.",
-    "en": null,
+    "en": "With most products, you notice right away whether they're any good. With seeds, nutrients, and other grow equipment, it's different: whether the genetics are correct only shows up at the end of a complete grow cycle - typically several months later. Whether a nutrient product is actually free of heavy metals isn't something you can see on the bottle. This delay between purchase and finding out is why it pays to evaluate the source itself - not just the individual product.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/0/content/0"
     ]
@@ -3880,7 +3880,7 @@
   },
   "8208a3cdfd06": {
     "de": "Bei Samen merkst du eine falsche oder gefälschte Genetik oft erst nach einem kompletten Grow-Zyklus - das macht die Bezugsquelle selbst zur wichtigsten Absicherung, weil keine Lizenzstelle Samenbanken vorab prüft.",
-    "en": null,
+    "en": "With seeds, you often only notice incorrect or fake genetics after a complete grow cycle - that makes the source itself the most important safeguard, because no licensing body vets seed banks in advance.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/keyTakeaways/3"
     ]
@@ -3894,7 +3894,7 @@
   },
   "d46d6a63ca57": {
     "de": "Bei stark abweichenden Werten zwischen zwei Laboren zur selben Charge lieber beide Zertifikate anschauen als nur das höhere zu glauben",
-    "en": null,
+    "en": "If values differ strongly between two labs for the same batch, look at both certificates rather than just trusting the higher one",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/5/checklist/4"
     ]
@@ -4104,7 +4104,7 @@
   },
   "80bcf98b985a": {
     "de": "Beide Familien haben eigene Texturnamen entwickelt, die sich teils ähneln - 'Badder'/'Jam' bei Rosin gegenüber 'Budder'/'Sauce' hier zum Beispiel. Das ist keine einheitliche Systematik, sondern zwei getrennt gewachsene Vokabulare für zwei unterschiedliche Herstellungswege. Für die solventlose Seite (Hash-Typen, Rosin, Full-Melt-Bewertung) lohnt sich ein Blick in Hash-Typen vergleichen, Rosin einordnen ohne Hype und Full Melt, Sterne-System und Marketingsprache bei Hash.",
-    "en": null,
+    "en": "Both families have developed their own texture names, some of which sound similar - 'Badder'/'Jam' for Rosin versus 'Budder'/'Sauce' here, for example. This is not a unified system but two vocabularies that grew separately for two different production methods. For the solventless side (hash types, rosin, full-melt rating), it's worth looking at Comparing hash types, Assessing rosin without the hype, and Full melt, star ratings and marketing language in hash.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/0/content/1"
     ]
@@ -4125,7 +4125,7 @@
   },
   "2ac44b49840d": {
     "de": "Beide starten aus frisch gefrorenem statt getrocknetem Pflanzenmaterial - daher 'Live'. Live Resin wird danach mit Lösungsmittel extrahiert, Live Rosin wird solventlos gepresst. Gleicher Ausgangspunkt, komplett unterschiedliches Verfahren.",
-    "en": null,
+    "en": "Both start from freshly frozen rather than dried plant material - hence 'live'. Live resin is then extracted with solvent, live rosin is pressed solventlessly. Same starting point, completely different process.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/simpleExplainers/1/text"
     ]
@@ -4139,7 +4139,7 @@
   },
   "b6e552572b56": {
     "de": "Beide teilen sich also die Ausgangslogik ('live' = frisch gefroren statt getrocknet), unterscheiden sich aber komplett im Verfahren - solventbasiert gegenüber solventlos. Steht auf einem Etikett nur 'Live Resin' oder nur 'Live Rosin', ist das Wort allein schon eindeutig genug, um die Produktfamilie zu bestimmen - der Fehler entsteht meist beim schnellen Lesen oder Verwechseln der beiden Begriffe, nicht bei uneindeutiger Kennzeichnung.",
-    "en": null,
+    "en": "Both therefore share the same basic logic ('live' = fresh-frozen instead of dried), but differ completely in process - solvent-based versus solventless. If a label reads only 'Live Resin' or only 'Live Rosin', the word alone is already unambiguous enough to determine the product family - the mistake usually happens from quick reading or confusing the two terms, not from unclear labeling.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/2/content/3"
     ]
@@ -4506,7 +4506,7 @@
   },
   "9034551c0707": {
     "de": "Bewässerung",
-    "en": null,
+    "en": "Irrigation",
     "paths": [
       "wiki/bewaesserung-ohne-uebergiessen/tags/0"
     ]
@@ -4555,21 +4555,21 @@
   },
   "5874fe5c2bd6": {
     "de": "Bewertungen richtig lesen: das Muster hinter Fake-Shops",
-    "en": null,
+    "en": "Reading reviews correctly: the pattern behind fake shops",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/3/heading"
     ]
   },
   "408a83e978f1": {
     "de": "Bewertungen sind gemischt (auch kritische dabei), nicht ausschließlich 5 Sterne",
-    "en": null,
+    "en": "Reviews are mixed (including critical ones), not exclusively 5 stars",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/3/checklist/1"
     ]
   },
   "f575ed38ddf7": {
     "de": "Bewertungs-Warnsignal",
-    "en": null,
+    "en": "Review warning sign",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/quickFacts/2/label"
     ]
@@ -4583,7 +4583,7 @@
   },
   "260bf09dc6e8": {
     "de": "Bewertungshistorie über mehrere Jahre auf unabhängigen Plattformen vorhanden, nicht nur auf der eigenen Seite",
-    "en": null,
+    "en": "Review history spanning several years on independent platforms available, not just on the provider's own site",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/3/checklist/0"
     ]
@@ -4604,14 +4604,14 @@
   },
   "d701ee3c3a9b": {
     "de": "Bezugsquelle",
-    "en": null,
+    "en": "Source",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/tags/0"
     ]
   },
   "ffe6790e9adb": {
     "de": "BHO",
-    "en": null,
+    "en": "BHO",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/tags/0",
       "wiki/concentrate-categorization-fuer-plattformen/glossary/0/term"
@@ -4619,28 +4619,28 @@
   },
   "91b583b34226": {
     "de": "BHO (Butane Hash Oil) und PHO (Propane Hash Oil) bezeichnen die Lösungsmittelfamilie, nicht ein einzelnes Produkt. Das Grundprinzip: Pflanzenmaterial wird mit einem geschlossenen, das Lösungsmittel zurückgewinnenden System extrahiert, danach folgt ein separater Purge-Schritt (Vakuum plus kontrollierte Wärme), der Lösungsmittelrückstände wieder entfernen soll. Dieser Artikel erklärt bewusst nur, was BHO/PHO als Kategorie bedeuten und wie sich daraus Produktnamen ableiten - keine Anleitung. Lösungsmittelextraktion mit Butan oder Propan ist ohne die passende, professionelle Ausrüstung ein reales Sicherheitsrisiko (Explosions- und Brandgefahr) und gehört nicht in die eigene Küche.",
-    "en": null,
+    "en": "BHO (Butane Hash Oil) and PHO (Propane Hash Oil) refer to the solvent family, not a single product. The basic principle: plant material is extracted with a closed system that recovers the solvent, followed by a separate purge step (vacuum plus controlled heat) intended to remove residual solvent. This article deliberately explains only what BHO/PHO mean as a category and how product names derive from that - not a how-to guide. Solvent extraction with butane or propane is a real safety risk (explosion and fire hazard) without the right professional equipment and does not belong in your own kitchen.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/1/content/0"
     ]
   },
   "a25f4cc8f8cb": {
     "de": "BHO und PHO nutzen Butan bzw. Propan als Lösungsmittel zur Extraktion. Rosin (auf dieser Seite in einem eigenen Artikel behandelt) kommt komplett ohne Lösungsmittel aus und presst stattdessen mit Hitze und Druck. Zwei getrennte Produktfamilien, keine Qualitätsstufen derselben Familie.",
-    "en": null,
+    "en": "BHO and PHO use butane and propane, respectively, as solvents for extraction. Rosin (covered in its own article on this page) uses no solvent at all and instead presses with heat and pressure. Two separate product families, not quality tiers of the same family.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/simpleExplainers/0/text"
     ]
   },
   "92c9875e40bc": {
     "de": "BHO und PHO sind lösungsmittelbasierte Konzentrate - eine komplett andere Produktfamilie als die solventlose Rosin-Familie (Flower/Hash/Live Rosin), auch wenn sich manche Texturnamen ähneln.",
-    "en": null,
+    "en": "BHO and PHO are solvent-based concentrates - a completely different product family from the solvent-free rosin family (Flower/Hash/Live Rosin), even if some texture names sound similar.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/keyTakeaways/0"
     ]
   },
   "c8f004959a48": {
     "de": "BHO und PHO: die Lösungsmittel-Basis, ohne Herstellungsanleitung",
-    "en": null,
+    "en": "BHO and PHO: the solvent basis, without a production guide",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/1/heading"
     ]
@@ -4661,7 +4661,7 @@
   },
   "a94d18c66516": {
     "de": "Bilddiagnose",
-    "en": null,
+    "en": "Image diagnosis",
     "paths": [
       "wiki/trichom-reifegrad-bilddiagnose/tags/3"
     ]
@@ -4873,7 +4873,7 @@
   },
   "ed3f808a3fff": {
     "de": "Blattläuse",
-    "en": null,
+    "en": "Aphids",
     "paths": [
       "wiki/blattlaeuse/tags/0"
     ]
@@ -4929,7 +4929,7 @@
   },
   "66b276fafefd": {
     "de": "Blattrand",
-    "en": null,
+    "en": "leaf margin",
     "paths": [
       "wiki/kaliummangel/tags/1"
     ]
@@ -5182,7 +5182,7 @@
   },
   "23fae754be13": {
     "de": "Blei",
-    "en": null,
+    "en": "Lead",
     "paths": [
       "wiki/schwere-metalle-und-aufnahmewege/tags/1"
     ]
@@ -5253,7 +5253,7 @@
   },
   "a39f120efb2f": {
     "de": "Blüte",
-    "en": null,
+    "en": "flowering",
     "paths": [
       "wiki/bud-rot-botrytis/tags/3",
       "wiki/bluetephase-ernaehrung-und-pflege/tags/0"
@@ -5303,7 +5303,7 @@
   },
   "466f4b7b07a0": {
     "de": "Blüteauslösung",
-    "en": null,
+    "en": "Flowering trigger",
     "paths": [
       "wiki/dli-und-photoperiode/tags/3"
     ]
@@ -5324,7 +5324,7 @@
   },
   "64d0347ffdf5": {
     "de": "Blütephase",
-    "en": null,
+    "en": "Flowering stage",
     "paths": [
       "wiki/bluetephase-ernaehrung-und-pflege/tags/1"
     ]
@@ -5380,7 +5380,7 @@
   },
   "5ff11b8759e8": {
     "de": "Botrytis",
-    "en": null,
+    "en": "Botrytis",
     "paths": [
       "wiki/bud-rot-botrytis/tags/1"
     ]
@@ -5661,7 +5661,7 @@
   },
   "282f9b362715": {
     "de": "Bubble Hash",
-    "en": null,
+    "en": "Bubble hash",
     "paths": [
       "wiki/bubble-hash-qualitaetskriterien/tags/0",
       "wiki/hash-typen-vergleichen/tags/2"
@@ -5697,7 +5697,7 @@
   },
   "9dbccbe8ff0b": {
     "de": "Bud Rot",
-    "en": null,
+    "en": "bud rot",
     "paths": [
       "wiki/bud-rot-botrytis/tags/0"
     ]
@@ -5718,21 +5718,21 @@
   },
   "f1392613bc10": {
     "de": "Budder, Sauce, Diamonds & Shatter: Lösungsmittel-Konzentrate richtig einordnen",
-    "en": null,
+    "en": "Budder, Sauce, Diamonds & Shatter: Classifying Solvent Concentrates Correctly",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/title"
     ]
   },
   "aacfe3628553": {
     "de": "Budder/Badder/Batter",
-    "en": null,
+    "en": "Budder/Badder/Batter",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/4/term"
     ]
   },
   "fa2bcf871a4f": {
     "de": "Budder/Badder/Batter: weich, cremig bis fließend - aktives Aufschlagen beim Purge, unterschiedlich stark",
-    "en": null,
+    "en": "Budder/Badder/Batter: soft, creamy to flowing - active whipping during purging, to varying degrees",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/checklist/1"
     ]
@@ -5746,14 +5746,14 @@
   },
   "7fc96522a5f9": {
     "de": "Butan (BHO) oder Propan (PHO)",
-    "en": null,
+    "en": "Butane (BHO) or propane (PHO)",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/quickFacts/0/value"
     ]
   },
   "b63c5b9c3610": {
     "de": "Butane Hash Oil - Sammelbegriff für Konzentrate, die mit Butan als Lösungsmittel extrahiert werden.",
-    "en": null,
+    "en": "Butane Hash Oil - umbrella term for concentrates extracted with butane as the solvent.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/0/definition"
     ]
@@ -5935,7 +5935,7 @@
   },
   "37684c78a6c3": {
     "de": "Cadmium",
-    "en": null,
+    "en": "Cadmium",
     "paths": [
       "wiki/schwere-metalle-und-aufnahmewege/tags/2"
     ]
@@ -6030,7 +6030,7 @@
   },
   "636f0dc2dfb9": {
     "de": "Calcium",
-    "en": null,
+    "en": "calcium",
     "paths": [
       "wiki/calciummangel/tags/0",
       "wiki/calciumueberschuss/tags/0",
@@ -6365,7 +6365,7 @@
   },
   "1221c1ab9631": {
     "de": "Caryophyllen",
-    "en": null,
+    "en": "Caryophyllene",
     "paths": [
       "wiki/myrcen-limonen-caryophyllen-einordnung/tags/2"
     ]
@@ -6403,7 +6403,7 @@
   },
   "bf6660fc3ee1": {
     "de": "Certificate of Analysis - das Analysezertifikat eines Labors zu einer konkreten Produktcharge. Nur aussagekräftig, wenn es von einem unabhängigen Drittlabor stammt und die Chargennummer zum tatsächlichen Produkt passt.",
-    "en": null,
+    "en": "Certificate of Analysis - a lab's analysis certificate for a specific product batch. Only meaningful if it comes from an independent third-party lab and the batch number matches the actual product.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/simpleExplainers/1/text"
     ]
@@ -6481,7 +6481,7 @@
   },
   "1f3cf0daad37": {
     "de": "Chargennummer",
-    "en": null,
+    "en": "Batch number",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/4/term"
     ]
@@ -6530,7 +6530,7 @@
   },
   "3a30dec0a93f": {
     "de": "Chemie",
-    "en": null,
+    "en": "Chemistry",
     "paths": [
       "wiki/cannabinoid-biosynthese-verstehen/tags/3",
       "wiki/terpen-oxidationsprodukte-und-bedeutung/tags/3"
@@ -6594,7 +6594,7 @@
   },
   "a6f6d9c1abbd": {
     "de": "Chemotyp",
-    "en": null,
+    "en": "Chemotype",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/glossary/1/term"
     ]
@@ -6608,7 +6608,7 @@
   },
   "651bac5b563c": {
     "de": "Chlorose",
-    "en": null,
+    "en": "Chlorosis",
     "paths": [
       "wiki/magnesiummangel/tags/1",
       "wiki/stickstoffmangel/tags/1",
@@ -6638,7 +6638,7 @@
   },
   "08423724042a": {
     "de": "Clones",
-    "en": null,
+    "en": "clones",
     "paths": [
       "wiki/genetik-und-phaenotyp-selektion/tags/3",
       "wiki/mutterpflanzen-und-clone-hygiene/tags/1"
@@ -6801,7 +6801,7 @@
   },
   "b3fe7ec1cb2b": {
     "de": "COA-Angabe für Stoffe, die unterhalb der Nachweisgrenze des verwendeten Tests liegen.",
-    "en": null,
+    "en": "COA designation for substances that are below the detection limit of the test used.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/glossary/4/definition"
     ]
@@ -6829,7 +6829,7 @@
   },
   "1edafb5c1c4e": {
     "de": "COA-Transparenz gilt nicht nur für Genetik-Anbieter",
-    "en": null,
+    "en": "COA transparency isn't just for genetics vendors",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/4/heading"
     ]
@@ -6843,7 +6843,7 @@
   },
   "2a6aef767af7": {
     "de": "Coco",
-    "en": null,
+    "en": "Coco coir",
     "paths": [
       "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/8",
       "wiki/substrat-vergleich-coco-erde-hydro/tags/3"
@@ -6977,7 +6977,7 @@
   },
   "975422bfa944": {
     "de": "Crossing",
-    "en": null,
+    "en": "Crossing",
     "paths": [
       "wiki/crossing-backcrossing-grundlagen/tags/0"
     ]
@@ -6998,21 +6998,21 @@
   },
   "b8ab755e260d": {
     "de": "Crumble",
-    "en": null,
+    "en": "Crumble",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/8/term"
     ]
   },
   "472fff421309": {
     "de": "Crumble: trocken, wabenartig, zerfällt leicht zu Staub",
-    "en": null,
+    "en": "Crumble: dry, honeycomb-like, easily breaks apart into dust",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/checklist/3"
     ]
   },
   "f22b52800885": {
     "de": "Cure",
-    "en": null,
+    "en": "Cure",
     "paths": [
       "wiki/rosin-einordnung-ohne-hype/tags/3"
     ]
@@ -7200,7 +7200,7 @@
   },
   "8ba7477b2081": {
     "de": "Das Analysezertifikat eines Labors zu einer konkreten Produktcharge - Angaben zu Inhaltsstoffen, Verunreinigungen und Kontaminanten.",
-    "en": null,
+    "en": "A lab's certificate of analysis for a specific product batch - information on ingredients, impurities, and contaminants.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/1/definition"
     ]
@@ -7214,7 +7214,7 @@
   },
   "50a8a53d3949": {
     "de": "Das auffälligste Muster bei unseriösen Shops: ausschließlich 5-Sterne-Bewertungen, gehostet ausschließlich auf der eigenen Webseite - keine Spur auf unabhängigen Plattformen wie Trustpilot, Reddit oder in Grow-Foren. Ein echter, langjährig aktiver Anbieter hat dagegen fast immer eine gemischte Bewertungshistorie über mehrere Jahre auf unabhängigen Plattformen verteilt - inklusive kritischer Stimmen. Kontraintuitiv, aber genau diese Mischung aus gut und schlecht ist das eigentliche Vertrauenssignal, nicht die Durchschnittsnote.",
-    "en": null,
+    "en": "The most conspicuous pattern with disreputable shops: exclusively 5-star reviews, hosted only on the vendor's own website - no trace on independent platforms like Trustpilot, Reddit, or in grow forums. A genuine, long-established vendor, by contrast, almost always has a mixed review history spread across independent platforms over several years - including critical voices. Counterintuitively, it's exactly this mix of good and bad that's the real trust signal, not the average rating.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/3/content/0"
     ]
@@ -7361,7 +7361,7 @@
   },
   "307954537db4": {
     "de": "Das gilt genauso für Dünger- und Nährstoffmarken: Ein vertrauenswürdiger Anbieter veröffentlicht Analysezertifikate (COAs) von einem unabhängigen Drittlabor - nicht von einem hauseigenen oder mit dem Hersteller verbundenen Labor, dessen Ergebnisse laut Brancheneinschätzung keine unabhängige Aussagekraft haben.",
-    "en": null,
+    "en": "The same applies to nutrient and fertilizer brands: a trustworthy vendor publishes certificates of analysis (COAs) from an independent third-party lab - not from an in-house lab or one affiliated with the manufacturer, whose results, according to industry assessment, carry no independent weight.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/4/content/0"
     ]
@@ -7466,7 +7466,7 @@
   },
   "49906dac1bdf": {
     "de": "Das ist der wichtigste Punkt in diesem Artikel, weil er der häufigste Verwechslungspunkt in der ganzen Szene ist: 'Live Resin' und 'Live Rosin' klingen fast wie Tippfehler voneinander, meinen aber zwei komplett unterschiedliche Produktfamilien.",
-    "en": null,
+    "en": "This is the most important point in this article, because it's the most common point of confusion in the whole scene: 'Live Resin' and 'Live Rosin' sound almost like typos of each other, but refer to two completely different product families.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/2/content/0"
     ]
@@ -7613,7 +7613,7 @@
   },
   "157bef99cc22": {
     "de": "Das strukturelle Problem bei Samen: du zahlst die Rechnung erst Monate später",
-    "en": null,
+    "en": "The structural problem with seeds: you don't get the bill until months later",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/5/heading"
     ]
@@ -7634,7 +7634,7 @@
   },
   "6bbb086bfbc2": {
     "de": "Das tatsächlich gemessene chemische Profil einer Pflanze, unabhängig vom Sortennamen.",
-    "en": null,
+    "en": "The actually measured chemical profile of a plant, independent of the strain name.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/glossary/1/definition"
     ]
@@ -7704,7 +7704,7 @@
   },
   "67b696468610": {
     "de": "Dashboard",
-    "en": null,
+    "en": "Dashboard",
     "paths": [
       "wiki/grow-log-und-kpi-dashboard/tags/2"
     ]
@@ -7725,14 +7725,14 @@
   },
   "43bf4ac31f53": {
     "de": "Daten",
-    "en": null,
+    "en": "Data",
     "paths": [
       "wiki/grow-log-und-kpi-dashboard/tags/3"
     ]
   },
   "d26e56165b2a": {
     "de": "Datenlog",
-    "en": null,
+    "en": "Data log",
     "paths": [
       "wiki/how-to-grow-cannabis-profi-tutorial/tags/5"
     ]
@@ -7904,7 +7904,7 @@
   },
   "74634b105f13": {
     "de": "Defoliation",
-    "en": null,
+    "en": "Defoliation",
     "paths": [
       "wiki/bluetephase-ernaehrung-und-pflege/tags/4"
     ]
@@ -8009,14 +8009,14 @@
   },
   "490ee5e0e17a": {
     "de": "Der Anteil der Samen einer Bestellung, der tatsächlich keimt. 80-95 % oder mehr gilt community-üblich als guter Wert.",
-    "en": null,
+    "en": "The share of seeds in an order that actually germinate. 80-95 % or more is commonly considered a good value in the community.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/0/definition"
     ]
   },
   "f481779e0049": {
     "de": "Der Anteil der Samen einer Bestellung, der tatsächlich zu einem Keimling wird. 80-95 % oder mehr gilt community-üblich als guter Wert - eine gesetzlich geprüfte Zahl gibt es dafür nicht.",
-    "en": null,
+    "en": "The share of seeds from an order that actually turn into a seedling. 80-95% or more is commonly considered a good value in the community - there's no legally verified figure for this.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/simpleExplainers/0/text"
     ]
@@ -8219,7 +8219,7 @@
   },
   "e63b088333c5": {
     "de": "Der Nachbearbeitungsschritt nach der Extraktion, bei dem Vakuum und kontrollierte Wärme eingesetzt werden, um Lösungsmittelrückstände zu entfernen.",
-    "en": null,
+    "en": "The post-processing step after extraction, in which vacuum and controlled heat are used to remove residual solvent.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/3/definition"
     ]
@@ -8638,42 +8638,42 @@
   },
   "56d926f90bb0": {
     "de": "Diagnostik",
-    "en": null,
+    "en": "Diagnostics",
     "paths": [
       "wiki/naehrstoffblockaden-und-antagonismen/tags/3"
     ]
   },
   "dc95f33b5876": {
     "de": "Diamonds",
-    "en": null,
+    "en": "Diamonds",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/6/term"
     ]
   },
   "0ceeb1072ca7": {
     "de": "Diamonds + Sauce: kristallines THCA getrennt von terpenreicher Flüssigkeit, oft zusammen als 'Diamond Sauce' verkauft",
-    "en": null,
+    "en": "Diamonds + Sauce: crystalline THCA separated from terpene-rich liquid, often sold together as 'Diamond Sauce'",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/checklist/5"
     ]
   },
   "4082de89a27f": {
     "de": "Diamonds bestehen zu einem sehr hohen Anteil aus reinem THCA, sind also in dieser einzelnen Kennzahl meist sehr hoch - aber Textur sagt allgemein wenig über die Gesamtwirkung aus, weil reine Diamonds ohne beigemischte Sauce kaum Terpene enthalten, die den sogenannten Entourage-Effekt mitprägen. Deshalb werden Diamonds oft bewusst mit Sauce kombiniert verkauft.",
-    "en": null,
+    "en": "Diamonds consist of a very high proportion of pure THCA, so they're usually very high on this single metric - but texture generally says little about overall effect, because pure diamonds without added sauce contain hardly any terpenes, which contribute to the so-called entourage effect. That's why diamonds are often deliberately sold combined with sauce.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/faq/1/answer"
     ]
   },
   "3a6279c60b3c": {
     "de": "Diamonds sind nahezu reines, auskristallisiertes THCA; die dabei zurückbleibende, terpenreiche Flüssigkeit ist Sauce - zusammen oft als 'Diamond Sauce' oder 'Liquid Diamonds' verkauft.",
-    "en": null,
+    "en": "Diamonds are nearly pure, crystallized THCA; the terpene-rich liquid left behind in the process is sauce - together often sold as 'Diamond Sauce' or 'Liquid Diamonds'.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/keyTakeaways/3"
     ]
   },
   "a8f59d838ae2": {
     "de": "Diamonds-Reinheit",
-    "en": null,
+    "en": "Diamonds purity",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/quickFacts/2/label"
     ]
@@ -8918,14 +8918,14 @@
   },
   "cb7dd43ad083": {
     "de": "Die genaue Abstammungslinie einer Cannabissorte - welche Elternsorten gekreuzt wurden und von welchem Züchter.",
-    "en": null,
+    "en": "The exact lineage of a cannabis strain - which parent strains were crossed and by which breeder.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/3/definition"
     ]
   },
   "1c8a97d811f0": {
     "de": "Die genaue Abstammungslinie einer Cannabissorte - welche Elternsorten wurden gekreuzt, von welchem Züchter. Seriöse Anbieter können das konkret benennen, unseriöse bleiben bei vagen Marketingnamen.",
-    "en": null,
+    "en": "The exact lineage of a cannabis strain - which parent strains were crossed, by which breeder. Reputable providers can name this concretely, disreputable ones stick to vague marketing names.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/simpleExplainers/2/text"
     ]
@@ -9219,7 +9219,7 @@
   },
   "49c169f123e8": {
     "de": "Die pragmatische Konsequenz: Behandle einen hohen Terpenwert in erster Linie als Aroma- und Geschmacksindikator, nicht als verlässlichen Vorhersagewert für Wirkung. Und priorisiere ein echtes, unabhängiges Analysezertifikat gegenüber Marketingtexten auf Verpackung oder Website.",
-    "en": null,
+    "en": "The pragmatic consequence: treat a high terpene value primarily as an aroma and flavor indicator, not as a reliable predictor of effect. And prioritize a genuine, independent certificate of analysis over marketing copy on packaging or a website.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/3/content/2"
     ]
@@ -9275,7 +9275,7 @@
   },
   "496ef9a10daa": {
     "de": "Die Summe aller auf einem Panel gemessenen Einzelterpene, meist in Prozent des Trockengewichts angegeben. Sagt nichts darüber aus, wie frisch die Probe beim Test war.",
-    "en": null,
+    "en": "The sum of all individual terpenes measured on a panel, usually given as a percentage of dry weight. Says nothing about how fresh the sample was at the time of testing.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/simpleExplainers/0/text"
     ]
@@ -9310,7 +9310,7 @@
   },
   "7d59f11f9376": {
     "de": "Die Textur nach dem Purge - Shatter, Budder, Sugar, Crumble, Wax, Diamonds & Sauce - entscheidet sich vor allem an der Nachbearbeitung (Bewegung, Kristallisation), nicht an Qualität oder Potenz.",
-    "en": null,
+    "en": "The texture after the purge - Shatter, Budder, Sugar, Crumble, Wax, Diamonds & Sauce - is determined mainly by the post-processing (agitation, crystallization), not by quality or potency.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/keyTakeaways/2"
     ]
@@ -9499,7 +9499,7 @@
   },
   "4e9d47dc77ce": {
     "de": "Diese Familie ist nicht Rosin - auch wenn manche Namen ähnlich klingen",
-    "en": null,
+    "en": "This family is not Rosin - even though some names sound similar",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/0/heading"
     ]
@@ -9576,7 +9576,7 @@
   },
   "01dc620956e4": {
     "de": "Dieser Artikel erklärt Begriffe und Produktkategorien, keine Extraktionsanleitung. Lösungsmittelextraktion mit Butan oder Propan ohne geeignete, professionelle Ausrüstung ist eine reale Explosions- und Brandgefahr und gehört nicht in den privaten Bereich.",
-    "en": null,
+    "en": "This article explains terms and product categories, not an extraction guide. Solvent extraction with butane or propane without suitable, professional equipment is a real explosion and fire hazard and has no place in a home setting.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/warnings/0"
     ]
@@ -9625,7 +9625,7 @@
   },
   "a0437393d590": {
     "de": "Direkt am fertigen Produkt kaum zuverlässig unterscheidbar. In der Szene wird PHO teils nachgesagt, Terpene durch die niedrigere Extraktionstemperatur etwas besser zu erhalten - das ist eine verbreitete Einschätzung aus der Community, keine unabhängig bestätigte Laboraussage, und beide Lösungsmittel kommen in praktisch allen Texturen (Shatter, Budder, Sauce, Diamonds) vor.",
-    "en": null,
+    "en": "Hardly reliably distinguishable directly on the finished product. Within the community, PHO is sometimes said to preserve terpenes slightly better due to the lower extraction temperature - this is a common view from the community, not an independently confirmed lab finding, and both solvents occur in practically all textures (shatter, budder, sauce, diamonds).",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/faq/2/answer"
     ]
@@ -9639,7 +9639,7 @@
   },
   "b637bcb4f3ba": {
     "de": "Direkt eher wenig. Zuordnungen einzelner Terpene zu bestimmten Effekten gelten in der Suchtmedizin überwiegend als anekdotisch, nicht als klinisch abgesichert. Verlässlicher ist der Terpenwert als Hinweis auf Aroma- und Geschmacksintensität.",
-    "en": null,
+    "en": "Directly, rather little. Assigning individual terpenes to specific effects is largely considered anecdotal in addiction medicine, not clinically confirmed. The terpene value is more reliable as an indicator of aroma and flavor intensity.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/faq/3/answer"
     ]
@@ -9743,7 +9743,7 @@
   },
   "3f4b37576056": {
     "de": "Dokumentiere den Kauf (Screenshots, Kommunikation), prüfe, ob eine Rückbuchung über dein Zahlungsmittel möglich ist, und teile deine Erfahrung auf einer unabhängigen Plattform - genau solche Berichte dienen anderen Käufern später als Warnsignal.",
-    "en": null,
+    "en": "Document the purchase (screenshots, communication), check whether a chargeback via your payment method is possible, and share your experience on an independent platform - reports like these later serve as a warning sign for other buyers.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/faq/3/answer"
     ]
@@ -9771,7 +9771,7 @@
   },
   "757ad65c6518": {
     "de": "Dosierung",
-    "en": null,
+    "en": "Dosage",
     "paths": [
       "wiki/sublingual-tinkturen-richtig-einordnen/tags/3"
     ]
@@ -9792,7 +9792,7 @@
   },
   "142a63554613": {
     "de": "Dosis",
-    "en": null,
+    "en": "Dose",
     "paths": [
       "wiki/dosisprotokolle-ohne-uebertreibung/tags/0"
     ]
@@ -9938,14 +9938,14 @@
   },
   "21d40446b83f": {
     "de": "Drittlabor",
-    "en": null,
+    "en": "Third-party lab",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/2/term"
     ]
   },
   "5277dd168232": {
     "de": "Dry Sift",
-    "en": null,
+    "en": "Dry sift",
     "paths": [
       "wiki/hash-typen-vergleichen/tags/1"
     ]
@@ -10022,7 +10022,7 @@
   },
   "c5f1d6f3c940": {
     "de": "Du findest im Netz tatsächlich Berichte von Käufern, die die Garantie erfolgreich genutzt haben",
-    "en": null,
+    "en": "You can actually find reports online from buyers who successfully used the guarantee",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/2/checklist/3"
     ]
@@ -10065,7 +10065,7 @@
   },
   "3079db5bcf02": {
     "de": "Dünger",
-    "en": null,
+    "en": "nutrients",
     "paths": [
       "wiki/pgr-und-kontaminanten/tags/1"
     ]
@@ -10093,7 +10093,7 @@
   },
   "992afee22f57": {
     "de": "Düngung",
-    "en": null,
+    "en": "feeding",
     "paths": [
       "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/2"
     ]
@@ -10310,7 +10310,7 @@
   },
   "3496b722301e": {
     "de": "Echter Mehltau",
-    "en": null,
+    "en": "powdery mildew",
     "paths": [
       "wiki/echter-mehltau-powdery-mildew/tags/0"
     ]
@@ -10366,7 +10366,7 @@
   },
   "a72572b04966": {
     "de": "Edibles",
-    "en": null,
+    "en": "edibles",
     "paths": [
       "wiki/inhalation-vs-edibles/tags/1",
       "wiki/decarboxylierung-grundlagen-und-fehler/tags/2",
@@ -10438,7 +10438,7 @@
   },
   "8f357cf6cbdb": {
     "de": "Eigenanbau",
-    "en": null,
+    "en": "Home cultivation",
     "paths": [
       "wiki/schwere-metalle-und-aufnahmewege/tags/5"
     ]
@@ -10501,7 +10501,7 @@
   },
   "37f7c52fa31b": {
     "de": "Ein Beispiel aus dem Einzelhandel zeigt, wie groß die Lücke zwischen 'wird verkauft' und 'hält, was draufsteht' sein kann: Das Testlabor SC Labs berichtete, dass über 70 % der CBD-Produkte, die in unlizenzierten Shops im Raum Los Angeles gekauft wurden, bei einer nachträglichen unabhängigen Labortestung durchfielen. Die Zahl stammt aus einer einzelnen Untersuchung eines bestimmten Marktes und lässt sich nicht 1:1 auf jede Region oder Produktkategorie übertragen - sie zeigt aber anschaulich, warum 'wird online verkauft' allein keine Qualitätsaussage ist, und warum ein echtes Drittlabor-COA mehr wert ist als jede Werbeaussage.",
-    "en": null,
+    "en": "An example from retail shows how big the gap between 'is being sold' and 'lives up to the label' can be: the testing lab SC Labs reported that over 70% of CBD products purchased at unlicensed shops in the Los Angeles area failed a subsequent independent lab test. This figure comes from a single study of a specific market and can't be applied 1:1 to every region or product category - but it illustrates vividly why 'sold online' alone is not a statement of quality, and why a genuine third-party lab COA is worth more than any advertising claim.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/6/content/0"
     ]
@@ -10795,7 +10795,7 @@
   },
   "db75c65690b3": {
     "de": "Ein hoher gemeldeter Terpenwert ist letztlich nur so vertrauenswürdig wie drei Faktoren im Hintergrund: wie frisch die Probe beim Testzeitpunkt tatsächlich war, ob das Labor terpen-gerechte statt nur cannabinoid-gerechte Probenhandhabung verwendet hat, und ob der Wert als quantitative Konzentration statt als normalisierter Prozentanteil ausgewiesen ist.",
-    "en": null,
+    "en": "A high reported terpene value is ultimately only as trustworthy as three background factors: how fresh the sample actually was at the time of testing, whether the lab used terpene-appropriate rather than merely cannabinoid-appropriate sample handling, and whether the value is reported as a quantitative concentration rather than a normalized percentage.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/5/content/0"
     ]
@@ -10809,7 +10809,7 @@
   },
   "94ce70068b84": {
     "de": "Ein hoher Terpenwert sagt vor allem etwas über Aroma – nicht zuverlässig etwas über Wirkung.",
-    "en": null,
+    "en": "A high terpene value mainly says something about aroma – not reliably something about effect.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/keyTakeaways/3"
     ]
@@ -11166,14 +11166,14 @@
   },
   "1c2ab8e5b0dc": {
     "de": "Ein Terpenwert relativ zur Summe aller gemessenen Terpene – kann echte Verluste verschleiern, weil verbleibende Anteile rechnerisch automatisch steigen.",
-    "en": null,
+    "en": "A terpene value relative to the sum of all measured terpenes – can mask real losses, because remaining proportions automatically increase in the calculation.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/glossary/4/definition"
     ]
   },
   "941bfcef6e62": {
     "de": "Ein Testlabor ohne wirtschaftliche Verbindung zum Hersteller oder Verkäufer des getesteten Produkts - Voraussetzung für ein unabhängig aussagekräftiges Ergebnis.",
-    "en": null,
+    "en": "A testing lab with no financial connection to the manufacturer or seller of the tested product - a prerequisite for an independently meaningful result.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/2/definition"
     ]
@@ -11187,7 +11187,7 @@
   },
   "a4ac06d1f118": {
     "de": "Ein typisches Terpenpanel listet die Einzelanteile der gemessenen Terpene sowie eine Summe, meist als 'Total Terpenes' bezeichnet.",
-    "en": null,
+    "en": "A typical terpene panel lists the individual shares of the measured terpenes as well as a sum, usually referred to as 'Total Terpenes'.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/1/content/0"
     ]
@@ -11208,14 +11208,14 @@
   },
   "4c0588a65d8c": {
     "de": "Ein Unterschied wird leicht übersehen: Ein Anbieter ganz ohne Keimgarantie ist ein kleineres Warnsignal als einer, der zwar mit '100 % Keimgarantie' wirbt, den Anspruch aber durch einen absichtlich umständlichen Einlöseprozess (unrealistische Fristen, widersprüchliche Anforderungen, keine Reaktion auf Anfragen) praktisch unbrauchbar macht. Letzteres ist eigentlich das größere Warnsignal, weil es zeigt, dass die Werbeaussage nicht ernst gemeint ist.",
-    "en": null,
+    "en": "One distinction is easy to overlook: a vendor with no germination guarantee at all is a smaller warning sign than one that advertises a '100% germination guarantee' but makes the claim practically unusable through a deliberately cumbersome redemption process (unrealistic deadlines, contradictory requirements, no response to inquiries). The latter is actually the bigger warning sign, because it shows the advertising claim isn't meant seriously.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/2/content/1"
     ]
   },
   "1e9a16c19bc3": {
     "de": "Ein Unterschied zwischen den beiden Lösungsmitteln, der in der Szene häufig genannt wird: PHO arbeitet mit etwas niedrigerer Temperatur und höherem Druck als BHO, was laut Brancheneinschätzung (nicht unabhängig laborseitig bestätigt) flüchtige Terpene besser erhalten soll. Das wird teils als Grund genannt, warum PHO-Extrakte häufiger in weicheren, budder-artigen Texturen enden.",
-    "en": null,
+    "en": "A difference between the two solvents that is often mentioned in the scene: PHO operates at a somewhat lower temperature and higher pressure than BHO, which according to industry assessment (not independently confirmed by lab testing) is said to better preserve volatile terpenes. This is sometimes cited as the reason PHO extracts more often end up in softer, budder-like textures.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/1/content/1"
     ]
@@ -11467,14 +11467,14 @@
   },
   "066a6c4d0313": {
     "de": "Eine echte Keimgarantie verlangt meist Fotobeweis ausgefallener Samen (z. B. per Papiertuch-Methode) innerhalb eines festen Zeitfensters - eine Garantie, die auf dem Papier existiert, aber durch einen absichtlich umständlichen Einlöseprozess praktisch unbrauchbar bleibt, ist selbst ein eigenes Warnsignal.",
-    "en": null,
+    "en": "A genuine germination guarantee usually requires photo proof of failed seeds (e.g. via the paper towel method) within a fixed time window - a guarantee that exists on paper but remains practically unusable due to a deliberately cumbersome redemption process is itself a warning sign.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/keyTakeaways/1"
     ]
   },
   "dbcb78fcd75b": {
     "de": "Eine eindeutige Kennung für eine bestimmte Produktions- oder Erntecharge, über die sich ein COA einem konkreten physischen Produkt zuordnen lässt.",
-    "en": null,
+    "en": "A unique identifier for a specific production or harvest batch, which allows a COA to be matched to a concrete physical product.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/4/definition"
     ]
@@ -11558,7 +11558,7 @@
   },
   "f831f5b913e0": {
     "de": "Eine gute Keimrate liegt community-üblich bei 80-95 % oder höher; konstant unter 80 % über mehrere Bestellungen bei derselben Quelle ist ein klares Warnsignal, kein Einzelfall-Pech.",
-    "en": null,
+    "en": "A good germination rate is commonly 80-95% or higher in the community; consistently under 80% across multiple orders from the same source is a clear warning sign, not just bad luck in a single case.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/keyTakeaways/0"
     ]
@@ -11712,7 +11712,7 @@
   },
   "0b0894ceb81c": {
     "de": "Eine seriöse Keimgarantie verlangt in der Regel einen Nachweis - meist Fotos der ausgefallenen Samen, oft nach der klassischen Papiertuch-Methode - innerhalb eines klar definierten Zeitfensters nach dem Kauf. Als Ersatz gibt es dann üblicherweise Nachlieferung oder eine Gutschrift.",
-    "en": null,
+    "en": "A reputable germination guarantee usually requires proof - typically photos of the failed seeds, often using the classic paper towel method - within a clearly defined time window after purchase. Replacement usually comes as a resend or a credit.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/2/content/0"
     ]
@@ -11859,7 +11859,7 @@
   },
   "05bf956cc407": {
     "de": "Einordnung",
-    "en": null,
+    "en": "Classification",
     "paths": [
       "wiki/myrcen-limonen-caryophyllen-einordnung/tags/3"
     ]
@@ -11929,7 +11929,7 @@
   },
   "1a34477191ef": {
     "de": "Einzelpflanze",
-    "en": null,
+    "en": "Single plant",
     "paths": [
       "wiki/outdoor-anbau-fuer-einsteiger/tags/5"
     ]
@@ -11957,7 +11957,7 @@
   },
   "3e93030ad13f": {
     "de": "Eisen",
-    "en": null,
+    "en": "iron",
     "paths": [
       "wiki/eisenmangel/tags/0"
     ]
@@ -12126,7 +12126,7 @@
   },
   "3d0595ece7bd": {
     "de": "Entscheidend ist das Muster, nicht der Einzelfall: Wenn du bei mehreren Bestellungen desselben Anbieters wiederholt deutlich unter 80 % landest, ist das ein Warnsignal für die Quelle - nicht für deine Anbautechnik.",
-    "en": null,
+    "en": "What matters is the pattern, not the single case: if you repeatedly land well below 80% across multiple orders from the same vendor, that's a warning sign for the source - not for your growing technique.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/1/content/1"
     ]
@@ -12147,7 +12147,7 @@
   },
   "84b5bbbb43d1": {
     "de": "Entscheidung",
-    "en": null,
+    "en": "Decision",
     "paths": [
       "wiki/erntefenster-trichomreife/tags/3"
     ]
@@ -12183,7 +12183,7 @@
   },
   "19a45e4da599": {
     "de": "Entweder, weil das Panel dieses Terpen gar nicht testet – Standardpanels decken nur 20 bis 30 von über 150 möglichen Terpenen ab – oder weil die Menge unterhalb der Nachweisgrenze liegt und deshalb als 'ND' erscheint.",
-    "en": null,
+    "en": "Either because the panel doesn't test for this terpene at all – standard panels cover only 20 to 30 of over 150 possible terpenes – or because the amount is below the detection limit and therefore shows up as 'ND'.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/faq/2/answer"
     ]
@@ -12218,14 +12218,14 @@
   },
   "726fbfb5d3af": {
     "de": "Er sagt vor allem etwas über Aroma und Geschmacksintensität aus, nicht zuverlässig über Wirkung oder Sicherheit. Zusätzlich ist er nur so aussagekräftig wie Probenfrische und Messmethode dahinter.",
-    "en": null,
+    "en": "It mainly says something about aroma and flavor intensity, not reliably about effect or safety. It's also only as meaningful as the sample freshness and measurement method behind it.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/faq/1/answer"
     ]
   },
   "3c9fca9c07f7": {
     "de": "Erde",
-    "en": null,
+    "en": "Soil",
     "paths": [
       "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/7",
       "wiki/substrat-vergleich-coco-erde-hydro/tags/5"
@@ -12509,7 +12509,7 @@
   },
   "1b22bd5c46a3": {
     "de": "Erntezeitpunkt",
-    "en": null,
+    "en": "Harvest timing",
     "paths": [
       "wiki/trichom-reifegrad-bilddiagnose/tags/1",
       "wiki/erntefenster-trichomreife/tags/0"
@@ -12548,7 +12548,7 @@
   },
   "278d53800370": {
     "de": "Ersatz (Nachlieferung/Gutschrift) ist klar zugesagt, nicht nur 'wird geprüft'",
-    "en": null,
+    "en": "Replacement (resend/credit) is clearly promised, not just 'will be reviewed'",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/2/checklist/2"
     ]
@@ -12667,7 +12667,7 @@
   },
   "c6c35d2c65c3": {
     "de": "Ertrag",
-    "en": null,
+    "en": "Yield",
     "paths": [
       "wiki/substrat-vergleich-coco-erde-hydro/tags/8",
       "wiki/indoor-outdoor-anbau-vergleich/tags/3"
@@ -12871,7 +12871,7 @@
   },
   "d5b1fb32ca8a": {
     "de": "exakte Lineage/Züchter nennbar, nicht nur vage Sortennamen",
-    "en": null,
+    "en": "exact lineage/breeder can be named, not just vague strain names",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/quickFacts/3/value"
     ]
@@ -12885,7 +12885,7 @@
   },
   "3219af24e5e7": {
     "de": "Extrakte",
-    "en": null,
+    "en": "Extracts",
     "paths": [
       "wiki/kontaminantenprofile-bei-extrakten/tags/0"
     ]
@@ -12997,7 +12997,7 @@
   },
   "a367707c51d4": {
     "de": "Fahrtüchtigkeit",
-    "en": null,
+    "en": "Fitness to drive",
     "paths": [
       "wiki/inhalation-set-setting-und-harm-reduction/tags/3"
     ]
@@ -13222,7 +13222,7 @@
   },
   "d4086a1f0a09": {
     "de": "Fehlersuche",
-    "en": null,
+    "en": "Troubleshooting",
     "paths": [
       "wiki/blattsymptom-troubleshooter/tags/4"
     ]
@@ -13539,7 +13539,7 @@
   },
   "e9014307a419": {
     "de": "Fortgeschritten",
-    "en": null,
+    "en": "Advanced",
     "paths": [
       "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/2"
     ]
@@ -13628,7 +13628,7 @@
   },
   "e29702f43f62": {
     "de": "Frankliniella",
-    "en": null,
+    "en": "Frankliniella",
     "paths": [
       "wiki/thripse/tags/3"
     ]
@@ -13677,7 +13677,7 @@
   },
   "783cf4bb6ad1": {
     "de": "Früherkennung",
-    "en": null,
+    "en": "Early detection",
     "paths": [
       "wiki/stressmarker-frueh-erkennen/tags/2"
     ]
@@ -13968,7 +13968,7 @@
   },
   "008f5b40b3ef": {
     "de": "Fusarium",
-    "en": null,
+    "en": "Fusarium",
     "paths": [
       "wiki/fusarium/tags/0"
     ]
@@ -14045,7 +14045,7 @@
   },
   "4caa25ff05ea": {
     "de": "Garantie verlangt klaren Nachweis (z. B. Fotos), keine vagen Formulierungen",
-    "en": null,
+    "en": "Guarantee requires clear proof (e.g., photos), no vague wording",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/2/checklist/0"
     ]
@@ -14059,7 +14059,7 @@
   },
   "d81f9bcfd660": {
     "de": "Garten",
-    "en": null,
+    "en": "Garden",
     "paths": [
       "wiki/outdoor-anbau-fuer-einsteiger/tags/4"
     ]
@@ -14269,7 +14269,7 @@
   },
   "2981d44935b9": {
     "de": "Genau das macht bekannte, teure Züchternamen zum bevorzugten Ziel für Fälschungen: Der Markenname allein rechtfertigt einen Preisaufschlag, und weil niemand die Echtheit vor dem Grow prüfen kann, lohnt sich das Kopieren des Katalogs für unseriöse Anbieter besonders bei genau diesen Premium-Linien.",
-    "en": null,
+    "en": "That's exactly what makes well-known, expensive breeder names a preferred target for counterfeits: the brand name alone justifies a price premium, and because no one can verify authenticity before the grow, copying the catalog is especially worthwhile for disreputable vendors precisely with these premium lines.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/5/content/1"
     ]
@@ -14290,7 +14290,7 @@
   },
   "b4b108dcf170": {
     "de": "Genau dieser Punkt steckt auch hinter der bereits erwähnten Empfehlung von Raeber et al. (2025, siehe Artikel Terpen-Oxidationsprodukte und ihre Bedeutung): Terpene sollten als quantitative Konzentration statt als normalisierter Prozentanteil angegeben werden, weil Normalisierung echte Verluste als bloße 'Profilverschiebung' tarnen kann.",
-    "en": null,
+    "en": "This exact point is also behind the previously mentioned recommendation from Raeber et al. (2025, see article Terpene oxidation products and their significance): terpenes should be reported as a quantitative concentration rather than a normalized percentage, because normalization can disguise real losses as a mere 'profile shift'.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/0/content/2"
     ]
@@ -14318,7 +14318,7 @@
   },
   "27265698cfc9": {
     "de": "Genetik",
-    "en": null,
+    "en": "genetics",
     "paths": [
       "wiki/genetik-und-phaenotyp-selektion/tags/0",
       "wiki/feminisiert-vs-regular-vs-autoflower/tags/3",
@@ -14797,7 +14797,7 @@
   },
   "83ad3c4eaace": {
     "de": "Glasartige, durchscheinende, brüchige Textur - entsteht durch minimale Bewegung des Materials während des Purge.",
-    "en": null,
+    "en": "Glass-like, translucent, brittle texture - results from minimal movement of the material during the purge.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/10/definition"
     ]
@@ -14867,7 +14867,7 @@
   },
   "2d65242fd1d4": {
     "de": "Glossar",
-    "en": null,
+    "en": "Glossary",
     "paths": [
       "wiki/full-melt-und-marketingsprache/tags/4"
     ]
@@ -14930,7 +14930,7 @@
   },
   "1bace9a59a13": {
     "de": "Grenzwerte",
-    "en": null,
+    "en": "limits",
     "paths": [
       "wiki/coa-richtig-lesen/tags/3"
     ]
@@ -14958,7 +14958,7 @@
   },
   "de7155b58fc1": {
     "de": "Grobe Richtwerte, die in der Branche kursieren (informelle Schätzungen, keine amtlichen Normwerte): Blüte liegt häufig bei etwa 1 bis 4 % Gesamtterpenen bezogen auf das Trockengewicht. Werte um 2 bis 3 % gelten bei vielen Händlern als solide und aromatisch, Werte über 3 % werden informell oft als außergewöhnlich beworben.",
-    "en": null,
+    "en": "Rough reference values circulating in the industry (informal estimates, not official standard values): flowering typically runs at about 1 to 4% total terpenes relative to dry weight. Values around 2 to 3% are considered solid and aromatic by many sellers, values above 3% are often informally marketed as exceptional.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/1/content/1"
     ]
@@ -14979,14 +14979,14 @@
   },
   "b97dc5270c17": {
     "de": "Grow",
-    "en": null,
+    "en": "Grow",
     "paths": [
       "wiki/stressmarker-frueh-erkennen/tags/3"
     ]
   },
   "f282f486c325": {
     "de": "Grow Log",
-    "en": null,
+    "en": "Grow Log",
     "paths": [
       "wiki/grow-log-und-kpi-dashboard/tags/0"
     ]
@@ -15042,7 +15042,7 @@
   },
   "aa7034efa95f": {
     "de": "Gute Keimrate",
-    "en": null,
+    "en": "Good germination rate",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/quickFacts/0/label"
     ]
@@ -15397,7 +15397,7 @@
   },
   "62ed9622006f": {
     "de": "Hash-Qualität",
-    "en": null,
+    "en": "Hash quality",
     "paths": [
       "wiki/full-melt-und-marketingsprache/tags/3"
     ]
@@ -15432,7 +15432,7 @@
   },
   "82b38b92c366": {
     "de": "häufig zitiert 98-99,9 % THCA (Richtwert, keine feste Norm)",
-    "en": null,
+    "en": "commonly cited 98-99.9% THCA (reference value, not a fixed standard)",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/quickFacts/2/value"
     ]
@@ -15648,14 +15648,14 @@
   },
   "0222dce66fa6": {
     "de": "HCFSE",
-    "en": null,
+    "en": "HCFSE",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/glossary/1/term"
     ]
   },
   "c99cca7231fb": {
     "de": "HCFSE (High Cannabinoid Full Spectrum Extract) ist das Gegenstück in derselben Produktfamilie: Der Prozess zielt stattdessen auf einen möglichst hohen Cannabinoidanteil, häufig um 90 % THCA, mit einer eher zuckrigen, diamantartigen Textur statt der eher sauce- oder flüssigkeitsartigen Konsistenz von HTFSE.",
-    "en": null,
+    "en": "HCFSE (High Cannabinoid Full Spectrum Extract) is the counterpart within the same product family: the process instead targets the highest possible cannabinoid share, often around 90% THCA, with a more sugary, diamond-like texture instead of the more sauce- or liquid-like consistency of HTFSE.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/2/content/1"
     ]
@@ -15669,7 +15669,7 @@
   },
   "1055bd96c630": {
     "de": "Headspace-Methode",
-    "en": null,
+    "en": "Headspace method",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/glossary/3/term"
     ]
@@ -15755,21 +15755,21 @@
   },
   "28bfcb8cc2c0": {
     "de": "High Cannabinoid Full Spectrum Extract – Gegenstück zu HTFSE, prozessiert für maximalen Cannabinoidgehalt (oft ~90 % THCA).",
-    "en": null,
+    "en": "High Cannabinoid Full Spectrum Extract – counterpart to HTFSE, processed for maximum cannabinoid content (often ~90% THCA).",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/glossary/1/definition"
     ]
   },
   "ba5bb16a1b96": {
     "de": "High Terpene Full Spectrum Extract – ein Extrakt aus frisch gefrorenem Pflanzenmaterial, hergestellt, um möglichst viele Terpene zu erhalten. Typisch sind etwa 13 bis 40 % Terpene bei rund 50 % THCA, mit einer eher flüssigen bis sauce-artigen Textur.",
-    "en": null,
+    "en": "High Terpene Full Spectrum Extract – an extract made from fresh-frozen plant material, processed to retain as many terpenes as possible. Typical values are around 13 to 40% terpenes at roughly 50% THCA, with a texture ranging from liquid to sauce-like.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/faq/0/answer"
     ]
   },
   "4a34b00cd2cf": {
     "de": "High Terpene Full Spectrum Extract – Extrakt aus frisch gefrorenem Material, prozessiert für maximalen Terpenerhalt statt maximalen Cannabinoidgehalt.",
-    "en": null,
+    "en": "High Terpene Full Spectrum Extract – extract from fresh-frozen material, processed for maximum terpene retention rather than maximum cannabinoid content.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/glossary/0/definition"
     ]
@@ -15860,7 +15860,7 @@
   },
   "e627db2a71d7": {
     "de": "Hitzestress",
-    "en": null,
+    "en": "heat stress",
     "paths": [
       "wiki/hitzestress/tags/0"
     ]
@@ -15902,7 +15902,7 @@
   },
   "07ea0a208064": {
     "de": "HLVd",
-    "en": null,
+    "en": "HLVd",
     "paths": [
       "wiki/hop-latent-viroid-hlvd/tags/0"
     ]
@@ -16099,7 +16099,7 @@
   },
   "bc7ce2333469": {
     "de": "How to Grow",
-    "en": null,
+    "en": "How to Grow",
     "paths": [
       "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/0",
       "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/0",
@@ -16159,35 +16159,35 @@
   },
   "1a3cb079219e": {
     "de": "HTFSE",
-    "en": null,
+    "en": "HTFSE",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/glossary/0/term"
     ]
   },
   "884de76dea2b": {
     "de": "HTFSE steht für High Terpene Full Spectrum Extract, ein Begriff, der ursprünglich von der Firma Extractioneering aus Oregon geprägt wurde. Definiert ist er über den Prozess, nicht über die Genetik: Ausgangsmaterial ist frisch gefrorenes statt getrocknetes und ausgehärtetes Pflanzenmaterial, extrahiert unter Bedingungen, die möglichst wenig Wachse und Fette mit herauslösen – genau diese Begleitstoffe würden sonst die empfindlichen Terpene beim späteren Prozessieren zusätzlich belasten. Typisch für HTFSE sind etwa 13 bis 40 % Terpene bei rund 50 % THCA – die Terpenerhaltung wird also bewusst mit einem niedrigeren rohen Cannabinoidgehalt erkauft.",
-    "en": null,
+    "en": "HTFSE stands for High Terpene Full Spectrum Extract, a term originally coined by the Oregon-based company Extractioneering. It is defined by the process, not by the genetics: the starting material is fresh-frozen rather than dried and cured plant material, extracted under conditions designed to pull out as few waxes and fats as possible – these companion substances would otherwise put additional strain on the sensitive terpenes during later processing. HTFSE typically contains about 13 to 40% terpenes at around 50% THCA – terpene preservation is thus deliberately traded for a lower raw cannabinoid content.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/2/content/0"
     ]
   },
   "5606403eb54c": {
     "de": "HTFSE und HCFSE sind keine unterschiedlichen Genetiken, sondern zwei Enden desselben Extraktionsspektrums – Terpenerhalt versus maximaler Cannabinoidgehalt.",
-    "en": null,
+    "en": "HTFSE and HCFSE are not different genetics, but two ends of the same extraction spectrum – terpene preservation versus maximum cannabinoid content.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/keyTakeaways/1"
     ]
   },
   "395be09b88bf": {
     "de": "HTFSE und HCFSE: zwei Enden desselben Spektrums",
-    "en": null,
+    "en": "HTFSE and HCFSE: two ends of the same spectrum",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/2/heading"
     ]
   },
   "89e580db5f78": {
     "de": "HTFSE-Terpenanteil",
-    "en": null,
+    "en": "HTFSE terpene share",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/quickFacts/1/label"
     ]
@@ -16222,7 +16222,7 @@
   },
   "80f6b2824f81": {
     "de": "Hydro",
-    "en": null,
+    "en": "Hydro",
     "paths": [
       "wiki/substrat-vergleich-coco-erde-hydro/tags/4"
     ]
@@ -16285,14 +16285,14 @@
   },
   "de317cdfc0a7": {
     "de": "Hydroponik",
-    "en": null,
+    "en": "hydroponics",
     "paths": [
       "wiki/wurzelfaeule/tags/2"
     ]
   },
   "542cc9c50872": {
     "de": "Hygiene",
-    "en": null,
+    "en": "Sanitation",
     "paths": [
       "wiki/integrierte-schaedlingspraevention-grow/tags/1",
       "wiki/mutterpflanzen-und-clone-hygiene/tags/2"
@@ -16321,7 +16321,7 @@
   },
   "d078d3051e91": {
     "de": "Hypothese, dass Cannabinoide und Terpene gemeinsam anders oder stärker wirken als isoliert; biologisch plausibel, aber bislang klinisch nicht bestätigt.",
-    "en": null,
+    "en": "Hypothesis that cannabinoids and terpenes act differently or more strongly together than in isolation; biologically plausible, but not yet clinically confirmed.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/glossary/3/definition"
     ]
@@ -16335,7 +16335,7 @@
   },
   "09de04691d8e": {
     "de": "Ice Water Hash",
-    "en": null,
+    "en": "Ice water hash",
     "paths": [
       "wiki/bubble-hash-qualitaetskriterien/tags/1"
     ]
@@ -16679,7 +16679,7 @@
   },
   "61dd40585c6d": {
     "de": "In der Grower-Community gilt eine Keimrate von 80-95 % oder mehr als guter Standard - keine gesetzlich geprüfte Laborzahl, sondern ein Erfahrungswert, der sich über viele Foren und Grower-Berichte hinweg wiederholt. Einzelne Ausreißer nach unten passieren jedem Anbieter mal; auch Lagerung beim Käufer und Keimmethode spielen mit rein.",
-    "en": null,
+    "en": "In the grower community, a germination rate of 80-95% or higher is considered good standard - not a legally verified lab figure, but an experience-based value that repeats across many forums and grower reports. Individual outliers on the low side happen to every vendor occasionally; storage on the buyer's side and germination method also play a role.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/1/content/0"
     ]
@@ -16935,7 +16935,7 @@
   },
   "a9cb38b7dd3c": {
     "de": "Indoor",
-    "en": null,
+    "en": "Indoor",
     "paths": [
       "wiki/indoor-outdoor-anbau-vergleich/tags/0"
     ]
@@ -17286,7 +17286,7 @@
   },
   "649f6e9af32a": {
     "de": "Ist der Entourage-Effekt wissenschaftlich bewiesen?",
-    "en": null,
+    "en": "Is the entourage effect scientifically proven?",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/faq/1/question"
     ]
@@ -17363,7 +17363,7 @@
   },
   "459def22d954": {
     "de": "Ist ein hoher Terpenwert automatisch ein Qualitätsmerkmal?",
-    "en": null,
+    "en": "Is a high terpene value automatically a quality feature?",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/faq/1/question"
     ]
@@ -17398,7 +17398,7 @@
   },
   "df80bcfecce8": {
     "de": "Ist eine niedrige Keimrate immer die Schuld des Anbieters?",
-    "en": null,
+    "en": "Is a low germination rate always the provider's fault?",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/faq/0/question"
     ]
@@ -17496,7 +17496,7 @@
   },
   "8b2a6ddc4f17": {
     "de": "Ist Live Resin dasselbe wie Live Rosin, nur anders geschrieben?",
-    "en": null,
+    "en": "Is live resin the same as live rosin, just spelled differently?",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/faq/0/question"
     ]
@@ -17918,7 +17918,7 @@
   },
   "af94f68441b4": {
     "de": "Kalium",
-    "en": null,
+    "en": "potassium",
     "paths": [
       "wiki/kaliummangel/tags/0",
       "wiki/kalium-ueberschuss/tags/0"
@@ -18060,7 +18060,7 @@
   },
   "8c76506141f5": {
     "de": "Kann ich an einem einzelnen Minor-Terpen eine bestimmte Sorte sicher erkennen?",
-    "en": null,
+    "en": "Can I reliably identify a specific strain from a single minor terpene?",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/faq/3/question"
     ]
@@ -18272,14 +18272,14 @@
   },
   "c16f986527ff": {
     "de": "Keimgarantie",
-    "en": null,
+    "en": "Germination guarantee",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/5/term"
     ]
   },
   "148afdb44abf": {
     "de": "Keimgarantien: worauf es wirklich ankommt",
-    "en": null,
+    "en": "Germination guarantees: what really matters",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/2/heading"
     ]
@@ -18293,14 +18293,14 @@
   },
   "4099eec7fbe5": {
     "de": "Keimrate",
-    "en": null,
+    "en": "Germination rate",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/0/term"
     ]
   },
   "3dd40853f167": {
     "de": "Keimrate: der erste, ehrliche Realitätscheck",
-    "en": null,
+    "en": "Germination rate: the first, honest reality check",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/1/heading"
     ]
@@ -18342,7 +18342,7 @@
   },
   "998e19388857": {
     "de": "Keine der hier genannten Prüfpunkte ist für sich allein ein Beweis für Betrug - bewerte sie in der Kombination, nicht isoliert.",
-    "en": null,
+    "en": "None of the checkpoints listed here is proof of fraud on its own - evaluate them in combination, not in isolation.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/warnings/0"
     ]
@@ -18440,7 +18440,7 @@
   },
   "107a294363a2": {
     "de": "Kernproblem der Terpenanalytik",
-    "en": null,
+    "en": "Core problem of terpene analytics",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/quickFacts/2/label"
     ]
@@ -18475,7 +18475,7 @@
   },
   "0c29740160ae": {
     "de": "Kif",
-    "en": null,
+    "en": "Kif",
     "paths": [
       "wiki/hash-typen-vergleichen/tags/7"
     ]
@@ -18524,7 +18524,7 @@
   },
   "79f73e5831ef": {
     "de": "Klassifikation",
-    "en": null,
+    "en": "Classification",
     "paths": [
       "wiki/hash-typen-vergleichen/tags/0"
     ]
@@ -18643,7 +18643,7 @@
   },
   "f7a6e5b531e8": {
     "de": "Klima",
-    "en": null,
+    "en": "Climate",
     "paths": [
       "wiki/vpd-einfach-erklaert/tags/1",
       "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/5",
@@ -18791,7 +18791,7 @@
   },
   "8923109006de": {
     "de": "Konkrete Lineage-/Züchterangaben statt nur vager Marketingnamen",
-    "en": null,
+    "en": "Concrete lineage/breeder details instead of just vague marketing names",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/3/checklist/4"
     ]
@@ -18819,7 +18819,7 @@
   },
   "d5ab9f341ba4": {
     "de": "Konsistenz",
-    "en": null,
+    "en": "Consistency",
     "paths": [
       "wiki/how-to-grow-cannabis-profi-tutorial/tags/4"
     ]
@@ -18847,7 +18847,7 @@
   },
   "00b09af6aac1": {
     "de": "konstant unter 80 % bei mehreren Bestellungen",
-    "en": null,
+    "en": "consistently under 80% across multiple orders",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/quickFacts/1/value"
     ]
@@ -18889,7 +18889,7 @@
   },
   "3cdc809bcee0": {
     "de": "Kontaminanten",
-    "en": null,
+    "en": "contaminants",
     "paths": [
       "wiki/coa-richtig-lesen/tags/2",
       "wiki/kontaminantenprofile-bei-extrakten/tags/1"
@@ -19023,7 +19023,7 @@
   },
   "6375a9b292f8": {
     "de": "Konzentrate",
-    "en": null,
+    "en": "Concentrates",
     "paths": [
       "wiki/inhalation-set-setting-und-harm-reduction/tags/2",
       "wiki/concentrate-categorization-fuer-plattformen/tags/3"
@@ -19045,7 +19045,7 @@
   },
   "3d77ffe2d782": {
     "de": "Konzentrate streuen deutlich stärker – grob im Bereich von 3 bis 12 %. Live Resin und Live Rosin, die gezielt auf Terpenerhalt ausgelegt sind, können 8 bis über 20 % erreichen.",
-    "en": null,
+    "en": "Concentrates vary much more widely – roughly in the range of 3 to 12%. Live resin and live rosin, which are specifically designed to preserve terpenes, can reach 8 to over 20%.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/1/content/2"
     ]
@@ -19073,7 +19073,7 @@
   },
   "993fdb851758": {
     "de": "Körnige, feuchte, sandartige Textur, die durch trockene Kristallisation ohne aktives Aufschlagen entsteht.",
-    "en": null,
+    "en": "Grainy, moist, sand-like texture that results from dry crystallization without active whipping.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/7/definition"
     ]
@@ -19276,7 +19276,7 @@
   },
   "64cf62101cee": {
     "de": "Krankheiten",
-    "en": null,
+    "en": "Diseases",
     "paths": [
       "wiki/fusarium/tags/1",
       "wiki/hop-latent-viroid-hlvd/tags/3"
@@ -19291,7 +19291,7 @@
   },
   "1a80c8534b5e": {
     "de": "Kristallines, nahezu reines THCA, das unter bestimmten Bedingungen aus der Lösung auskristallisiert. Oft mit Sauce kombiniert als 'Diamond Sauce' verkauft.",
-    "en": null,
+    "en": "Crystalline, nearly pure THCA that crystallizes out of solution under certain conditions. Often combined with sauce and sold as 'Diamond Sauce'.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/6/definition"
     ]
@@ -19396,7 +19396,7 @@
   },
   "03fbe9966696": {
     "de": "Kurz erklärt: BHO/PHO vs. Rosin",
-    "en": null,
+    "en": "Briefly explained: BHO/PHO vs. Rosin",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/simpleExplainers/0/title"
     ]
@@ -19700,7 +19700,7 @@
   },
   "6a43425a66a8": {
     "de": "Kurz erklärt: HTFSE vs. HCFSE",
-    "en": null,
+    "en": "Briefly explained: HTFSE vs. HCFSE",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/simpleExplainers/1/title"
     ]
@@ -19735,7 +19735,7 @@
   },
   "b677ff41f166": {
     "de": "Kurz erklärt: Keimrate",
-    "en": null,
+    "en": "Briefly explained: germination rate",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/simpleExplainers/0/title"
     ]
@@ -19805,7 +19805,7 @@
   },
   "ba4c7e6b623d": {
     "de": "Kurz erklärt: Lineage",
-    "en": null,
+    "en": "Briefly explained: lineage",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/simpleExplainers/2/title"
     ]
@@ -19819,7 +19819,7 @@
   },
   "8f56a4bde615": {
     "de": "Kurz erklärt: Live Resin vs. Live Rosin",
-    "en": null,
+    "en": "Briefly explained: live resin vs. live rosin",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/simpleExplainers/1/title"
     ]
@@ -20079,7 +20079,7 @@
   },
   "74b58a5cab6b": {
     "de": "Kurz erklärt: Total Terpenes",
-    "en": null,
+    "en": "Briefly explained: Total Terpenes",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/simpleExplainers/0/title"
     ]
@@ -20773,14 +20773,14 @@
   },
   "0e66373f45dc": {
     "de": "Label",
-    "en": null,
+    "en": "Label",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/tags/1"
     ]
   },
   "7b6b969c8bc4": {
     "de": "Labor",
-    "en": null,
+    "en": "lab",
     "paths": [
       "wiki/coa-richtig-lesen/tags/1",
       "wiki/kontaminantenprofile-bei-extrakten/tags/4"
@@ -20802,7 +20802,7 @@
   },
   "3f056af8b7a3": {
     "de": "Laborvergleich",
-    "en": null,
+    "en": "Lab comparison",
     "paths": [
       "wiki/interlaborvergleich-und-ringtests/tags/2"
     ]
@@ -20865,7 +20865,7 @@
   },
   "7a1990c0e88c": {
     "de": "Lagerung",
-    "en": null,
+    "en": "Storage",
     "paths": [
       "wiki/wasseraktivitaet-und-curing/tags/2",
       "wiki/thc-zu-cbn-abbau-und-oxidation/tags/3",
@@ -21038,7 +21038,7 @@
   },
   "69c9b97390b8": {
     "de": "Lebenszyklus",
-    "en": null,
+    "en": "life cycle",
     "paths": [
       "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/3"
     ]
@@ -21287,7 +21287,7 @@
   },
   "0d8d541d98f3": {
     "de": "Licht",
-    "en": null,
+    "en": "Light",
     "paths": [
       "wiki/dli-und-photoperiode/tags/2",
       "wiki/indoor-outdoor-anbau-vergleich/tags/2"
@@ -21358,7 +21358,7 @@
   },
   "2ba1cf50047d": {
     "de": "Lichtdichtigkeit",
-    "en": null,
+    "en": "Light tightness",
     "paths": [
       "wiki/bluetephase-ernaehrung-und-pflege/tags/8"
     ]
@@ -21416,7 +21416,7 @@
   },
   "bdbc808a91f0": {
     "de": "Lichtstress",
-    "en": null,
+    "en": "Light stress",
     "paths": [
       "wiki/lichtstress-und-canopy-management/tags/2"
     ]
@@ -21535,7 +21535,7 @@
   },
   "28a1486d42a6": {
     "de": "Limonen",
-    "en": null,
+    "en": "Limonene",
     "paths": [
       "wiki/myrcen-limonen-caryophyllen-einordnung/tags/1"
     ]
@@ -21549,14 +21549,14 @@
   },
   "044baaecb29f": {
     "de": "Lineage",
-    "en": null,
+    "en": "Lineage",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/3/term"
     ]
   },
   "8652e89cec5a": {
     "de": "Linien",
-    "en": null,
+    "en": "Lines",
     "paths": [
       "wiki/genetische-stabilitaet-ueber-generationen/tags/3"
     ]
@@ -21612,7 +21612,7 @@
   },
   "b2d8cf78d732": {
     "de": "Live Resin",
-    "en": null,
+    "en": "Live Resin",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/tags/2",
       "wiki/concentrate-categorization-fuer-plattformen/quickFacts/1/label",
@@ -21621,14 +21621,14 @@
   },
   "90df0a7fe8f7": {
     "de": "Live Resin (dieser Artikel): Frisch geerntetes Pflanzenmaterial wird nie getrocknet, sondern direkt eingefroren - aus diesem frisch gefrorenen Material wird anschließend mit Lösungsmittel (Butan oder Propan) extrahiert. Ein BHO/PHO-Produkt mit fresh-frozen Ausgangsmaterial.",
-    "en": null,
+    "en": "Live Resin (this article): Freshly harvested plant material is never dried, but frozen directly - this fresh-frozen material is then extracted using a solvent (butane or propane). A BHO/PHO product with fresh-frozen starting material.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/2/content/1"
     ]
   },
   "385afe675a5a": {
     "de": "Live Resin vs. Live Rosin: der Namens-Zwilling, der für die meiste Verwirrung sorgt",
-    "en": null,
+    "en": "Live Resin vs. Live Rosin: the name twin that causes the most confusion",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/2/heading"
     ]
@@ -21645,7 +21645,7 @@
   },
   "4d48dfa8b0bc": {
     "de": "Live Rosin (solventlos, ausführlich behandelt in Rosin einordnen ohne Hype): startet ebenfalls aus frisch gefrorenem Material - aber statt Lösungsmittel kommen hier ausschließlich Hitze und Druck zum Einsatz, meist nach einem vorherigen Bubble-Hash-Waschschritt.",
-    "en": null,
+    "en": "Live Rosin (solventless, covered in detail in Assessing rosin without the hype): also starts from fresh-frozen material - but instead of solvent, only heat and pressure are used here, usually after a prior bubble hash wash step.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/2/content/2"
     ]
@@ -21709,7 +21709,7 @@
   },
   "6fb1e2e136ab": {
     "de": "LOD/LOQ",
-    "en": null,
+    "en": "LOD/LOQ",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/glossary/2/term"
     ]
@@ -21779,14 +21779,14 @@
   },
   "69d98d49897f": {
     "de": "Lösungsmittel",
-    "en": null,
+    "en": "Solvent",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/quickFacts/0/label"
     ]
   },
   "610e51b550b2": {
     "de": "Lösungsmittelbasiertes Konzentrat aus frisch gefrorenem, nie getrocknetem Pflanzenmaterial - nicht zu verwechseln mit dem solventlosen 'Live Rosin'.",
-    "en": null,
+    "en": "Solvent-based concentrate made from fresh-frozen, never-dried plant material - not to be confused with solventless 'Live Rosin'.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/2/definition"
     ]
@@ -21821,7 +21821,7 @@
   },
   "4b21f18d5b44": {
     "de": "Luftbewegung",
-    "en": null,
+    "en": "Air movement",
     "paths": [
       "wiki/windbrand/tags/1"
     ]
@@ -21842,7 +21842,7 @@
   },
   "2efe8e4b46e7": {
     "de": "Luftfeuchte",
-    "en": null,
+    "en": "relative humidity",
     "paths": [
       "wiki/luftfeuchte-management/tags/0"
     ]
@@ -21926,7 +21926,7 @@
   },
   "b502eb348ec7": {
     "de": "Magnesium",
-    "en": null,
+    "en": "Magnesium",
     "paths": [
       "wiki/magnesiummangel/tags/0",
       "wiki/calmag-supplementierung/tags/2"
@@ -22011,7 +22011,7 @@
   },
   "f5904cf7a123": {
     "de": "Marketing",
-    "en": null,
+    "en": "Marketing",
     "paths": [
       "wiki/full-melt-und-marketingsprache/tags/2"
     ]
@@ -22417,7 +22417,7 @@
   },
   "9cb035bc924c": {
     "de": "Messfehler",
-    "en": null,
+    "en": "Measurement error",
     "paths": [
       "wiki/sensor-kalibrierung-und-messfehler/tags/2"
     ]
@@ -22501,7 +22501,7 @@
   },
   "cb13ea105cb2": {
     "de": "Messwerte",
-    "en": null,
+    "en": "Measurements",
     "paths": [
       "wiki/ec-und-runoff-interpretation/tags/4"
     ]
@@ -22620,7 +22620,7 @@
   },
   "49c44734ea4c": {
     "de": "Mikrobiologie",
-    "en": null,
+    "en": "Microbiology",
     "paths": [
       "wiki/wasseraktivitaet-und-curing/tags/3",
       "wiki/schimmel-und-mykotoxine-bei-cannabis/tags/2"
@@ -22733,7 +22733,7 @@
   },
   "60f81433acc0": {
     "de": "Minimale Bewegung während des Purge: Das Ergebnis bleibt glasartig, durchscheinend und bricht sauber - das ist Shatter. Bewusst das Gegenteil der Bearbeitung, die zu Budder führt.",
-    "en": null,
+    "en": "Minimal agitation during purging: the result stays glassy, translucent and breaks cleanly - that's shatter. Deliberately the opposite of the processing that leads to budder.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/content/1"
     ]
@@ -22747,14 +22747,14 @@
   },
   "8b22cf5f41da": {
     "de": "Minor Terpene",
-    "en": null,
+    "en": "Minor Terpenes",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/tags/0"
     ]
   },
   "5560179d35c0": {
     "de": "Minor-Terpen mit kiefrig-blumig-krautigem, leicht zitrusartigem Aroma; nur bei einer Minderheit der Sorten das mengenmäßig dominante Terpen.",
-    "en": null,
+    "en": "Minor terpene with a piney, floral, herbal, slightly citrusy aroma; only in a minority of strains is it the dominant terpene by quantity.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/glossary/0/definition"
     ]
@@ -22922,7 +22922,7 @@
   },
   "1dc83f605edf": {
     "de": "Monitoring",
-    "en": null,
+    "en": "Monitoring",
     "paths": [
       "wiki/stressmarker-frueh-erkennen/tags/1",
       "wiki/integrierte-schaedlingspraevention-grow/tags/2"
@@ -22993,7 +22993,7 @@
   },
   "49cb35b36bf8": {
     "de": "Multi-Zone",
-    "en": null,
+    "en": "Multi-Zone",
     "paths": [
       "wiki/how-to-grow-cannabis-profi-tutorial/tags/6"
     ]
@@ -23098,7 +23098,7 @@
   },
   "bfa49127397e": {
     "de": "Mutterpflanzen",
-    "en": null,
+    "en": "Mother plants",
     "paths": [
       "wiki/mutterpflanzen-und-clone-hygiene/tags/0"
     ]
@@ -23196,7 +23196,7 @@
   },
   "de29dd6b9c84": {
     "de": "Mykotoxine",
-    "en": null,
+    "en": "Mycotoxins",
     "paths": [
       "wiki/schimmel-und-mykotoxine-bei-cannabis/tags/1"
     ]
@@ -23217,7 +23217,7 @@
   },
   "b598631667e0": {
     "de": "Myrcen",
-    "en": null,
+    "en": "Myrcene",
     "paths": [
       "wiki/myrcen-limonen-caryophyllen-einordnung/tags/0"
     ]
@@ -23351,7 +23351,7 @@
   },
   "48edda2744fa": {
     "de": "Nach der Extraktion und dem Purge entscheidet vor allem die Nachbearbeitung, welche Textur am Ende entsteht - nicht die Qualität des Ausgangsmaterials allein. Grob lassen sich vier Wege unterscheiden.",
-    "en": null,
+    "en": "After extraction and purging, it's mainly the post-processing that determines which texture ultimately results - not the quality of the starting material alone. Roughly four approaches can be distinguished.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/content/0"
     ]
@@ -23407,7 +23407,7 @@
   },
   "d5e546c3d27c": {
     "de": "Nach quantitativer Konzentration (z. B. mg/g) statt nur normalisiertem Prozentwert fragen, wenn das Zertifikat das nicht klar ausweist",
-    "en": null,
+    "en": "Ask for the quantitative concentration (e.g. mg/g) instead of just a normalized percentage if the certificate doesn't clearly state it",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/5/checklist/1"
     ]
@@ -23449,7 +23449,7 @@
   },
   "b303a1acbb89": {
     "de": "Nachernte",
-    "en": null,
+    "en": "Post-harvest",
     "paths": [
       "wiki/trocknung-protokoll/tags/2"
     ]
@@ -23512,7 +23512,7 @@
   },
   "dd9ef9dd6f42": {
     "de": "Nachweisgrenze bzw. Bestimmungsgrenze eines Analyseverfahrens; unterhalb davon wird ein Stoff als 'ND' gemeldet, unabhängig davon, ob er wirklich fehlt oder nur zu wenig vorhanden ist.",
-    "en": null,
+    "en": "Detection limit or quantification limit of an analytical method; below this, a substance is reported as 'ND', regardless of whether it is truly absent or simply present in too small an amount.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/glossary/2/definition"
     ]
@@ -23561,7 +23561,7 @@
   },
   "a9283560ce62": {
     "de": "Nährstoffe",
-    "en": null,
+    "en": "Nutrients",
     "paths": [
       "wiki/cannabis-anbau-grundlagen/tags/2",
       "wiki/naehrstoffblockaden-und-antagonismen/tags/0",
@@ -23582,7 +23582,7 @@
   },
   "39e1553b04b3": {
     "de": "Nährstoffmangel",
-    "en": null,
+    "en": "Nutrient deficiency",
     "paths": [
       "wiki/magnesiummangel/tags/3",
       "wiki/stickstoffmangel/tags/3",
@@ -23637,14 +23637,14 @@
   },
   "148801d07cd7": {
     "de": "ND (nicht nachweisbar)",
-    "en": null,
+    "en": "ND (not detected)",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/glossary/4/term"
     ]
   },
   "4ae6190ded4a": {
     "de": "Neben der reinen Volatilität kommt eine zweite Unschärfe hinzu: uneinheitliche Labormethodik. Aus der Branchenpresse (mit mittlerer Verlässlichkeit, eher als beobachteter Trend denn als belastbare Statistik einzuordnen) gibt es wiederkehrende Hinweise, dass sich Testverfahren zwischen Laboren spürbar unterscheiden können – etwa Headspace-Methoden (die Terpene aus der Gasphase über der Probe messen) gegenüber Direktinjektionsverfahren, die auf derselben Probe teils deutlich abweichende Werte liefern.",
-    "en": null,
+    "en": "Alongside the sheer volatility, there is a second source of imprecision: inconsistent lab methodology. Trade press coverage (of medium reliability, better classified as an observed trend than as solid statistics) repeatedly points to noticeable differences in testing procedures between labs – for example headspace methods (which measure terpenes from the gas phase above the sample) versus direct injection methods, which can yield markedly different values on the same sample.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/4/content/0"
     ]
@@ -23700,7 +23700,7 @@
   },
   "aabc056209ee": {
     "de": "Nein, das ist genau die Verwechslung, die am häufigsten passiert. Beide starten aus frisch gefrorenem Material, aber Live Resin wird mit Lösungsmittel (Butan/Propan) extrahiert, Live Rosin wird solventlos mit Hitze und Druck gepresst. Zwei unterschiedliche Produktfamilien mit ähnlich klingendem Namen.",
-    "en": null,
+    "en": "No, that's exactly the mix-up that happens most often. Both start from freshly frozen material, but live resin is extracted with solvent (butane/propane), while live rosin is pressed solventlessly with heat and pressure. Two different product families with similarly sounding names.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/faq/0/answer"
     ]
@@ -23728,7 +23728,7 @@
   },
   "422eaa27d541": {
     "de": "Nein, im Gegenteil: Eine makellose 5-Sterne-Bewertung ausschließlich auf der eigenen Webseite ist eher verdächtig als vertrauenerweckend. Suche stattdessen nach einer langjährigen, gemischten Bewertungshistorie auf unabhängigen Plattformen wie Trustpilot, Reddit oder Grow-Foren.",
-    "en": null,
+    "en": "No, quite the opposite: a flawless 5-star rating exclusively on the provider's own website is more suspicious than reassuring. Instead, look for a long-standing, mixed review history on independent platforms like Trustpilot, Reddit or grow forums.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/faq/1/answer"
     ]
@@ -23819,7 +23819,7 @@
   },
   "5ffd2ede5293": {
     "de": "Nein. Er ist eine plausible, seit 2011 diskutierte Hypothese mit etwas präklinischer Unterstützung, aber auch mit Studien, die ihm widersprechen. Aktuelle Übersichtsarbeiten sagen übereinstimmend: klinisch nicht bestätigt, weiter erforscht.",
-    "en": null,
+    "en": "No. It is a plausible hypothesis, discussed since 2011, with some preclinical support, but also with studies that contradict it. Current review papers agree: not clinically confirmed, still under research.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/faq/1/answer"
     ]
@@ -24289,14 +24289,14 @@
   },
   "ef4bead4415e": {
     "de": "Nicht zuverlässig. Terpenprofile schwanken je nach Phänotyp, Anbaubedingungen und Erntezeitpunkt. Community-Zuordnungen wie 'Sorte X ist terpinolen-betont' sind Erfahrungswerte, keine verifizierten Chemotyp-Register.",
-    "en": null,
+    "en": "Not reliably. Terpene profiles vary depending on phenotype, growing conditions, and harvest timing. Community assignments like 'strain X is terpinolene-dominant' are anecdotal experience, not verified chemotype registries.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/faq/3/answer"
     ]
   },
   "bf3715a05c5c": {
     "de": "Nicht zwingend - Lagerung, Alter der Samen und die verwendete Keimmethode spielen mit rein. Entscheidend ist das Muster über mehrere Bestellungen: Ein einzelner schwacher Samen ist normal, konstant niedrige Werte bei demselben Anbieter sind das eigentliche Warnsignal.",
-    "en": null,
+    "en": "Not necessarily - storage, seed age and the germination method used all play a role. What matters is the pattern across multiple orders: a single weak seed is normal, consistently low rates with the same provider are the actual warning sign.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/faq/0/answer"
     ]
@@ -24479,7 +24479,7 @@
   },
   "820df5566d0d": {
     "de": "NPK",
-    "en": null,
+    "en": "NPK",
     "paths": [
       "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/4",
       "wiki/bluetephase-ernaehrung-und-pflege/tags/2"
@@ -24522,14 +24522,14 @@
   },
   "43dd4d0dfa82": {
     "de": "Nur 5-Sterne-Bewertungen ausschließlich auf der eigenen Webseite ohne jede Spur auf unabhängigen Plattformen ist ein deutlich verlässlicheres Warnsignal als jede einzelne schlechte Bewertung.",
-    "en": null,
+    "en": "Only 5-star reviews exclusively on the seller's own website, with no trace on independent platforms, is a far more reliable warning sign than any single bad review.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/keyTakeaways/2"
     ]
   },
   "2596fffc6709": {
     "de": "nur 5-Sterne-Bewertungen, nur auf der eigenen Seite",
-    "en": null,
+    "en": "only 5-star reviews, only on the seller's own site",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/quickFacts/2/value"
     ]
@@ -25190,7 +25190,7 @@
   },
   "a77a21ff0cdc": {
     "de": "Oral",
-    "en": null,
+    "en": "Oral",
     "paths": [
       "wiki/orale-produkte-und-first-pass-risiken/tags/0"
     ]
@@ -25303,7 +25303,7 @@
   },
   "9aac1455b8cf": {
     "de": "Outdoor",
-    "en": null,
+    "en": "Outdoor",
     "paths": [
       "wiki/outdoor-anbau-fuer-einsteiger/tags/0",
       "wiki/indoor-outdoor-anbau-vergleich/tags/1"
@@ -25572,7 +25572,7 @@
   },
   "aa65fe17e34f": {
     "de": "Pestizide",
-    "en": null,
+    "en": "Pesticides",
     "paths": [
       "wiki/pestizidklassen-und-rueckstandsrisiken/tags/0",
       "wiki/kontaminantenprofile-bei-extrakten/tags/2"
@@ -26031,7 +26031,7 @@
   },
   "0b0327112671": {
     "de": "Phasengetrennte Kristallisation: Unter bestimmten Bedingungen kristallisiert THCA rein aus der Lösung heraus, während eine terpenreiche Flüssigkeit zurückbleibt. Das kristalline THCA sind Diamonds (in der Praxis oft mit einer Reinheit im Bereich 98-99,9 % THCA angegeben, als Richtwert und nicht als feste, überall geltende Norm zu verstehen), die zurückbleibende Flüssigkeit ist Sauce. Werden beide zusammen verkauft, heißt das Produkt meist 'Diamond Sauce' oder 'Liquid Diamonds'.",
-    "en": null,
+    "en": "Phase-separated crystallization: under certain conditions, THCA crystallizes out of solution in pure form while a terpene-rich liquid remains. The crystalline THCA is diamonds (in practice often stated at a purity in the range of 98-99.9% THCA, to be understood as a reference value, not a fixed, universally applicable standard), and the remaining liquid is sauce. When both are sold together, the product is usually called 'Diamond Sauce' or 'Liquid Diamonds'.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/content/4"
     ]
@@ -26068,7 +26068,7 @@
   },
   "43db0227fc8c": {
     "de": "PHO",
-    "en": null,
+    "en": "PHO",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/tags/1",
       "wiki/concentrate-categorization-fuer-plattformen/glossary/1/term"
@@ -26083,7 +26083,7 @@
   },
   "998b7663ed3f": {
     "de": "Phosphor",
-    "en": null,
+    "en": "phosphorus",
     "paths": [
       "wiki/phosphormangel/tags/0"
     ]
@@ -26189,7 +26189,7 @@
   },
   "6405486aaadf": {
     "de": "Photoperiodisch",
-    "en": null,
+    "en": "Photoperiod",
     "paths": [
       "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/6"
     ]
@@ -26210,7 +26210,7 @@
   },
   "b0fa746a66b1": {
     "de": "Photosynthese",
-    "en": null,
+    "en": "photosynthesis",
     "paths": [
       "wiki/co2-management/tags/1"
     ]
@@ -26435,7 +26435,7 @@
   },
   "f19fbc293abe": {
     "de": "Potenz",
-    "en": null,
+    "en": "Potency",
     "paths": [
       "wiki/analytik-hplc-vs-gc-bei-cannabinoiden/tags/2",
       "wiki/interlaborvergleich-und-ringtests/tags/3"
@@ -26457,7 +26457,7 @@
   },
   "38bfce609b2f": {
     "de": "Powdery Mildew",
-    "en": null,
+    "en": "Powdery Mildew",
     "paths": [
       "wiki/echter-mehltau-powdery-mildew/tags/1"
     ]
@@ -26567,7 +26567,7 @@
   },
   "c48a1fb960d0": {
     "de": "Praktisch bedeutet das: der Terpenwert auf einem COA ist viel stärker zeit- und methodenabhängig als der Cannabinoidwert direkt daneben – selbst wenn beide von derselben Probe, am selben Tag, im selben Labor stammen.",
-    "en": null,
+    "en": "In practice, this means: the terpene value on a COA is far more time- and method-dependent than the cannabinoid value right next to it – even if both come from the same sample, on the same day, at the same lab.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/0/content/1"
     ]
@@ -26681,7 +26681,7 @@
   },
   "4a2f7c88d531": {
     "de": "Presshash",
-    "en": null,
+    "en": "Pressed hash",
     "paths": [
       "wiki/hash-typen-vergleichen/tags/8"
     ]
@@ -26779,7 +26779,7 @@
   },
   "588df216666c": {
     "de": "Profi",
-    "en": null,
+    "en": "Pro",
     "paths": [
       "wiki/how-to-grow-cannabis-profi-tutorial/tags/2"
     ]
@@ -26793,7 +26793,7 @@
   },
   "e267d343821f": {
     "de": "Profil",
-    "en": null,
+    "en": "profile",
     "paths": [
       "wiki/terpene-und-wirkprofil/tags/3",
       "wiki/minor-terpene-und-profiltiefe/tags/1"
@@ -26822,7 +26822,7 @@
   },
   "87bbe4991c86": {
     "de": "Propane Hash Oil - dieselbe Grundidee wie BHO, aber mit Propan als Lösungsmittel, meist bei niedrigerer Temperatur und höherem Druck extrahiert.",
-    "en": null,
+    "en": "Propane Hash Oil - the same basic idea as BHO, but extracted with propane as the solvent, usually at lower temperature and higher pressure.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/1/definition"
     ]
@@ -26878,7 +26878,7 @@
   },
   "a293906e79ce": {
     "de": "Prüfe bei Samenbank oder Dünger-Marke die Keimrate über mehrere Bestellungen (Ziel: 80–95%+) und verlange ein Drittlabor-COA statt hauseigener Testergebnisse.",
-    "en": null,
+    "en": "Check the germination rate across multiple orders for a seed bank or nutrient brand (target: 80-95%+) and demand a third-party lab COA instead of in-house test results.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/growValue"
     ]
@@ -26997,7 +26997,7 @@
   },
   "17c60a21a9c2": {
     "de": "Purge",
-    "en": null,
+    "en": "Purge",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/3/term"
     ]
@@ -27046,7 +27046,7 @@
   },
   "dd89cf901c23": {
     "de": "Pythium",
-    "en": null,
+    "en": "Pythium",
     "paths": [
       "wiki/wurzelfaeule/tags/1"
     ]
@@ -27088,7 +27088,7 @@
   },
   "eb718207ad94": {
     "de": "Qualität",
-    "en": null,
+    "en": "Quality",
     "paths": [
       "wiki/batch-release-und-freigabekriterien/tags/0",
       "wiki/lagerung-verpackung-und-lichtschutz/tags/3",
@@ -27163,7 +27163,7 @@
   },
   "7e03b72786a0": {
     "de": "Quecksilber",
-    "en": null,
+    "en": "Mercury",
     "paths": [
       "wiki/schwere-metalle-und-aufnahmewege/tags/4"
     ]
@@ -27198,7 +27198,7 @@
   },
   "929e889379bf": {
     "de": "Rauchen",
-    "en": null,
+    "en": "Smoking",
     "paths": [
       "wiki/vaping-rauchen-und-verdampfen-vergleich/tags/1"
     ]
@@ -27338,7 +27338,7 @@
   },
   "9d5e74710f04": {
     "de": "Regelkreis",
-    "en": null,
+    "en": "Control loop",
     "paths": [
       "wiki/vpd-und-ec-kombi-rechner-guide/tags/3"
     ]
@@ -27422,14 +27422,14 @@
   },
   "eb324a13a0ff": {
     "de": "Regionale Stile",
-    "en": null,
+    "en": "Regional styles",
     "paths": [
       "wiki/hash-typen-vergleichen/tags/9"
     ]
   },
   "b455784ab530": {
     "de": "Regular",
-    "en": null,
+    "en": "Regular",
     "paths": [
       "wiki/feminisiert-vs-regular-vs-autoflower/tags/1"
     ]
@@ -27549,7 +27549,7 @@
   },
   "aa37dde72fb2": {
     "de": "Reicht eine gute Durchschnittsbewertung als Vertrauensbeweis?",
-    "en": null,
+    "en": "Is a good average rating enough proof of trustworthiness?",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/faq/1/question"
     ]
@@ -27598,7 +27598,7 @@
   },
   "191b4d737992": {
     "de": "Reife",
-    "en": null,
+    "en": "Maturity",
     "paths": [
       "wiki/erntefenster-trichomreife/tags/2",
       "wiki/cannabinoid-biosynthese-verstehen/tags/2"
@@ -27606,7 +27606,7 @@
   },
   "cc7f9cb6d67d": {
     "de": "Reifegrad",
-    "en": null,
+    "en": "Maturity level",
     "paths": [
       "wiki/trichom-reifegrad-bilddiagnose/tags/2"
     ]
@@ -27641,7 +27641,7 @@
   },
   "e72f4dff3def": {
     "de": "Reinheitsangaben wie '98-99,9 % THCA' bei Diamonds sind Richtwerte aus der Praxis, keine unabhängig geprüfte, überall geltende Norm - verlass dich für konkrete Werte auf ein Drittlabor-COA des jeweiligen Produkts.",
-    "en": null,
+    "en": "Purity figures such as '98-99.9% THCA' for diamonds are reference values from practice, not an independently verified, universally applicable standard - rely on a third-party lab COA for the specific product for concrete values.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/warnings/1"
     ]
@@ -27809,7 +27809,7 @@
   },
   "702b322d9171": {
     "de": "Rhythmus",
-    "en": null,
+    "en": "Rhythm",
     "paths": [
       "wiki/bewaesserung-ohne-uebergiessen/tags/2"
     ]
@@ -27844,7 +27844,7 @@
   },
   "7bd5ce204cfe": {
     "de": "Ringtest",
-    "en": null,
+    "en": "Ring test",
     "paths": [
       "wiki/interlaborvergleich-und-ringtests/tags/1"
     ]
@@ -27949,7 +27949,7 @@
   },
   "c7ee67768dd7": {
     "de": "Robustere, klebrig-weiche Textur mit höherem Lipidgehalt als Sugar oder Crumble.",
-    "en": null,
+    "en": "More robust, sticky-soft texture with a higher lipid content than sugar or crumble.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/9/definition"
     ]
@@ -27984,7 +27984,7 @@
   },
   "872336607466": {
     "de": "Rosin",
-    "en": null,
+    "en": "Rosin",
     "paths": [
       "wiki/rosin-einordnung-ohne-hype/tags/0",
       "wiki/hash-typen-vergleichen/tags/3"
@@ -28041,7 +28041,7 @@
   },
   "09e6342fc6f7": {
     "de": "Rostmilben",
-    "en": null,
+    "en": "Rust mites",
     "paths": [
       "wiki/hanf-rostmilben/tags/0"
     ]
@@ -28078,7 +28078,7 @@
   },
   "868939f131cd": {
     "de": "Rückbuchungsschutz (z. B. bei Kreditkarte) ist bei Vorkasse-Zahlungen wie Krypto oder Überweisung nicht gegeben - kalkuliere das bei größeren Bestellungen mit ein.",
-    "en": null,
+    "en": "Chargeback protection (e.g. with credit card) does not exist with prepayment methods like crypto or bank transfer - factor that in for larger orders.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/warnings/1"
     ]
@@ -28113,7 +28113,7 @@
   },
   "12fad0744f1a": {
     "de": "Rückstände",
-    "en": null,
+    "en": "Residues",
     "paths": [
       "wiki/pestizidklassen-und-rueckstandsrisiken/tags/1"
     ]
@@ -28283,7 +28283,7 @@
   },
   "6f2ccaa67842": {
     "de": "Sagt der Terpengehalt etwas über die Wirkung aus?",
-    "en": null,
+    "en": "Does terpene content say anything about the effect?",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/faq/3/question"
     ]
@@ -28311,7 +28311,7 @@
   },
   "37289aaf2307": {
     "de": "Salzstress",
-    "en": null,
+    "en": "salt stress",
     "paths": [
       "wiki/salzanreicherung-hohe-ec/tags/0"
     ]
@@ -28346,7 +28346,7 @@
   },
   "a00bd7fb57aa": {
     "de": "Samen",
-    "en": null,
+    "en": "Seeds",
     "paths": [
       "wiki/feminisiert-vs-regular-vs-autoflower/tags/0"
     ]
@@ -28423,14 +28423,14 @@
   },
   "d4f122c9947e": {
     "de": "Sauce",
-    "en": null,
+    "en": "Sauce",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/5/term"
     ]
   },
   "65c14b1ce518": {
     "de": "Sauerstoff",
-    "en": null,
+    "en": "Oxygen",
     "paths": [
       "wiki/cannabis-substrat-und-wurzelzone/tags/3",
       "wiki/wurzelfaeule/tags/3",
@@ -28476,7 +28476,7 @@
   },
   "948885acf0bb": {
     "de": "Schädlinge",
-    "en": null,
+    "en": "pests",
     "paths": [
       "wiki/spinnmilben/tags/1",
       "wiki/thripse/tags/1",
@@ -28518,7 +28518,7 @@
   },
   "5ca8ddce4e4a": {
     "de": "Schimmel",
-    "en": null,
+    "en": "Mold",
     "paths": [
       "wiki/vpd-einfach-erklaert/tags/3",
       "wiki/schimmel-und-mykotoxine-bei-cannabis/tags/0",
@@ -29310,7 +29310,7 @@
   },
   "dda74546ea2d": {
     "de": "Schwermetalle",
-    "en": null,
+    "en": "Heavy metals",
     "paths": [
       "wiki/schwere-metalle-und-aufnahmewege/tags/0"
     ]
@@ -29423,7 +29423,7 @@
   },
   "bb2b47b27f58": {
     "de": "Selektion",
-    "en": null,
+    "en": "Selection",
     "paths": [
       "wiki/selektionsscorecards-fuer-pheno-hunts/tags/2",
       "wiki/genetische-stabilitaet-ueber-generationen/tags/2"
@@ -29545,7 +29545,7 @@
   },
   "49223c1ebedd": {
     "de": "Set und Setting",
-    "en": null,
+    "en": "Set and setting",
     "paths": [
       "wiki/inhalation-set-setting-und-harm-reduction/tags/0"
     ]
@@ -29566,7 +29566,7 @@
   },
   "7013af4c42fe": {
     "de": "Setup",
-    "en": null,
+    "en": "Setup",
     "paths": [
       "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/4"
     ]
@@ -29587,14 +29587,14 @@
   },
   "e25ac0db27e8": {
     "de": "Shatter",
-    "en": null,
+    "en": "Shatter",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/10/term"
     ]
   },
   "1a6bd8b138bc": {
     "de": "Shatter: glasig, durchscheinend, bricht sauber - minimale Bewegung beim Purge",
-    "en": null,
+    "en": "Shatter: glassy, translucent, breaks cleanly - minimal agitation during purging",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/checklist/0"
     ]
@@ -29629,7 +29629,7 @@
   },
   "4474c7526089": {
     "de": "Sicherheit",
-    "en": null,
+    "en": "Safety",
     "paths": [
       "wiki/schimmel-und-mykotoxine-bei-cannabis/tags/3",
       "wiki/pgr-und-kontaminanten/tags/2",
@@ -29810,7 +29810,7 @@
   },
   "47f9d3e2210f": {
     "de": "Sind Diamonds automatisch das potenteste Konzentrat?",
-    "en": null,
+    "en": "Are diamonds automatically the most potent concentrate?",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/faq/1/question"
     ]
@@ -30091,7 +30091,7 @@
   },
   "0192ee4062bf": {
     "de": "Solide Terpenwerte bei Blüte",
-    "en": null,
+    "en": "Solid terpene values in flower",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/quickFacts/0/label"
     ]
@@ -30147,7 +30147,7 @@
   },
   "b5430393c579": {
     "de": "Sommer",
-    "en": null,
+    "en": "Summer",
     "paths": [
       "wiki/outdoor-anbau-fuer-einsteiger/tags/2"
     ]
@@ -30294,7 +30294,7 @@
   },
   "216486a12379": {
     "de": "Spinnmilben",
-    "en": null,
+    "en": "spider mites",
     "paths": [
       "wiki/spinnmilben/tags/0"
     ]
@@ -31228,7 +31228,7 @@
   },
   "7ec4ac8af9e9": {
     "de": "Step by Step",
-    "en": null,
+    "en": "Step by Step",
     "paths": [
       "wiki/how-to-grow-cannabis-anfaenger-tutorial/tags/3",
       "wiki/how-to-grow-cannabis-fortgeschritten-tutorial/tags/3",
@@ -31273,7 +31273,7 @@
   },
   "7138ad7146ef": {
     "de": "Steuerung",
-    "en": null,
+    "en": "Control",
     "paths": [
       "wiki/vpd-und-ec-kombi-rechner-guide/tags/2"
     ]
@@ -31294,7 +31294,7 @@
   },
   "f08d1733b9c7": {
     "de": "Stickstoff",
-    "en": null,
+    "en": "Nitrogen",
     "paths": [
       "wiki/stickstoffmangel/tags/0",
       "wiki/stickstoffueberschuss/tags/0"
@@ -31470,7 +31470,7 @@
   },
   "2319cd90fbab": {
     "de": "Stress",
-    "en": null,
+    "en": "Stress",
     "paths": [
       "wiki/stressmarker-frueh-erkennen/tags/0"
     ]
@@ -31541,7 +31541,7 @@
   },
   "08efa6376773": {
     "de": "Studien",
-    "en": null,
+    "en": "Studies",
     "paths": [
       "wiki/naehrstoffbedarf-cannabis-lebenszyklus/tags/9",
       "wiki/substrat-vergleich-coco-erde-hydro/tags/9",
@@ -31600,7 +31600,7 @@
   },
   "d59f856adb4e": {
     "de": "Substrat",
-    "en": null,
+    "en": "Substrate",
     "paths": [
       "wiki/cannabis-substrat-und-wurzelzone/tags/0",
       "wiki/bewaesserung-ohne-uebergiessen/tags/3",
@@ -31739,28 +31739,28 @@
   },
   "975694e82705": {
     "de": "Sugar/Sugar Wax",
-    "en": null,
+    "en": "Sugar/Sugar Wax",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/7/term"
     ]
   },
   "abf2ef4b9a2b": {
     "de": "Sugar/Sugar Wax: körnig, feucht, sandartig - trockene Kristallisation, weniger Lipide als Wax",
-    "en": null,
+    "en": "Sugar/Sugar Wax: granular, moist, sand-like - dry crystallization, less lipids than wax",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/checklist/2"
     ]
   },
   "33bbcefba010": {
     "de": "Summenwert aller auf einem Panel gemessenen Einzelterpene.",
-    "en": null,
+    "en": "Sum value of all individual terpenes measured on a panel.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/glossary/2/definition"
     ]
   },
   "be91940b79f4": {
     "de": "Support",
-    "en": null,
+    "en": "Support",
     "paths": [
       "wiki/bluetephase-ernaehrung-und-pflege/tags/6"
     ]
@@ -31802,7 +31802,7 @@
   },
   "ca9735b6a966": {
     "de": "Symptome",
-    "en": null,
+    "en": "Symptoms",
     "paths": [
       "wiki/blattsymptom-troubleshooter/tags/2"
     ]
@@ -32065,7 +32065,7 @@
   },
   "2da10076c9e7": {
     "de": "Temperatur",
-    "en": null,
+    "en": "temperature",
     "paths": [
       "wiki/hitzestress/tags/1",
       "wiki/kaeltestress/tags/1",
@@ -32158,7 +32158,7 @@
   },
   "7872bb3edf99": {
     "de": "Terpen-Panels und Qualitätslabels",
-    "en": null,
+    "en": "Terpene panels and quality labels",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/title"
     ]
@@ -32186,7 +32186,7 @@
   },
   "8154b066755d": {
     "de": "Terpene",
-    "en": null,
+    "en": "terpenes",
     "paths": [
       "wiki/terpene-und-wirkprofil/tags/0",
       "wiki/trocknung-protokoll/tags/3",
@@ -32224,7 +32224,7 @@
   },
   "1bc3c0f0fc92": {
     "de": "Terpene sind flüchtig und reagieren empfindlich auf Probenhandhabung und Zeit. Dazu kommt, dass Testmethoden wie Headspace- und Direktinjektionsverfahren unterschiedlich messen können und es – anders als bei Cannabinoid-Potenztests – keinen breit etablierten, terpenspezifischen Ringtest-Standard gibt.",
-    "en": null,
+    "en": "Terpenes are volatile and sensitive to sample handling and time. In addition, test methods such as headspace and direct injection procedures can measure differently, and unlike cannabinoid potency testing, there is no broadly established, terpene-specific ring test standard.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/faq/2/answer"
     ]
@@ -32259,7 +32259,7 @@
   },
   "8c8f1d50815d": {
     "de": "Terpene sind volatiler und methodenempfindlicher als Cannabinoide",
-    "en": null,
+    "en": "Terpenes are more volatile and more method-sensitive than cannabinoids",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/quickFacts/2/value"
     ]
@@ -32287,7 +32287,7 @@
   },
   "ab1a45b98299": {
     "de": "Terpenpanel",
-    "en": null,
+    "en": "Terpene panel",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/tags/0"
     ]
@@ -32308,7 +32308,7 @@
   },
   "c81a0d985c09": {
     "de": "Terpenverlust",
-    "en": null,
+    "en": "Terpene loss",
     "paths": [
       "wiki/lagerung-und-terpenverlust-vermeiden/tags/0"
     ]
@@ -32322,28 +32322,28 @@
   },
   "6ce843c1f4c2": {
     "de": "Terpenwert primär als Aroma-Hinweis lesen, nicht als Wirkversprechen",
-    "en": null,
+    "en": "Read the terpene value primarily as an aroma indicator, not as a promise of effect",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/5/checklist/3"
     ]
   },
   "926ddeb233a9": {
     "de": "Terpenwerte auf einem COA sind deutlich empfindlicher gegenüber Probenalter als Cannabinoidwerte – vergleiche Test- mit Erntedatum, bevor du einen hohen Terpenwert als Qualitätsbeweis nimmst.",
-    "en": null,
+    "en": "Terpene values on a COA are significantly more sensitive to sample age than cannabinoid values – compare the test date with the harvest date before you take a high terpene value as proof of quality.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/growValue"
     ]
   },
   "c080f1fa5a88": {
     "de": "Terpenwerte auf einem COA sind grundsätzlich empfindlicher gegenüber Probenalter und Messmethode als Cannabinoidwerte auf demselben Zertifikat.",
-    "en": null,
+    "en": "Terpene values on a COA are fundamentally more sensitive to sample age and measurement method than cannabinoid values on the same certificate.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/keyTakeaways/0"
     ]
   },
   "54bc0565d7a4": {
     "de": "Terpinolen",
-    "en": null,
+    "en": "Terpinolene",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/glossary/0/term"
     ]
@@ -32371,7 +32371,7 @@
   },
   "4da4d22cb9b0": {
     "de": "Testdatum auf dem COA mit dem Erntedatum bzw. Herstellungsdatum vergleichen – große Lücken sind ein Warnsignal",
-    "en": null,
+    "en": "Compare the test date on the COA with the harvest date or production date – large gaps are a warning sign",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/5/checklist/0"
     ]
@@ -32406,7 +32406,7 @@
   },
   "43e36bca8a97": {
     "de": "Tetranychus",
-    "en": null,
+    "en": "Tetranychus",
     "paths": [
       "wiki/spinnmilben/tags/3"
     ]
@@ -32420,7 +32420,7 @@
   },
   "83c91957085b": {
     "de": "Textur",
-    "en": null,
+    "en": "Texture",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/tags/4"
     ]
@@ -32484,7 +32484,7 @@
   },
   "11e77952bf6c": {
     "de": "THC-Gehalt",
-    "en": null,
+    "en": "THC content",
     "paths": [
       "wiki/interlaborvergleich-und-ringtests/tags/0"
     ]
@@ -32557,7 +32557,7 @@
   },
   "8e9253d5ffb4": {
     "de": "Thripse",
-    "en": null,
+    "en": "thrips",
     "paths": [
       "wiki/thripse/tags/0"
     ]
@@ -32613,14 +32613,14 @@
   },
   "fc4e84255a41": {
     "de": "Timing",
-    "en": null,
+    "en": "Timing",
     "paths": [
       "wiki/orale-produkte-und-first-pass-risiken/tags/2"
     ]
   },
   "435b8b705e4f": {
     "de": "Tinktur",
-    "en": null,
+    "en": "Tincture",
     "paths": [
       "wiki/sublingual-tinkturen-richtig-einordnen/tags/1"
     ]
@@ -32743,7 +32743,7 @@
   },
   "51612cb87aa8": {
     "de": "Total Terpenes",
-    "en": null,
+    "en": "Total Terpenes",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/glossary/2/term"
     ]
@@ -32757,7 +32757,7 @@
   },
   "130fe584ad3a": {
     "de": "Toxizität",
-    "en": null,
+    "en": "toxicity",
     "paths": [
       "wiki/stickstoffueberschuss/tags/2",
       "wiki/kalium-ueberschuss/tags/3"
@@ -32779,7 +32779,7 @@
   },
   "4cf3c91e0b08": {
     "de": "Transpiration",
-    "en": null,
+    "en": "Transpiration",
     "paths": [
       "wiki/vpd-einfach-erklaert/tags/2",
       "wiki/vpd-nach-wachstumsphase/tags/3"
@@ -32794,7 +32794,7 @@
   },
   "f204f47f73dc": {
     "de": "Trauermücken",
-    "en": null,
+    "en": "Fungus gnats",
     "paths": [
       "wiki/trauermuecken/tags/0"
     ]
@@ -32864,7 +32864,7 @@
   },
   "ef64848a4dfe": {
     "de": "Trellis",
-    "en": null,
+    "en": "Trellis",
     "paths": [
       "wiki/bluetephase-ernaehrung-und-pflege/tags/5"
     ]
@@ -32942,7 +32942,7 @@
   },
   "82d74de73f3e": {
     "de": "Trichome",
-    "en": null,
+    "en": "Trichomes",
     "paths": [
       "wiki/trichom-reifegrad-bilddiagnose/tags/0",
       "wiki/erntefenster-trichomreife/tags/1"
@@ -33020,14 +33020,14 @@
   },
   "bcc7f44ef43b": {
     "de": "Trockene Kristallisation ohne aktives Aufschlagen: Je nach verbliebenem Lipid- und Feuchtigkeitsgehalt entstehen unterschiedlich harte, körnige bis krümelige Texturen. Sugar/Sugar Wax kristallisiert körnig, feucht, ähnlich nassem Sand. Crumble ist trockener, wabenartig strukturiert und zerbricht leicht zu Staub. Wax hat den höchsten Lipidgehalt der drei, ist robuster und bricht eher in Klumpen statt zu Staub, mit weicher, klebriger Konsistenz.",
-    "en": null,
+    "en": "Dry crystallization without active whipping: depending on the remaining lipid and moisture content, textures of varying hardness result, from granular to crumbly. Sugar/sugar wax crystallizes granular and moist, similar to wet sand. Crumble is drier, honeycomb-structured, and breaks easily into dust. Wax has the highest lipid content of the three, is more robust and tends to break into clumps rather than dust, with a soft, sticky consistency.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/content/3"
     ]
   },
   "3e9fa6889431": {
     "de": "Trockene, wabenartige Textur, die leicht zu Staub zerbricht.",
-    "en": null,
+    "en": "Dry, honeycomb-like texture that easily crumbles into dust.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/8/definition"
     ]
@@ -33055,7 +33055,7 @@
   },
   "3b77df3302fc": {
     "de": "Trocknung",
-    "en": null,
+    "en": "Drying",
     "paths": [
       "wiki/trocknung-protokoll/tags/0"
     ]
@@ -33104,7 +33104,7 @@
   },
   "c3af076f92c5": {
     "de": "Troubleshooting",
-    "en": null,
+    "en": "Troubleshooting",
     "paths": [
       "wiki/blattsymptom-troubleshooter/tags/1"
     ]
@@ -33287,7 +33287,7 @@
   },
   "4113c7c4143d": {
     "de": "Überdüngung",
-    "en": null,
+    "en": "overfertilization",
     "paths": [
       "wiki/salzanreicherung-hohe-ec/tags/2",
       "wiki/naehrstoffverbrennung-tipburn/tags/0"
@@ -33330,7 +33330,7 @@
   },
   "fe59a735a090": {
     "de": "Überschuss",
-    "en": null,
+    "en": "toxicity",
     "paths": [
       "wiki/stickstoffueberschuss/tags/1",
       "wiki/kalium-ueberschuss/tags/1",
@@ -33360,7 +33360,7 @@
   },
   "4d2bb368f919": {
     "de": "Übersicht",
-    "en": null,
+    "en": "Overview",
     "paths": [
       "wiki/blattsymptom-troubleshooter/tags/3"
     ]
@@ -33423,7 +33423,7 @@
   },
   "25f985701e3a": {
     "de": "Überwässerung",
-    "en": null,
+    "en": "overwatering",
     "paths": [
       "wiki/ueberwaesserung-staunaesse/tags/1",
       "wiki/trauermuecken/tags/3"
@@ -33537,7 +33537,7 @@
   },
   "0e619044cb55": {
     "de": "Umwelt",
-    "en": null,
+    "en": "Environment",
     "paths": [
       "wiki/indoor-outdoor-anbau-vergleich/tags/5"
     ]
@@ -33633,7 +33633,7 @@
   },
   "fc017fa816c5": {
     "de": "Uniformität",
-    "en": null,
+    "en": "Uniformity",
     "paths": [
       "wiki/lichtstress-und-canopy-management/tags/3"
     ]
@@ -33895,7 +33895,7 @@
   },
   "f0ec430246c9": {
     "de": "Vaping",
-    "en": null,
+    "en": "Vaping",
     "paths": [
       "wiki/vaping-rauchen-und-verdampfen-vergleich/tags/0"
     ]
@@ -33965,7 +33965,7 @@
   },
   "e31ddc10a827": {
     "de": "Vegetationsphase",
-    "en": null,
+    "en": "vegetative stage",
     "paths": [
       "wiki/stickstoffmangel/tags/2"
     ]
@@ -34147,7 +34147,7 @@
   },
   "1a2d984ce1ad": {
     "de": "Verdampfen",
-    "en": null,
+    "en": "Vaporizing",
     "paths": [
       "wiki/vaping-rauchen-und-verdampfen-vergleich/tags/2"
     ]
@@ -34259,7 +34259,7 @@
   },
   "383d9d39aeec": {
     "de": "Verifizierbare Geschäftsidentität: echte Adresse, Telefonnummer, benannte Betreiber",
-    "en": null,
+    "en": "Verifiable business identity: real address, phone number, named operators",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/3/checklist/2"
     ]
@@ -34329,7 +34329,7 @@
   },
   "fbdcdefe74d5": {
     "de": "Verlass dich bei einem Terpenpanel nicht auf 'ND' als Beweis für Abwesenheit – die meisten Panels testen nur 20–30 von über 150 möglichen Terpenen.",
-    "en": null,
+    "en": "Don't rely on 'ND' in a terpene panel as proof of absence – most panels test only 20–30 of over 150 possible terpenes.",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/growValue"
     ]
@@ -34399,7 +34399,7 @@
   },
   "d6c4b1df29e0": {
     "de": "Verpackung",
-    "en": null,
+    "en": "Packaging",
     "paths": [
       "wiki/lagerung-verpackung-und-lichtschutz/tags/1"
     ]
@@ -34434,7 +34434,7 @@
   },
   "25f8a537084c": {
     "de": "Vertrauen",
-    "en": null,
+    "en": "Trust",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/tags/1"
     ]
@@ -34448,7 +34448,7 @@
   },
   "04613b2b1b4f": {
     "de": "Vertrauenssignal bei Genetik",
-    "en": null,
+    "en": "Trust signal for genetics",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/quickFacts/3/label"
     ]
@@ -34469,7 +34469,7 @@
   },
   "ed3d78b94a80": {
     "de": "Verwechsle 'Live Resin' nicht mit 'Live Rosin' – Live Resin ist lösungsmittelbasiert (BHO/PHO), Live Rosin wird solventlos gepresst, trotz ähnlichem Namen komplett unterschiedliche Verfahren.",
-    "en": null,
+    "en": "Don't confuse 'Live Resin' with 'Live Rosin' – Live Resin is solvent-based (BHO/PHO), Live Rosin is pressed solventless, despite the similar name these are completely different processes.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/growValue"
     ]
@@ -34604,7 +34604,7 @@
   },
   "dbb618471f9a": {
     "de": "Viskose, terpenreiche Flüssigkeit, die bei der Kristallisation von Diamonds zurückbleibt bzw. sich separat absetzt.",
-    "en": null,
+    "en": "Viscous, terpene-rich liquid that remains after the crystallization of diamonds or settles out separately.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/5/definition"
     ]
@@ -35059,14 +35059,14 @@
   },
   "0cb66f4d5784": {
     "de": "Wachstumsphase",
-    "en": null,
+    "en": "Vegetative stage",
     "paths": [
       "wiki/vpd-nach-wachstumsphase/tags/2"
     ]
   },
   "98e2381f5325": {
     "de": "Wachstumsregler",
-    "en": null,
+    "en": "growth regulator",
     "paths": [
       "wiki/pgr-und-kontaminanten/tags/0"
     ]
@@ -35378,7 +35378,7 @@
   },
   "7a421a67f7ce": {
     "de": "Warum 'terpenreich' als Label wenig aussagt",
-    "en": null,
+    "en": "Why 'terpene-rich' as a label says little",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/3/heading"
     ]
@@ -35511,7 +35511,7 @@
   },
   "4ee03336a45b": {
     "de": "Warum die Bezugsquelle mehr entscheidet als der einzelne Kauf",
-    "en": null,
+    "en": "Why the source matters more than the individual purchase",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/0/heading"
     ]
@@ -35728,7 +35728,7 @@
   },
   "444003c19d6e": {
     "de": "Warum Labortests überhaupt so einen Unterschied machen",
-    "en": null,
+    "en": "Why lab tests make such a difference in the first place",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/6/heading"
     ]
@@ -35889,7 +35889,7 @@
   },
   "1a3f9a98d7a5": {
     "de": "Warum sich Terpenwerte zwischen Laboren unterscheiden können",
-    "en": null,
+    "en": "Why terpene values can differ between labs",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/4/heading"
     ]
@@ -35903,7 +35903,7 @@
   },
   "bd040ef142ef": {
     "de": "Warum sollte ein Düngerhersteller überhaupt ein Drittlabor-COA brauchen?",
-    "en": null,
+    "en": "Why would a nutrient manufacturer even need a third-party lab COA?",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/faq/2/question"
     ]
@@ -35931,14 +35931,14 @@
   },
   "cccb531e2de4": {
     "de": "Warum taucht ein Terpen, das im Shop beworben wird, nicht auf meinem COA auf?",
-    "en": null,
+    "en": "Why doesn't a terpene advertised in the shop show up on my COA?",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/faq/2/question"
     ]
   },
   "9102cba3bef8": {
     "de": "Warum Terpenwerte wackeliger sind als Cannabinoidwerte",
-    "en": null,
+    "en": "Why terpene values are shakier than cannabinoid values",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/0/heading"
     ]
@@ -35959,7 +35959,7 @@
   },
   "493dc25ec977": {
     "de": "Warum unterscheiden sich Budder, Sugar und Crumble, wenn sie aus demselben Ausgangsmaterial stammen können?",
-    "en": null,
+    "en": "Why do budder, sugar, and crumble differ when they can come from the same starting material?",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/faq/3/question"
     ]
@@ -36057,7 +36057,7 @@
   },
   "40824e6a8f1e": {
     "de": "Warum zeigen zwei Labore für dieselbe Charge unterschiedliche Terpenwerte?",
-    "en": null,
+    "en": "Why do two labs show different terpene values for the same batch?",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/faq/2/question"
     ]
@@ -36120,7 +36120,7 @@
   },
   "371783d4b6a2": {
     "de": "Was bedeutet HTFSE genau?",
-    "en": null,
+    "en": "What exactly does HTFSE mean?",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/faq/0/question"
     ]
@@ -36251,7 +36251,7 @@
   },
   "c19923f1365d": {
     "de": "Was ein Terpenpanel überhaupt zeigt",
-    "en": null,
+    "en": "What a terpene panel actually shows",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/1/heading"
     ]
@@ -36321,7 +36321,7 @@
   },
   "9a00d267cb77": {
     "de": "Was ist der Unterschied zwischen BHO und PHO für mich als Konsument?",
-    "en": null,
+    "en": "What's the difference between BHO and PHO for me as a consumer?",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/faq/2/question"
     ]
@@ -36377,7 +36377,7 @@
   },
   "b76a2851690b": {
     "de": "Was mache ich, wenn ich erst nach dem Kauf merke, dass eine Quelle unseriös wirkt?",
-    "en": null,
+    "en": "What do I do if I only notice after purchase that a source seems disreputable?",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/faq/3/question"
     ]
@@ -36574,7 +36574,7 @@
   },
   "619c1cecf6c2": {
     "de": "Wasserqualität",
-    "en": null,
+    "en": "Water quality",
     "paths": [
       "wiki/calmag-supplementierung/tags/3"
     ]
@@ -36595,14 +36595,14 @@
   },
   "ad3032601a69": {
     "de": "Wax",
-    "en": null,
+    "en": "Wax",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/9/term"
     ]
   },
   "0ec9b591e632": {
     "de": "Wax: robuster, klebrig-weich, bricht in Klumpen - höherer Lipidgehalt",
-    "en": null,
+    "en": "Wax: more robust, sticky-soft, breaks into clumps - higher lipid content",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/checklist/4"
     ]
@@ -36665,7 +36665,7 @@
   },
   "2634fd4b0027": {
     "de": "Weiche, cremige bis fließende Texturen, die durch aktives Aufschlagen/Rühren während des Purge entstehen - unterschiedliche Namen für unterschiedlich starke Bearbeitung, keine Qualitätsstufen.",
-    "en": null,
+    "en": "Soft, creamy to flowing textures that result from active whipping/stirring during the purge - different names for different degrees of agitation, not quality tiers.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/glossary/4/definition"
     ]
@@ -36749,7 +36749,7 @@
   },
   "3eb8bdcfdedb": {
     "de": "Weil die Nachbearbeitung nach dem Purge über die Textur entscheidet - wie stark das Material bewegt/aufgeschlagen wird und wie viel Lipide bzw. Feuchtigkeit zurückbleiben. Dieselbe Ausgangscharge kann je nach gewähltem Nachbearbeitungsweg zu ganz unterschiedlichen Texturen werden.",
-    "en": null,
+    "en": "Because the post-processing after the purge determines the texture - how much the material is agitated/whipped and how much lipids or moisture remain. The same starting batch can turn into entirely different textures depending on the post-processing path chosen.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/faq/3/answer"
     ]
@@ -36840,7 +36840,7 @@
   },
   "25009168c0fa": {
     "de": "Weil Schwermetalle oder andere unerwünschte Stoffe im Produkt weder sichtbar noch riechbar sind. Ein hauseigenes Testergebnis hat laut Brancheneinschätzung keine unabhängige Aussagekraft - erst ein Test durch ein unabhängiges Drittlabor mit nachvollziehbarer Chargenzuordnung ist eine belastbare Aussage.",
-    "en": null,
+    "en": "Because heavy metals or other undesirable substances in the product are neither visible nor detectable by smell. According to industry assessment, an in-house test result has no independent validity - only a test by an independent third-party lab with traceable batch assignment is a reliable statement.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/faq/2/answer"
     ]
@@ -36917,7 +36917,7 @@
   },
   "622a0cef25ff": {
     "de": "Weiße Fliege",
-    "en": null,
+    "en": "Whiteflies",
     "paths": [
       "wiki/weisse-fliege/tags/0"
     ]
@@ -37022,7 +37022,7 @@
   },
   "35572d4d494b": {
     "de": "Weitere konkrete, leicht prüfbare Signale: Gibt es eine verifizierbare Geschäftsidentität (echte Adresse, Telefonnummer, benannte Betreiber) oder nur eine generische Gmail-Adresse? Wird ausschließlich mit Kryptowährung oder Vorkasse per Überweisung bezahlt, ohne Möglichkeit einer Rückbuchung? Wirken Produktfotos wie Stockfotos, und wechselt das Seitendesign auffällig zwischen Unterseiten? Kann der Anbieter bei Genetik konkrete Angaben zu Züchter und Abstammungslinie machen, oder bleibt es bei vagen Marketing-Begriffen ohne nachprüfbare Herkunft?",
-    "en": null,
+    "en": "Other concrete, easily checkable signals: Is there a verifiable business identity (real address, phone number, named operators), or just a generic Gmail address? Is payment accepted exclusively via cryptocurrency or prepayment by bank transfer, with no chance of a chargeback? Do product photos look like stock photos, and does the site design noticeably change between subpages? Can the vendor give concrete details about the breeder and lineage for genetics, or does it stay at vague marketing terms with no verifiable origin?",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/3/content/1"
     ]
@@ -37577,7 +37577,7 @@
   },
   "fd529943ce25": {
     "de": "Wichtig für die Einordnung: HTFSE und HCFSE sind keine unterschiedlichen Sorten oder Genetiken, sondern zwei Enden desselben Verarbeitungsspektrums – dieselbe Ausgangspflanze kann je nach Prozessführung eher in die eine oder die andere Richtung verarbeitet werden.",
-    "en": null,
+    "en": "Important for context: HTFSE and HCFSE are not different strains or genetics, but two ends of the same processing spectrum – the same starting plant can be processed more toward one direction or the other depending on how the process is run.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/2/content/2"
     ]
@@ -37633,7 +37633,7 @@
   },
   "6ad2f65c9b81": {
     "de": "Wie aus demselben Ansatz unterschiedliche Texturen werden",
-    "en": null,
+    "en": "How the same batch becomes different textures",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/heading"
     ]
@@ -37661,7 +37661,7 @@
   },
   "3bdc2c9a6605": {
     "de": "Wie BHO und PHO aus demselben Ausgangsmaterial ganz unterschiedliche Texturen wie Budder, Sauce, Diamonds, Sugar, Crumble oder Shatter ergeben - und warum 'Live Resin' trotz ähnlichem Namen etwas komplett anderes ist als das solventlose 'Live Rosin'.",
-    "en": null,
+    "en": "How BHO and PHO produce completely different textures such as budder, sauce, diamonds, sugar, crumble, or shatter from the same starting material - and why 'Live Resin' is something completely different from the solvent-free 'Live Rosin', despite the similar name.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/summary"
     ]
@@ -37724,14 +37724,14 @@
   },
   "c2d4f289d4db": {
     "de": "Wie du ein Terpenpanel auf einem COA kritisch liest und was Begriffe wie HTFSE, HCFSE oder 'terpenreich' tatsächlich bedeuten – jenseits von Marketing.",
-    "en": null,
+    "en": "How to critically read a terpene panel on a COA and what terms like HTFSE, HCFSE or 'terpene-rich' actually mean – beyond marketing.",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/summary"
     ]
   },
   "a30193621d9e": {
     "de": "Wie du ein Terpenpanel praktisch liest",
-    "en": null,
+    "en": "How to read a terpene panel in practice",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/sections/5/heading"
     ]
@@ -38284,7 +38284,7 @@
   },
   "e0c8d6722ebf": {
     "de": "Wie zuverlässig ist deine Bezugsquelle wirklich?",
-    "en": null,
+    "en": "How reliable is your source really?",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/title"
     ]
@@ -38439,7 +38439,7 @@
   },
   "e4bb52c82c8e": {
     "de": "Wirken Minor-Terpene stärker, als ihr geringer Anteil vermuten lässt?",
-    "en": null,
+    "en": "Do minor terpenes act more strongly than their small share would suggest?",
     "paths": [
       "wiki/minor-terpene-und-profiltiefe/faq/0/question"
     ]
@@ -38741,7 +38741,7 @@
   },
   "6a593c4a367d": {
     "de": "Woran du erkennst, ob Samenbank, Dünger-Marke oder Verkäufer eine verlässliche Quelle sind - und worauf du bei wiederholten Käufen achten solltest.",
-    "en": null,
+    "en": "How to tell whether a seed bank, nutrient brand, or seller is a reliable source - and what to look out for on repeat purchases.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/summary"
     ]
@@ -38790,7 +38790,7 @@
   },
   "880421c1678b": {
     "de": "WPFF",
-    "en": null,
+    "en": "WPFF",
     "paths": [
       "wiki/bubble-hash-qualitaetskriterien/tags/2"
     ]
@@ -38853,7 +38853,7 @@
   },
   "ecbe134ae325": {
     "de": "Wurzelfäule",
-    "en": null,
+    "en": "root rot",
     "paths": [
       "wiki/wurzelfaeule/tags/0",
       "wiki/wurzelgesundheit-diagnose/tags/2",
@@ -39002,7 +39002,7 @@
   },
   "43f1936b42f6": {
     "de": "Wurzelzone",
-    "en": null,
+    "en": "Root zone",
     "paths": [
       "wiki/cannabis-substrat-und-wurzelzone/tags/1",
       "wiki/kaeltestress/tags/2",
@@ -39096,7 +39096,7 @@
   },
   "b52c4d7de81d": {
     "de": "Zahlungsmittel mit Rückbuchungsschutz verfügbar, nicht nur Krypto/Vorkasse",
-    "en": null,
+    "en": "Payment methods with chargeback protection available, not just crypto/prepayment",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/3/checklist/3"
     ]
@@ -39138,7 +39138,7 @@
   },
   "485434e9802c": {
     "de": "Zeitfenster für die Reklamation ist konkret benannt, nicht 'nach Ermessen'",
-    "en": null,
+    "en": "Time window for the claim is stated concretely, not 'at our discretion'",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/sections/2/checklist/1"
     ]
@@ -39634,7 +39634,7 @@
   },
   "a174170b5917": {
     "de": "Zucht",
-    "en": null,
+    "en": "Breeding",
     "paths": [
       "wiki/crossing-backcrossing-grundlagen/tags/2"
     ]
@@ -39704,7 +39704,7 @@
   },
   "8824495b9a2b": {
     "de": "Zur Einordnung: Budder, Sauce, Diamonds, Sugar, Crumble, Wax und Shatter gehören alle zu dieser lösungsmittelbasierten Familie - die solventlose Rosin-Familie auf dieser Seite verwendet mit Badder und Jam eigenständige, teils ähnlich klingende Texturbegriffe für ihre eigenen Produkte.",
-    "en": null,
+    "en": "For context: budder, sauce, diamonds, sugar, crumble, wax and shatter all belong to this solvent-based family - the solventless rosin family on this page uses its own, sometimes similarly sounding texture terms, badder and jam, for its own products.",
     "paths": [
       "wiki/concentrate-categorization-fuer-plattformen/sections/3/content/5"
     ]
@@ -39718,7 +39718,7 @@
   },
   "5ed7912fec07": {
     "de": "Zusage eines Verkäufers, nicht gekeimte Samen gegen Nachweis (meist Fotobeweis) durch Nachlieferung oder Gutschrift zu ersetzen.",
-    "en": null,
+    "en": "A seller's commitment to replace seeds that fail to germinate, upon proof (usually photo evidence), through a replacement shipment or credit.",
     "paths": [
       "wiki/supplier-risk-scoring-fuer-cannabis/glossary/5/definition"
     ]
@@ -39803,7 +39803,7 @@
   },
   "bdc30ff077be": {
     "de": "Zwei Prozessziele derselben Extraktfamilie: HTFSE priorisiert Terpenerhalt (mehr Aroma, weniger roher Cannabinoidgehalt), HCFSE priorisiert maximalen Cannabinoidgehalt (weniger Terpene, mehr THCA).",
-    "en": null,
+    "en": "Two process goals within the same extract family: HTFSE prioritizes terpene retention (more aroma, less raw cannabinoid content), HCFSE prioritizes maximum cannabinoid content (fewer terpenes, more THCA).",
     "paths": [
       "wiki/terpen-panels-und-qualitaetslabels/simpleExplainers/1/text"
     ]
