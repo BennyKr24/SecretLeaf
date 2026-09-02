@@ -16,32 +16,31 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 
 ---
 
-## 📊 Admin-Panel-Überarbeitung + `/status`-Chronik-Split (2026-08-31)
+## 📊 Admin-Panel-Überarbeitung (Stand 2026-09-02)
 
-- 🔍 **Vollständiger Plan liegt in `docs/ADMIN_PANEL_OVERHAUL_PLAN.md`**
-  (Ausgangslage-Code-Check + Recherche + Ziel-IA + Seite-für-Seite +
-  Migrationen + API-Umbau + 5-Phasen-Plan). Kurz:
-  - Bestand: 7 Seiten, eine 785-Z.-Mega-Route (`api/admin/dashboard`), kein
-    Server-Gate, keine geteilten Typen/Primitives, ~11 echte Bugs
-    (Users-Suche filtert nur die aktuelle Seite, Analytics-„Ø Score" mittelt
-    nur Top-20, `?filter=pending`-Deep-Link ignoriert, Algorithmus ohne
-    Dirty-Guard, u. a.), durchgängig `emerald-*`/`red-*`-Hardcodes statt
-    Design-System-Tokens.
-  - Fehlt komplett: Billing/Abos, Cron-Lauf-Historie (nur 20 Z. sichtbar,
-    `automation_error_memory` unsichtbar), Audit-Log, E-Mail-Log,
-    Knowledge-OS-CMS (19 Tabellen), Grow-/Diagnose-Domäne, Feature-Flags,
-    Consent-Records, Changelog-Editor. 30 von ~37 DB-Tabellen ohne Admin-Sicht.
-  - Nächster Schritt: Phase 0 (Fundament — Contracts, Ressourcen-Routen,
-    `admin_audit_log`, geteilte Primitives, Nav-Registry).
+Voller Plan + Phasen-Checkliste: `docs/ADMIN_PANEL_OVERHAUL_PLAN.md`.
+`/status`-Chronik-Split, Phase 0–3a/b/c und die vier „Hebel"
+(`stripe_events`-Idempotenz, Wartungsmodus, Site-Banner, Wachstum-Funnel)
+sind gebaut, verifiziert und auf Prod (Migrationen bis `202609020002`
+angewendet). Live-Seiten: Lage, Finanzen, Steuerung, Nutzer, Neuigkeiten,
+Betrieb, Wachstum.
 
-- 🔍 **`/status`-Chronik-Split** ist Teil von Phase 1 des obigen Plans (§3.9):
-  `app/[locale]/status/page.tsx` mischt in „Was sich zuletzt getan hat"
-  (Z. 477–514) `changelogData.releases` (manuell) mit `operationalChangelog`
-  (Z. 235–245, aus `statusReport.events` = Cron-/Pipeline-Läufe) in **einer**
-  Liste. Ziel: zwei getrennte Blöcke — „Automatische Läufe" (aus
-  `automation_job_runs`) und „Neuigkeiten" (nur manuelle Einträge). Der
-  `operationalChangelog`-Merge (Z. 247–256) entfällt; die Events stehen schon
-  in „Was in den letzten 30 Tagen war" (Z. 451–475).
+Noch offen:
+- 🔍 **Studien/Assistent** laufen noch auf dem alten `adminApi`/Design-Muster
+  (nicht kaputt, nur nicht auf die neuen Primitives migriert). Der
+  Plan-Teil „Engine-Trigger-Panel" ist überholt (Studien-Engine bewusst nur
+  Notfall-Zugriff, `/engine`-Seite deshalb gelöscht); „Übersetzungs-Coverage"
+  hängt an PR #29 (i18n). Ein reiner Design-Umbau der Studien-Seite ist ohne
+  Browser-Test riskant — ein aktiv genutzter Moderations-Workflow.
+- ⏸️ **Mail-Modul** (`/dashboard/admin/mail`, `email_log`) hängt an PR #30.
+- ⏸️ **Pro-Codes-Admin-UI** hängt an PR #27 — dessen App-Code (Redeem-Endpoints,
+  `serverAuth.ts`-Änderungen) ist **nicht** gemerged, nur das Schema
+  (`202608270000_pro_trial_and_codes`) wurde am 2026-09-02 isoliert
+  nachgezogen, weil gemergter Admin-Code (`subscriptions_source_check`)
+  schon davon abhing. `pro_codes`/`pro_code_redemptions` existieren also auf
+  Prod, aber niemand kann sie befüllen, bis PR #27 gemerged wird.
+- 🔍 Phase 2b Rest: `email_log`/`alert_rules`-Migrationen, Cron `cost-sync` +
+  `alert-check`, Consent-Records + Compliance-Seite (Phase 4).
 
 ---
 
