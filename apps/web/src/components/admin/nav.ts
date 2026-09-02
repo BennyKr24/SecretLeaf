@@ -26,6 +26,7 @@ import {
   SlidersHorizontal,
   ShieldCheck,
   Euro,
+  Ticket,
   type LucideIcon,
 } from "lucide-react";
 
@@ -61,6 +62,7 @@ export const ADMIN_NAV_REGISTRY: AdminNavItem[] = [
   // ── Geld ────────────────────────────────────────────────────────────────
   { group: "Geld", segment: "finance", label: "Finanzen", icon: Euro, status: "live" },
   { group: "Geld", segment: "growth", label: "Wachstum", icon: Sprout, status: "live" },
+  { group: "Geld", segment: "pro-codes", label: "Pro-Codes", icon: Ticket, status: "live" },
 
   // ── Menschen ────────────────────────────────────────────────────────────
   { group: "Menschen", segment: "users", label: "Nutzer", icon: Users, status: "live" },

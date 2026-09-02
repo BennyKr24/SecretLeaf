@@ -2,6 +2,8 @@ export type UserRole = "CONSUMER" | "PROVIDER" | "ADMIN";
 
 export type UserPlan = "free" | "pro" | "team";
 
+export type PlanSource = "stripe" | "trial" | "code";
+
 export type SessionUser = {
   id: string;
   username: string;
@@ -10,6 +12,12 @@ export type SessionUser = {
   role: UserRole;
   /** Subscription tier — defaults to "free" when not set */
   plan?: UserPlan;
+  /** How the Pro entitlement was granted — "stripe" (paid), "trial", "code". */
+  planSource?: PlanSource;
+  /** Whether the one-time self-serve Pro trial has ever been activated. */
+  trialRedeemed?: boolean;
+  /** ISO end of the current entitled period (trial / code / paid cycle), if any. */
+  currentPeriodEnd?: string | null;
 };
 
 /** Profile data stored in localStorage per user — keyed by userId */
