@@ -5,7 +5,7 @@
 // POST /api/billing/redeem (Authorization: Bearer <supabase access token>)
 // Body: { code: string }
 //
-// Admin-generated codes (see /api/admin/dashboard "pro-codes-*") grant a fixed
+// Admin-generated codes (see /api/admin/pro-codes) grant a fixed
 // number of Pro days. Redemption is idempotent per user via the
 // UNIQUE(code_id, user_id) constraint on `pro_code_redemptions`, and a slot is
 // claimed with a compare-and-swap on `redemption_count` so a code cannot be

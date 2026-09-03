@@ -5,8 +5,8 @@ const MODEL = "claude-opus-5";
 
 // ────────────────────────────────────────────────────────────────────────────
 // Admin-only Claude API access. Never imported by user-facing code paths —
-// every caller must go through an admin-gated route (see api/admin/dashboard
-// action "ai-assist") so normal users can't trigger billed API calls.
+// every caller must go through an admin-gated route (see
+// api/admin/assistant) so normal users can't trigger billed API calls.
 // ────────────────────────────────────────────────────────────────────────────
 
 let client: Anthropic | null = null;
