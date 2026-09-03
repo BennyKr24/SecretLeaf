@@ -37,7 +37,7 @@ angewendet (Pro-Codes nutzt sie live).
 
 ## 1. Studien
 
-### 1.1 Contracts (`src/lib/admin/contracts.ts` — ergänzen) `[ ]`
+### 1.1 Contracts `[x]`
 
 - `StudyRow` — die 16 Felder aus `dashboard/route.ts` `STUDIES_SELECT_ENGINE`
   (`id,title,description,source,tags,quality_status,relevance_score,study_type,
@@ -51,7 +51,7 @@ angewendet (Pro-Codes nutzt sie live).
 - `studyUpdateSchema = z.object({ qualityStatus?, editorialPriority?, title?,
   description?, tags? (string[]), reviewNote? }).refine(mind. 1 Feld)`.
 
-### 1.2 API-Routen `[ ]`
+### 1.2 API-Routen `[x]`
 
 **Neu:** `src/app/api/admin/content/studies/route.ts` — `GET`
 - `parseQuery(url, adminStudiesQuerySchema)`.
@@ -73,7 +73,7 @@ angewendet (Pro-Codes nutzt sie live).
 - `DELETE`: `withAudit(actor, { resource: "study", resourceId: id,
   action: "delete", before }, () => supabase.delete().eq("id",id))`.
 
-### 1.3 Seite (`src/app/[locale]/dashboard/admin/studies/page.tsx`) `[ ]`
+### 1.3 Seite `[x]`
 
 - Header (Z. 219–238) → `<AdminPage title="Studien" icon={Microscope}
   description="Alle Studien filtern, sortieren, prüfen und bearbeiten."
@@ -119,7 +119,7 @@ die API schon am richtigen Ort.
 
 ## 2. Assistent
 
-### 2.1 Migration `[ ]`
+### 2.1 Migration `[x]` (Datei angelegt, Anwenden lokal+prod noch offen)
 
 `supabase/migrations/<ts>_admin_assistant_messages.sql`:
 ```sql
@@ -141,13 +141,13 @@ gegenprüfen, dass die Tabelle wirklich da ist (Memory
 `secretleaf_security_migration_gap_2026_08_19`: dup-Timestamp-Pushes können
 still fehlschlagen).
 
-### 2.2 Contract `[ ]`
+### 2.2 Contract `[x]`
 
 - `AssistantMessage = { id; prompt; reply; createdAt }`.
 - `AdminAssistantResponse = { messages: AssistantMessage[] }`.
 - `assistantAskSchema = z.object({ prompt: z.string().trim().min(1).max(8000) })`.
 
-### 2.3 API-Route (`src/app/api/admin/assistant/route.ts` — neu) `[ ]`
+### 2.3 API-Route `[x]`
 
 - `GET` = `adminRoute` — letzte ~50 Zeilen für `actor.userId`,
   `order("created_at", { ascending: true })`.
@@ -162,7 +162,7 @@ still fehlschlagen).
   löschen"-Knopf).
 - Kein `withAudit` nötig — die Zeile selbst ist der Nachweis.
 
-### 2.4 Seite (`src/app/[locale]/dashboard/admin/assistant/page.tsx`) `[ ]`
+### 2.4 Seite `[x]`
 
 - `readHistory`/`writeHistory`/`HISTORY_STORAGE_KEY`/localStorage **komplett raus**.
 - Header → `<AdminPage title="Assistent" icon={Bot} description="Notizen,
@@ -180,7 +180,7 @@ still fehlschlagen).
 
 ---
 
-## 3. Toter Code weg `[ ]`
+## 3. Toter Code weg `[x]`
 
 - `src/app/api/admin/dashboard/route.ts`: `case "studies" | "study-update" |
   "study-delete" | "ai-assist"` löschen → `switch` leer → **ganze Datei löschen**
