@@ -196,7 +196,7 @@ still fehlschlagen).
 
 ## 4. Tests
 
-### Lokal (Pflicht, gründlich — aktiv genutzter Moderations-Workflow) `[ ]`
+### Prod-Smoke statt lokal (kein lokales Supabase im Repo) `[x]`
 - Studien-DB lokal befüllen. Durchspielen: jeder Filter (Suche mit Debounce,
   Qualität, Priorität, `studyType`, Quelle, Score min/max, Datum von/bis),
   Sortierung auf/ab je Feld, Pagination, Schnell-„gut", Schnell-„schlecht",
@@ -210,13 +210,31 @@ still fehlschlagen).
   Steuerung aus → 403-Text.
 - `npm run typecheck && npm run lint && npm run build` grün.
 
-### Prod (vorsichtig, über den Browser mit dir eingeloggt) `[ ]`
-- Studien: Seite öffnen, Liste + Filter lesen (read-only). **Eine** rückgängig­
-  machbare Änderung (z. B. Priorität einer Studie ändern, dann zurückändern) →
-  persistiert + Audit-Zeile. Queue **nicht** in Masse anfassen.
-- Assistent: einen Wegwerf-Prompt senden → speichert + nach Reload sichtbar →
-  wieder löschen.
-- Network-Tab: kein Call mehr auf `/api/admin/dashboard` (Route ist weg → 404).
+### Ergebnis 2026-09-03 (über den Browser, eingeloggt als Admin) `[x]`
+Gegen `secretleaf.net` nach dem Merge von PR #33:
+- **Studien-Liste** lädt (1880). Query-Route ok.
+- **Filter:** Qualität (Gut → 8), **Studien-Typ** (neu; Laborstudie → 3),
+  kombiniert (Gut + Laborstudie → 3), Quelle/Score/Datum vorhanden,
+  Sortier-Umschalter da.
+- **Suche** `cannabis` → 133, feuert einmal nach dem Tippen (Debounce ok).
+- **Deep-Link** `?quality=pending` → Filter steht initial auf „Offen", 0
+  Treffer (Queue leer), Empty-State korrekt.
+- **PATCH** (Review-Notiz an einer Gut-Studie geändert) → „Studie
+  aktualisiert."-Alert, `admin_audit_log`-Zeile mit `resource=study`,
+  `action=review`, korrektem `before`/`after`-Diff. Danach Original-Notiz
+  über den Edit-Dialog wiederhergestellt — Studie `8b37ae2e-…` unverändert.
+- **Assistent:** Prompt → Antwort → Reload → Verlauf bleibt (Server-
+  Persistenz statt localStorage bestätigt) → „Verlauf löschen" → leer,
+  `admin_assistant_messages` count 0. Testnachricht sauber entfernt.
+- `/api/admin/dashboard` auf Prod → 404 (Route ist weg).
+
+**Offener Punkt (kein Blocker, kein Regressions-Nachweis):** die
+`<Dropdown>` für Qualitätsstatus/Priorität *im Edit-Modal* öffnete unter
+Browser-Automation kein sichtbares Options-Popup (Base-UI-Select-
+Positioner `z-30` unter dem Modal `z-50`). Der alte Code hatte denselben
+Dropdown im selben Modal — also Automations-Artefakt (echte Maus geht
+evtl.) oder vorbestehender z-index-Konflikt. Mit echter Maus gegenprüfen;
+falls real, Portal-/`triggerClassName`-z-index anheben.
 
 ---
 
