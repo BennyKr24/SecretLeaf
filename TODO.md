@@ -21,17 +21,21 @@ noch nicht untersucht · ⏸️ blockiert auf Entscheidung/Check, kein Code nöt
 Voller Plan + Phasen-Checkliste: `docs/ADMIN_PANEL_OVERHAUL_PLAN.md`.
 `/status`-Chronik-Split, Phase 0–3a/b/c und die vier „Hebel"
 (`stripe_events`-Idempotenz, Wartungsmodus, Site-Banner, Wachstum-Funnel)
-sind gebaut, verifiziert und auf Prod (Migrationen bis `202609020002`
+sind gebaut, verifiziert und auf Prod (Migrationen bis `202609030000`
 angewendet). Live-Seiten: Lage, Finanzen, Steuerung, Nutzer, Neuigkeiten,
-Betrieb, Wachstum, Pro-Codes.
+Betrieb, Wachstum, Pro-Codes, **Studien, Assistent**.
+
+- ✅ **Studien + Assistent migriert** (PR #33, 2026-09-03) — auf die neuen
+  Primitives, `/api/admin/dashboard` + `lib/adminApi.ts` gelöscht. Studien
+  neu: entprellte Suche, `?quality=`-Deep-Link, Review-Notiz-Feld,
+  Studien-Typ-Filter. Assistent-Verlauf jetzt serverseitig
+  (`admin_assistant_messages`). Prod-Smoke bestanden. Detail:
+  `docs/ADMIN_STUDIES_ASSISTANT_MIGRATION_PLAN.md`.
+  Offener Kleinkram: `<Dropdown>` für Status/Priorität *im Edit-Modal* mit
+  echter Maus gegenprüfen (möglicher z-index-Konflikt mit dem Modal, kein
+  Regressions-Nachweis).
 
 Noch offen:
-- 🔍 **Studien/Assistent** laufen noch auf dem alten `adminApi`/Design-Muster
-  (nicht kaputt, nur nicht auf die neuen Primitives migriert). Der
-  Plan-Teil „Engine-Trigger-Panel" ist überholt (Studien-Engine bewusst nur
-  Notfall-Zugriff, `/engine`-Seite deshalb gelöscht); „Übersetzungs-Coverage"
-  hängt an PR #29 (i18n). Ein reiner Design-Umbau der Studien-Seite ist ohne
-  Browser-Test riskant — ein aktiv genutzter Moderations-Workflow.
 - 🔍 **Mail-Modul** (`/dashboard/admin/mail`, `email_log`): PR #30 ist
   gemerged und der Mailversand läuft (siehe ✉️-Abschnitt), aber das
   Admin-Panel + `email_log`-Tabelle dafür sind noch nicht gebaut.
