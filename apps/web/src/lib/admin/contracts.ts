@@ -460,3 +460,83 @@ export const proCodeCreateSchema = z.object({
 export const proCodePatchSchema = z.object({
   active: z.boolean(),
 });
+
+// ── Content / Studien ───────────────────────────────────────────────────────
+
+/** One row of the studies moderation queue. Mirrors STUDIES_SELECT in
+ *  app/api/admin/content/studies/route.ts. Legacy DBs without the engine
+ *  columns get them back as null (see normalizeLegacyStudyRow). */
+export type StudyRow = {
+  id: string;
+  title: string;
+  description: string | null;
+  source: string | null;
+  tags: string[];
+  quality_status: string;
+  relevance_score: number | null;
+  study_type: string | null;
+  editorial_priority: string | null;
+  matched_topics: string[] | null;
+  flags: string[] | null;
+  first_author: string | null;
+  origin_label: string | null;
+  created_at: string | null;
+  fetched_at: string | null;
+  doi: string | null;
+};
+
+export type AdminStudiesResponse = {
+  studies: StudyRow[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+};
+
+/** GET /api/admin/content/studies query. All filters optional; unknown
+ *  sortBy is clamped server-side to a safe column. */
+export const adminStudiesQuerySchema = listQuerySchema.extend({
+  quality: z.enum(["all", "pending", "good", "bad"]).optional(),
+  priority: z.enum(["all", "high", "medium", "low"]).optional(),
+  studyType: z.string().max(64).optional(),
+  source: z.string().trim().max(200).optional(),
+  minScore: z.coerce.number().optional(),
+  maxScore: z.coerce.number().optional(),
+  dateFrom: z.string().max(40).optional(),
+  dateTo: z.string().max(40).optional(),
+});
+
+export type AdminStudiesQuery = z.infer<typeof adminStudiesQuerySchema>;
+
+/** PATCH /api/admin/content/studies/[id] body. At least one field required. */
+export const studyUpdateSchema = z
+  .object({
+    qualityStatus: z.enum(["pending", "good", "bad"]).optional(),
+    editorialPriority: z.enum(["high", "medium", "low"]).optional(),
+    title: z.string().trim().max(500).optional(),
+    description: z.string().max(20_000).optional(),
+    tags: z.array(z.string().trim().max(80)).max(50).optional(),
+    reviewNote: z.string().max(4_000).optional(),
+  })
+  .refine((v) => Object.keys(v).length > 0, { message: "Keine Felder zum Aktualisieren" });
+
+export type StudyUpdateInput = z.infer<typeof studyUpdateSchema>;
+
+// ── Assistent ───────────────────────────────────────────────────────────────
+
+export type AssistantMessage = {
+  id: string;
+  prompt: string;
+  reply: string;
+  createdAt: string;
+};
+
+export type AdminAssistantResponse = {
+  messages: AssistantMessage[];
+};
+
+export const assistantAskSchema = z.object({
+  prompt: z.string().trim().min(1).max(8_000),
+});
+
+export type AssistantAskInput = z.infer<typeof assistantAskSchema>;
