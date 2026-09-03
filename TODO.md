@@ -32,7 +32,9 @@ Noch offen:
   Notfall-Zugriff, `/engine`-Seite deshalb gelöscht); „Übersetzungs-Coverage"
   hängt an PR #29 (i18n). Ein reiner Design-Umbau der Studien-Seite ist ohne
   Browser-Test riskant — ein aktiv genutzter Moderations-Workflow.
-- ⏸️ **Mail-Modul** (`/dashboard/admin/mail`, `email_log`) hängt an PR #30.
+- 🔍 **Mail-Modul** (`/dashboard/admin/mail`, `email_log`): PR #30 ist
+  gemerged und der Mailversand läuft (siehe ✉️-Abschnitt), aber das
+  Admin-Panel + `email_log`-Tabelle dafür sind noch nicht gebaut.
 - 🔍 Phase 2b Rest: `email_log`/`alert_rules`-Migrationen, Cron `cost-sync` +
   `alert-check`, Consent-Records + Compliance-Seite (Phase 4).
 
@@ -224,35 +226,24 @@ Ursprüngliche Phase-2/3-Planung (jetzt abhängig von der Neuquellungs-Entscheid
   Metadata — niedrige Priorität (Quellenregister, kaum SEO-relevant),
   ggf. später ebenfalls in Server-Wrapper splitten.
 
-## ✉️ Professionelle E-Mail-Templates (2026-08-30)
+## ✉️ Professionelle E-Mail-Templates — LIVE seit 2026-09-03
 
-- 🔍 **Alle ausgehenden Mails brauchen ein einheitliches, hochwertiges
-  Layout — kein 0815.** Aktueller Stand: es gibt *keinen* eigenen Mailer.
-  Die einzigen Mails, die Nutzer bekommen, sind die Supabase-Auth-Mails
-  (Signup-Bestätigung, Magic Link, Passwort-Reset — ausgelöst in
-  `apps/web/src/app/[locale]/auth/page.tsx`), und die laufen mit dem
-  Supabase-Default-Text. Ziel:
-  - **Gemeinsames HTML-Grundgerüst** (table-based, Dark-Mode-tauglich,
-    ~600px, Inline-CSS — E-Mail-Clients können kein `<style>`): Header mit
-    Logo/Banner, klarer Textkörper, Footer mit vollständiger Anschrift +
-    Impressumsdaten (Betreiber, Adresse, Kontakt, USt-Falls-vorhanden),
-    Abmelde-/Rechtshinweis wo nötig. Optisch an `DESIGN_SYSTEM.md` +
-    Marken-Palette angelehnt, nicht der generische SaaS-Purple-Gradient.
-  - **Supabase-Auth-Templates** im Dashboard (Auth → Email Templates) mit
-    diesem Gerüst ersetzen — DE + EN Variante, da die App zweisprachig ist
-    (Supabase kann nur *ein* Template pro Typ → entweder zweisprachig im
-    selben Body oder Redirect-Locale-Logik prüfen).
-  - **Mailer-Entscheidung für app-eigene Mails** (alles außerhalb Auth:
-    z. B. künftige Benachrichtigungen, Kontaktformular-Antworten). Resend
-    passt zum Stack (React-Email für die Templates, ein API-Key, kein
-    SMTP-Setup); Alternative wäre Supabase-SMTP-Custom mit eigenem
-    Provider. Kein Vendor-Zwang, solange nur Auth-Mails rausgehen.
-  - **Absender-Domain**: aktuell verschicken Supabase-Mails von deren
-    Shared-Domain → landen eher im Spam. Eigene Versand-Subdomain
-    (`mail.secretleaf.*`) mit SPF/DKIM/DMARC einrichten, sobald ein Mailer
-    steht.
-  - Nicht in Scope: Newsletter/Marketing-Mails (eigenes Thema, eigenes
-    Consent).
-  - **Am Ende: Test-Versand aller Template-Typen an eine echte Inbox
-    gegenchecken** (Rendering in Gmail-App, Apple Mail, Outlook-Web;
-    Dark-Mode; Spam-Score z. B. via mail-tester.com).
+- ✅ **Erledigt.** Supabase **Send Email Hook** →
+  `apps/web/src/app/api/auth/send-email/route.ts` → React-Email-Templates
+  (`apps/web/src/emails/`) → Brevo Transactional API. Confirm-Signup +
+  Reset-Password aktiv (DE/EN, helles Marken-Layout mit Anschrift-Footer).
+  Code über PR #30 gemerged; Konto-Config (Brevo-Keys, Supabase
+  Hook/Custom-SMTP/Site-URL, Vercel-Env) am 2026-09-03 eingerichtet und
+  per echtem Signup gegen Prod verifiziert (Bestätigungsmail kam an).
+  Vollständiger Runbook + gesetzte Werte:
+  Memory `secretleaf_mail_verification_priority_2026_09_03`.
+- Offene Kleinigkeiten:
+  - `standardwebhooks` als direkte `apps/web`-Dep (Branch
+    `benny/email-hook-dep-fix`, Commit `f344539`) noch pushen/mergen.
+  - Multi-Client-Render-QA (Gmail/Apple Mail/Outlook, Dark-Mode,
+    mail-tester ≥ 9) — beim ersten echten Test sah das Layout gut aus,
+    aber kein systematischer Durchlauf.
+  - Dashboard-Fallback-Templates (Confirm/Reset) noch auf
+    Supabase-Default — greifen nur, wenn der Hook mal deaktiviert wird.
+  - Security-Notification-Mails (Password changed etc.) = eigener,
+    späterer TODO. Newsletter/Marketing weiter explizit out of scope.
