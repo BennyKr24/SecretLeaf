@@ -131,3 +131,21 @@ export function computeGrowProgress(currentDay: number, totalDays: number): numb
   if (totalDays <= 0) return 0;
   return Math.min(100, Math.round((currentDay / totalDays) * 100));
 }
+
+/**
+ * Display name of a plant. Untouched default names ("Plant 3" from older
+ * grows, "Pflanze 3" from newer ones) follow the UI language; names the
+ * grower chose are shown as stored. Nothing is rewritten in the data.
+ */
+export function displayPlantName(name: string, locale: string): string {
+  const match = /^(?:Plant|Pflanze) (\d+)$/.exec(name);
+  if (!match) return name;
+  return `${locale.startsWith("de") ? "Pflanze" : "Plant"} ${match[1]}`;
+}
+
+/** Local calendar date as YYYY-MM-DD (toISOString() would give the UTC date,
+ *  i.e. yesterday for entries made shortly after midnight in Europe). */
+export function localDateString(date: Date = new Date()): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}

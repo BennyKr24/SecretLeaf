@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import { ActionRow, BTN_GHOST, TEXT_LINK } from "@/components/grow/cockpit/ui";
 import type { Route } from "next";
 import { wikiArticles } from "@/data/terpira/wiki";
 import { resolveActiveRule, type WikiEvalContext } from "@/data/terpira/wikiContextMapping";
@@ -63,24 +65,24 @@ function persistMemory(growId: string, memory: WikiMemoryState): void {
   window.localStorage.setItem(getMemoryKey(growId), JSON.stringify(memory));
 }
 
-function getContextAction(rule: ReturnType<typeof resolveActiveRule>, growId: string): { href: Route; label: string } {
+function getContextAction(rule: ReturnType<typeof resolveActiveRule>, growId: string): { href: Route; label: "knowledgeActionLog" | "knowledgeActionWater" | "knowledgeActionOpen" | "knowledgeActionTools" | "knowledgeActionTransition" } {
   if (!rule) {
-    return { href: `/grow/${growId}/log` as Route, label: "Log öffnen" };
+    return { href: `/grow/${growId}/log` as Route, label: "knowledgeActionLog" };
   }
 
   switch (rule.trigger.type) {
     case "water_gap_days":
-      return { href: `/grow/${growId}/log?type=wasser` as Route, label: "Bewässerung eintragen" };
+      return { href: `/grow/${growId}/log?type=wasser` as Route, label: "knowledgeActionWater" };
     case "last_log_type":
-      return { href: `/grow/${growId}/log?type=${rule.trigger.logType}` as Route, label: "Aktion öffnen" };
+      return { href: `/grow/${growId}/log?type=${rule.trigger.logType}` as Route, label: "knowledgeActionOpen" };
     case "health_score_below":
     case "health_score_above":
-      return { href: "/tools" as Route, label: "Tools öffnen" };
+      return { href: "/tools" as Route, label: "knowledgeActionTools" };
     case "phase_ending_soon":
     case "harvest_phase_active":
-      return { href: `/grow/${growId}/log?type=notiz` as Route, label: "Übergang dokumentieren" };
+      return { href: `/grow/${growId}/log?type=notiz` as Route, label: "knowledgeActionTransition" };
     default:
-      return { href: `/grow/${growId}/log` as Route, label: "Log öffnen" };
+      return { href: `/grow/${growId}/log` as Route, label: "knowledgeActionLog" };
   }
 }
 
@@ -92,6 +94,7 @@ export default function GrowKnowledgePanel({
   overdueTasks,
   growsCount,
 }: Props) {
+  const t = useTranslations("dashboard");
   const [memoryVersion, setMemoryVersion] = useState(0);
 
   const memory = useMemo(
@@ -164,53 +167,24 @@ export default function GrowKnowledgePanel({
 
   if (!activeRule || !article) return null;
 
+  // One row in the cockpit's "Als Nächstes" list (DESIGN_SYSTEM.md §24).
   return (
-    <div className="rounded-2xl border border-border bg-card p-5" data-reveal>
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-primary">Wissen im Grow-Kontext</p>
-          <h2 className="mt-1 text-lg font-bold text-foreground">{article.title}</h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted-fg">{article.growValue ?? article.summary}</p>
-        </div>
-        <span className="rounded-full bg-primary/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary">
-          {activeRule.priority}
-        </span>
-      </div>
-
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-xl border border-border bg-background px-4 py-3">
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-fg">Warum jetzt?</p>
-          <p className="mt-1 text-sm text-foreground">{relationMatch?.reason ?? activeRule.reason}</p>
-        </div>
-        <div className="rounded-xl border border-border bg-background px-4 py-3">
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-fg">Ziel</p>
-          <p className="mt-1 text-sm text-foreground">{relationMatch?.expectedBenefit ?? activeRule.goal}</p>
-        </div>
-      </div>
-
-      <div className="mt-4 flex flex-wrap gap-3">
-        <Link
-          href={action.href}
-          onClick={() => rememberArticle(article.slug)}
-          className="inline-flex items-center rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary-dark"
-        >
-          {action.label}
+    <ActionRow
+      label={t("knowledgeContextTitle")}
+      title={article.title}
+      text={<>{relationMatch?.reason ?? activeRule.reason} {t("knowledgeGoalInline", { goal: relationMatch?.expectedBenefit ?? activeRule.goal })}</>}
+      meta={(
+        <Link href={`/studies/${article.slug}` as Route} onClick={() => rememberArticle(article.slug)} className={TEXT_LINK}>
+          {t("insightWhy")}
         </Link>
-        <Link
-          href={`/studies/${article.slug}` as Route}
-          onClick={() => rememberArticle(article.slug)}
-          className="inline-flex items-center rounded-xl border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-card"
-        >
-          Studie öffnen
+      )}
+      actions={(
+        <Link href={action.href} onClick={() => rememberArticle(article.slug)} className={BTN_GHOST}>
+          {t(action.label)}
         </Link>
-        <button
-          type="button"
-          onClick={() => rememberArticle(article.slug)}
-          className="inline-flex items-center rounded-xl border border-border bg-background px-4 py-2 text-sm font-medium text-muted-fg transition hover:text-foreground"
-        >
-          Später ausblenden
-        </button>
-      </div>
-    </div>
+      )}
+      onDismiss={() => rememberArticle(article.slug)}
+      dismissLabel={t("knowledgeHideLater")}
+    />
   );
 }

@@ -841,6 +841,11 @@ Referenz: Linear. Ein Werkzeug, kein Prospekt.
 - Optionale Messwerte (pH, EC …) zeigen ohne Daten eine Einladung mit
   konkretem Nutzen, keinen leeren Zustand.
 
+## 24.6 Eine Fläche pro Grow
+- Ein Grow wird nur im Grow-Cockpit gezeigt (Dashboard und `/grow/[id]` nutzen denselben Baustein).
+- Pflanzen, Ernte, Einschätzung und Einstellungen sind Abschnitte des Cockpits, keine eigenen Karten-Seiten.
+- Mobil: Tabs „Heute / Grow (/ Wissen)“ statt einer langen Spalte.
+
 ---
 
 # 25. Final Rule

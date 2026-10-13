@@ -47,7 +47,9 @@ export function BottomNav() {
 
   if (isAdminRoute(pathname)) return null;
 
-  const growHref = activeGrow ? "/dashboard/user" : "/start";
+  // Signed-in users see their grow in the dashboard cockpit; guests (local
+  // grows, no dashboard access) on the grow page.
+  const growHref = !activeGrow ? "/start" : isLoggedIn ? "/dashboard/user" : `/grow/${activeGrow.id}`;
   const growActive =
     pathname === "/start" || pathname.startsWith("/grow/") || (isLoggedIn && pathname.startsWith("/dashboard/user"));
   const dashboardActive = pathname === "/dashboard" || pathname.startsWith("/dashboard/user");

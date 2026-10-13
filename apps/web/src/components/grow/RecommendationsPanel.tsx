@@ -6,7 +6,8 @@
 // outcome chain that had a write path but no UI at all. See TODO.md.
 
 import { useEffect, useState, useCallback } from 'react';
-import { CheckCircle2, X, Sparkles } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { ActionRow, BTN_GHOST, BTN_QUIET } from '@/components/grow/cockpit/ui';
 import { getSupabaseBrowserClient } from '@/lib/supabaseBrowser';
 import {
   getPendingRecommendations,
@@ -17,12 +18,10 @@ import {
 type Props = {
   growId: string;
   userId: string;
-  /** Render without its own card shell — for nesting inside a parent card
-      (e.g. the grow dashboard's consolidated sidebar Insights card). */
-  bare?: boolean;
 };
 
-export default function RecommendationsPanel({ growId, userId, bare = false }: Props) {
+export default function RecommendationsPanel({ growId, userId }: Props) {
+  const t = useTranslations('dashboard');
   const [recommendations, setRecommendations] = useState<PendingRecommendation[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [actingOn, setActingOn] = useState<string | null>(null);
@@ -70,59 +69,33 @@ export default function RecommendationsPanel({ growId, userId, bare = false }: P
 
   if (!loaded || recommendations.length === 0) return null;
 
+  // Rows for the cockpit's "Als Nächstes" list (DESIGN_SYSTEM.md §24).
   return (
-    <section className={bare ? 'border-t border-border pt-5' : 'rounded-2xl border border-border bg-card p-5 shadow-sm'}>
-      <div className="flex items-center gap-3">
-        <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
-          <Sparkles className="h-4 w-4" strokeWidth={2} />
-        </span>
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-primary">Offene Empfehlungen</p>
-          <h2 className="text-sm font-bold text-foreground">
-            {recommendations.length === 1 ? '1 Empfehlung wartet' : `${recommendations.length} Empfehlungen warten`}
-          </h2>
-        </div>
-      </div>
-
-      <div className="mt-4 space-y-3">
-        {recommendations.map((rec) => (
-          <div key={rec.id} className="rounded-xl border border-border bg-background p-4">
-            {rec.diagnosisTitle && (
-              <p className="text-sm font-bold text-foreground">{rec.diagnosisTitle}</p>
-            )}
-            {rec.steps.length > 0 && (
-              <ul className="mt-2 space-y-1">
-                {rec.steps.map((step, i) => (
-                  <li key={i} className="flex gap-2 text-xs text-muted-fg">
-                    <span className="text-primary">•</span>
-                    <span>{step}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <div className="mt-3 flex gap-2">
-              <button
-                type="button"
-                disabled={actingOn === rec.id}
-                onClick={() => handleEvent(rec.id, 'applied')}
-                className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-white transition hover:bg-primary-dark active:scale-[0.97] disabled:opacity-50"
-              >
-                <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2.25} />
-                Angewendet
+    <>
+      {recommendations.map((rec) => (
+        <ActionRow
+          key={rec.id}
+          label={t('recommendationLabel')}
+          title={rec.diagnosisTitle ?? t('recommendationFallbackTitle')}
+          text={rec.steps.length > 0 ? (
+            <ul className="flex flex-col gap-0.5">
+              {rec.steps.map((step, i) => (
+                <li key={i} className="flex gap-2"><span aria-hidden="true">–</span><span>{step}</span></li>
+              ))}
+            </ul>
+          ) : undefined}
+          actions={(
+            <>
+              <button type="button" disabled={actingOn === rec.id} onClick={() => handleEvent(rec.id, 'applied')} className={BTN_GHOST}>
+                {t('recommendationApplied')}
               </button>
-              <button
-                type="button"
-                disabled={actingOn === rec.id}
-                onClick={() => handleEvent(rec.id, 'dismissed')}
-                className="flex items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-semibold text-muted-fg transition hover:border-rose-500/30 hover:text-rose-500 active:scale-[0.97] disabled:opacity-50"
-              >
-                <X className="h-3.5 w-3.5" strokeWidth={2.25} />
-                Verwerfen
+              <button type="button" disabled={actingOn === rec.id} onClick={() => handleEvent(rec.id, 'dismissed')} className={BTN_QUIET}>
+                {t('recommendationDismiss')}
               </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
+            </>
+          )}
+        />
+      ))}
+    </>
   );
 }
