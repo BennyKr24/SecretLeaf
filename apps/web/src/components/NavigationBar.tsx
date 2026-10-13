@@ -36,7 +36,7 @@ export function NavigationBar() {
         {/* Primary Navigation */}
         <div className="hidden md:flex items-center gap-0.5 text-[13.5px] text-foreground/80">
           <Link
-            href={activeGrow ? `/grow/${activeGrow.id}` : "/start"}
+            href={activeGrow ? "/dashboard/user" : "/start"}
             className="nav-link px-3 py-1.5 rounded-md font-semibold text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950 hover:text-emerald-800 dark:hover:text-emerald-300 transition-colors duration-150"
           >
             {activeGrow ? t("myGrow") : t("startGrow")}

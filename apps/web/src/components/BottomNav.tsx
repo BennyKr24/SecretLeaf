@@ -47,8 +47,9 @@ export function BottomNav() {
 
   if (isAdminRoute(pathname)) return null;
 
-  const growHref = activeGrow ? `/grow/${activeGrow.id}` : "/start";
-  const growActive = pathname === "/start" || pathname.startsWith("/grow/");
+  const growHref = activeGrow ? "/dashboard/user" : "/start";
+  const growActive =
+    pathname === "/start" || pathname.startsWith("/grow/") || (isLoggedIn && pathname.startsWith("/dashboard/user"));
   const dashboardActive = pathname === "/dashboard" || pathname.startsWith("/dashboard/user");
   const toolsActive = pathname.startsWith("/tools");
   const diagnoseActive = pathname.startsWith("/diagnose");
