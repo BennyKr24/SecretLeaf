@@ -32,7 +32,7 @@ function createDefaultPlants(count: number): Plant[] {
   const now = new Date().toISOString();
   return Array.from({ length: Math.max(1, count) }, (_, index) => ({
     id: generateId(),
-    name: `Plant ${index + 1}`,
+    name: `Pflanze ${index + 1}`,
     createdAt: now,
   }));
 }

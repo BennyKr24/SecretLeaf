@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Space_Grotesk } from "next/font/google";
+import { JetBrains_Mono, Manrope, Space_Grotesk } from "next/font/google";
 import { getLocale } from "next-intl/server";
 import { CookieConsentProvider } from "@/components/cookie/CookieConsentProvider";
 import { AnalyticsScripts } from "@/components/cookie/AnalyticsScripts";
@@ -7,6 +7,8 @@ import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-body" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
+// Mono for measured values, units, day counts and small caps labels on app surfaces (DESIGN_SYSTEM.md §24.2).
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://secretleaf.net";
 
@@ -56,7 +58,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className={`${manrope.variable} ${spaceGrotesk.variable}`}>
+      <body className={`${manrope.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
         <CookieConsentProvider>
           {children}
           {/* Plausible + Vercel Analytics/Speed Insights — only load after cookie consent (see CookieConsentBanner) */}

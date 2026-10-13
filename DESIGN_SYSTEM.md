@@ -802,7 +802,48 @@ Wenn nein:
 
 ---
 
-# 24. Final Rule
+# 24. Produkt-Flächen (App)
+
+Gilt für alle eingeloggten Arbeitsflächen: Cockpit/Dashboard, Grow, Journal,
+Diagnose, Analyse. Marketing-Flächen (Landing, Wissen, Artikel) folgen
+weiterhin §7–§13. Bei Konflikt gewinnt auf Produkt-Flächen dieser Abschnitt.
+
+Referenz: Linear. Ein Werkzeug, kein Prospekt.
+
+## 24.1 Radius
+- Flächen/Cards: 6px · Buttons, Inputs: 6px · Badges, Balken: 2–4px
+- Ersetzt §13 (20–24px) für Produkt-Flächen.
+
+## 24.2 Typografie
+- Überschriften: Space Grotesk · Fließtext: Manrope (wie §6)
+- NEU Mono: JetBrains Mono (via next/font) für Messwerte, Einheiten,
+  Tagesangaben und kleine Uppercase-Labels. Nie für Fließtext.
+- Zahlen immer `tabular-nums`.
+
+## 24.3 Dichte
+- Card-Padding 16–20px, Abstand zwischen Sektionen 24px.
+- Kein 120px-Section-Padding (§7 gilt nur für Marketing).
+- Mehr Information pro Blick ist erlaubt, solange die Hierarchie klar ist:
+  ein Hauptbereich pro Screen („Als Nächstes“), der Rest ordnet sich unter.
+
+## 24.4 Farbe
+- Markentokens bleiben (§5): --bg, --surface, --primary, --muted, --text.
+- Flächen bleiben die dunklen Markentöne aus §5 (leichter Grün-Unterton ist
+  gewollt). Grün ist präsent, aber dezent: Cockpit, keine Farbe zur Ablenkung.
+- Keine großen grün gefüllten Flächen, Verläufe, Glows oder farbigen Deko-Streifen.
+- Kräftiges Grün nur für: eine Primary-Action pro Bereich + Status „im Zielbereich“.
+- Amber/Rose nur für echte Priorität, nie als Dekoration.
+- Trennung über 1px-Linien statt Schatten.
+
+## 24.5 Daten-Ehrlichkeit
+- Keine erfundenen Erfolgsquoten, Nutzerzahlen oder Prognosen.
+  Fehlt die Datenbasis, wird der Wert nicht angezeigt.
+- Optionale Messwerte (pH, EC …) zeigen ohne Daten eine Einladung mit
+  konkretem Nutzen, keinen leeren Zustand.
+
+---
+
+# 25. Final Rule
 
 Jede Designentscheidung muss eine dieser Eigenschaften verbessern:
 
