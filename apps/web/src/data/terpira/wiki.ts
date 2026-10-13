@@ -7886,7 +7886,7 @@ const GROW_KNOWLEDGE: Record<string, { growValue: string; qualityScore: number; 
     growCategory: "watering",
   },
   "bewaesserung-ohne-uebergiessen": {
-    growValue: "Gieß erst wenn der Topf spürbar leichter ist – Saürstoffmangel durch Staunässe schadet mehr als kurze Trockenheit.",
+    growValue: "Gieß erst wenn der Topf spürbar leichter ist – Sauerstoffmangel durch Staunässe schadet mehr als kurze Trockenheit.",
     qualityScore: 5,
     growCategory: "watering",
   },

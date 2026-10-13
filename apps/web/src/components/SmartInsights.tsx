@@ -1,9 +1,9 @@
 'use client';
 
 // ────────────────────────────────────────────────────────────────────────────
-// SmartInsights — Phase-aware action system for the grow page
+// SmartInsights — phase-aware recommendations in the grow cockpit
 //
-// Shows 2–3 prioritised insights based on the current grow phase + medium.
+// Shows the top prioritised insights based on the current grow phase + medium.
 // Each insight has a one-click action (log or tool), optional task linkage,
 // and a completion loop that replaces handled insights with the next best.
 // ────────────────────────────────────────────────────────────────────────────
@@ -14,14 +14,12 @@ import type { Route } from 'next';
 import type { Grow } from '@/lib/grow/types';
 import { getRecommendationsForGrow } from '@/lib/grow/insights';
 import type { GrowInsight, InsightPriority } from '@/lib/grow/insights';
-import { useAssistantPreference } from '@/hooks/useAssistantPreference';
 import { useAuth } from '@/hooks/useAuth';
 import { getSupabaseBrowserClient } from '@/lib/supabaseBrowser';
 import { createPhaseInsightRecommendation, recordRecommendationEvent } from '@/lib/diagnose/db';
-import {
-  Droplets, FlaskConical, NotebookPen, Scissors, Ruler, Wrench,
-  CheckCircle2, Zap, X, type LucideIcon,
-} from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { CheckCircle2 } from 'lucide-react';
+import { ActionRow, BTN_GHOST, TEXT_LINK } from '@/components/grow/cockpit/ui';
 
 // 2 = high, 1 = medium, 0 = low — matches recommendations.priority (smallint).
 const PRIORITY_RANK: Record<InsightPriority, number> = { high: 2, medium: 1, low: 0 };
@@ -54,30 +52,18 @@ function persistPhaseInsightEvent(
   })();
 }
 
-// ── Priority config ───────────────────────────────────────────────────────────
+// ── Rows for the cockpit's "Als Nächstes" list (DESIGN_SYSTEM.md §24) ─────
+// Amber only for high priority; one quiet action, the study as "Warum?".
 
-const PRIORITY_CONFIG: Record<InsightPriority, {
-  label: string;
-  dot: string;
-  badge: string;
-  border: string;
-}> = {
-  high:   { label: "Dringend",     dot: "bg-rose-500",    badge: "bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400",     border: "border-rose-200 dark:border-rose-900/40" },
-  medium: { label: "Empfohlen",    dot: "bg-amber-400",   badge: "bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400",   border: "border-amber-200 dark:border-amber-900/40" },
-  low:    { label: "Lernwert",     dot: "bg-border",   badge: "bg-border text-muted-fg",   border: "border-border" },
+const ACTION_LABEL_KEY: Record<string, string> = {
+  wasser: 'insightActionWater',
+  duenger: 'insightActionFeed',
+  notiz: 'insightActionNote',
+  training: 'insightActionTraining',
+  tool_result: 'insightActionTool',
 };
 
-const ACTION_LABEL: Record<string, { icon: LucideIcon; label: string }> = {
-  wasser:    { icon: Droplets, label: "Jetzt gießen" },
-  duenger:   { icon: FlaskConical, label: "Düngung eintragen" },
-  notiz:     { icon: NotebookPen, label: "Notiz eintragen" },
-  training:  { icon: Scissors, label: "Training eintragen" },
-  tool_result: { icon: Ruler, label: "Tool öffnen" },
-};
-
-// ── Single insight card ───────────────────────────────────────────────────────
-
-function InsightCard({
+function InsightRow({
   insight,
   growId,
   userId,
@@ -88,12 +74,12 @@ function InsightCard({
   userId: string | undefined;
   onDone: (slug: string) => void;
 }) {
-  const [showFeedback, setShowFeedback] = useState(false);
-  const cfg = PRIORITY_CONFIG[insight.priority];
+  const t = useTranslations('dashboard');
+  const [done, setDone] = useState(false);
   const { article, action, relatedTask, reason, evidenceLevel, confidenceScore, expectedBenefit } = insight;
 
   const handleAction = useCallback(() => {
-    setShowFeedback(true);
+    setDone(true);
     if (userId) persistPhaseInsightEvent(userId, growId, insight, 'applied');
     setTimeout(() => onDone(article.slug), 1600);
   }, [article.slug, growId, insight, onDone, userId]);
@@ -103,122 +89,42 @@ function InsightCard({
     onDone(article.slug);
   }, [article.slug, growId, insight, onDone, userId]);
 
-  // Build action href
-  const actionHref: string = action.type === "log"
+  const actionHref: string = action.type === 'log'
     ? `/grow/${growId}/log?type=${action.logType}`
     : action.href;
-
-  const { icon: ActionIcon, label: actionLabel } = action.type === "log"
-    ? (ACTION_LABEL[action.logType] ?? { icon: Wrench, label: "Jetzt handeln" })
-    : { icon: Wrench, label: "Tool öffnen" };
+  const actionLabel = t(action.type === 'log' ? (ACTION_LABEL_KEY[action.logType] ?? 'insightActionGeneric') : 'insightActionTool');
 
   return (
-    <div className={`relative overflow-hidden rounded-xl border bg-card transition-colors duration-200 ${cfg.border}`}>
-      {/* Priority strip */}
-      <div className={`flex items-center gap-2 border-b px-4 py-2 ${cfg.border}`}>
-        <span className={`h-2 w-2 flex-shrink-0 rounded-full ${cfg.dot}`} />
-        <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${cfg.badge}`}>
-          {cfg.label}
+    <ActionRow
+      label={t(`insightPriority.${insight.priority}`)}
+      title={article.growValue}
+      text={<>{reason}{expectedBenefit && <> {t('insightBenefit', { benefit: expectedBenefit })}</>}</>}
+      meta={(
+        <>
+          <span className="tabular-nums">{t('insightEvidence', { level: t(`evidenceLevel.${evidenceLevel}`), score: confidenceScore })}</span>
+          {relatedTask && <span>· {t('insightFulfils', { task: relatedTask.title })}</span>}
+          <span>·</span>
+          <Link href={`/studies/${article.slug}` as Route} className={TEXT_LINK}>{t('insightWhy')}</Link>
+        </>
+      )}
+      actions={done ? (
+        <span className="flex items-center gap-1.5 text-xs text-primary">
+          <CheckCircle2 className="h-3.5 w-3.5" strokeWidth={2} /> {t('insightDone')}
         </span>
-        {relatedTask && (
-          <span className="ml-auto flex items-center gap-1 text-[10px] font-medium text-emerald-600">
-            <CheckCircle2 className="h-3 w-3" strokeWidth={2} />
-            <span className="max-w-[120px] truncate">erfüllt: {relatedTask.title}</span>
-          </span>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="p-4">
-        <p className="text-[13px] font-medium leading-snug text-foreground">
-          {article.growValue}
-        </p>
-
-        <p className="mt-2 text-[11px] leading-snug text-muted-fg">
-          {reason}
-        </p>
-
-        <div className="mt-2 flex flex-wrap gap-1.5 text-[10px] font-semibold">
-          <span className="rounded-full bg-background px-2 py-0.5 text-muted-fg ring-1 ring-border">
-            Evidenz: {evidenceLevel}
-          </span>
-          <span className="rounded-full bg-background px-2 py-0.5 text-muted-fg ring-1 ring-border">
-            Confidence: {confidenceScore}/100
-          </span>
-        </div>
-
-        {expectedBenefit && (
-          <p className="mt-2 text-[11px] font-medium leading-snug text-primary">
-            Nutzen: {expectedBenefit}
-          </p>
-        )}
-
-        {/* Tags */}
-        <div className="mt-2.5 flex flex-wrap gap-1">
-          {article.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-background px-2 py-0.5 text-[10px] text-muted-fg ring-1 ring-border"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Actions row */}
-        <div className="mt-3 flex items-center gap-2">
-          <Link
-            href={actionHref as Route}
-            onClick={handleAction}
-            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold text-white transition-[transform,background-color] duration-150 active:scale-[0.97] ${
-              insight.priority === "high"
-                ? "bg-rose-600 hover:bg-rose-700"
-                : insight.priority === "medium"
-                ? "bg-emerald-600 hover:bg-emerald-700"
-                : "bg-slate-600 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600"
-            }`}
-          >
-            <ActionIcon className="h-3.5 w-3.5" strokeWidth={2} /> {actionLabel}
-          </Link>
-          <Link
-            href={`/studies/${article.slug}` as Route}
-            className="text-[11px] font-semibold text-muted-fg hover:text-foreground hover:underline"
-          >
-            Details →
-          </Link>
-          <button
-            type="button"
-            onClick={handleDismiss}
-            className="ml-auto text-[11px] text-muted-fg transition-transform duration-150 hover:text-foreground active:scale-90"
-            aria-label="Insight verwerfen"
-          >
-            <X className="h-3.5 w-3.5" strokeWidth={2} />
-          </button>
-        </div>
-      </div>
-
-      {/* Feedback overlay */}
-      <div className={`absolute inset-0 flex items-center justify-center gap-2 bg-emerald-500 transition-opacity duration-300 ${
-        showFeedback ? "opacity-100" : "pointer-events-none opacity-0"
-      }`}>
-        <CheckCircle2 className="h-4 w-4 flex-shrink-0 text-white" strokeWidth={2} />
-        <p className="text-sm font-bold text-white">Guter Zug — das verbessert deinen Grow</p>
-      </div>
-    </div>
+      ) : (
+        <Link href={actionHref as Route} onClick={handleAction} className={BTN_GHOST}>{actionLabel}</Link>
+      )}
+      onDismiss={done ? undefined : handleDismiss}
+      dismissLabel={t('insightDismiss')}
+    />
   );
 }
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-type Props = {
-  grow: Grow;
-  /** Render without its own card shell — for nesting inside a parent card
-      (e.g. the grow dashboard's consolidated sidebar Insights card). */
-  bare?: boolean;
-};
-
-export default function SmartInsights({ grow, bare = false }: Props) {
-  const { enabled, setEnabled } = useAssistantPreference();
+/** Renders up to `max` recommendation rows (or nothing). Visibility of the
+ *  whole feature is controlled by the assistant preference in the cockpit. */
+export default function SmartInsights({ grow, max = 2 }: { grow: Grow; max?: number }) {
   const { user } = useAuth();
 
   // Resolved pool — sorted by priority+score
@@ -231,58 +137,19 @@ export default function SmartInsights({ grow, bare = false }: Props) {
     setHandledSlugs((prev) => new Set([...prev, slug]));
   }, []);
 
-  // Active insights: first 3 not yet handled
-  const visible = pool.filter((i) => !handledSlugs.has(i.article.slug)).slice(0, 3);
-
-  if (!enabled) {
-    // Fully collapsed per user preference — analysis itself (getRecommendationsForGrow)
-    // keeps running elsewhere, only the proactive panel is hidden. A single
-    // unobtrusive line stays so the panel is discoverable again.
-    return (
-      <button
-        type="button"
-        onClick={() => setEnabled(true)}
-        className={`w-full text-left text-xs text-muted-fg transition-[transform,color] duration-150 hover:text-foreground active:scale-[0.97] ${
-          bare ? 'border-t border-dashed border-border pt-4' : 'rounded-xl border border-dashed border-border bg-card px-4 py-2.5'
-        }`}
-      >
-        Empfehlungen sind ausgeblendet · wieder einblenden
-      </button>
-    );
-  }
-
-  if (visible.length === 0) return null;
+  const visible = pool.filter((i) => !handledSlugs.has(i.article.slug)).slice(0, max);
 
   return (
-    <div className={bare ? 'border-t border-border pt-5' : 'rounded-2xl border border-border bg-card p-5 shadow-sm'}>
-      <div className="mb-4 flex items-center gap-2">
-        <Zap className="h-4 w-4 text-primary" strokeWidth={2} />
-        <h2 className="text-sm font-bold text-foreground">Nächste Schritte</h2>
-        <span className="ml-auto rounded-full bg-emerald-100 dark:bg-emerald-950/40 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-400">
-          {visible.length} offen
-        </span>
-        <button
-          type="button"
-          onClick={() => setEnabled(false)}
-          title="Empfehlungen dauerhaft ausblenden"
-          aria-label="Empfehlungen dauerhaft ausblenden"
-          className="text-muted-fg transition-transform duration-150 hover:text-foreground active:scale-90"
-        >
-          <X className="h-3.5 w-3.5" strokeWidth={2} />
-        </button>
-      </div>
-
-      <div className="space-y-3">
-        {visible.map((insight) => (
-          <InsightCard
-            key={insight.article.slug}
-            insight={insight}
-            growId={grow.id}
-            userId={user?.id}
-            onDone={handleDone}
-          />
-        ))}
-      </div>
-    </div>
+    <>
+      {visible.map((insight) => (
+        <InsightRow
+          key={insight.article.slug}
+          insight={insight}
+          growId={grow.id}
+          userId={user?.id}
+          onDone={handleDone}
+        />
+      ))}
+    </>
   );
 }

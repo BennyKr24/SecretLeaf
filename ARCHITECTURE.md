@@ -296,6 +296,19 @@ Der Flow wurde am 2026-07-01 End-to-End bewiesen und ist im Obsidian-Checkpoint 
 
 `Obsidian/SecretLeaf v2 - Obsidian/07_Technik/Checkpoint_2026-07-01_Persistence_Recovery.md`
 
+## Grow-Oberfläche: ein Cockpit (2026-10-14)
+
+Ein Grow hat genau eine Oberfläche: `apps/web/src/components/grow/cockpit/GrowCockpit.tsx`.
+
+- `/dashboard/user` zeigt den aktiven Grow im Cockpit plus den Wissen-Bereich.
+- `/grow/[id]` zeigt beliebige Grows (z. B. abgeschlossene aus `/grow/history`) im selben Cockpit.
+  Ist der Grow der aktive eines eingeloggten Nutzers, leitet die Route auf `/dashboard/user` um.
+- Gäste (Grows nur in localStorage) haben kein Dashboard; „Mein Grow“ führt sie auf `/grow/[id]`.
+- Die Seite besitzt die einzige `useGrowState()`-Instanz und reicht sie ans Cockpit weiter
+  (der Hook hält seinen Zustand pro Instanz).
+
+Neue Grow-Funktionen kommen ins Cockpit, nicht in eine zweite Grow-Seite.
+
 ---
 
 # 9. Knowledge Architecture

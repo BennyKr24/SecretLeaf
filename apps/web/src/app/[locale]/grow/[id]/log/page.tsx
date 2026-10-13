@@ -36,7 +36,8 @@ import type {
 import { getInsightsForLogType } from '@/lib/grow/insights';
 import type { GrowInsight } from '@/lib/grow/insights';
 import { getPhaseForDay } from '@/lib/grow/planGenerator';
-import { getPhaseRelativeDay } from '@/lib/grow/utils';
+import { getPhaseRelativeDay, displayPlantName, localDateString } from '@/lib/grow/utils';
+import { useLocale } from 'next-intl';
 import { Analytics } from '@/lib/analytics';
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -361,6 +362,7 @@ function QuickAddBar({
   onSave,
   editingEntry,
 }: QuickAddProps) {
+  const locale = useLocale();
   const isEditing = editingEntry != null;
 
   // Pre-fill fields from existing entry when editing
@@ -368,7 +370,7 @@ function QuickAddBar({
     const base: Record<string, string> = {};
     // Date/time — split ISO into date + time parts for the inputs
     const d = new Date(entry.date);
-    base['_date'] = d.toISOString().slice(0, 10);
+    base['_date'] = localDateString(d);
     base['_time'] = d.toTimeString().slice(0, 5);
     if (entry.notes) base['notes'] = entry.notes;
     const { data } = entry;
@@ -387,7 +389,7 @@ function QuickAddBar({
     return base;
   }, []);
 
-  const todayDate = new Date().toISOString().slice(0, 10);
+  const todayDate = localDateString();
   const nowTime = new Date().toTimeString().slice(0, 5);
 
   const [fields, setFields] = useState<Record<string, string>>(() => {
@@ -423,7 +425,7 @@ function QuickAddBar({
           <DropdownOption value="">Gesamter Grow</DropdownOption>
           {plants.map((plant) => (
             <DropdownOption key={plant.id} value={plant.id}>
-              {plant.name}
+              {displayPlantName(plant.name, locale)}
             </DropdownOption>
           ))}
         </Dropdown>
@@ -598,7 +600,7 @@ function QuickAddBar({
               </label>
               <input
                 type="date"
-                max={new Date().toISOString().slice(0, 10)}
+                max={localDateString()}
                 value={fields['_date'] ?? todayDate}
                 onChange={(e) => set('_date', e.target.value)}
                 className="w-full rounded-xl border border-border px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -742,6 +744,7 @@ function EntryCard({
 // ────────────────────────────────────────────────────────────────────────────
 
 export default function GrowLogPage({}: Props) {
+  const locale = useLocale();
   const { id } = useParams<{ id: string }>();
   const searchParams = useSearchParams();
   const { grows, loaded: growLoaded } = useGrowState();
@@ -752,7 +755,12 @@ export default function GrowLogPage({}: Props) {
   const { entries, loaded: logLoaded, addEntry, deleteEntry, updateEntry, currentStreak, entriesByPlant } = useGrowLog(id);
 
   const initPlant = searchParams.get('plant') ?? '';
-  const [activeType, setActiveType] = useState<LogEntryType | null>(null);
+  // ?type=wasser|duenger|training|notiz opens the form pre-selected (quick
+  // entries in the grow cockpit and recommendation links use this).
+  const initType = searchParams.get('type');
+  const [activeType, setActiveType] = useState<LogEntryType | null>(
+    () => QUICK_ADD_TYPES.find((q) => q.type === initType)?.type ?? null,
+  );
   const [selectedPlantId, setSelectedPlantId] = useState<string>(initPlant);
   const [activePlantFilter, setActivePlantFilter] = useState<string | null>(initPlant || null);
   const [editingEntry, setEditingEntry] = useState<LogEntry | null>(null);
@@ -826,7 +834,7 @@ export default function GrowLogPage({}: Props) {
 
   /** Builds an ISO date string from the _date / _time fields. */
   const buildDate = (fields: Record<string, string>): string => {
-    const datePart = fields['_date'] ?? new Date().toISOString().slice(0, 10);
+    const datePart = fields['_date'] ?? localDateString();
     const timePart = fields['_time'] ?? new Date().toTimeString().slice(0, 5);
     return new Date(`${datePart}T${timePart}:00`).toISOString();
   };
@@ -1025,7 +1033,7 @@ export default function GrowLogPage({}: Props) {
                   : 'border border-border bg-card text-muted-fg hover:border-primary/40'
               }`}
             >
-              {plant.name}
+              {displayPlantName(plant.name, locale)}
             </button>
           ))}
         </div>
