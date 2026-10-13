@@ -35,6 +35,14 @@ const config: Config = {
         '6xl': ['3.75rem', { lineHeight: '1.05', letterSpacing: '-0.03em' }],
         '7xl': ['4.5rem', { lineHeight: '1.02', letterSpacing: '-0.035em' }],
       },
+      // App surfaces (DESIGN_SYSTEM.md §24): JetBrains Mono for values/labels,
+      // 6px radius for cards, buttons and inputs.
+      fontFamily: {
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+      },
+      borderRadius: {
+        app: '6px',
+      },
       colors: {
         // Semantic tokens — resolved from CSS custom properties in globals.css.
         // `rgb(var(--x-rgb) / <alpha-value>)` (not plain `var(--x)`) so
