@@ -529,7 +529,17 @@
     "quickLogFeed": "Feed",
     "quickLogNote": "Note",
     "taskDoneToast": "Done: {task}",
-    "undo": "Undo"
+    "undo": "Undo",
+    "glossaryHint": "Explain term",
+    "glossaryMissing": "There’s no explanation in the wiki yet.",
+    "glossaryMore": "More in the wiki",
+    "startTitle": "First steps",
+    "startDismiss": "Hide first steps",
+    "startFirstEntry": "Add your first entry",
+    "startNamePlants": "Name your plants",
+    "startFirstMeasurement": "First measurement (pH or EC)",
+    "startReadBasics": "Read the basics",
+    "startGo": "Go"
   },
   "start": {
     "pageTitle": "Start a new grow",

@@ -309,6 +309,10 @@ Ein Grow hat genau eine Oberfläche: `apps/web/src/components/grow/cockpit/GrowC
 
 Neue Grow-Funktionen kommen ins Cockpit, nicht in eine zweite Grow-Seite.
 
+Fachbegriffe im Cockpit (EC, pH …) erklärt `GET /api/glossary` mit den Glossar-Einträgen der Wiki-Artikel
+(einzige Quelle, auf Englisch über die Translation Memory). Die Route liefert nur den einen Begriff, damit der Client
+weder das ganze Wiki noch die 2-MB-Übersetzungsdatei laden muss.
+
 ---
 
 # 9. Knowledge Architecture

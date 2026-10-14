@@ -6,7 +6,9 @@
 // "ok" status; amber only for real priority.
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import type { Route } from 'next';
+import { Link } from '@/i18n/navigation';
 import { ChevronDown, ChevronUp, X } from 'lucide-react';
 
 export type TFn = ReturnType<typeof useTranslations>;
@@ -226,5 +228,57 @@ export function ActionRow({
         </div>
       )}
     </article>
+  );
+}
+
+type GlossaryHit = { term: string; definition: string; slug: string };
+const glossaryCache = new Map<string, Promise<GlossaryHit | null>>();
+
+/**
+ * A label that explains itself on tap, with the definition from the wiki
+ * glossary (/api/glossary — same text as in the articles, loaded on demand).
+ */
+export function GlossaryLabel({ terms, children }: { terms: string[]; children: React.ReactNode }) {
+  const t = useTranslations('dashboard');
+  const locale = useLocale();
+  const [open, setOpen] = useState(false);
+  const [hit, setHit] = useState<GlossaryHit | null | undefined>(undefined);
+
+  const toggle = () => {
+    const next = !open;
+    setOpen(next);
+    if (!next || hit !== undefined) return;
+    const key = `${locale}:${terms.join('|')}`;
+    let request = glossaryCache.get(key);
+    if (!request) {
+      const query = new URLSearchParams([...terms.map((term) => ['term', term]), ['locale', locale]]);
+      request = fetch(`/api/glossary?${query}`).then((r) => (r.ok ? r.json() as Promise<GlossaryHit> : null)).catch(() => null);
+      glossaryCache.set(key, request);
+    }
+    void request.then(setHit);
+  };
+
+  return (
+    <span className="flex min-w-0 flex-col gap-1.5">
+      <button
+        type="button"
+        onClick={toggle}
+        aria-expanded={open}
+        title={t('glossaryHint')}
+        className={`${LABEL} self-start underline decoration-dotted underline-offset-[3px] transition-colors hover:text-foreground`}
+      >
+        {children}
+      </button>
+      {open && (
+        <span className="text-xs leading-relaxed text-muted-fg">
+          {hit === undefined ? t('loading') : hit === null ? t('glossaryMissing') : (
+            <>
+              {hit.definition}{' '}
+              <Link href={`/studies/${hit.slug}` as Route} className="text-foreground underline underline-offset-2 hover:text-primary">{t('glossaryMore')}</Link>
+            </>
+          )}
+        </span>
+      )}
+    </span>
   );
 }

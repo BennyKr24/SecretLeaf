@@ -529,7 +529,17 @@
     "quickLogFeed": "Düngen",
     "quickLogNote": "Notiz",
     "taskDoneToast": "Erledigt: {task}",
-    "undo": "Rückgängig"
+    "undo": "Rückgängig",
+    "glossaryHint": "Begriff erklären",
+    "glossaryMissing": "Dazu gibt es noch keine Erklärung im Wiki.",
+    "glossaryMore": "Mehr im Wiki",
+    "startTitle": "Erste Schritte",
+    "startDismiss": "Erste Schritte ausblenden",
+    "startFirstEntry": "Ersten Eintrag erfassen",
+    "startNamePlants": "Pflanzen benennen",
+    "startFirstMeasurement": "Erste Messung (pH oder EC)",
+    "startReadBasics": "Grundlagen lesen",
+    "startGo": "Los"
   },
   "start": {
     "pageTitle": "Neuen Grow starten",

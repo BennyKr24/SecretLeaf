@@ -589,7 +589,7 @@ const baseWikiArticles: TerpiraArticle[] = [
       },
       {
         term: "EC",
-        definition: "Electrical Conductivity - Salzgehalt der Nährlosung, Indikator für verfügbare Nährstoffe."
+        definition: "Electrical Conductivity - Salzgehalt der Nährlösung, Indikator für verfügbare Nährstoffe."
       }
     ],
     sourceIds: ["horticulture-research-cannabis-cultivation", "plant-physiology-vpd-transpiration", "astm-d37-cannabis", "postharvest-biology-technology-curing"],
@@ -6109,7 +6109,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
   }),
   createArticle({
     slug: "how-to-grow-cannabis-anfaenger-tutorial",
-    title: "How to Grow Cannabis: Schritt-für-Schritt für Anfänger",
+    title: "Cannabis anbauen: Schritt für Schritt für Einsteiger",
     summary: "Ein klarer Einstieg in Setup, Klima, Bewässerung und Erntefenster - aufgebaut auf belastbaren Grundlagen aus Forschung und bewährten Profi-Routinen.",
     category: "tutorials",
     difficulty: "einsteiger",
@@ -6235,7 +6235,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
   }),
   createArticle({
     slug: "how-to-grow-cannabis-fortgeschritten-tutorial",
-    title: "How to Grow Cannabis: Schritt-für-Schritt für Fortgeschrittene",
+    title: "Cannabis anbauen: Schritt für Schritt für Fortgeschrittene",
     summary: "Wie du ein stabiles Setup in ein datengestütztes Produktionssystem verwandelst - mit sauberer Klima-, Feed- und Canopy-Steuerung.",
     category: "tutorials",
     difficulty: "fortgeschritten",
@@ -6349,7 +6349,7 @@ const expansionWikiArticles: TerpiraArticle[] = [
   }),
   createArticle({
     slug: "how-to-grow-cannabis-profi-tutorial",
-    title: "How to Grow Cannabis: Schritt-für-Schritt für Profis",
+    title: "Cannabis anbauen: Schritt für Schritt für Profis",
     summary: "Wie du als erfahrener Grower über mehrere Zonen oder Durchläufe hinweg konstant gute Ergebnisse erzielst, statt bei jedem Run wieder von vorne zu lernen.",
     category: "tutorials",
     difficulty: "profi",
