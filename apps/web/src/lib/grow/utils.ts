@@ -137,8 +137,15 @@ export function computeGrowProgress(currentDay: number, totalDays: number): numb
  * grows, "Pflanze 3" from newer ones) follow the UI language; names the
  * grower chose are shown as stored. Nothing is rewritten in the data.
  */
+const DEFAULT_PLANT_NAME = /^(?:Plant|Pflanze) (\d+)$/;
+
+/** True for an untouched default name ("Plant 3" / "Pflanze 3"). */
+export function isDefaultPlantName(name: string): boolean {
+  return DEFAULT_PLANT_NAME.test(name);
+}
+
 export function displayPlantName(name: string, locale: string): string {
-  const match = /^(?:Plant|Pflanze) (\d+)$/.exec(name);
+  const match = DEFAULT_PLANT_NAME.exec(name);
   if (!match) return name;
   return `${locale.startsWith("de") ? "Pflanze" : "Plant"} ${match[1]}`;
 }

@@ -34,13 +34,14 @@ import {
   Sprout, AlertTriangle, CheckCircle2, ArrowRight, NotebookPen, MoreHorizontal, X, Droplets, FlaskConical,
 } from 'lucide-react';
 import {
-  ActionRow, BTN_GHOST, BTN_PRIMARY, Disclosure, LABEL, PANEL, Section, ShowMoreButton, Sparkline, TEXT_LINK,
+  ActionRow, BTN_GHOST, BTN_PRIMARY, Disclosure, GlossaryLabel, LABEL, PANEL, Section, ShowMoreButton, Sparkline, TEXT_LINK,
   growDayOf, timeAgo, useExpandableList, windowStart,
 } from './ui';
 import { PlantList, plantNeedsCheck } from './PlantList';
 import { GrowAssessment } from './GrowAssessment';
 import { HarvestPanel } from './HarvestPanel';
 import { GrowSettings } from './GrowSettings';
+import { StartChecklist } from './StartChecklist';
 
 const METRIC_WINDOW_DAYS = 14;
 
@@ -409,6 +410,10 @@ export function GrowCockpit({
           <div className="flex min-w-0 flex-col gap-6">
             {grow && taskProgress ? (
               <>
+                <div className={vis('today')}>
+                  <StartChecklist key={grow.id} grow={grow} entries={entries} />
+                </div>
+
                 {/* Schnell erfassen — the most frequent actions, one tap to the pre-selected form */}
                 <div className={`flex flex-wrap items-center gap-1.5 ${vis('today')}`} data-reveal>
                   <span className={`${LABEL} mr-1 w-full sm:w-auto`}>{t('quickLogLabel')}</span>
@@ -525,7 +530,7 @@ export function GrowCockpit({
                     {/* EC */}
                     {growMetrics.ec && growMetrics.ec.data.type === 'duenger' && growMetrics.ec.data.ec != null ? (
                       <div className="flex min-w-0 flex-col gap-2 bg-card px-4 py-3.5">
-                        <span className={LABEL}>{t('metricEc')}</span>
+                        <GlossaryLabel terms={['EC', 'EC-Wert']}>{t('metricEc')}</GlossaryLabel>
                         <p className="font-mono text-[26px] leading-tight tabular-nums text-foreground">
                           {num(growMetrics.ec.data.ec)} <small className="text-xs text-muted-fg">mS/cm</small>
                         </p>
@@ -534,7 +539,7 @@ export function GrowCockpit({
                       </div>
                     ) : (
                       <div className="flex min-w-0 flex-col gap-2 bg-background px-4 py-3.5">
-                        <div className="flex items-center justify-between gap-1.5"><span className={LABEL}>{t('metricEc')}</span><span className={LABEL}>{t('metricOptional')}</span></div>
+                        <div className="flex items-start justify-between gap-1.5"><GlossaryLabel terms={['EC', 'EC-Wert']}>{t('metricEc')}</GlossaryLabel><span className={LABEL}>{t('metricOptional')}</span></div>
                         <p className="text-xs leading-relaxed text-muted-fg">{t('ecInvite')}</p>
                         <Link href={logHref} className={`${TEXT_LINK} mt-auto self-start`}>{t('ecCta')}</Link>
                       </div>
@@ -543,14 +548,14 @@ export function GrowCockpit({
                     {/* pH */}
                     {growMetrics.ph && growMetrics.ph.data.type === 'wasser' && growMetrics.ph.data.ph != null ? (
                       <div className="flex min-w-0 flex-col gap-2 bg-card px-4 py-3.5">
-                        <span className={LABEL}>{t('metricPh')}</span>
+                        <GlossaryLabel terms={['pH-Wert', 'pH']}>{t('metricPh')}</GlossaryLabel>
                         <p className="font-mono text-[26px] leading-tight tabular-nums text-foreground">{num(growMetrics.ph.data.ph)}</p>
                         <Sparkline values={growMetrics.phSeries} />
                         <span className={`${LABEL} tabular-nums`}>{t('metricLastValueDay', { day: growDayOf(growMetrics.ph.date, grow.startDate) })}</span>
                       </div>
                     ) : (
                       <div className="flex min-w-0 flex-col gap-2 bg-background px-4 py-3.5">
-                        <div className="flex items-center justify-between gap-1.5"><span className={LABEL}>{t('metricPh')}</span><span className={LABEL}>{t('metricOptional')}</span></div>
+                        <div className="flex items-start justify-between gap-1.5"><GlossaryLabel terms={['pH-Wert', 'pH']}>{t('metricPh')}</GlossaryLabel><span className={LABEL}>{t('metricOptional')}</span></div>
                         <p className="text-xs leading-relaxed text-muted-fg">{t('phInvite')}</p>
                         <Link href={logHref} className={`${TEXT_LINK} mt-auto self-start`}>{t('phCta')}</Link>
                       </div>

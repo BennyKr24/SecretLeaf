@@ -68,11 +68,14 @@ function InsightRow({
   growId,
   userId,
   onDone,
+  showEvidence,
 }: {
   insight: GrowInsight;
   growId: string;
   userId: string | undefined;
   onDone: (slug: string) => void;
+  /** Evidence/confidence figures are noise for first-time growers. */
+  showEvidence: boolean;
 }) {
   const t = useTranslations('dashboard');
   const [done, setDone] = useState(false);
@@ -101,9 +104,8 @@ function InsightRow({
       text={<>{reason}{expectedBenefit && <> {t('insightBenefit', { benefit: expectedBenefit })}</>}</>}
       meta={(
         <>
-          <span className="tabular-nums">{t('insightEvidence', { level: t(`evidenceLevel.${evidenceLevel}`), score: confidenceScore })}</span>
-          {relatedTask && <span>· {t('insightFulfils', { task: relatedTask.title })}</span>}
-          <span>·</span>
+          {showEvidence && <span className="tabular-nums">{t('insightEvidence', { level: t(`evidenceLevel.${evidenceLevel}`), score: confidenceScore })} ·</span>}
+          {relatedTask && <span>{t('insightFulfils', { task: relatedTask.title })} ·</span>}
           <Link href={`/studies/${article.slug}` as Route} className={TEXT_LINK}>{t('insightWhy')}</Link>
         </>
       )}
@@ -148,6 +150,7 @@ export default function SmartInsights({ grow, max = 2 }: { grow: Grow; max?: num
           growId={grow.id}
           userId={user?.id}
           onDone={handleDone}
+          showEvidence={grow.erfahrung !== 'einsteiger'}
         />
       ))}
     </>
