@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-03-28T00:11:07.344Z",
+  "generatedAt": "2026-10-31T04:32:35.570Z",
   "stats": {
     "fetched": 1080,
     "kept": 22,
-    "deduped": 854,
-    "excluded": 832,
+    "deduped": 875,
+    "excluded": 853,
     "lookbackDays": 45,
     "queries": [
       {
@@ -105,16 +105,16 @@
       "reason": "score-below-threshold"
     },
     {
-      "title": "Comparing and Prioritizing Different Methods of Collection and Decontamination of Waste in Decentralized Healthcare Centers",
-      "reason": "no-cannabis-anchor"
+      "title": "A Simplified Approach to Evaluate Retinal Blue Light Hazard Using the Correlated Color Temperature of LED Light Sources",
+      "reason": "poultry-feed"
     },
     {
       "title": "Studying the Effluent Quality of Enhanced Modified Ludzack Ettinger-oxic Settling Anaerobic Process (E-MLE-OSA) for Treating Real Municipal Wastewater",
       "reason": "no-cannabis-anchor"
     },
     {
-      "title": "A Simplified Approach to Evaluate Retinal Blue Light Hazard Using the Correlated Color Temperature of LED Light Sources",
-      "reason": "poultry-feed"
+      "title": "Comparing and Prioritizing Different Methods of Collection and Decontamination of Waste in Decentralized Healthcare Centers",
+      "reason": "no-cannabis-anchor"
     },
     {
       "title": "The Perceptions of Families of Comatose Patients in the Intensive Care Unit: A Qualitative Study",
@@ -133,11 +133,11 @@
       "reason": "no-cannabis-anchor"
     },
     {
-      "title": "Need of Hearing Assistance Technology (HAT) for Adults with Hearing Impairment",
+      "title": "Hearing Screening in Primary School Children: An Overview",
       "reason": "no-cannabis-anchor"
     },
     {
-      "title": "Correlation of Dermatoglyphic Interpretation with Oral Diseases- Revisited",
+      "title": "Need of Hearing Assistance Technology (HAT) for Adults with Hearing Impairment",
       "reason": "no-cannabis-anchor"
     },
     {
@@ -145,19 +145,7 @@
       "reason": "no-cannabis-anchor"
     },
     {
-      "title": "Comparative  Study of Serum Lipid Profile Parameters  for Oral Cancer  and Non Oral Cancer Patients",
-      "reason": "no-cannabis-anchor"
-    },
-    {
-      "title": "Behavioral Screening Tests to Detect Hearing Loss in School Aged Children: A Review",
-      "reason": "no-cannabis-anchor"
-    },
-    {
-      "title": "Vertigo in ICF Framework: A Pilot Study",
-      "reason": "no-cannabis-anchor"
-    },
-    {
-      "title": "Hearing Screening in Primary School Children: An Overview",
+      "title": "Knowledge Management in Health Care Sectors",
       "reason": "no-cannabis-anchor"
     },
     {
@@ -165,7 +153,19 @@
       "reason": "no-cannabis-anchor"
     },
     {
-      "title": "Comparison of Locus of Control Behaviour Scores in Normal and Individuals with stuttering – A new way to Approach Stuttering Disorder for Speech – Language Pathologists",
+      "title": "Glaucoma: Risk Factors and Prevalence: A Review",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Vertigo in ICF Framework: A Pilot Study",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Behavioral Screening Tests to Detect Hearing Loss in School Aged Children: A Review",
+      "reason": "no-cannabis-anchor"
+    },
+    {
+      "title": "Comparative  Study of Serum Lipid Profile Parameters  for Oral Cancer  and Non Oral Cancer Patients",
       "reason": "no-cannabis-anchor"
     },
     {
@@ -173,11 +173,11 @@
       "reason": "no-cannabis-anchor"
     },
     {
-      "title": "Glaucoma: Risk Factors and Prevalence: A Review",
+      "title": "Comparison of Locus of Control Behaviour Scores in Normal and Individuals with stuttering – A new way to Approach Stuttering Disorder for Speech – Language Pathologists",
       "reason": "no-cannabis-anchor"
     },
     {
-      "title": "Knowledge Management in Health Care Sectors",
+      "title": "Correlation of Dermatoglyphic Interpretation with Oral Diseases- Revisited",
       "reason": "no-cannabis-anchor"
     },
     {
@@ -185,15 +185,15 @@
       "reason": "no-cannabis-anchor"
     },
     {
+      "title": "Abortion in France’s ‘Medical Deserts’: How Healthcare Professionals Are Contributing to the Production of Territorial Inequalities",
+      "reason": "no-cannabis-anchor"
+    },
+    {
       "title": "Maternal and Fetal Outcomes in Booked versus Unbooked Pregnancies: Evidence from a Tertiary Care Hospital in Pakistan",
       "reason": "no-cannabis-anchor"
     },
     {
-      "title": "Subgroup Testing in Change-Plane Models and Its Applications to Medical Data",
-      "reason": "no-cannabis-anchor"
-    },
-    {
-      "title": "Direct and configurational paths of medical tourist emotions to healthcare quality and revisit intention: a price perception perspective",
+      "title": "Enhancements to the Deep Learning Architecture for Metaverse Integration in Medical Image Processing",
       "reason": "no-cannabis-anchor"
     },
     {
@@ -203,70 +203,101 @@
   ],
   "sources": [
     {
-      "id": "auto-10-1016-j-yrtph-2026-106067",
-      "title": "Preclinical evidence of cannabis-induced oxidative stress: A systematic review and meta-analysis",
-      "publisher": "Regulatory Toxicology and Pharmacology",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.yrtph.2026.106067",
-      "doi": "10.1016/j.yrtph.2026.106067",
-      "relevanceScore": 100,
-      "evidenceLevel": 100,
+      "id": "auto-10-1016-j-jpain-2026-106477",
+      "title": "Effects of cannabidiol (CBD) oral solution in patients undergoing bilateral total knee arthroplasty: A randomized, controlled, parallel, triple blind, pilot study",
+      "publisher": "The Journal of Pain",
+      "year": "2027",
+      "url": "https://doi.org/10.1016/j.jpain.2026.106477",
+      "doi": "10.1016/j.jpain.2026.106477",
+      "relevanceScore": 81,
+      "evidenceLevel": 88,
       "publisherQuality": 90,
-      "topicFit": 100,
-      "studyType": "meta-analysis",
-      "editorialPriority": "high",
+      "topicFit": 48,
+      "studyType": "controlled-study",
+      "editorialPriority": "medium",
       "matchedTopics": [
-        "medizin-evidenz",
-        "pharmakologie",
-        "qualitaet-labor"
+        "medizin-evidenz"
       ],
       "flags": [
-        "high-evidence"
+        "controlled-study",
+        "pilot"
       ],
-      "firstAuthor": "A. Sanz-Pérez",
-      "originLabel": "Regulatory Toxicology and Pharmacology",
+      "firstAuthor": "Alexandra Sideris",
+      "originLabel": "The Journal of Pain",
       "reviewSummary": [
-        "Meta-Analyse mit hoher Evidenz.",
-        "Regulatory Toxicology and Pharmacology · 2026 · Priorität high. Fokus: medizin-evidenz, pharmakologie, qualitaet-labor.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Kontrollierte Studie mit direktem Praxisbezug.",
+        "The Journal of Pain · 2027 · Prioritaet medium. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
+      "tags": [
+        "auto",
+        "study-sync",
+        "crossref",
+        "medizin-evidenz"
+      ]
+    },
+    {
+      "id": "auto-10-1016-j-drugpo-2026-105574",
+      "title": "Selective legalization: How medical cannabis regulation constitutes markets in Brazil and Colombia",
+      "publisher": "International Journal of Drug Policy",
+      "year": "2026",
+      "url": "https://doi.org/10.1016/j.drugpo.2026.105574",
+      "doi": "10.1016/j.drugpo.2026.105574",
+      "relevanceScore": 79,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 100,
+      "studyType": "general-study",
+      "editorialPriority": "medium",
+      "matchedTopics": [
+        "medizin-evidenz",
+        "markt-regulierung"
+      ],
+      "flags": [],
+      "firstAuthor": "Paulo José dos Reis Pereira",
+      "originLabel": "International Journal of Drug Policy",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "International Journal of Drug Policy · 2026 · Prioritaet medium. Fokus: medizin-evidenz, markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
         "medizin-evidenz",
-        "pharmakologie",
-        "qualitaet-labor"
+        "markt-regulierung"
       ]
     },
     {
-      "id": "auto-10-1016-j-bbi-2026-106517",
-      "title": "Regular cannabinoid use and inflammatory biomarkers: Systematic review and hierarchical meta-analysis",
-      "publisher": "Brain, Behavior, and Immunity",
+      "id": "auto-10-1016-j-abrep-2026-100758",
+      "title": "A pilot randomized controlled trial of an integrative psychotherapy incorporating an attachment-based approach for adolescents with cannabis use disorder (TIMCA)",
+      "publisher": "Addictive Behaviors Reports",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.bbi.2026.106517",
-      "doi": "10.1016/j.bbi.2026.106517",
-      "relevanceScore": 87,
-      "evidenceLevel": 100,
+      "url": "https://doi.org/10.1016/j.abrep.2026.100758",
+      "doi": "10.1016/j.abrep.2026.100758",
+      "relevanceScore": 78,
+      "evidenceLevel": 88,
       "publisherQuality": 54,
       "topicFit": 40,
-      "studyType": "meta-analysis",
-      "editorialPriority": "high",
+      "studyType": "controlled-study",
+      "editorialPriority": "medium",
       "matchedTopics": [
         "medizin-evidenz"
       ],
       "flags": [
-        "high-evidence"
+        "controlled-study"
       ],
-      "firstAuthor": "Martino Belvederi Murri",
-      "originLabel": "Brain, Behavior, and Immunity",
+      "firstAuthor": "Bou Nassif Yara",
+      "originLabel": "Addictive Behaviors Reports",
       "reviewSummary": [
-        "Meta-Analyse mit hoher Evidenz.",
-        "Brain, Behavior, and Immunity · 2026 · Priorität high. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Kontrollierte Studie mit direktem Praxisbezug.",
+        "Addictive Behaviors Reports · 2026 · Prioritaet medium. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
@@ -297,10 +328,10 @@
       "originLabel": "Sleep Medicine: X",
       "reviewSummary": [
         "Kontrollierte Studie mit direktem Praxisbezug.",
-        "Sleep Medicine: X · 2026 · Priorität medium. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Sleep Medicine: X · 2026 · Prioritaet medium. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
@@ -309,80 +340,82 @@
       ]
     },
     {
-      "id": "auto-10-1016-j-sleepx-2026-100173",
-      "title": "Integrative therapies for chronic insomnia: A randomized controlled trial of a traditional Thai Herbal Remedy and Cannabis sativa oil",
-      "publisher": "Sleep Medicine: X",
+      "id": "auto-10-1016-j-taap-2026-118080",
+      "title": "Maternal cannabis use during pregnancy associates with alterations in placental endocannabinoid- and steroid-homeostasis and morphology",
+      "publisher": "Toxicology and Applied Pharmacology",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.sleepx.2026.100173",
-      "doi": "10.1016/j.sleepx.2026.100173",
-      "relevanceScore": 78,
-      "evidenceLevel": 88,
-      "publisherQuality": 54,
-      "topicFit": 40,
-      "studyType": "controlled-study",
-      "editorialPriority": "medium",
-      "matchedTopics": [
-        "medizin-evidenz"
-      ],
-      "flags": [
-        "controlled-study"
-      ],
-      "firstAuthor": "Naruwat Pakdee",
-      "originLabel": "Sleep Medicine: X",
-      "reviewSummary": [
-        "Kontrollierte Studie mit direktem Praxisbezug.",
-        "Sleep Medicine: X · 2026 · Priorität medium. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "medizin-evidenz"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-drugpo-2026-105222",
-      "title": "Nonmedical cannabis legalization and adolescent inpatient cannabis use disorder, 2008–2020: A quasi-experimental analysis",
-      "publisher": "International Journal of Drug Policy",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.drugpo.2026.105222",
-      "doi": "10.1016/j.drugpo.2026.105222",
-      "relevanceScore": 74,
+      "url": "https://doi.org/10.1016/j.taap.2026.118080",
+      "doi": "10.1016/j.taap.2026.118080",
+      "relevanceScore": 75,
       "evidenceLevel": 56,
       "publisherQuality": 68,
-      "topicFit": 82,
+      "topicFit": 92,
       "studyType": "general-study",
       "editorialPriority": "medium",
       "matchedTopics": [
         "medizin-evidenz",
-        "markt-regulierung"
+        "pharmakologie",
+        "qualitaet-labor"
       ],
       "flags": [],
-      "firstAuthor": "Sunday Azagba",
-      "originLabel": "International Journal of Drug Policy",
+      "firstAuthor": "M.S. Harhangi",
+      "originLabel": "Toxicology and Applied Pharmacology",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "International Journal of Drug Policy · 2026 · Priorität medium. Fokus: medizin-evidenz, markt-regulierung.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Toxicology and Applied Pharmacology · 2026 · Prioritaet medium. Fokus: medizin-evidenz, pharmakologie, qualitaet-labor.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
         "medizin-evidenz",
-        "markt-regulierung"
+        "pharmakologie",
+        "qualitaet-labor"
       ]
     },
     {
-      "id": "auto-10-1016-j-jcoa-2026-100316",
-      "title": "An alternative easy method for the analysis of volatile compounds from lipid matrices: analysis of terpenes and terpenoids in medical-grade Cannabis sativa L. inflorescences in macerated oils",
-      "publisher": "Journal of Chromatography Open",
+      "id": "auto-10-1016-j-hermed-2026-101136",
+      "title": "Cannabis sativa L. in Unani medicine bridging ethnopharmacology, phytochemistry, and clinical evidence",
+      "publisher": "Journal of Herbal Medicine",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.jcoa.2026.100316",
-      "doi": "10.1016/j.jcoa.2026.100316",
+      "url": "https://doi.org/10.1016/j.hermed.2026.101136",
+      "doi": "10.1016/j.hermed.2026.101136",
+      "relevanceScore": 71,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 76,
+      "studyType": "general-study",
+      "editorialPriority": "medium",
+      "matchedTopics": [
+        "medizin-evidenz",
+        "pharmakologie"
+      ],
+      "flags": [],
+      "firstAuthor": "Shifa Khan",
+      "originLabel": "Journal of Herbal Medicine",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Journal of Herbal Medicine · 2026 · Prioritaet medium. Fokus: medizin-evidenz, pharmakologie.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
+      "tags": [
+        "auto",
+        "study-sync",
+        "crossref",
+        "medizin-evidenz",
+        "pharmakologie"
+      ]
+    },
+    {
+      "id": "auto-10-1016-j-jpba-2026-117665",
+      "title": "Application of liquid chromatography with tandem mass spectrometry detection for the determination of twelve cannabinoids in a feasibility study to produce a pharmacologically active ingredient from seized Cannabis sativa L. (marijuana)",
+      "publisher": "Journal of Pharmaceutical and Biomedical Analysis",
+      "year": "2026",
+      "url": "https://doi.org/10.1016/j.jpba.2026.117665",
+      "doi": "10.1016/j.jpba.2026.117665",
       "relevanceScore": 70,
       "evidenceLevel": 78,
       "publisherQuality": 68,
@@ -390,154 +423,118 @@
       "studyType": "laboratory-study",
       "editorialPriority": "medium",
       "matchedTopics": [
-        "qualitaet-labor",
-        "anbau-postharvest"
+        "medizin-evidenz",
+        "qualitaet-labor"
       ],
       "flags": [],
-      "firstAuthor": "Victor Pereira-Francisco",
-      "originLabel": "Journal of Chromatography Open",
+      "firstAuthor": "Rafael Scorsatto Ortiz",
+      "originLabel": "Journal of Pharmaceutical and Biomedical Analysis",
       "reviewSummary": [
-        "Labor-/Analytik-Arbeit für Qualität oder Profile.",
-        "Journal of Chromatography Open · 2026 · Priorität medium. Fokus: qualitaet-labor, anbau-postharvest.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Labor-/Analytik-Arbeit fuer Qualitaet oder Profile.",
+        "Journal of Pharmaceutical and Biomedical Analysis · 2026 · Prioritaet medium. Fokus: medizin-evidenz, qualitaet-labor.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
-        "qualitaet-labor",
-        "anbau-postharvest"
+        "medizin-evidenz",
+        "qualitaet-labor"
       ]
     },
     {
-      "id": "auto-10-1016-j-neuropharm-2026-110878",
-      "title": "Assessment of high-efficacy agonism in synthetic cannabinoid receptor agonists containing l-tert-leucinate",
-      "publisher": "Neuropharmacology",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.neuropharm.2026.110878",
-      "doi": "10.1016/j.neuropharm.2026.110878",
-      "relevanceScore": 68,
+      "id": "auto-10-22409-hw311c49",
+      "title": "Analysis of the physical properties of incorporating cannabis oil in products for the control of alveolitis",
+      "publisher": "Revista Fluminense de Odontologia",
+      "year": "2027",
+      "url": "https://doi.org/10.22409/hw311c49",
+      "doi": "10.22409/hw311c49",
+      "relevanceScore": 65,
       "evidenceLevel": 56,
-      "publisherQuality": 68,
+      "publisherQuality": 54,
       "topicFit": 74,
       "studyType": "general-study",
       "editorialPriority": "medium",
       "matchedTopics": [
-        "medizin-evidenz",
-        "pharmakologie"
+        "medizin-evidenz"
       ],
       "flags": [],
-      "firstAuthor": "Christopher Lucaj",
-      "originLabel": "Neuropharmacology",
+      "firstAuthor": "José Magalhães Muniz Filho",
+      "originLabel": "Revista Fluminense de Odontologia",
+      "abstractSnippet": "This study evaluated the incorporation of Cannabis sativa oil into dental formulations designed for the management of alveolitis, a common postoperative complication characterized by severe pain and inflammation following tooth extraction.…",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "Neuropharmacology · 2026 · Priorität medium. Fokus: medizin-evidenz, pharmakologie.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Revista Fluminense de Odontologia · 2027 · Prioritaet medium. Fokus: medizin-evidenz.",
+        "This study evaluated the incorporation of Cannabis sativa oil into dental formulations designed for the management of alveolitis, a common postoperative complication cha…"
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
-        "medizin-evidenz",
-        "pharmakologie"
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-1016-j-cct-2026-108287",
-      "title": "An adapted brief negotiation interview for alcohol and cannabis use among assault-injured emerging adults: A randomized pilot trial protocol",
-      "publisher": "Contemporary Clinical Trials",
+      "id": "auto-10-1016-j-talanta-2026-130154",
+      "title": "Miniaturized and automated analysis of pesticides in Cannabis sativa L. flowering tops by means of a robotic platform coupled to liquid chromatography-tandem mass spectrometry",
+      "publisher": "Talanta",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.cct.2026.108287",
-      "doi": "10.1016/j.cct.2026.108287",
-      "relevanceScore": 66,
-      "evidenceLevel": 88,
+      "url": "https://doi.org/10.1016/j.talanta.2026.130154",
+      "doi": "10.1016/j.talanta.2026.130154",
+      "relevanceScore": 58,
+      "evidenceLevel": 78,
       "publisherQuality": 54,
-      "topicFit": 50,
-      "studyType": "controlled-study",
-      "editorialPriority": "medium",
-      "matchedTopics": [
-        "medizin-evidenz"
-      ],
-      "flags": [
-        "controlled-study",
-        "pilot",
-        "protocol",
-        "trial"
-      ],
-      "firstAuthor": "Edouard Coupet",
-      "originLabel": "Contemporary Clinical Trials",
-      "reviewSummary": [
-        "Kontrollierte Studie mit direktem Praxisbezug.",
-        "Contemporary Clinical Trials · 2026 · Priorität medium. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "medizin-evidenz"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-josat-2026-209943",
-      "title": "Socioeconomic outcomes following outpatient treatment for alcohol, cannabis, and gambling disorder in Greenland: Changes in income, employment, and welfare utilization",
-      "publisher": "Journal of Substance Use and Addiction Treatment",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.josat.2026.209943",
-      "doi": "10.1016/j.josat.2026.209943",
-      "relevanceScore": 59,
-      "evidenceLevel": 56,
-      "publisherQuality": 90,
-      "topicFit": 40,
-      "studyType": "general-study",
+      "topicFit": 48,
+      "studyType": "laboratory-study",
       "editorialPriority": "low",
       "matchedTopics": [
-        "medizin-evidenz"
+        "qualitaet-labor"
       ],
       "flags": [],
-      "firstAuthor": "Julie Flyger",
-      "originLabel": "Journal of Substance Use and Addiction Treatment",
+      "firstAuthor": "Danilo Donnarumma",
+      "originLabel": "Talanta",
       "reviewSummary": [
-        "Allgemeine Studie mit Cannabis-Bezug.",
-        "Journal of Substance Use and Addiction Treatment · 2026 · Priorität low. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Labor-/Analytik-Arbeit fuer Qualitaet oder Profile.",
+        "Talanta · 2026 · Prioritaet low. Fokus: qualitaet-labor.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
-        "medizin-evidenz"
+        "qualitaet-labor"
       ]
     },
     {
-      "id": "auto-10-1016-j-ajmo-2025-100120",
-      "title": "Risk of Heart Failure-related Events in Patients Exposed to Medical Cannabis: A Longitudinal Cohort Study",
-      "publisher": "American Journal of Medicine Open",
+      "id": "auto-10-1016-j-prenap-2026-100909",
+      "title": "Medical cannabis clinical data sharing initiative in Germany: A cross-sectional study",
+      "publisher": "Pharmacological Research - Natural Products",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.ajmo.2025.100120",
-      "doi": "10.1016/j.ajmo.2025.100120",
-      "relevanceScore": 59,
+      "url": "https://doi.org/10.1016/j.prenap.2026.100909",
+      "doi": "10.1016/j.prenap.2026.100909",
+      "relevanceScore": 57,
       "evidenceLevel": 62,
       "publisherQuality": 68,
-      "topicFit": 48,
+      "topicFit": 58,
       "studyType": "observational-study",
       "editorialPriority": "low",
       "matchedTopics": [
         "medizin-evidenz"
       ],
-      "flags": [],
-      "firstAuthor": "Cerina Dubois",
-      "originLabel": "American Journal of Medicine Open",
+      "flags": [
+        "observational"
+      ],
+      "firstAuthor": "Joshua Aviram",
+      "originLabel": "Pharmacological Research - Natural Products",
       "reviewSummary": [
         "Beobachtungsstudie, eher kontext- als beweisstark.",
-        "American Journal of Medicine Open · 2026 · Priorität low. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Pharmacological Research - Natural Products · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
@@ -546,44 +543,44 @@
       ]
     },
     {
-      "id": "auto-10-1016-j-drugalcdep-2026-113127",
-      "title": "Relations between depression and cannabis use among college students in evolving state cannabis policy environments",
-      "publisher": "Drug and Alcohol Dependence",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.drugalcdep.2026.113127",
-      "doi": "10.1016/j.drugalcdep.2026.113127",
-      "relevanceScore": 57,
+      "id": "auto-10-1016-j-saa-2026-128954",
+      "title": "Two-trace two-dimensional correlation spectroscopy (2T2D-COS) combined with multivariate analysis for quality control of Cannabis sativa oil extracts: detection of synthetic cannabinoid adulteration and CBD discrimination by UV–Vis and ATR-FT-IR spectroscopy",
+      "publisher": "Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy",
+      "year": "2027",
+      "url": "https://doi.org/10.1016/j.saa.2026.128954",
+      "doi": "10.1016/j.saa.2026.128954",
+      "relevanceScore": 56,
       "evidenceLevel": 56,
-      "publisherQuality": 90,
-      "topicFit": 40,
+      "publisherQuality": 54,
+      "topicFit": 50,
       "studyType": "general-study",
       "editorialPriority": "low",
       "matchedTopics": [
-        "markt-regulierung"
+        "medizin-evidenz"
       ],
       "flags": [],
-      "firstAuthor": "Harold Bae",
-      "originLabel": "Drug and Alcohol Dependence",
+      "firstAuthor": "Dary Mendoza",
+      "originLabel": "Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "Drug and Alcohol Dependence · 2026 · Priorität low. Fokus: markt-regulierung.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Spectrochimica Acta Part A: Molecular and Biomolecular Spectroscopy · 2027 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
-        "markt-regulierung"
+        "medizin-evidenz"
       ]
     },
     {
-      "id": "auto-10-1016-j-ijindorg-2026-103272",
-      "title": "Legalization and innovation in the cannabis market",
-      "publisher": "International Journal of Industrial Organization",
+      "id": "auto-10-1016-j-drugpo-2026-105581",
+      "title": "The comprehensive cannabis retail framework (CCRF): A system-level framework for analyzing legal cannabis retail systems",
+      "publisher": "International Journal of Drug Policy",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.ijindorg.2026.103272",
-      "doi": "10.1016/j.ijindorg.2026.103272",
+      "url": "https://doi.org/10.1016/j.drugpo.2026.105581",
+      "doi": "10.1016/j.drugpo.2026.105581",
       "relevanceScore": 56,
       "evidenceLevel": 56,
       "publisherQuality": 68,
@@ -594,14 +591,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "firstAuthor": "Lucy Xiaolu Wang",
-      "originLabel": "International Journal of Industrial Organization",
+      "firstAuthor": "Tanisha Wright-Brown",
+      "originLabel": "International Journal of Drug Policy",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "International Journal of Industrial Organization · 2026 · Priorität low. Fokus: markt-regulierung.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "International Journal of Drug Policy · 2026 · Prioritaet low. Fokus: markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
@@ -610,15 +607,47 @@
       ]
     },
     {
-      "id": "auto-10-1016-j-drugalcdep-2026-113138",
-      "title": "Cannabis legalization and early adolescent expectancies: Findings from the adolescent brain cognitive development study",
-      "publisher": "Drug and Alcohol Dependence",
+      "id": "auto-10-1016-j-fbp-2026-10-004",
+      "title": "Drying, curing Cannabis sativa L.: Implications for moisture, microbial safety and chemical quality",
+      "publisher": "Food and Bioproducts Processing",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.drugalcdep.2026.113138",
-      "doi": "10.1016/j.drugalcdep.2026.113138",
+      "url": "https://doi.org/10.1016/j.fbp.2026.10.004",
+      "doi": "10.1016/j.fbp.2026.10.004",
       "relevanceScore": 56,
       "evidenceLevel": 56,
-      "publisherQuality": 90,
+      "publisherQuality": 54,
+      "topicFit": 50,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "anbau-postharvest"
+      ],
+      "flags": [],
+      "firstAuthor": "Jeffrey Robinson",
+      "originLabel": "Food and Bioproducts Processing",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Food and Bioproducts Processing · 2026 · Prioritaet low. Fokus: anbau-postharvest.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
+      "tags": [
+        "auto",
+        "study-sync",
+        "crossref",
+        "anbau-postharvest"
+      ]
+    },
+    {
+      "id": "auto-10-1016-j-glmedi-2026-100243",
+      "title": "Demographic and health profiles of medicinal, recreational, and dual cannabis use: A comparative regression and tree-based analysis",
+      "publisher": "Journal of Medicine, Surgery, and Public Health",
+      "year": "2026",
+      "url": "https://doi.org/10.1016/j.glmedi.2026.100243",
+      "doi": "10.1016/j.glmedi.2026.100243",
+      "relevanceScore": 53,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
       "topicFit": 40,
       "studyType": "general-study",
       "editorialPriority": "low",
@@ -626,14 +655,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "firstAuthor": "Colbey Ricklefs",
-      "originLabel": "Drug and Alcohol Dependence",
+      "firstAuthor": "Dharmi Desai",
+      "originLabel": "Journal of Medicine, Surgery, and Public Health",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "Drug and Alcohol Dependence · 2026 · Priorität low. Fokus: markt-regulierung.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Journal of Medicine, Surgery, and Public Health · 2026 · Prioritaet low. Fokus: markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
@@ -642,15 +671,15 @@
       ]
     },
     {
-      "id": "auto-10-1016-j-drugalcdep-2026-113096",
-      "title": "Cannabis retail environment and treatment for cannabis use disorder",
-      "publisher": "Drug and Alcohol Dependence",
+      "id": "auto-10-1016-j-drugpo-2026-105532",
+      "title": "Quantifying cannabis-attributable traffic fatalities",
+      "publisher": "International Journal of Drug Policy",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.drugalcdep.2026.113096",
-      "doi": "10.1016/j.drugalcdep.2026.113096",
-      "relevanceScore": 56,
+      "url": "https://doi.org/10.1016/j.drugpo.2026.105532",
+      "doi": "10.1016/j.drugpo.2026.105532",
+      "relevanceScore": 53,
       "evidenceLevel": 56,
-      "publisherQuality": 90,
+      "publisherQuality": 68,
       "topicFit": 40,
       "studyType": "general-study",
       "editorialPriority": "low",
@@ -658,14 +687,14 @@
         "markt-regulierung"
       ],
       "flags": [],
-      "firstAuthor": "Jeremy Mennis",
-      "originLabel": "Drug and Alcohol Dependence",
+      "firstAuthor": "Russell S. Kamer",
+      "originLabel": "International Journal of Drug Policy",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "Drug and Alcohol Dependence · 2026 · Priorität low. Fokus: markt-regulierung.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "International Journal of Drug Policy · 2026 · Prioritaet low. Fokus: markt-regulierung.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
@@ -674,12 +703,12 @@
       ]
     },
     {
-      "id": "auto-10-1016-j-euroneuro-2026-112782",
-      "title": "Personality, not cognition, distinguishes chronic ayahuasca and cannabis users from non-users",
-      "publisher": "European Neuropsychopharmacology",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.euroneuro.2026.112782",
-      "doi": "10.1016/j.euroneuro.2026.112782",
+      "id": "auto-10-1016-j-jep-2026-122428",
+      "title": "Standardized Curcuma longa–Cannabis sativa extract derived from a traditional Thai formulation for psoriasis: anti-inflammatory activity, keratinocyte modulation, and skin-targeted delivery",
+      "publisher": "Journal of Ethnopharmacology",
+      "year": "2027",
+      "url": "https://doi.org/10.1016/j.jep.2026.122428",
+      "doi": "10.1016/j.jep.2026.122428",
       "relevanceScore": 52,
       "evidenceLevel": 56,
       "publisherQuality": 68,
@@ -690,14 +719,14 @@
         "pharmakologie"
       ],
       "flags": [],
-      "firstAuthor": "José Carlos Bouso",
-      "originLabel": "European Neuropsychopharmacology",
+      "firstAuthor": "Piyaporn Thorajak",
+      "originLabel": "Journal of Ethnopharmacology",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "European Neuropsychopharmacology · 2026 · Priorität low. Fokus: pharmakologie.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Journal of Ethnopharmacology · 2027 · Prioritaet low. Fokus: pharmakologie.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
@@ -706,12 +735,108 @@
       ]
     },
     {
-      "id": "auto-10-1016-j-forsciint-2026-112922",
-      "title": "Explainable machine learning to identify cannabinoid 1 receptor agonists",
-      "publisher": "Forensic Science International",
+      "id": "auto-10-1016-j-neubiorev-2026-107032",
+      "title": "Cannabis Co-use and endocannabinoid system modulation in tobacco use disorder",
+      "publisher": "Neuroscience &amp; Biobehavioral Reviews",
+      "year": "2027",
+      "url": "https://doi.org/10.1016/j.neubiorev.2026.107032",
+      "doi": "10.1016/j.neubiorev.2026.107032",
+      "relevanceScore": 52,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [],
+      "firstAuthor": "Gabriel . P. A. Costa",
+      "originLabel": "Neuroscience &amp; Biobehavioral Reviews",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Neuroscience &amp; Biobehavioral Reviews · 2027 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
+      "tags": [
+        "auto",
+        "study-sync",
+        "crossref",
+        "medizin-evidenz"
+      ]
+    },
+    {
+      "id": "auto-10-1016-j-jad-2026-122640",
+      "title": "Cannabis detection in postmortem toxicology among suicide decedents in the Federal District, Brazil, 2009–2019",
+      "publisher": "Journal of Affective Disorders",
+      "year": "2027",
+      "url": "https://doi.org/10.1016/j.jad.2026.122640",
+      "doi": "10.1016/j.jad.2026.122640",
+      "relevanceScore": 52,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "qualitaet-labor"
+      ],
+      "flags": [],
+      "firstAuthor": "Amanda Oliveira Lyrio",
+      "originLabel": "Journal of Affective Disorders",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Journal of Affective Disorders · 2027 · Prioritaet low. Fokus: qualitaet-labor.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
+      "tags": [
+        "auto",
+        "study-sync",
+        "crossref",
+        "qualitaet-labor"
+      ]
+    },
+    {
+      "id": "auto-10-1016-j-jad-2026-122483",
+      "title": "Plasma endocannabinoid levels in bipolar disorder: Differences between manic and euthymic states and the impact of cannabis use",
+      "publisher": "Journal of Affective Disorders",
       "year": "2026",
-      "url": "https://doi.org/10.1016/j.forsciint.2026.112922",
-      "doi": "10.1016/j.forsciint.2026.112922",
+      "url": "https://doi.org/10.1016/j.jad.2026.122483",
+      "doi": "10.1016/j.jad.2026.122483",
+      "relevanceScore": 52,
+      "evidenceLevel": 56,
+      "publisherQuality": 68,
+      "topicFit": 40,
+      "studyType": "general-study",
+      "editorialPriority": "low",
+      "matchedTopics": [
+        "medizin-evidenz"
+      ],
+      "flags": [],
+      "firstAuthor": "Iñaki Ochandiano",
+      "originLabel": "Journal of Affective Disorders",
+      "reviewSummary": [
+        "Allgemeine Studie mit Cannabis-Bezug.",
+        "Journal of Affective Disorders · 2026 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
+      ],
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
+      "tags": [
+        "auto",
+        "study-sync",
+        "crossref",
+        "medizin-evidenz"
+      ]
+    },
+    {
+      "id": "auto-10-1016-j-cropro-2026-107918",
+      "title": "Efficacy of the free-living panagrolaimid nematode, Shahnema ilamense (Rhabditida: Panagrolaimidae) in managing the two-spotted spider mite Tetranychus urticae Koch (Acari: Tetranychidae) on greenhouse-grown Cannabis sativa L.",
+      "publisher": "Crop Protection",
+      "year": "2027",
+      "url": "https://doi.org/10.1016/j.cropro.2026.107918",
+      "doi": "10.1016/j.cropro.2026.107918",
       "relevanceScore": 50,
       "evidenceLevel": 56,
       "publisherQuality": 54,
@@ -722,14 +847,14 @@
         "medizin-evidenz"
       ],
       "flags": [],
-      "firstAuthor": "Sherwin S.S. Ng",
-      "originLabel": "Forensic Science International",
+      "firstAuthor": "Veronica B. Tañan",
+      "originLabel": "Crop Protection",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "Forensic Science International · 2026 · Priorität low. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Crop Protection · 2027 · Prioritaet low. Fokus: medizin-evidenz.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
@@ -738,131 +863,35 @@
       ]
     },
     {
-      "id": "auto-10-1016-j-regsciurbeco-2026-104220",
-      "title": "The heterogeneous effects of cannabis dispensaries on crime: The importance of foot traffic",
-      "publisher": "Regional Science and Urban Economics",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.regsciurbeco.2026.104220",
-      "doi": "10.1016/j.regsciurbeco.2026.104220",
-      "relevanceScore": 50,
+      "id": "auto-10-1016-j-postharvbio-2026-114815",
+      "title": "Acyclic monoterpenes inhibit postharvest Botrytis cinerea on Lonicera caerulea fruits via targeting phospholipid bilayer",
+      "publisher": "Postharvest Biology and Technology",
+      "year": "2027",
+      "url": "https://doi.org/10.1016/j.postharvbio.2026.114815",
+      "doi": "10.1016/j.postharvbio.2026.114815",
+      "relevanceScore": 48,
       "evidenceLevel": 56,
       "publisherQuality": 54,
-      "topicFit": 40,
-      "studyType": "general-study",
-      "editorialPriority": "low",
-      "matchedTopics": [
-        "markt-regulierung"
-      ],
-      "flags": [],
-      "firstAuthor": "Thomas Lebesmuehlbacher",
-      "originLabel": "Regional Science and Urban Economics",
-      "reviewSummary": [
-        "Allgemeine Studie mit Cannabis-Bezug.",
-        "Regional Science and Urban Economics · 2026 · Priorität low. Fokus: markt-regulierung.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "markt-regulierung"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-ssaho-2026-102484",
-      "title": "Harmonizing health logistics: A digital framework for balancing medical cannabis demand and supply",
-      "publisher": "Social Sciences &amp; Humanities Open",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.ssaho.2026.102484",
-      "doi": "10.1016/j.ssaho.2026.102484",
-      "relevanceScore": 50,
-      "evidenceLevel": 56,
-      "publisherQuality": 54,
-      "topicFit": 40,
-      "studyType": "general-study",
-      "editorialPriority": "low",
-      "matchedTopics": [
-        "medizin-evidenz"
-      ],
-      "flags": [],
-      "firstAuthor": "Weerapat Pookkaman",
-      "originLabel": "Social Sciences &amp; Humanities Open",
-      "reviewSummary": [
-        "Allgemeine Studie mit Cannabis-Bezug.",
-        "Social Sciences &amp; Humanities Open · 2026 · Priorität low. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "medizin-evidenz"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-phymed-2026-158068",
-      "title": "A sesquiterpene-rich essential oil from Cannabis sativa L. attenuates symptoms and neuroinflammation in experimental autoimmune encephalomyelitis model through a CB2-mediated signalling",
-      "publisher": "Phytomedicine",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.phymed.2026.158068",
-      "doi": "10.1016/j.phymed.2026.158068",
-      "relevanceScore": 50,
-      "evidenceLevel": 56,
-      "publisherQuality": 54,
-      "topicFit": 40,
+      "topicFit": 34,
       "studyType": "general-study",
       "editorialPriority": "low",
       "matchedTopics": [
         "anbau-postharvest"
       ],
       "flags": [],
-      "firstAuthor": "Giacomina Videtta",
-      "originLabel": "Phytomedicine",
+      "firstAuthor": "Xin Zhan",
+      "originLabel": "Postharvest Biology and Technology",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "Phytomedicine · 2026 · Priorität low. Fokus: anbau-postharvest.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Postharvest Biology and Technology · 2027 · Prioritaet low. Fokus: anbau-postharvest.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
         "anbau-postharvest"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-abrep-2026-100680",
-      "title": "Associations of cannabis, alcohol, and tobacco use combinations with sleep health",
-      "publisher": "Addictive Behaviors Reports",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.abrep.2026.100680",
-      "doi": "10.1016/j.abrep.2026.100680",
-      "relevanceScore": 50,
-      "evidenceLevel": 56,
-      "publisherQuality": 54,
-      "topicFit": 40,
-      "studyType": "general-study",
-      "editorialPriority": "low",
-      "matchedTopics": [
-        "medizin-evidenz"
-      ],
-      "flags": [],
-      "firstAuthor": "David A. Reichenberger",
-      "originLabel": "Addictive Behaviors Reports",
-      "reviewSummary": [
-        "Allgemeine Studie mit Cannabis-Bezug.",
-        "Addictive Behaviors Reports · 2026 · Priorität low. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "medizin-evidenz"
       ]
     },
     {
@@ -886,49 +915,15 @@
       "originLabel": "Pharmacy &amp; Pharmacology International Journal",
       "reviewSummary": [
         "Allgemeine Studie mit Cannabis-Bezug.",
-        "Pharmacy &amp; Pharmacology International Journal · 2106 · Priorität low. Fokus: pharmakologie.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
+        "Pharmacy &amp; Pharmacology International Journal · 2106 · Prioritaet low. Fokus: pharmakologie.",
+        "Kein belastbarer Abstract-Auszug verfuegbar."
       ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
+      "fetchedAt": "2026-10-31T04:32:35.570Z",
       "tags": [
         "auto",
         "study-sync",
         "crossref",
         "pharmakologie"
-      ]
-    },
-    {
-      "id": "auto-10-1016-j-abrep-2025-100656",
-      "title": "Consumption patterns and withdrawal symptoms in dual cannabis-tobacco users in Spain: Cross-sectional study",
-      "publisher": "Addictive Behaviors Reports",
-      "year": "2026",
-      "url": "https://doi.org/10.1016/j.abrep.2025.100656",
-      "doi": "10.1016/j.abrep.2025.100656",
-      "relevanceScore": 45,
-      "evidenceLevel": 62,
-      "publisherQuality": 54,
-      "topicFit": 40,
-      "studyType": "observational-study",
-      "editorialPriority": "low",
-      "matchedTopics": [
-        "medizin-evidenz"
-      ],
-      "flags": [
-        "observational"
-      ],
-      "firstAuthor": "Judith Saura",
-      "originLabel": "Addictive Behaviors Reports",
-      "reviewSummary": [
-        "Beobachtungsstudie, eher kontext- als beweisstark.",
-        "Addictive Behaviors Reports · 2026 · Priorität low. Fokus: medizin-evidenz.",
-        "Kein belastbarer Abstract-Auszug verfügbar."
-      ],
-      "fetchedAt": "2026-03-28T00:11:07.344Z",
-      "tags": [
-        "auto",
-        "study-sync",
-        "crossref",
-        "medizin-evidenz"
       ]
     }
   ]
